@@ -25,6 +25,7 @@ public class Recipe implements Parcelable {
 	{
 		name = parcel.readString();
 		parcel.readList(ingredientList, null);
+		parcel.readList(instructionList, null);
 	}
 	
 	// Public methods
@@ -104,5 +105,6 @@ public class Recipe implements Parcelable {
 	public void writeToParcel(Parcel parcel, int i) {
 		parcel.writeString(name);
 		parcel.writeList(ingredientList);
+		parcel.writeList(instructionList);
 	}
 }

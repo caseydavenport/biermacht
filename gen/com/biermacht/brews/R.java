@@ -16,13 +16,14 @@ public final class R {
         public static final int icon=0x7f020002;
     }
     public static final class id {
-        public static final int add_recipe_button=0x7f070006;
+        public static final int add_recipe_button=0x7f070007;
         public static final int amount=0x7f070004;
         public static final int fragment_container=0x7f070000;
         public static final int label=0x7f070003;
-        public static final int menu_settings=0x7f070007;
+        public static final int menu_settings=0x7f070008;
+        public static final int numbering=0x7f070005;
         public static final int recipe_list=0x7f070001;
-        public static final int recipe_title_row=0x7f070005;
+        public static final int recipe_title_row=0x7f070006;
         public static final int row_icon=0x7f070002;
     }
     public static final class layout {
