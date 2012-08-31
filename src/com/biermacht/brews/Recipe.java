@@ -16,6 +16,7 @@ public class Recipe implements Parcelable {
 	public Recipe(String name)
 	{
 		this.name = name;
+		this.ingredientList = new ArrayList<Ingredient>();
 	}
 	
 	public Recipe(Parcel parcel)
@@ -50,6 +51,11 @@ public class Recipe implements Parcelable {
 				ingredientList.remove(ingredient);
 			}
 		}
+	}
+	
+	public ArrayList<Ingredient> getIngredientList()
+	{
+		return ingredientList;
 	}
 	
 	// Comparator for sorting ingredients list

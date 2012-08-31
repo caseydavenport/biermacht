@@ -1,6 +1,5 @@
 package com.biermacht.brews;
 
-import android.accounts.Account;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,7 +7,7 @@ public class Ingredient implements Parcelable {
 	private String type;
 	private String name;
 	private String unit;
-	private float amount;
+	private double amount;
 	
 	// Types
 	public static String TYPE_HOPS = "hops";
@@ -18,7 +17,7 @@ public class Ingredient implements Parcelable {
 	public static String TYPE_OTHER = "other";
 	
 	// Public constructors
-	public Ingredient(String type, String name, float amount, String unit)
+	public Ingredient(String type, String name, double amount, String unit)
 	{
 		this.type = type;
 		this.name = name;
@@ -31,7 +30,7 @@ public class Ingredient implements Parcelable {
 		type = parcel.readString();
 		name = parcel.readString();
 		unit = parcel.readString();
-		amount = parcel.readFloat();
+		amount = parcel.readDouble();
 	}
 	
 	// Public Methods
@@ -60,7 +59,7 @@ public class Ingredient implements Parcelable {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public float getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 	public void setAmount(float amount) {
@@ -76,7 +75,7 @@ public class Ingredient implements Parcelable {
 		parcel.writeString(type);
 		parcel.writeString(name);
 		parcel.writeString(unit);
-		parcel.writeFloat(amount);
+		parcel.writeDouble(amount);
 	}
 	
     public static Creator<Ingredient> CREATOR = new Creator<Ingredient>() {

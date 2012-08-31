@@ -31,8 +31,16 @@ public class DisplayRecipeActivity extends FragmentActivity {
         // Get recipe from calling activity
         Intent i = getIntent();
         Bundle extras = i.getExtras();
-        mRecipe = (Recipe) extras.getParcelable("com.biermacht.brews.RECIPE");
+        mRecipe = new Recipe("Sample Recipe"); // (Recipe) extras.getParcelable("com.biermacht.brews.RECIPE");
         
+        // Make random ingredient and add it...
+        Ingredient hops = new Ingredient(Ingredient.TYPE_HOPS, "Vanguard", 1.0, "oz");
+        Ingredient malt = new Ingredient(Ingredient.TYPE_MALT, "Amber", 6.3, "lbs");
+        Ingredient hops2 = new Ingredient(Ingredient.TYPE_HOPS, "Challenger", 1.0, "oz");
+        
+        mRecipe.addIngredient(hops);
+        mRecipe.addIngredient(malt);
+        mRecipe.addIngredient(hops2);
         
         // Set up ActionBar tabs
     	final ActionBar actionBar = getActionBar();
