@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">Biermacht Brews</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Brews</string>
+    <string name="recipe_list_title">Recipes</string>
+    <string name="add_recipe_text">New</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_display_recipe">Display Recipe</string>
+
+</resources>
