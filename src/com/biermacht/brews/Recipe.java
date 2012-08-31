@@ -10,6 +10,7 @@ import android.os.Parcelable;
 
 public class Recipe implements Parcelable {
 	private String name;
+	private String description;
 	private ArrayList<Ingredient> ingredientList;
 	private ArrayList<Instruction> instructionList;
 	
@@ -17,6 +18,7 @@ public class Recipe implements Parcelable {
 	public Recipe(String name)
 	{
 		this.name = name;
+		this.description = "No description provided";
 		this.ingredientList = new ArrayList<Ingredient>();
 		this.instructionList = new ArrayList<Instruction>();
 	}
@@ -106,5 +108,13 @@ public class Recipe implements Parcelable {
 		parcel.writeString(name);
 		parcel.writeList(ingredientList);
 		parcel.writeList(instructionList);
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
