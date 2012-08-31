@@ -45,11 +45,11 @@ public class CustomFragment extends Fragment {
 		}
 		else
 		{
-		  TableRow tableRow = new TableRow(DisplayRecipeActivity.appContext);
-		  TextView tv = new TextView(DisplayRecipeActivity.appContext);
-		  tv.setText("1. This is the instructions for " + r.getRecipeName());
-		  tableRow.addView(tv);
-		  tableView.addView(tableRow);
+		  ArrayList<Instruction> instructionList = r.getInstructionList();
+		  InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
+		  ListView listView = new ListView(DisplayRecipeActivity.appContext);
+		  listView.setAdapter(instructionArrayAdapter);
+		  tableView.addView(listView);
 		}
 
 		

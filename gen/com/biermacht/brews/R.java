@@ -30,9 +30,10 @@ public final class R {
         public static final int activity_main=0x7f030001;
         public static final int ingredient_row_layout=0x7f030002;
         public static final int ingredient_view=0x7f030003;
-        public static final int instruction_view=0x7f030004;
-        public static final int recipe_row_layout=0x7f030005;
-        public static final int recipe_title_row=0x7f030006;
+        public static final int instruction_row_layout=0x7f030004;
+        public static final int instruction_view=0x7f030005;
+        public static final int recipe_row_layout=0x7f030006;
+        public static final int recipe_title_row=0x7f030007;
     }
     public static final class menu {
         public static final int activity_display_message=0x7f060000;

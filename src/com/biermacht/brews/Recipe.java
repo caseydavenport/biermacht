@@ -11,12 +11,14 @@ import android.os.Parcelable;
 public class Recipe implements Parcelable {
 	private String name;
 	private ArrayList<Ingredient> ingredientList;
+	private ArrayList<Instruction> instructionList;
 	
-	// Public contructors
+	// Public constructors
 	public Recipe(String name)
 	{
 		this.name = name;
 		this.ingredientList = new ArrayList<Ingredient>();
+		this.instructionList = new ArrayList<Instruction>();
 	}
 	
 	public Recipe(Parcel parcel)
@@ -53,9 +55,25 @@ public class Recipe implements Parcelable {
 		}
 	}
 	
+	public void addInstruction(Instruction i)
+	{
+		instructionList.add(i);
+		// TODO: Sort instructions somehow??
+	}
+	
+	public void removeInstruction(String i)
+	{
+
+	}
+	
 	public ArrayList<Ingredient> getIngredientList()
 	{
 		return ingredientList;
+	}
+	
+	public ArrayList<Instruction> getInstructionList()
+	{
+		return instructionList;
 	}
 	
 	// Comparator for sorting ingredients list

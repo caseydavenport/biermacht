@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class DisplayRecipeActivity extends FragmentActivity {
 	
@@ -37,10 +36,17 @@ public class DisplayRecipeActivity extends FragmentActivity {
         Ingredient hops = new Ingredient(Ingredient.TYPE_HOPS, "Vanguard", 1.0, "oz");
         Ingredient malt = new Ingredient(Ingredient.TYPE_MALT, "Amber", 6.3, "lbs");
         Ingredient hops2 = new Ingredient(Ingredient.TYPE_HOPS, "Challenger", 1.0, "oz");
+        Ingredient yeast = new Ingredient(Ingredient.TYPE_YEAST, "Random", 1, "vial");
         
         mRecipe.addIngredient(hops);
         mRecipe.addIngredient(malt);
         mRecipe.addIngredient(hops2);
+        mRecipe.addIngredient(yeast);
+        mRecipe.addInstruction(new Instruction("Do one thing!"));
+        mRecipe.addInstruction(new Instruction("Then, you should probably do another thing!"));
+        mRecipe.addInstruction(new Instruction("After you have performed both of those things, it might be best to do one more thing"));
+        mRecipe.addInstruction(new Instruction("Shit man, don't forget THAT thing... if you don't do that it will NEVER WORK.. christ what do you think you're doing?"));
+        mRecipe.addInstruction(new Instruction("After that, you're done!"));
         
         // Set up ActionBar tabs
     	final ActionBar actionBar = getActionBar();
@@ -104,7 +110,7 @@ class MyTabsListener implements ActionBar.TabListener {
     }
     
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
-            Toast.makeText(DisplayRecipeActivity.appContext, "Reselected!", Toast.LENGTH_LONG).show();
+            // Do nothing on tab reselect
     }
 
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
