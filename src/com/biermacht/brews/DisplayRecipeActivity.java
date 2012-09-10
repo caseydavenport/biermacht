@@ -45,6 +45,9 @@ public class DisplayRecipeActivity extends FragmentActivity {
         mRecipe.addIngredient(yeast);
         mRecipe.addInstruction(new Instruction("Do one thing!"));
         mRecipe.addInstruction(new Instruction("Then, you should probably do another thing!"));
+        mRecipe.addInstruction(new Instruction("And, you should do more..."));
+        mRecipe.addInstruction(new Instruction("This is an important step.  Please make sure to you know, do this one.  Because it's important and all."));
+        mRecipe.addInstruction(new Instruction("And, you should do more..."));
         mRecipe.addInstruction(new Instruction("After you have performed both of those things, it might be best to do one more thing"));
         mRecipe.addInstruction(new Instruction("Shit man, don't forget THAT thing... if you don't do that it will NEVER WORK.. christ what do you think you're doing?"));
         mRecipe.addInstruction(new Instruction("After that, you're done!"));

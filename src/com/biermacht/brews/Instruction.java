@@ -1,21 +1,22 @@
 package com.biermacht.brews;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.os.Parcelable.Creator;
-
-public class Instruction implements Parcelable {
+public class Instruction {
 	
 	private String instructionText;
+	private String instructionType;
+	private int duration;
+	private String duration_units;
+	
+	public static String INSTRUCTION_TYPE_BOIL = "Brew";
+	public static String INSTRUCTION_TYPE_FERMENT = "Ferment";
+	public static String INSTRUCTION_TYPE_OTHER = "Other";
 
 	public Instruction(String i)
 	{
 		this.setInstructionText(i);
-	}
-	
-	public Instruction(Parcel p)
-	{
-		instructionText = p.readString();
+		this.duration = 0;
+		this.duration_units = "hours";
+		this.instructionType = INSTRUCTION_TYPE_OTHER;
 	}
 
 	public String getInstructionText() {
@@ -25,26 +26,29 @@ public class Instruction implements Parcelable {
 	public void setInstructionText(String instructionText) {
 		this.instructionText = instructionText;
 	}
-	
-	
-	// Parcelable stuff
-	public void writeToParcel(Parcel parcel, int i) {
-		parcel.writeString(instructionText);
+
+	public String getInstructionType() {
+		return instructionType;
 	}
-	
-    public static Creator<Instruction> CREATOR = new Creator<Instruction>() {
-        public Instruction createFromParcel(Parcel parcel) {
-            return new Instruction(parcel);
-        }
 
-        public Instruction[] newArray(int size) {
-            return new Instruction[size];
-        }
-    };
+	public void setInstructionType(String instructionType) {
+		this.instructionType = instructionType;
+	}
 
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public String getDuration_units() {
+		return duration_units;
+	}
+
+	public void setDuration_units(String duration_units) {
+		this.duration_units = duration_units;
 	}
 
 }

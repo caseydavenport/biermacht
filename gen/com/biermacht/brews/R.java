@@ -38,17 +38,21 @@ public final class R {
         public static final int edit_text=0x7f070007;
         public static final int fragment_container=0x7f070004;
         public static final int ingredient_row_icon=0x7f070013;
+        public static final int instruction_list=0x7f070018;
+        public static final int instruction_player=0x7f070019;
         public static final int label=0x7f070014;
-        public static final int menu_new_recipe=0x7f070019;
-        public static final int menu_settings=0x7f070018;
+        public static final int menu_new_recipe=0x7f07001d;
+        public static final int menu_settings=0x7f07001c;
         public static final int new_recipe_submit_button=0x7f070003;
         public static final int numbering=0x7f070016;
         public static final int recipe_description_edit_text=0x7f070002;
         public static final int recipe_name_edit_text=0x7f070000;
         public static final int recipe_search_view=0x7f070005;
-        public static final int row_icon=0x7f070017;
+        public static final int row_icon=0x7f07001b;
         public static final int select_ingredient_type_button=0x7f070006;
         public static final int tag=0x7f07000b;
+        public static final int time_left=0x7f07001a;
+        public static final int time_view=0x7f070017;
     }
     public static final class layout {
         public static final int activity_add_new_recipe=0x7f030000;

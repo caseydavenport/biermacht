@@ -50,11 +50,14 @@ public class CustomFragment extends Fragment {
 		}
 		else if(isInstructionView)
 		{
+		  LinearLayout instructionsPageView = new LinearLayout(DisplayRecipeActivity.appContext);
+		  inflater.inflate(resource, instructionsPageView);
+		  
 		  ArrayList<Instruction> instructionList = r.getInstructionList();
 		  InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
-		  ListView listView = new ListView(DisplayRecipeActivity.appContext);
+		  ListView listView = (ListView) instructionsPageView.findViewById(R.id.instruction_list);
 		  listView.setAdapter(instructionArrayAdapter);
-		  tableView.addView(listView);
+		  tableView.addView(instructionsPageView);
 		}
 		else
 		{
