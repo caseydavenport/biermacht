@@ -36,7 +36,20 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 		TextView textView = (TextView) row.findViewById(R.id.label);
 		ImageView imageView = (ImageView) row.findViewById(R.id.row_icon);
 		textView.setText(list.get(position).getRecipeName());
-		imageView.setImageResource(R.drawable.icon);
+		
+		// Set imageView based on beer type
+		String beerType = list.get(position).getBeerType();
+		
+		if(beerType == Recipe.BEERTYPE_STOUT)
+			imageView.setImageResource(R.drawable.icon_stout);
+		else if(beerType == Recipe.BEERTYPE_HEFEWEIZEN)
+			imageView.setImageResource(R.drawable.icon_hefeweizen);
+		else if(beerType == Recipe.BEERTYPE_IPA)
+			imageView.setImageResource(R.drawable.icon_ipa);
+		else
+			imageView.setImageResource(R.drawable.icon_default);
+
+		
 		
 		return row;
 	}

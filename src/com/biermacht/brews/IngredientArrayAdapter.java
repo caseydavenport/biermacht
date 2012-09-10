@@ -33,8 +33,23 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		View row = inflater.inflate(R.layout.ingredient_row_layout, parent, false);
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView amountView = (TextView) row.findViewById(R.id.amount);
+		ImageView imageView = (ImageView) row.findViewById(R.id.ingredient_row_icon);
 		labelView.setText(list.get(position).getName() + " " + list.get(position).getType());
 		amountView.setText(list.get(position).getAmount() + " " + list.get(position).getUnit());
+		
+		// Set imageView based on ingredient type
+		String ingType = list.get(position).getType();
+		
+		if(ingType == Ingredient.TYPE_HOPS)
+			imageView.setImageResource(R.drawable.icon_hops);
+		else if(ingType == Ingredient.TYPE_MALT)
+			imageView.setImageResource(R.drawable.icon_idk);
+		else if(ingType == Ingredient.TYPE_SPICE)
+			imageView.setImageResource(R.drawable.icon_idk);
+		else if (ingType == Ingredient.TYPE_YEAST)
+			imageView.setImageResource(R.drawable.icon_idk);
+		else
+			imageView.setImageResource(R.drawable.icon_idk);
 		
 		return row;
 	}

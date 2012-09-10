@@ -5,7 +5,7 @@
     android:padding="10dp" 
     android:orientation="horizontal">
     
-    <ImageView android:id="@+id/row_icon"
+    <ImageView android:id="@+id/ingredient_row_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

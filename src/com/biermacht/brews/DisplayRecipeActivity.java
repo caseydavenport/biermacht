@@ -52,10 +52,6 @@ public class DisplayRecipeActivity extends FragmentActivity {
     	final ActionBar actionBar = getActionBar();
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
-		// Remove unsightly actionbar title etc
-		getActionBar().setDisplayShowHomeEnabled(false);
-		getActionBar().setDisplayShowTitleEnabled(false);
-		
 		// Create Tabs
 		ActionBar.Tab ingredientTab = actionBar.newTab();
 		ActionBar.Tab instructionTab = actionBar.newTab();

@@ -28,7 +28,6 @@ public class Instruction implements Parcelable {
 	
 	
 	// Parcelable stuff
-	@Override
 	public void writeToParcel(Parcel parcel, int i) {
 		parcel.writeString(instructionText);
 	}
@@ -43,7 +42,6 @@ public class Instruction implements Parcelable {
         }
     };
 
-	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
 		return 0;

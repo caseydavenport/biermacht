@@ -11,8 +11,16 @@ import android.os.Parcelable;
 public class Recipe implements Parcelable {
 	private String name;
 	private String description;
+	private String beerType;
 	private ArrayList<Ingredient> ingredientList;
 	private ArrayList<Instruction> instructionList;
+	
+	
+	// Beer types - don't forget to update getBeerTypeList() as well
+	public static String BEERTYPE_STOUT = "Stout";
+	public static String BEERTYPE_HEFEWEIZEN = "Hefeweizen";
+	public static String BEERTYPE_IPA = "India Pale Ale";
+	public static String BEERTYPE_OTHER = "Select a beer type";
 	
 	// Public constructors
 	public Recipe(String name)
@@ -21,6 +29,7 @@ public class Recipe implements Parcelable {
 		this.description = "No description provided";
 		this.ingredientList = new ArrayList<Ingredient>();
 		this.instructionList = new ArrayList<Instruction>();
+		this.beerType = BEERTYPE_OTHER;
 	}
 	
 	public Recipe(Parcel parcel)
@@ -28,6 +37,18 @@ public class Recipe implements Parcelable {
 		name = parcel.readString();
 		parcel.readList(ingredientList, null);
 		parcel.readList(instructionList, null);
+	}
+	
+	public static ArrayList<String> getBeerTypeList()
+	{
+		ArrayList<String> list = new ArrayList<String>();
+		
+		list.add(BEERTYPE_OTHER);
+		list.add(BEERTYPE_HEFEWEIZEN);
+		list.add(BEERTYPE_STOUT);
+		list.add(BEERTYPE_IPA);
+	
+		return list;
 	}
 	
 	// Public methods
@@ -69,6 +90,22 @@ public class Recipe implements Parcelable {
 
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getBeerType() {
+		return beerType;
+	}
+
+	public void setBeerType(String beertype) {
+		this.beerType = beertype;
+	}
+	
 	public ArrayList<Ingredient> getIngredientList()
 	{
 		return ingredientList;
@@ -108,13 +145,5 @@ public class Recipe implements Parcelable {
 		parcel.writeString(name);
 		parcel.writeList(ingredientList);
 		parcel.writeList(instructionList);
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 }
