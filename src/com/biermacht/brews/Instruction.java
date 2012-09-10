@@ -15,7 +15,7 @@ public class Instruction {
 	{
 		this.setInstructionText(i);
 		this.duration = 0;
-		this.duration_units = "hours";
+		this.duration_units = "mins";
 		this.instructionType = INSTRUCTION_TYPE_OTHER;
 	}
 
