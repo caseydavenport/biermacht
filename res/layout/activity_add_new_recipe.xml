@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- EditText for Beer Name -->
+
+    <EditText
+        android:id="@+id/recipe_name_edit_text"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:hint="Enter a recipe name" />
+
+    <!-- BeerType spinner -->
+
+    <Spinner
+        android:id="@+id/beer_type_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:drawSelectorOnTop="true"
+        android:padding="5dip"
+        android:paddingLeft="10dip" />
+
+    <!-- EditText for Description -->
+
+    <EditText
+        android:id="@+id/recipe_description_edit_text"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_weight="1"
+        android:hint="Enter a description (optional)" />
+
+    <!-- Submit Button -->
+
+    <Button
+        android:id="@+id/new_recipe_submit_button"
+        android:layout_width="fill_parent"
+        android:layout_height="70dip"
+        android:text="Create new recipe" />
+
+</LinearLayout>
