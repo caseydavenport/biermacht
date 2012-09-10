@@ -17,6 +17,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
 	private Recipe mRecipe;
 	private Fragment instructionFragment;
 	private Fragment ingredientFragment;
+	private Fragment detailsFragment;
 	
 	public static Context appContext;
 
@@ -48,6 +49,8 @@ public class DisplayRecipeActivity extends FragmentActivity {
         mRecipe.addInstruction(new Instruction("Shit man, don't forget THAT thing... if you don't do that it will NEVER WORK.. christ what do you think you're doing?"));
         mRecipe.addInstruction(new Instruction("After that, you're done!"));
         
+        mRecipe.setDescription("This is just a sample description.  Hopefully this will show up in the description section of the details page.  That would be really nice.  I'm also going to extend this on for a bit to make sure it is lengthy enough to take up some space, and hopefully even require scrolling of some sort to occur on the description / details page");
+        
         // Set up ActionBar tabs
     	final ActionBar actionBar = getActionBar();
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -55,22 +58,27 @@ public class DisplayRecipeActivity extends FragmentActivity {
 		// Create Tabs
 		ActionBar.Tab ingredientTab = actionBar.newTab();
 		ActionBar.Tab instructionTab = actionBar.newTab();
+		ActionBar.Tab detailsTab = actionBar.newTab();
 		
 		// Create fragments
 		 ingredientFragment = new CustomFragment(R.layout.ingredient_view, mRecipe);
 		 instructionFragment = new CustomFragment(R.layout.instruction_view, mRecipe);
+		 detailsFragment = new CustomFragment(R.layout.details_view, mRecipe);
 		
 		// Set Tab text
 		ingredientTab.setText("Ingredients");
 		instructionTab.setText("Intructions");
+		detailsTab.setText("Details");
         
 		// Set Tab Listeners
     	ingredientTab.setTabListener(new MyTabsListener(ingredientFragment));
     	instructionTab.setTabListener(new MyTabsListener(instructionFragment));
+    	detailsTab.setTabListener(new MyTabsListener(detailsFragment));
         
 		// Add Tab to bar
 		actionBar.addTab(ingredientTab);
 		actionBar.addTab(instructionTab);
+		actionBar.addTab(detailsTab);
 		
     }
 

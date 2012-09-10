@@ -4,16 +4,28 @@
     android:layout_height="match_parent" 
     android:orientation="vertical" >
     
-    <ListView
-        android:id="@+id/recipe_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+    <View android:layout_width="fill_parent" 
+        android:layout_height="1dip"
+        android:background="#44000000" />
+    
+    <SearchView android:id="@+id/recipe_search_view"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:queryHint="Recipe search"
+        android:background="#000000"
+        android:iconifiedByDefault="true" >
+    </SearchView>
+    
+    <View android:layout_width="fill_parent" 
+        android:layout_height="2dip"
+        android:background="#44000000" />
     
     <ListView
-	  android:id="@android:id/list"
-	  android:layout_width="match_parent"
-	  android:layout_height="wrap_content" >
-	</ListView> 
+        android:id="@+id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:drawSelectorOnTop="true"
+        android:listSelector="#22000000" >
+    </ListView>
 
 </LinearLayout>

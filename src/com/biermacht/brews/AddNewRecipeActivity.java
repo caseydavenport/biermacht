@@ -17,10 +17,6 @@ public class AddNewRecipeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_recipe);
         
-        // Action bar stuff
-        TextView customActionBar = (TextView) findViewById(R.layout.custom_action_bar);
-        getActionBar().setCustomView(customActionBar);
-        
         // View holders
         Spinner beerTypeSpinner;
         EditText recipeNameEditText;

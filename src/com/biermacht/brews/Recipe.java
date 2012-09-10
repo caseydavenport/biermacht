@@ -12,6 +12,11 @@ public class Recipe implements Parcelable {
 	private String name;
 	private String description;
 	private String beerType;
+	private int batchTime; // Batch time in weeks
+	private float gravity;
+	private float ABV;
+	private float bitterness;
+	private float color;
 	private ArrayList<Ingredient> ingredientList;
 	private ArrayList<Instruction> instructionList;
 	
@@ -20,16 +25,23 @@ public class Recipe implements Parcelable {
 	public static String BEERTYPE_STOUT = "Stout";
 	public static String BEERTYPE_HEFEWEIZEN = "Hefeweizen";
 	public static String BEERTYPE_IPA = "India Pale Ale";
-	public static String BEERTYPE_OTHER = "Select a beer type";
+	public static String BEERTYPE_OTHER = "Other";
 	
 	// Public constructors
 	public Recipe(String name)
 	{
 		this.name = name;
-		this.description = "No description provided";
+		
+		// Default values
 		this.ingredientList = new ArrayList<Ingredient>();
 		this.instructionList = new ArrayList<Instruction>();
+		this.description = "No description provided";
 		this.beerType = BEERTYPE_OTHER;
+		this.setABV(0);
+		this.setBitterness(0);
+		this.setColor(0);
+		this.gravity = 0;
+		this.setBatchTime(0);
 	}
 	
 	public Recipe(Parcel parcel)
@@ -145,5 +157,45 @@ public class Recipe implements Parcelable {
 		parcel.writeString(name);
 		parcel.writeList(ingredientList);
 		parcel.writeList(instructionList);
+	}
+
+	public float getGravity() {
+		return gravity;
+	}
+
+	public void setGravity(float gravity) {
+		this.gravity = gravity;
+	}
+
+	public float getBitterness() {
+		return bitterness;
+	}
+
+	public void setBitterness(float bitterness) {
+		this.bitterness = bitterness;
+	}
+
+	public float getColor() {
+		return color;
+	}
+
+	public void setColor(float color) {
+		this.color = color;
+	}
+
+	public float getABV() {
+		return ABV;
+	}
+
+	public void setABV(float aBV) {
+		ABV = aBV;
+	}
+
+	public int getBatchTime() {
+		return batchTime;
+	}
+
+	public void setBatchTime(int batchTime) {
+		this.batchTime = batchTime;
 	}
 }

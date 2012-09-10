@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -26,7 +25,8 @@ public class MainActivity extends ListActivity {
         setContentView(R.layout.activity_main);
         
         //Make views here
-        ListView listView = (ListView) findViewById(R.id.recipe_list);
+        ListView listView = getListView();
+
         
         // Create a bunch of test brews here
         Recipe brew1 = new Recipe("Arizona Pale Ale");
