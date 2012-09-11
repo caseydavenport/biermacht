@@ -5,7 +5,6 @@ import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
@@ -29,8 +28,6 @@ public class DisplayRecipeActivity extends FragmentActivity {
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        Intent i = getIntent();
-        Bundle extras = i.getExtras();
         mRecipe = new Recipe("Sample Recipe"); // (Recipe) extras.getParcelable("com.biermacht.brews.RECIPE");
         
         // Make random ingredient and add it...
@@ -43,7 +40,12 @@ public class DisplayRecipeActivity extends FragmentActivity {
         mRecipe.addIngredient(malt);
         mRecipe.addIngredient(hops2);
         mRecipe.addIngredient(yeast);
+        
+        Instruction timedInst = new Instruction("This should have a time limit!");
+        timedInst.setDuration(15, "mins");
+        
         mRecipe.addInstruction(new Instruction("Do one thing!"));
+        mRecipe.addInstruction(timedInst);
         mRecipe.addInstruction(new Instruction("Then, you should probably do another thing!"));
         mRecipe.addInstruction(new Instruction("And, you should do more..."));
         mRecipe.addInstruction(new Instruction("This is an important step.  Please make sure to you know, do this one.  Because it's important and all."));

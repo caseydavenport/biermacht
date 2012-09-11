@@ -1,13 +1,11 @@
 package com.biermacht.brews;
 
 import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
@@ -26,13 +24,14 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		// Get inflater
-		LayoutInflater inflater = (LayoutInflater) 
-					context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		// View to return
 		View row = inflater.inflate(R.layout.instruction_row_layout, parent, false);
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView numberView = (TextView) row.findViewById(R.id.numbering);
+		TextView timeView = (TextView) row.findViewById(R.id.time_view);
+		timeView.setText(list.get(position).getDuration() + " " + list.get(position).getDuration_units());
 		numberView.setText(position+1 + ".");
 		labelView.setText(list.get(position).getInstructionText());
 		

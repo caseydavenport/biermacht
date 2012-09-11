@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import android.accounts.Account;
 import android.os.Parcel;
 import android.os.Parcelable;
 

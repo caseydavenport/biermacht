@@ -42,6 +42,12 @@ public class Instruction {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+	
+	public void setDuration(int duration, String units)
+	{
+		this.duration = duration;
+		this.duration_units = units;
+	}
 
 	public String getDuration_units() {
 		return duration_units;

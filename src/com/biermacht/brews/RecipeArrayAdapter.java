@@ -29,7 +29,7 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 	{
 		// Get inflater
 		LayoutInflater inflater = (LayoutInflater) 
-					context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+					context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		// View to return
 		View row = inflater.inflate(R.layout.recipe_row_layout, parent, false);
