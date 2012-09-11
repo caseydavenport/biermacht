@@ -47,7 +47,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		else if(ingType == Ingredient.TYPE_SPICE)
 			imageView.setImageResource(R.drawable.icon_idk);
 		else if (ingType == Ingredient.TYPE_YEAST)
-			imageView.setImageResource(R.drawable.icon_idk);
+			imageView.setImageResource(R.drawable.icon_yeast);
 		else
 			imageView.setImageResource(R.drawable.icon_idk);
 		
