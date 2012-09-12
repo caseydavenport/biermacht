@@ -28,9 +28,14 @@ public class DisplayRecipeActivity extends FragmentActivity {
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        mRecipe = new Recipe("Sample Recipe"); // (Recipe) extras.getParcelable("com.biermacht.brews.RECIPE");
+        Bundle extras = getIntent().getExtras();
+        int id = extras.getInt("biermacht.brews.recipeID");
+        mRecipe = MainActivity.recipeDataSource.getRecipeWithId(id);
         
-        // Make random ingredient and add it...
+        // Set title based on recipe name
+        setTitle(mRecipe.getRecipeName());
+        
+        // Make random ingredients and instructions and add them...
         Ingredient hops = new Ingredient(Ingredient.TYPE_HOPS, "Vanguard", 1.0, "oz");
         Ingredient malt = new Ingredient(Ingredient.TYPE_MALT, "Amber", 6.3, "lbs");
         Ingredient hops2 = new Ingredient(Ingredient.TYPE_HOPS, "Challenger", 1.0, "oz");

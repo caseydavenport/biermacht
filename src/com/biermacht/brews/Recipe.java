@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class Recipe implements Parcelable {
+public class Recipe {
+	private long id;
 	private String name;
 	private String description;
 	private String beerType;
@@ -27,27 +25,22 @@ public class Recipe implements Parcelable {
 	public static String BEERTYPE_OTHER = "Other";
 	
 	// Public constructors
-	public Recipe(String name)
+	public Recipe(String s)
 	{
-		this.name = name;
+		this.name = s;
 		
 		// Default values
+		this.id = -1;
 		this.ingredientList = new ArrayList<Ingredient>();
 		this.instructionList = new ArrayList<Instruction>();
 		this.description = "No description provided";
 		this.beerType = BEERTYPE_OTHER;
-		this.setABV(0);
-		this.setBitterness(0);
-		this.setColor(0);
+		this.ABV = 0;
+		this.bitterness = 0;
+		this.color = 0;
 		this.gravity = 0;
-		this.setBatchTime(0);
-	}
-	
-	public Recipe(Parcel parcel)
-	{
-		name = parcel.readString();
-		parcel.readList(ingredientList, null);
-		parcel.readList(instructionList, null);
+		this.batchTime = 0;
+		
 	}
 	
 	public static ArrayList<String> getBeerTypeList()
@@ -136,28 +129,6 @@ public class Recipe implements Parcelable {
 		}	
 	}
 
-	// Parcelable methods so that we can send via an intent
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	 public static Creator<Recipe> CREATOR = new Creator<Recipe>() {
-	        public Recipe createFromParcel(Parcel parcel) {
-	            return new Recipe(parcel);
-	        }
-
-	        public Recipe[] newArray(int size) {
-	            return new Recipe[size];
-	        }
-	    };
-
-	public void writeToParcel(Parcel parcel, int i) {
-		parcel.writeString(name);
-		parcel.writeList(ingredientList);
-		parcel.writeList(instructionList);
-	}
-
 	public float getGravity() {
 		return gravity;
 	}
@@ -196,5 +167,13 @@ public class Recipe implements Parcelable {
 
 	public void setBatchTime(int batchTime) {
 		this.batchTime = batchTime;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

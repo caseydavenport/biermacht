@@ -15,6 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.biermacht.brews.database.RecipeDataSource;
+
 public class MainActivity extends ListActivity {
 	
 	// Create our stuff
@@ -22,6 +24,7 @@ public class MainActivity extends ListActivity {
 	private OnItemClickListener mClickListener;
 	private TextWatcher mTextWatcher;
 	private ArrayList<Recipe> recipeList;
+	public static RecipeDataSource recipeDataSource;
 	
     //Declare views here
     private ListView listView; 
@@ -37,8 +40,33 @@ public class MainActivity extends ListActivity {
         listView = getListView();
         searchView = (EditText) findViewById(R.id.search_bar);
         
+        // Put recipes into database
+        
+        recipeDataSource = new RecipeDataSource(getApplicationContext());
+        recipeDataSource.open();
+        
+        /*
+        // Create a bunch of test brews here
+        Recipe brew1 = new Recipe("Arizona Pale Ale");
+        Recipe brew2 = new Recipe("Panther Stout");
+        Recipe brew3 = new Recipe("Chattanooga Cherry Weissbier");
+        Recipe brew4 = new Recipe("Sherman Light");
+        
+        brew1.setBeerType(Recipe.BEERTYPE_IPA);
+        brew2.setBeerType(Recipe.BEERTYPE_STOUT);
+        brew3.setBeerType(Recipe.BEERTYPE_HEFEWEIZEN);
+        
+        // Add the recipes to the database
+        
+        recipeDataSource.addRecipeToDatabase(brew1);
+        recipeDataSource.addRecipeToDatabase(brew2);
+        recipeDataSource.addRecipeToDatabase(brew3);
+        recipeDataSource.addRecipeToDatabase(brew4);
+        */
+        
+        
         // Get recipes to display
-        recipeList = Utils.getRecipeList();
+        recipeList = Utils.getRecipeList(recipeDataSource);
         
         // Set up the onClickListener
         mClickListener = new OnItemClickListener() 
@@ -46,9 +74,8 @@ public class MainActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parentView, View childView, int pos,
 						long id)
 			{	
-				Recipe recipe = (Recipe) getListView().getItemAtPosition(pos);
 			    Intent intent = new Intent(getApplicationContext(), DisplayRecipeActivity.class);
-			    intent.putExtra("com.biermacht.brews.RECIPE", recipe);
+			    intent.putExtra("biermacht.brews.recipeID", recipeList.get(pos).getId());
 			    startActivity(intent);				
 			}
         };
@@ -103,7 +130,7 @@ public class MainActivity extends ListActivity {
      */
     private ArrayList<Recipe> getFilteredList(String s)
     {
-    	recipeList = Utils.getRecipeList();
+    	recipeList = Utils.getRecipeList(recipeDataSource);
     	ArrayList<Recipe> filteredList = new ArrayList<Recipe>();
     	
     	for (Recipe r : recipeList)
