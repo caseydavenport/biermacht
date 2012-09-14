@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,7 +75,8 @@ public class MainActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parentView, View childView, int pos,
 						long id)
 			{	
-			    Intent intent = new Intent(getApplicationContext(), DisplayRecipeActivity.class);
+			    Intent intent = new Intent(MainActivity.this, DisplayRecipeActivity.class);
+			    Log.e("ID: ", "THE ID: " + recipeList.get(pos).getId());
 			    intent.putExtra("biermacht.brews.recipeID", recipeList.get(pos).getId());
 			    startActivity(intent);				
 			}

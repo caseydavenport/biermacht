@@ -75,7 +75,7 @@ public class RecipeDataSource {
 			r = cursorToRecipe(cursor);
 			cursor.moveToNext();
 			
-			if(cursor.isAfterLast())
+			if(cursor.isAfterLast() || r.getId() == id)
 				break;
 		}
 		
@@ -120,7 +120,15 @@ public class RecipeDataSource {
 		
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
+		r.setDescription(recipeDesc);
 		r.setBeerType(beerType);
+		r.setBatchTime(batchTime);
+		r.setGravity(gravity);
+		r.setABV(ABV);
+		r.setBitterness(bitterness);
+		r.setColor(color);
+		
+		// TODO: GET INGREDIENT AND INSTRUCTION INFORMATION
 		
 		return r;
 	}

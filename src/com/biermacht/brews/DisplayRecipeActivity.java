@@ -28,8 +28,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        Bundle extras = getIntent().getExtras();
-        int id = extras.getInt("biermacht.brews.recipeID");
+        long id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
         mRecipe = MainActivity.recipeDataSource.getRecipeWithId(id);
         
         // Set title based on recipe name
