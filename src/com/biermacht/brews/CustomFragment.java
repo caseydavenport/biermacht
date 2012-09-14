@@ -37,43 +37,61 @@ public class CustomFragment extends Fragment {
 	
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
+		LinearLayout pageView = new LinearLayout(DisplayRecipeActivity.appContext);
+		inflater.inflate(resource, pageView);
+		  
 		TableLayout tableView = new TableLayout(DisplayRecipeActivity.appContext);
 		tableView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 		if(isIngredientList)
 		{
 		  ArrayList<Ingredient> ingredientList = r.getIngredientList();
-		  IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
-		  ListView listView = new ListView(DisplayRecipeActivity.appContext);
-		  listView.setAdapter(ingredientArrayAdapter);
-		  tableView.addView(listView);
+		  
+		  if (ingredientList.size() > 0)
+		  {
+			  IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
+			  ListView listView = (ListView) pageView.findViewById(R.id.ingredient_list);
+			  listView.setAdapter(ingredientArrayAdapter);
+			  listView.setVisibility(View.VISIBLE);
+		  }
+		  else
+		  {
+			  TextView noIngredientsView = (TextView) pageView.findViewById(R.id.no_ingredients_view);
+			  noIngredientsView.setVisibility(View.VISIBLE);
+		  }
+		  
+		  tableView.addView(pageView);
 		}
 		else if(isInstructionView)
 		{
-		  LinearLayout instructionsPageView = new LinearLayout(DisplayRecipeActivity.appContext);
-		  inflater.inflate(resource, instructionsPageView);
-		  
 		  ArrayList<Instruction> instructionList = r.getInstructionList();
-		  InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
-		  ListView listView = (ListView) instructionsPageView.findViewById(R.id.instruction_list);
-		  listView.setAdapter(instructionArrayAdapter);
-		  tableView.addView(instructionsPageView);
+		  
+		  if (instructionList.size() > 0)
+		  {
+			  InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
+			  ListView listView = (ListView) pageView.findViewById(R.id.instruction_list);
+			  listView.setAdapter(instructionArrayAdapter);
+		  }
+		  else
+		  {
+			  TextView noInstructionsView = (TextView) pageView.findViewById(R.id.no_instructions_view);
+			  noInstructionsView.setVisibility(View.VISIBLE);
+		  }
+		  tableView.addView(pageView);
 		}
 		else
 		{
-		  LinearLayout detailsPageView = new LinearLayout(DisplayRecipeActivity.appContext);
-		  inflater.inflate(resource, detailsPageView);
 		  
 		  // View to hold the description
-		  TextView descriptionView = (TextView) detailsPageView.findViewById(R.id.description_view);
+		  TextView descriptionView = (TextView) pageView.findViewById(R.id.description_view);
 		  descriptionView.setText(r.getDescription());
 		  
 		  // Add all the detail views here
-		  LinearLayout beerTypeView = (LinearLayout) detailsPageView.findViewById(R.id.beer_type_view);
-		  LinearLayout gravityView = (LinearLayout) detailsPageView.findViewById(R.id.beer_gravity_view);
-		  LinearLayout bitternessView = (LinearLayout) detailsPageView.findViewById(R.id.beer_bitterness_view);
-		  LinearLayout colorView = (LinearLayout) detailsPageView.findViewById(R.id.beer_color_view);
-		  LinearLayout abvView = (LinearLayout) detailsPageView.findViewById(R.id.beer_abv_view);
+		  LinearLayout beerTypeView = (LinearLayout) pageView.findViewById(R.id.beer_type_view);
+		  LinearLayout gravityView = (LinearLayout) pageView.findViewById(R.id.beer_gravity_view);
+		  LinearLayout bitternessView = (LinearLayout) pageView.findViewById(R.id.beer_bitterness_view);
+		  LinearLayout colorView = (LinearLayout) pageView.findViewById(R.id.beer_color_view);
+		  LinearLayout abvView = (LinearLayout) pageView.findViewById(R.id.beer_abv_view);
 		  
 		  // Beer type detail view
 		  TextView tag = (TextView) beerTypeView.findViewById(R.id.tag);
@@ -106,7 +124,7 @@ public class CustomFragment extends Fragment {
 		  abv_content.setText("" + r.getColor() + "%");
 		  
 		  //Add details page view to the table
-		  tableView.addView(detailsPageView);	
+		  tableView.addView(pageView);	
 		}
 
 		

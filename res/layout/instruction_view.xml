@@ -13,8 +13,18 @@
         android:listSelector="#2200FF00" >
     </ListView>
     
+    <TextView android:id="@+id/no_instructions_view"
+        android:layout_width="fill_parent"
+        android:layout_height="70dip" 
+        android:background="#FFFFFF" 
+        android:gravity="center"
+        android:visibility="invisible"
+        android:text="No instructions found" 
+        />
+    
     <LinearLayout android:id="@+id/instruction_player"
         android:layout_height="70dip"
+        android:gravity="bottom"
         android:layout_width="fill_parent" >
         
         <View android:layout_height="fill_parent"

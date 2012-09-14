@@ -35,7 +35,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
         setTitle(mRecipe.getRecipeName());
         
         // Make random ingredients and instructions and add them...
-        Ingredient hops = new Ingredient(Ingredient.TYPE_HOPS, "Vanguard", 1.0, "oz");
+        /*Ingredient hops = new Ingredient(Ingredient.TYPE_HOPS, "Vanguard", 1.0, "oz");
         Ingredient malt = new Ingredient(Ingredient.TYPE_MALT, "Amber", 6.3, "lbs");
         Ingredient hops2 = new Ingredient(Ingredient.TYPE_HOPS, "Challenger", 1.0, "oz");
         Ingredient yeast = new Ingredient(Ingredient.TYPE_YEAST, "Random", 1, "vial");
@@ -59,6 +59,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
         mRecipe.addInstruction(new Instruction("After that, you're done!"));
         
         mRecipe.setDescription("This is just a sample description.  Hopefully this will show up in the description section of the details page.  That would be really nice.  I'm also going to extend this on for a bit to make sure it is lengthy enough to take up some space, and hopefully even require scrolling of some sort to occur on the description / details page");
+        */
         
         // Set up ActionBar tabs
     	final ActionBar actionBar = getActionBar();

@@ -4,5 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    <ListView
+        android:id="@+id/ingredient_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="false"
+        android:visibility="visible" >
+    </ListView>
+    
+    <TextView android:id="@+id/no_ingredients_view"
+        android:layout_width="fill_parent"
+        android:layout_height="70dip" 
+        android:background="#FFFFFF" 
+        android:gravity="center"
+        android:visibility="invisible"
+        android:text="No ingredients found" 
+        />
+    
     
 </LinearLayout>
