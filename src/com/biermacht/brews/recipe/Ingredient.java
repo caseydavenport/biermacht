@@ -1,42 +1,34 @@
 package com.biermacht.brews.recipe;
 
-import com.biermacht.brews.utils.Utils;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class Ingredient {
-	private String type;
+public abstract class Ingredient {
 	private String name;
 	private String unit;
-	private float color;
-	private float gravity;
 	private double amount;
+	private double time;
 	
 	// Public constructors
-	public Ingredient(String type, String name, double amount, String unit)
+	public Ingredient(String name)
 	{
-		this.type = type;
+		this.name = name;
+		this.amount = 0;
+		this.unit = "";
+		this.time = 0;
+	}
+	public Ingredient(String name, double amount, String unit, float time)
+	{
 		this.name = name;
 		this.amount = amount;
 		this.unit = unit;
-		this.type = Utils.TYPE_OTHER;
+		this.time = time;
 	}
 	
 	// Public Methods
 	@Override 
-	public String toString()
-	{
-		return name + " " + type;
+	public String toString() {
+		return name;
 	}
 	
 	// Setters and getters
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
 	public String getName() {
 		return name;
 	}
@@ -55,20 +47,121 @@ public class Ingredient {
 	public void setAmount(float amount) {
 		this.amount = amount;
 	}
-
-	public float getColor() {
-		return color;
+	
+	public double getTime() {
+		return time;
 	}
 
-	public void setColor(float color) {
-		this.color = color;
+	public void setTime(double time) {
+		this.time = time;
+	}
+	
+	// Abstract methods of Ingredient
+	public abstract String getType();
+	
+//====================================================================================
+//====================================================================================
+
+	// Hop subclass of Ingredient
+	public class Hop extends Ingredient {
+
+		public Hop(String name)
+		{
+			super(name);
+		}
+		
+		public Hop(String name, double amount, String unit, float time) {
+			super(name, amount, unit, time);
+		}
+
+		@Override
+		public String getType() {
+			return "Hops";
+		}	
 	}
 
-	public float getGravity() {
-		return gravity;
-	}
+//====================================================================================
+//====================================================================================
+	
+	// Yeast subclass of Ingredient
+	public class Yeast extends Ingredient {
 
-	public void setGravity(float gravity) {
-		this.gravity = gravity;
+		public Yeast(String name)
+		{
+			super(name);
+		}
+		
+		public Yeast(String name, double amount, String unit, float time) {
+			super(name, amount, unit, time);
+		}
+
+		@Override
+		public String getType() {
+			return "Yeast";
+		}	
+	}
+	
+//====================================================================================
+//====================================================================================
+	
+	// Grain subclass of Ingredient
+	public class Grain extends Ingredient {
+		private double weight;
+		private double color;
+
+		public Grain(String name)
+		{
+			super(name);
+			this.weight = 0;
+			this.color = 7;
+		}
+		
+		public Grain(String name, double amount, String unit, float time, float weight) {
+			super(name, amount, unit, time);
+			this.weight = weight;
+			this.color = 10;
+		}
+
+		@Override
+		public String getType() {
+			return "Grain";
+		}
+
+		public double getWeight() {
+			return weight;
+		}
+
+		public void setWeight(double weight) {
+			this.weight = weight;
+		}
+
+		public double getColor() {
+			return color;
+		}
+
+		public void setColor(double color) {
+			this.color = color;
+		}		
+	}
+	
+//====================================================================================
+//====================================================================================
+	
+	// Grain subclass of Ingredient
+	public class OtherIngredient extends Ingredient {
+
+		public OtherIngredient(String name)
+		{
+			super(name);
+		}
+		
+		public OtherIngredient(String name, double amount, String unit, float time) {
+			super(name, amount, unit, time);
+		}
+
+		@Override
+		public String getType() {
+			return "Other";
+		}
 	}
 }

@@ -22,6 +22,7 @@ public class RecipeDataSource {
 			RecipeDbHelper.COL_DESC,
 			RecipeDbHelper.COL_TYPE,
 			RecipeDbHelper.COL_TIME,
+			RecipeDbHelper.COL_VOL,
 			RecipeDbHelper.COL_GRAV,
 			RecipeDbHelper.COL_ABV,
 			RecipeDbHelper.COL_BITTER,
@@ -53,6 +54,7 @@ public class RecipeDataSource {
 		values.put(RecipeDbHelper.COL_DESC, r.getDescription());
 		values.put(RecipeDbHelper.COL_TYPE, r.getBeerType());
 		values.put(RecipeDbHelper.COL_TIME, r.getBatchTime());
+		values.put(RecipeDbHelper.COL_VOL, r.getVolume());
 		values.put(RecipeDbHelper.COL_GRAV, r.getGravity());
 		values.put(RecipeDbHelper.COL_ABV, r.getABV());
 		values.put(RecipeDbHelper.COL_BITTER, r.getBitterness());
@@ -62,6 +64,13 @@ public class RecipeDataSource {
 		
 		// Insert a new row
 		return database.insert(RecipeDbHelper.TABLE_NAME, null, values);
+	}
+	
+	public long deleteRecipeIfExists(long id)
+	{
+		String whereClause = RecipeDbHelper.COL_ID + "='" + id +"'";
+		database.delete(RecipeDbHelper.TABLE_NAME, null, null);
+		return database.delete(RecipeDbHelper.TABLE_NAME, whereClause, null);
 	}
 	
 	public Recipe getRecipeWithId(long id)
@@ -111,22 +120,26 @@ public class RecipeDataSource {
 		String recipeDesc = cursor.getString(2);
 		String beerType = cursor.getString(3);
 		int batchTime = cursor.getInt(4);
-		float gravity = cursor.getInt(5);
-		float ABV = cursor.getFloat(6);
-		float bitterness = cursor.getFloat(7);
-		float color = cursor.getFloat(8);
-		int ingredientListId = cursor.getInt(9);
-		int instructionListId = cursor.getInt(10);
+		float volume = cursor.getFloat(5);
+		float gravity = cursor.getInt(6);
+		float ABV = cursor.getFloat(7);
+		float bitterness = cursor.getFloat(8);
+		float color = cursor.getFloat(9);
+		int ingredientListId = cursor.getInt(10);
+		int instructionListId = cursor.getInt(11);
 		
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
 		r.setDescription(recipeDesc);
 		r.setBeerType(beerType);
 		r.setBatchTime(batchTime);
+		r.setVolume(volume);
 		r.setGravity(gravity);
 		r.setABV(ABV);
 		r.setBitterness(bitterness);
 		r.setColor(color);
+		
+		Log.e("COLOR", "COLOR FROM DB: " + color);
 		
 		// TODO: GET INGREDIENT AND INSTRUCTION INFORMATION
 		

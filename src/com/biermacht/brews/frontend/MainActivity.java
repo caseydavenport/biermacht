@@ -63,13 +63,17 @@ public class MainActivity extends ListActivity {
         brew2.setBeerType(Utils.BEERTYPE_STOUT);
         brew3.setBeerType(Utils.BEERTYPE_HEFEWEIZEN);
         
+        recipeDataSource.deleteRecipeIfExists(1);
+        recipeDataSource.deleteRecipeIfExists(2);
+        recipeDataSource.deleteRecipeIfExists(3);
+        recipeDataSource.deleteRecipeIfExists(4);
+        
         brew1.setColor(5);
         brew2.setColor(9);
         brew3.setColor(25);
         brew4.setColor(3);
         
         // Add the recipes to the database
-        
         recipeDataSource.addRecipeToDatabase(brew1);
         recipeDataSource.addRecipeToDatabase(brew2);
         recipeDataSource.addRecipeToDatabase(brew3);
@@ -87,7 +91,6 @@ public class MainActivity extends ListActivity {
 						long id)
 			{	
 			    Intent intent = new Intent(MainActivity.this, DisplayRecipeActivity.class);
-			    Log.e("ID: ", "THE ID: " + recipeList.get(pos).getId());
 			    intent.putExtra("biermacht.brews.recipeID", recipeList.get(pos).getId());
 			    startActivity(intent);				
 			}

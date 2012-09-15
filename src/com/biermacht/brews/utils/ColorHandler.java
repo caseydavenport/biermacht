@@ -6,6 +6,15 @@ public class ColorHandler {
 	
   public static String getSrmColor(double d)
   {
+	  
+	// Format input
+	d = (double) Math.round(d * 10) / 10;
+	
+	// Lookup
+	if (d == 0.0) {
+	return RgbToHex(248,248,248); }
+	
+	
 	if (d == 0.1) {
 	return RgbToHex(248,248,230); }
 
@@ -1606,7 +1615,10 @@ public class ColorHandler {
 	return RgbToHex(3,4,3); }
 	
 	else
-		return RgbToHex(100,100,100);
+	{
+		Log.e("COLOR", "Could not locate color.");
+		return RgbToHex(0,0,0);
+	}
   }
 
   private static String RgbToHex(Integer R, Integer G, Integer B) {

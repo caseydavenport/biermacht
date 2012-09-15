@@ -2,8 +2,10 @@ package com.biermacht.brews.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import com.biermacht.brews.database.RecipeDataSource;
+import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
 
 public class Utils {
@@ -21,44 +23,44 @@ public class Utils {
 	public static String INSTRUCTION_TYPE_OTHER = "Other";
 	
 	// Beer types
-	public static String BEERTYPE_OTHER = "Other";
-	public static String BEERTYPE_STOUT = "Stout";
-	public static String BEERTYPE_DRY_STOUT = "Dry Stout";
-	public static String BEERTYPE_OATMEAL_STOUT = "Oatmeal Stout";
-	public static String BEERTYPE_IMPERIAL_STOUT = "Imperial Stout";
-	public static String BEERTYPE_HEFEWEIZEN = "Hefeweizen";
-	public static String BEERTYPE_IPA = "India Pale Ale";
-	public static String BEERTYPE_LIGHT_LAGER = "Light Lager";
-	public static String BEERTYPE_PILSNER = "Pilsner";
-	public static String BEERTYPE_EUROPEAN_AMBER_LAGER = "European Amber Lager";
-	public static String BEERTYPE_DARK_LAGER = "Dark Lager";
-	public static String BEERTYPE_BOCK = "Bock";
-	public static String BEERTYPE_LIGHT_HYBRID = "Light Hybrid Beer";
-	public static String BEERTYPE_AMBER_HYBRID = "Amber Hybrid Beer";
-	public static String BEERTYPE_ENGLISH_PALE_ALE = "English Pale Ale";
-	public static String BEERTYPE_SCOT_IRISH_ALE = "Scottish and Irish Ale";
-	public static String BEERTYPE_AMERICAN_ALE = "American Ale";
-	public static String BEERTYPE_ENGLISH_BROWN_ALE = "English Brown Ale";
-	public static String BEERTYPE_PORTER = "Porter";
-	public static String BEERTYPE_GERMAN_WHEAT = "German Wheat";
-	public static String BEERTYPE_WEIZENBOCK = "Weizenbock";
-	public static String BEERTYPE_WITBIER = "Witbier";
-	public static String BEERTYPE_BELGIAN_ALE = "Belgian Ale";
-	public static String BEERTYPE_SOUR_ALE = "Sour Ale";
-	public static String BEERTYPE_BELGIAN_STRONG_ALE = "Belgian Strong Ale";
-	public static String BEERTYPE_STRONG_ALE = "Strong Ale";
-	public static String BEERTYPE_FRUIT_BEER = "Fruit Beer";
-	public static String BEERTYPE_SPICE_HERB_VEG = "Spice/Herb/Vegetable Beer";
-	public static String BEERTYPE_SPECIALTY = "Specialty Beer";
+	public static BeerStyle BEERTYPE_OTHER = new BeerStyle("Other");
+	public static BeerStyle BEERTYPE_STOUT = new BeerStyle("Stout");
+	public static BeerStyle BEERTYPE_DRY_STOUT = new BeerStyle("Dry Stout");
+	public static BeerStyle BEERTYPE_OATMEAL_STOUT = new BeerStyle("Oatmeal Stout");
+	public static BeerStyle BEERTYPE_IMPERIAL_STOUT = new BeerStyle("Imperial Stout");
+	public static BeerStyle BEERTYPE_HEFEWEIZEN = new BeerStyle("Hefeweizen");
+	public static BeerStyle BEERTYPE_IPA = new BeerStyle("India Pale Ale");
+	public static BeerStyle BEERTYPE_LIGHT_LAGER = new BeerStyle("Light Lager");
+	public static BeerStyle BEERTYPE_PILSNER = new BeerStyle("Pilsner");
+	public static BeerStyle BEERTYPE_EUROPEAN_AMBER_LAGER = new BeerStyle("European Amber Lager");
+	public static BeerStyle BEERTYPE_DARK_LAGER = new BeerStyle("Dark Lager");
+	public static BeerStyle BEERTYPE_BOCK = new BeerStyle("Bock");
+	public static BeerStyle BEERTYPE_LIGHT_HYBRID = new BeerStyle("Light Hybrid Beer");
+	public static BeerStyle BEERTYPE_AMBER_HYBRID = new BeerStyle("Amber Hybrid Beer");
+	public static BeerStyle BEERTYPE_ENGLISH_PALE_ALE = new BeerStyle("English Pale Ale");
+	public static BeerStyle BEERTYPE_SCOT_IRISH_ALE = new BeerStyle("Scottish and Irish Ale");
+	public static BeerStyle BEERTYPE_AMERICAN_ALE = new BeerStyle("American Ale");
+	public static BeerStyle BEERTYPE_ENGLISH_BROWN_ALE = new BeerStyle("English Brown Ale");
+	public static BeerStyle BEERTYPE_PORTER = new BeerStyle("Porter");
+	public static BeerStyle BEERTYPE_GERMAN_WHEAT = new BeerStyle("German Wheat");
+	public static BeerStyle BEERTYPE_WEIZENBOCK = new BeerStyle("Weizenbock");
+	public static BeerStyle BEERTYPE_WITBIER = new BeerStyle("Witbier");
+	public static BeerStyle BEERTYPE_BELGIAN_ALE = new BeerStyle("Belgian Ale");
+	public static BeerStyle BEERTYPE_SOUR_ALE = new BeerStyle("Sour Ale");
+	public static BeerStyle BEERTYPE_BELGIAN_STRONG_ALE = new BeerStyle("Belgian Strong Ale");
+	public static BeerStyle BEERTYPE_STRONG_ALE = new BeerStyle("Strong Ale");
+	public static BeerStyle BEERTYPE_FRUIT_BEER = new BeerStyle("Fruit Beer");
+	public static BeerStyle BEERTYPE_SPICE_HERB_VEG = new BeerStyle("Spice/Herb/Vegetable Beer");
+	public static BeerStyle BEERTYPE_SPECIALTY = new BeerStyle("Specialty Beer");
 
 	
 // ====================================================================================
 // ====================================================================================
 	
 	
-	public static ArrayList<String> getBeerTypeList()
+	public static ArrayList<BeerStyle> getBeerStyleList()
 	{
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<BeerStyle> list = new ArrayList<BeerStyle>();
 		
 		list.add(BEERTYPE_HEFEWEIZEN);
 		list.add(BEERTYPE_STOUT);
@@ -89,9 +91,21 @@ public class Utils {
 		list.add(BEERTYPE_IMPERIAL_STOUT);
 		list.add(BEERTYPE_DRY_STOUT);
 		
-		Collections.sort(list);
+		Collections.sort(list, new BeerStyleComparator<BeerStyle>());
 		list.add(0, BEERTYPE_OTHER);
 		return list;
+	}
+	
+	public static ArrayList<String> getBeerStyleStringList()
+	{
+		ArrayList<BeerStyle> listA = getBeerStyleList();
+		ArrayList<String> listToReturn = new ArrayList<String>();
+		
+		for (BeerStyle b : listA)
+		{
+			listToReturn.add(b.toString());
+		}	
+		return listToReturn;
 	}
 	
 	public static ArrayList<Recipe> getRecipeList(RecipeDataSource rds)

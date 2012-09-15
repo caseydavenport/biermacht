@@ -17,6 +17,7 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
 	public static final String COL_DESC = "description";
 	public static final String COL_TYPE = "beertype";
 	public static final String COL_TIME = "batchTime";
+	public static final String COL_VOL = "Volume";
 	public static final String COL_GRAV = "gravity";
 	public static final String COL_ABV = "ABV";
 	public static final String COL_BITTER = "bitterness";
@@ -33,6 +34,7 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
 			+ COL_DESC + " text not null, "
 			+ COL_TYPE + " text not null, " 
 			+ COL_TIME + " int not null, "
+			+ COL_VOL + " float not null, "
 			+ COL_GRAV + " float not null, " 
 			+ COL_ABV + " float not null, " 
 			+ COL_BITTER + " float not null, " 

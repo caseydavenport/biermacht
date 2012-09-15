@@ -12,6 +12,7 @@ public class Recipe {
 	private String description;
 	private String beerType;
 	private int batchTime; // Batch time in weeks
+	private float volume;
 	private float gravity;
 	private float ABV;
 	private float bitterness;
@@ -26,10 +27,11 @@ public class Recipe {
 		
 		// Default values
 		this.id = -1;
+		this.volume = 5;
 		this.ingredientList = new ArrayList<Ingredient>();
 		this.instructionList = new ArrayList<Instruction>();
 		this.description = "No description provided";
-		this.beerType = Utils.BEERTYPE_OTHER;
+		this.beerType = Utils.BEERTYPE_OTHER.toString();
 		this.ABV = 0;
 		this.bitterness = 0;
 		this.color = 0;
@@ -91,6 +93,10 @@ public class Recipe {
 
 	public void setBeerType(String beertype) {
 		this.beerType = beertype;
+	}
+	
+	public void setBeerType(BeerStyle beertype) {
+		this.beerType = beertype.toString();
 	}
 	
 	public ArrayList<Ingredient> getIngredientList()
@@ -158,5 +164,14 @@ public class Recipe {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public float getVolume() {
+		return this.volume;
+	}
+	
+	public void setVolume(float v)
+	{
+		this.volume = v;
 	}
 }

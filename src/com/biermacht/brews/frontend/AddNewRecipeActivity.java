@@ -29,7 +29,7 @@ public class AddNewRecipeActivity extends Activity {
         EditText recipeDescriptionEditText;
         
         //Arraylist of beer types
-        ArrayList<String> beerTypeArray = Utils.getBeerTypeList();
+        ArrayList<String> beerTypeArray = Utils.getBeerStyleStringList();
         
         // Set up beer type spinner
         beerTypeSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
