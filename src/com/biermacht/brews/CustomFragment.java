@@ -3,11 +3,14 @@ package com.biermacht.brews;
 import java.util.ArrayList;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
@@ -43,10 +46,26 @@ public class CustomFragment extends Fragment {
 		TableLayout tableView = new TableLayout(DisplayRecipeActivity.appContext);
 		tableView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
+		// INGREDIENT VIEW STUFF
 		if(isIngredientList)
 		{
 		  ArrayList<Ingredient> ingredientList = r.getIngredientList();
 		  
+		  // onClickListener
+	      OnClickListener addIngredientClickListener = new OnClickListener() 
+	        {
+				public void onClick(View v) {
+				    Intent intent = new Intent(DisplayRecipeActivity.appContext, AddIngredientActivity.class);
+				    intent.putExtra("com.biermacht.brews.recipeId", r.getId());
+				    startActivity(intent);	
+				}
+	      };
+		  
+		  // Add ingredient stuff
+		  TextView addIngredientView = (TextView) pageView.findViewById(R.id.add_ingredient);
+		  addIngredientView.setOnClickListener(addIngredientClickListener);
+		  
+		  // Set whether or not we show the list view
 		  if (ingredientList.size() > 0)
 		  {
 			  IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
@@ -62,6 +81,8 @@ public class CustomFragment extends Fragment {
 		  
 		  tableView.addView(pageView);
 		}
+		
+		// INSTRUCTION VIEW STUFF
 		else if(isInstructionView)
 		{
 		  ArrayList<Instruction> instructionList = r.getInstructionList();

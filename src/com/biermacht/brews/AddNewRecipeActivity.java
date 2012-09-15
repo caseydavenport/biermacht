@@ -2,6 +2,8 @@ package com.biermacht.brews;
 
 import java.util.ArrayList;
 
+import com.biermacht.brews.utils.Utils;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,11 +25,11 @@ public class AddNewRecipeActivity extends Activity {
         EditText recipeDescriptionEditText;
         
         //Arraylist of beer types
-        ArrayList<String> beerTypeArray = Recipe.getBeerTypeList();
+        ArrayList<String> beerTypeArray = Utils.getBeerTypeList();
         
         // Set up beer type spinner
         beerTypeSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, beerTypeArray);  
+        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, beerTypeArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerTypeSpinner.setAdapter(adapter);
         beerTypeSpinner.setSelection(0); 

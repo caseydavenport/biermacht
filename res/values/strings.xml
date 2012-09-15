@@ -5,5 +5,7 @@
     <string name="title_activity_main">Recipes</string>
     <string name="title_activity_display_recipe">Recipe Details</string>
     <string name="title_activity_add_new_recipe">Add New Recipe</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_add_ingredient">Add an Ingredient</string>
 
 </resources>

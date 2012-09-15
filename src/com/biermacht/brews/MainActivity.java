@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.biermacht.brews.database.RecipeDataSource;
+import com.biermacht.brews.utils.Utils;
 
 public class MainActivity extends ListActivity {
 	
@@ -46,16 +47,21 @@ public class MainActivity extends ListActivity {
         recipeDataSource = new RecipeDataSource(getApplicationContext());
         recipeDataSource.open();
         
-        /*
+        
         // Create a bunch of test brews here
         Recipe brew1 = new Recipe("Arizona Pale Ale");
         Recipe brew2 = new Recipe("Panther Stout");
         Recipe brew3 = new Recipe("Chattanooga Cherry Weissbier");
         Recipe brew4 = new Recipe("Sherman Light");
         
-        brew1.setBeerType(Recipe.BEERTYPE_IPA);
-        brew2.setBeerType(Recipe.BEERTYPE_STOUT);
-        brew3.setBeerType(Recipe.BEERTYPE_HEFEWEIZEN);
+        brew1.setBeerType(Utils.BEERTYPE_IPA);
+        brew2.setBeerType(Utils.BEERTYPE_STOUT);
+        brew3.setBeerType(Utils.BEERTYPE_HEFEWEIZEN);
+        
+        brew1.setColor(5);
+        brew2.setColor(15);
+        brew3.setColor(25);
+        brew4.setColor(25);
         
         // Add the recipes to the database
         
@@ -63,7 +69,7 @@ public class MainActivity extends ListActivity {
         recipeDataSource.addRecipeToDatabase(brew2);
         recipeDataSource.addRecipeToDatabase(brew3);
         recipeDataSource.addRecipeToDatabase(brew4);
-        */
+        
         
         
         // Get recipes to display

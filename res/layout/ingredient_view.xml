@@ -33,7 +33,7 @@
         android:layout_height="1dip"
         android:background="#44000000" />
 	        
-    <LinearLayout android:id="@+id/instruction_player"
+    <LinearLayout android:id="@+id/ingredient_bottom_nav"
         android:layout_height="70dip"
         android:gravity="bottom"
         android:layout_width="fill_parent" >
@@ -42,14 +42,14 @@
             android:layout_width="0dip"
             android:layout_weight="1" />
         
-        <TextView android:id="@+id/time_left"
+        <TextView android:id="@+id/add_ingredient"
             android:layout_height="fill_parent"
             android:layout_width="wrap_content"
             android:background="#00000000"
             android:padding="5dip"
             android:gravity="center"
             android:textSize="20dip"
-            android:text="30:00" />
+            android:text="Add New Ingredient" />
         
         <View android:layout_height="fill_parent"
             android:layout_width="0dip"

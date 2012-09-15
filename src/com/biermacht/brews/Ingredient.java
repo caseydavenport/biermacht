@@ -1,20 +1,17 @@
 package com.biermacht.brews;
 
+import com.biermacht.brews.utils.Utils;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Ingredient implements Parcelable {
+public class Ingredient {
 	private String type;
 	private String name;
 	private String unit;
+	private float color;
+	private float gravity;
 	private double amount;
-	
-	// Types
-	public static String TYPE_HOPS = "hops";
-	public static String TYPE_YEAST = "yeast";
-	public static String TYPE_MALT = "malt";
-	public static String TYPE_SPICE = "spice";
-	public static String TYPE_OTHER = "other";
 	
 	// Public constructors
 	public Ingredient(String type, String name, double amount, String unit)
@@ -23,14 +20,7 @@ public class Ingredient implements Parcelable {
 		this.name = name;
 		this.amount = amount;
 		this.unit = unit;
-	}
-	
-	public Ingredient(Parcel parcel)
-	{
-		type = parcel.readString();
-		name = parcel.readString();
-		unit = parcel.readString();
-		amount = parcel.readDouble();
+		this.type = Utils.TYPE_OTHER;
 	}
 	
 	// Public Methods
@@ -66,25 +56,19 @@ public class Ingredient implements Parcelable {
 		this.amount = amount;
 	}
 
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getColor() {
+		return color;
 	}
 
-	public void writeToParcel(Parcel parcel, int i) {
-		parcel.writeString(type);
-		parcel.writeString(name);
-		parcel.writeString(unit);
-		parcel.writeDouble(amount);
+	public void setColor(float color) {
+		this.color = color;
 	}
-	
-    public static Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
-        public Ingredient createFromParcel(Parcel parcel) {
-            return new Ingredient(parcel);
-        }
 
-        public Ingredient[] newArray(int size) {
-            return new Ingredient[size];
-        }
-    };
+	public float getGravity() {
+		return gravity;
+	}
+
+	public void setGravity(float gravity) {
+		this.gravity = gravity;
+	}
 }

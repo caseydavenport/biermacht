@@ -1,22 +1,20 @@
 package com.biermacht.brews;
 
+import com.biermacht.brews.utils.Utils;
+
 public class Instruction {
 	
 	private String instructionText;
 	private String instructionType;
 	private int duration;
 	private String duration_units;
-	
-	public static String INSTRUCTION_TYPE_BOIL = "Brew";
-	public static String INSTRUCTION_TYPE_FERMENT = "Ferment";
-	public static String INSTRUCTION_TYPE_OTHER = "Other";
 
 	public Instruction(String i)
 	{
 		this.setInstructionText(i);
 		this.duration = 0;
 		this.duration_units = "mins";
-		this.instructionType = INSTRUCTION_TYPE_OTHER;
+		this.instructionType = Utils.INSTRUCTION_TYPE_OTHER;
 	}
 
 	public String getInstructionText() {

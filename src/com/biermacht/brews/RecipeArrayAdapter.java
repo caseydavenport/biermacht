@@ -3,12 +3,16 @@ package com.biermacht.brews;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.biermacht.brews.utils.ColorHandler;
 
 public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 	
@@ -26,13 +30,17 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
-	{
-		// Get inflater
-		LayoutInflater inflater = (LayoutInflater) 
-					context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
+	{	
 		// View to return
-		View row = inflater.inflate(R.layout.recipe_row_layout, parent, false);
+		View row = convertView;
+				
+		if (row == null)
+		{
+			// Get inflater
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			row = inflater.inflate(R.layout.recipe_row_layout, parent, false);
+		}
+		
 		TextView textView = (TextView) row.findViewById(R.id.label);
 		ImageView imageView = (ImageView) row.findViewById(R.id.row_icon);
 		
@@ -40,22 +48,15 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 		{
 			textView.setText(list.get(position).getRecipeName());
 			
+			// Set beer color here
+			Log.e("COLOR", "COLOR: " + list.get(position).getColor() + " " + ColorHandler.getSrmColor(list.get(position).getColor()));
+			String color = ColorHandler.getSrmColor(10); //ColorHandler.getSrmColor(list.get(position).getColor());
+			imageView.setBackgroundColor(Color.parseColor("#a55936"));
+			
 			// Set imageView based on beer type
 			String beerType = list.get(position).getBeerType();
 			
-			if(beerType.equals(Recipe.BEERTYPE_STOUT))
-				imageView.setImageResource(R.drawable.icon_stout);
-			else if(beerType.equals(Recipe.BEERTYPE_HEFEWEIZEN))
-				imageView.setImageResource(R.drawable.icon_hefeweizen);
-			else if(beerType.equals(Recipe.BEERTYPE_IPA))
-				imageView.setImageResource(R.drawable.icon_ipa);
-			else
-				imageView.setImageResource(R.drawable.icon_default);
 		}
-
-		
-		
 		return row;
 	}
-
 }

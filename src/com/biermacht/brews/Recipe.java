@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.biermacht.brews.utils.Utils;
+
 public class Recipe {
 	private long id;
 	private String name;
@@ -17,13 +19,6 @@ public class Recipe {
 	private ArrayList<Ingredient> ingredientList;
 	private ArrayList<Instruction> instructionList;
 	
-	
-	// Beer types - don't forget to update getBeerTypeList() as well
-	public static String BEERTYPE_STOUT = "Stout";
-	public static String BEERTYPE_HEFEWEIZEN = "Hefeweizen";
-	public static String BEERTYPE_IPA = "India Pale Ale";
-	public static String BEERTYPE_OTHER = "Other";
-	
 	// Public constructors
 	public Recipe(String s)
 	{
@@ -34,25 +29,13 @@ public class Recipe {
 		this.ingredientList = new ArrayList<Ingredient>();
 		this.instructionList = new ArrayList<Instruction>();
 		this.description = "No description provided";
-		this.beerType = BEERTYPE_OTHER;
+		this.beerType = Utils.BEERTYPE_OTHER;
 		this.ABV = 0;
 		this.bitterness = 0;
 		this.color = 0;
 		this.gravity = 0;
 		this.batchTime = 0;
 		
-	}
-	
-	public static ArrayList<String> getBeerTypeList()
-	{
-		ArrayList<String> list = new ArrayList<String>();
-		
-		list.add(BEERTYPE_OTHER);
-		list.add(BEERTYPE_HEFEWEIZEN);
-		list.add(BEERTYPE_STOUT);
-		list.add(BEERTYPE_IPA);
-	
-		return list;
 	}
 	
 	// Public methods

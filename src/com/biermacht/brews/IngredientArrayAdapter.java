@@ -2,6 +2,8 @@ package com.biermacht.brews;
 
 import java.util.List;
 
+import com.biermacht.brews.utils.Utils;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,13 +42,13 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		// Set imageView based on ingredient type
 		String ingType = list.get(position).getType();
 		
-		if(ingType == Ingredient.TYPE_HOPS)
+		if(ingType == Utils.TYPE_HOPS)
 			imageView.setImageResource(R.drawable.icon_hops);
-		else if(ingType == Ingredient.TYPE_MALT)
+		else if(ingType == Utils.TYPE_MALT)
 			imageView.setImageResource(R.drawable.icon_idk);
-		else if(ingType == Ingredient.TYPE_SPICE)
+		else if(ingType == Utils.TYPE_SPICE)
 			imageView.setImageResource(R.drawable.icon_idk);
-		else if (ingType == Ingredient.TYPE_YEAST)
+		else if (ingType == Utils.TYPE_YEAST)
 			imageView.setImageResource(R.drawable.icon_yeast);
 		else
 			imageView.setImageResource(R.drawable.icon_idk);

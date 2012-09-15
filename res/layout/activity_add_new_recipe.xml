@@ -45,6 +45,7 @@
         android:drawSelectorOnTop="false"
         android:padding="10dip"
         android:background="#FFFFFF"
+        android:spinnerMode="dialog"
         android:layout_marginBottom="15dip"
         android:paddingLeft="10dip" />
 
