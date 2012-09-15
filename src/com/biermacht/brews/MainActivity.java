@@ -59,9 +59,9 @@ public class MainActivity extends ListActivity {
         brew3.setBeerType(Utils.BEERTYPE_HEFEWEIZEN);
         
         brew1.setColor(5);
-        brew2.setColor(15);
+        brew2.setColor(9);
         brew3.setColor(25);
-        brew4.setColor(25);
+        brew4.setColor(3);
         
         // Add the recipes to the database
         
