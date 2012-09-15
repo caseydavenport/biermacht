@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Biermacht.Brews" >
         <activity
-            android:name=".MainActivity"
+            android:name=".frontend.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,18 +21,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DisplayRecipeActivity"
+            android:name=".frontend.DisplayRecipeActivity"
             android:label="@string/title_activity_display_recipe" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.biermacht.brews.MainActivity" />
         </activity>
         <activity
-            android:name=".AddNewRecipeActivity"
+            android:name=".frontend.AddNewRecipeActivity"
             android:label="@string/title_activity_add_new_recipe" >
         </activity>
         <activity
-            android:name=".AddIngredientActivity"
+            andro.frontend.AddIngredientActivitytActivity"
             android:label="@string/title_activity_add_ingredient" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

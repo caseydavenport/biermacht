@@ -1,4 +1,4 @@
-package com.biermacht.brews;
+package com.biermacht.brews.frontend;
 
 import java.util.List;
 
@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.biermacht.brews.R;
+import com.biermacht.brews.R.id;
+import com.biermacht.brews.R.layout;
+import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.ColorHandler;
 
 public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {

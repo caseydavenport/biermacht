@@ -9,7 +9,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.biermacht.brews.Recipe;
+import com.biermacht.brews.recipe.Recipe;
 
 public class RecipeDataSource {
 	

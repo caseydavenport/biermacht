@@ -1,4 +1,4 @@
-package com.biermacht.brews;
+package com.biermacht.brews.recipe;
 
 import com.biermacht.brews.utils.Utils;
 

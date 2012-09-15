@@ -1,4 +1,10 @@
-package com.biermacht.brews;
+package com.biermacht.brews.frontend;
+
+import com.biermacht.brews.R;
+import com.biermacht.brews.R.id;
+import com.biermacht.brews.R.layout;
+import com.biermacht.brews.R.menu;
+import com.biermacht.brews.recipe.Recipe;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;

@@ -1,7 +1,11 @@
-package com.biermacht.brews;
+package com.biermacht.brews.frontend;
 
 import java.util.ArrayList;
 
+import com.biermacht.brews.R;
+import com.biermacht.brews.R.id;
+import com.biermacht.brews.R.layout;
+import com.biermacht.brews.R.menu;
 import com.biermacht.brews.utils.Utils;
 
 import android.app.Activity;
