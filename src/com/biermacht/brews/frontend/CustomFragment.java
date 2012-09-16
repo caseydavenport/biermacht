@@ -2,26 +2,24 @@ package com.biermacht.brews.frontend;
 
 import java.util.ArrayList;
 
-import com.biermacht.brews.R;
-import com.biermacht.brews.R.id;
-import com.biermacht.brews.R.layout;
-import com.biermacht.brews.recipe.Ingredient;
-import com.biermacht.brews.recipe.Instruction;
-import com.biermacht.brews.recipe.Recipe;
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import com.biermacht.brews.R;
+import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.recipe.Instruction;
+import com.biermacht.brews.recipe.Recipe;
 
 public class CustomFragment extends Fragment {
 
@@ -57,6 +55,8 @@ public class CustomFragment extends Fragment {
 		if(isIngredientList)
 		{
 		  ArrayList<Ingredient> ingredientList = r.getIngredientList();
+		  
+		  Log.e("SIZE: ", "LISTSIZE: " + ingredientList.size());
 		  
 		  // onClickListener
 	      OnClickListener addIngredientClickListener = new OnClickListener() 
@@ -130,7 +130,7 @@ public class CustomFragment extends Fragment {
 		  // Beer gravity detail view
 		  TextView grav_tag = (TextView) gravityView.findViewById(R.id.tag);
 		  TextView grav_content = (TextView) gravityView.findViewById(R.id.content);
-		  grav_tag.setText("Gravity: ");
+		  grav_tag.setText("Orig. Gravity: ");
 		  grav_content.setText("" + r.getGravity() + "");
 		  
 		  // Beer gravity detail view
@@ -145,11 +145,11 @@ public class CustomFragment extends Fragment {
 		  color_tag.setText("Color, SRM: ");
 		  color_content.setText("" + r.getColor() + "");
 		  
-		  // Beer color detail view
+		  // Beer abv detail view
 		  TextView abv_tag = (TextView) abvView.findViewById(R.id.tag);
 		  TextView abv_content = (TextView) abvView.findViewById(R.id.content);
 		  abv_tag.setText("ABV: ");
-		  abv_content.setText("" + r.getColor() + "%");
+		  abv_content.setText("" + r.getABV() + "%");
 		  
 		  //Add details page view to the table
 		  tableView.addView(pageView);	

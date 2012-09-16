@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,11 +16,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.R.id;
-import com.biermacht.brews.R.layout;
-import com.biermacht.brews.R.menu;
 import com.biermacht.brews.database.RecipeDataSource;
+import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Utils;
 
 public class MainActivity extends ListActivity {
@@ -63,15 +61,24 @@ public class MainActivity extends ListActivity {
         brew2.setBeerType(Utils.BEERTYPE_STOUT);
         brew3.setBeerType(Utils.BEERTYPE_HEFEWEIZEN);
         
+        Grain testGrain = (Grain) Utils.FERMENTABLE_MUNICH_MALT;
+        Grain testGrain2 = (Grain) Utils.FERMENTABLE_BLACK_BARLEY;
+        testGrain.setWeight(6);
+        testGrain2.setWeight(6);
+        
+        brew4.addIngredient(testGrain);
+        brew4.addIngredient(testGrain2);
+        brew3.addIngredient(testGrain2);
+        brew2.addIngredient(testGrain);
+        brew4.setColor((float) BrewCalculator.calculateColorFromRecipe(brew4));
+        brew3.setColor((float) BrewCalculator.calculateColorFromRecipe(brew3));
+        brew2.setColor((float) BrewCalculator.calculateColorFromRecipe(brew2));
+        brew1.setColor((float) BrewCalculator.calculateColorFromRecipe(brew1));
+        
         recipeDataSource.deleteRecipeIfExists(1);
         recipeDataSource.deleteRecipeIfExists(2);
         recipeDataSource.deleteRecipeIfExists(3);
         recipeDataSource.deleteRecipeIfExists(4);
-        
-        brew1.setColor(5);
-        brew2.setColor(9);
-        brew3.setColor(25);
-        brew4.setColor(3);
         
         // Add the recipes to the database
         recipeDataSource.addRecipeToDatabase(brew1);

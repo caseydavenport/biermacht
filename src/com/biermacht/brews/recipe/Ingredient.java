@@ -56,6 +56,11 @@ public abstract class Ingredient {
 		this.time = time;
 	}
 	
+	public Grain Grain(String name, String units, float colour, double grav)
+	{
+		return new Grain(name, units, colour, grav);
+	}
+	
 	// Abstract methods of Ingredient
 	public abstract String getType();
 	
@@ -101,49 +106,7 @@ public abstract class Ingredient {
 		}	
 	}
 	
-//====================================================================================
-//====================================================================================
-	
-	// Grain subclass of Ingredient
-	public class Grain extends Ingredient {
-		private double weight;
-		private double color;
 
-		public Grain(String name)
-		{
-			super(name);
-			this.weight = 0;
-			this.color = 7;
-		}
-		
-		public Grain(String name, double amount, String unit, float time, float weight) {
-			super(name, amount, unit, time);
-			this.weight = weight;
-			this.color = 10;
-		}
-
-		@Override
-		public String getType() {
-			return "Grain";
-		}
-
-		public double getWeight() {
-			return weight;
-		}
-
-		public void setWeight(double weight) {
-			this.weight = weight;
-		}
-
-		public double getColor() {
-			return color;
-		}
-
-		public void setColor(double color) {
-			this.color = color;
-		}		
-	}
-	
 //====================================================================================
 //====================================================================================
 	

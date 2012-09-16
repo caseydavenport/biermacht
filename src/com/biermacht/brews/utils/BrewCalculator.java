@@ -2,8 +2,8 @@ package com.biermacht.brews.utils;
 
 import java.util.ArrayList;
 
+import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Ingredient;
-import com.biermacht.brews.recipe.Ingredient.Grain;
 import com.biermacht.brews.recipe.Recipe;
 
 public class BrewCalculator {
@@ -30,10 +30,10 @@ public class BrewCalculator {
 		{
 			if (i.getType().equals("Grain"))
 			{
-				MCU += ((Grain) i).getWeight() * ((Grain) i).getColor() / r.getVolume();
+				MCU += ((Grain) i).getWeight() * ((Grain) i).getLovibondColor() / r.getVolume();
 			}
 		}
-		SRM = 7498*Math.pow(MCU, .6859);
+		SRM = 1.4922*Math.pow(MCU, .6859);
 		return SRM;
 	}
 	

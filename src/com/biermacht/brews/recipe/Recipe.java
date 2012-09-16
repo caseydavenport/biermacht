@@ -139,6 +139,7 @@ public class Recipe {
 	}
 
 	public void setColor(float color) {
+		color = (float) Math.round(color * 10) / 10;
 		this.color = color;
 	}
 
