@@ -1,8 +1,6 @@
 package com.biermacht.brews.frontend;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.R.layout;
-import com.biermacht.brews.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
