@@ -62,7 +62,7 @@ public class MainActivity extends ListActivity {
         brew3.setBeerType(Utils.BEERTYPE_HEFEWEIZEN);
         
         Grain testGrain = (Grain) Utils.FERMENTABLE_MUNICH_MALT;
-        Grain testGrain2 = (Grain) Utils.FERMENTABLE_BLACK_BARLEY;
+        Grain testGrain2 = (Grain) Utils.FERMENTABLE_VIENNA_MALT;
         testGrain.setWeight(6);
         testGrain2.setWeight(6);
         
@@ -70,10 +70,10 @@ public class MainActivity extends ListActivity {
         brew4.addIngredient(testGrain2);
         brew3.addIngredient(testGrain2);
         brew2.addIngredient(testGrain);
-        brew4.setColor((float) BrewCalculator.calculateColorFromRecipe(brew4));
-        brew3.setColor((float) BrewCalculator.calculateColorFromRecipe(brew3));
-        brew2.setColor((float) BrewCalculator.calculateColorFromRecipe(brew2));
-        brew1.setColor((float) BrewCalculator.calculateColorFromRecipe(brew1));
+        brew4.update();
+        brew3.update();
+        brew2.update();
+        brew1.update();
         
         recipeDataSource.deleteRecipeIfExists(1);
         recipeDataSource.deleteRecipeIfExists(2);

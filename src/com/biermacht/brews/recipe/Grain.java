@@ -5,6 +5,13 @@ public class Grain extends Ingredient {
 	private double weight;
 	private double color;
 	private double gravity;
+	private String grainType;
+	private float ppg;
+	private float efficiency;
+	
+	public static String GRAIN = "Grain";
+	public static String EXTRACT = "Extract";
+	public static String ADJUNCT = "Adjunct";
 
 	public Grain(String name)
 	{
@@ -21,12 +28,15 @@ public class Grain extends Ingredient {
 		this.gravity = gravity;
 	}
 	
-	public Grain(String name, String units, double colour, double grav)
+	public Grain(String name, String units, double colour, double grav, String gt)
 	{
 		super(name);
 		setUnit(units);
 		color = colour;
 		gravity = grav;
+		grainType = gt;
+		ppg = 34;
+		efficiency = 1;
 	}
 
 	@Override
@@ -56,6 +66,22 @@ public class Grain extends Ingredient {
 
 	public void setGravity(double gravity) {
 		this.gravity = gravity;
-	}		
+	}
+
+	public String getGrainType() {
+		return grainType;
+	}	
+	
+	public void setGrainType(String s)
+	{
+		this.grainType = s;
+	}
+
+	public float getPpg() {
+		
+		float adjPPG = (float) (efficiency * gravity);
+		
+		return adjPPG;
+	}
 }
 

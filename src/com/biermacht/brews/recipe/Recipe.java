@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Utils;
 
 public class Recipe {
@@ -41,6 +42,12 @@ public class Recipe {
 	}
 	
 	// Public methods
+	public void update()
+	{
+		setColor(BrewCalculator.calculateColorFromRecipe(this));
+		setGravity(BrewCalculator.calculateGravityFromRecipe(this));
+	}
+	
 	public void setRecipeName(String name)
 	{
 		this.name = name;
@@ -123,6 +130,7 @@ public class Recipe {
 	}
 
 	public void setGravity(float gravity) {
+		gravity = (float) Math.round(gravity * 1000) / 1000;
 		this.gravity = gravity;
 	}
 

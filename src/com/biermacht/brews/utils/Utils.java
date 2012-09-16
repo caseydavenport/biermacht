@@ -2,8 +2,6 @@ package com.biermacht.brews.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-
 import com.biermacht.brews.database.RecipeDataSource;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Ingredient;
@@ -56,17 +54,17 @@ public class Utils {
 	public static BeerStyle BEERTYPE_SPECIALTY = new BeerStyle("Specialty Beer");
 	
 	// Fermentables.. http://byo.com/resources/grains
-	public static Ingredient FERMENTABLE_BLACK_BARLEY = new Grain("Black Barley", "lbs", 525, 1.025);
-	public static Ingredient FERMENTABLE_MUNICH_MALT = new Grain("Munich Malt", "lbs", 10, 1.034);
-	public static Ingredient FERMENTABLE_CHOCOLATE_MALT = new Grain("Chocolate Malt", "lbs", 350, 1.034);
-	public static Ingredient FERMENTABLE_DEXTRIN_MALT = new Grain("Dextrin Malt", "lbs", 1.5, 1.033);
-	public static Ingredient FERMENTABLE_PALE_MALT_2_ROW = new Grain("Pale Malt, 2-row", "lbs", 1.8, 1.037);
-	public static Ingredient FERMENTABLE_PALE_MALT_6_ROW = new Grain("Pale Malt, 6-row", "lbs", 1.8, 1.035);
-	public static Ingredient FERMENTABLE_ROASTED_BARELY = new Grain("Roasted Barley", "lbs", 300, 1.025);
-	public static Ingredient FERMENTABLE_VICTORY_MALT = new Grain("Victory Malt", "lbs", 25, 1.034);
-	public static Ingredient FERMENTABLE_VIENNA_MALT = new Grain("Vienna Malt", "lbs", 3.7, 1.035);
-	public static Ingredient FERMENTABLE_WHEAT_MALT = new Grain("Wheat Malt", "lbs", 2, 1.038);
-	public static Ingredient FERMENTABLE_WHITE_WHEAT_MALT = new Grain("White Wheat Malt", "lbs", 2, 1.037);
+	public static Ingredient FERMENTABLE_BLACK_BARLEY = new Grain("Black Barley", "lbs", 525, 1.025, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_MUNICH_MALT = new Grain("Munich Malt", "lbs", 10, 1.034, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_CHOCOLATE_MALT = new Grain("Chocolate Malt", "lbs", 350, 1.034, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_DEXTRIN_MALT = new Grain("Dextrin Malt", "lbs", 1.5, 1.033, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_PALE_MALT_2_ROW = new Grain("Pale Malt, 2-row", "lbs", 1.8, 1.037, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_PALE_MALT_6_ROW = new Grain("Pale Malt, 6-row", "lbs", 1.8, 1.035, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_ROASTED_BARELY = new Grain("Roasted Barley", "lbs", 300, 1.025, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_VICTORY_MALT = new Grain("Victory Malt", "lbs", 25, 1.034, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_VIENNA_MALT = new Grain("Vienna Malt", "lbs", 3.7, 1.035, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_WHEAT_MALT = new Grain("Wheat Malt", "lbs", 2, 1.038, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_WHITE_WHEAT_MALT = new Grain("White Wheat Malt", "lbs", 2, 1.037, Grain.GRAIN);
 
 
 

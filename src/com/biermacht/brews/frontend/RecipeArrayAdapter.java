@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.R.id;
-import com.biermacht.brews.R.layout;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.ColorHandler;
 

@@ -121,7 +121,7 @@ public class RecipeDataSource {
 		String beerType = cursor.getString(3);
 		int batchTime = cursor.getInt(4);
 		float volume = cursor.getFloat(5);
-		float gravity = cursor.getInt(6);
+		float gravity = cursor.getFloat(6);
 		float ABV = cursor.getFloat(7);
 		float bitterness = cursor.getFloat(8);
 		float color = cursor.getFloat(9);

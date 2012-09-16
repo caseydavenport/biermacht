@@ -2,6 +2,8 @@ package com.biermacht.brews.utils;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
@@ -20,28 +22,40 @@ public class BrewCalculator {
 	 *  IBU = 7498*(Weight of hops in OZ)*(% of Alpha Acids)*(Utilization factor) / (Volume in gal)
 	 */
 	
-	public static double calculateColorFromRecipe(Recipe r)
+	public static float calculateColorFromRecipe(Recipe r)
 	{
-		double SRM = 0.0;
-		double MCU = 0.0;
+		float SRM = 0;
+		float MCU = 0;
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 		
 		for (Ingredient i : ingredientsList)
 		{
 			if (i.getType().equals("Grain"))
 			{
-				MCU += ((Grain) i).getWeight() * ((Grain) i).getLovibondColor() / r.getVolume();
+				Grain g = (Grain) i;
+				MCU += g.getWeight() * g.getLovibondColor() / r.getVolume();
 			}
 		}
-		SRM = 1.4922*Math.pow(MCU, .6859);
+		SRM = (float) (1.4922*Math.pow(MCU, .6859));
 		return SRM;
 	}
 	
-	public static double calculateGravityFromRecipe(Recipe r)
+	public static float calculateGravityFromRecipe(Recipe r)
 	{
-		double grav = 0.0;
+		float grav = 0;
+		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 		
-		return grav;
+		// http://homebrew.stackexchange.com/questions/1434/wiki-how-do-you-calculate-original-gravity
+		for (Ingredient i : ingredientsList)
+		{
+			if (i.getType().equals("Grain"))
+			{
+				Grain g = (Grain) i;
+				
+				grav += (g.getWeight() * g.getPpg() / (r.getVolume()-(g.getWeight()/2.7)))/100;
+			}
+		}
+		return (1 + grav);
 	}
 	
 	public static double calculateIbuFromRecipe(Recipe r)

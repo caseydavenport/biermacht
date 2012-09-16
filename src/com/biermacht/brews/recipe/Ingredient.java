@@ -56,11 +56,6 @@ public abstract class Ingredient {
 		this.time = time;
 	}
 	
-	public Grain Grain(String name, String units, float colour, double grav)
-	{
-		return new Grain(name, units, colour, grav);
-	}
-	
 	// Abstract methods of Ingredient
 	public abstract String getType();
 	
