@@ -171,5 +171,6 @@ public class MainActivity extends ListActivity {
         // Set up my listView with title and ArrayAdapter
         mAdapter = new RecipeArrayAdapter(getApplicationContext(), l);
         listView.setAdapter(mAdapter);
+        recipeList = l;
     }
 }
