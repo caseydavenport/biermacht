@@ -30,7 +30,7 @@ public class BrewCalculator {
 		
 		for (Ingredient i : ingredientsList)
 		{
-			if (i.getType().equals("Grain"))
+			if (i.getType().equals(Ingredient.GRAIN))
 			{
 				Grain g = (Grain) i;
 				MCU += g.getWeight() * g.getLovibondColor() / r.getVolume();
@@ -48,7 +48,7 @@ public class BrewCalculator {
 		// http://homebrew.stackexchange.com/questions/1434/wiki-how-do-you-calculate-original-gravity
 		for (Ingredient i : ingredientsList)
 		{
-			if (i.getType().equals("Grain"))
+			if (i.getType().equals(Ingredient.GRAIN))
 			{
 				Grain g = (Grain) i;
 				

@@ -6,7 +6,6 @@ public class Grain extends Ingredient {
 	private double color;
 	private double gravity;
 	private String grainType;
-	private float ppg;
 	private float efficiency;
 	
 	public static String GRAIN = "Grain";
@@ -35,13 +34,12 @@ public class Grain extends Ingredient {
 		color = colour;
 		gravity = grav;
 		grainType = gt;
-		ppg = 34;
 		efficiency = 1;
 	}
 
 	@Override
 	public String getType() {
-		return "Grain";
+		return Ingredient.GRAIN;
 	}
 
 	public double getWeight() {
@@ -72,6 +70,16 @@ public class Grain extends Ingredient {
 		return grainType;
 	}	
 	
+	public void setEfficiency(float e)
+	{
+		this.efficiency = e;
+	}
+	
+	public float getEfficiency()
+	{
+		return this.efficiency;
+	}
+	
 	public void setGrainType(String s)
 	{
 		this.grainType = s;
@@ -82,6 +90,18 @@ public class Grain extends Ingredient {
 		float adjPPG = (float) (efficiency * gravity);
 		
 		return adjPPG;
+	}
+	
+	@Override
+	public double getAmount()
+	{
+		return getWeight();
+	}
+	
+	@Override 
+	public void setAmount(float amt)
+	{
+		setWeight(amt);
 	}
 }
 

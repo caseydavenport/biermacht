@@ -5,6 +5,9 @@ public abstract class Ingredient {
 	private String unit;
 	private double amount;
 	private double time;
+	private long ownerId;
+	
+	public static final String GRAIN = "grain";
 	
 	// Public constructors
 	public Ingredient(String name)
@@ -12,7 +15,8 @@ public abstract class Ingredient {
 		this.name = name;
 		this.amount = 0;
 		this.unit = "";
-		this.time = 0;
+		this.time = -1;
+		this.ownerId = -1;
 	}
 	public Ingredient(String name, double amount, String unit, float time)
 	{
@@ -20,6 +24,7 @@ public abstract class Ingredient {
 		this.amount = amount;
 		this.unit = unit;
 		this.time = time;
+		this.ownerId = -1;
 	}
 	
 	// Public Methods
@@ -61,6 +66,13 @@ public abstract class Ingredient {
 	
 //====================================================================================
 //====================================================================================
+
+	public long getOwnerId() {
+		return ownerId;
+	}
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
+	}
 
 	// Hop subclass of Ingredient
 	public class Hop extends Ingredient {

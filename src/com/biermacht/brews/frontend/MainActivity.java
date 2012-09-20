@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.database.RecipeDataSource;
+import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.BrewCalculator;
@@ -29,7 +29,7 @@ public class MainActivity extends ListActivity {
 	private OnItemClickListener mClickListener;
 	private TextWatcher mTextWatcher;
 	private ArrayList<Recipe> recipeList;
-	public static RecipeDataSource recipeDataSource;
+	public static DatabaseInterface recipeDataSource;
 	
     //Declare views here
     private ListView listView; 
@@ -47,7 +47,7 @@ public class MainActivity extends ListActivity {
         
         // Put recipes into database
         
-        recipeDataSource = new RecipeDataSource(getApplicationContext());
+        recipeDataSource = new DatabaseInterface(getApplicationContext());
         recipeDataSource.open();
         
         

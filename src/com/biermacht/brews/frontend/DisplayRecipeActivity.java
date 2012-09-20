@@ -1,11 +1,5 @@
 package com.biermacht.brews.frontend;
 
-import com.biermacht.brews.R;
-import com.biermacht.brews.R.id;
-import com.biermacht.brews.R.layout;
-import com.biermacht.brews.R.menu;
-import com.biermacht.brews.recipe.Recipe;
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
@@ -16,6 +10,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.biermacht.brews.R;
+import com.biermacht.brews.recipe.Recipe;
 
 public class DisplayRecipeActivity extends FragmentActivity {
 	
@@ -39,33 +36,10 @@ public class DisplayRecipeActivity extends FragmentActivity {
         
         // Set title based on recipe name
         setTitle(mRecipe.getRecipeName());
-        
-        // Make random ingredients and instructions and add them...
-        /*Ingredient hops = new Ingredient(Ingredient.TYPE_HOPS, "Vanguard", 1.0, "oz");
-        Ingredient malt = new Ingredient(Ingredient.TYPE_MALT, "Amber", 6.3, "lbs");
-        Ingredient hops2 = new Ingredient(Ingredient.TYPE_HOPS, "Challenger", 1.0, "oz");
-        Ingredient yeast = new Ingredient(Ingredient.TYPE_YEAST, "Random", 1, "vial");
-        
-        mRecipe.addIngredient(hops);
-        mRecipe.addIngredient(malt);
-        mRecipe.addIngredient(hops2);
-        mRecipe.addIngredient(yeast);
-        
-        Instruction timedInst = new Instruction("This should have a time limit!");
-        timedInst.setDuration(15, "mins");
-        
-        mRecipe.addInstruction(new Instruction("Do one thing!"));
-        mRecipe.addInstruction(timedInst);
-        mRecipe.addInstruction(new Instruction("Then, you should probably do another thing!"));
-        mRecipe.addInstruction(new Instruction("And, you should do more..."));
-        mRecipe.addInstruction(new Instruction("This is an important step.  Please make sure to you know, do this one.  Because it's important and all."));
-        mRecipe.addInstruction(new Instruction("And, you should do more..."));
-        mRecipe.addInstruction(new Instruction("After you have performed both of those things, it might be best to do one more thing"));
-        mRecipe.addInstruction(new Instruction("Shit man, don't forget THAT thing... if you don't do that it will NEVER WORK.. christ what do you think you're doing?"));
-        mRecipe.addInstruction(new Instruction("After that, you're done!"));
-        
+
+        // Fake description
         mRecipe.setDescription("This is just a sample description.  Hopefully this will show up in the description section of the details page.  That would be really nice.  I'm also going to extend this on for a bit to make sure it is lengthy enough to take up some space, and hopefully even require scrolling of some sort to occur on the description / details page");
-        */
+        
         
         // Set up ActionBar tabs
     	final ActionBar actionBar = getActionBar();

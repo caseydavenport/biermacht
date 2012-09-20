@@ -2,7 +2,7 @@ package com.biermacht.brews.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import com.biermacht.brews.database.RecipeDataSource;
+import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Grain;
@@ -126,8 +126,8 @@ public class Utils {
 		return listToReturn;
 	}
 	
-	public static ArrayList<Recipe> getRecipeList(RecipeDataSource rds)
+	public static ArrayList<Recipe> getRecipeList(DatabaseInterface dbi)
 	{
-		return rds.getRecipeList();
+		return dbi.getRecipeList();
 	}
 }

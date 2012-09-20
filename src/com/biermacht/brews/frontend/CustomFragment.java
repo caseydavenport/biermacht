@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
@@ -20,6 +20,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Utils;
 
 public class CustomFragment extends Fragment {
 
@@ -56,8 +57,6 @@ public class CustomFragment extends Fragment {
 		{
 		  ArrayList<Ingredient> ingredientList = r.getIngredientList();
 		  
-		  Log.e("SIZE: ", "LISTSIZE: " + ingredientList.size());
-		  
 		  // onClickListener
 	      OnClickListener addIngredientClickListener = new OnClickListener() 
 	        {
@@ -76,17 +75,19 @@ public class CustomFragment extends Fragment {
 		  if (ingredientList.size() > 0)
 		  {
 			  IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
-			  ListView listView = (ListView) pageView.findViewById(R.id.ingredient_list);
-			  listView.setAdapter(ingredientArrayAdapter);
+			  ListView listView = new ListView(DisplayRecipeActivity.appContext); //(ListView) pageView.findViewById(R.id.ingredient_list);
 			  listView.setVisibility(View.VISIBLE);
+			  listView.setAdapter(ingredientArrayAdapter);
+			  tableView.addView(listView);
 		  }
 		  else
 		  {
 			  TextView noIngredientsView = (TextView) pageView.findViewById(R.id.no_ingredients_view);
 			  noIngredientsView.setVisibility(View.VISIBLE);
+			  tableView.addView(pageView);
 		  }
 		  
-		  tableView.addView(pageView);
+		  //tableView.addView(pageView);
 		}
 		
 		// INSTRUCTION VIEW STUFF

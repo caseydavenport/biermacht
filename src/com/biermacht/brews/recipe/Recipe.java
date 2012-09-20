@@ -111,6 +111,10 @@ public class Recipe {
 		return ingredientList;
 	}
 	
+	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) {
+		this.ingredientList = ingredientsList;
+	}
+	
 	public ArrayList<Instruction> getInstructionList()
 	{
 		return instructionList;
