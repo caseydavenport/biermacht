@@ -75,19 +75,17 @@ public class CustomFragment extends Fragment {
 		  if (ingredientList.size() > 0)
 		  {
 			  IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
-			  ListView listView = new ListView(DisplayRecipeActivity.appContext); //(ListView) pageView.findViewById(R.id.ingredient_list);
+			  ListView listView = (ListView) pageView.findViewById(R.id.ingredient_list);
 			  listView.setVisibility(View.VISIBLE);
 			  listView.setAdapter(ingredientArrayAdapter);
-			  tableView.addView(listView);
 		  }
 		  else
 		  {
 			  TextView noIngredientsView = (TextView) pageView.findViewById(R.id.no_ingredients_view);
 			  noIngredientsView.setVisibility(View.VISIBLE);
-			  tableView.addView(pageView);
 		  }
 		  
-		  //tableView.addView(pageView);
+		  tableView.addView(pageView);
 		}
 		
 		// INSTRUCTION VIEW STUFF
