@@ -96,11 +96,18 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
+		
+		deleteIngredientList(r.getId());
 		addIngredientListToDatabase(r.getIngredientList(), r.getId());
 		
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
 	}
 	
+	private boolean deleteIngredientList(long id) {
+		String whereClause = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
+		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
+	}
+
 	private void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id) {
 		
 		// Load up values to store

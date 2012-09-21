@@ -125,7 +125,7 @@ public abstract class Ingredient {
 //====================================================================================
 //====================================================================================
 	
-	// Grain subclass of Ingredient
+	// Other subclass of Ingredient
 	public class OtherIngredient extends Ingredient {
 
 		public OtherIngredient(String name)

@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
 public class AddGrainActivity extends Activity implements OnClickListener {
@@ -28,11 +29,16 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private Button submitButton;
 	private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private String grainType;
+	private Recipe mRecipe;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_grain);
+        
+        // Get recipe from calling activity
+        long id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
+        mRecipe = MainActivity.databaseInterface.getRecipeWithId(id);
         
         // Initialize views and such here
         grainNameEditText = (EditText) findViewById(R.id.grain_name_edit_text);
@@ -92,7 +98,12 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			g.setLovibondColor(color);
 			g.setGravity(grav);
 			g.setWeight(weight);
+			g.setGrainType(Grain.GRAIN);
+			g.setUnit("lbs");
 			
+			mRecipe.addIngredient(g);
+			mRecipe.update();
+			Utils.updateRecipe(mRecipe);
 			finish();
 		}
 	}
