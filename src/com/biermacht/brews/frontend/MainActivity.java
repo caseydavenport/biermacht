@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Utils;
 
 public class MainActivity extends ListActivity {
@@ -29,7 +29,7 @@ public class MainActivity extends ListActivity {
 	private OnItemClickListener mClickListener;
 	private TextWatcher mTextWatcher;
 	private ArrayList<Recipe> recipeList;
-	public static DatabaseInterface recipeDataSource;
+	public static DatabaseInterface databaseInterface;
 	
     //Declare views here
     private ListView listView; 
@@ -45,51 +45,12 @@ public class MainActivity extends ListActivity {
         listView = getListView();
         searchView = (EditText) findViewById(R.id.search_bar);
         
-        // Put recipes into database
-        
-        recipeDataSource = new DatabaseInterface(getApplicationContext());
-        recipeDataSource.open();
-        
-        
-        // Create a bunch of test brews here
-        Recipe brew1 = new Recipe("Arizona Pale Ale");
-        Recipe brew2 = new Recipe("Panther Stout");
-        Recipe brew3 = new Recipe("Chattanooga Cherry Weissbier");
-        Recipe brew4 = new Recipe("Sherman Light");
-        
-        brew1.setBeerType(Utils.BEERTYPE_IPA);
-        brew2.setBeerType(Utils.BEERTYPE_STOUT);
-        brew3.setBeerType(Utils.BEERTYPE_HEFEWEIZEN);
-        
-        Grain testGrain = (Grain) Utils.FERMENTABLE_MUNICH_MALT;
-        Grain testGrain2 = (Grain) Utils.FERMENTABLE_VIENNA_MALT;
-        testGrain.setWeight(6);
-        testGrain2.setWeight(6);
-        
-        brew4.addIngredient(testGrain);
-        brew4.addIngredient(testGrain2);
-        brew3.addIngredient(testGrain2);
-        brew2.addIngredient(testGrain);
-        brew4.update();
-        brew3.update();
-        brew2.update();
-        brew1.update();
-        
-        recipeDataSource.deleteRecipeIfExists(1);
-        recipeDataSource.deleteRecipeIfExists(2);
-        recipeDataSource.deleteRecipeIfExists(3);
-        recipeDataSource.deleteRecipeIfExists(4);
-        
-        // Add the recipes to the database
-        recipeDataSource.addRecipeToDatabase(brew1);
-        recipeDataSource.addRecipeToDatabase(brew2);
-        recipeDataSource.addRecipeToDatabase(brew3);
-        recipeDataSource.addRecipeToDatabase(brew4);
-        
-        
-        
+        // Declare my database interface 
+        databaseInterface = new DatabaseInterface(getApplicationContext());
+        databaseInterface.open();
+
         // Get recipes to display
-        recipeList = Utils.getRecipeList(recipeDataSource);
+        recipeList = Utils.getRecipeList(databaseInterface);
         
         // Set up the onClickListener
         mClickListener = new OnItemClickListener() 
@@ -153,7 +114,7 @@ public class MainActivity extends ListActivity {
      */
     private ArrayList<Recipe> getFilteredList(String s)
     {
-    	recipeList = Utils.getRecipeList(recipeDataSource);
+    	recipeList = Utils.getRecipeList(databaseInterface);
     	ArrayList<Recipe> filteredList = new ArrayList<Recipe>();
     	
     	for (Recipe r : recipeList)

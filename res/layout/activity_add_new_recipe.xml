@@ -76,6 +76,7 @@
         android:id="@+id/new_recipe_submit_button"
         android:layout_width="fill_parent"
         android:layout_height="70dip"
+        android:onClick="onClick"
         android:text="Create new recipe" />
 
 </LinearLayout>

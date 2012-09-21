@@ -37,24 +37,33 @@
 	        
     <LinearLayout android:id="@+id/ingredient_bottom_nav"
         android:layout_height="70dip"
-        android:gravity="bottom"
+        android:gravity="center"
         android:layout_width="fill_parent" >
         
-        <View android:layout_height="fill_parent"
-            android:layout_width="0dip"
-            android:layout_weight="1" />
-        
-        <TextView android:id="@+id/add_ingredient"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:background="#00000000"
-            android:padding="5dip"
-            android:gravity="center"
-            android:textSize="20dip"
-            android:text="Add New Ingredient" />
-        
-        <View android:layout_height="fill_parent"
-            android:layout_width="0dip"
-            android:layout_weight="1" />     
+	    <ImageView android:id="@+id/add_grain"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:padding="10dip"
+	        android:onClick="grainClick"
+	        android:src="@drawable/icon_wheat"
+	        android:contentDescription="icon" />
+	    
+	    <ImageView android:id="@+id/add_hops"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:padding="10dip"
+	        android:src="@drawable/icon_hops"
+	        android:contentDescription="icon" />
+	    
+	    <ImageView android:id="@+id/add_other"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:padding="10dip"
+	        android:src="@drawable/icon_idk"
+	        android:contentDescription="icon" />
+       
     </LinearLayout>
 </LinearLayout>

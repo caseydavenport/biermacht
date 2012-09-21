@@ -5,11 +5,14 @@ import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
@@ -32,15 +35,11 @@ public class DisplayRecipeActivity extends FragmentActivity {
         
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
-        mRecipe = MainActivity.recipeDataSource.getRecipeWithId(id);
+        mRecipe = MainActivity.databaseInterface.getRecipeWithId(id);
         
         // Set title based on recipe name
         setTitle(mRecipe.getRecipeName());
-
-        // Fake description
-        mRecipe.setDescription("This is just a sample description.  Hopefully this will show up in the description section of the details page.  That would be really nice.  I'm also going to extend this on for a bit to make sure it is lengthy enough to take up some space, and hopefully even require scrolling of some sort to occur on the description / details page");
-        
-        
+      
         // Set up ActionBar tabs
     	final ActionBar actionBar = getActionBar();
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -93,6 +92,14 @@ public class DisplayRecipeActivity extends FragmentActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+    }
+    
+	// Method called when we click on the ADD GRAIN button
+    public void grainClick(View v)
+    {
+    	Intent intent = new Intent(DisplayRecipeActivity.appContext, AddGrainActivity.class);
+	    intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+	    startActivity(intent);
     }
 }
 

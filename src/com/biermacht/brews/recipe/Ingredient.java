@@ -1,6 +1,7 @@
 package com.biermacht.brews.recipe;
 
 public abstract class Ingredient {
+	private long id;
 	private String name;
 	private String unit;
 	private double amount;
@@ -72,6 +73,13 @@ public abstract class Ingredient {
 	}
 	public void setOwnerId(long ownerId) {
 		this.ownerId = ownerId;
+	}
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	// Hop subclass of Ingredient

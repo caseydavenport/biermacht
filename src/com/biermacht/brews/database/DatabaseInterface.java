@@ -81,6 +81,26 @@ public class DatabaseInterface {
 		return id;
 	}
 	
+	public boolean updateExistingRecipe(Recipe r)
+	{
+		String whereClause = DatabaseHelper.REC_COL_ID + "=" + r.getId();
+		
+		// Load up values to store
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
+		values.put(DatabaseHelper.REC_COL_DESC, r.getDescription());
+		values.put(DatabaseHelper.REC_COL_TYPE, r.getBeerType());
+		values.put(DatabaseHelper.REC_COL_TIME, r.getBatchTime());
+		values.put(DatabaseHelper.REC_COL_VOL, r.getVolume());
+		values.put(DatabaseHelper.REC_COL_GRAV, r.getGravity());
+		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
+		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
+		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
+		addIngredientListToDatabase(r.getIngredientList(), r.getId());
+		
+		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
+	}
+	
 	private void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id) {
 		
 		// Load up values to store
@@ -111,13 +131,22 @@ public class DatabaseInterface {
 		}
 	}
 
-	public long deleteRecipeIfExists(long id)
+	/**
+	 * Takes recipe hashCode as input, deletes if it exists
+	 * @param hash
+	 * @return if it was deleted or not
+	 */
+	public boolean deleteRecipeIfExists(int hash)
 	{
-		String whereClause = DatabaseHelper.REC_COL_ID + "='" + id +"'";
-		database.delete(DatabaseHelper.TABLE_RECIPES, null, null);
-		return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null);
+		String whereClause = DatabaseHelper.REC_COL_ID + "=" + hash;
+		return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null) > 0;
 	}
 	
+	/**
+	 * takes recipe ID and returns the recipe with that ID from the database
+	 * @param id
+	 * @return
+	 */
 	public Recipe getRecipeWithId(long id)
 	{
 		Recipe r = new Recipe("Database Problem");
@@ -135,6 +164,10 @@ public class DatabaseInterface {
 		return r;
 	}
 	
+	/**
+	 * returns arraylist of all recipes in database
+	 * @return
+	 */
 	public ArrayList<Recipe> getRecipeList()
 	{
 		ArrayList<Recipe> list = new ArrayList<Recipe>();
@@ -208,7 +241,8 @@ public class DatabaseInterface {
 	private Ingredient cursorToIngredient(Cursor cursor) {
 
 		// Ingredient type agnostic stuff
-		long id = cursor.getLong(1);
+		long id = cursor.getLong(0);
+		long ownerId = cursor.getLong(1);
 		String ingType = cursor.getString(2);
 		String ingName = cursor.getString(3);
 		String ingUnit = cursor.getString(4);
@@ -225,7 +259,8 @@ public class DatabaseInterface {
 			float grainEff = cursor.getFloat(11);
 			
 			Grain grain = new Grain(ingName);
-			grain.setOwnerId(id);
+			grain.setId(id);
+			grain.setOwnerId(ownerId);
 			grain.setUnit(ingUnit);
 			grain.setAmount(ingAmount);
 			grain.setTime(ingTime);
@@ -240,5 +275,4 @@ public class DatabaseInterface {
 		
 		return new Grain("NO DATA READ");
 	}
-
 }

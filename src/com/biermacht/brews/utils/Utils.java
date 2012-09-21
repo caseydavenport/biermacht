@@ -3,6 +3,7 @@ package com.biermacht.brews.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import com.biermacht.brews.database.DatabaseInterface;
+import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Grain;
@@ -114,6 +115,25 @@ public class Utils {
 		return list;
 	}
 	
+	public static ArrayList<Ingredient> getFermentablesList()
+	{
+		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+		
+		list.add(FERMENTABLE_BLACK_BARLEY);
+		list.add(FERMENTABLE_MUNICH_MALT);
+		list.add(FERMENTABLE_CHOCOLATE_MALT);
+		list.add(FERMENTABLE_DEXTRIN_MALT);
+		list.add(FERMENTABLE_PALE_MALT_2_ROW);
+		list.add(FERMENTABLE_PALE_MALT_6_ROW);
+		list.add(FERMENTABLE_ROASTED_BARELY);
+		list.add(FERMENTABLE_VICTORY_MALT);
+		list.add(FERMENTABLE_VIENNA_MALT);
+		list.add(FERMENTABLE_WHEAT_MALT);
+		list.add(FERMENTABLE_WHITE_WHEAT_MALT);
+
+		return list;
+	}
+	
 	public static ArrayList<String> getBeerStyleStringList()
 	{
 		ArrayList<BeerStyle> listA = getBeerStyleList();
@@ -126,8 +146,51 @@ public class Utils {
 		return listToReturn;
 	}
 	
+	public static ArrayList<String> getFermentablesStringList()
+	{
+		ArrayList<Ingredient> listA = getFermentablesList();
+		ArrayList<String> listToReturn = new ArrayList<String>();
+		
+		for (Ingredient b : listA)
+		{
+			listToReturn.add(b.toString());
+		}	
+		return listToReturn;
+	}
+	
+	// Methods for dealing with the Database
+	/**
+	 * Get all recipes in the database
+	 * @param dbi
+	 * @return
+	 */
 	public static ArrayList<Recipe> getRecipeList(DatabaseInterface dbi)
 	{
 		return dbi.getRecipeList();
+	}
+	
+	/**
+	 * Create a recipe with the given name
+	 * @param name
+	 * @return
+	 */
+	public static Recipe createRecipeWithName(String name)
+	{
+		Recipe r = new Recipe(name);
+		
+		long id = MainActivity.databaseInterface.addRecipeToDatabase(r);
+		r = MainActivity.databaseInterface.getRecipeWithId(id);
+		
+		return r;
+	}
+	
+	/**
+	 * Updates existing recipe to match the given recipe
+	 * @param r
+	 * @return
+	 */
+	public static boolean updateRecipe(Recipe r)
+	{
+		return MainActivity.databaseInterface.updateExistingRecipe(r);
 	}
 }

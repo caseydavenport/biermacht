@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
@@ -20,7 +19,6 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.Utils;
 
 public class CustomFragment extends Fragment {
 
@@ -56,20 +54,6 @@ public class CustomFragment extends Fragment {
 		if(isIngredientList)
 		{
 		  ArrayList<Ingredient> ingredientList = r.getIngredientList();
-		  
-		  // onClickListener
-	      OnClickListener addIngredientClickListener = new OnClickListener() 
-	        {
-				public void onClick(View v) {
-				    Intent intent = new Intent(DisplayRecipeActivity.appContext, AddIngredientActivity.class);
-				    intent.putExtra("com.biermacht.brews.recipeId", r.getId());
-				    startActivity(intent);	
-				}
-	      };
-		  
-		  // Add ingredient stuff
-		  TextView addIngredientView = (TextView) pageView.findViewById(R.id.add_ingredient);
-		  addIngredientView.setOnClickListener(addIngredientClickListener);
 		  
 		  // Set whether or not we show the list view
 		  if (ingredientList.size() > 0)

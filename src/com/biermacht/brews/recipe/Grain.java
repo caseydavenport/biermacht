@@ -16,8 +16,9 @@ public class Grain extends Ingredient {
 	{
 		super(name);
 		this.weight = 0;
-		this.color = 7;
-		this.gravity = 0;
+		this.color = 0;
+		this.gravity = 1;
+		setUnit("lbs");
 	}
 	
 	public Grain(String name, double amount, String unit, float time, float weight, float gravity) {
