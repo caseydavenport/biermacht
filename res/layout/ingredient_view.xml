@@ -39,6 +39,11 @@
         android:layout_height="70dip"
         android:gravity="center"
         android:layout_width="fill_parent" >
+	    
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add: " />
         
 	    <ImageView android:id="@+id/add_grain"
 	        android:layout_width="wrap_content"

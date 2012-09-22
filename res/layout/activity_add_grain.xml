@@ -47,43 +47,60 @@
         android:layout_marginBottom="15dip"
         android:hint="Enter a name" />
     
-    <!-- EditText for Grain Color -->
-    <TextView android:id="@+id/details_title_view"
+    <LinearLayout android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:layout_marginBottom="3dip"
-        android:gravity="left"
-        android:textSize="15dip"
-        android:textStyle="bold"
-        android:text="Color, Lovibond" />
+        android:background="#00000000" >
+	    
+	    <TextView android:id="@+id/details_title_view"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:background="#00000000"
+	        android:layout_marginBottom="3dip"
+	        android:gravity="left"
+	        android:textSize="15dip"
+	        android:textStyle="bold"
+	        android:text="Color" />
+		    
+	    <TextView android:id="@+id/details_title_view"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:background="#00000000"
+	        android:layout_marginBottom="3dip"
+	        android:gravity="left"
+	        android:textSize="15dip"
+	        android:textStyle="bold"
+	        android:text="Specific Gravity" />
+	            
+    </LinearLayout>
     
-    <EditText
-        android:id="@+id/grain_color_edit_text"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
-        android:background="#FFFFFF"
-        android:padding="10dip"
-        android:layout_marginBottom="15dip" />
-   
-    <!-- EditText for Grain Grav -->
-    <TextView android:id="@+id/details_title_view"
+    <LinearLayout android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:layout_marginBottom="3dip"
-        android:gravity="left"
-        android:textSize="15dip"
-        android:textStyle="bold"
-        android:text="Specific Gravity" />
-    
-    <EditText
-        android:id="@+id/grain_grav_edit_text"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
-        android:background="#FFFFFF"
-        android:padding="10dip"
-        android:layout_marginBottom="15dip" />
+        android:background="#00000000" >
+	    
+	    <EditText
+	        android:id="@+id/grain_color_edit_text"
+	        android:layout_width="0dp"
+	        android:layout_height="60dip"
+	        android:layout_weight="1"
+	        android:background="#FFFFFF"
+	        android:padding="10dip"
+	        android:layout_marginRight="2dip"
+	        android:layout_marginBottom="15dip" />
+	    
+	    <EditText
+	        android:id="@+id/grain_grav_edit_text"
+	        android:layout_width="0dp"
+	        android:layout_height="60dip"
+	        android:layout_weight="1"
+	        android:background="#FFFFFF"
+	        android:padding="10dip"
+	        android:layout_marginBottom="15dip" />
+	            
+    </LinearLayout>
     
     <!-- EditText for Grain Weight -->
     <TextView android:id="@+id/details_title_view"
