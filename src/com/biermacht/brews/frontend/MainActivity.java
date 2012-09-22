@@ -95,6 +95,13 @@ public class MainActivity extends ListActivity {
     }
     
     @Override
+    public void onResume()
+    {
+    	super.onResume();
+    	updateRecipeList(getFilteredList(searchView.getText().toString()));
+    }
+    
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
     	switch (item.getItemId())
