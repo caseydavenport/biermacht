@@ -36,13 +36,8 @@
             android:label="@string/title_activity_add_ingredient" >
         </activity>
         <activity
-            android:name=".EditIngredientActivity"
+            android:name=".frontend.EditIngredientActivity"
             android:label="@string/title_activity_edit_ingredient" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".EditRecipeActivity"

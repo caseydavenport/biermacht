@@ -38,14 +38,9 @@
         <activity
             android:name=".frontend.EditIngredientActivity"
             android:label="@string/title_activity_edit_ingredient" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            andro.frontend.EditRecipeActivityeActivity"
+            android:name=".EditRecipeActivity"
             android:label="@string/title_activity_edit_recipe" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

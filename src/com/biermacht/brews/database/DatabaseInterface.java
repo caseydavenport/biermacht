@@ -277,6 +277,8 @@ public class DatabaseInterface {
 			grain.setGrainType(grainType);
 			grain.setEfficiency(grainEff);
 			
+			Log.e("dbi", "EFF: " + grainEff + "Grav: " + grainGrav);
+			
 			return grain;
 		}
 		

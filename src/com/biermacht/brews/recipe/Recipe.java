@@ -62,6 +62,7 @@ public class Recipe {
 	{
 		ingredientList.add(i);
 		Collections.sort(ingredientList, new ingredientComparator());
+		update();
 	}
 	
 	public void removeIngredient(String i)
@@ -73,6 +74,7 @@ public class Recipe {
 				ingredientList.remove(ingredient);
 			}
 		}
+		update();
 	}
 	
 	public void addInstruction(Instruction i)
@@ -113,6 +115,7 @@ public class Recipe {
 	
 	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) {
 		this.ingredientList = ingredientsList;
+		update();
 	}
 	
 	public ArrayList<Instruction> getInstructionList()

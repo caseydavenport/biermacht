@@ -166,7 +166,12 @@ public class Utils {
 	 */
 	public static ArrayList<Recipe> getRecipeList(DatabaseInterface dbi)
 	{
-		return dbi.getRecipeList();
+		ArrayList<Recipe> list = dbi.getRecipeList();
+		
+		for (Recipe r : list)
+			r.update();
+		
+		return list;
 	}
 	
 	/**
@@ -191,6 +196,7 @@ public class Utils {
 	 */
 	public static boolean updateRecipe(Recipe r)
 	{
+		r.update();
 		return MainActivity.databaseInterface.updateExistingRecipe(r);
 	}
 	
