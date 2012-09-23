@@ -140,12 +140,12 @@ public class DatabaseInterface {
 
 	/**
 	 * Takes recipe hashCode as input, deletes if it exists
-	 * @param hash
+	 * @param id
 	 * @return if it was deleted or not
 	 */
-	public boolean deleteRecipeIfExists(int hash)
+	public boolean deleteRecipeIfExists(long id)
 	{
-		String whereClause = DatabaseHelper.REC_COL_ID + "=" + hash;
+		String whereClause = DatabaseHelper.REC_COL_ID + "=" + id;
 		return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null) > 0;
 	}
 	

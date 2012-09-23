@@ -2,12 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
+    android:background="#EEEEEE"
     android:orientation="vertical">
     
     <LinearLayout android:id="@+id/recipe_search_view"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="60dip"
+        android:layout_height="50dip"
         android:padding="2dip"
         android:background="#66000000" >
         

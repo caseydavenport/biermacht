@@ -7,6 +7,5 @@
     
     <style name="Theme.Biermacht.Brews.ActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
         <item name="android:background">@drawable/actionbar_background</item>
-        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>

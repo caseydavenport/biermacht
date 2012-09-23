@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -27,8 +31,10 @@ public class MainActivity extends ListActivity {
 	// Create our stuff
 	private RecipeArrayAdapter mAdapter;
 	private OnItemClickListener mClickListener;
+	private OnItemLongClickListener mLongClickListener;
 	private TextWatcher mTextWatcher;
 	private ArrayList<Recipe> recipeList;
+	private Recipe selectedRecipe;
 	public static DatabaseInterface databaseInterface;
 	
     //Declare views here
@@ -85,6 +91,7 @@ public class MainActivity extends ListActivity {
         // Set up my listView with title and ArrayAdapter
         updateRecipeList(recipeList);
         listView.setOnItemClickListener(mClickListener);
+        registerForContextMenu(listView);
         
     }
     
@@ -132,6 +139,46 @@ public class MainActivity extends ListActivity {
     		}
     	}  
     	return filteredList;
+    }
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) 
+    {
+      if (v == listView) 
+      {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+        String title = recipeList.get(info.position).getRecipeName();
+        
+        selectedRecipe = recipeList.get(info.position);
+        
+        menu.setHeaderTitle(title);
+        String[] menuItems = {"Edit Recipe", "Delete Recipe"};
+        
+        for (int i = 0; i < menuItems.length; i++) 
+        {
+          menu.add(Menu.NONE, i, i, menuItems[i]);
+        }
+      }
+    }
+    
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+      int menuItemIndex = item.getItemId();
+      
+      // Edit recipe selected
+      if (menuItemIndex == 0)
+      {
+  		Intent i = new Intent(getApplicationContext(), EditRecipeActivity.class);
+  		startActivity(i); 
+      }
+      // Delete recipe selected
+      else if (menuItemIndex == 1)
+      {
+    	  Utils.deleteRecipe(selectedRecipe);
+    	  updateRecipeList(getFilteredList(searchView.getText().toString()));
+      }
+
+      return true;
     }
     
     private void updateRecipeList(ArrayList<Recipe> l)

@@ -5,11 +5,17 @@ import java.util.ArrayList;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
@@ -19,6 +25,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Utils;
 
 public class CustomFragment extends Fragment {
 
@@ -26,6 +33,8 @@ public class CustomFragment extends Fragment {
 	private Recipe r;
 	private boolean isIngredientList;
 	private boolean isInstructionView;
+	private OnItemClickListener mClickListener;
+	private ListView listView;
 	
 	public CustomFragment(int resource, Recipe r)
 	{
@@ -53,15 +62,31 @@ public class CustomFragment extends Fragment {
 		// INGREDIENT VIEW STUFF
 		if(isIngredientList)
 		{
+			
+          // Set up the onClickListener
+          mClickListener = new OnItemClickListener() 
+          {
+			public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id)
+			{	
+				Ingredient ing = r.getIngredientList().get(pos);
+				long ingId = ing.getId();
+				
+		  		Intent i = new Intent(DisplayRecipeActivity.appContext, EditIngredientActivity.class);
+		  		startActivity(i);
+			}
+          };
+          
 		  ArrayList<Ingredient> ingredientList = r.getIngredientList();
 		  
 		  // Set whether or not we show the list view
 		  if (ingredientList.size() > 0)
 		  {
 			  IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
-			  ListView listView = (ListView) pageView.findViewById(R.id.ingredient_list);
+			  listView = (ListView) pageView.findViewById(R.id.ingredient_list);
 			  listView.setVisibility(View.VISIBLE);
 			  listView.setAdapter(ingredientArrayAdapter);
+			  registerForContextMenu(listView);
+			  listView.setOnItemClickListener(mClickListener);
 		  }
 		  else
 		  {

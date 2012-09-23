@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEEEEE"
     android:orientation="vertical" >
     
     
@@ -38,37 +39,37 @@
     <LinearLayout android:id="@+id/ingredient_bottom_nav"
         android:layout_height="70dip"
         android:gravity="center"
+        android:background="@drawable/actionbar_background"
         android:layout_width="fill_parent" >
-	    
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add: " />
         
 	    <ImageView android:id="@+id/add_grain"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical"
-	        android:padding="10dip"
+	        android:layout_marginRight="20dip"
 	        android:onClick="grainClick"
-	        android:src="@drawable/icon_wheat"
-	        android:contentDescription="icon" />
+	        android:src="@drawable/icon_wheat" />
 	    
 	    <ImageView android:id="@+id/add_hops"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical"
-	        android:padding="10dip"
-	        android:src="@drawable/icon_hops"
-	        android:contentDescription="icon" />
+	        android:layout_marginRight="20dip"
+	        android:src="@drawable/icon_hops" />
+	    
+	    <ImageView android:id="@+id/add_yeast"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:layout_marginRight="20dip"
+	        android:src="@drawable/icon_yeast" />
 	    
 	    <ImageView android:id="@+id/add_other"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical"
-	        android:padding="10dip"
-	        android:src="@drawable/icon_idk"
-	        android:contentDescription="icon" />
+	        android:layout_marginRight="20dip"
+	        android:src="@drawable/icon_idk" />
        
     </LinearLayout>
 </LinearLayout>

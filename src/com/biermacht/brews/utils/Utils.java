@@ -193,4 +193,10 @@ public class Utils {
 	{
 		return MainActivity.databaseInterface.updateExistingRecipe(r);
 	}
+	
+	public static boolean deleteRecipe(Recipe r)
+	{
+		MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
+		return true;
+	}
 }

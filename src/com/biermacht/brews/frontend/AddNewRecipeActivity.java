@@ -56,7 +56,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+                // Blag
             }
 
         });
@@ -75,11 +75,15 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 			String recipeDesc = recipeDescEditText.getText().toString();
 			Recipe r = Utils.createRecipeWithName(recipeName);
 			
-			r.setDescription(recipeDesc);
-			r.setBeerType(beerType);
-			Utils.updateRecipe(r);
+			if (!recipeDesc.isEmpty())
+				r.setDescription(recipeDesc);
 			
-			finish();
+			if (!recipeName.isEmpty())
+			{
+				r.setBeerType(beerType);
+				Utils.updateRecipe(r);
+				finish();
+			}
 		}
 	}
 }

@@ -31,8 +31,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		// Get inflater
-		LayoutInflater inflater = (LayoutInflater) 
-					context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		// View to return
 		View row = inflater.inflate(R.layout.ingredient_row_layout, parent, false);
