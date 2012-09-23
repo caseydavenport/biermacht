@@ -41,5 +41,6 @@ Thumbs.db
 ########
 bin/classes.dex
 bin/resources.ap_
+bin/*
 *.apk
 gen/com/biermacht/brews/R.java
