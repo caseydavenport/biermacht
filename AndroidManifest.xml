@@ -36,7 +36,7 @@
             android:label="@string/title_activity_add_ingredient" >
         </activity>
         <activity
-            android:name=".frontend.EditIngredientActivity"
+            android:name=".frontend.EditGrainActivity"
             android:label="@string/title_activity_edit_ingredient" >
         </activity>
         <activity

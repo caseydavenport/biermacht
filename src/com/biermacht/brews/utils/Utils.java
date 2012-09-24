@@ -210,4 +210,9 @@ public class Utils {
 	{
 		return MainActivity.databaseInterface.getRecipeWithId(id);
 	}
+	
+	public static Ingredient getIngredientWithId(long id)
+	{
+		return MainActivity.databaseInterface.getIngredientWithId(id);
+	}
 }

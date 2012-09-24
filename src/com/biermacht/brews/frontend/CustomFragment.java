@@ -6,11 +6,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -74,9 +70,10 @@ public class CustomFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id)
 			{	
 				Ingredient ing = r.getIngredientList().get(pos);
-				long ingId = ing.getId();
 				
-		  		Intent i = new Intent(DisplayRecipeActivity.appContext, EditIngredientActivity.class);
+		  		Intent i = new Intent(DisplayRecipeActivity.appContext, EditGrainActivity.class);
+			    i.putExtra("com.biermacht.brews.recipeID", r.getId());
+			    i.putExtra("com.biermacht.brews.grainID", ing.getId());
 		  		startActivity(i);
 			}
           };

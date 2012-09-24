@@ -171,6 +171,23 @@ public class DatabaseInterface {
 		return r;
 	}
 	
+	public Ingredient getIngredientWithId(long id)
+	{
+		Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, null, null, null, null, null);
+		cursor.moveToFirst();
+		Ingredient i = cursorToIngredient(cursor);
+		
+		while(i.getId() != id)
+		{
+			i = cursorToIngredient(cursor);
+			cursor.moveToNext();
+			
+			if(cursor.isAfterLast() || i.getId() == id)
+				break;
+		}
+		return i;
+	}
+	
 	/**
 	 * returns arraylist of all recipes in database
 	 * @return
@@ -276,8 +293,6 @@ public class DatabaseInterface {
 			grain.setGravity(grainGrav);
 			grain.setGrainType(grainType);
 			grain.setEfficiency(grainEff);
-			
-			Log.e("dbi", "EFF: " + grainEff + "Grav: " + grainGrav);
 			
 			return grain;
 		}
