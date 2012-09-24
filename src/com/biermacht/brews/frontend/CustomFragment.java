@@ -60,6 +60,9 @@ public class CustomFragment extends Fragment {
 		  
 		TableLayout tableView = new TableLayout(DisplayRecipeActivity.appContext);
 		tableView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		
+		// Initialize important junk
+		ingredientListView = (ListView) pageView.findViewById(R.id.ingredient_list);
 
 		// INGREDIENT VIEW STUFF
 		if(isIngredientList)
@@ -84,7 +87,6 @@ public class CustomFragment extends Fragment {
 		  if (ingredientList.size() > 0)
 		  {
 			  IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
-			  ingredientListView = (ListView) pageView.findViewById(R.id.ingredient_list);
 			  ingredientListView.setVisibility(View.VISIBLE);
 			  ingredientListView.setAdapter(ingredientArrayAdapter);
 			  registerForContextMenu(ingredientListView);
