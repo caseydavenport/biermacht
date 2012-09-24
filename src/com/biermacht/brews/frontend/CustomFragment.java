@@ -34,7 +34,9 @@ public class CustomFragment extends Fragment {
 	private boolean isIngredientList;
 	private boolean isInstructionView;
 	private OnItemClickListener mClickListener;
-	private ListView listView;
+	private ListView ingredientListView;
+	private ArrayList<Ingredient> ingredientList;
+	private ArrayList<Instruction> instructionList;
 	
 	public CustomFragment(int resource, Recipe r)
 	{
@@ -76,17 +78,17 @@ public class CustomFragment extends Fragment {
 			}
           };
           
-		  ArrayList<Ingredient> ingredientList = r.getIngredientList();
+		  ingredientList = r.getIngredientList();
 		  
 		  // Set whether or not we show the list view
 		  if (ingredientList.size() > 0)
 		  {
 			  IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
-			  listView = (ListView) pageView.findViewById(R.id.ingredient_list);
-			  listView.setVisibility(View.VISIBLE);
-			  listView.setAdapter(ingredientArrayAdapter);
-			  registerForContextMenu(listView);
-			  listView.setOnItemClickListener(mClickListener);
+			  ingredientListView = (ListView) pageView.findViewById(R.id.ingredient_list);
+			  ingredientListView.setVisibility(View.VISIBLE);
+			  ingredientListView.setAdapter(ingredientArrayAdapter);
+			  registerForContextMenu(ingredientListView);
+			  ingredientListView.setOnItemClickListener(mClickListener);
 		  }
 		  else
 		  {
@@ -100,13 +102,13 @@ public class CustomFragment extends Fragment {
 		// INSTRUCTION VIEW STUFF
 		else if(isInstructionView)
 		{
-		  ArrayList<Instruction> instructionList = r.getInstructionList();
+		  instructionList = r.getInstructionList();
 		  
 		  if (instructionList.size() > 0)
 		  {
 			  InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
-			  ListView listView = (ListView) pageView.findViewById(R.id.instruction_list);
-			  listView.setAdapter(instructionArrayAdapter);
+			  ListView instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
+			  instructionListView.setAdapter(instructionArrayAdapter);
 		  }
 		  else
 		  {
@@ -169,5 +171,16 @@ public class CustomFragment extends Fragment {
 		container.addView(tableView);
 		
 		return inflater.inflate(resource, container, false);
+	}
+	
+	public void update()
+	{
+		Log.e("CustomFrag", "CustomFragment update()");
+		
+		// Ingredient updates
+		r = Utils.getRecipeWithId(r.getId());
+		ingredientList = r.getIngredientList();
+		IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
+		ingredientListView.setAdapter(ingredientArrayAdapter);
 	}
 }

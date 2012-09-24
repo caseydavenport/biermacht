@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.biermacht.brews.EditRecipeActivity;
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.recipe.Recipe;

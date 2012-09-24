@@ -205,4 +205,9 @@ public class Utils {
 		MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
 		return true;
 	}
+	
+	public static Recipe getRecipeWithId(long id)
+	{
+		return MainActivity.databaseInterface.getRecipeWithId(id);
+	}
 }

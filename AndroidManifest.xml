@@ -40,7 +40,7 @@
             android:label="@string/title_activity_edit_ingredient" >
         </activity>
         <activity
-            android:name=".EditRecipeActivity"
+            android:name=".frontend.EditRecipeActivity"
             android:label="@string/title_activity_edit_recipe" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

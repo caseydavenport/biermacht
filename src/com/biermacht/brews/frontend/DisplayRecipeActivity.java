@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Utils;
 
 public class DisplayRecipeActivity extends FragmentActivity {
 	
@@ -38,7 +39,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
         
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
-        mRecipe = MainActivity.databaseInterface.getRecipeWithId(id);
+        mRecipe = Utils.getRecipeWithId(id);
         
         // Set title based on recipe name
         setTitle(mRecipe.getRecipeName());
@@ -103,6 +104,14 @@ public class DisplayRecipeActivity extends FragmentActivity {
     	Intent intent = new Intent(DisplayRecipeActivity.appContext, AddGrainActivity.class);
 	    intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
 	    startActivity(intent);
+    }
+    
+    @Override
+    public void onResume()
+    {
+    	Log.e("DisplayRecipe", "Display Recipe: onResume()");
+    	super.onResume();
+    	((CustomFragment) ingredientFragment).update();
     }
 }
 
