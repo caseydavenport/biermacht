@@ -26,7 +26,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainColorEditText;
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
-	private EditText grainEfficiencyEditText;
 	private Button submitButton;
 	private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private String grainType;
@@ -46,7 +45,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainColorEditText = (EditText) findViewById(R.id.grain_color_edit_text);
         grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
-        grainEfficiencyEditText = (EditText) findViewById(R.id.grain_eff_edit_text);
         
         submitButton = (Button) findViewById(R.id.new_grain_submit_button);
         
@@ -74,7 +72,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 grainColorEditText.setText(grainObj.getLovibondColor() +"");
                 grainGravEditText.setText(grainObj.getGravity() +"");
                 grainWeightEditText.setText(5 +"");
-                grainEfficiencyEditText.setText(grainObj.getEfficiency() + "");
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
