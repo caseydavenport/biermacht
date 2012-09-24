@@ -101,6 +101,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			g.setWeight(weight);
 			g.setGrainType(Grain.GRAIN);
 			g.setUnit("lbs");
+			g.setEfficiency(1);
 			
 			mRecipe.addIngredient(g);
 			mRecipe.update();

@@ -18,24 +18,19 @@ public class Grain extends Ingredient {
 		this.weight = 0;
 		this.color = 0;
 		this.gravity = 1;
+		this.grainType = GRAIN;
+		this.efficiency = 1;
 		setUnit("lbs");
 	}
 	
-	public Grain(String name, double amount, String unit, float time, float weight, float gravity) {
-		super(name, amount, unit, time);
-		this.weight = weight;
-		this.color = 10;
-		this.gravity = gravity;
-	}
-	
-	public Grain(String name, String units, double colour, double grav, String gt)
+	public Grain(String name, String units, double colour, double grav, String gType)
 	{
 		super(name);
 		setUnit(units);
-		color = colour;
-		gravity = grav;
-		grainType = gt;
-		efficiency = 1;
+		this.color = colour;
+		this.gravity = grav;
+		this.grainType = gType;
+		this.efficiency = 1;
 	}
 
 	@Override
