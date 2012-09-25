@@ -10,6 +10,9 @@ public class ColorHandler {
 	// Format input
 	d = (double) Math.round(d * 10) / 10;
 	
+	if (d > 40)
+		d = 40;
+	
 	// Lookup
 	if (d == 0.0) {
 	return RgbToHex(248,248,248); }
