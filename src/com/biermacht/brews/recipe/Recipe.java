@@ -150,6 +150,7 @@ public class Recipe {
 	}
 
 	public float getColor() {
+		color = (float) Math.round(color * 10) / 10;
 		return color;
 	}
 

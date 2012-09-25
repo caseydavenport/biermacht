@@ -117,8 +117,7 @@ public class CustomFragment extends Fragment {
 		  tableView.addView(pageView);
 		}
 		else
-		{
-		  
+		{	  
 		  // View to hold the description
 		  TextView descriptionView = (TextView) pageView.findViewById(R.id.description_view);
 		  descriptionView.setText(r.getDescription());
@@ -178,11 +177,10 @@ public class CustomFragment extends Fragment {
 		
 		// Ingredient updates
 		r = Utils.getRecipeWithId(r.getId());
+		r.update();
 		ingredientList = r.getIngredientList();
 		IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
 		ingredientListView.setAdapter(ingredientArrayAdapter);
-		
-		// Recipe updates
-		r.update();
+
 	}
 }

@@ -3,13 +3,14 @@ package com.biermacht.brews.frontend;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -26,7 +27,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainColorEditText;
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
-	private Button submitButton;
 	private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private String grainType;
 	private Recipe mRecipe;
@@ -37,16 +37,16 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_add_grain);
         
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
-        mRecipe = MainActivity.databaseInterface.getRecipeWithId(id);
+        long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
+        mRecipe = Utils.getRecipeWithId(id);
+        
+        Log.e("AddGrain", "ID: " + id);
         
         // Initialize views and such here
         grainNameEditText = (EditText) findViewById(R.id.grain_name_edit_text);
         grainColorEditText = (EditText) findViewById(R.id.grain_color_edit_text);
         grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
-        
-        submitButton = (Button) findViewById(R.id.new_grain_submit_button);
         
         // Set up grain type spinner
         grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
@@ -88,6 +88,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
     }
 
 	public void onClick(View v) {
+		// if "SUBMIT" button pressed
 		if (v.getId() == R.id.new_grain_submit_button)
 		{
 			String grainName = grainNameEditText.getText().toString();
@@ -106,7 +107,18 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			mRecipe.addIngredient(g);
 			mRecipe.update();
 			Utils.updateRecipe(mRecipe);
-			finish();
+			
+		    Intent intent = new Intent(AddGrainActivity.this, DisplayRecipeActivity.class);
+		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
+		    startActivity(intent);		
+		}
+		
+		// if "CANCEL" button pressed
+		if (v.getId() == R.id.cancel_button)
+		{
+		    Intent intent = new Intent(AddGrainActivity.this, DisplayRecipeActivity.class);
+		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
+		    startActivity(intent);	
 		}
 	}
 }

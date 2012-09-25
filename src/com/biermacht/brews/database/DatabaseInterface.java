@@ -103,6 +103,34 @@ public class DatabaseInterface {
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
 	}
 	
+	public boolean updateExistingIngredient(Ingredient ing)
+	{
+		Log.e("DBI", "Updating ingredient with ID: " + ing.getId());
+		String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId();
+		
+		// Load up values to store
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHelper.ING_COL_OWNER_ID, ing.getOwnerId());
+		values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
+		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
+		values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnit());
+		values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
+		values.put(DatabaseHelper.ING_COL_TIME, ing.getTime());
+		
+		// Grain specific values
+		if (ing.getType().equals(Ingredient.GRAIN))
+		{
+			Grain gr = (Grain) ing;
+			values.put(DatabaseHelper.ING_GR_COL_WEIGHT, gr.getWeight());
+			values.put(DatabaseHelper.ING_GR_COL_COLOR, gr.getLovibondColor());
+			values.put(DatabaseHelper.ING_GR_COL_GRAV, gr.getGravity());
+			values.put(DatabaseHelper.ING_GR_COL_TYPE, gr.getGrainType());
+			values.put(DatabaseHelper.ING_GR_COL_EFF, gr.getEfficiency());
+		}
+		
+		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
+	}
+	
 	private boolean deleteIngredientList(long id) {
 		String whereClause = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
 		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
@@ -147,6 +175,12 @@ public class DatabaseInterface {
 	{
 		String whereClause = DatabaseHelper.REC_COL_ID + "=" + id;
 		return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null) > 0;
+	}
+	
+
+	public boolean deleteIngredientIfExists(long id) {
+		String whereClause = DatabaseHelper.ING_COL_ID + "=" + id;
+		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
 	}
 	
 	/**
@@ -299,4 +333,5 @@ public class DatabaseInterface {
 		
 		return new Grain("NO DATA READ");
 	}
+
 }

@@ -96,6 +96,7 @@
 	    
 	    <EditText
 	        android:id="@+id/grain_color_edit_text"
+	        android:inputType="numberDecimal"
 	        android:layout_width="0dp"
 	        android:layout_height="60dip"
 	        android:layout_weight="1"
@@ -106,6 +107,7 @@
 	    
 	    <EditText
 	        android:id="@+id/grain_grav_edit_text"
+	        android:inputType="numberDecimal"
 	        android:layout_width="0dp"
 	        android:layout_height="60dip"
 	        android:layout_weight="1"
@@ -116,6 +118,7 @@
 	    
 	    <EditText
 	        android:id="@+id/grain_weight_edit_text"
+	        android:inputType="numberDecimal"
 	        android:layout_width="0dp"
 	        android:layout_height="60dip"
 	        android:layout_weight="1"
@@ -131,9 +134,18 @@
         android:layout_height="wrap_content"
         android:background="#00000000" >
 	    
+        <!-- Cancel Button -->
+	    <Button
+	        android:id="@+id/cancel_button"
+	        android:layout_width="0dp"
+	        android:layout_weight="1"
+	        android:layout_height="70dip"
+	        android:onClick="onClick"
+	        android:text="Cancel" />
+	    
 	    <!-- Delete Button -->
 	    <Button
-	        android:id="@+id/new_grain_delete_button"
+	        android:id="@+id/grain_delete_button"
 	        android:layout_width="0dp"
 	        android:layout_weight="1"
 	        android:layout_height="70dip"
@@ -142,7 +154,7 @@
 	    
 	    <!-- Submit Button -->
 	    <Button
-	        android:id="@+id/new_grain_submit_button"
+	        android:id="@+id/grain_submit_button"
 	   	    android:layout_width="0dp"
 	        android:layout_weight="1"
 	        android:layout_height="70dip"

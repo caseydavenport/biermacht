@@ -22,31 +22,31 @@
         </activity>
         <activity
             android:name=".frontend.DisplayRecipeActivity"
-            android:label="@string/title_activity_display_recipe" >
+            android:label="@string/title_activity_display_recipe"
+            android:noHistory="true" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.biermacht.brews.MainActivity" />
         </activity>
         <activity
             android:name=".frontend.AddNewRecipeActivity"
-            android:label="@string/title_activity_add_new_recipe" >
+            android:label="@string/title_activity_add_new_recipe"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".frontend.AddGrainActivity"
-            android:label="@string/title_activity_add_ingredient" >
+            android:label="@string/title_activity_add_ingredient"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".frontend.EditGrainActivity"
-            android:label="@string/title_activity_edit_ingredient" >
+            android:label="@string/title_activity_edit_ingredient"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".frontend.EditRecipeActivity"
-            android:label="@string/title_activity_edit_recipe" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/title_activity_edit_recipe"
+            android:noHistory="true" >
         </activity>
     </application>
 

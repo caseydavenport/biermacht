@@ -15,6 +15,7 @@ public class Grain extends Ingredient {
 	public Grain(String name)
 	{
 		super(name);
+		setName(name);
 		this.weight = 0;
 		this.color = 0;
 		this.gravity = 1;
@@ -47,14 +48,17 @@ public class Grain extends Ingredient {
 	}
 
 	public double getLovibondColor() {
+		color = (float) Math.round(color * 10) / 10;
 		return color;
 	}
 
 	public void setLovibondColor(double color) {
+		color = (float) Math.round(color * 10) / 10;
 		this.color = color;
 	}
 
 	public double getGravity() {
+		gravity = (double) Math.round(gravity * 1000) / 1000;
 		return gravity;
 	}
 

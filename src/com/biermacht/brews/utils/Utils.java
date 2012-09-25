@@ -200,10 +200,19 @@ public class Utils {
 		return MainActivity.databaseInterface.updateExistingRecipe(r);
 	}
 	
+	public static boolean updateIngredient(Ingredient i)
+	{
+		return MainActivity.databaseInterface.updateExistingIngredient(i);
+	}
+	
 	public static boolean deleteRecipe(Recipe r)
 	{
-		MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
-		return true;
+		return MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
+	}
+	
+	public static boolean deleteIngredient(Ingredient i)
+	{
+		return MainActivity.databaseInterface.deleteIngredientIfExists(i.getId());
 	}
 	
 	public static Recipe getRecipeWithId(long id)
