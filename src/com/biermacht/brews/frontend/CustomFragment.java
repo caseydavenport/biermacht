@@ -181,5 +181,8 @@ public class CustomFragment extends Fragment {
 		ingredientList = r.getIngredientList();
 		IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
 		ingredientListView.setAdapter(ingredientArrayAdapter);
+		
+		// Recipe updates
+		r.update();
 	}
 }
