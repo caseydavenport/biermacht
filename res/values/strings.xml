@@ -9,5 +9,6 @@
     <string name="title_activity_add_ingredient">Add an Ingredient</string>
     <string name="title_activity_edit_ingredient">EditIngredientActivity</string>
     <string name="title_activity_edit_recipe">EditRecipeActivity</string>
+    <string name="title_activity_add_hops">AddHopsActivity</string>
 
 </resources>

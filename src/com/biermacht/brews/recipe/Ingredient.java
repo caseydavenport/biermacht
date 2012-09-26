@@ -9,6 +9,7 @@ public abstract class Ingredient {
 	private long ownerId;
 	
 	public static final String GRAIN = "grain";
+	public static final String HOP = "hop";
 	
 	// Public constructors
 	public Ingredient(String name)
@@ -50,7 +51,7 @@ public abstract class Ingredient {
 	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(float amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	
@@ -82,23 +83,6 @@ public abstract class Ingredient {
 		this.id = id;
 	}
 
-	// Hop subclass of Ingredient
-	public class Hop extends Ingredient {
-
-		public Hop(String name)
-		{
-			super(name);
-		}
-		
-		public Hop(String name, double amount, String unit, float time) {
-			super(name, amount, unit, time);
-		}
-
-		@Override
-		public String getType() {
-			return "Hops";
-		}	
-	}
 
 //====================================================================================
 //====================================================================================

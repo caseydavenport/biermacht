@@ -34,11 +34,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_COL_UNIT = "units";
 	public static final String ING_COL_AMT = "amount";
 	public static final String ING_COL_TIME = "time";
+	
 	public static final String ING_GR_COL_WEIGHT = "weight";
 	public static final String ING_GR_COL_COLOR = "color";
 	public static final String ING_GR_COL_GRAV = "gravity";
 	public static final String ING_GR_COL_TYPE = "grainType";
 	public static final String ING_GR_COL_EFF = "efficiency";
+	
+	public static final String ING_HP_COL_DESC = "description";
+	public static final String ING_HP_COL_ACID = "acids";
+	public static final String ING_HP_COL_BOILTIME = "boiltime";
+	public static final String ING_HP_COL_TYPE = "hopType";
 	
 	
 	// Table Creation Queries
@@ -67,11 +73,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_COL_UNIT + " text not null, "
 				+ ING_COL_AMT + " float not null, " 
 				+ ING_COL_TIME + " float not null, "
-				+ ING_GR_COL_WEIGHT + " float not null, "
-				+ ING_GR_COL_COLOR + " float not null, " 
-				+ ING_GR_COL_GRAV + " float not null, " 
-				+ ING_GR_COL_TYPE + " text not null, " 
-				+ ING_GR_COL_EFF + " float not null"
+				+ ING_GR_COL_WEIGHT + " float, "
+				+ ING_GR_COL_COLOR + " float, " 
+				+ ING_GR_COL_GRAV + " float, " 
+				+ ING_GR_COL_TYPE + " text, " 
+				+ ING_GR_COL_EFF + " float, "
+				+ ING_HP_COL_DESC + " text, "
+				+ ING_HP_COL_ACID + " float, "
+				+ ING_HP_COL_BOILTIME + " int, "
+				+ ING_HP_COL_TYPE + " text"
 			+ ");";
 	
 	// Public Constructor

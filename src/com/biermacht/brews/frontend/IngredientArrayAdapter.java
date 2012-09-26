@@ -44,7 +44,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		// Set imageView based on ingredient type
 		String ingType = list.get(position).getType();
 		
-		if(ingType == Utils.TYPE_HOPS)
+		if(ingType == Ingredient.HOP)
 			imageView.setImageResource(R.drawable.icon_hops);
 		else if(ingType == Ingredient.GRAIN)
 			imageView.setImageResource(R.drawable.icon_wheat);

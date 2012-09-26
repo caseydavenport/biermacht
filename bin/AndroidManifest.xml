@@ -48,6 +48,11 @@
             android:label="@string/title_activity_edit_recipe"
             android:noHistory="true" >
         </activity>
+        <activity
+            android:name=".frontend.AddHopsActivity"
+            android:label="@string/title_activity_add_hops"
+            android:noHistory="true" >
+        </activity>
     </application>
 
 </manifest>

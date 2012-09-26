@@ -99,7 +99,7 @@ public class Grain extends Ingredient {
 	}
 	
 	@Override 
-	public void setAmount(float amt)
+	public void setAmount(double amt)
 	{
 		setWeight(amt);
 	}

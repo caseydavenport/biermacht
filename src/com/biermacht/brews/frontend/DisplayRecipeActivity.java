@@ -10,18 +10,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.AdapterView;
+import android.view.View.OnClickListener;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
-public class DisplayRecipeActivity extends FragmentActivity {
+public class DisplayRecipeActivity extends FragmentActivity implements OnClickListener {
 	
 	private Recipe mRecipe;
 	private Fragment instructionFragment;
@@ -98,14 +96,6 @@ public class DisplayRecipeActivity extends FragmentActivity {
         outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
     }
     
-	// Method called when we click on the ADD GRAIN button
-    public void grainClick(View v)
-    {
-    	Intent intent = new Intent(DisplayRecipeActivity.appContext, AddGrainActivity.class);
-	    intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
-	    startActivity(intent);
-    }
-    
     @Override
     public void onResume()
     {
@@ -113,6 +103,24 @@ public class DisplayRecipeActivity extends FragmentActivity {
     	super.onResume();
     	((CustomFragment) ingredientFragment).update();
     }
+
+	public void onClick(View v) 
+	{
+		// if ADD GRAIN button pressed
+		if(v.getId() == R.id.add_new_grain_button)
+		{
+	    	Intent intent = new Intent(DisplayRecipeActivity.appContext, AddGrainActivity.class);
+		    intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+		    startActivity(intent);
+		}
+		// if ADD HOPS button pressed
+		if(v.getId() == R.id.add_new_hops_button)
+		{
+	    	Intent intent = new Intent(DisplayRecipeActivity.appContext, AddHopsActivity.class);
+		    intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+		    startActivity(intent);
+		}
+	}
 }
 
 class MyTabsListener implements ActionBar.TabListener {

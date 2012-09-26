@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.biermacht.brews.recipe.Grain;
+import com.biermacht.brews.recipe.Hop;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 
@@ -39,11 +40,17 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_COL_UNIT,
 			DatabaseHelper.ING_COL_AMT,
 			DatabaseHelper.ING_COL_TIME,
+			
 			DatabaseHelper.ING_GR_COL_WEIGHT,
 			DatabaseHelper.ING_GR_COL_COLOR,
 			DatabaseHelper.ING_GR_COL_GRAV,
 			DatabaseHelper.ING_GR_COL_TYPE,
-			DatabaseHelper.ING_GR_COL_EFF
+			DatabaseHelper.ING_GR_COL_EFF,
+			
+			DatabaseHelper.ING_HP_COL_DESC,
+			DatabaseHelper.ING_HP_COL_ACID,
+			DatabaseHelper.ING_HP_COL_BOILTIME,
+			DatabaseHelper.ING_HP_COL_TYPE
 			};
 	
 	// Constructor
@@ -128,6 +135,16 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_GR_COL_EFF, gr.getEfficiency());
 		}
 		
+		// Hop specific values
+		if (ing.getType().equals(Ingredient.HOP))
+		{
+			Hop hop = (Hop) ing;
+			values.put(DatabaseHelper.ING_HP_COL_DESC, hop.getDescription());
+			values.put(DatabaseHelper.ING_HP_COL_ACID, hop.getAlphaAcidContent());
+			values.put(DatabaseHelper.ING_HP_COL_BOILTIME, hop.getBoilTime());
+			values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
+		}
+		
 		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
 	}
 	
@@ -159,6 +176,16 @@ public class DatabaseInterface {
 				values.put(DatabaseHelper.ING_GR_COL_GRAV, gr.getGravity());
 				values.put(DatabaseHelper.ING_GR_COL_TYPE, gr.getGrainType());
 				values.put(DatabaseHelper.ING_GR_COL_EFF, gr.getEfficiency());
+			}
+			
+			// Hop specific values
+			if (ing.getType().equals(Ingredient.HOP))
+			{
+				Hop hop = (Hop) ing;
+				values.put(DatabaseHelper.ING_HP_COL_DESC, hop.getDescription());
+				values.put(DatabaseHelper.ING_HP_COL_ACID, hop.getAlphaAcidContent());
+				values.put(DatabaseHelper.ING_HP_COL_BOILTIME, hop.getBoilTime());
+				values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
 			}
 			
 			database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
@@ -329,6 +356,28 @@ public class DatabaseInterface {
 			grain.setEfficiency(grainEff);
 			
 			return grain;
+		}
+		
+		// Hop specific stuff
+		if (ingType.equals(Ingredient.HOP))
+		{
+			String hopDesc = cursor.getString(12);
+			float hopAcid = cursor.getFloat(13);
+			int hopBoilTime = cursor.getInt(14);
+			String hopType = cursor.getString(15);
+			
+			Hop hop = new Hop(ingName);
+			hop.setId(id);
+			hop.setOwnerId(ownerId);
+			hop.setUnit(ingUnit);
+			hop.setAmount(ingAmount);
+			hop.setTime(ingTime);
+			hop.setDescription(hopDesc);
+			hop.setAlphaAcidContent(hopAcid);
+			hop.setBoilTime(hopBoilTime);
+			hop.setHopType(hopType);
+			
+			return hop;
 		}
 		
 		return new Grain("NO DATA READ");

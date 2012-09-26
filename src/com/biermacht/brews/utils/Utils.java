@@ -5,6 +5,7 @@ import java.util.Collections;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.recipe.BeerStyle;
+import com.biermacht.brews.recipe.Hop;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Recipe;
@@ -67,6 +68,23 @@ public class Utils {
 	public static Ingredient FERMENTABLE_WHEAT_MALT = new Grain("Wheat Malt", "lbs", 2, 1.038, Grain.GRAIN);
 	public static Ingredient FERMENTABLE_WHITE_WHEAT_MALT = new Grain("White Wheat Malt", "lbs", 2, 1.037, Grain.GRAIN);
 
+	// Hops.. http://byo.com/resources/hops
+	public static Ingredient HOP_AHTANUM = new Hop("Ahtanum", 5, "Floral, citrus, sharp, piney");
+	public static Ingredient HOP_AMARILLO = new Hop("Amarillo", 8.5, "Citrus, flowery");
+	public static Ingredient HOP_APOLLO = new Hop("Apollo", 17, "High alpha acid content, disease resistant");
+	public static Ingredient HOP_BOADICEA = new Hop("Boadicea", 8.5, "Spicy");
+	public static Ingredient HOP_BRAVO = new Hop("Bravo", 16, "High alpha acid content, disease resistant");
+	public static Ingredient HOP_CASCADE_US = new Hop("Cascade (US)", 5.5, "Flowery, citrusy.  Can have a grapefruit flavor");
+	public static Ingredient HOP_CASCADE_NZ = new Hop("Cascade (NZ)", 7, "Flowery, citrusy.  Can have a grapefruit flavor");
+	public static Ingredient HOP_CENTENNIAL = new Hop("Centennial", 9.75, "Medium floral and citrus tones");
+	public static Ingredient HOP_CHINOOK = new Hop("Chinook", 12, "Medium strength, spicy, piney");
+	public static Ingredient HOP_CITRA = new Hop("Citra", 12, "Intense Flavor");
+	public static Ingredient HOP_CLUSTER = new Hop("Cluster", 7.5, "Quite spicy");
+	public static Ingredient HOP_COLUMBUS = new Hop("Columbus", 13.5, "Pleasant, strong aroma");
+	public static Ingredient HOP_EL_DORADO = new Hop("El Dorado (US)", 15, "Candy-like");
+	public static Ingredient HOP_GALAXY = new Hop("Galaxy (AUS)", 14, "");
+	public static Ingredient HOP_GALENA = new Hop("Galena", 12, "Medium strength, citrusy");
+	public static Ingredient HOP_GLACIER = new Hop("Glacier (US)", 7, "Earthy, Citrus");
 
 
 
@@ -134,6 +152,30 @@ public class Utils {
 		return list;
 	}
 	
+	public static ArrayList<Ingredient> getHopsList()
+	{
+		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+		
+		list.add(HOP_AHTANUM);
+		list.add(HOP_AMARILLO);
+		list.add(HOP_APOLLO);
+		list.add(HOP_BOADICEA);
+		list.add(HOP_BRAVO);
+		list.add(HOP_CASCADE_US);
+		list.add(HOP_CASCADE_NZ);
+		list.add(HOP_CENTENNIAL);
+		list.add(HOP_CHINOOK);
+		list.add(HOP_CITRA);
+		list.add(HOP_CLUSTER);
+		list.add(HOP_COLUMBUS);
+		list.add(HOP_EL_DORADO);
+		list.add(HOP_GALAXY);
+		list.add(HOP_GALENA);
+		list.add(HOP_GLACIER);
+	
+		return list;
+	}
+	
 	public static ArrayList<String> getBeerStyleStringList()
 	{
 		ArrayList<BeerStyle> listA = getBeerStyleList();
@@ -149,6 +191,18 @@ public class Utils {
 	public static ArrayList<String> getFermentablesStringList()
 	{
 		ArrayList<Ingredient> listA = getFermentablesList();
+		ArrayList<String> listToReturn = new ArrayList<String>();
+		
+		for (Ingredient b : listA)
+		{
+			listToReturn.add(b.toString());
+		}	
+		return listToReturn;
+	}
+	
+	public static ArrayList<String> getHopsStringList()
+	{
+		ArrayList<Ingredient> listA = getHopsList();
 		ArrayList<String> listToReturn = new ArrayList<String>();
 		
 		for (Ingredient b : listA)

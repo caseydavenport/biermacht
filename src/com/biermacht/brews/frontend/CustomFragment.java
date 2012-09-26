@@ -71,10 +71,13 @@ public class CustomFragment extends Fragment {
 			{	
 				Ingredient ing = r.getIngredientList().get(pos);
 				
+				if (ing.getType().equals(Ingredient.GRAIN))
+				{
 		  		Intent i = new Intent(DisplayRecipeActivity.appContext, EditGrainActivity.class);
 			    i.putExtra("com.biermacht.brews.recipeID", r.getId());
 			    i.putExtra("com.biermacht.brews.grainID", ing.getId());
 		  		startActivity(i);
+				}
 			}
           };
           
