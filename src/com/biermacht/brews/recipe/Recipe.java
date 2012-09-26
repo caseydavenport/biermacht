@@ -13,6 +13,7 @@ public class Recipe {
 	private String description;
 	private String beerType;
 	private int batchTime; // Batch time in weeks
+	private int boilTime; // Total boil time for this recipe
 	private float volume;
 	private float gravity;
 	private float ABV;
@@ -46,6 +47,7 @@ public class Recipe {
 	{
 		setColor(BrewCalculator.calculateColorFromRecipe(this));
 		setGravity(BrewCalculator.calculateGravityFromRecipe(this));
+		setBitterness(BrewCalculator.calculateIbuFromRecipe(this));
 	}
 	
 	public void setRecipeName(String name)
@@ -142,10 +144,12 @@ public class Recipe {
 	}
 
 	public float getBitterness() {
+		bitterness = (float) Math.round(bitterness * 10) / 10;
 		return bitterness;
 	}
 
 	public void setBitterness(float bitterness) {
+		bitterness = (float) Math.round(bitterness * 10) / 10;
 		this.bitterness = bitterness;
 	}
 
@@ -190,5 +194,15 @@ public class Recipe {
 	public void setVolume(float v)
 	{
 		this.volume = v;
+	}
+
+	public int getBoilTime() {
+		// TODO: CALCULATE BOIL TIME BASED OFF INGREDIENTS
+		boilTime = 60;
+		return boilTime;
+	}
+
+	public void setBoilTime(int boilTime) {
+		this.boilTime = boilTime;
 	}
 }

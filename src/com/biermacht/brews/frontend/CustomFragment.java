@@ -144,7 +144,7 @@ public class CustomFragment extends Fragment {
 		  grav_tag.setText("Orig. Gravity: ");
 		  grav_content.setText("" + r.getGravity() + "");
 		  
-		  // Beer gravity detail view
+		  // Beer bitterness detail view
 		  TextView bitt_tag = (TextView) bitternessView.findViewById(R.id.tag);
 		  TextView bitt_content = (TextView) bitternessView.findViewById(R.id.content);
 		  bitt_tag.setText("Bitterness (IBU): ");

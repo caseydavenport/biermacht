@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.util.Log;
 
 import com.biermacht.brews.recipe.Grain;
+import com.biermacht.brews.recipe.Hop;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 
@@ -58,11 +59,44 @@ public class BrewCalculator {
 		return (1 + grav);
 	}
 	
-	public static double calculateIbuFromRecipe(Recipe r)
+	public static float calculateIbuFromRecipe(Recipe r)
 	{
-		double ibu = 0.0;
+		float ibu;
+		float AAU = 0;
+		float utilization = getHopUtilization(r);
+		
+		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
+		
+		http://www.howtobrew.com/section1/chapter5-5.html
+		for (Ingredient i : ingredientsList)
+		{
+			if (i.getType().equals(Ingredient.HOP))
+			{
+				Hop h = (Hop) i;
+				AAU += h.getWeight() * h.getAlphaAcidContent();
+			}
+		}
+		
+		ibu = (AAU * utilization * 75)/r.getVolume();
+		
+		Log.e("BrewCalc", "Calculated IBU: " + ibu);
 		
 		return ibu;
+	}
+	
+	public static float getHopUtilization(Recipe r)
+	{
+		float utilization;
+		double bignessFactor;
+		double boilTimeFactor;
+		
+		bignessFactor = 1.65 * Math.pow(.000125, r.getGravity()-1);
+		boilTimeFactor = (1 - Math.pow(Math.E, -.04*r.getBoilTime()))/4.8;
+		
+		utilization = (float) (bignessFactor * boilTimeFactor);
+		
+		Log.e("BrewCalc", "Calculated Utilization: " + utilization);
+		return utilization;
 	}
 
 }
