@@ -1,0 +1,13 @@
+** Brews Backlog **
+
+=======================================
+Features / bugs that need workin' can
+be reported here
+=======================================
+
+feature: Reverse engineering capabilities --> Modify desired traits
+	 and the app will auto-modify your recipe to match!
+
+TODO:	 Need to calculate boil time dynamically using ingredients.
+	 Also, need to clean up how we are handling boil time across
+	 recipes and different types of ingredients.
