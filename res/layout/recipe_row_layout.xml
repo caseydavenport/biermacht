@@ -19,7 +19,8 @@
         android:background="#FFFFFF" />
     
     <LinearLayout android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content" >
 	    
 	    <TextView android:id="@+id/label"
@@ -39,5 +40,18 @@
 	        android:text="Beer Style" 
 	        android:background="#00FFFFFF" />
     </LinearLayout>
+    
+    <TextView android:id="@+id/batch_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="#666666"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:text="0.0 Gal"
+        android:background="#FFFFFF" />
    
 </LinearLayout>
