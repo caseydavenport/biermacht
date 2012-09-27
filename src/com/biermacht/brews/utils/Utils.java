@@ -28,16 +28,34 @@ public class Utils {
 	public static String INSTRUCTION_TYPE_FERMENT = "Ferment";
 	public static String INSTRUCTION_TYPE_OTHER = "Other";
 	
+	
+	
 	// Beer types... http://www.bjcp.org/docs/2008_stylebook.pdf
 	public static BeerStyle BEERTYPE_OTHER = new BeerStyle("Other");
+	public static BeerStyle BEERTYPE_FRUIT_BEER = new BeerStyle("Fruit Beer");
+	public static BeerStyle BEERTYPE_SPICE_HERB_VEG = new BeerStyle("Spice/Herb/Vegetable Beer");
+	public static BeerStyle BEERTYPE_SPECIALTY = new BeerStyle("Specialty Beer");
+	public static BeerStyle BEERTYPE_RAUNCHBIER = new BeerStyle("Raunchbier");
 	
 	// Stouts
-	public static BeerStyle BEERTYPE_STOUT = new BeerStyle("Stout");
-	public static BeerStyle BEERTYPE_DRY_STOUT = new BeerStyle("Dry Stout");
-	public static BeerStyle BEERTYPE_OATMEAL_STOUT = new BeerStyle("Oatmeal Stout");
-	public static BeerStyle BEERTYPE_IMPERIAL_STOUT = new BeerStyle("Imperial Stout");
-	public static BeerStyle BEERTYPE_HEFEWEIZEN = new BeerStyle("Hefeweizen");
-	public static BeerStyle BEERTYPE_IPA = new BeerStyle("India Pale Ale");
+	public static BeerStyle BEERTYPE_SWEET_STOUT = new BeerStyle("Stout, Sweet");
+	public static BeerStyle BEERTYPE_DRY_STOUT = new BeerStyle("Stout, Dry");
+	public static BeerStyle BEERTYPE_OATMEAL_STOUT = new BeerStyle("Stout, Oatmeal");
+	public static BeerStyle BEERTYPE_IMPERIAL_STOUT = new BeerStyle("Stout, Imperial");
+	public static BeerStyle BEERTYPE_FOREIGN_EXTRA_STOUT = new BeerStyle("Stout, Foreign Extra");
+	public static BeerStyle BEERTYPE_AMERICAN_STOUT = new BeerStyle("Stout, American");
+	
+	// German Wheat and Rye Beer
+	public static BeerStyle BEERTYPE_WEIZEN = new BeerStyle("Weizen / Weissbier");
+	public static BeerStyle BEERTYPE_DUNKELWEIZEN = new BeerStyle("Dunkelweizen");
+	public static BeerStyle BEERTYPE_WEIZENBOCK = new BeerStyle("Weizenbock");
+	public static BeerStyle BEERTYPE_GERMAN_RYE = new BeerStyle("German Rye Beer");
+
+	
+	// India Pale Ale (IPA)
+	public static BeerStyle BEERTYPE_ENGLISH_IPA = new BeerStyle("IPA, English");
+	public static BeerStyle BEERTYPE_AMERICAN_IPA = new BeerStyle("IPA, American");
+	public static BeerStyle BEERTYPE_IMPERIAL_IPA = new BeerStyle("IPA, Imperial");
 	
 	// Light Lager
 	public static BeerStyle BEERTYPE_LIGHT_AMERICAN_LAGER = new BeerStyle("Lager, Light American");
@@ -100,17 +118,24 @@ public class Utils {
 	
 	// Porter
 	public static BeerStyle BEERTYPE_BROWN_PORTER = new BeerStyle("Porter, Brown");
-
-	public static BeerStyle BEERTYPE_GERMAN_WHEAT = new BeerStyle("German Wheat");
-	public static BeerStyle BEERTYPE_WEIZENBOCK = new BeerStyle("Weizenbock");
+	public static BeerStyle BEERTYPE_ROBUST_PORTER = new BeerStyle("Porter, Robust");
+	public static BeerStyle BEERTYPE_BALTIC_PORTER = new BeerStyle("Porter, Baltic");
+	
+	// Belgian and French Ale TODO: Biere de Garde, Belgian Specialty Ale
 	public static BeerStyle BEERTYPE_WITBIER = new BeerStyle("Witbier");
-	public static BeerStyle BEERTYPE_BELGIAN_ALE = new BeerStyle("Belgian Ale");
-	public static BeerStyle BEERTYPE_SOUR_ALE = new BeerStyle("Sour Ale");
-	public static BeerStyle BEERTYPE_BELGIAN_STRONG_ALE = new BeerStyle("Belgian Strong Ale");
-	public static BeerStyle BEERTYPE_STRONG_ALE = new BeerStyle("Strong Ale");
-	public static BeerStyle BEERTYPE_FRUIT_BEER = new BeerStyle("Fruit Beer");
-	public static BeerStyle BEERTYPE_SPICE_HERB_VEG = new BeerStyle("Spice/Herb/Vegetable Beer");
-	public static BeerStyle BEERTYPE_SPECIALTY = new BeerStyle("Specialty Beer");
+	public static BeerStyle BEERTYPE_BELGIAN_PALE_ALE = new BeerStyle("Belgian Ale");
+	public static BeerStyle BEERTYPE_SAISON = new BeerStyle("Saison");
+	
+	// Sour Ale TODO:
+	public static BeerStyle BEERTYPE_BERLINER_WEISSE = new BeerStyle("Berliner Weisse");
+	
+	// Belgian Ale TODO:
+	public static BeerStyle BEERTYPE_BELGIAN_BLOND_ALE = new BeerStyle("Belgian Blond Ale");
+	
+	// Strong Ale TODO:
+	public static BeerStyle BEERTYPE_OLD_ALE = new BeerStyle("Old Ale");
+
+	
 	
 	// Fermentables.. http://byo.com/resources/grains
 	public static Ingredient FERMENTABLE_BLACK_BARLEY = new Grain("Black Barley", "lbs", 525, 1.025, Grain.GRAIN);
@@ -152,9 +177,9 @@ public class Utils {
 	{
 		ArrayList<BeerStyle> list = new ArrayList<BeerStyle>();
 		
-		list.add(BEERTYPE_HEFEWEIZEN);
-		list.add(BEERTYPE_STOUT);
-		list.add(BEERTYPE_IPA);
+		list.add(BEERTYPE_WEIZEN);
+		list.add(BEERTYPE_SWEET_STOUT);
+		list.add(BEERTYPE_ENGLISH_IPA);
 		list.add(BEERTYPE_LIGHT_AMERICAN_LAGER);
 		list.add(BEERTYPE_GERMAN_PILSNER);
 		list.add(BEERTYPE_VIENNA_LAGER);
@@ -167,13 +192,12 @@ public class Utils {
 		list.add(BEERTYPE_AMERICAN_PALE_ALE);
 		list.add(BEERTYPE_ENGLISH_MILD_BROWN_ALE);
 		list.add(BEERTYPE_BROWN_PORTER);
-		list.add(BEERTYPE_GERMAN_WHEAT);
-		list.add(BEERTYPE_WEIZENBOCK);
+		list.add(BEERTYPE_GERMAN_RYE);
 		list.add(BEERTYPE_WITBIER);
-		list.add(BEERTYPE_BELGIAN_ALE);
-		list.add(BEERTYPE_SOUR_ALE);
-		list.add(BEERTYPE_BELGIAN_STRONG_ALE);
-		list.add(BEERTYPE_STRONG_ALE);
+		list.add(BEERTYPE_BELGIAN_PALE_ALE);
+		list.add(BEERTYPE_BERLINER_WEISSE);
+		list.add(BEERTYPE_BELGIAN_BLOND_ALE);
+		list.add(BEERTYPE_OLD_ALE);
 		list.add(BEERTYPE_FRUIT_BEER);
 		list.add(BEERTYPE_SPICE_HERB_VEG);
 		list.add(BEERTYPE_SPECIALTY);
@@ -193,7 +217,6 @@ public class Utils {
 		list.add(BEERTYPE_EISBOCK);
 		list.add(BEERTYPE_BLONDE_ALE);
 		list.add(BEERTYPE_KOLSCH);
-		list.add(BEERTYPE_KOLSCH);
 		list.add(BEERTYPE_AMERICAN_RYE_WHEAT);
 		list.add(BEERTYPE_CALIF_COMMON);
 		list.add(BEERTYPE_DUSSELDORF_ALTBIER);
@@ -207,6 +230,16 @@ public class Utils {
 		list.add(BEERTYPE_AMERICAN_BROWN_ALE);
 		list.add(BEERTYPE_ENGLISH_SOUTHERN_BROWN);
 		list.add(BEERTYPE_ENGLISH_NORTHERN_BROWN);
+		list.add(BEERTYPE_ROBUST_PORTER);
+		list.add(BEERTYPE_BALTIC_PORTER);
+		list.add(BEERTYPE_FOREIGN_EXTRA_STOUT);
+		list.add(BEERTYPE_AMERICAN_STOUT);
+		list.add(BEERTYPE_AMERICAN_IPA);
+		list.add(BEERTYPE_IMPERIAL_IPA);
+		list.add(BEERTYPE_DUNKELWEIZEN);
+		list.add(BEERTYPE_WEIZENBOCK);
+		list.add(BEERTYPE_SAISON);
+		list.add(BEERTYPE_RAUNCHBIER);
 		
 		Collections.sort(list, new BeerStyleComparator<BeerStyle>());
 		list.add(0, BEERTYPE_OTHER);
@@ -366,23 +399,41 @@ public class Utils {
 		if (type.equals(BEERTYPE_OTHER))
 			return new RecipeReccomendedValues();
 		
-		else if (type.equals(BEERTYPE_STOUT.toString()))
-			return new RecipeReccomendedValues(); 
+		else if (type.equals(BEERTYPE_SWEET_STOUT.toString()))
+			return new RecipeReccomendedValues(1.044, 1.060, 1.012, 1.024, 20, 40, 30, 40, 4, 6); 
 		
 		else if (type.equals(BEERTYPE_DRY_STOUT.toString()))
-			return new RecipeReccomendedValues();
+			return new RecipeReccomendedValues(1.036, 1.050, 1.007, 1.011, 30, 45, 25, 40, 4, 5);
 		
 		else if (type.equals(BEERTYPE_OATMEAL_STOUT.toString()))
-			return new RecipeReccomendedValues();
+			return new RecipeReccomendedValues(1.048, 1.065, 1.010, 1.018, 25, 40, 22, 40, 4.2, 5.9);
+		
+		else if (type.equals(BEERTYPE_FOREIGN_EXTRA_STOUT.toString()))
+			return new RecipeReccomendedValues(1.056, 1.075, 1.010, 1.018, 30, 70, 30, 40, 5.5, 8);
+		
+		else if (type.equals(BEERTYPE_AMERICAN_STOUT.toString()))
+			return new RecipeReccomendedValues(1.050, 1.075, 1.010, 1.022, 35, 75, 30, 40, 5, 7);
 		
 		else if (type.equals(BEERTYPE_IMPERIAL_STOUT.toString()))
-			return new RecipeReccomendedValues();
+			return new RecipeReccomendedValues(1.075, 1.115, 1.018, 1.030, 50, 90, 30, 40, 8, 12);
 		
-		else if (type.equals(BEERTYPE_HEFEWEIZEN.toString()))
-			return new RecipeReccomendedValues();
+		else if (type.equals(BEERTYPE_AMERICAN_IPA.toString()))
+			return new RecipeReccomendedValues(1.056, 1.075, 1.010, 1.018, 40, 70, 6, 15, 5.5, 7.5);
 		
-		else if (type.equals(BEERTYPE_IPA.toString()))
-			return new RecipeReccomendedValues();
+		else if (type.equals(BEERTYPE_AMERICAN_IPA.toString()))
+			return new RecipeReccomendedValues(1.070, 1.090, 1.010, 1.020, 60, 120, 8, 15, 7.5, 10);
+		
+		else if (type.equals(BEERTYPE_WEIZEN.toString()))
+			return new RecipeReccomendedValues(1.044, 1.052, 1.010, 1.014, 8, 15, 2, 8, 4.2, 5.6);
+		
+		else if (type.equals(BEERTYPE_DUNKELWEIZEN.toString()))
+			return new RecipeReccomendedValues(1.044, 1.056, 1.010, 1.014, 10, 18, 14, 23, 4.3, 5.6);
+		
+		else if (type.equals(BEERTYPE_WEIZENBOCK.toString()))
+			return new RecipeReccomendedValues(1.064, 1.090, 1.015, 1.022, 15, 30, 12,25, 6.5, 8.0);
+		
+		else if (type.equals(BEERTYPE_ENGLISH_IPA.toString()))
+			return new RecipeReccomendedValues(1.050, 1.075, 1.010, 1.018, 40, 60, 8, 14, 5, 7.5);
 		
 		else if (type.equals(BEERTYPE_LIGHT_AMERICAN_LAGER.toString()))
 			return new RecipeReccomendedValues(1.028, 1.040, .998, 1.008, 8.0, 12.0, 2.0, 3.0, 2.8, 4.2);
@@ -498,26 +549,35 @@ public class Utils {
 		else if (type.equals(BEERTYPE_BROWN_PORTER.toString()))
 			return new RecipeReccomendedValues(1.040, 1.052, 1.008, 1.014, 18, 35, 20, 30, 4, 5.4);
 		
-		else if (type.equals(BEERTYPE_GERMAN_WHEAT.toString()))
-			return new RecipeReccomendedValues();
+		else if (type.equals(BEERTYPE_ROBUST_PORTER.toString()))
+			return new RecipeReccomendedValues(1.048, 1.065, 1.012, 1.016, 25, 50, 22, 35, 4.8, 6.5);
 		
-		else if (type.equals(BEERTYPE_WEIZENBOCK.toString()))
-			return new RecipeReccomendedValues();
+		else if (type.equals(BEERTYPE_BALTIC_PORTER.toString()))
+			return new RecipeReccomendedValues(1.060, 1.090, 1.016, 1.024, 20, 40, 17, 30, 5.5, 9.5);
+		
+		else if (type.equals(BEERTYPE_GERMAN_RYE.toString()))
+			return new RecipeReccomendedValues(1.046, 1.056, 1.010, 1.014, 10, 20, 14, 19, 4.5, 6.0);
 		
 		else if (type.equals(BEERTYPE_WITBIER.toString()))
-			return new RecipeReccomendedValues();
+			return new RecipeReccomendedValues(1.044, 1.052, 1.008, 1.012, 10, 20, 2.0, 4.0, 4.5, 5.5);
 		
-		else if (type.equals(BEERTYPE_BELGIAN_ALE.toString()))
-			return new RecipeReccomendedValues();
+		else if (type.equals(BEERTYPE_BELGIAN_PALE_ALE.toString()))
+			return new RecipeReccomendedValues(1.048, 1.054, 1.010, 1.014, 20, 30, 8, 14, 4.8, 5.5);
 		
-		else if (type.equals(BEERTYPE_SOUR_ALE.toString()))
-			return new RecipeReccomendedValues();
+		else if (type.equals(BEERTYPE_SAISON.toString()))
+			return new RecipeReccomendedValues(1.048, 1.065, 1.002, 1.012, 20, 35, 5, 14, 5, 7);
 		
-		else if (type.equals(BEERTYPE_BELGIAN_STRONG_ALE.toString()))
-			return new RecipeReccomendedValues();
+		else if (type.equals(BEERTYPE_BERLINER_WEISSE.toString()))
+			return new RecipeReccomendedValues(1.028, 1.032, 1.003, 1.006, 3, 8, 2, 3, 2.8, 3.8);
 		
-		else if (type.equals(BEERTYPE_STRONG_ALE.toString()))
-			return new RecipeReccomendedValues();
+		else if (type.equals(BEERTYPE_BELGIAN_BLOND_ALE.toString()))
+			return new RecipeReccomendedValues(1.062, 1.075, 1.008, 1.018, 15, 30, 4, 7, 6, 7.5);
+		
+		else if (type.equals(BEERTYPE_OLD_ALE.toString()))
+			return new RecipeReccomendedValues(1.060, 1.090, 1.015, 1.022, 30, 60, 10, 22, 6, 9);
+		
+		else if (type.equals(BEERTYPE_RAUNCHBIER.toString()))
+			return new RecipeReccomendedValues(1.050, 1.057, 1.012, 1.016, 20, 30, 12, 22, 4.8, 6);
 		
 		else if (type.equals(BEERTYPE_FRUIT_BEER.toString()))
 			return new RecipeReccomendedValues();
