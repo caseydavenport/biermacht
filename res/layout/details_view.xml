@@ -66,7 +66,22 @@
 		        	    android:layout_weight="1"
 		        	    android:background="#00000000"
 		        	    android:layout_height="fill_parent"
+		        	    android:gravity="right"
+		        	    android:layout_marginRight="15dp"
 		        	    android:text="content" />
+		        	
+		        	<View android:layout_height="fill_parent"
+		        	    android:layout_width="1dp"
+		        	    android:background="#AAAAAA"
+		        	    android:layout_marginRight="15dp" />
+		        	
+		        	<TextView android:id="@+id/gravity_range"
+		        	    android:layout_width="0dip"
+		        	    android:layout_weight="1"
+		        	    android:background="#00000000"
+		        	    android:layout_height="fill_parent"
+		        	    android:text="@string/error" />
+		        	
 		        </LinearLayout>
 		        
 		        <!-- Bitterness view -->
@@ -89,7 +104,22 @@
 		        	    android:layout_weight="1"
 		        	    android:background="#00000000"
 		        	    android:layout_height="fill_parent"
+		        	    android:gravity="right"
+		        	    android:layout_marginRight="15dp"
 		        	    android:text="content" />
+		        	
+		        	<View android:layout_height="fill_parent"
+		        	    android:layout_width="1dp"
+		        	    android:background="#AAAAAA"
+		        	    android:layout_marginRight="15dp" />
+		        	
+		        	<TextView android:id="@+id/bitterness_range"
+		        	    android:layout_width="0dip"
+		        	    android:layout_weight="1"
+		        	    android:background="#00000000"
+		        	    android:layout_height="fill_parent"
+		        	    android:text="@string/error" />
+		        	
 		        </LinearLayout>
 		        
 		        <!-- Color view -->
@@ -112,7 +142,22 @@
 		        	    android:layout_weight="1"
 		        	    android:background="#00000000"
 		        	    android:layout_height="fill_parent"
+		        	    android:gravity="right"
+		        	    android:layout_marginRight="15dp"
 		        	    android:text="content" />
+		        	
+		        	<View android:layout_height="fill_parent"
+		        	    android:layout_width="1dp"
+		        	    android:background="#AAAAAA"
+		        	    android:layout_marginRight="15dp" />
+		        	
+		        	<TextView android:id="@+id/color_range"
+		        	    android:layout_width="0dip"
+		        	    android:layout_weight="1"
+		        	    android:background="#00000000"
+		        	    android:layout_height="fill_parent"
+		        	    android:text="@string/error" />
+		        	
 		        </LinearLayout>
 		        
 		        <!-- ABV view -->
@@ -135,7 +180,21 @@
 		        	    android:layout_weight="1"
 		        	    android:background="#00000000"
 		        	    android:layout_height="fill_parent"
+		        	    android:gravity="right"
+		        	    android:layout_marginRight="15dp"
 		        	    android:text="content" />
+		        	
+		        	<View android:layout_height="fill_parent"
+		        	    android:layout_width="1dp"
+		        	    android:background="#AAAAAA"
+		        	    android:layout_marginRight="15dp" />
+		        	
+		        	<TextView android:id="@+id/ABV_range"
+		        	    android:layout_width="0dip"
+		        	    android:layout_weight="1"
+		        	    android:background="#00000000"
+		        	    android:layout_height="fill_parent"
+		        	    android:text="@string/error" />
 		        </LinearLayout>
 		         
 		    </LinearLayout>

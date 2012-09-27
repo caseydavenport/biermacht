@@ -21,6 +21,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.recipe.RecipeReccomendedValues;
 import com.biermacht.brews.utils.Utils;
 
 public class CustomFragment extends Fragment {
@@ -33,11 +34,13 @@ public class CustomFragment extends Fragment {
 	private ListView ingredientListView;
 	private ArrayList<Ingredient> ingredientList;
 	private ArrayList<Instruction> instructionList;
+	private RecipeReccomendedValues reccomendedValues;
 	
 	public CustomFragment(int resource, Recipe r)
 	{
 		this.resource = resource;
 		this.r = r;
+		this.reccomendedValues = Utils.getRecipeReccomendedValues(r);
 		
 		isIngredientList = false;
 		isInstructionView = false;
@@ -147,7 +150,7 @@ public class CustomFragment extends Fragment {
 		  // Beer bitterness detail view
 		  TextView bitt_tag = (TextView) bitternessView.findViewById(R.id.tag);
 		  TextView bitt_content = (TextView) bitternessView.findViewById(R.id.content);
-		  bitt_tag.setText("Bitterness (IBU): ");
+		  bitt_tag.setText("Bitter (IBU): ");
 		  bitt_content.setText("" + r.getBitterness() + "");	
 		  
 		  // Beer color detail view
@@ -161,6 +164,29 @@ public class CustomFragment extends Fragment {
 		  TextView abv_content = (TextView) abvView.findViewById(R.id.content);
 		  abv_tag.setText("ABV: ");
 		  abv_content.setText("" + r.getABV() + "%");
+		  
+		  // ===========================================
+		  // RECCOMENDED VALUES VIEWS
+		  // ===========================================
+
+		  
+		  // Beer gravity detail view
+		  TextView grav_range = (TextView) gravityView.findViewById(R.id.gravity_range);
+		  grav_range.setText(reccomendedValues.getGravRange());
+		  
+		  // Beer bitterness detail view
+		  TextView bitt_range = (TextView) bitternessView.findViewById(R.id.bitterness_range);
+		  bitt_range.setText(reccomendedValues.getBitterRange());	
+		  
+		  // Beer color detail view
+		  TextView color_range = (TextView) colorView.findViewById(R.id.color_range);
+		  color_range.setText(reccomendedValues.getColorRange());
+		  
+		  // Beer abv detail view
+		  TextView abv_range = (TextView) abvView.findViewById(R.id.ABV_range);
+		  abv_range.setText(reccomendedValues.getAbvRange());
+		  
+		  
 		  
 		  //Add details page view to the table
 		  tableView.addView(pageView);	
