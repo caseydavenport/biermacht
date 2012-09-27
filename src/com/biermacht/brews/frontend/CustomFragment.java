@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -134,7 +135,7 @@ public class CustomFragment extends Fragment {
 		  LinearLayout bitternessView = (LinearLayout) pageView.findViewById(R.id.beer_bitterness_view);
 		  LinearLayout colorView = (LinearLayout) pageView.findViewById(R.id.beer_color_view);
 		  LinearLayout abvView = (LinearLayout) pageView.findViewById(R.id.beer_abv_view);
-		  
+
 		  // Beer type detail view
 		  TextView tag = (TextView) beerTypeView.findViewById(R.id.tag);
 		  TextView content = (TextView) beerTypeView.findViewById(R.id.content);
@@ -164,6 +165,35 @@ public class CustomFragment extends Fragment {
 		  TextView abv_content = (TextView) abvView.findViewById(R.id.content);
 		  abv_tag.setText("ABV: ");
 		  abv_content.setText("" + r.getABV() + "%");
+		  
+		  // Set all the colors appropriately
+		  String green = "#44AA44";
+		  String red = "#FF0000";
+		  
+		  Boolean isGravGreen = Utils.isWithinRange(r.getGravity(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
+		  Boolean isBitGreen = Utils.isWithinRange(r.getBitterness(), reccomendedValues.getMinBitter(), reccomendedValues.getMaxBitter());
+		  Boolean isColorGreen = Utils.isWithinRange(r.getColor(), reccomendedValues.getMinColor(), reccomendedValues.getMaxColor());
+		  Boolean isAbvGreen = Utils.isWithinRange(r.getABV(), reccomendedValues.getMinAbv(), reccomendedValues.getMaxAbv());
+		  
+		  if (isGravGreen)
+			  grav_content.setTextColor(Color.parseColor(green));
+		  else
+			  grav_content.setTextColor(Color.parseColor(red));
+		  
+		  if (isBitGreen)
+			  bitt_content.setTextColor(Color.parseColor(green));
+		  else
+			  bitt_content.setTextColor(Color.parseColor(red));
+		  
+		  if (isColorGreen)
+			  color_content.setTextColor(Color.parseColor(green));
+		  else
+			  color_content.setTextColor(Color.parseColor(red));
+		  
+		  if (isAbvGreen)
+			  abv_content.setTextColor(Color.parseColor(green));
+		  else
+			  abv_content.setTextColor(Color.parseColor(red));
 		  
 		  // ===========================================
 		  // RECCOMENDED VALUES VIEWS

@@ -325,6 +325,14 @@ public class Utils {
 		return listToReturn;
 	}
 	
+	public static boolean isWithinRange(float a, double low, double high)
+	{
+		if (a <= high && a >= low)
+			return true;
+		else
+			return false;
+	}
+	
 	// Methods for dealing with the Database
 	/**
 	 * Get all recipes in the database
@@ -593,6 +601,5 @@ public class Utils {
 		
 		else
 			return new RecipeReccomendedValues();
-		
 	}
 }
