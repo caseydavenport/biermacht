@@ -43,9 +43,11 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 		}
 		
 		TextView textView = (TextView) row.findViewById(R.id.label);
+		TextView beerStyleView = (TextView) row.findViewById(R.id.beer_style);
 		ImageView imageView = (ImageView) row.findViewById(R.id.row_icon);
 		
 		textView.setText(list.get(position).getRecipeName());
+		beerStyleView.setText((list.get(position).getBeerType()));
 		
 		// Set beer color here
 		String color = ColorHandler.getSrmColor(list.get(position).getColor());

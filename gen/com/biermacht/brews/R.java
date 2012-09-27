@@ -40,6 +40,7 @@ public final class R {
         public static final int beer_bitterness_view=0x7f07001f;
         public static final int beer_color_view=0x7f070021;
         public static final int beer_gravity_view=0x7f07001d;
+        public static final int beer_style=0x7f070038;
         public static final int beer_type_spinner=0x7f07000e;
         public static final int beer_type_view=0x7f07001a;
         public static final int bitterness_range=0x7f070020;
@@ -71,8 +72,8 @@ public final class R {
         public static final int ingredient_row_icon=0x7f070029;
         public static final int instruction_list=0x7f070034;
         public static final int label=0x7f07002a;
-        public static final int menu_new_recipe=0x7f07003a;
-        public static final int menu_settings=0x7f070039;
+        public static final int menu_new_recipe=0x7f07003b;
+        public static final int menu_settings=0x7f07003a;
         public static final int new_grain_submit_button=0x7f070007;
         public static final int new_recipe_submit_button=0x7f070010;
         public static final int no_ingredients_view=0x7f07002d;
@@ -85,7 +86,7 @@ public final class R {
         public static final int search_bar=0x7f070015;
         public static final int search_icon=0x7f070016;
         public static final int select_ingredient_type_button=0x7f070017;
-        public static final int selected_view=0x7f070038;
+        public static final int selected_view=0x7f070039;
         public static final int tag=0x7f07001b;
         public static final int time_view=0x7f070033;
         public static final int timer=0x7f070036;
