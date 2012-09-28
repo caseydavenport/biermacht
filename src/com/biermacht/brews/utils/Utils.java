@@ -151,6 +151,7 @@ public class Utils {
 	public static Ingredient FERMENTABLE_WHITE_WHEAT_MALT = new Grain("White Wheat Malt", "lbs", 2, 1.037, Grain.GRAIN);
 
 	// Hops.. http://byo.com/resources/hops
+	public static Ingredient HOP_OTHER = new Hop("Custom Hop", 6, "Custom added hop");
 	public static Ingredient HOP_AHTANUM = new Hop("Ahtanum", 5, "Floral, citrus, sharp, piney");
 	public static Ingredient HOP_AMARILLO = new Hop("Amarillo", 8.5, "Citrus, flowery");
 	public static Ingredient HOP_APOLLO = new Hop("Apollo", 17, "High alpha acid content, disease resistant");
@@ -167,7 +168,39 @@ public class Utils {
 	public static Ingredient HOP_GALAXY = new Hop("Galaxy (AUS)", 14, "");
 	public static Ingredient HOP_GALENA = new Hop("Galena", 12, "Medium strength, citrusy");
 	public static Ingredient HOP_GLACIER = new Hop("Glacier (US)", 7, "Earthy, Citrus");
-
+	public static Ingredient HOP_HORIZON = new Hop("Horizon", 12.5, "Pleasantly hoppy");
+	public static Ingredient HOP_MAGNUM = new Hop("Magnum", 14, "Bitter");
+	public static Ingredient HOP_NELSON_SAUVIN = new Hop("Nelson Sauvin", 13, "Grape-like flavor");
+	public static Ingredient HOP_NEWPORT = new Hop("Newport", 15, "Pungent");
+	public static Ingredient HOP_NORTHERN_BREWER_GER = new Hop("Northern Brewer (GER)", 8.5, "Medium strength");
+	public static Ingredient HOP_NORTHERN_BREWER_US = new Hop("Northern Brewer (US)", 8, "Medium strength");
+	public static Ingredient HOP_NW_GOLDING = new Hop("Northwest Golding", 7, "Earthy, Citrus");
+	public static Ingredient HOP_NUGGET = new Hop("Nugget", 12.75, "Heavy and herbal");
+	public static Ingredient HOP_OLYMPIC = new Hop("Olympic", 12, "Citrusy, spicy");
+	public static Ingredient HOP_OPAL_GER = new Hop("Opal (GER)", 6.5, "dual-purpose");
+	public static Ingredient HOP_PACIFIC_GEM_NZ = new Hop("Pacific Gem (NZ)", 14, "Woody");
+	public static Ingredient HOP_PACIFIC_JADE_NZ = new Hop("Pacific Jade (NZ)", 13, "Spicy, citrusy");
+	public static Ingredient HOP_PALISADE = new Hop("Palisade", 6.5, " ");
+	public static Ingredient HOP_PERLE_GER = new Hop("Perle (GER)", 7.25, "Fruity, mild spice");
+	public static Ingredient HOP_PERLE_US = new Hop("Perle (US)", 7.75, "Aromatic, bitter");
+	public static Ingredient HOP_PILGRIM_UK = new Hop("Pilgrim (UK)", 11, " ");
+	public static Ingredient HOP_PR_OF_RINGWOOD_AUS = new Hop("Pride of Ringwood (AUS)", 8.5, "Woody, earthy, herbal");
+	public static Ingredient HOP_RIWAKA_NZ = new Hop("Riwaka (NZ)", 5.5, "Citrusy, grapefruit aroma");
+	public static Ingredient HOP_SANTIAM = new Hop("Santiam (GER)", 6.5, "Noble");
+	public static Ingredient HOP_SATUS = new Hop("Satus (GER)", 13.25, "Bitter, aromatic");
+	public static Ingredient HOP_SIMCOE = new Hop("Simcoe (GER)", 13, "Bitter, aromatic");
+	public static Ingredient HOP_SORACHI_ACE = new Hop("Sorachi Ace (JAP)", 14.5, "Bitter, lemon aroma");
+	public static Ingredient HOP_SOVEREIGN = new Hop("Sovereign (UK)", 5.5, "Mild");
+	public static Ingredient HOP_SUMMIT = new Hop("Summit", 17, "Ultra bitter");
+	public static Ingredient HOP_SUN = new Hop("Sun", 14, "Intense character");
+	public static Ingredient HOP_SUPER_ALPHA = new Hop("Super Alpha (NZ))", 11, "Earthy, pineyc");
+	public static Ingredient HOP_SUPER_PRIDE = new Hop("Super Pride (AUS)", 14, "Bitter");
+	public static Ingredient HOP_TARGET = new Hop("Target (UK)", 11, "Intense");
+	public static Ingredient HOP_TOMAHAWK = new Hop("Tomahawk", 16, "Bitter");
+	public static Ingredient HOP_WARRIOR = new Hop("Warrior", 16, "Bitter, aromatic");
+	public static Ingredient HOP_WILLAMETTE = new Hop("Willamette", 4.5, "Mild, spicy, fruity, floral");
+	public static Ingredient HOP_YAKIMA_CLUSTER = new Hop("Yakima Cluster", 7.25, "kettle hop for bittering");
+	public static Ingredient HOP_ZEUS = new Hop("Zeus", 15, "Pleasant, aromatic");
 	
 // ====================================================================================
 // ====================================================================================
@@ -269,6 +302,7 @@ public class Utils {
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
 		
+		list.add(HOP_OTHER);
 		list.add(HOP_AHTANUM);
 		list.add(HOP_AMARILLO);
 		list.add(HOP_APOLLO);
@@ -285,6 +319,39 @@ public class Utils {
 		list.add(HOP_GALAXY);
 		list.add(HOP_GALENA);
 		list.add(HOP_GLACIER);
+		list.add(HOP_HORIZON);
+		list.add(HOP_MAGNUM);
+		list.add(HOP_NELSON_SAUVIN);
+		list.add(HOP_NEWPORT);
+		list.add(HOP_NORTHERN_BREWER_GER);
+		list.add(HOP_NORTHERN_BREWER_US);
+		list.add(HOP_NW_GOLDING);
+		list.add(HOP_NUGGET);
+		list.add(HOP_OLYMPIC);
+		list.add(HOP_OPAL_GER);
+		list.add(HOP_PACIFIC_GEM_NZ);
+		list.add(HOP_PACIFIC_JADE_NZ);
+		list.add(HOP_PALISADE);
+		list.add(HOP_PERLE_GER);
+		list.add(HOP_PERLE_US);
+		list.add(HOP_PILGRIM_UK);
+		list.add(HOP_PR_OF_RINGWOOD_AUS);
+		list.add(HOP_RIWAKA_NZ);
+		list.add(HOP_SANTIAM);
+		list.add(HOP_SATUS);
+		list.add(HOP_SIMCOE);
+		list.add(HOP_SORACHI_ACE);
+		list.add(HOP_SOVEREIGN);
+		list.add(HOP_SUMMIT);
+		list.add(HOP_SUN);
+		list.add(HOP_SUPER_ALPHA);
+		list.add(HOP_SUPER_PRIDE);
+		list.add(HOP_TARGET);
+		list.add(HOP_TOMAHAWK);
+		list.add(HOP_WARRIOR);
+		list.add(HOP_WILLAMETTE);
+		list.add(HOP_YAKIMA_CLUSTER);
+		list.add(HOP_ZEUS); 
 	
 		return list;
 	}
