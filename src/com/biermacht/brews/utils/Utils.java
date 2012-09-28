@@ -138,6 +138,7 @@ public class Utils {
 	
 	
 	// Fermentables.. http://byo.com/resources/grains
+	public static Ingredient FERMENTABLE_OTHER = new Grain("Custom Fermentable", "lbs", 10, 1.030, Grain.GRAIN);
 	public static Ingredient FERMENTABLE_BLACK_BARLEY = new Grain("Black Barley", "lbs", 525, 1.025, Grain.GRAIN);
 	public static Ingredient FERMENTABLE_MUNICH_MALT = new Grain("Munich Malt", "lbs", 10, 1.034, Grain.GRAIN);
 	public static Ingredient FERMENTABLE_CHOCOLATE_MALT = new Grain("Chocolate Malt", "lbs", 350, 1.034, Grain.GRAIN);
@@ -294,6 +295,9 @@ public class Utils {
 		list.add(FERMENTABLE_VIENNA_MALT);
 		list.add(FERMENTABLE_WHEAT_MALT);
 		list.add(FERMENTABLE_WHITE_WHEAT_MALT);
+		
+		Collections.sort(list, new IngredientComparator<Ingredient>());
+		list.add(0, FERMENTABLE_OTHER);
 
 		return list;
 	}
@@ -302,7 +306,6 @@ public class Utils {
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
 		
-		list.add(HOP_OTHER);
 		list.add(HOP_AHTANUM);
 		list.add(HOP_AMARILLO);
 		list.add(HOP_APOLLO);
@@ -352,6 +355,9 @@ public class Utils {
 		list.add(HOP_WILLAMETTE);
 		list.add(HOP_YAKIMA_CLUSTER);
 		list.add(HOP_ZEUS); 
+		
+		Collections.sort(list, new IngredientComparator<Ingredient>());
+		list.add(0, HOP_OTHER);
 	
 		return list;
 	}
