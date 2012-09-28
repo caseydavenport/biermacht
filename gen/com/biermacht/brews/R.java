@@ -14,20 +14,21 @@ public final class R {
         public static final int actionbar_background=0x7f020000;
         public static final int beer_icon=0x7f020001;
         public static final int beer_icon_editable=0x7f020002;
-        public static final int ic_action_search=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int icon=0x7f020005;
-        public static final int icon_clock=0x7f020006;
-        public static final int icon_default=0x7f020007;
-        public static final int icon_hefeweizen=0x7f020008;
-        public static final int icon_hops=0x7f020009;
-        public static final int icon_idk=0x7f02000a;
-        public static final int icon_ipa=0x7f02000b;
-        public static final int icon_stout=0x7f02000c;
-        public static final int icon_wheat=0x7f02000d;
-        public static final int icon_yeast=0x7f02000e;
-        public static final int plus_icon=0x7f02000f;
-        public static final int search_icon=0x7f020010;
+        public static final int button_gradient=0x7f020003;
+        public static final int ic_action_search=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int icon=0x7f020006;
+        public static final int icon_clock=0x7f020007;
+        public static final int icon_default=0x7f020008;
+        public static final int icon_hefeweizen=0x7f020009;
+        public static final int icon_hops=0x7f02000a;
+        public static final int icon_idk=0x7f02000b;
+        public static final int icon_ipa=0x7f02000c;
+        public static final int icon_stout=0x7f02000d;
+        public static final int icon_wheat=0x7f02000e;
+        public static final int icon_yeast=0x7f02000f;
+        public static final int plus_icon=0x7f020010;
+        public static final int search_icon=0x7f020011;
     }
     public static final class id {
         public static final int ABV_range=0x7f070024;

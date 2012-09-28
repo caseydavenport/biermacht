@@ -52,7 +52,7 @@
 	        android:layout_margin="2dp"
 	        android:layout_height="wrap_content"
 	        android:onClick="onClick"
-	        android:background="#EEEEEE"
+	        android:background="@drawable/button_gradient"
 	        android:text="Add Grain" />
 	    
 	    <Button
@@ -64,7 +64,7 @@
 	        android:layout_margin="2dp"
 	        android:layout_height="wrap_content"
 	        android:onClick="onClick"
-	        android:background="#EEEEEE"
+	        android:background="@drawable/button_gradient"
 	        android:text="Add Hops" />
 	    
 	    <Button
@@ -76,7 +76,7 @@
 	        android:layout_margin="2dp"
 	        android:layout_height="wrap_content"
 	        android:onClick="onClick"
-	        android:background="#EEEEEE"
+	        android:background="@drawable/button_gradient"
 	        android:text="Add Yeast" />
 	    
 	    <Button
@@ -88,7 +88,7 @@
 	        android:layout_margin="2dp"
 	        android:layout_height="wrap_content"
 	        android:onClick="onClick"
-	        android:background="#EEEEEE"
+	        android:background="@drawable/button_gradient"
 	        android:text="Add Other" />
        
     </LinearLayout>
