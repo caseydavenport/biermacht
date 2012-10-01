@@ -167,8 +167,8 @@ public final class R {
          */
         public static final int recipe_search_hint=0x7f060013;
         public static final int search_icon_description=0x7f060014;
+        public static final int title_activity_add_grain=0x7f060006;
         public static final int title_activity_add_hops=0x7f060009;
-        public static final int title_activity_add_ingredient=0x7f060006;
         public static final int title_activity_add_new_recipe=0x7f060004;
         public static final int title_activity_display_recipe=0x7f060003;
         public static final int title_activity_edit_grain=0x7f060007;

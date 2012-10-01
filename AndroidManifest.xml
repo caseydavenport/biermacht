@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:name=".frontend.AddGrainActivity"
-            android:label="@string/title_activity_add_ingredient"
+            android:label="@string/title_activity_add_grain"
             android:noHistory="true" >
         </activity>
         <activity
