@@ -8,7 +8,9 @@
     <LinearLayout android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dip"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_marginBottom="75dip"
+        android:layout_alignParentTop="true" >
             
 	    <View android:layout_width="2dip"
 	        android:layout_height="fill_parent" 
@@ -83,16 +85,7 @@
         android:background="@drawable/actionbar_background"
         android:layout_width="fill_parent" 
         android:layout_alignParentBottom="true">
-        
-	    <ImageView android:id="@+id/add_recipe_button"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:layout_weight="1"
-	        android:background="#00000000"
-	        android:onClick="onClick"
-	        android:src="@drawable/plus_icon" />
-       
+
     </LinearLayout>
     
 </RelativeLayout>

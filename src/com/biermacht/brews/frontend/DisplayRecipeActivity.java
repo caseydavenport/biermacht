@@ -136,6 +136,7 @@ class MyTabsListener implements ActionBar.TabListener {
 
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
             ft.replace(R.id.fragment_container, fragment);
+            ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
     }
 
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {

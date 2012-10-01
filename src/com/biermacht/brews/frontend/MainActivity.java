@@ -48,7 +48,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
         
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+                
         // Initialize views
         listView = getListView();
         searchView = (EditText) findViewById(R.id.search_bar);
@@ -192,11 +192,6 @@ public class MainActivity extends ListActivity implements OnClickListener {
     }
 
 	public void onClick(View v) {
-		if (v.getId() == R.id.add_recipe_button)
-		{
-    		Intent i = new Intent(getApplicationContext(), AddNewRecipeActivity.class);
-    		startActivity(i);
-		}
 		
 	}
 }
