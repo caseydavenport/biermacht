@@ -37,6 +37,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
 	private TextWatcher mTextWatcher;
 	private ArrayList<Recipe> recipeList;
 	private Recipe selectedRecipe;
+	private int searchOptions;
 	public static DatabaseInterface databaseInterface;
 	
     //Declare views here
@@ -87,6 +88,9 @@ public class MainActivity extends ListActivity implements OnClickListener {
             }
         };
         
+        // Set default search options to search by all criteria
+        searchOptions = 1;
+        
         // Add TextWatcher to search bar
         searchView.addTextChangedListener(mTextWatcher);
         
@@ -135,14 +139,23 @@ public class MainActivity extends ListActivity implements OnClickListener {
     	
     	for (Recipe r : recipeList)
     	{
+    		
+    		// Search options decoder
+    		// 1 --> Filter by all the following
+    		// 2 --> Filter by name only
+    		// 3 --> Filter by type only
+    		
+    		boolean searchByName = (searchOptions == 1 || searchOptions == 2);
+    		boolean searchByType = (searchOptions == 1 || searchOptions == 3);
+    		
     		// If the recipe name matches
-    		if(r.getRecipeName().toLowerCase().contains(s.toLowerCase()))
+    		if(r.getRecipeName().toLowerCase().contains(s.toLowerCase()) && searchByName)
     		{
     			filteredList.add(r);
     		}
     		
     		// If the recipe type matches
-    		else if(r.getBeerType().toLowerCase().contains(s.toLowerCase()))
+    		else if(r.getBeerType().toLowerCase().contains(s.toLowerCase()) && searchByType )
     		{
     			filteredList.add(r);
     		}
