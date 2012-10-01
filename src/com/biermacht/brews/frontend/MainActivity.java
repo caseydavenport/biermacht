@@ -174,7 +174,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
         selectedRecipe = recipeList.get(info.position);
         
         menu.setHeaderTitle(title);
-        String[] menuItems = {"Edit Recipe", "Delete Recipe"};
+        String[] menuItems = {"Edit Recipe", "Copy Recipe", "Delete Recipe"};
         
         for (int i = 0; i < menuItems.length; i++) 
         {
@@ -193,8 +193,16 @@ public class MainActivity extends ListActivity implements OnClickListener {
   		Intent i = new Intent(getApplicationContext(), EditRecipeActivity.class);
   		startActivity(i); 
       }
-      // Delete recipe selected
+      // Copy recipe selected
       else if (menuItemIndex == 1)
+      {
+    	  selectedRecipe.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
+    	  Utils.createRecipeFromExisting(selectedRecipe);
+    	  updateRecipeList(getFilteredList(searchView.getText().toString()));
+    	  
+      }
+      // Delete recipe selected
+      else if (menuItemIndex == 2)
       {
     	  Utils.deleteRecipe(selectedRecipe);
     	  updateRecipeList(getFilteredList(searchView.getText().toString()));

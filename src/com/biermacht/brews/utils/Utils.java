@@ -440,6 +440,19 @@ public class Utils {
 	}
 	
 	/**
+	 * Create a recipe with the given name
+	 * @param name
+	 * @return
+	 */
+	public static Recipe createRecipeFromExisting(Recipe r)
+	{
+		long id = MainActivity.databaseInterface.addRecipeToDatabase(r);
+		r = MainActivity.databaseInterface.getRecipeWithId(id);
+		
+		return r;
+	}
+	
+	/**
 	 * Updates existing recipe to match the given recipe
 	 * @param r
 	 * @return
