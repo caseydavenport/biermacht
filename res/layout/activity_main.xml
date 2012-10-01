@@ -60,9 +60,9 @@
 		        android:id="@+id/android:list"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:drawSelectorOnTop="false"
 		        android:padding="0dip"
-		        android:listSelector="#66000000" >
+		        android:drawSelectorOnTop="true"
+		        android:listSelector="@drawable/selector" >
 		    </ListView>
 		    
 		    <View android:layout_width="fill_parent"

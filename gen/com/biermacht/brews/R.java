@@ -37,6 +37,7 @@ public final class R {
         public static final int icon_yeast=0x7f020011;
         public static final int plus_icon=0x7f020012;
         public static final int search_icon=0x7f020013;
+        public static final int selector=0x7f020014;
     }
     public static final class id {
         public static final int ABV_range=0x7f080024;
