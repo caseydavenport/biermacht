@@ -49,7 +49,7 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 		
 		textView.setText(list.get(position).getRecipeName());
 		beerStyleView.setText((list.get(position).getBeerType()));
-		batchVolumeView.setText(list.get(position).getVolume() + " Gal");
+		batchVolumeView.setText(list.get(position).getVolume() + "");
 		
 		// Set beer color here
 		String color = ColorHandler.getSrmColor(list.get(position).getColor());

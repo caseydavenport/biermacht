@@ -6,62 +6,76 @@
     android:padding="10dip"
     android:orientation="vertical">
     
-    <View android:layout_width="fill_parent"
-        android:layout_height="2dip" 
-        android:background="#66000000" />
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+            
+	    <View android:layout_width="2dip"
+	        android:layout_height="fill_parent" 
+	        android:background="#66000000" />
     
-    <LinearLayout android:id="@+id/recipe_search_view"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:padding="0dip"
-        android:background="#66000000" >
-        
-        <View android:layout_width="2dip"
-            android:layout_height="fill_parent" 
-            android:background="#00000000" />
-        
-        <EditText android:id="@+id/search_bar"
-            android:layout_width="0dip" 
-            android:layout_weight="1" 
-            android:layout_height="fill_parent" 
-            android:padding="10dip"
-            android:background="#EEEEEE"
-            android:hint="Search for a recipe" />
-        
-        <View android:layout_width="2dip"
-            android:layout_height="fill_parent" 
-            android:background="#00000000" />
-        
-        <ImageView android:id="@+id/search_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:focusable="false"
-            android:background="#EEEEEE"
-            android:src="@drawable/search_icon" />
-        
-        <View android:layout_width="2dip"
-            android:layout_height="fill_parent" 
-            android:background="#00000000" />
-        
+    	<LinearLayout android:orientation="vertical"
+    	    android:layout_width="0dp"
+    	    android:layout_weight="1"
+    	    android:layout_height="wrap_content">
+    	    
+    	    <View android:layout_width="fill_parent"
+	        	android:layout_height="2dip" 
+	       		android:background="#66000000" />
+	    
+		    <LinearLayout android:id="@+id/recipe_search_view"
+		        android:orientation="horizontal"
+		        android:layout_width="fill_parent"
+		        android:layout_height="50dip"
+		        android:padding="0dip"
+		        android:background="#66000000" >
+		        
+		        <EditText android:id="@+id/search_bar"
+		            android:layout_width="0dip" 
+		            android:layout_weight="1" 
+		            android:layout_height="fill_parent" 
+		            android:padding="10dip"
+		            android:background="#EEEEEE"
+		            android:hint="Search for a recipe" />
+		        
+		        <View android:layout_width="2dip"
+		            android:layout_height="fill_parent" 
+		            android:background="#00000000" />
+		        
+		        <ImageView android:id="@+id/search_icon"
+		            android:layout_width="wrap_content"
+		            android:layout_height="fill_parent"
+		            android:gravity="center"
+		            android:focusable="false"
+		            android:background="#EEEEEE"
+		            android:src="@drawable/search_icon" />
+		        
+		    </LinearLayout>
+		    
+		    <View android:layout_width="fill_parent"
+	        	android:layout_height="2dip" 
+	       		android:background="#66000000" />
+		    
+		    <ListView
+		        android:id="@+id/android:list"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:drawSelectorOnTop="false"
+		        android:padding="0dip"
+		        android:listSelector="#66000000" >
+		    </ListView>
+		    
+		    <View android:layout_width="fill_parent"
+	        	android:layout_height="2dip" 
+	       		android:background="#66000000" />
+	    
+	    </LinearLayout>
+            
+	    <View android:layout_width="2dip"
+	        android:layout_height="fill_parent" 
+	        android:background="#66000000" />
+    
     </LinearLayout>
     
-    <View android:layout_width="fill_parent"
-        android:layout_height="2dip" 
-        android:background="#66000000" />
-    
-	    <ListView
-	        android:id="@+id/android:list"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:drawSelectorOnTop="false"
-	        android:padding="0dip"
-	        android:listSelector="#22000000" >
-	    </ListView>
-    
-    <View android:layout_width="fill_parent"
-        android:layout_height="2dip" 
-        android:background="#66000000" />
 </LinearLayout>
 
