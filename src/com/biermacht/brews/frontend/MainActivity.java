@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -27,7 +28,7 @@ import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends ListActivity implements OnClickListener {
 	
 	// Create our stuff
 	private RecipeArrayAdapter mAdapter;
@@ -189,4 +190,13 @@ public class MainActivity extends ListActivity {
         listView.setAdapter(mAdapter);
         recipeList = l;
     }
+
+	public void onClick(View v) {
+		if (v.getId() == R.id.add_recipe_button)
+		{
+    		Intent i = new Intent(getApplicationContext(), AddNewRecipeActivity.class);
+    		startActivity(i);
+		}
+		
+	}
 }

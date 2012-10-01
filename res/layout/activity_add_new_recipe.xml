@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dip"
-    android:background="#CCCCCC"
+    android:background="@color/body_background"
     android:orientation="vertical" >
         
     <!-- EditText for Beer Name -->
