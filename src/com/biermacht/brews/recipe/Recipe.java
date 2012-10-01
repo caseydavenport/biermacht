@@ -205,4 +205,10 @@ public class Recipe {
 	public void setBoilTime(int boilTime) {
 		this.boilTime = boilTime;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return this.getRecipeName();
+	}
 }

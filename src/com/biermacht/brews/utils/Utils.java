@@ -419,6 +419,8 @@ public class Utils {
 		for (Recipe r : list)
 			r.update();
 		
+		Collections.sort(list, new RecipeComparator<Recipe>());
+		
 		return list;
 	}
 	

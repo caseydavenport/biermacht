@@ -135,7 +135,14 @@ public class MainActivity extends ListActivity implements OnClickListener {
     	
     	for (Recipe r : recipeList)
     	{
+    		// If the recipe name matches
     		if(r.getRecipeName().toLowerCase().contains(s.toLowerCase()))
+    		{
+    			filteredList.add(r);
+    		}
+    		
+    		// If the recipe type matches
+    		else if(r.getBeerType().toLowerCase().contains(s.toLowerCase()))
     		{
     			filteredList.add(r);
     		}
