@@ -3,8 +3,11 @@ package com.biermacht.brews.frontend;
 import java.util.ArrayList;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,6 +25,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
@@ -204,8 +208,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
       // Delete recipe selected
       else if (menuItemIndex == 2)
       {
-    	  Utils.deleteRecipe(selectedRecipe);
-    	  updateRecipeList(getFilteredList(searchView.getText().toString()));
+    	  deleteAlert(selectedRecipe).show();
       }
 
       return true;
@@ -221,5 +224,23 @@ public class MainActivity extends ListActivity implements OnClickListener {
 
 	public void onClick(View v) {
 		
+	}
+	
+	private Builder deleteAlert(final Recipe r)
+	{
+		return new AlertDialog.Builder(this)
+			.setTitle("Confirm Delete")
+			.setMessage("Do you really want to delete '" + r.getRecipeName() +"'")
+			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+					Utils.deleteRecipe(r);
+			    	updateRecipeList(getFilteredList(searchView.getText().toString()));
+				}
+				
+		    })
+		    
+		    .setNegativeButton(android.R.string.no, null);
 	}
 }
