@@ -14,9 +14,19 @@
 
     <!-- Standard generic messages -->
     <string name="error">Error</string>
-    <string name="title_section3">Section 3</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_activity_tab_display">TabDisplayActivity</string>
+	<string name="add">Add</string>
+	<string name="cancel">Cancel</string>
+	<string name="gravity">Gravity</string>
+	<string name="color">Color</string>
+	<string name="name">Name</string>
+	<string name="enter_name">Enter a name</string>
+	
+	<!-- from activity_add_grain.xml -->
+	<string name="weight_lbs">Weight (lbs)</string>
+	<string name="grain_type">Grain Type</string>
+	
+	<!-- from activity_main.xml -->
+	<string name="recipe_search_hint">Filter Recipes</string>
+	<string name="search_icon_description">Search Icon</string>
 
 </resources>

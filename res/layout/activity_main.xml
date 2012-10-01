@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="10dip"
         android:orientation="horizontal"
-        android:layout_marginBottom="75dip"
+        android:layout_marginBottom="62dip"
         android:layout_alignParentTop="true" >
             
 	    <View android:layout_width="2dip"
@@ -38,7 +38,7 @@
 		            android:layout_height="fill_parent" 
 		            android:padding="10dip"
 		            android:background="#EEEEEE"
-		            android:hint="Search for a recipe" />
+		            android:hint="@string/recipe_search_hint" />
 		        
 		        <View android:layout_width="2dip"
 		            android:layout_height="fill_parent" 
@@ -50,6 +50,7 @@
 		            android:gravity="center"
 		            android:focusable="false"
 		            android:background="#EEEEEE"
+		            android:contentDescription="@string/search_icon_description"
 		            android:src="@drawable/search_icon" />
 		        
 		    </LinearLayout>
