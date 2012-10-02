@@ -4,7 +4,6 @@ public class Hop extends Ingredient {
 	
 	private String description;
 	private double alphaAcidContent;
-	private int boilTime;
 	private String hopType;
 	
 	public static final String TYPE_PELLET = "Pellet";
@@ -48,14 +47,6 @@ public class Hop extends Ingredient {
 	public void setAlphaAcidContent(double alphaAcidContent) {
 		this.alphaAcidContent = alphaAcidContent;
 	}
-
-	public int getBoilTime() {
-		return boilTime;
-	}
-
-	public void setBoilTime(int boilTime) {
-		this.boilTime = boilTime;
-	}	
 	
 	public void setWeight(double w)
 	{

@@ -122,7 +122,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
 		values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnit());
 		values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
-		values.put(DatabaseHelper.ING_COL_TIME, ing.getTime());
+		values.put(DatabaseHelper.ING_COL_TIME, ing.getBoilTime());
 		
 		// Grain specific values
 		if (ing.getType().equals(Ingredient.GRAIN))
@@ -165,7 +165,7 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
 			values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnit());
 			values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
-			values.put(DatabaseHelper.ING_COL_TIME, ing.getTime());
+			values.put(DatabaseHelper.ING_COL_TIME, ing.getBoilTime());
 			
 			// Grain specific values
 			if (ing.getType().equals(Ingredient.GRAIN))
@@ -348,7 +348,7 @@ public class DatabaseInterface {
 			grain.setOwnerId(ownerId);
 			grain.setUnit(ingUnit);
 			grain.setAmount(ingAmount);
-			grain.setTime(ingTime);
+			grain.setBoilTime(ingTime);
 			grain.setWeight(grainWeight);
 			grain.setLovibondColor(grainColor);
 			grain.setGravity(grainGrav);
@@ -371,7 +371,7 @@ public class DatabaseInterface {
 			hop.setOwnerId(ownerId);
 			hop.setUnit(ingUnit);
 			hop.setAmount(ingAmount);
-			hop.setTime(ingTime);
+			hop.setBoilTime(ingTime);
 			hop.setDescription(hopDesc);
 			hop.setAlphaAcidContent(hopAcid);
 			hop.setBoilTime(hopBoilTime);

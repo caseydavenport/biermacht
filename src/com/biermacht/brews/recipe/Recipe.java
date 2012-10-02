@@ -122,7 +122,7 @@ public class Recipe {
 	
 	public ArrayList<Instruction> getInstructionList()
 	{
-		return instructionList;
+		return generateInstructionsFromIngredients(); //instructionList;
 	}
 	
 	// Comparator for sorting ingredients list
@@ -210,5 +210,26 @@ public class Recipe {
 	public String toString()
 	{
 		return this.getRecipeName();
+	}
+	
+	private ArrayList<Instruction> generateInstructionsFromIngredients()
+	{
+		ArrayList<Instruction> list = new ArrayList<Instruction>();
+
+		
+		for (Ingredient i : getIngredientList())
+		{
+			Instruction inst = new Instruction();
+			
+			// Gain case
+			if (i.getType().equals(Ingredient.GRAIN))
+			{
+				inst.setInstructionText("Add " + i.getName() + " and boil for " + i.getBoilTime());
+				inst.setDuration((float) i.getBoilTime());
+				list.add(inst);
+			}
+		}
+		
+		return list;
 	}
 }

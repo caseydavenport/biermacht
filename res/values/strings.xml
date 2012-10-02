@@ -20,10 +20,16 @@
 	<string name="color">Color</string>
 	<string name="name">Name</string>
 	<string name="enter_name">Enter a name</string>
+	<string name="boil_start_time">Boil Start Time</string>
+	<string name="boil_end_time">Boil End Time</string>
 	
 	<!-- from activity_add_grain.xml -->
 	<string name="weight_lbs">Weight (lbs)</string>
 	<string name="grain_type">Grain Type</string>
+	<string name="start_time">Start time</string>
+	<string name="end_time">End time</string>
+	<string name="boil_start_time_helper">Time in minutes after starting the brew that this ingredient gets added to the boil.</string>
+	<string name="boil_end_time_helper">This defaults to the recipe boil length! Modify for custom boil time.</string>
 	
 	<!-- from activity_main.xml -->
 	<string name="recipe_search_hint">Filter Recipes</string>

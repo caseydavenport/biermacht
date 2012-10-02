@@ -5,7 +5,7 @@ public abstract class Ingredient {
 	private String name;
 	private String unit;
 	private double amount;
-	private double time;
+	private double boilTime;
 	private long ownerId;
 	
 	public static final String GRAIN = "grain";
@@ -17,7 +17,7 @@ public abstract class Ingredient {
 		this.name = name;
 		this.amount = 0;
 		this.unit = "";
-		this.time = -1;
+		this.boilTime = -1;
 		this.ownerId = -1;
 	}
 	public Ingredient(String name, double amount, String unit, float time)
@@ -25,7 +25,7 @@ public abstract class Ingredient {
 		this.name = name;
 		this.amount = amount;
 		this.unit = unit;
-		this.time = time;
+		this.boilTime = time;
 		this.ownerId = -1;
 	}
 	
@@ -55,12 +55,12 @@ public abstract class Ingredient {
 		this.amount = amount;
 	}
 	
-	public double getTime() {
-		return time;
+	public double getBoilTime() {
+		return boilTime;
 	}
 
-	public void setTime(double time) {
-		this.time = time;
+	public void setBoilTime(double time) {
+		this.boilTime = time;
 	}
 	
 	// Abstract methods of Ingredient

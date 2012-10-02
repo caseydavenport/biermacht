@@ -27,6 +27,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainColorEditText;
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
+	private EditText grainBoilStartTimeEditText;
 	private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private String grainType;
 	private Recipe mRecipe;
@@ -47,6 +48,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainColorEditText = (EditText) findViewById(R.id.grain_color_edit_text);
         grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
+        grainBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
         
         // Set up grain type spinner
         grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
@@ -72,6 +74,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 grainColorEditText.setText(grainObj.getLovibondColor() +"");
                 grainGravEditText.setText(grainObj.getGravity() +"");
                 grainWeightEditText.setText(5 +"");
+                grainBoilStartTimeEditText.setText(0 + "");
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -103,6 +106,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			double color = Double.parseDouble(grainColorEditText.getText().toString());
 			double grav = Double.parseDouble(grainGravEditText.getText().toString());
 			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
+			double boilTime = Double.parseDouble(grainBoilStartTimeEditText.getText().toString());
 			
 			Grain g = new Grain(grainName);
 			g.setLovibondColor(color);
@@ -111,6 +115,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			g.setGrainType(Grain.GRAIN);
 			g.setUnit("lbs");
 			g.setEfficiency(1);
+			g.setBoilTime(boilTime);
 			
 			mRecipe.addIngredient(g);
 			mRecipe.update();
