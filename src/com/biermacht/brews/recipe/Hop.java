@@ -15,7 +15,8 @@ public class Hop extends Ingredient {
 		super(name);
 		this.setAlphaAcidContent(0);
 		this.setDescription("No Description");
-		this.setBoilTime(60);
+		this.setBoilStartTime(0);
+		this.setBoilEndTime(60);
 		this.setHopType(TYPE_PELLET);
 	}
 	
@@ -23,7 +24,8 @@ public class Hop extends Ingredient {
 		super(name);
 		this.setAlphaAcidContent(aAcid);
 		this.setDescription(desc);
-		this.setBoilTime(60);
+		this.setBoilStartTime(0);
+		this.setBoilEndTime(60);
 		this.setHopType(TYPE_PELLET);
 	}
 

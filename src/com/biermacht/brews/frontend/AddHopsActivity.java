@@ -69,7 +69,7 @@ public class AddHopsActivity extends Activity {
                 }
             	
                 hopNameEditText.setText(hopObj.getName());
-                hopBoilTimeEditText.setText(hopObj.getBoilTime() +"");
+                hopBoilTimeEditText.setText(hopObj.getBoilStartTime() +"");
                 hopAcidEditText.setText(hopObj.getAlphaAcidContent() +"");
                 hopWeightEditText.setText(1.0 +"");
             }
@@ -100,12 +100,12 @@ public class AddHopsActivity extends Activity {
 		if (v.getId() == R.id.new_grain_submit_button)
 		{
 			String hopName = hopNameEditText.getText().toString();
-			int boilTime = Integer.parseInt(hopBoilTimeEditText.getText().toString());
+			double boilTime = Double.parseDouble(hopBoilTimeEditText.getText().toString());
 			double aAcid = Double.parseDouble(hopAcidEditText.getText().toString());
 			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
 			
 			Hop h = new Hop(hopName);
-			h.setBoilTime(boilTime);
+			h.setBoilStartTime(boilTime);
 			h.setAlphaAcidContent(aAcid);
 			h.setWeight(weight);
 			h.setHopType(Hop.TYPE_PELLET);

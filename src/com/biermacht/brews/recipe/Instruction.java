@@ -6,13 +6,15 @@ public class Instruction {
 	
 	private String instructionText;
 	private String instructionType;
-	private float duration;
+	private double startTime;
+	private double endTime;
 	private String duration_units;
 
 	public Instruction()
 	{
 		this.setInstructionText("Blank Instruction");
-		this.duration = 0;
+		this.startTime = 0;
+		this.endTime = 0;
 		this.duration_units = "mins";
 		this.instructionType = Utils.INSTRUCTION_TYPE_OTHER;
 	}
@@ -33,18 +35,8 @@ public class Instruction {
 		this.instructionType = instructionType;
 	}
 
-	public float getDuration() {
-		return duration;
-	}
-
-	public void setDuration(float duration) {
-		this.duration = duration;
-	}
-	
-	public void setDuration(int duration, String units)
-	{
-		this.duration = duration;
-		this.duration_units = units;
+	public double getDuration() {
+		return getEndTime() - getStartTime();
 	}
 
 	public String getDuration_units() {
@@ -53,6 +45,22 @@ public class Instruction {
 
 	public void setDuration_units(String duration_units) {
 		this.duration_units = duration_units;
+	}
+
+	public double getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(double startTime) {
+		this.startTime = startTime;
+	}
+
+	public double getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(double endTime) {
+		this.endTime = endTime;
 	}
 
 }

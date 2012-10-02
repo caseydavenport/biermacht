@@ -39,7 +39,8 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_COL_NAME,
 			DatabaseHelper.ING_COL_UNIT,
 			DatabaseHelper.ING_COL_AMT,
-			DatabaseHelper.ING_COL_TIME,
+			DatabaseHelper.ING_COL_BOIL_START_TIME,
+			DatabaseHelper.ING_COL_BOIL_END_TIME,
 			
 			DatabaseHelper.ING_GR_COL_WEIGHT,
 			DatabaseHelper.ING_GR_COL_COLOR,
@@ -49,7 +50,6 @@ public class DatabaseInterface {
 			
 			DatabaseHelper.ING_HP_COL_DESC,
 			DatabaseHelper.ING_HP_COL_ACID,
-			DatabaseHelper.ING_HP_COL_BOILTIME,
 			DatabaseHelper.ING_HP_COL_TYPE
 			};
 	
@@ -122,7 +122,8 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
 		values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnit());
 		values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
-		values.put(DatabaseHelper.ING_COL_TIME, ing.getBoilTime());
+		values.put(DatabaseHelper.ING_COL_BOIL_START_TIME, ing.getBoilStartTime());
+		values.put(DatabaseHelper.ING_COL_BOIL_END_TIME, ing.getBoilEndTime());
 		
 		// Grain specific values
 		if (ing.getType().equals(Ingredient.GRAIN))
@@ -141,7 +142,6 @@ public class DatabaseInterface {
 			Hop hop = (Hop) ing;
 			values.put(DatabaseHelper.ING_HP_COL_DESC, hop.getDescription());
 			values.put(DatabaseHelper.ING_HP_COL_ACID, hop.getAlphaAcidContent());
-			values.put(DatabaseHelper.ING_HP_COL_BOILTIME, hop.getBoilTime());
 			values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
 		}
 		
@@ -165,7 +165,8 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
 			values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnit());
 			values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
-			values.put(DatabaseHelper.ING_COL_TIME, ing.getBoilTime());
+			values.put(DatabaseHelper.ING_COL_BOIL_START_TIME, ing.getBoilStartTime());
+			values.put(DatabaseHelper.ING_COL_BOIL_END_TIME, ing.getBoilEndTime());
 			
 			// Grain specific values
 			if (ing.getType().equals(Ingredient.GRAIN))
@@ -184,7 +185,6 @@ public class DatabaseInterface {
 				Hop hop = (Hop) ing;
 				values.put(DatabaseHelper.ING_HP_COL_DESC, hop.getDescription());
 				values.put(DatabaseHelper.ING_HP_COL_ACID, hop.getAlphaAcidContent());
-				values.put(DatabaseHelper.ING_HP_COL_BOILTIME, hop.getBoilTime());
 				values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
 			}
 			
@@ -332,23 +332,25 @@ public class DatabaseInterface {
 		String ingName = cursor.getString(3);
 		String ingUnit = cursor.getString(4);
 		float ingAmount = cursor.getFloat(5);
-		float ingTime = cursor.getFloat(6);
+		float ingStartTime = cursor.getFloat(6);
+		int ingEndTime = cursor.getInt(7);
 		
 		// Grain specific stuff
 		if (ingType.equals(Ingredient.GRAIN))
 		{
-			float grainWeight = cursor.getFloat(7);
-			float grainColor = cursor.getFloat(8);
-			float grainGrav = cursor.getFloat(9);
-			String grainType = cursor.getString(10);
-			float grainEff = cursor.getFloat(11);
+			float grainWeight = cursor.getFloat(8);
+			float grainColor = cursor.getFloat(9);
+			float grainGrav = cursor.getFloat(10);
+			String grainType = cursor.getString(11);
+			float grainEff = cursor.getFloat(12);
 			
 			Grain grain = new Grain(ingName);
 			grain.setId(id);
 			grain.setOwnerId(ownerId);
 			grain.setUnit(ingUnit);
 			grain.setAmount(ingAmount);
-			grain.setBoilTime(ingTime);
+			grain.setBoilStartTime(ingStartTime);
+			grain.setBoilEndTime(ingEndTime);
 			grain.setWeight(grainWeight);
 			grain.setLovibondColor(grainColor);
 			grain.setGravity(grainGrav);
@@ -361,9 +363,8 @@ public class DatabaseInterface {
 		// Hop specific stuff
 		if (ingType.equals(Ingredient.HOP))
 		{
-			String hopDesc = cursor.getString(12);
-			float hopAcid = cursor.getFloat(13);
-			int hopBoilTime = cursor.getInt(14);
+			String hopDesc = cursor.getString(13);
+			float hopAcid = cursor.getFloat(14);
 			String hopType = cursor.getString(15);
 			
 			Hop hop = new Hop(ingName);
@@ -371,10 +372,10 @@ public class DatabaseInterface {
 			hop.setOwnerId(ownerId);
 			hop.setUnit(ingUnit);
 			hop.setAmount(ingAmount);
-			hop.setBoilTime(ingTime);
+			hop.setBoilStartTime(ingStartTime);
+			hop.setBoilEndTime(ingEndTime);
 			hop.setDescription(hopDesc);
 			hop.setAlphaAcidContent(hopAcid);
-			hop.setBoilTime(hopBoilTime);
 			hop.setHopType(hopType);
 			
 			return hop;

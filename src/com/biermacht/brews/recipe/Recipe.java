@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import com.biermacht.brews.utils.BrewCalculator;
+import com.biermacht.brews.utils.InstructionComparator;
 import com.biermacht.brews.utils.Utils;
 
 public class Recipe {
@@ -222,13 +223,17 @@ public class Recipe {
 			Instruction inst = new Instruction();
 			
 			// Gain case
-			if (i.getType().equals(Ingredient.GRAIN))
+			if (i.getType().equals(Ingredient.GRAIN) || i.getType().equals(Ingredient.HOP))
 			{
-				inst.setInstructionText("Add " + i.getName() + " and boil for " + i.getBoilTime());
-				inst.setDuration((float) i.getBoilTime());
+				inst.setInstructionText("Boil " + i.getName());
+				inst.setStartTime(i.getBoilStartTime());
+				inst.setEndTime(i.getBoilEndTime());
 				list.add(inst);
 			}
 		}
+		
+		// Sort based on start time
+		Collections.sort(list, new InstructionComparator<Instruction>());
 		
 		return list;
 	}

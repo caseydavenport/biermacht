@@ -33,7 +33,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_COL_NAME = "name";
 	public static final String ING_COL_UNIT = "units";
 	public static final String ING_COL_AMT = "amount";
-	public static final String ING_COL_TIME = "time";
+	public static final String ING_COL_BOIL_END_TIME = "endtime";
+	public static final String ING_COL_BOIL_START_TIME = "starttime";
 	
 	public static final String ING_GR_COL_WEIGHT = "weight";
 	public static final String ING_GR_COL_COLOR = "color";
@@ -43,7 +44,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public static final String ING_HP_COL_DESC = "description";
 	public static final String ING_HP_COL_ACID = "acids";
-	public static final String ING_HP_COL_BOILTIME = "boiltime";
 	public static final String ING_HP_COL_TYPE = "hopType";
 	
 	
@@ -72,7 +72,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_COL_NAME + " text not null, " 
 				+ ING_COL_UNIT + " text not null, "
 				+ ING_COL_AMT + " float not null, " 
-				+ ING_COL_TIME + " float not null, "
+				+ ING_COL_BOIL_START_TIME + " float not null, "
+				+ ING_COL_BOIL_END_TIME + " float not null, "
 				+ ING_GR_COL_WEIGHT + " float, "
 				+ ING_GR_COL_COLOR + " float, " 
 				+ ING_GR_COL_GRAV + " float, " 
@@ -80,7 +81,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_GR_COL_EFF + " float, "
 				+ ING_HP_COL_DESC + " text, "
 				+ ING_HP_COL_ACID + " float, "
-				+ ING_HP_COL_BOILTIME + " int, "
 				+ ING_HP_COL_TYPE + " text"
 			+ ");";
 	

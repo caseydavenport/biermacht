@@ -36,8 +36,12 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 		View row = inflater.inflate(R.layout.instruction_row_layout, parent, false);
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView numberView = (TextView) row.findViewById(R.id.numbering);
-		TextView timeView = (TextView) row.findViewById(R.id.time_view);
-		timeView.setText(list.get(position).getDuration() + " " + list.get(position).getDuration_units());
+		TextView startTimeView = (TextView) row.findViewById(R.id.start_time_view);
+		TextView endTimeView = (TextView) row.findViewById(R.id.end_time_view);
+		
+		
+		startTimeView.setText(list.get(position).getStartTime() + " " + list.get(position).getDuration_units());
+		endTimeView.setText(list.get(position).getEndTime() + " " + list.get(position).getDuration_units());
 		numberView.setText(position+1 + ".");
 		labelView.setText(list.get(position).getInstructionText());
 		

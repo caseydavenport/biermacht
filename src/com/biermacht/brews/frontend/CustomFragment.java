@@ -33,6 +33,7 @@ public class CustomFragment extends Fragment {
 	private boolean isInstructionView;
 	private OnItemClickListener mClickListener;
 	private ListView ingredientListView;
+	private ListView instructionListView;
 	private ArrayList<Ingredient> ingredientList;
 	private ArrayList<Instruction> instructionList;
 	private RecipeReccomendedValues reccomendedValues;
@@ -63,6 +64,7 @@ public class CustomFragment extends Fragment {
 		
 		// Initialize important junk
 		ingredientListView = (ListView) pageView.findViewById(R.id.ingredient_list);
+		instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
 
 		// INGREDIENT VIEW STUFF
 		if(isIngredientList)
@@ -113,8 +115,9 @@ public class CustomFragment extends Fragment {
 		  if (instructionList.size() > 0)
 		  {
 			  InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
-			  ListView instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
+			  instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
 			  instructionListView.setAdapter(instructionArrayAdapter);
+			  instructionListView.setVisibility(View.VISIBLE);
 		  }
 		  else
 		  {

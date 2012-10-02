@@ -17,8 +17,8 @@
 	        android:id="@+id/ingredient_list"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:drawSelectorOnTop="false"
+	        android:drawSelectorOnTop="true"
+	        android:listSelector="@drawable/selector"
 	        android:visibility="gone" >
 	    </ListView>
 	    
