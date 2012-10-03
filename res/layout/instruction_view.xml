@@ -12,23 +12,100 @@
 	    android:minHeight="4000dip"
 	    android:padding="10dip"
 	    android:layout_weight="10" >
-	
-	    <ListView
-	        android:id="@+id/instruction_list"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:drawSelectorOnTop="true"
-	        android:listSelector="@drawable/selector"
-	        android:visibility="gone" >
-	    </ListView>
 	    
-	    <TextView android:id="@+id/no_instructions_view"
-	        android:layout_width="fill_parent"
-	        android:layout_height="72dip" 
-	        android:background="#FFFFFF" 
-	        android:gravity="center"
+	    <LinearLayout android:id="@+id/title_row"
+	        android:layout_width="match_parent"
+	        android:layout_height="40dip"
+	        android:background="@drawable/edit_text_bg"
 	        android:visibility="gone"
-	        android:text="No instructions found" /> 
+	        android:layout_marginBottom="10dip" >
+	        
+	        <LinearLayout android:orientation="vertical"
+		        android:layout_width="60dp"
+		        android:layout_height="fill_parent"
+		        android:background="#00FFFFFF"
+		        android:layout_gravity="center"
+		        android:gravity="center"
+		        android:layout_marginRight="0dp">
+		        
+		        <TextView android:id="@+id/numbering"
+			        android:layout_width="32dp"
+			        android:layout_height="32dp"
+			        android:gravity="center"
+			        android:layout_margin="14dip"
+			        android:textStyle="bold"
+			        android:textSize="15dp"
+			        android:text="#"
+			        android:background="#00FFFFFF" /> 
+	        
+   			</LinearLayout>
+   			 
+		    <!-- Divider line -->
+		    <View android:layout_width="1dip"
+		        android:layout_height="match_parent"
+		        android:background="#44000000"
+		        android:layout_marginRight="10dp" />
+		       
+		    <TextView android:id="@+id/label"
+		        android:layout_width="0dip"
+		        android:layout_weight="3"
+		        android:layout_height="fill_parent"
+		        android:gravity="center_vertical"
+		        android:textColor="#000000"
+		        android:textSize="15dp"
+		        android:layout_marginTop="5dp"
+		        android:textStyle="bold"
+		        android:text="Instruction"
+		        android:background="#00FFFFFF" />
+		    
+		    <!-- Divider line -->
+		    <View android:layout_width="1dip"
+		        android:layout_height="fill_parent"
+		        android:background="#44000000" />
+		    
+		    <!-- Displays the estimated time for this step -->
+			<TextView android:id="@+id/start_time_view"
+			    android:layout_height="fill_parent"
+			    android:layout_width="50dip"
+			    android:gravity="center"
+			    android:layout_marginLeft="2dp"
+			    android:background="#00000000" 
+			    android:textStyle="bold"
+			    android:text="Start"/>
+			
+			    <!-- Divider line -->
+		    <View android:layout_width="1dip"
+		        android:layout_height="fill_parent"
+		        android:background="#44000000" />
+		    
+		    <!-- Displays the estimated time for this step -->
+			<TextView android:id="@+id/end_time_view"
+			    android:layout_height="fill_parent"
+			    android:layout_width="50dip"
+			    android:gravity="center"
+			    android:layout_marginLeft="2dp"
+			    android:background="#00000000" 
+			    android:textStyle="bold"
+			    android:text="Finish"/>
+		
+		</LinearLayout>
+			
+			    <ListView
+			        android:id="@+id/instruction_list"
+			        android:layout_width="match_parent"
+			        android:layout_height="match_parent"
+			        android:drawSelectorOnTop="true"
+			        android:listSelector="@drawable/selector"
+			        android:visibility="gone" >
+			    </ListView>
+			    
+			    <TextView android:id="@+id/no_instructions_view"
+			        android:layout_width="fill_parent"
+			        android:layout_height="72dip" 
+			        android:background="#FFFFFF" 
+			        android:gravity="center"
+			        android:visibility="gone"
+			        android:text="No instructions found" /> 
 	        
     </LinearLayout>
 	

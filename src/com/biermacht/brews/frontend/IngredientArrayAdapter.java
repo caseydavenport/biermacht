@@ -38,8 +38,11 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView amountView = (TextView) row.findViewById(R.id.amount);
 		ImageView imageView = (ImageView) row.findViewById(R.id.ingredient_row_icon);
+		TextView unitView = (TextView) row.findViewById(R.id.unit_text);
+		
 		labelView.setText(list.get(position).getName());
-		amountView.setText(list.get(position).getAmount() + " " + list.get(position).getUnit());
+		amountView.setText(list.get(position).getAmount() + " ");
+		unitView.setText(list.get(position).getUnit());
 		
 		// Set imageView based on ingredient type
 		String ingType = list.get(position).getType();

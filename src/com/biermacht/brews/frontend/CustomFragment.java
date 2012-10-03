@@ -114,10 +114,13 @@ public class CustomFragment extends Fragment {
 		  
 		  if (instructionList.size() > 0)
 		  {
+			  LinearLayout instructionListTitleView = (LinearLayout) pageView.findViewById(R.id.title_row);
+			  
 			  InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
 			  instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
 			  instructionListView.setAdapter(instructionArrayAdapter);
 			  instructionListView.setVisibility(View.VISIBLE);
+			  instructionListTitleView.setVisibility(View.VISIBLE);
 		  }
 		  else
 		  {
