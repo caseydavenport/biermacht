@@ -20,7 +20,8 @@ public class Recipe {
 	private float ABV;
 	private float bitterness;
 	private float color;
-	private ArrayList<Ingredient> ingredientList;
+	private float efficiency; // TODO: ADD THIS TO DATABASE
+	private ArrayList<Ingredient> ingredientList; 
 	private ArrayList<Instruction> instructionList;
 	
 	// Public constructors
@@ -236,5 +237,13 @@ public class Recipe {
 		Collections.sort(list, new InstructionComparator<Instruction>());
 		
 		return list;
+	}
+
+	public float getEfficiency() {
+		return efficiency;
+	}
+
+	public void setEfficiency(float efficiency) {
+		this.efficiency = efficiency;
 	}
 }

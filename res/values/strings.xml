@@ -20,8 +20,11 @@
 	<string name="color">Color</string>
 	<string name="name">Name</string>
 	<string name="enter_name">Enter a name</string>
+	<string name="efficiency">Efficiency (%)</string>
 	<string name="boil_start_time">Boil Start Time</string>
 	<string name="boil_end_time">Boil End Time</string>
+	<string name="boil_time">Boil Time (mins)</string>
+	<string name="batch_volume">Batch Size (gal)</string>
 	
 	<!-- from activity_add_grain.xml -->
 	<string name="weight_lbs">Weight (lbs)</string>

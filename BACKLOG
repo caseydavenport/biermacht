@@ -13,3 +13,8 @@ feature: Determine the best matching beer type for a given recipe!
 TODO:	 Need to calculate boil time dynamically using ingredients.
 	 Also, need to clean up how we are handling boil time across
 	 recipes and different types of ingredients.
+
+TODO:	 Add EFFICIENCY to database
+
+TODO:	 Update calculations to include efficiency and boil time for ingredients
+

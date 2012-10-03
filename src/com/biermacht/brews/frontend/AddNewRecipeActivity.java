@@ -24,7 +24,9 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 	private Spinner beerTypeSpinner;
 	private EditText recipeNameEditText;
 	private EditText recipeDescEditText;
-	private Button submitButton;
+	private EditText boilTimeEditText;
+	private EditText effEditText;
+	private EditText batchSizeEditText;
 	private String beerType = Utils.BEERTYPE_OTHER.toString();
 	private ArrayList<String> beerTypeArray;
 	
@@ -36,7 +38,14 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         // Initialize views and stuff
         recipeNameEditText = (EditText) findViewById(R.id.recipe_name_edit_text);
         recipeDescEditText = (EditText) findViewById(R.id.recipe_description_edit_text);
-        submitButton = (Button) findViewById(R.id.new_recipe_submit_button);
+        boilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
+        effEditText = (EditText) findViewById(R.id.efficiency_edit_text);
+        batchSizeEditText = (EditText) findViewById(R.id.batch_volume_edit_text);
+        
+        // Default values
+        boilTimeEditText.setText(60 +"");
+        effEditText.setText(100 +"");
+        batchSizeEditText.setText(5.0 +"");
         
         //Arraylist of beer types
         beerTypeArray = Utils.getBeerStyleStringList();
@@ -69,10 +78,21 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
     }
 
 	public void onClick(View v) {
+		
+		// Cancel Button Pressed
+		if (v.getId() == R.id.cancel_button)
+		{
+			finish();
+		}
+		
+		// Submit Button pressed
 		if (v.getId() == R.id.new_recipe_submit_button)
 		{
 			String recipeName = recipeNameEditText.getText().toString();
 			String recipeDesc = recipeDescEditText.getText().toString();
+			int boilTime = Integer.parseInt(boilTimeEditText.getText().toString());
+			float eff = Float.parseFloat(effEditText.getText().toString());
+			float batchSize = Float.parseFloat(batchSizeEditText.getText().toString());
 			Recipe r = Utils.createRecipeWithName(recipeName);
 			
 			if (!recipeDesc.isEmpty())
@@ -81,6 +101,9 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 			if (!recipeName.isEmpty())
 			{
 				r.setBeerType(beerType);
+				r.setBoilTime(boilTime);
+				r.setEfficiency(eff);
+				r.setVolume(batchSize);
 				Utils.updateRecipe(r);
 				finish();
 			}
