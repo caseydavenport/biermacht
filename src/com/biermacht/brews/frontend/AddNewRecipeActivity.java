@@ -22,6 +22,7 @@ import com.biermacht.brews.utils.Utils;
 public class AddNewRecipeActivity extends Activity implements OnClickListener {
 
 	private Spinner beerTypeSpinner;
+	private Spinner brewTypeSpinner;
 	private EditText recipeNameEditText;
 	private EditText recipeDescEditText;
 	private EditText boilTimeEditText;
@@ -56,6 +57,17 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerTypeSpinner.setAdapter(adapter);
         beerTypeSpinner.setSelection(0);    
+        
+        // Set up brew type spinner
+        brewTypeSpinner = (Spinner) findViewById(R.id.brew_type_spinner);
+        ArrayList<String> brewTypeArray = new ArrayList<String>();
+        brewTypeArray.add("Extract");
+        brewTypeArray.add("Partial Mash");
+        brewTypeArray.add("All Grain");
+        SpinnerAdapter<String> brewTypeAdapter = new SpinnerAdapter<String>(this, brewTypeArray);  
+        brewTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        brewTypeSpinner.setAdapter(brewTypeAdapter);
+        brewTypeSpinner.setSelection(0); 
         
         // Handle beer type selector here
         beerTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {

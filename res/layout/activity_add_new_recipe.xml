@@ -30,32 +30,59 @@
 	        android:layout_marginBottom="15dip"
 	        android:layout_below="@id/recipe_name_title"
 	        android:hint="Enter a recipe name" />
-	
-	    <!-- BeerType spinner -->
+
 	    
-	    <TextView android:id="@+id/beer_style_title"
+	    <LinearLayout android:id="@+id/spinner_titles"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="#00000000"
-	        android:layout_marginBottom="3dip"
-	        android:gravity="left"
-	        android:textSize="15dip"
-	        android:textStyle="bold"
-	        android:layout_below="@id/recipe_name_edit_text"
-	        android:text="Beer Style" />
+	        android:layout_below="@id/recipe_name_edit_text" >
+
+		    <!-- BeerType spinner -->
+		    <TextView android:id="@+id/beer_style_title"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#00000000"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="left"
+		        android:textSize="15dip"
+		        android:textStyle="bold"
+		        android:layout_below="@id/recipe_name_edit_text"
+		        android:text="Beer Style" />
+		              
+	    </LinearLayout>
 	    
-	    <Spinner
-	        android:id="@+id/beer_type_spinner"
+	    <LinearLayout android:id="@+id/spinners"
+	        android:orientation="horizontal"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:drawSelectorOnTop="false"
-	        android:padding="10dip"
-	        android:background="@drawable/edit_text_bg"
-	        android:spinnerMode="dialog"
-	        android:layout_marginBottom="15dip"
-	        android:layout_below="@id/beer_style_title"
-	        android:paddingLeft="10dip" />
-	
+	        android:layout_marginBottom="15dp"
+	        android:background="#00000000"
+	        android:layout_below="@id/spinner_titles" >
+	        
+		   <Spinner
+		        android:id="@+id/beer_type_spinner"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:drawSelectorOnTop="false"
+		        android:padding="10dip"
+		        android:background="@drawable/edit_text_bg"
+		        android:spinnerMode="dialog"
+		        android:paddingLeft="10dip" />
+		   
+		  <Spinner
+		        android:id="@+id/brew_type_spinner"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:drawSelectorOnTop="false"
+		        android:padding="10dip"
+		        android:background="@drawable/edit_text_bg"
+		        android:spinnerMode="dialog"
+		        android:paddingLeft="10dip" />
+			            
+	    </LinearLayout>
+
 	    <!-- EditText for Description -->
 	    <TextView android:id="@+id/description_title"
 	        android:layout_width="fill_parent"
@@ -65,7 +92,7 @@
 	        android:gravity="left"
 	        android:textSize="15dip"
 	        android:textStyle="bold"
-	        android:layout_below="@id/beer_type_spinner"
+	        android:layout_below="@id/spinners"
 	        android:text="Description" />
 	    
 	    <EditText
