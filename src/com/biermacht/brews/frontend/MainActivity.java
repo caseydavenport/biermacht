@@ -2,19 +2,17 @@ package com.biermacht.brews.frontend;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.ListActivity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,16 +21,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
-public class MainActivity extends ListActivity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener {
 	
 	// Create our stuff
 	private RecipeArrayAdapter mAdapter;
@@ -47,6 +44,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
     //Declare views here
     private ListView listView; 
     private EditText searchView;
+    private TextView noRecipesView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +53,9 @@ public class MainActivity extends ListActivity implements OnClickListener {
         setContentView(R.layout.activity_main);
                 
         // Initialize views
-        listView = getListView();
+        listView = (ListView) findViewById(R.id.recipe_list);
         searchView = (EditText) findViewById(R.id.search_bar);
+        noRecipesView = (TextView) findViewById(R.id.no_recipes_view);
         
         // Declare my database interface 
         databaseInterface = new DatabaseInterface(getApplicationContext());
@@ -220,10 +219,20 @@ public class MainActivity extends ListActivity implements OnClickListener {
         mAdapter = new RecipeArrayAdapter(getApplicationContext(), l);
         listView.setAdapter(mAdapter);
         recipeList = l;
+        
+        if (l.size() == 0)
+        	noRecipesView.setVisibility(View.VISIBLE);
+        else
+        	noRecipesView.setVisibility(View.GONE);
     }
 
 	public void onClick(View v) {
-		
+		Log.e("MAINACTIVITY", "VIEW CLICKED");
+		if (v.getId() == R.id.no_recipes_view)
+		{
+    		Intent i = new Intent(getApplicationContext(), AddNewRecipeActivity.class);
+    		startActivity(i);
+		}
 	}
 	
 	private Builder deleteAlert(final Recipe r)

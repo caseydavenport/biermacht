@@ -36,6 +36,7 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_recipe);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
               
         appContext = getApplicationContext();
         
@@ -88,8 +89,9 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+        		Intent i = new Intent(DisplayRecipeActivity.appContext, MainActivity.class);
+        		startActivity(i);
+        		return true;
             
             case R.id.add_fermentable:
     	    	Intent ferm_intent = new Intent(DisplayRecipeActivity.appContext, AddGrainActivity.class);

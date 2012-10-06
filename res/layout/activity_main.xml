@@ -47,8 +47,7 @@
 	        android:background="#66000000" />
     
     	<LinearLayout android:orientation="vertical"
-    	    android:layout_width="0dp"
-    	    android:layout_weight="1"
+    	    android:layout_width="wrap_content"
     	    android:layout_height="wrap_content">
 		    
 		    <View android:layout_width="fill_parent"
@@ -56,7 +55,7 @@
 	       		android:background="#66000000" />
 		    
 		    <ListView
-		        android:id="@+id/android:list"
+		        android:id="@+id/recipe_list"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:padding="0dip"
@@ -65,6 +64,15 @@
 		        android:dividerHeight="1dp"
 		        android:listSelector="@drawable/selector" >
 		    </ListView>
+		    
+		    <TextView android:id="@+id/no_recipes_view"
+		        android:layout_width="fill_parent"
+		        android:layout_height="60dip" 
+		        android:background="#FFFFFF" 
+		        android:gravity="center"
+		        android:visibility="gone"
+		        android:onClick="onClick"
+		        android:text="No recipes - Touch the plus to make one!" />
 		    
 		    <View android:layout_width="fill_parent"
 	        	android:layout_height="2dip" 

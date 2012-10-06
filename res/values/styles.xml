@@ -4,6 +4,7 @@
         <item name="android:background">#00DEDEDE</item>
         <item name="android:actionBarStyle">@style/Theme.Biermacht.Brews.ActionBarStyle</item>
         <item name="android:actionBarTabStyle">@style/Theme.Biermacht.Brews.ActionBarTabBarStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/up_indicator</item>
     </style>
     
     <style name="Theme.Biermacht.Brews.ActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
