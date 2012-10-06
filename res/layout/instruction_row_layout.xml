@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/transparent"
     android:orientation="horizontal">
     
     <LinearLayout android:orientation="vertical"
         android:layout_width="60dp"
         android:layout_height="fill_parent"
-        android:background="#FFFFFF"
+        android:background="@color/transparent"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginRight="0dp">
@@ -37,8 +37,8 @@
         android:textColor="#000000"
         android:textSize="15dp"
         android:layout_marginTop="5dp"
-        android:text="Instruction text goes here"
-        android:background="#FFFFFF" />
+        android:background="@color/transparent"
+        android:text="Instruction text goes here" />
     
     <!-- Divider line -->
     <View android:layout_width="1dip"
@@ -51,7 +51,7 @@
 	    android:layout_width="50dip"
 	    android:gravity="center"
 	    android:layout_marginLeft="2dp"
-	    android:background="#00000000" 
+	    android:background="@color/transparent" 
 	    android:text="0 mins"/>
 	
 	    <!-- Divider line -->
@@ -65,7 +65,7 @@
 	    android:layout_width="50dip"
 	    android:gravity="center"
 	    android:layout_marginLeft="2dp"
-	    android:background="#00000000" 
+	    android:background="@color/transparent" 
 	    android:text="0 mins"/>
     
 </LinearLayout>

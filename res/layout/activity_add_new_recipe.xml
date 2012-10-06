@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/body_background"
+    android:background="@drawable/textured_background_light"
     android:orientation="vertical" >
        
     <RelativeLayout android:layout_height="fill_parent"
@@ -18,6 +18,7 @@
 	        android:gravity="left"
 	        android:textSize="15dip"
 	        android:textStyle="bold"
+	        android:textColor="@color/title_color_light"
 	        android:layout_alignParentTop="true"
 	        android:text="Recipe Name" />
 	    
@@ -25,7 +26,7 @@
 	        android:id="@+id/recipe_name_edit_text"
 	        android:layout_width="fill_parent"
 	        android:layout_height="40dip"
-	        android:background="@drawable/edit_text_bg"
+	        android:background="@drawable/rounded_bg_white"
 	        android:paddingLeft="10dip"
 	        android:layout_marginBottom="15dip"
 	        android:layout_below="@id/recipe_name_title"
@@ -47,6 +48,7 @@
 		        android:gravity="left"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
+		        android:textColor="@color/title_color_light"
 		        android:layout_below="@id/recipe_name_edit_text"
 		        android:text="Beer Style" />
 		              
@@ -67,7 +69,7 @@
 		        android:layout_height="wrap_content"
 		        android:drawSelectorOnTop="false"
 		        android:padding="10dip"
-		        android:background="@drawable/edit_text_bg"
+		        android:background="@drawable/rounded_bg_white"
 		        android:spinnerMode="dialog"
 		        android:paddingLeft="10dip" />
 		   
@@ -77,7 +79,7 @@
 		        android:layout_height="wrap_content"
 		        android:drawSelectorOnTop="false"
 		        android:padding="10dip"
-		        android:background="@drawable/edit_text_bg"
+		        android:background="@drawable/rounded_bg_white"
 		        android:spinnerMode="dialog"
 		        android:paddingLeft="10dip" />
 			            
@@ -92,6 +94,7 @@
 	        android:gravity="left"
 	        android:textSize="15dip"
 	        android:textStyle="bold"
+	        android:textColor="@color/title_color_light"
 	        android:layout_below="@id/spinners"
 	        android:text="Description" />
 	    
@@ -100,7 +103,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="80dip"
 	        android:layout_weight="1"
-	        android:background="@drawable/edit_text_bg"
+	        android:background="@drawable/rounded_bg_white"
 	        android:padding="10dip"
 	        android:layout_marginBottom="15dip"
 	        android:layout_below="@id/description_title"
@@ -122,6 +125,7 @@
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
+		        android:textColor="@color/title_color_light"
 		        android:text="@string/boil_time" />
 		    
 		    <!-- Efficiency -->
@@ -134,6 +138,7 @@
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
+		        android:textColor="@color/title_color_light"
 		        android:text="@string/efficiency" />
 		    
 		    		    
@@ -147,6 +152,7 @@
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
+		        android:textColor="@color/title_color_light"
 		        android:text="@string/batch_volume" />
 		              
 	    </LinearLayout>
@@ -166,7 +172,8 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="40dip"
-		        android:background="@drawable/edit_text_bg"
+		        android:layout_marginRight="2dp"
+		        android:background="@drawable/rounded_bg_white"
 		        android:padding="10dip"
 		        android:hint="@string/boil_time" />
 		    
@@ -177,7 +184,8 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="40dip"
-		        android:background="@drawable/edit_text_bg"
+		        android:layout_marginRight="2dp"
+		        android:background="@drawable/rounded_bg_white"
 		        android:padding="10dip"
 		        android:hint="@string/efficiency" />
 		    
@@ -188,7 +196,7 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="40dip"
-		        android:background="@drawable/edit_text_bg"
+		        android:background="@drawable/rounded_bg_white"
 		        android:padding="10dip"
 		        android:hint="@string/batch_volume" />
 			            

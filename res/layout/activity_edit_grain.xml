@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dip"
-    android:background="@color/body_background"
+    android:background="@drawable/textured_background_light"
     android:orientation="vertical" >
         
     <!-- Grain Type spinner -->

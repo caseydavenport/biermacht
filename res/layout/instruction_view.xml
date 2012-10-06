@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/body_background"
+    android:background="@drawable/textured_background_light"
     android:orientation="vertical" >
     
 	<LinearLayout android:orientation="vertical"
@@ -16,14 +16,14 @@
 	    <LinearLayout android:id="@+id/title_row"
 	        android:layout_width="match_parent"
 	        android:layout_height="40dip"
-	        android:background="@drawable/edit_text_bg"
+	        android:background="@drawable/rounded_bg_dark"
 	        android:visibility="gone"
 	        android:layout_marginBottom="10dip" >
 	        
 	        <LinearLayout android:orientation="vertical"
 		        android:layout_width="60dp"
 		        android:layout_height="fill_parent"
-		        android:background="#00FFFFFF"
+		        android:background="@color/transparent"
 		        android:layout_gravity="center"
 		        android:gravity="center"
 		        android:layout_marginRight="0dp">
@@ -35,8 +35,9 @@
 			        android:layout_margin="14dip"
 			        android:textStyle="bold"
 			        android:textSize="15dp"
+			        android:textColor="@color/title_color_light"
 			        android:text="#"
-			        android:background="#00FFFFFF" /> 
+			        android:background="@color/transparent" /> 
 	        
    			</LinearLayout>
    			 
@@ -51,9 +52,8 @@
 		        android:layout_weight="3"
 		        android:layout_height="fill_parent"
 		        android:gravity="center_vertical"
-		        android:textColor="#000000"
+		        android:textColor="@color/title_color_light"
 		        android:textSize="15dp"
-		        android:layout_marginTop="5dp"
 		        android:textStyle="bold"
 		        android:text="Instruction"
 		        android:background="#00FFFFFF" />
@@ -71,6 +71,7 @@
 			    android:layout_marginLeft="2dp"
 			    android:background="#00000000" 
 			    android:textStyle="bold"
+			    android:textColor="@color/title_color_light"
 			    android:text="Start"/>
 			
 			    <!-- Divider line -->
@@ -86,16 +87,18 @@
 			    android:layout_marginLeft="2dp"
 			    android:background="#00000000" 
 			    android:textStyle="bold"
-			    android:text="Finish"/>
+			    android:textColor="@color/title_color_light"
+			    android:text="End"/>
 		
 		</LinearLayout>
 			
 			    <ListView
 			        android:id="@+id/instruction_list"
 			        android:layout_width="match_parent"
-			        android:layout_height="match_parent"
+			        android:layout_height="wrap_content"
 			        android:drawSelectorOnTop="true"
 			        android:listSelector="@drawable/selector"
+			        android:background="@drawable/rounded_bg_white"
 			        android:visibility="gone" >
 			    </ListView>
 			    
@@ -118,15 +121,6 @@
         android:gravity="center"
         android:background="@drawable/actionbar_background"
         android:layout_width="fill_parent" >
-        
-	    <ImageView android:id="@+id/timer"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:layout_weight="1"
-	        android:background="#00000000"
-	        android:onClick="grainClick"
-	        android:src="@drawable/icon_clock" />
        
     </LinearLayout>
 

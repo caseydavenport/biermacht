@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_new_recipe"
-        android:title="Add new recipe"
+        android:title="Add"
         android:icon="@drawable/plus_icon"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom|withText" />
     
 </menu>

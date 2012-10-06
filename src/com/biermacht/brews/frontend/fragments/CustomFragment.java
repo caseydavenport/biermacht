@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.fragments;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -15,10 +18,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.DisplayRecipeActivity;
+import com.biermacht.brews.frontend.EditGrainActivity;
+import com.biermacht.brews.frontend.IngredientArrayAdapter;
+import com.biermacht.brews.frontend.InstructionArrayAdapter;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
@@ -29,7 +37,7 @@ public class CustomFragment extends Fragment {
 
 	private int resource;
 	private Recipe r;
-	private boolean isIngredientList;
+	private boolean isIngredientView;
 	private boolean isInstructionView;
 	private OnItemClickListener mClickListener;
 	private ListView ingredientListView;
@@ -44,12 +52,12 @@ public class CustomFragment extends Fragment {
 		this.r = r;
 		this.reccomendedValues = Utils.getRecipeReccomendedValues(r);
 		
-		isIngredientList = false;
+		isIngredientView = false;
 		isInstructionView = false;
 		
 		// Determine what kind of view this is
 		if (resource == R.layout.ingredient_view)
-			isIngredientList = true;
+			isIngredientView = true;
 		else if(resource == R.layout.instruction_view)
 			isInstructionView = true;
 	}
@@ -58,6 +66,8 @@ public class CustomFragment extends Fragment {
 	{
 		LinearLayout pageView = new LinearLayout(DisplayRecipeActivity.appContext);
 		inflater.inflate(resource, pageView);
+		
+		setHasOptionsMenu(true);
 		  
 		TableLayout tableView = new TableLayout(DisplayRecipeActivity.appContext);
 		tableView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -67,7 +77,7 @@ public class CustomFragment extends Fragment {
 		instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
 
 		// INGREDIENT VIEW STUFF
-		if(isIngredientList)
+		if(isIngredientView)
 		{
 			
           // Set up the onClickListener
@@ -248,4 +258,15 @@ public class CustomFragment extends Fragment {
 		ingredientListView.setAdapter(ingredientArrayAdapter);
 
 	}
+	
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		if (isIngredientView)
+			inflater.inflate(R.menu.ingredient_menu, menu);
+		else if (isInstructionView)
+			inflater.inflate(R.menu.instruction_menu, menu);
+		else
+			inflater.inflate(R.menu.details_menu, menu);
+	}
+	
 }

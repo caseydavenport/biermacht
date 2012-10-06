@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="body_background">#c7c7d6</color>
+    <color name="body_background">#BCBCBC</color>
+    <color name="button_color">#FFFFFF</color>
+    <color name="recipe_list_icon_bg">#AAAAAA</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="title_color_light">#CCCCCC</color>
     
 </resources>

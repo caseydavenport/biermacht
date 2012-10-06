@@ -2,7 +2,6 @@
 
     <!-- Activity names -->
     <string name="app_name">Biermacht Brews</string>
-    <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Recipes</string>
     <string name="title_activity_display_recipe">Recipe Details</string>
     <string name="title_activity_add_new_recipe">Add New Recipe</string>
@@ -11,6 +10,12 @@
     <string name="title_activity_edit_grain">Edit Grain</string>
     <string name="title_activity_edit_recipe">Edit Recipe</string>
     <string name="title_activity_add_hops">Add Hops</string>
+    
+    <!-- Menu stuff -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_add_ingredient">Add Ingredient</string>
+    <string name="menu_brew_timer">Brew Timer</string>
+    <string name="menu_edit_recipe">Edit Recipe</string>
 
     <!-- Standard generic messages -->
     <string name="error">Error</string>

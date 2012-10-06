@@ -11,11 +11,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.PopupMenu;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.fragments.CustomFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
@@ -75,17 +78,21 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_display_recipe, menu);
+        // getMenuInflater().inflate(R.menu.activity_display_recipe, menu);
         return true;
     }
 
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    	switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            
+            case R.id.menu_add_ing:
+            	//showIngredientPopup();
+            	return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -103,6 +110,13 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     	super.onResume();
     	((CustomFragment) ingredientFragment).update();
     }
+    
+	public void showIngredientPopup(View v) {
+	    PopupMenu popup = new PopupMenu(DisplayRecipeActivity.appContext, v);
+	    MenuInflater inflater = popup.getMenuInflater();
+	    inflater.inflate(R.menu.ingredient_types, popup.getMenu());
+	    popup.show();
+	}
 
 	public void onClick(View v) 
 	{
