@@ -257,7 +257,7 @@
 	    
 	</RelativeLayout>
 	
-      <!-- Bottom Bar -->
+    <!-- Bottom Bar -->
     <LinearLayout android:id="@+id/bottom_nav"
         android:layout_height="70dip"
         android:background="@drawable/actionbar_background"
@@ -271,6 +271,7 @@
 	        android:layout_width="0dp"
 	        android:layout_weight="1"
 	        android:layout_height="fill_parent"
+	        android:textColor="@drawable/button_text"
 	        android:onClick="onClick"
 	        android:background="@drawable/left_button_bg"
 	        android:text="@string/cancel" />
@@ -281,6 +282,7 @@
 	        android:layout_width="0dp"
 	        android:layout_weight="1"
 	        android:layout_height="fill_parent"
+	        android:textColor="@drawable/button_text"
 	        android:onClick="onClick"
 	        android:background="@drawable/right_button_bg"
 	        android:text="@string/add" />

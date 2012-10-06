@@ -100,18 +100,37 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 		// Submit Button pressed
 		if (v.getId() == R.id.new_recipe_submit_button)
 		{
-			String recipeName = recipeNameEditText.getText().toString();
-			String recipeDesc = recipeDescEditText.getText().toString();
-			int boilTime = Integer.parseInt(boilTimeEditText.getText().toString());
-			float eff = Float.parseFloat(effEditText.getText().toString());
-			float batchSize = Float.parseFloat(batchSizeEditText.getText().toString());
-			Recipe r = Utils.createRecipeWithName(recipeName);
+			boolean readyToGo = true;
+			String recipeName = "Unnamed Brew";
+			String recipeDesc = "";
+			Integer boilTime = 60;
+			float eff = 100;
+			float batchSize = 5;
 			
-			if (!recipeDesc.isEmpty())
-				r.setDescription(recipeDesc);
-			
-			if (!recipeName.isEmpty())
+			try {
+			    recipeName = recipeNameEditText.getText().toString();
+			    recipeDesc = recipeDescEditText.getText().toString();
+				boilTime = Integer.parseInt(boilTimeEditText.getText().toString());
+				eff = Float.parseFloat(effEditText.getText().toString());
+				batchSize = Float.parseFloat(batchSizeEditText.getText().toString());
+			}
+			catch (Exception e)
 			{
+				readyToGo = false;
+			}
+			
+			if (recipeName.isEmpty())
+				readyToGo = false;
+			if (eff > 100)
+				readyToGo = false;
+			
+			if (readyToGo)
+			{
+				Recipe r = Utils.createRecipeWithName(recipeName);
+				
+				if (!recipeDesc.isEmpty())
+					r.setDescription(recipeDesc);
+				
 				r.setBeerType(beerType);
 				r.setBoilTime(boilTime);
 				r.setEfficiency(eff);
