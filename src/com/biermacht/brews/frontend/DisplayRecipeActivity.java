@@ -91,9 +91,17 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             
-            case R.id.menu_add_ing:
-            	//showIngredientPopup();
-            	return true;
+            case R.id.add_fermentable:
+    	    	Intent ferm_intent = new Intent(DisplayRecipeActivity.appContext, AddGrainActivity.class);
+    	    	ferm_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+    		    startActivity(ferm_intent);
+    		    return true;
+
+            case R.id.add_hop:
+    	    	Intent hop_intent = new Intent(DisplayRecipeActivity.appContext, AddHopsActivity.class);
+    	    	hop_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+    		    startActivity(hop_intent);
+    		    return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -111,30 +119,10 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     	super.onResume();
     	((CustomFragment) ingredientFragment).update();
     }
-    
-	public void showIngredientPopup(View v) {
-	    PopupMenu popup = new PopupMenu(DisplayRecipeActivity.appContext, v);
-	    MenuInflater inflater = popup.getMenuInflater();
-	    inflater.inflate(R.menu.ingredient_types, popup.getMenu());
-	    popup.show();
-	}
 
 	public void onClick(View v) 
 	{
-		// if ADD GRAIN button pressed
-		if(v.getId() == R.id.add_new_grain_button)
-		{
-	    	Intent intent = new Intent(DisplayRecipeActivity.appContext, AddGrainActivity.class);
-		    intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
-		    startActivity(intent);
-		}
-		// if ADD HOPS button pressed
-		if(v.getId() == R.id.add_new_hops_button)
-		{
-	    	Intent intent = new Intent(DisplayRecipeActivity.appContext, AddHopsActivity.class);
-		    intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
-		    startActivity(intent);
-		}
+		
 	}
 }
 
@@ -149,9 +137,8 @@ class MyTabsListener implements ActionBar.TabListener {
             // Do nothing on tab reselect
     }
 
-    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+    public void onTabSelected(Tab tab, FragmentTransaction ft) {      
             ft.replace(R.id.fragment_container, fragment);
-            ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
     }
 
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {

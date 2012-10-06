@@ -43,56 +43,6 @@
         android:padding="5dp"
         android:background="@drawable/actionbar_background"
         android:layout_width="fill_parent" >
-        
-	    <Button
-	        android:id="@+id/add_new_grain_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:textColor="#222222"
-	        android:textSize="15dip"
-	        android:layout_marginLeft="2dp"
-	        android:padding="3dp"
-	        android:layout_height="wrap_content"
-	        android:onClick="onClick"
-	        android:background="@drawable/left_add_button_drawable"
-	        android:text="Add Grain" />
-	    
-	    <Button
-	        android:id="@+id/add_new_hops_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:textColor="#222222"
-	        android:textSize="15dip"
-	        android:padding="3dp"
-	        android:layout_height="wrap_content"
-	        android:onClick="onClick"
-	        android:background="@drawable/inner_add_button_drawable"
-	        android:text="Add Hops" />
-	    
-	    <Button
-	        android:id="@+id/add_new_yeast_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:textColor="#222222"
-	        android:textSize="15dip"
-	        android:padding="3dp"
-	        android:layout_height="wrap_content"
-	        android:onClick="onClick"
-	        android:background="@drawable/inner_add_button_drawable"
-	        android:text="Add Yeast" />
-	    
-	    <Button
-	        android:id="@+id/add_new_other_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:textColor="#222222"
-	        android:textSize="15dip"
-	        android:layout_marginRight="2dp"
-	        android:padding="3dp"
-	        android:layout_height="wrap_content"
-	        android:onClick="onClick"
-	        android:background="@drawable/right_add_button_drawable"
-	        android:text="Add Other" />
        
     </LinearLayout>
 </LinearLayout>

@@ -222,7 +222,7 @@
 	        android:layout_weight="1"
 	        android:layout_height="fill_parent"
 	        android:onClick="onClick"
-	        android:background="@drawable/left_add_button_drawable"
+	        android:background="@drawable/left_button_bg"
 	        android:text="@string/cancel" />
 	
 	    <!-- Submit Button -->
@@ -232,7 +232,7 @@
 	        android:layout_weight="1"
 	        android:layout_height="fill_parent"
 	        android:onClick="onClick"
-	        android:background="@drawable/right_add_button_drawable"
+	        android:background="@drawable/right_button_bg"
 	        android:text="Create" />
 
     </LinearLayout>
