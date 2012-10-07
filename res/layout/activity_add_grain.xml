@@ -15,16 +15,9 @@
    		
 	    <!-- Grain Type spinner -->
 	    <TextView android:id="@+id/spinner_title"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:background="#00000000"
-	        android:layout_marginBottom="3dip"
-	        android:gravity="left"
-	        android:textSize="15dip"
-	        android:textStyle="bold"
-	        android:textColor="#FFF"
 	        android:text="@string/grain_type"
-	        android:layout_alignParentTop="true" />
+	        android:layout_alignParentTop="true"
+	        style="@style/title_light" />
 	    
 	    <Spinner
 	        android:id="@+id/grain_type_spinner"
@@ -40,26 +33,15 @@
 	    
 	    <!-- EditText for Grain Name -->
 	    <TextView android:id="@+id/grain_name_title"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:background="#00000000"
-	        android:layout_marginBottom="3dip"
-	        android:gravity="left"
-	        android:textSize="15dip"
-	        android:textStyle="bold"
-	        android:textColor="#FFF"
 	        android:text="@string/name"
-	        android:layout_below="@id/grain_type_spinner" />
+	        android:layout_below="@id/grain_type_spinner"
+	        style="@style/title_light" />
 	    
 	    <EditText
 	        android:id="@+id/grain_name_edit_text"
-	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
-	        android:background="@drawable/rounded_bg_white"
-	        android:paddingLeft="10dip"
-	        android:layout_marginBottom="15dip"
 	        android:hint="@string/enter_name"
-	        android:layout_below="@id/grain_name_title" />
+	        android:layout_below="@id/grain_name_title"
+	        style="@style/text_input" />
 	    
 	    <LinearLayout android:id="@+id/first_ll"
 	        android:layout_width="fill_parent"
@@ -75,7 +57,7 @@
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
-		        android:textColor="#FFF"
+		        android:textColor="@color/title_color_light"
 		        android:textStyle="bold"
 		        android:text="@string/color" />
 			    
@@ -87,7 +69,7 @@
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
-		        android:textColor="#FFF"
+		        android:textColor="@color/title_color_light"
 		        android:textStyle="bold"
 		        android:text="@string/gravity" />
 		    
@@ -100,7 +82,7 @@
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="#FFF"
+		        android:textColor="@color/title_color_light"
 		        android:text="@string/weight_lbs" />
 		              
 	    </LinearLayout>
@@ -157,16 +139,8 @@
 		    
 		    <!-- Boil time -->
 		    <TextView android:id="@+id/boil_start_time_title"
-		        android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="wrap_content"
-		        android:background="#00000000"
-		        android:layout_marginBottom="3dip"
-		        android:gravity="left"
-		        android:textSize="15dip"
-		        android:textStyle="bold"
-		        android:textColor="#FFF"
-		        android:text="@string/boil_start_time" />
+		        android:text="@string/boil_start_time"
+		        style="@style/title_light" />
 		              
 	    </LinearLayout>
 	    
@@ -211,16 +185,8 @@
 		    
 		    <!-- Boil time -->
 		    <TextView android:id="@+id/boil_length_title"
-		        android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="wrap_content"
-		        android:background="#00000000"
-		        android:layout_marginBottom="3dip"
-		        android:gravity="left"
-		        android:textSize="15dip"
-		        android:textStyle="bold"
-		        android:textColor="#FFF"
-		        android:text="@string/boil_end_time" />
+		        android:text="@string/boil_end_time"
+		        style="@style/title_light" />
 		              
 	    </LinearLayout>
 	    
@@ -268,24 +234,16 @@
         <!-- Cancel Button -->
 	    <Button
 	        android:id="@+id/cancel_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="fill_parent"
-	        android:textColor="@drawable/button_text"
 	        android:onClick="onClick"
-	        android:background="@drawable/left_button_bg"
-	        android:text="@string/cancel" />
+	        android:text="@string/cancel"
+			style="@style/button_left" />
 	
 	    <!-- Submit Button -->
 	    <Button
 	        android:id="@+id/new_grain_submit_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="fill_parent"
-	        android:textColor="@drawable/button_text"
 	        android:onClick="onClick"
-	        android:background="@drawable/right_button_bg"
-	        android:text="@string/add" />
+	        android:text="@string/add"
+	        style="@style/button_right" />
 
     </LinearLayout>
 

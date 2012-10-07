@@ -89,8 +89,7 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
             case android.R.id.home:
-        		Intent i = new Intent(DisplayRecipeActivity.appContext, MainActivity.class);
-        		startActivity(i);
+        		finish();
         		return true;
             
             case R.id.add_fermentable:

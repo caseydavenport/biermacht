@@ -1,5 +1,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+<!-- ===================================================================== -->
+<!-- ===================== THEME STYLES ================================== -->
+<!-- ===================================================================== -->
+
     <style name="Theme.Biermacht.Brews" parent="android:Theme.Holo.Light">
         <item name="android:background">#00DEDEDE</item>
         <item name="android:actionBarStyle">@style/Theme.Biermacht.Brews.ActionBarStyle</item>
@@ -19,6 +23,66 @@
     
     <style name="Theme.Biermacht.Brews.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#FFFFFF</item>
+    </style>
+    
+<!-- ===================================================================== -->
+<!-- ===================== OTHER STYLES ================================== -->
+<!-- ===================================================================== -->
+
+	<!-- Buttons -->
+    <style name="button">
+		<item name="android:background">@drawable/button_bg</item>
+		<item name="android:textColor">@drawable/button_text</item>
+		<item name="android:layout_width">0dip</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="button_left">
+		<item name="android:background">@drawable/left_button_bg</item>
+		<item name="android:textColor">@drawable/button_text</item>
+		<item name="android:layout_width">0dip</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:layout_height">fill_parent</item>
+    </style>
+    
+    <style name="button_right">
+		<item name="android:background">@drawable/right_button_bg</item>
+		<item name="android:textColor">@drawable/button_text</item>
+		<item name="android:layout_width">0dip</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:layout_height">fill_parent</item>
+    </style>
+    
+    <style name="title_light">
+		<item name="android:background">@color/transparent</item>
+		<item name="android:textColor">@color/title_color_light</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">15dip</item>
+		<item name="android:gravity">left</item>
+		<item name="android:layout_marginBottom">3dip</item>
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="title_dark">
+		<item name="android:background">@color/transparent</item>
+		<item name="android:textColor">@color/title_color_dark</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">15dip</item>
+		<item name="android:gravity">left</item>
+		<item name="android:layout_marginBottom">3dip</item>
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="text_input">
+        <item name="android:background">@drawable/rounded_bg_white</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">40dip</item>
+        <item name="android:layout_marginBottom">15dip</item>
+        <item name="android:paddingLeft">10dip</item>
     </style>
 
 </resources>

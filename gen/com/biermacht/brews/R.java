@@ -14,7 +14,8 @@ public final class R {
         public static final int body_background=0x7f040000;
         public static final int button_color=0x7f040001;
         public static final int recipe_list_icon_bg=0x7f040002;
-        public static final int theme_orange=0x7f040005;
+        public static final int theme_orange=0x7f040006;
+        public static final int title_color_dark=0x7f040005;
         public static final int title_color_light=0x7f040004;
         public static final int transparent=0x7f040003;
     }
@@ -197,21 +198,24 @@ public final class R {
         /**  Activity names 
          */
         public static final int app_name=0x7f050000;
-        public static final int batch_volume=0x7f050018;
-        public static final int boil_end_time=0x7f050016;
-        public static final int boil_end_time_helper=0x7f05001e;
-        public static final int boil_start_time=0x7f050015;
-        public static final int boil_start_time_helper=0x7f05001d;
-        public static final int boil_time=0x7f050017;
+        public static final int batch_volume=0x7f050017;
+        public static final int batch_volume_hint=0x7f05001a;
+        public static final int boil_end_time=0x7f050015;
+        public static final int boil_end_time_helper=0x7f050021;
+        public static final int boil_start_time=0x7f050014;
+        public static final int boil_start_time_helper=0x7f050020;
+        public static final int boil_time=0x7f050016;
+        public static final int boil_time_hint=0x7f050019;
         public static final int cancel=0x7f05000f;
         public static final int color=0x7f050011;
-        public static final int efficiency=0x7f050014;
-        public static final int end_time=0x7f05001c;
+        public static final int efficiency=0x7f050018;
+        public static final int efficiency_hint=0x7f05001b;
+        public static final int end_time=0x7f05001f;
         public static final int enter_name=0x7f050013;
         /**  Standard generic messages 
          */
         public static final int error=0x7f05000d;
-        public static final int grain_type=0x7f05001a;
+        public static final int grain_type=0x7f05001d;
         public static final int gravity=0x7f050010;
         public static final int hello_world=0x7f050004;
         public static final int menu_add_ingredient=0x7f05000a;
@@ -223,9 +227,9 @@ public final class R {
         public static final int name=0x7f050012;
         /**  from activity_main.xml 
          */
-        public static final int recipe_search_hint=0x7f05001f;
-        public static final int search_icon_description=0x7f050020;
-        public static final int start_time=0x7f05001b;
+        public static final int recipe_search_hint=0x7f050022;
+        public static final int search_icon_description=0x7f050023;
+        public static final int start_time=0x7f05001e;
         public static final int title_activity_add_grain=0x7f050005;
         public static final int title_activity_add_hops=0x7f050008;
         public static final int title_activity_add_new_recipe=0x7f050003;
@@ -235,13 +239,28 @@ public final class R {
         public static final int title_activity_main=0x7f050001;
         /**  from activity_add_grain.xml 
          */
-        public static final int weight_lbs=0x7f050019;
+        public static final int weight_lbs=0x7f05001c;
     }
     public static final class style {
-        public static final int AppTheme=0x7f060004;
+        public static final int AppTheme=0x7f06000a;
+        /**  ===================================================================== 
+ ===================== THEME STYLES ================================== 
+ ===================================================================== 
+         */
         public static final int Theme_Biermacht_Brews=0x7f060000;
         public static final int Theme_Biermacht_Brews_ActionBar_TitleTextStyle=0x7f060003;
         public static final int Theme_Biermacht_Brews_ActionBarStyle=0x7f060001;
         public static final int Theme_Biermacht_Brews_ActionBarTabBarStyle=0x7f060002;
+        /**  ===================================================================== 
+ ===================== OTHER STYLES ================================== 
+ ===================================================================== 
+ Buttons 
+         */
+        public static final int button=0x7f060004;
+        public static final int button_left=0x7f060005;
+        public static final int button_right=0x7f060006;
+        public static final int text_input=0x7f060009;
+        public static final int title_dark=0x7f060008;
+        public static final int title_light=0x7f060007;
     }
 }
