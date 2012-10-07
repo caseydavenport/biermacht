@@ -8,10 +8,12 @@ public class ColorHandler {
   {
 	  
 	// Format input
-	d = (double) Math.round(d * 10) / 10;
+	d = (double) Math.round(d * 100) / 100;
 	
 	if (d > 40)
 		d = 40;
+	
+	Log.e("ColorHandler", "Received SRM value: " + d);
 	
 	// Lookup
 	if (d == 0.0) {
@@ -1633,13 +1635,15 @@ public class ColorHandler {
 	String bString = Integer.toHexString(B);
 	
 	if (rString.length() < 2)
-		rString = rString + "0";
+		rString = "0" + rString;
 	if (gString.length() < 2)
-		gString = gString + "0";
+		gString = "0" + gString;
 	if (bString.length() < 2)
-		bString = bString + "0";
+		bString = "0" + bString;
 	
 	hexColor = "#" + rString + gString + bString;
+	Log.e("ColorHandler", "Produced hex color: " + R + G + B + " : " + hexColor);
+	
  	
   return hexColor;
   }

@@ -79,8 +79,6 @@ public class BrewCalculator {
 		
 		ibu = (AAU * utilization * 75)/r.getVolume();
 		
-		Log.e("BrewCalc", "Calculated IBU: " + ibu);
-		
 		return ibu;
 	}
 	
@@ -95,7 +93,6 @@ public class BrewCalculator {
 		
 		utilization = (float) (bignessFactor * boilTimeFactor);
 		
-		Log.e("BrewCalc", "Calculated Utilization: " + utilization);
 		return utilization;
 	}
 
