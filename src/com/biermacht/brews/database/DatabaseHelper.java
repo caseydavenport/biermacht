@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String REC_COL_ABV = "ABV";
 	public static final String REC_COL_BITTER = "bitterness";
 	public static final String REC_COL_COLOR = "color";
+	public static final String REC_COL_BOIL_TIME = "boilTime";
 	
 	// Column name defines for INGREDIENTS
 	public static final String ING_COL_ID = "_id";
@@ -60,7 +61,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ REC_COL_GRAV + " float not null, " 
 			+ REC_COL_ABV + " float not null, " 
 			+ REC_COL_BITTER + " float not null, " 
-			+ REC_COL_COLOR + " float not null"
+			+ REC_COL_COLOR + " float not null, "
+			+ REC_COL_BOIL_TIME + " float not null"
 		+ ");";
 	
 	private static final String CREATE_INGREDIENT_TABLE = "create table " +

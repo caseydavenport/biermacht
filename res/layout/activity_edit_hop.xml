@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/textured_background_light"
     android:orientation="vertical" >
-        
+       
     <RelativeLayout android:layout_width="match_parent"
     	android:layout_height="match_parent"
    		android:padding="10dip"
@@ -12,56 +12,26 @@
    		android:layout_above="@+id/bottom_nav"
    		android:layout_alignParentTop="true"
    		android:background="@drawable/textured_background" >
-   		
-	    <!-- Grain Type spinner -->
-	    <TextView android:id="@+id/spinner_title"
-	        android:text="@string/grain_type"
-	        android:layout_alignParentTop="true"
-	        style="@style/title_light" />
-	    
-	    <Spinner
-	        android:id="@+id/grain_type_spinner"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:drawSelectorOnTop="false"
-	        android:padding="10dip"
-	        android:background="@drawable/rounded_bg_white"
-	        android:spinnerMode="dialog"
-	        android:layout_marginBottom="15dip"
-	        android:paddingLeft="10dip"
-	        android:layout_below="@id/spinner_title" />
-	    
-	    <!-- EditText for Grain Name -->
-	    <TextView android:id="@+id/grain_name_title"
+    
+	    <!-- EditText for Hop Name -->
+	    <TextView android:id="@+id/hop_name_title"
 	        android:text="@string/name"
-	        android:layout_below="@id/grain_type_spinner"
+	        android:layout_below="@id/hop_type_spinner"
 	        style="@style/title_light" />
-	    
+    
 	    <EditText
-	        android:id="@+id/grain_name_edit_text"
+	        android:id="@+id/hop_name_edit_text"
 	        android:hint="@string/enter_name"
-	        android:layout_below="@id/grain_name_title"
+	        android:layout_below="@id/hop_name_title"
 	        style="@style/text_input" />
-	    
+    
 	    <LinearLayout android:id="@+id/first_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="#00000000"
-	        android:layout_below="@id/grain_name_edit_text" >
-		    
-		    <TextView android:id="@+id/color_title"
-		        android:layout_width="0dp"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        android:background="#00000000"
-		        android:layout_marginBottom="3dip"
-		        android:gravity="center"
-		        android:textSize="15dip"
-		        android:textColor="@color/title_color_light"
-		        android:textStyle="bold"
-		        android:text="@string/color" />
+	        android:layout_below="@id/hop_name_edit_text" >
 			    
-		    <TextView android:id="@+id/gravity_title"
+		    <TextView android:id="@+id/alpha_acids_title"
 		        android:layout_width="0dp"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
@@ -71,7 +41,7 @@
 		        android:textSize="15dip"
 		        android:textColor="@color/title_color_light"
 		        android:textStyle="bold"
-		        android:text="@string/gravity" />
+		        android:text="@string/alpha_acids_title" />
 		    
 		    <TextView android:id="@+id/weight_title"
 		        android:layout_width="0dp"
@@ -83,10 +53,10 @@
 		        android:textSize="15dip"
 		        android:textStyle="bold"
 		        android:textColor="@color/title_color_light"
-		        android:text="@string/weight_lbs" />
+		        android:text="@string/weight_oz" />
 		              
 	    </LinearLayout>
-	    
+    
 	    <LinearLayout android:id="@+id/second_ll"
 	        android:orientation="horizontal"
 	        android:layout_width="fill_parent"
@@ -95,19 +65,7 @@
 	        android:layout_below="@id/first_ll" >
 		    
 		    <EditText
-		        android:id="@+id/grain_color_edit_text"
-		        android:inputType="numberDecimal"
-		        android:layout_width="0dp"
-		        android:layout_height="40dip"
-	       		android:paddingLeft="10dip"
-		        android:layout_weight="1"
-		        android:maxLength="6"
-		        android:background="@drawable/rounded_bg_white"
-		        android:layout_marginRight="2dip"
-		        android:layout_marginBottom="15dip" />
-		    
-		    <EditText
-		        android:id="@+id/grain_grav_edit_text"
+		        android:id="@+id/hop_acid_edit_text"
 		        android:inputType="numberDecimal"
 		        android:layout_width="0dp"
 		        android:layout_height="40dip"
@@ -119,7 +77,7 @@
 		        android:layout_marginBottom="15dip" />
 		    
 		    <EditText
-		        android:id="@+id/grain_weight_edit_text"
+		        android:id="@+id/hop_weight_edit_text"
 		        android:inputType="numberDecimal"
 		        android:layout_width="0dp"
 		        android:layout_height="40dip"
@@ -128,9 +86,9 @@
 		        android:background="@drawable/rounded_bg_white"
 		        android:paddingLeft="10dip"
 		        android:layout_marginBottom="15dip" />
-			            
-	    </LinearLayout>
-	    
+		            
+    	</LinearLayout>
+    	
 	    <LinearLayout android:id="@+id/third_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
@@ -177,7 +135,8 @@
 			            
 	    </LinearLayout>
 	    
-	</RelativeLayout>
+    </RelativeLayout>
+    
 	
     <!-- Bottom Bar -->
     <LinearLayout android:id="@+id/bottom_nav"
@@ -193,12 +152,19 @@
 	        android:onClick="onClick"
 	        android:text="@string/cancel"
 			style="@style/button_left" />
+	    
+	    <!-- Delete Button -->
+	    <Button
+	        android:id="@+id/delete_button"
+	        android:onClick="onClick"
+	        android:text="@string/delete"
+	        style="@style/button" />
 	
 	    <!-- Submit Button -->
 	    <Button
-	        android:id="@+id/new_grain_submit_button"
+	        android:id="@+id/submit_button"
 	        android:onClick="onClick"
-	        android:text="@string/add"
+	        android:text="@string/edit"
 	        style="@style/button_right" />
 
     </LinearLayout>

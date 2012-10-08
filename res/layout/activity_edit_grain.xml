@@ -1,167 +1,195 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dip"
     android:background="@drawable/textured_background_light"
     android:orientation="vertical" >
         
-    <!-- Grain Type spinner -->
-    <TextView android:id="@+id/details_title_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:layout_marginBottom="3dip"
-        android:gravity="left"
-        android:textSize="15dip"
-        android:textStyle="bold"
-        android:text="Grain Type" />
-    
-    <Spinner
-        android:id="@+id/grain_type_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
-        android:drawSelectorOnTop="false"
-        android:padding="10dip"
-        android:background="#FFFFFF"
-        android:spinnerMode="dialog"
-        android:layout_marginBottom="15dip"
-        android:paddingLeft="10dip" />
-    
-    <!-- EditText for Grain Name -->
-    <TextView android:id="@+id/details_title_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:layout_marginBottom="3dip"
-        android:gravity="left"
-        android:textSize="15dip"
-        android:textStyle="bold"
-        android:text="Name" />
-    
-    <EditText
-        android:id="@+id/grain_name_edit_text"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
-        android:background="#FFFFFF"
-        android:padding="10dip"
-        android:layout_marginBottom="15dip"
-        android:hint="Enter a name" />
-    
-    <LinearLayout android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#00000000" >
+    <RelativeLayout android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+   		android:padding="10dip"
+   		android:layout_margin="10dip"
+   		android:layout_above="@+id/bottom_nav"
+   		android:layout_alignParentTop="true"
+   		android:background="@drawable/textured_background" >
 	    
-	    <TextView android:id="@+id/details_title_view"
-	        android:layout_width="0dp"
+	    <!-- EditText for Grain Name -->
+	    <TextView android:id="@+id/grain_name_title"
+	        android:text="@string/name"
+	        android:layout_below="@id/grain_type_spinner"
+	        style="@style/title_light" />
+	    
+	    <EditText
+	        android:id="@+id/grain_name_edit_text"
+	        android:hint="@string/enter_name"
+	        android:layout_below="@id/grain_name_title"
+	        style="@style/text_input" />
+	    
+	    <LinearLayout android:id="@+id/first_ll"
+	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
 	        android:background="#00000000"
-	        android:layout_marginBottom="3dip"
-	        android:gravity="center"
-	        android:textSize="15dip"
-	        android:textStyle="bold"
-	        android:text="Color" />
+	        android:layout_below="@id/grain_name_edit_text" >
 		    
-	    <TextView android:id="@+id/details_title_view"
-	        android:layout_width="0dp"
+		    <TextView android:id="@+id/color_title"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:background="#00000000"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="center"
+		        android:textSize="15dip"
+		        android:textColor="@color/title_color_light"
+		        android:textStyle="bold"
+		        android:text="@string/color" />
+			    
+		    <TextView android:id="@+id/gravity_title"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:background="#00000000"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="center"
+		        android:textSize="15dip"
+		        android:textColor="@color/title_color_light"
+		        android:textStyle="bold"
+		        android:text="@string/gravity" />
+		    
+		    <TextView android:id="@+id/weight_title"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:background="#00000000"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="center"
+		        android:textSize="15dip"
+		        android:textStyle="bold"
+		        android:textColor="@color/title_color_light"
+		        android:text="@string/weight_lbs" />
+		              
+	    </LinearLayout>
+	    
+	    <LinearLayout android:id="@+id/second_ll"
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
 	        android:background="#00000000"
-	        android:layout_marginBottom="3dip"
-	        android:gravity="center"
-	        android:textSize="15dip"
-	        android:textStyle="bold"
-	        android:text="Gravity" />
+	        android:layout_below="@id/first_ll" >
+		    
+		    <EditText
+		        android:id="@+id/grain_color_edit_text"
+		        android:inputType="numberDecimal"
+		        android:layout_width="0dp"
+		        android:layout_height="40dip"
+	       		android:paddingLeft="10dip"
+		        android:layout_weight="1"
+		        android:maxLength="6"
+		        android:background="@drawable/rounded_bg_white"
+		        android:layout_marginRight="2dip"
+		        android:layout_marginBottom="15dip" />
+		    
+		    <EditText
+		        android:id="@+id/grain_grav_edit_text"
+		        android:inputType="numberDecimal"
+		        android:layout_width="0dp"
+		        android:layout_height="40dip"
+		        android:layout_weight="1"
+		        android:background="@drawable/rounded_bg_white"
+		        android:maxLength="6"
+		        android:paddingLeft="10dip"
+		        android:layout_marginRight="2dip"
+		        android:layout_marginBottom="15dip" />
+		    
+		    <EditText
+		        android:id="@+id/grain_weight_edit_text"
+		        android:inputType="numberDecimal"
+		        android:layout_width="0dp"
+		        android:layout_height="40dip"
+		        android:layout_weight="1"
+		        android:maxLength="5"
+		        android:background="@drawable/rounded_bg_white"
+		        android:paddingLeft="10dip"
+		        android:layout_marginBottom="15dip" />
+			            
+	    </LinearLayout>
 	    
-	    <!-- EditText for Grain Weight -->
-	    <TextView android:id="@+id/details_title_view"
-	        android:layout_width="0dp"
+	    <LinearLayout android:id="@+id/third_ll"
+	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
 	        android:background="#00000000"
-	        android:layout_marginBottom="3dip"
-	        android:gravity="center"
-	        android:textSize="15dip"
-	        android:textStyle="bold"
-	        android:text="Weight (lbs)" />
-	              
-    </LinearLayout>
-    
-    <LinearLayout android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#00000000" >
+	        android:layout_below="@id/second_ll" >
+		    
+		    <!-- Boil time -->
+		    <TextView android:id="@+id/boil_start_time_title"
+		        android:text="@string/boil_start_time"
+		        style="@style/title_light" />
+		              
+	    </LinearLayout>
 	    
-	    <EditText
-	        android:id="@+id/grain_color_edit_text"
-	        android:inputType="numberDecimal"
-	        android:layout_width="0dp"
-	        android:layout_height="60dip"
-	        android:layout_weight="1"
-	        android:background="#FFFFFF"
-	        android:padding="10dip"
-	        android:layout_marginRight="2dip"
-	        android:layout_marginBottom="15dip" />
+	    <LinearLayout android:id="@+id/forth_ll"
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="#00000000"
+	        android:layout_below="@id/third_ll"
+	        android:layout_marginBottom="15dip" >
+	        	    
+		    <EditText
+		        android:id="@+id/start_time_edit_text"
+		        android:inputType="numberDecimal"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="40dip"
+		        android:background="@drawable/rounded_bg_white"
+		        android:padding="10dip"
+		        android:selectAllOnFocus="true"
+		        android:hint="@string/start_time" />
+		    
+		    <!-- Boil time -->
+		    <TextView android:id="@+id/boil_time_helper"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="fill_parent"
+		        android:background="#00000000"
+		        android:layout_marginLeft="5dip"
+		        android:gravity="top"
+		        android:textSize="11dip"
+		        android:textColor="#CCC"
+		        android:text="@string/boil_start_time_helper" />
+			            
+	    </LinearLayout>
 	    
-	    <EditText
-	        android:id="@+id/grain_grav_edit_text"
-	        android:inputType="numberDecimal"
-	        android:layout_width="0dp"
-	        android:layout_height="60dip"
-	        android:layout_weight="1"
-	        android:background="#FFFFFF"
-	        android:padding="10dip"
-	        android:layout_marginRight="2dip"
-	        android:layout_marginBottom="15dip" />
-	    
-	    <EditText
-	        android:id="@+id/grain_weight_edit_text"
-	        android:inputType="numberDecimal"
-	        android:layout_width="0dp"
-	        android:layout_height="60dip"
-	        android:layout_weight="1"
-	        android:background="#FFFFFF"
-	        android:padding="10dip"
-	        android:layout_marginBottom="15dip" />
-	    
-		            
-    </LinearLayout>
-
-    <LinearLayout android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#00000000" >
+	</RelativeLayout>
+	
+    <!-- Bottom Bar -->
+    <LinearLayout android:id="@+id/bottom_nav"
+        android:layout_height="70dip"
+        android:background="@drawable/actionbar_background"
+        android:layout_width="fill_parent" 
+        android:padding="15dp"
+        android:layout_alignParentBottom="true">
 	    
         <!-- Cancel Button -->
 	    <Button
 	        android:id="@+id/cancel_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="70dip"
 	        android:onClick="onClick"
-	        android:text="Cancel" />
+	        android:text="@string/cancel"
+			style="@style/button_left" />
 	    
 	    <!-- Delete Button -->
 	    <Button
-	        android:id="@+id/grain_delete_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="70dip"
+	        android:id="@+id/delete_button"
 	        android:onClick="onClick"
-	        android:text="Delete" />
-	    
+	        android:text="@string/delete"
+	        style="@style/button" />
+	
 	    <!-- Submit Button -->
 	    <Button
-	        android:id="@+id/grain_submit_button"
-	   	    android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="70dip"
+	        android:id="@+id/submit_button"
 	        android:onClick="onClick"
-	        android:text="Submit" />
-	    
-	</LinearLayout>
-    
+	        android:text="@string/edit"
+	        style="@style/button_right" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

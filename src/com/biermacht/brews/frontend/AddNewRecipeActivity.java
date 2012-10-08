@@ -103,7 +103,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 			boolean readyToGo = true;
 			String recipeName = "Unnamed Brew";
 			String recipeDesc = "";
-			Integer boilTime = 60;
+			Integer boilTime = 1;
 			float eff = 100;
 			float batchSize = 5;
 			

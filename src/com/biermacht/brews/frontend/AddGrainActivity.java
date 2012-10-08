@@ -28,7 +28,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
 	private EditText grainBoilStartTimeEditText;
-	private EditText grainBoilEndTimeEditText;
 	private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private String grainType;
 	private Recipe mRecipe;
@@ -50,7 +49,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
         grainBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
-        grainBoilEndTimeEditText = (EditText) findViewById(R.id.boil_end_edit_text);
         
         // Set up grain type spinner
         grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
@@ -77,7 +75,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 grainGravEditText.setText(grainObj.getGravity() +"");
                 grainWeightEditText.setText(5 +"");
                 grainBoilStartTimeEditText.setText(0 + "");
-                grainBoilEndTimeEditText.setText(mRecipe.getBoilTime() + "");
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -110,7 +107,10 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			double grav = Double.parseDouble(grainGravEditText.getText().toString());
 			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
 			double boilStartTime = Double.parseDouble(grainBoilStartTimeEditText.getText().toString());
-			double boilEndTime = Double.parseDouble(grainBoilEndTimeEditText.getText().toString());
+			double boilEndTime = mRecipe.getBoilTime();
+			
+			if (boilStartTime > mRecipe.getBoilTime())
+				boilStartTime = mRecipe.getBoilTime();
 			
 			Grain g = new Grain(grainName);
 			g.setLovibondColor(color);

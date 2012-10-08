@@ -1,62 +1,55 @@
 package com.biermacht.brews.frontend;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.Spinner;
-
 import com.biermacht.brews.R;
-import com.biermacht.brews.recipe.Grain;
+import com.biermacht.brews.recipe.Hop;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
-public class EditGrainActivity extends Activity implements OnClickListener {
+public class EditHopActivity extends Activity implements OnClickListener {
 	
 	// private Spinner grainTypeSpinner;
-	private EditText grainNameEditText;
-	private EditText grainColorEditText;
-	private EditText grainGravEditText;
-	private EditText grainWeightEditText;
-	private EditText grainBoilStartTimeEditText;
+	private EditText hopNameEditText;
+	private EditText hopAcidsEditText;
+	private EditText hopStartTimeEditText;
+	private EditText hopWeightEditText;
 	// private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private Recipe mRecipe;
-	private Grain grain;
+	private Hop hop;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_grain);
+        setContentView(R.layout.activity_edit_hop);
         
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("com.biermacht.brews.recipeID", 0);
-        long grainId = getIntent().getLongExtra("com.biermacht.brews.grainID", 0);
+        long hopId = getIntent().getLongExtra("com.biermacht.brews.grainID", 0);
         mRecipe = MainActivity.databaseInterface.getRecipeWithId(id);
         
         // Get the grain from the database
-        grain = (Grain) Utils.getIngredientWithId(grainId);
+        hop = (Hop) Utils.getIngredientWithId(hopId);
         
         // Initialize views and such here
-        grainNameEditText = (EditText) findViewById(R.id.grain_name_edit_text);
-        grainColorEditText = (EditText) findViewById(R.id.grain_color_edit_text);
-        grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
-        grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
-        grainBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
+        hopNameEditText = (EditText) findViewById(R.id.hop_name_edit_text);
+        hopAcidsEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
+        hopStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
+        hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
         
-        grainNameEditText.setText(grain.getName());
-        grainColorEditText.setText(grain.getLovibondColor() +"");
-        grainGravEditText.setText(grain.getGravity() +"");
-        grainWeightEditText.setText(grain.getAmount() + "");
-        grainBoilStartTimeEditText.setText(grain.getBoilStartTime() + "");
+        hopNameEditText.setText(hop.getName());
+        hopAcidsEditText.setText(hop.getAlphaAcidContent() +"");
+        hopStartTimeEditText.setText(hop.getBoilStartTime() +"");
+        hopWeightEditText.setText(hop.getAmount() + "");
+        
         
         /*
-        // Set up grain type spinner
+        // Set up hop type spinner
         grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
         SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, grainTypeArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -99,7 +92,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
     @Override
     public void onBackPressed()
     {
-	    Intent intent = new Intent(EditGrainActivity.this, DisplayRecipeActivity.class);
+	    Intent intent = new Intent(EditHopActivity.this, DisplayRecipeActivity.class);
 	    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
 	    startActivity(intent);				
     }
@@ -107,31 +100,27 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		// If "EDIT" button pressed
 		if (v.getId() == R.id.submit_button)
-		{
-			String grainName = grainNameEditText.getText().toString();
-			double color = Double.parseDouble(grainColorEditText.getText().toString());
-			double grav = Double.parseDouble(grainGravEditText.getText().toString());
-			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
-			double boilStartTime = Double.parseDouble(grainBoilStartTimeEditText.getText().toString());
+		{	
+			String name = hopNameEditText.getText().toString();
+			double acids = Double.parseDouble(hopAcidsEditText.getText().toString());
+			double boilStartTime = Double.parseDouble(hopStartTimeEditText.getText().toString());
+			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
 			
 			if (boilStartTime > mRecipe.getBoilTime())
 				boilStartTime = mRecipe.getBoilTime();
 			
-			grain.setName(grainName);
-			grain.setLovibondColor(color);
-			grain.setGravity(grav);
-			grain.setWeight(weight);
-			grain.setGrainType(Grain.GRAIN);
-			grain.setUnit("lbs");
-			grain.setEfficiency(1);
-			grain.setBoilStartTime(boilStartTime);
+			hop.setName(name);
+			hop.setAlphaAcidContent(acids);
+			hop.setBoilStartTime(boilStartTime);
+			hop.setWeight(weight);
+			hop.setUnit("oz");
 			
-			Utils.updateIngredient(grain);
+			Utils.updateIngredient(hop);
 			mRecipe = Utils.getRecipeWithId(mRecipe.getId());
 			mRecipe.update();
 			Utils.updateRecipe(mRecipe);
 
-		    Intent intent = new Intent(EditGrainActivity.this, DisplayRecipeActivity.class);
+		    Intent intent = new Intent(EditHopActivity.this, DisplayRecipeActivity.class);
 		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
 		    startActivity(intent);	
 		}
@@ -139,9 +128,9 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 		// If "DELETE" button pressed
 		if (v.getId() == R.id.delete_button)
 		{
-			Utils.deleteIngredient(grain);
+			Utils.deleteIngredient(hop);
 			
-		    Intent intent = new Intent(EditGrainActivity.this, DisplayRecipeActivity.class);
+		    Intent intent = new Intent(EditHopActivity.this, DisplayRecipeActivity.class);
 		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
 		    startActivity(intent);	
 		}
@@ -149,7 +138,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 		// if "CANCEL" button pressed
 		if (v.getId() == R.id.cancel_button)
 		{
-		    Intent intent = new Intent(EditGrainActivity.this, DisplayRecipeActivity.class);
+		    Intent intent = new Intent(EditHopActivity.this, DisplayRecipeActivity.class);
 		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
 		    startActivity(intent);	
 		}

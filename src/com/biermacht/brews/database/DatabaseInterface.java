@@ -29,7 +29,8 @@ public class DatabaseInterface {
 			DatabaseHelper.REC_COL_GRAV,
 			DatabaseHelper.REC_COL_ABV,
 			DatabaseHelper.REC_COL_BITTER,
-			DatabaseHelper.REC_COL_COLOR
+			DatabaseHelper.REC_COL_COLOR,
+			DatabaseHelper.REC_COL_BOIL_TIME
 			};
 	
 	private String[] ingredientAllColumns = {
@@ -81,6 +82,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
+		values.put(DatabaseHelper.REC_COL_BOIL_TIME, r.getBoilTime());
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id);
@@ -103,6 +105,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
+		values.put(DatabaseHelper.REC_COL_BOIL_TIME, r.getBoilTime());
 		
 		deleteIngredientList(r.getId());
 		addIngredientListToDatabase(r.getIngredientList(), r.getId());
@@ -287,6 +290,7 @@ public class DatabaseInterface {
 		float ABV = cursor.getFloat(7);
 		float bitterness = cursor.getFloat(8);
 		float color = cursor.getFloat(9);
+		int boilTime = cursor.getInt(10);
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
 		
 		Recipe r = new Recipe(recipeName);
@@ -300,6 +304,7 @@ public class DatabaseInterface {
 		r.setBitterness(bitterness);
 		r.setColor(color);
 		r.setIngredientsList(ingredientsList);
+		r.setBoilTime(boilTime);
 		
 		return r;
 	}

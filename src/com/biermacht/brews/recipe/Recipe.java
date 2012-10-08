@@ -31,7 +31,7 @@ public class Recipe {
 		
 		// Default values
 		this.id = -1;
-		this.volume = 5;
+		this.volume = 0;
 		this.ingredientList = new ArrayList<Ingredient>();
 		this.instructionList = new ArrayList<Instruction>();
 		this.description = "No description provided";
@@ -41,6 +41,7 @@ public class Recipe {
 		this.color = 0;
 		this.gravity = 0;
 		this.batchTime = 0;
+		this.boilTime = 0;
 		
 	}
 	
@@ -200,7 +201,6 @@ public class Recipe {
 
 	public int getBoilTime() {
 		// TODO: CALCULATE BOIL TIME BASED OFF INGREDIENTS
-		boilTime = 60;
 		return boilTime;
 	}
 

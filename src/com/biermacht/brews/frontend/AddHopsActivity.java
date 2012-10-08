@@ -26,7 +26,7 @@ public class AddHopsActivity extends Activity {
 	
 	private Spinner hopSpinner;
 	private EditText hopNameEditText;
-	private EditText hopBoilTimeEditText;
+	private EditText hopBoilStartTimeEditText;
 	private EditText hopAcidEditText;
 	private EditText hopWeightEditText;
 	private ArrayList<String> hopTypeArray = Utils.getHopsStringList();
@@ -44,7 +44,7 @@ public class AddHopsActivity extends Activity {
         
         // Initialize views and such here
         hopNameEditText = (EditText) findViewById(R.id.hop_name_edit_text);
-        hopBoilTimeEditText = (EditText) findViewById(R.id.hop_boil_time_edit_text);
+        hopBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
         hopAcidEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
         hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
         
@@ -69,7 +69,7 @@ public class AddHopsActivity extends Activity {
                 }
             	
                 hopNameEditText.setText(hopObj.getName());
-                hopBoilTimeEditText.setText(hopObj.getBoilStartTime() +"");
+                hopBoilStartTimeEditText.setText(hopObj.getBoilStartTime() +"");
                 hopAcidEditText.setText(hopObj.getAlphaAcidContent() +"");
                 hopWeightEditText.setText(1.0 +"");
             }
@@ -100,18 +100,21 @@ public class AddHopsActivity extends Activity {
 		if (v.getId() == R.id.new_grain_submit_button)
 		{
 			String hopName = hopNameEditText.getText().toString();
-			double boilTime = Double.parseDouble(hopBoilTimeEditText.getText().toString());
+			double boilStartTime = Double.parseDouble(hopBoilStartTimeEditText.getText().toString());
+			double boilEndTime = mRecipe.getBoilTime();
 			double aAcid = Double.parseDouble(hopAcidEditText.getText().toString());
 			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
 			
+			if (boilStartTime > mRecipe.getBoilTime())
+				boilStartTime = mRecipe.getBoilTime();
+			
 			Hop h = new Hop(hopName);
-			h.setBoilStartTime(boilTime);
+			h.setBoilStartTime(boilStartTime);
+			h.setBoilEndTime(boilEndTime);
 			h.setAlphaAcidContent(aAcid);
 			h.setWeight(weight);
 			h.setHopType(Hop.TYPE_PELLET);
 			h.setUnit("oz");
-			
-			
 			
 			mRecipe.addIngredient(h);
 			mRecipe.update();

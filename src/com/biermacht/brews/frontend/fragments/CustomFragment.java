@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.DisplayRecipeActivity;
 import com.biermacht.brews.frontend.EditGrainActivity;
+import com.biermacht.brews.frontend.EditHopActivity;
 import com.biermacht.brews.frontend.IngredientArrayAdapter;
 import com.biermacht.brews.frontend.InstructionArrayAdapter;
 import com.biermacht.brews.recipe.Ingredient;
@@ -87,12 +88,22 @@ public class CustomFragment extends Fragment {
 			{	
 				Ingredient ing = r.getIngredientList().get(pos);
 				
+				// Grain pressed
 				if (ing.getType().equals(Ingredient.GRAIN))
 				{
-		  		Intent i = new Intent(DisplayRecipeActivity.appContext, EditGrainActivity.class);
-			    i.putExtra("com.biermacht.brews.recipeID", r.getId());
-			    i.putExtra("com.biermacht.brews.grainID", ing.getId());
-		  		startActivity(i);
+		  		Intent editGrainIntent = new Intent(DisplayRecipeActivity.appContext, EditGrainActivity.class);
+		  		editGrainIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
+			    editGrainIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
+		  		startActivity(editGrainIntent);
+				}
+				
+				// Hop Pressed
+				if (ing.getType().equals(Ingredient.HOP))
+				{
+		  		Intent editHopIntent = new Intent(DisplayRecipeActivity.appContext, EditHopActivity.class);
+		  		editHopIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
+		  		editHopIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
+		  		startActivity(editHopIntent);
 				}
 			}
           };
@@ -151,6 +162,7 @@ public class CustomFragment extends Fragment {
 		  LinearLayout bitternessView = (LinearLayout) pageView.findViewById(R.id.beer_bitterness_view);
 		  LinearLayout colorView = (LinearLayout) pageView.findViewById(R.id.beer_color_view);
 		  LinearLayout abvView = (LinearLayout) pageView.findViewById(R.id.beer_abv_view);
+		  LinearLayout boilTimeView = (LinearLayout) pageView.findViewById(R.id.boil_time_view);
 
 		  // Beer type detail view
 		  TextView tag = (TextView) beerTypeView.findViewById(R.id.tag);
@@ -181,6 +193,12 @@ public class CustomFragment extends Fragment {
 		  TextView abv_content = (TextView) abvView.findViewById(R.id.content);
 		  abv_tag.setText("ABV: ");
 		  abv_content.setText("" + r.getABV() + "%");
+		  
+		  // Beer boil time detail view
+		  TextView boilTimeTag = (TextView) boilTimeView.findViewById(R.id.tag);
+		  TextView boilTimeContent = (TextView) boilTimeView.findViewById(R.id.content);
+		  boilTimeTag.setText("Boil Time: ");
+		  boilTimeContent.setText("" + r.getBoilTime() + " mins");
 		  
 		  // Set all the colors appropriately
 		  String green = "#44AA44";

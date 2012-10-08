@@ -197,6 +197,38 @@
 		        	    android:background="#00000000"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="@string/error" />
+		        </LinearLayout>	
+		        	        
+		        <!-- Boil time view -->
+		        <LinearLayout android:id="@+id/boil_time_view"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="#DCDCDC"
+			        android:layout_marginBottom="5dip"
+			        android:padding="10dip" >
+			        
+		        	<TextView android:id="@id/tag"
+		        	    android:layout_width="0dip"
+		        	    android:layout_weight="1"
+		        	    android:background="#00000000"
+		        	    android:layout_height="fill_parent"
+		        	    android:text="tag: " />
+		        	
+		        	<TextView android:id="@id/content"
+		        	    android:layout_width="0dip"
+		        	    android:layout_weight="1"
+		        	    android:background="#00000000"
+		        	    android:layout_height="fill_parent"
+		        	    android:gravity="right"
+		        	    android:layout_marginRight="15dp"
+		        	    android:text="content" />
+		        	
+		        	<View android:layout_height="fill_parent"
+		        	    android:layout_width="0dp"
+		        	    android:layout_weight="1"
+		        	    android:background="@color/transparent"
+		        	    android:layout_marginRight="15dp" />
+		    
 		        </LinearLayout>
 		         
 		    </LinearLayout>

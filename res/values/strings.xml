@@ -8,9 +8,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_grain">Add Grain</string>
     <string name="title_activity_edit_grain">Edit Grain</string>
+	<string name="title_activity_edit_hop">Edit Hop</string>
     <string name="title_activity_edit_recipe">Edit Recipe</string>
     <string name="title_activity_add_hops">Add Hops</string>
-    
+
+
     <!-- Menu stuff -->
     <string name="menu_settings">Settings</string>
     <string name="menu_add_ingredient">Add Ingredient</string>
@@ -19,31 +21,38 @@
 
     <!-- Standard generic messages -->
     <string name="error">Error</string>
-	<string name="add">Add</string>
-	<string name="cancel">Cancel</string>
-	<string name="gravity">Gravity</string>
-	<string name="color">Color</string>
-	<string name="name">Name</string>
-	<string name="enter_name">Enter a name</string>
-	<string name="boil_start_time">Boil Start Time</string>
-	<string name="boil_end_time">Boil End Time</string>
-	<string name="boil_time">Boil Time (mins)</string>
-	<string name="batch_volume">Batch Size (gal)</string>
-	<string name="efficiency">Efficiency (%)</string>
-	<string name="boil_time_hint">minutes</string>
-	<string name="batch_volume_hint">Gal</string>
-	<string name="efficiency_hint">1 - 100</string>
-	
-	<!-- from activity_add_grain.xml -->
-	<string name="weight_lbs">Weight (lbs)</string>
-	<string name="grain_type">Grain Type</string>
-	<string name="start_time">Start time</string>
-	<string name="end_time">End time</string>
-	<string name="boil_start_time_helper">Time in minutes after starting the brew that this ingredient gets added to the boil.</string>
-	<string name="boil_end_time_helper">This defaults to the recipe boil length! Modify for custom boil time.</string>
-	
-	<!-- from activity_main.xml -->
-	<string name="recipe_search_hint">Filter Recipes</string>
-	<string name="search_icon_description">Search Icon</string>
+    <string name="add">Add</string>
+    <string name="edit">Save</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="gravity">Gravity</string>
+    <string name="color">Color</string>
+    <string name="name">Name</string>
+    <string name="enter_name">Enter a name</string>
+    <string name="boil_start_time">Boil Start Time</string>
+    <string name="boil_end_time">Boil End Time</string>
+    <string name="boil_time">Boil Time (mins)</string>
+    <string name="batch_volume">Batch Size (gal)</string>
+    <string name="efficiency">Efficiency (%)</string>
+    <string name="boil_time_hint">minutes</string>
+    <string name="batch_volume_hint">Gal</string>
+    <string name="efficiency_hint">1 - 100</string>
+
+    <!-- from activity_add_grain.xml -->
+    <string name="weight_lbs">Weight (lbs)</string>
+    <string name="grain_type">Grain Type</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
+    <string name="boil_start_time_helper">Time in minutes after starting the brew that this ingredient gets added to the boil.</string>
+    <string name="boil_end_time_helper">This defaults to the recipe boil length! Modify for custom boil time.</string>
+
+    <!-- from activity_add_hops.xml -->
+    <string name="select_hop">Select Hop</string>
+    <string name="alpha_acids_title">Alpha Acids (%)</string>
+    <string name="weight_oz">Weight (oz)</string>
+
+    <!-- from activity_main.xml -->
+    <string name="recipe_search_hint">Filter Recipes</string>
+    <string name="search_icon_description">Search Icon</string>
 
 </resources>

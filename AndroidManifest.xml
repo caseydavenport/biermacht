@@ -8,16 +8,17 @@
         android:targetSdkVersion="15" />
 
     <application
+        uiOptions="splitActionBarWhenNarrow"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Biermacht.Brews"
-        uiOptions="splitActionBarWhenNarrow" >
+        android:theme="@style/Theme.Biermacht.Brews" >
         <activity
             android:name=".frontend.MainActivity"
             android:label="@string/title_activity_main"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,6 +53,11 @@
         <activity
             android:name=".frontend.AddHopsActivity"
             android:label="@string/title_activity_add_hops"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name=".frontend.EditHopActivity"
+            android:label="@string/title_activity_edit_hop"
             android:noHistory="true" >
         </activity>
     </application>
