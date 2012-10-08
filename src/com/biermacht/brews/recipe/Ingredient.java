@@ -70,6 +70,10 @@ public abstract class Ingredient {
 	public void setBoilEndTime(double boilEndTime) {
 		this.boilEndTime = boilEndTime;
 	}
+	public double getBoilTime()
+	{
+		return this.boilEndTime - this.boilStartTime;
+	}
 
 	
 	

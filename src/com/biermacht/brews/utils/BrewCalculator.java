@@ -63,7 +63,7 @@ public class BrewCalculator {
 	{
 		float ibu;
 		float AAU = 0;
-		float utilization = getHopUtilization(r);
+		float utilization = 0;
 		
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 		
@@ -73,6 +73,7 @@ public class BrewCalculator {
 			if (i.getType().equals(Ingredient.HOP))
 			{
 				Hop h = (Hop) i;
+				utilization = getHopUtilization(r, h);
 				AAU += h.getWeight() * h.getAlphaAcidContent();
 			}
 		}
@@ -82,14 +83,14 @@ public class BrewCalculator {
 		return ibu;
 	}
 	
-	public static float getHopUtilization(Recipe r)
+	public static float getHopUtilization(Recipe r, Hop i)
 	{
 		float utilization;
 		double bignessFactor;
 		double boilTimeFactor;
 		
 		bignessFactor = 1.65 * Math.pow(.000125, r.getGravity()-1);
-		boilTimeFactor = (1 - Math.pow(Math.E, -.04*r.getBoilTime()))/4.15;
+		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getBoilTime()))/4.15;
 		
 		utilization = (float) (bignessFactor * boilTimeFactor);
 		
