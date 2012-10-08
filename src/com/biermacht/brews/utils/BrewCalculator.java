@@ -67,7 +67,7 @@ public class BrewCalculator {
 		
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 		
-		http://www.howtobrew.com/section1/chapter5-5.html
+		// http://www.howtobrew.com/section1/chapter5-5.html
 		for (Ingredient i : ingredientsList)
 		{
 			if (i.getType().equals(Ingredient.HOP))
