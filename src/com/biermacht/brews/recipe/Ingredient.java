@@ -19,7 +19,7 @@ public abstract class Ingredient {
 		this.amount = 0;
 		this.unit = "";
 		this.boilStartTime = -1;
-		this.ownerId = -1;
+		this.setOwnerId(-1);
 	}
 	public Ingredient(String name, double amount, String unit, float time)
 	{
@@ -27,7 +27,7 @@ public abstract class Ingredient {
 		this.amount = amount;
 		this.unit = unit;
 		this.boilStartTime = time;
-		this.ownerId = -1;
+		this.setOwnerId(-1);
 	}
 	
 	// Public Methods
@@ -50,10 +50,10 @@ public abstract class Ingredient {
 		this.unit = unit;
 	}
 	public double getAmount() {
-		return amount;
+		return (float) Math.round(amount * 100) / 100.0;
 	}
 	public void setAmount(double amount) {
-		this.amount = amount;
+		this.amount = (float) Math.round(amount * 100) / 100;
 	}
 	
 	public double getBoilStartTime() {
@@ -74,70 +74,21 @@ public abstract class Ingredient {
 	{
 		return this.boilEndTime - this.boilStartTime;
 	}
-
 	
-	
-	// Abstract methods of Ingredient
-	public abstract String getType();
-	
-//====================================================================================
-//====================================================================================
-
 	public long getOwnerId() {
 		return ownerId;
 	}
 	public void setOwnerId(long ownerId) {
 		this.ownerId = ownerId;
 	}
-
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-
-
-//====================================================================================
-//====================================================================================
 	
-	// Yeast subclass of Ingredient
-	public class Yeast extends Ingredient {
-
-		public Yeast(String name)
-		{
-			super(name);
-		}
-		
-		public Yeast(String name, double amount, String unit, float time) {
-			super(name, amount, unit, time);
-		}
-
-		@Override
-		public String getType() {
-			return "Yeast";
-		}	
-	}
-	
-
-//====================================================================================
-//====================================================================================
-	
-	// Other subclass of Ingredient
-	public class OtherIngredient extends Ingredient {
-
-		public OtherIngredient(String name)
-		{
-			super(name);
-		}
-		
-		public OtherIngredient(String name, double amount, String unit, float time) {
-			super(name, amount, unit, time);
-		}
-
-		@Override
-		public String getType() {
-			return "Other";
-		}
-	}
+	// Abstract methods of Ingredient
+	public abstract String getType();
+	public abstract String getShortDescription();
 }

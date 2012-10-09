@@ -67,4 +67,9 @@ public class Hop extends Ingredient {
 	public void setHopType(String hopType) {
 		this.hopType = hopType;
 	}
+
+	@Override
+	public String getShortDescription() {
+		return this.description;
+	}
 }

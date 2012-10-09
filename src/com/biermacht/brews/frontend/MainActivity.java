@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
+import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 

@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.adapters;
 
 import java.util.List;
 
@@ -31,14 +31,21 @@ public class SpinnerAdapter<String> extends ArrayAdapter<String> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		// Get inflater
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
 		// View to return
-		View row = inflater.inflate(R.layout.spinner_row_layout, parent, false);
+		View row = convertView;
+				
+		if (row == null)
+		{
+			// Get inflater
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			row = inflater.inflate(R.layout.spinner_row_layout, parent, false);
+		}
+		
 		TextView textView = (TextView) row.findViewById(R.id.selected_view);
+		TextView descView = (TextView) row.findViewById(R.id.description_view);
 		
 		textView.setText((CharSequence) list.get(position));
+		descView.setText("Aromatic, strong, bitter");
 		
 		return row;
 	}

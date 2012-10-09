@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.adapters;
 
 import java.util.List;
 
@@ -29,11 +29,15 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		// Get inflater
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
 		// View to return
-		View row = inflater.inflate(R.layout.instruction_row_layout, parent, false);
+		View row = convertView;
+				
+		if (row == null)
+		{
+			// Get inflater
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			row = inflater.inflate(R.layout.instruction_row_layout, parent, false);
+		}
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView numberView = (TextView) row.findViewById(R.id.numbering);
 		TextView startTimeView = (TextView) row.findViewById(R.id.start_time_view);

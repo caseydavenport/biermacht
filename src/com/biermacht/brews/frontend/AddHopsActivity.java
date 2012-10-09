@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.biermacht.brews.R;
 import com.biermacht.brews.R.layout;
 import com.biermacht.brews.R.menu;
+import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Hop;
 import com.biermacht.brews.recipe.Ingredient;
@@ -29,7 +31,7 @@ public class AddHopsActivity extends Activity {
 	private EditText hopBoilStartTimeEditText;
 	private EditText hopAcidEditText;
 	private EditText hopWeightEditText;
-	private ArrayList<String> hopTypeArray = Utils.getHopsStringList();
+	private ArrayList<Ingredient> hopTypeArray = Utils.getHopsList();
 	private String hopType;
 	private Recipe mRecipe;
 
@@ -48,9 +50,9 @@ public class AddHopsActivity extends Activity {
         hopAcidEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
         hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
         
-        // Set up grain type spinner
+        // Set up hop type spinner
         hopSpinner = (Spinner) findViewById(R.id.hop_type_spinner);
-        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, hopTypeArray);  
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopTypeArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         hopSpinner.setAdapter(adapter);
         hopSpinner.setSelection(0);    
@@ -60,7 +62,7 @@ public class AddHopsActivity extends Activity {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Hop hopObj = new Hop("");
-            	hopType = hopTypeArray.get(position);
+            	hopType = hopTypeArray.get(position).getName();
                 
                 for (Ingredient i : Utils.getHopsList())
                 {

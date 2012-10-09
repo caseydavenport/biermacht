@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.adapters;
 
 import java.util.List;
 

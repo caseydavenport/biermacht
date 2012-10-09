@@ -54,6 +54,7 @@
 	        android:textSize="20dp"
 	        android:textColor="#666666"
 	        android:text="5.0"
+	        android:maxLength="4"
         	android:background="#FFFFFF" />
         
         <TextView android:id="@+id/unit_text"

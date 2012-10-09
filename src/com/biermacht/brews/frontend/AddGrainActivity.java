@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Grain;
 import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Recipe;

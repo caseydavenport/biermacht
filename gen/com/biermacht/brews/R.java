@@ -175,7 +175,8 @@ public final class R {
         public static final int instruction_row_layout=0x7f03000c;
         public static final int instruction_view=0x7f03000d;
         public static final int recipe_row_layout=0x7f03000e;
-        public static final int spinner_row_layout=0x7f03000f;
+        public static final int spinner_row_dropdown_layout=0x7f03000f;
+        public static final int spinner_row_layout=0x7f030010;
     }
     public static final class menu {
         public static final int activity_add_hops=0x7f070000;

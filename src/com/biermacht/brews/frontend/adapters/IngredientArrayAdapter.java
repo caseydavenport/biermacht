@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.adapters;
 
 import java.util.List;
 
@@ -30,18 +30,23 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		// Get inflater
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
 		// View to return
-		View row = inflater.inflate(R.layout.ingredient_row_layout, parent, false);
+		View row = convertView;
+				
+		if (row == null)
+		{
+			// Get inflater
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			row = inflater.inflate(R.layout.ingredient_row_layout, parent, false);
+		}
+		
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView amountView = (TextView) row.findViewById(R.id.amount);
 		ImageView imageView = (ImageView) row.findViewById(R.id.ingredient_row_icon);
 		TextView unitView = (TextView) row.findViewById(R.id.unit_text);
 		
 		labelView.setText(list.get(position).getName());
-		amountView.setText(list.get(position).getAmount() + " ");
+		amountView.setText(list.get(position).getAmount() + "");
 		unitView.setText(list.get(position).getUnit());
 		
 		// Set imageView based on ingredient type

@@ -103,5 +103,11 @@ public class Grain extends Ingredient {
 	{
 		setWeight(amt);
 	}
+
+	@Override
+	public String getShortDescription() {
+		// TODO
+		return "";
+	}
 }
 
