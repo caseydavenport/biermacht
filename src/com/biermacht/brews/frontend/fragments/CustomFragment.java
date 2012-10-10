@@ -28,7 +28,7 @@ import com.biermacht.brews.frontend.EditGrainActivity;
 import com.biermacht.brews.frontend.EditHopActivity;
 import com.biermacht.brews.frontend.adapters.IngredientArrayAdapter;
 import com.biermacht.brews.frontend.adapters.InstructionArrayAdapter;
-import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeReccomendedValues;
@@ -89,7 +89,7 @@ public class CustomFragment extends Fragment {
 				Ingredient ing = r.getIngredientList().get(pos);
 				
 				// Grain pressed
-				if (ing.getType().equals(Ingredient.GRAIN))
+				if (ing.getType().equals(Ingredient.FERMENTABLE))
 				{
 		  		Intent editGrainIntent = new Intent(DisplayRecipeActivity.appContext, EditGrainActivity.class);
 		  		editGrainIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
@@ -168,13 +168,13 @@ public class CustomFragment extends Fragment {
 		  TextView tag = (TextView) beerTypeView.findViewById(R.id.tag);
 		  TextView content = (TextView) beerTypeView.findViewById(R.id.content);
 		  tag.setText("Beer Style: ");
-		  content.setText(r.getBeerType());
+		  content.setText(r.getStyle());
 		  
 		  // Beer gravity detail view
 		  TextView grav_tag = (TextView) gravityView.findViewById(R.id.tag);
 		  TextView grav_content = (TextView) gravityView.findViewById(R.id.content);
 		  grav_tag.setText("Orig. Gravity: ");
-		  grav_content.setText("" + r.getGravity() + "");
+		  grav_content.setText("" + r.getOG() + "");
 		  
 		  // Beer bitterness detail view
 		  TextView bitt_tag = (TextView) bitternessView.findViewById(R.id.tag);
@@ -204,7 +204,7 @@ public class CustomFragment extends Fragment {
 		  String green = "#44AA44";
 		  String red = "#FF0000";
 		  
-		  Boolean isGravGreen = Utils.isWithinRange(r.getGravity(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
+		  Boolean isGravGreen = Utils.isWithinRange(r.getOG(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
 		  Boolean isBitGreen = Utils.isWithinRange(r.getBitterness(), reccomendedValues.getMinBitter(), reccomendedValues.getMaxBitter());
 		  Boolean isColorGreen = Utils.isWithinRange(r.getColor(), reccomendedValues.getMinColor(), reccomendedValues.getMaxColor());
 		  Boolean isAbvGreen = Utils.isWithinRange(r.getABV(), reccomendedValues.getMinAbv(), reccomendedValues.getMaxAbv());

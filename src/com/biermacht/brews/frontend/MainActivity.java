@@ -159,7 +159,7 @@ public class MainActivity extends Activity implements OnClickListener {
     		}
     		
     		// If the recipe type matches
-    		else if(r.getBeerType().toLowerCase().contains(s.toLowerCase()) && searchByType )
+    		else if(r.getStyle().toString().toLowerCase().contains(s.toLowerCase()) && searchByType )
     		{
     			filteredList.add(r);
     		}

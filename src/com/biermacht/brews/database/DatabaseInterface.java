@@ -9,10 +9,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.biermacht.brews.recipe.Grain;
-import com.biermacht.brews.recipe.Hop;
-import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.ingredient.Fermentable;
+import com.biermacht.brews.ingredient.Hop;
+import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Utils;
 
 public class DatabaseInterface {
 	
@@ -75,10 +77,10 @@ public class DatabaseInterface {
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
 		values.put(DatabaseHelper.REC_COL_DESC, r.getDescription());
-		values.put(DatabaseHelper.REC_COL_TYPE, r.getBeerType());
+		values.put(DatabaseHelper.REC_COL_TYPE, r.getStyle().toString());
 		values.put(DatabaseHelper.REC_COL_TIME, r.getBatchTime());
-		values.put(DatabaseHelper.REC_COL_VOL, r.getVolume());
-		values.put(DatabaseHelper.REC_COL_GRAV, r.getGravity());
+		values.put(DatabaseHelper.REC_COL_VOL, r.getBatchSize());
+		values.put(DatabaseHelper.REC_COL_GRAV, r.getOG());
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
@@ -98,10 +100,10 @@ public class DatabaseInterface {
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
 		values.put(DatabaseHelper.REC_COL_DESC, r.getDescription());
-		values.put(DatabaseHelper.REC_COL_TYPE, r.getBeerType());
+		values.put(DatabaseHelper.REC_COL_TYPE, r.getStyle().toString());
 		values.put(DatabaseHelper.REC_COL_TIME, r.getBatchTime());
-		values.put(DatabaseHelper.REC_COL_VOL, r.getVolume());
-		values.put(DatabaseHelper.REC_COL_GRAV, r.getGravity());
+		values.put(DatabaseHelper.REC_COL_VOL, r.getBatchSize());
+		values.put(DatabaseHelper.REC_COL_GRAV, r.getOG());
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
@@ -123,19 +125,19 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.ING_COL_OWNER_ID, ing.getOwnerId());
 		values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
 		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
-		values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnit());
+		values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnits());
 		values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
 		values.put(DatabaseHelper.ING_COL_BOIL_START_TIME, ing.getBoilStartTime());
 		values.put(DatabaseHelper.ING_COL_BOIL_END_TIME, ing.getBoilEndTime());
 		
 		// Grain specific values
-		if (ing.getType().equals(Ingredient.GRAIN))
+		if (ing.getType().equals(Ingredient.FERMENTABLE))
 		{
-			Grain gr = (Grain) ing;
-			values.put(DatabaseHelper.ING_GR_COL_WEIGHT, gr.getWeight());
+			Fermentable gr = (Fermentable) ing;
+			values.put(DatabaseHelper.ING_GR_COL_WEIGHT, gr.getAmount());
 			values.put(DatabaseHelper.ING_GR_COL_COLOR, gr.getLovibondColor());
 			values.put(DatabaseHelper.ING_GR_COL_GRAV, gr.getGravity());
-			values.put(DatabaseHelper.ING_GR_COL_TYPE, gr.getGrainType());
+			values.put(DatabaseHelper.ING_GR_COL_TYPE, gr.getFermentableType());
 			values.put(DatabaseHelper.ING_GR_COL_EFF, gr.getEfficiency());
 		}
 		
@@ -145,7 +147,7 @@ public class DatabaseInterface {
 			Hop hop = (Hop) ing;
 			values.put(DatabaseHelper.ING_HP_COL_DESC, hop.getDescription());
 			values.put(DatabaseHelper.ING_HP_COL_ACID, hop.getAlphaAcidContent());
-			values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
+			values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getForm());
 		}
 		
 		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
@@ -166,19 +168,19 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_COL_OWNER_ID, id);
 			values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
 			values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
-			values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnit());
+			values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnits());
 			values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
 			values.put(DatabaseHelper.ING_COL_BOIL_START_TIME, ing.getBoilStartTime());
 			values.put(DatabaseHelper.ING_COL_BOIL_END_TIME, ing.getBoilEndTime());
 			
 			// Grain specific values
-			if (ing.getType().equals(Ingredient.GRAIN))
+			if (ing.getType().equals(Ingredient.FERMENTABLE))
 			{
-				Grain gr = (Grain) ing;
-				values.put(DatabaseHelper.ING_GR_COL_WEIGHT, gr.getWeight());
+				Fermentable gr = (Fermentable) ing;
+				values.put(DatabaseHelper.ING_GR_COL_WEIGHT, gr.getAmount());
 				values.put(DatabaseHelper.ING_GR_COL_COLOR, gr.getLovibondColor());
 				values.put(DatabaseHelper.ING_GR_COL_GRAV, gr.getGravity());
-				values.put(DatabaseHelper.ING_GR_COL_TYPE, gr.getGrainType());
+				values.put(DatabaseHelper.ING_GR_COL_TYPE, gr.getFermentableType());
 				values.put(DatabaseHelper.ING_GR_COL_EFF, gr.getEfficiency());
 			}
 			
@@ -188,7 +190,7 @@ public class DatabaseInterface {
 				Hop hop = (Hop) ing;
 				values.put(DatabaseHelper.ING_HP_COL_DESC, hop.getDescription());
 				values.put(DatabaseHelper.ING_HP_COL_ACID, hop.getAlphaAcidContent());
-				values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
+				values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getForm());
 			}
 			
 			database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
@@ -283,7 +285,7 @@ public class DatabaseInterface {
 		long id = cursor.getLong(0);
 		String recipeName = cursor.getString(1);
 		String recipeDesc = cursor.getString(2);
-		String beerType = cursor.getString(3);
+		String beerStyle = cursor.getString(3);
 		int batchTime = cursor.getInt(4);
 		float volume = cursor.getFloat(5);
 		float gravity = cursor.getFloat(6);
@@ -296,10 +298,10 @@ public class DatabaseInterface {
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
 		r.setDescription(recipeDesc);
-		r.setBeerType(beerType);
+		r.setStyle(beerStyle);
 		r.setBatchTime(batchTime);
-		r.setVolume(volume);
-		r.setGravity(gravity);
+		r.setBatchSize(volume);
+		r.setOG(gravity);
 		r.setABV(ABV);
 		r.setBitterness(bitterness);
 		r.setColor(color);
@@ -341,7 +343,7 @@ public class DatabaseInterface {
 		int ingEndTime = cursor.getInt(7);
 		
 		// Grain specific stuff
-		if (ingType.equals(Ingredient.GRAIN))
+		if (ingType.equals(Ingredient.FERMENTABLE))
 		{
 			float grainWeight = cursor.getFloat(8);
 			float grainColor = cursor.getFloat(9);
@@ -349,17 +351,16 @@ public class DatabaseInterface {
 			String grainType = cursor.getString(11);
 			float grainEff = cursor.getFloat(12);
 			
-			Grain grain = new Grain(ingName);
+			Fermentable grain = new Fermentable(ingName);
 			grain.setId(id);
 			grain.setOwnerId(ownerId);
-			grain.setUnit(ingUnit);
 			grain.setAmount(ingAmount);
 			grain.setBoilStartTime(ingStartTime);
 			grain.setBoilEndTime(ingEndTime);
-			grain.setWeight(grainWeight);
+			grain.setAmount(grainWeight);
 			grain.setLovibondColor(grainColor);
 			grain.setGravity(grainGrav);
-			grain.setGrainType(grainType);
+			grain.setFermentableType(grainType);
 			grain.setEfficiency(grainEff);
 			
 			return grain;
@@ -375,18 +376,17 @@ public class DatabaseInterface {
 			Hop hop = new Hop(ingName);
 			hop.setId(id);
 			hop.setOwnerId(ownerId);
-			hop.setUnit(ingUnit);
 			hop.setAmount(ingAmount);
 			hop.setBoilStartTime(ingStartTime);
 			hop.setBoilEndTime(ingEndTime);
 			hop.setDescription(hopDesc);
 			hop.setAlphaAcidContent(hopAcid);
-			hop.setHopType(hopType);
+			hop.setForm(hopType);
 			
 			return hop;
 		}
 		
-		return new Grain("NO DATA READ");
+		return new Fermentable("NO DATA READ");
 	}
 
 }

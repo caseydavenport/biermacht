@@ -6,7 +6,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.R.id;
 import com.biermacht.brews.R.layout;
 
-import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.ingredient.Ingredient;
 
 import android.content.Context;
 import android.view.LayoutInflater;

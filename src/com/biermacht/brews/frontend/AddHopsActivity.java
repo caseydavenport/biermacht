@@ -3,20 +3,15 @@ package com.biermacht.brews.frontend;
 import java.util.ArrayList;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.R.layout;
-import com.biermacht.brews.R.menu;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
-import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
-import com.biermacht.brews.recipe.Grain;
-import com.biermacht.brews.recipe.Hop;
-import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.ingredient.Hop;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -114,9 +109,8 @@ public class AddHopsActivity extends Activity {
 			h.setBoilStartTime(boilStartTime);
 			h.setBoilEndTime(boilEndTime);
 			h.setAlphaAcidContent(aAcid);
-			h.setWeight(weight);
-			h.setHopType(Hop.TYPE_PELLET);
-			h.setUnit("oz");
+			h.setAmount(weight);
+			h.setForm(Hop.FORM_PELLET);
 			
 			mRecipe.addIngredient(h);
 			mRecipe.update();

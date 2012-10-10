@@ -16,8 +16,8 @@ import android.widget.Spinner;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
-import com.biermacht.brews.recipe.Grain;
-import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.ingredient.Fermentable;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
@@ -62,13 +62,13 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Grain grainObj = new Grain("");
+                Fermentable grainObj = new Fermentable("");
             	grainType = grainTypeArray.get(position);
                 
                 for (Ingredient i : Utils.getFermentablesList())
                 {
                 	if (grainType.equals(i.toString()))
-                		grainObj = (Grain) i;
+                		grainObj = (Fermentable) i;
                 }
             	
                 grainNameEditText.setText(grainType);
@@ -113,12 +113,11 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			if (boilStartTime > mRecipe.getBoilTime())
 				boilStartTime = mRecipe.getBoilTime();
 			
-			Grain g = new Grain(grainName);
+			Fermentable g = new Fermentable(grainName);
 			g.setLovibondColor(color);
 			g.setGravity(grav);
-			g.setWeight(weight);
-			g.setGrainType(Grain.GRAIN);
-			g.setUnit("lbs");
+			g.setAmount(weight);
+			g.setFermentableType(Fermentable.GRAIN);
 			g.setEfficiency(1);
 			g.setBoilStartTime(boilStartTime);
 			g.setBoilEndTime(boilEndTime);

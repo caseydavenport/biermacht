@@ -7,10 +7,10 @@ import android.util.Log;
 
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.MainActivity;
+import com.biermacht.brews.ingredient.Fermentable;
+import com.biermacht.brews.ingredient.Hop;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.BeerStyle;
-import com.biermacht.brews.recipe.Grain;
-import com.biermacht.brews.recipe.Hop;
-import com.biermacht.brews.recipe.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeReccomendedValues;
 
@@ -138,18 +138,18 @@ public class Utils {
 	
 	
 	// Fermentables.. http://byo.com/resources/grains
-	public static Ingredient FERMENTABLE_OTHER = new Grain("Custom Fermentable", "lbs", 10, 1.030, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_BLACK_BARLEY = new Grain("Black Barley", "lbs", 525, 1.025, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_MUNICH_MALT = new Grain("Munich Malt", "lbs", 10, 1.034, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_CHOCOLATE_MALT = new Grain("Chocolate Malt", "lbs", 350, 1.034, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_DEXTRIN_MALT = new Grain("Dextrin Malt", "lbs", 1.5, 1.033, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_PALE_MALT_2_ROW = new Grain("Pale Malt, 2-row", "lbs", 1.8, 1.037, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_PALE_MALT_6_ROW = new Grain("Pale Malt, 6-row", "lbs", 1.8, 1.035, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_ROASTED_BARELY = new Grain("Roasted Barley", "lbs", 300, 1.025, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_VICTORY_MALT = new Grain("Victory Malt", "lbs", 25, 1.034, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_VIENNA_MALT = new Grain("Vienna Malt", "lbs", 3.7, 1.035, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_WHEAT_MALT = new Grain("Wheat Malt", "lbs", 2, 1.038, Grain.GRAIN);
-	public static Ingredient FERMENTABLE_WHITE_WHEAT_MALT = new Grain("White Wheat Malt", "lbs", 2, 1.037, Grain.GRAIN);
+	public static Ingredient FERMENTABLE_OTHER = new Fermentable("Custom Fermentable", "lbs", 10, 1.030, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_BLACK_BARLEY = new Fermentable("Black Barley", "lbs", 525, 1.025, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_MUNICH_MALT = new Fermentable("Munich Malt", "lbs", 10, 1.034, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_CHOCOLATE_MALT = new Fermentable("Chocolate Malt", "lbs", 350, 1.034, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_DEXTRIN_MALT = new Fermentable("Dextrin Malt", "lbs", 1.5, 1.033, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_PALE_MALT_2_ROW = new Fermentable("Pale Malt, 2-row", "lbs", 1.8, 1.037, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_PALE_MALT_6_ROW = new Fermentable("Pale Malt, 6-row", "lbs", 1.8, 1.035, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_ROASTED_BARELY = new Fermentable("Roasted Barley", "lbs", 300, 1.025, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_VICTORY_MALT = new Fermentable("Victory Malt", "lbs", 25, 1.034, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_VIENNA_MALT = new Fermentable("Vienna Malt", "lbs", 3.7, 1.035, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_WHEAT_MALT = new Fermentable("Wheat Malt", "lbs", 2, 1.038, Fermentable.GRAIN);
+	public static Ingredient FERMENTABLE_WHITE_WHEAT_MALT = new Fermentable("White Wheat Malt", "lbs", 2, 1.037, Fermentable.GRAIN);
 
 	// Hops.. http://byo.com/resources/hops
 	public static Ingredient HOP_OTHER = new Hop("Custom Hop", 6, "Custom added hop");
@@ -362,135 +362,9 @@ public class Utils {
 		return list;
 	}
 	
-	public static ArrayList<String> getBeerStyleStringList()
-	{
-		ArrayList<BeerStyle> listA = getBeerStyleList();
-		ArrayList<String> listToReturn = new ArrayList<String>();
-		
-		for (BeerStyle b : listA)
-		{
-			listToReturn.add(b.toString());
-		}	
-		return listToReturn;
-	}
-	
-	public static ArrayList<String> getFermentablesStringList()
-	{
-		ArrayList<Ingredient> listA = getFermentablesList();
-		ArrayList<String> listToReturn = new ArrayList<String>();
-		
-		for (Ingredient b : listA)
-		{
-			listToReturn.add(b.toString());
-		}	
-		return listToReturn;
-	}
-	
-	public static ArrayList<String> getHopsStringList()
-	{
-		ArrayList<Ingredient> listA = getHopsList();
-		ArrayList<String> listToReturn = new ArrayList<String>();
-		
-		for (Ingredient b : listA)
-		{
-			listToReturn.add(b.toString());
-		}	
-		return listToReturn;
-	}
-	
-	public static boolean isWithinRange(float a, double low, double high)
-	{
-		if (a <= high && a >= low)
-			return true;
-		else
-			return false;
-	}
-	
-	// Methods for dealing with the Database
-	/**
-	 * Get all recipes in the database
-	 * @param dbi
-	 * @return
-	 */
-	public static ArrayList<Recipe> getRecipeList(DatabaseInterface dbi)
-	{
-		ArrayList<Recipe> list = dbi.getRecipeList();
-		
-		for (Recipe r : list)
-			r.update();
-		
-		Collections.sort(list, new RecipeComparator<Recipe>());
-		
-		return list;
-	}
-	
-	/**
-	 * Create a recipe with the given name
-	 * @param name
-	 * @return
-	 */
-	public static Recipe createRecipeWithName(String name)
-	{
-		Recipe r = new Recipe(name);
-		
-		long id = MainActivity.databaseInterface.addRecipeToDatabase(r);
-		r = MainActivity.databaseInterface.getRecipeWithId(id);
-		
-		return r;
-	}
-	
-	/**
-	 * Create a recipe with the given name
-	 * @param name
-	 * @return
-	 */
-	public static Recipe createRecipeFromExisting(Recipe r)
-	{
-		long id = MainActivity.databaseInterface.addRecipeToDatabase(r);
-		r = MainActivity.databaseInterface.getRecipeWithId(id);
-		
-		return r;
-	}
-	
-	/**
-	 * Updates existing recipe to match the given recipe
-	 * @param r
-	 * @return
-	 */
-	public static boolean updateRecipe(Recipe r)
-	{
-		r.update();
-		return MainActivity.databaseInterface.updateExistingRecipe(r);
-	}
-	
-	public static boolean updateIngredient(Ingredient i)
-	{
-		return MainActivity.databaseInterface.updateExistingIngredient(i);
-	}
-	
-	public static boolean deleteRecipe(Recipe r)
-	{
-		return MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
-	}
-	
-	public static boolean deleteIngredient(Ingredient i)
-	{
-		return MainActivity.databaseInterface.deleteIngredientIfExists(i.getId());
-	}
-	
-	public static Recipe getRecipeWithId(long id)
-	{
-		return MainActivity.databaseInterface.getRecipeWithId(id);
-	}
-	
-	public static Ingredient getIngredientWithId(long id)
-	{
-		return MainActivity.databaseInterface.getIngredientWithId(id);
-	}
-	
 	public static RecipeReccomendedValues getRecipeReccomendedValues(Recipe r)
 	{
-		String type = r.getBeerType();
+		String type = r.getStyle().toString();
 		
 		if (type.equals(BEERTYPE_OTHER))
 			return new RecipeReccomendedValues();
@@ -684,10 +558,194 @@ public class Utils {
 		else if (type.equals(BEERTYPE_SPECIALTY.toString()))
 			return new RecipeReccomendedValues();
 		
-		
 		// If all else fails
 		
 		else
 			return new RecipeReccomendedValues();
+	}
+	
+	/**
+	 * Returns a list of strings corresponding to beer styles
+	 * @return
+	 */
+	public static ArrayList<String> getBeerStyleStringList()
+	{
+		ArrayList<BeerStyle> listA = getBeerStyleList();
+		ArrayList<String> listToReturn = new ArrayList<String>();
+		
+		for (BeerStyle b : listA)
+		{
+			listToReturn.add(b.toString());
+		}	
+		return listToReturn;
+	}
+	
+	/**
+	 * Returns a list of strings corresponding to fermentable objects
+	 * @return
+	 */
+	public static ArrayList<String> getFermentablesStringList()
+	{
+		ArrayList<Ingredient> listA = getFermentablesList();
+		ArrayList<String> listToReturn = new ArrayList<String>();
+		
+		for (Ingredient b : listA)
+		{
+			listToReturn.add(b.toString());
+		}	
+		return listToReturn;
+	}
+	
+	/**
+	 * Returns a list of strings corresponding to hop objects
+	 * @return
+	 */
+	public static ArrayList<String> getHopsStringList()
+	{
+		ArrayList<Ingredient> listA = getHopsList();
+		ArrayList<String> listToReturn = new ArrayList<String>();
+		
+		for (Ingredient b : listA)
+		{
+			listToReturn.add(b.toString());
+		}	
+		return listToReturn;
+	}
+	
+	/**
+	 * Determins if the given value is within the given range
+	 * @param a
+	 * @param low
+	 * @param high
+	 * @return
+	 */
+	public static boolean isWithinRange(float a, double low, double high)
+	{
+		if (a <= high && a >= low)
+			return true;
+		else
+			return false;
+	}
+	
+	// Methods for dealing with the Database
+	/**
+	 * Get all recipes in the database
+	 * @param dbi
+	 * @return
+	 */
+	public static ArrayList<Recipe> getRecipeList(DatabaseInterface dbi)
+	{
+		ArrayList<Recipe> list = dbi.getRecipeList();
+		
+		for (Recipe r : list)
+			r.update();
+		
+		Collections.sort(list, new RecipeComparator<Recipe>());
+		
+		return list;
+	}
+	
+	/**
+	 * Create a recipe with the given name
+	 * @param name
+	 * @return
+	 */
+	public static Recipe createRecipeWithName(String name)
+	{
+		Recipe r = new Recipe(name);
+		
+		long id = MainActivity.databaseInterface.addRecipeToDatabase(r);
+		r = MainActivity.databaseInterface.getRecipeWithId(id);
+		
+		return r;
+	}
+	
+	/**
+	 * Create a recipe with the given name
+	 * @param name
+	 * @return
+	 */
+	public static Recipe createRecipeFromExisting(Recipe r)
+	{
+		long id = MainActivity.databaseInterface.addRecipeToDatabase(r);
+		r = MainActivity.databaseInterface.getRecipeWithId(id);
+		
+		return r;
+	}
+	
+	/**
+	 * Updates existing recipe to match the given recipe
+	 * @param r
+	 * @return
+	 */
+	public static boolean updateRecipe(Recipe r)
+	{
+		r.update();
+		return MainActivity.databaseInterface.updateExistingRecipe(r);
+	}
+	
+	/**
+	 * Updates the existing ingredient in the database
+	 * @param i
+	 * @return
+	 */
+	public static boolean updateIngredient(Ingredient i)
+	{
+		return MainActivity.databaseInterface.updateExistingIngredient(i);
+	}
+	
+	/**
+	 * Deletes the given recipe from the database
+	 * @param r
+	 * @return
+	 */
+	public static boolean deleteRecipe(Recipe r)
+	{
+		return MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
+	}
+	
+	/**
+	 * Deletes the given ingredient from database
+	 * @param i
+	 * @return
+	 */
+	public static boolean deleteIngredient(Ingredient i)
+	{
+		return MainActivity.databaseInterface.deleteIngredientIfExists(i.getId());
+	}
+	
+	/**
+	 * Gets recipe with given ID from database
+	 * @param id
+	 * @return
+	 */
+	public static Recipe getRecipeWithId(long id)
+	{
+		return MainActivity.databaseInterface.getRecipeWithId(id);
+	}
+	
+	/**
+	 * Gets ingredient with given ID from database
+	 * @param id
+	 * @return
+	 */
+	public static Ingredient getIngredientWithId(long id)
+	{
+		return MainActivity.databaseInterface.getIngredientWithId(id);
+	}
+	
+	/**
+	 * Gets beerStyle object for given string
+	 * @param s
+	 */
+	public static BeerStyle getBeerStyleFromString(String s)
+	{
+		for (BeerStyle b : getBeerStyleList())
+		{
+			if(b.toString().equals(s))
+				return b;
+		}
+		
+		return new BeerStyle(null); // TODO: THIS IS SHITTY
 	}
 }

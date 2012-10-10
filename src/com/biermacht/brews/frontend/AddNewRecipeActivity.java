@@ -132,10 +132,10 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 				if (!recipeDesc.isEmpty())
 					r.setDescription(recipeDesc);
 				
-				r.setBeerType(beerType);
+				r.setStyle(beerType);
 				r.setBoilTime(boilTime);
 				r.setEfficiency(eff);
-				r.setVolume(batchSize);
+				r.setBatchSize(batchSize);
 				Utils.updateRecipe(r);
 				finish();
 			}

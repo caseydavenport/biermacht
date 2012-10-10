@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import android.util.Log;
 
-import com.biermacht.brews.recipe.Grain;
-import com.biermacht.brews.recipe.Hop;
-import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.ingredient.Fermentable;
+import com.biermacht.brews.ingredient.Hop;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 
 public class BrewCalculator {
@@ -31,10 +31,10 @@ public class BrewCalculator {
 		
 		for (Ingredient i : ingredientsList)
 		{
-			if (i.getType().equals(Ingredient.GRAIN))
+			if (i.getType().equals(Ingredient.FERMENTABLE))
 			{
-				Grain g = (Grain) i;
-				MCU += g.getWeight() * g.getLovibondColor() / r.getVolume();
+				Fermentable g = (Fermentable) i;
+				MCU += g.getAmount() * g.getLovibondColor() / r.getBatchSize();
 			}
 		}
 		SRM = (float) (1.4922*Math.pow(MCU, .6859));
@@ -49,11 +49,11 @@ public class BrewCalculator {
 		// http://homebrew.stackexchange.com/questions/1434/wiki-how-do-you-calculate-original-gravity
 		for (Ingredient i : ingredientsList)
 		{
-			if (i.getType().equals(Ingredient.GRAIN))
+			if (i.getType().equals(Ingredient.FERMENTABLE))
 			{
-				Grain g = (Grain) i;
+				Fermentable g = (Fermentable) i;
 				
-				grav += (g.getWeight() * g.getPpg() / (r.getVolume()-(g.getWeight()/2.7)))/100;
+				grav += (g.getAmount() * g.getPpg() / (r.getBatchSize()-(g.getAmount()/2.7)))/100;
 			}
 		}
 		return (1 + grav);
@@ -74,11 +74,11 @@ public class BrewCalculator {
 			{
 				Hop h = (Hop) i;
 				utilization = getHopUtilization(r, h);
-				AAU += h.getWeight() * h.getAlphaAcidContent();
+				AAU += h.getAmount() * h.getAlphaAcidContent();
 			}
 		}
 		
-		ibu = (AAU * utilization * 75)/r.getVolume();
+		ibu = (AAU * utilization * 75)/r.getBatchSize();
 		
 		return ibu;
 	}
@@ -89,7 +89,7 @@ public class BrewCalculator {
 		double bignessFactor;
 		double boilTimeFactor;
 		
-		bignessFactor = 1.65 * Math.pow(.000125, r.getGravity()-1);
+		bignessFactor = 1.65 * Math.pow(.000125, r.getOG()-1);
 		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getBoilTime()))/4.15;
 		
 		utilization = (float) (bignessFactor * boilTimeFactor);

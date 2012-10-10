@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.recipe.Ingredient;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Utils;
 
 public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
@@ -47,14 +47,14 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		
 		labelView.setText(list.get(position).getName());
 		amountView.setText(list.get(position).getAmount() + "");
-		unitView.setText(list.get(position).getUnit());
+		unitView.setText(list.get(position).getUnits());
 		
 		// Set imageView based on ingredient type
 		String ingType = list.get(position).getType();
 		
 		if(ingType == Ingredient.HOP)
 			imageView.setImageResource(R.drawable.icon_hops);
-		else if(ingType == Ingredient.GRAIN)
+		else if(ingType == Ingredient.FERMENTABLE)
 			imageView.setImageResource(R.drawable.icon_wheat);
 		else if(ingType == Utils.TYPE_SPICE)
 			imageView.setImageResource(R.drawable.icon_idk);

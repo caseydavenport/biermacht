@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import com.biermacht.brews.R;
-import com.biermacht.brews.recipe.Hop;
+import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
@@ -112,8 +112,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
 			hop.setName(name);
 			hop.setAlphaAcidContent(acids);
 			hop.setBoilStartTime(boilStartTime);
-			hop.setWeight(weight);
-			hop.setUnit("oz");
+			hop.setAmount(weight);
 			
 			Utils.updateIngredient(hop);
 			mRecipe = Utils.getRecipeWithId(mRecipe.getId());

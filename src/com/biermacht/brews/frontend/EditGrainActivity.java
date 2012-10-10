@@ -1,19 +1,14 @@
 package com.biermacht.brews.frontend;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.Spinner;
-
 import com.biermacht.brews.R;
-import com.biermacht.brews.recipe.Grain;
+import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
@@ -27,7 +22,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 	private EditText grainBoilStartTimeEditText;
 	// private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private Recipe mRecipe;
-	private Grain grain;
+	private Fermentable fermentable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +35,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
         mRecipe = MainActivity.databaseInterface.getRecipeWithId(id);
         
         // Get the grain from the database
-        grain = (Grain) Utils.getIngredientWithId(grainId);
+        fermentable = (Fermentable) Utils.getIngredientWithId(grainId);
         
         // Initialize views and such here
         grainNameEditText = (EditText) findViewById(R.id.grain_name_edit_text);
@@ -49,11 +44,11 @@ public class EditGrainActivity extends Activity implements OnClickListener {
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
         grainBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
         
-        grainNameEditText.setText(grain.getName());
-        grainColorEditText.setText(grain.getLovibondColor() +"");
-        grainGravEditText.setText(grain.getGravity() +"");
-        grainWeightEditText.setText(grain.getAmount() + "");
-        grainBoilStartTimeEditText.setText(grain.getBoilStartTime() + "");
+        grainNameEditText.setText(fermentable.getName());
+        grainColorEditText.setText(fermentable.getLovibondColor() +"");
+        grainGravEditText.setText(fermentable.getGravity() +"");
+        grainWeightEditText.setText(fermentable.getAmount() + "");
+        grainBoilStartTimeEditText.setText(fermentable.getBoilStartTime() + "");
         
         /*
         // Set up grain type spinner
@@ -117,16 +112,15 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 			if (boilStartTime > mRecipe.getBoilTime())
 				boilStartTime = mRecipe.getBoilTime();
 			
-			grain.setName(grainName);
-			grain.setLovibondColor(color);
-			grain.setGravity(grav);
-			grain.setWeight(weight);
-			grain.setGrainType(Grain.GRAIN);
-			grain.setUnit("lbs");
-			grain.setEfficiency(1);
-			grain.setBoilStartTime(boilStartTime);
+			fermentable.setName(grainName);
+			fermentable.setLovibondColor(color);
+			fermentable.setGravity(grav);
+			fermentable.setAmount(weight);
+			fermentable.setFermentableType(Fermentable.GRAIN);
+			fermentable.setEfficiency(1);
+			fermentable.setBoilStartTime(boilStartTime);
 			
-			Utils.updateIngredient(grain);
+			Utils.updateIngredient(fermentable);
 			mRecipe = Utils.getRecipeWithId(mRecipe.getId());
 			mRecipe.update();
 			Utils.updateRecipe(mRecipe);
@@ -139,7 +133,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 		// If "DELETE" button pressed
 		if (v.getId() == R.id.delete_button)
 		{
-			Utils.deleteIngredient(grain);
+			Utils.deleteIngredient(fermentable);
 			
 		    Intent intent = new Intent(EditGrainActivity.this, DisplayRecipeActivity.class);
 		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
