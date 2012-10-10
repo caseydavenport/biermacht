@@ -17,15 +17,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Column name defines for RECIPES
 	public static final String REC_COL_ID = "_id";
 	public static final String REC_COL_NAME = "name";
+	public static final String REC_COL_VER = "xmlversion";
+	public static final String REC_COL_TYPE = "type";
+	public static final String REC_COL_STYLE = "style";
+	public static final String REC_COL_BREWER = "brewer";
+	public static final String REC_COL_BATCH_SIZE = "batchSize";
+	public static final String REC_COL_BOIL_SIZE = "boilSize";
+	public static final String REC_COL_BOIL_TIME = "boilTime";
+	public static final String REC_COL_BOIL_EFF = "efficiency";
+	public static final String REC_COL_OG = "OG";
+	public static final String REC_COL_FG = "FG";
+	public static final String REC_COL_STAGES = "fermStages";
 	public static final String REC_COL_DESC = "description";
-	public static final String REC_COL_TYPE = "beertype";
-	public static final String REC_COL_TIME = "batchTime";
-	public static final String REC_COL_VOL = "Volume";
-	public static final String REC_COL_GRAV = "gravity";
+	public static final String REC_COL_BATCH_TIME = "batchTime";
 	public static final String REC_COL_ABV = "ABV";
 	public static final String REC_COL_BITTER = "bitterness";
 	public static final String REC_COL_COLOR = "color";
-	public static final String REC_COL_BOIL_TIME = "boilTime";
+
 	
 	// Column name defines for INGREDIENTS
 	public static final String ING_COL_ID = "_id";
@@ -54,15 +62,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		+ "("
 			+ REC_COL_ID + " integer primary key autoincrement, "
 			+ REC_COL_NAME + " text not null, " 
-			+ REC_COL_DESC + " text not null, "
+			+ REC_COL_VER + " int not null, "
 			+ REC_COL_TYPE + " text not null, " 
-			+ REC_COL_TIME + " int not null, "
-			+ REC_COL_VOL + " float not null, "
-			+ REC_COL_GRAV + " float not null, " 
+			+ REC_COL_STYLE + " text not null, "
+			+ REC_COL_BREWER + " text not null, "
+			+ REC_COL_BATCH_SIZE + " float not null, "
+			+ REC_COL_BOIL_SIZE + " float not null, "
+			+ REC_COL_BOIL_TIME + " int not null, "
+			+ REC_COL_BOIL_EFF + " float not null, "
+			+ REC_COL_OG + " float not null, "
+			+ REC_COL_FG + " float not null, "
+			+ REC_COL_STAGES + " int not null, "
+			+ REC_COL_DESC + " text not null, "
+			+ REC_COL_BATCH_TIME + " int not null, "
 			+ REC_COL_ABV + " float not null, " 
 			+ REC_COL_BITTER + " float not null, " 
-			+ REC_COL_COLOR + " float not null, "
-			+ REC_COL_BOIL_TIME + " float not null"
+			+ REC_COL_COLOR + " float not null"
+
 		+ ");";
 	
 	private static final String CREATE_INGREDIENT_TABLE = "create table " +

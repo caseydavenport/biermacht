@@ -33,6 +33,7 @@ public class Hop extends Ingredient {
 	public static final String FORM_PELLET = "Pellet";
 	public static final String FORM_WHOLE = "Whole";
 	public static final String FORM_PLUG = "Plug";
+	
 	public static final String USE_BOIL = "Boil";
 	public static final String USE_DRY_HOP = "Dry Hop";
 	public static final String USE_MASH = "Mash";

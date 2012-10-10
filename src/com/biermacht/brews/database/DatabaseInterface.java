@@ -21,18 +21,26 @@ public class DatabaseInterface {
 	// Database Fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
+	
 	private String[] recipeAllColumns = {
 			DatabaseHelper.REC_COL_ID,
 			DatabaseHelper.REC_COL_NAME,
-			DatabaseHelper.REC_COL_DESC,
+			DatabaseHelper.REC_COL_VER,
 			DatabaseHelper.REC_COL_TYPE,
-			DatabaseHelper.REC_COL_TIME,
-			DatabaseHelper.REC_COL_VOL,
-			DatabaseHelper.REC_COL_GRAV,
+			DatabaseHelper.REC_COL_STYLE,
+			DatabaseHelper.REC_COL_BREWER,
+			DatabaseHelper.REC_COL_BATCH_SIZE,
+			DatabaseHelper.REC_COL_BOIL_SIZE,
+			DatabaseHelper.REC_COL_BOIL_TIME,
+			DatabaseHelper.REC_COL_BOIL_EFF,
+			DatabaseHelper.REC_COL_OG,
+			DatabaseHelper.REC_COL_FG,
+			DatabaseHelper.REC_COL_STAGES,
+			DatabaseHelper.REC_COL_DESC,
+			DatabaseHelper.REC_COL_BATCH_TIME,
 			DatabaseHelper.REC_COL_ABV,
 			DatabaseHelper.REC_COL_BITTER,
 			DatabaseHelper.REC_COL_COLOR,
-			DatabaseHelper.REC_COL_BOIL_TIME
 			};
 	
 	private String[] ingredientAllColumns = {
@@ -76,21 +84,28 @@ public class DatabaseInterface {
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
+		values.put(DatabaseHelper.REC_COL_VER, 1);
+		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
+		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle());
+		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
+		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBatchSize());
+		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBoilSize());
+		values.put(DatabaseHelper.REC_COL_BOIL_TIME, r.getBoilTime());
+		values.put(DatabaseHelper.REC_COL_BOIL_EFF, r.getEfficiency());
+		values.put(DatabaseHelper.REC_COL_OG, r.getOG());
+		values.put(DatabaseHelper.REC_COL_FG, r.getFG());
+		values.put(DatabaseHelper.REC_COL_STAGES, r.getFermentationStages());
 		values.put(DatabaseHelper.REC_COL_DESC, r.getDescription());
-		values.put(DatabaseHelper.REC_COL_TYPE, r.getStyle().toString());
-		values.put(DatabaseHelper.REC_COL_TIME, r.getBatchTime());
-		values.put(DatabaseHelper.REC_COL_VOL, r.getBatchSize());
-		values.put(DatabaseHelper.REC_COL_GRAV, r.getOG());
+		values.put(DatabaseHelper.REC_COL_BATCH_TIME, r.getBatchTime());
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
-		values.put(DatabaseHelper.REC_COL_BOIL_TIME, r.getBoilTime());
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id);
 		
 		return id;
-	}
+	}	
 	
 	public boolean updateExistingRecipe(Recipe r)
 	{
@@ -99,15 +114,22 @@ public class DatabaseInterface {
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
+		values.put(DatabaseHelper.REC_COL_VER, 1);
+		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
+		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle());
+		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
+		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBatchSize());
+		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBoilSize());
+		values.put(DatabaseHelper.REC_COL_BOIL_TIME, r.getBoilTime());
+		values.put(DatabaseHelper.REC_COL_BOIL_EFF, r.getEfficiency());
+		values.put(DatabaseHelper.REC_COL_OG, r.getOG());
+		values.put(DatabaseHelper.REC_COL_FG, r.getFG());
+		values.put(DatabaseHelper.REC_COL_STAGES, r.getFermentationStages());
 		values.put(DatabaseHelper.REC_COL_DESC, r.getDescription());
-		values.put(DatabaseHelper.REC_COL_TYPE, r.getStyle().toString());
-		values.put(DatabaseHelper.REC_COL_TIME, r.getBatchTime());
-		values.put(DatabaseHelper.REC_COL_VOL, r.getBatchSize());
-		values.put(DatabaseHelper.REC_COL_GRAV, r.getOG());
+		values.put(DatabaseHelper.REC_COL_BATCH_TIME, r.getBatchTime());
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
-		values.put(DatabaseHelper.REC_COL_BOIL_TIME, r.getBoilTime());
 		
 		deleteIngredientList(r.getId());
 		addIngredientListToDatabase(r.getIngredientList(), r.getId());
@@ -282,31 +304,48 @@ public class DatabaseInterface {
 	 * @return
 	 */
 	private Recipe cursorToRecipe(Cursor cursor) {
-		long id = cursor.getLong(0);
-		String recipeName = cursor.getString(1);
-		String recipeDesc = cursor.getString(2);
-		String beerStyle = cursor.getString(3);
-		int batchTime = cursor.getInt(4);
-		float volume = cursor.getFloat(5);
-		float gravity = cursor.getFloat(6);
-		float ABV = cursor.getFloat(7);
-		float bitterness = cursor.getFloat(8);
-		float color = cursor.getFloat(9);
-		int boilTime = cursor.getInt(10);
+		int cid = 0;
+		
+		long id = cursor.getLong(cid);                cid++;
+		String recipeName = cursor.getString(cid);    cid++;
+		int version = cursor.getInt(cid);             cid++;
+		String type = cursor.getString(cid);          cid++;
+		String style = cursor.getString(cid);         cid++;
+		String brewer = cursor.getString(cid);        cid++;
+		float batchSize = cursor.getFloat(cid);       cid++;
+		float boilSize = cursor.getFloat(cid);        cid++;
+		int boilTime = cursor.getInt(cid);            cid++;
+		float boilEff = cursor.getFloat(cid);         cid++;
+		float OG = cursor.getFloat(cid);              cid++;
+		float FG = cursor.getFloat(cid);              cid++;
+		int fermentationStages = cursor.getInt(cid);  cid++;
+		String description = cursor.getString(cid);   cid++;
+		int batchTime = cursor.getInt(cid);           cid++;
+		float ABV = cursor.getFloat(cid);             cid++;
+		float bitterness = cursor.getFloat(cid);      cid++;
+		float color = cursor.getFloat(cid);           cid++;
+		
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
 		
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
-		r.setDescription(recipeDesc);
-		r.setStyle(beerStyle);
+		r.setType(type);
+		r.setStyle(style);
+		r.setBrewer(brewer);
+		r.setBatchSize(batchSize);
+		r.setBoilSize(boilSize);
+		r.setBoilTime(boilTime);
+		r.setEfficiency(boilEff);
+		r.setOG(OG);
+		r.setFG(FG);
+		r.setFermentationStages(fermentationStages);
+		r.setDescription(description);
 		r.setBatchTime(batchTime);
-		r.setBatchSize(volume);
-		r.setOG(gravity);
 		r.setABV(ABV);
 		r.setBitterness(bitterness);
 		r.setColor(color);
+		
 		r.setIngredientsList(ingredientsList);
-		r.setBoilTime(boilTime);
 		
 		return r;
 	}

@@ -21,7 +21,7 @@ public class Recipe {
 	private String name;		     // Recipe name
 	private int version;			 // XML Version -- 1
 	private String type;             // Extract, Grain, Mash
-	private String style;         // Stout, Pilsner, etc.
+	private String style;            // Stout, Pilsner, etc.
 	private String brewer;		     // Brewer's name
 	private float batchSize;         // Target size (L)
 	private float boilSize;		     // Pre-boil vol (L)
@@ -48,7 +48,6 @@ public class Recipe {
 	private float ABV;                // Alcohol by volume
 	private float bitterness;         // Bitterness in IBU
 	private float color;              // Color - SRM
-	private ArrayList<Ingredient> ingredientList; 
 	private ArrayList<Instruction> instructionList;
 	
 	// Static values =================================================
@@ -64,11 +63,11 @@ public class Recipe {
 		// ================================================================
 		this.name = s;	     
 		this.version = 1;			
-		this.type = EXTRACT;            
+		this.setType(EXTRACT);            
 		this.style = Utils.BEERTYPE_OTHER.toString();     
-		this.brewer = "Unknown Brewer";		     
+		this.setBrewer("Unknown Brewer");		     
 		this.batchSize = -1;        
-		this.boilSize = -1;		     
+		this.setBoilSize(-1);		     
 		this.boilTime = -1;	     
 		this.efficiency = 100;	     
 		this.hops = new ArrayList<Hop>();   
@@ -80,8 +79,8 @@ public class Recipe {
 		// Beer XML 1.0 Optional Fields ===================================
 		// ================================================================
 		this.OG = 1;
-		this.FG = 1;
-		this.fermentationStages = 1;
+		this.setFG(1);
+		this.setFermentationStages(1);
 		
 		// Custom Fields ==================================================
 		// ================================================================
@@ -90,8 +89,7 @@ public class Recipe {
 		this.batchTime = 60;
 		this.ABV = 0;
 		this.bitterness = 0;
-		this.color = 0;
-		this.ingredientList = new ArrayList<Ingredient>(); 
+		this.color = 0; 
 		instructionList = new ArrayList<Instruction>();
 	}
 	
@@ -115,27 +113,49 @@ public class Recipe {
 	
 	public void addIngredient(Ingredient i)
 	{
-		ingredientList.add(i);
-		Collections.sort(ingredientList, new ingredientComparator());
+		if (i.getType().equals(Ingredient.HOP))
+			addHop(i);
+		else if (i.getType().equals(Ingredient.FERMENTABLE))
+			addFermentable(i);
+		else if (i.getType().equals(Ingredient.MISC))
+			addMisc(i);
+		else if (i.getType().equals(Ingredient.YEAST))
+			addYeast(i);
+		else if (i.getType().equals(Ingredient.WATER))
+			addWater(i);
+		
 		update();
 	}
 	
 	public void removeIngredient(String i)
 	{
-		for (Ingredient ingredient : ingredientList)
+		for (Ingredient ingredient : getIngredientList())
 		{
 			if(i.equals(ingredient.toString()));
 			{
-				ingredientList.remove(ingredient);
+				removeIngredient(ingredient);
 			}
 		}
 		update();
 	}
 	
+	private void removeIngredient(Ingredient i)
+	{
+		if (i.getType().equals(Ingredient.HOP))
+			hops.remove((Hop) i);
+		else if (i.getType().equals(Ingredient.FERMENTABLE))
+			fermentables.remove((Fermentable) i);
+		else if (i.getType().equals(Ingredient.MISC))
+			miscs.remove((Misc) i);
+		else if (i.getType().equals(Ingredient.YEAST))
+			yeasts.remove((Yeast) i);
+		else if (i.getType().equals(Ingredient.WATER))
+			waters.remove((Water) i);
+	}
+	
 	public void addInstruction(Instruction i)
 	{
 		instructionList.add(i);
-		// TODO: Sort instructions somehow??
 	}
 	
 	public void removeInstruction(String i)
@@ -161,21 +181,67 @@ public class Recipe {
 	
 	public ArrayList<Ingredient> getIngredientList()
 	{
-		return ingredientList;
+		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+		list.addAll(hops);
+		list.addAll(fermentables);
+		list.addAll(yeasts);
+		list.addAll(waters);
+		
+		Collections.sort(list, new IngredientComparator());
+		return list;
 	}
 	
 	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) {
-		this.ingredientList = ingredientsList;
+		
+		for (Ingredient i : ingredientsList)
+		{
+			if (i.getType().equals(Ingredient.HOP))
+				addHop(i);
+			else if (i.getType().equals(Ingredient.FERMENTABLE))
+				addFermentable(i);
+			else if (i.getType().equals(Ingredient.MISC))
+				addMisc(i);
+			else if (i.getType().equals(Ingredient.YEAST))
+				addYeast(i);
+			else if (i.getType().equals(Ingredient.WATER))
+				addWater(i);
+		}
+		
 		update();
 	}
 	
+	private void addWater(Ingredient i) {
+		Water w = (Water) i;
+		waters.add(w);
+	}
+
+	private void addYeast(Ingredient i) {
+		Yeast y = (Yeast) i;
+		yeasts.add(y);
+	}
+
+	private void addMisc(Ingredient i) {
+		Misc m = (Misc) i;
+		miscs.add(m);
+	}
+
+	private void addFermentable(Ingredient i) {
+		Fermentable f = (Fermentable) i;
+		fermentables.add(f);
+	}
+
+	private void addHop(Ingredient i) {
+		Hop h = (Hop) i;
+		hops.add(h);
+	}
+
 	public ArrayList<Instruction> getInstructionList()
 	{
 		return generateInstructionsFromIngredients(); //instructionList;
 	}
 	
 	// Comparator for sorting ingredients list
-	private class ingredientComparator implements Comparator<Ingredient>
+	private class IngredientComparator implements Comparator<Ingredient>
 	{
 
 		public int compare(Ingredient i1, Ingredient i2) {
@@ -290,5 +356,75 @@ public class Recipe {
 		Collections.sort(list, new InstructionComparator<Instruction>());
 		
 		return list;
+	}
+
+	/**
+	 * @return the brewer
+	 */
+	public String getBrewer() {
+		return brewer;
+	}
+
+	/**
+	 * @param brewer the brewer to set
+	 */
+	public void setBrewer(String brewer) {
+		this.brewer = brewer;
+	}
+
+	/**
+	 * @return the boilSize
+	 */
+	public float getBoilSize() {
+		return boilSize;
+	}
+
+	/**
+	 * @param boilSize the boilSize to set
+	 */
+	public void setBoilSize(float boilSize) {
+		this.boilSize = boilSize;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return the fG
+	 */
+	public float getFG() {
+		return FG;
+	}
+
+	/**
+	 * @param fG the fG to set
+	 */
+	public void setFG(float fG) {
+		FG = fG;
+	}
+
+	/**
+	 * @return the fermentationStages
+	 */
+	public int getFermentationStages() {
+		return fermentationStages;
+	}
+
+	/**
+	 * @param fermentationStages the fermentationStages to set
+	 */
+	public void setFermentationStages(int fermentationStages) {
+		this.fermentationStages = fermentationStages;
 	}
 }
