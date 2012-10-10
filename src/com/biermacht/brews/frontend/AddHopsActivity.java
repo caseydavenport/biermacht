@@ -66,7 +66,7 @@ public class AddHopsActivity extends Activity {
                 }
             	
                 hopNameEditText.setText(hopObj.getName());
-                hopBoilStartTimeEditText.setText(hopObj.getBoilStartTime() +"");
+                hopBoilStartTimeEditText.setText(hopObj.getStartTime() +"");
                 hopAcidEditText.setText(hopObj.getAlphaAcidContent() +"");
                 hopWeightEditText.setText(1.0 +"");
             }
@@ -97,18 +97,18 @@ public class AddHopsActivity extends Activity {
 		if (v.getId() == R.id.new_grain_submit_button)
 		{
 			String hopName = hopNameEditText.getText().toString();
-			double boilStartTime = Double.parseDouble(hopBoilStartTimeEditText.getText().toString());
-			double boilEndTime = mRecipe.getBoilTime();
-			double aAcid = Double.parseDouble(hopAcidEditText.getText().toString());
+			int startTime = Integer.parseInt(hopBoilStartTimeEditText.getText().toString());
+			int endTime = mRecipe.getBoilTime();
+			double alpha = Double.parseDouble(hopAcidEditText.getText().toString());
 			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
 			
-			if (boilStartTime > mRecipe.getBoilTime())
-				boilStartTime = mRecipe.getBoilTime();
+			if (startTime > mRecipe.getBoilTime())
+				startTime = mRecipe.getBoilTime();
 			
 			Hop h = new Hop(hopName);
-			h.setBoilStartTime(boilStartTime);
-			h.setBoilEndTime(boilEndTime);
-			h.setAlphaAcidContent(aAcid);
+			h.setStartTime(startTime);
+			h.setEndTime(endTime);
+			h.setAlphaAcidContent(alpha);
 			h.setAmount(weight);
 			h.setForm(Hop.FORM_PELLET);
 			

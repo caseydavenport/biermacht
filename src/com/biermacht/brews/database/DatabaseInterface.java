@@ -48,20 +48,25 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_COL_OWNER_ID,
 			DatabaseHelper.ING_COL_TYPE,
 			DatabaseHelper.ING_COL_NAME,
-			DatabaseHelper.ING_COL_UNIT,
+			DatabaseHelper.ING_COL_DESC,
+			DatabaseHelper.ING_COL_UNITS,
 			DatabaseHelper.ING_COL_AMT,
-			DatabaseHelper.ING_COL_BOIL_START_TIME,
-			DatabaseHelper.ING_COL_BOIL_END_TIME,
+			DatabaseHelper.ING_COL_START_TIME,
+			DatabaseHelper.ING_COL_END_TIME,
 			
-			DatabaseHelper.ING_GR_COL_WEIGHT,
-			DatabaseHelper.ING_GR_COL_COLOR,
-			DatabaseHelper.ING_GR_COL_GRAV,
-			DatabaseHelper.ING_GR_COL_TYPE,
-			DatabaseHelper.ING_GR_COL_EFF,
+			DatabaseHelper.ING_FR_COL_TYPE,
+			DatabaseHelper.ING_FR_COL_YIELD,
+			DatabaseHelper.ING_FR_COL_COLOR,
+			DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL,
+			DatabaseHelper.ING_FR_COL_GRAV,
+			DatabaseHelper.ING_FR_COL_EFF,
 			
-			DatabaseHelper.ING_HP_COL_DESC,
-			DatabaseHelper.ING_HP_COL_ACID,
-			DatabaseHelper.ING_HP_COL_TYPE
+			DatabaseHelper.ING_HP_COL_TYPE,
+			DatabaseHelper.ING_HP_COL_ALPHA,
+			DatabaseHelper.ING_HP_COL_USE,
+			DatabaseHelper.ING_HP_COL_TIME,
+			DatabaseHelper.ING_HP_COL_FORM,
+			DatabaseHelper.ING_HP_COL_ORIGIN
 			};
 	
 	// Constructor
@@ -84,7 +89,7 @@ public class DatabaseInterface {
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
-		values.put(DatabaseHelper.REC_COL_VER, 1);
+		values.put(DatabaseHelper.REC_COL_VER, r.getVersion());
 		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
 		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle());
 		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
@@ -114,7 +119,7 @@ public class DatabaseInterface {
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
-		values.put(DatabaseHelper.REC_COL_VER, 1);
+		values.put(DatabaseHelper.REC_COL_VER, r.getVersion());
 		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
 		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle());
 		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
@@ -147,29 +152,34 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.ING_COL_OWNER_ID, ing.getOwnerId());
 		values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
 		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
-		values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnits());
+		values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
+		values.put(DatabaseHelper.ING_COL_UNITS, ing.getUnits());
 		values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
-		values.put(DatabaseHelper.ING_COL_BOIL_START_TIME, ing.getBoilStartTime());
-		values.put(DatabaseHelper.ING_COL_BOIL_END_TIME, ing.getBoilEndTime());
+		values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
+		values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
 		
 		// Grain specific values
 		if (ing.getType().equals(Ingredient.FERMENTABLE))
 		{
-			Fermentable gr = (Fermentable) ing;
-			values.put(DatabaseHelper.ING_GR_COL_WEIGHT, gr.getAmount());
-			values.put(DatabaseHelper.ING_GR_COL_COLOR, gr.getLovibondColor());
-			values.put(DatabaseHelper.ING_GR_COL_GRAV, gr.getGravity());
-			values.put(DatabaseHelper.ING_GR_COL_TYPE, gr.getFermentableType());
-			values.put(DatabaseHelper.ING_GR_COL_EFF, gr.getEfficiency());
+			Fermentable fer = (Fermentable) ing;
+			values.put(DatabaseHelper.ING_FR_COL_TYPE, fer.getFermentableType());
+			values.put(DatabaseHelper.ING_FR_COL_YIELD, fer.getYield());
+			values.put(DatabaseHelper.ING_FR_COL_COLOR, fer.getLovibondColor());
+			values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
+			values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
+			values.put(DatabaseHelper.ING_FR_COL_EFF, fer.getEfficiency());
 		}
 		
 		// Hop specific values
 		if (ing.getType().equals(Ingredient.HOP))
 		{
 			Hop hop = (Hop) ing;
-			values.put(DatabaseHelper.ING_HP_COL_DESC, hop.getDescription());
-			values.put(DatabaseHelper.ING_HP_COL_ACID, hop.getAlphaAcidContent());
-			values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getForm());
+			values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
+			values.put(DatabaseHelper.ING_HP_COL_ALPHA, hop.getAlphaAcidContent());
+			values.put(DatabaseHelper.ING_HP_COL_USE, hop.getUse());
+			values.put(DatabaseHelper.ING_HP_COL_TIME, hop.getTime());
+			values.put(DatabaseHelper.ING_HP_COL_FORM, hop.getForm());
+			values.put(DatabaseHelper.ING_HP_COL_ORIGIN, hop.getOrigin());
 		}
 		
 		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
@@ -187,32 +197,38 @@ public class DatabaseInterface {
 		
 		for (Ingredient ing : ingredientList)
 		{
+			// Load up values to store
 			values.put(DatabaseHelper.ING_COL_OWNER_ID, id);
 			values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
 			values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
-			values.put(DatabaseHelper.ING_COL_UNIT, ing.getUnits());
+			values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
+			values.put(DatabaseHelper.ING_COL_UNITS, ing.getUnits());
 			values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
-			values.put(DatabaseHelper.ING_COL_BOIL_START_TIME, ing.getBoilStartTime());
-			values.put(DatabaseHelper.ING_COL_BOIL_END_TIME, ing.getBoilEndTime());
+			values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
+			values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
 			
 			// Grain specific values
 			if (ing.getType().equals(Ingredient.FERMENTABLE))
 			{
-				Fermentable gr = (Fermentable) ing;
-				values.put(DatabaseHelper.ING_GR_COL_WEIGHT, gr.getAmount());
-				values.put(DatabaseHelper.ING_GR_COL_COLOR, gr.getLovibondColor());
-				values.put(DatabaseHelper.ING_GR_COL_GRAV, gr.getGravity());
-				values.put(DatabaseHelper.ING_GR_COL_TYPE, gr.getFermentableType());
-				values.put(DatabaseHelper.ING_GR_COL_EFF, gr.getEfficiency());
+				Fermentable fer = (Fermentable) ing;
+				values.put(DatabaseHelper.ING_FR_COL_TYPE, fer.getFermentableType());
+				values.put(DatabaseHelper.ING_FR_COL_YIELD, fer.getYield());
+				values.put(DatabaseHelper.ING_FR_COL_COLOR, fer.getLovibondColor());
+				values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
+				values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
+				values.put(DatabaseHelper.ING_FR_COL_EFF, fer.getEfficiency());
 			}
 			
 			// Hop specific values
 			if (ing.getType().equals(Ingredient.HOP))
 			{
 				Hop hop = (Hop) ing;
-				values.put(DatabaseHelper.ING_HP_COL_DESC, hop.getDescription());
-				values.put(DatabaseHelper.ING_HP_COL_ACID, hop.getAlphaAcidContent());
-				values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getForm());
+				values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
+				values.put(DatabaseHelper.ING_HP_COL_ALPHA, hop.getAlphaAcidContent());
+				values.put(DatabaseHelper.ING_HP_COL_USE, hop.getUse());
+				values.put(DatabaseHelper.ING_HP_COL_TIME, hop.getTime());
+				values.put(DatabaseHelper.ING_HP_COL_FORM, hop.getForm());
+				values.put(DatabaseHelper.ING_HP_COL_ORIGIN, hop.getOrigin());
 			}
 			
 			database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
@@ -329,6 +345,7 @@ public class DatabaseInterface {
 		
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
+		r.setVersion(version);
 		r.setType(type);
 		r.setStyle(style);
 		r.setBrewer(brewer);
@@ -370,57 +387,77 @@ public class DatabaseInterface {
 	}
 
 	private Ingredient cursorToIngredient(Cursor cursor) {
-
-		// Ingredient type agnostic stuff
-		long id = cursor.getLong(0);
-		long ownerId = cursor.getLong(1);
-		String ingType = cursor.getString(2);
-		String ingName = cursor.getString(3);
-		String ingUnit = cursor.getString(4);
-		float ingAmount = cursor.getFloat(5);
-		float ingStartTime = cursor.getFloat(6);
-		int ingEndTime = cursor.getInt(7);
+		int cid = 0;
 		
-		// Grain specific stuff
+		// Ingredient type agnostic stuff
+		long id = cursor.getLong(cid);                          cid++;
+		long ownerId = cursor.getLong(cid);						cid++;
+		String ingType = cursor.getString(cid);					cid++;
+		String name = cursor.getString(cid);					cid++;
+		String description = cursor.getString(cid);				cid++;
+		String units = cursor.getString(cid);					cid++;
+		float amount = cursor.getFloat(cid);					cid++;
+		int startTime = cursor.getInt(cid);						cid++;
+		int endTime = cursor.getInt(cid);						cid++;	
+		
+		Log.e("DBI", "Creating ingredient from cursor... " + name + " oid: " + cursor.getString(1));
+		
+		// Fermentable specific stuff
 		if (ingType.equals(Ingredient.FERMENTABLE))
 		{
-			float grainWeight = cursor.getFloat(8);
-			float grainColor = cursor.getFloat(9);
-			float grainGrav = cursor.getFloat(10);
-			String grainType = cursor.getString(11);
-			float grainEff = cursor.getFloat(12);
+			String type = cursor.getString(cid);				cid++;
+			float yield = cursor.getFloat(cid);					cid++;
+			float color = cursor.getFloat(cid);					cid++;
+			int afterBoil = cursor.getInt(cid);					cid++;
+			float gravity = cursor.getFloat(cid);				cid++;
+			float efficiency = cursor.getFloat(cid);			cid++;			
 			
-			Fermentable grain = new Fermentable(ingName);
-			grain.setId(id);
-			grain.setOwnerId(ownerId);
-			grain.setAmount(ingAmount);
-			grain.setBoilStartTime(ingStartTime);
-			grain.setBoilEndTime(ingEndTime);
-			grain.setAmount(grainWeight);
-			grain.setLovibondColor(grainColor);
-			grain.setGravity(grainGrav);
-			grain.setFermentableType(grainType);
-			grain.setEfficiency(grainEff);
+			boolean addAfterBoil = (afterBoil == 0) ? false : true;
 			
-			return grain;
+			Fermentable fer = new Fermentable(name);
+			fer.setId(id);
+			fer.setOwnerId(ownerId);
+			fer.setShortDescription(description);
+			fer.setUnits(units);
+			fer.setAmount(amount);
+			fer.setStartTime(startTime);
+			fer.setEndTime(endTime);
+			fer.setFermentableType(type);
+			fer.setYield(yield);
+			fer.setLovibondColor(color);
+			fer.setAddAfterBoil(addAfterBoil);
+			fer.setGravity(gravity);
+			fer.setEfficiency(efficiency);
+			
+			return fer;
 		}
 		
 		// Hop specific stuff
-		if (ingType.equals(Ingredient.HOP))
+		else if (ingType.equals(Ingredient.HOP))
 		{
-			String hopDesc = cursor.getString(13);
-			float hopAcid = cursor.getFloat(14);
-			String hopType = cursor.getString(15);
+			cid += 6;
 			
-			Hop hop = new Hop(ingName);
+			String type = cursor.getString(cid);				cid++;
+			float alpha = cursor.getFloat(cid);					cid++;
+			String use = cursor.getString(cid);					cid++;
+			int time = cursor.getInt(cid);						cid++;
+			String form = cursor.getString(cid);				cid++;
+			String origin = cursor.getString(cid);				cid++;
+			
+			Hop hop = new Hop(name);
 			hop.setId(id);
 			hop.setOwnerId(ownerId);
-			hop.setAmount(ingAmount);
-			hop.setBoilStartTime(ingStartTime);
-			hop.setBoilEndTime(ingEndTime);
-			hop.setDescription(hopDesc);
-			hop.setAlphaAcidContent(hopAcid);
-			hop.setForm(hopType);
+			hop.setShortDescription(description);
+			hop.setUnits(units);
+			hop.setAmount(amount);
+			hop.setStartTime(startTime);
+			hop.setEndTime(endTime);
+			hop.setHopType(type);
+			hop.setAlphaAcidContent(alpha);
+			hop.setUse(use);
+			hop.setTime(time);
+			hop.setForm(form);
+			hop.setOrigin(origin);
 			
 			return hop;
 		}

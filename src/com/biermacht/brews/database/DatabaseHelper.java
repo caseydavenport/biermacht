@@ -38,22 +38,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Column name defines for INGREDIENTS
 	public static final String ING_COL_ID = "_id";
 	public static final String ING_COL_OWNER_ID = "ownerId";
-	public static final String ING_COL_TYPE = "type";
+	public static final String ING_COL_TYPE = "ingType";
 	public static final String ING_COL_NAME = "name";
-	public static final String ING_COL_UNIT = "units";
+	public static final String ING_COL_DESC = "description";
+	public static final String ING_COL_UNITS = "units";
 	public static final String ING_COL_AMT = "amount";
-	public static final String ING_COL_BOIL_END_TIME = "endtime";
-	public static final String ING_COL_BOIL_START_TIME = "starttime";
+	public static final String ING_COL_START_TIME = "startTime";
+	public static final String ING_COL_END_TIME = "endTime";
 	
-	public static final String ING_GR_COL_WEIGHT = "weight";
-	public static final String ING_GR_COL_COLOR = "color";
-	public static final String ING_GR_COL_GRAV = "gravity";
-	public static final String ING_GR_COL_TYPE = "grainType";
-	public static final String ING_GR_COL_EFF = "efficiency";
+	public static final String ING_FR_COL_TYPE = "ferType";
+	public static final String ING_FR_COL_YIELD = "yield";
+	public static final String ING_FR_COL_COLOR = "color";
+	public static final String ING_FR_COL_ADD_AFTER_BOIL = "addAfterBoil";
+	public static final String ING_FR_COL_GRAV = "gravity";
+	public static final String ING_FR_COL_EFF = "efficiency";
 	
-	public static final String ING_HP_COL_DESC = "description";
-	public static final String ING_HP_COL_ACID = "acids";
 	public static final String ING_HP_COL_TYPE = "hopType";
+	public static final String ING_HP_COL_ALPHA = "alpha";
+	public static final String ING_HP_COL_USE = "use";
+	public static final String ING_HP_COL_TIME = "time";
+	public static final String ING_HP_COL_FORM = "form";
+	public static final String ING_HP_COL_ORIGIN = "origin";
 	
 	
 	// Table Creation Queries
@@ -87,19 +92,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_COL_ID + " integer primary key autoincrement, "
 				+ ING_COL_OWNER_ID + " long not null, "
 				+ ING_COL_TYPE + " text not null, "
-				+ ING_COL_NAME + " text not null, " 
-				+ ING_COL_UNIT + " text not null, "
-				+ ING_COL_AMT + " float not null, " 
-				+ ING_COL_BOIL_START_TIME + " float not null, "
-				+ ING_COL_BOIL_END_TIME + " float not null, "
-				+ ING_GR_COL_WEIGHT + " float, "
-				+ ING_GR_COL_COLOR + " float, " 
-				+ ING_GR_COL_GRAV + " float, " 
-				+ ING_GR_COL_TYPE + " text, " 
-				+ ING_GR_COL_EFF + " float, "
-				+ ING_HP_COL_DESC + " text, "
-				+ ING_HP_COL_ACID + " float, "
-				+ ING_HP_COL_TYPE + " text"
+				+ ING_COL_NAME + " text not null, "
+				+ ING_COL_DESC + " text not null, "
+				+ ING_COL_UNITS + " text not null, "
+				+ ING_COL_AMT + " float not null, "
+				+ ING_COL_START_TIME + " int not null, "
+				+ ING_COL_END_TIME + " int not null, "
+				
+				+ ING_FR_COL_TYPE + " text, "
+				+ ING_FR_COL_YIELD + " float, "
+				+ ING_FR_COL_COLOR + " float, " 
+				+ ING_FR_COL_ADD_AFTER_BOIL + " int, "   // SQLITE does not have bool type
+				+ ING_FR_COL_GRAV + " float, " 
+				+ ING_FR_COL_EFF + " float, "
+				
+				+ ING_HP_COL_TYPE + " text, "
+				+ ING_HP_COL_ALPHA + " float, "
+				+ ING_HP_COL_USE + " text, "
+				+ ING_HP_COL_TIME + " int, "
+				+ ING_HP_COL_FORM + " text, "
+				+ ING_HP_COL_ORIGIN + " text"
 			+ ");";
 	
 	// Public Constructor

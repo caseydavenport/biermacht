@@ -23,6 +23,8 @@ public class Fermentable extends Ingredient {
 	// ================================================================
 	private double gravity;                        // OG Contribution
 	private float efficiency;                      // Efficiency
+	private int startTime;						   // Boil start time
+	private int endTime;						   // Boil end time
 	
 	// Static values =================================================
 	// ===============================================================
@@ -33,20 +35,25 @@ public class Fermentable extends Ingredient {
 	public Fermentable(String name)
 	{
 		super(name);
-		setName(name);
-		this.amount = 0;
-		this.color = 0;
-		this.gravity = 1;
 		this.type = GRAIN;
+		this.amount = 0;
+		this.yield = 1;
+		this.color = 0;
+		this.addAfterBoil = false;
+		this.gravity = 1;
 		this.efficiency = 1;
 	}
 	
-	public Fermentable(String name, String units, double colour, double grav, String type)
+	public Fermentable(String name, String units, double color, double grav, String type)
 	{
+		// TODO - FIX THIS CONSTRUCTOR -- REMOVE UNITS
 		super(name);
-		this.color = colour;
-		this.gravity = grav;
 		this.type = type;
+		this.amount = 0;
+		this.yield = 1;
+		this.color = color;
+		this.addAfterBoil = false;
+		this.gravity = grav;
 		this.efficiency = 1;
 	}
 
@@ -133,8 +140,73 @@ public class Fermentable extends Ingredient {
 
 	@Override
 	public boolean equals(Object o) {
+		if (o instanceof Fermentable)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
+	}
+
+	@Override
+	public void setEndTime(int endTime) {
+		this.endTime = endTime;
+	}
+
+	@Override
+	public int getStartTime() {
+		return startTime;
+	}
+
+	@Override
+	public int getEndTime() {
+		return endTime;
+	}
+
+	@Override
+	public int getTime() {
+		return getEndTime() - getStartTime();
+	}
+
+	/**
+	 * @return the yield
+	 */
+	public double getYield() {
+		return yield;
+	}
+
+	/**
+	 * @param yield the yield to set
+	 */
+	public void setYield(double yield) {
+		this.yield = yield;
+	}
+
+	/**
+	 * @return the addAfterBoil
+	 */
+	public boolean isAddAfterBoil() {
+		return addAfterBoil;
+	}
+
+	/**
+	 * @param addAfterBoil the addAfterBoil to set
+	 */
+	public void setAddAfterBoil(boolean addAfterBoil) {
+		this.addAfterBoil = addAfterBoil;
+	}
+
+	@Override
+	public void setShortDescription(String description) {
 		// TODO Auto-generated method stub
-		return false;
+	}
+
+	@Override
+	public void setUnits(String units) {
+		// TODO This does nothign for now
 	}
 }
 

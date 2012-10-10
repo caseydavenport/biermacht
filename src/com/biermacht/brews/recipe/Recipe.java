@@ -62,7 +62,7 @@ public class Recipe {
 		// Beer XML 1.0 Required Fields ===================================
 		// ================================================================
 		this.name = s;	     
-		this.version = 1;			
+		this.setVersion(1);			
 		this.setType(EXTRACT);            
 		this.style = Utils.BEERTYPE_OTHER.toString();     
 		this.setBrewer("Unknown Brewer");		     
@@ -346,8 +346,8 @@ public class Recipe {
 			if (i.getType().equals(Ingredient.FERMENTABLE) || i.getType().equals(Ingredient.HOP))
 			{
 				inst.setInstructionText("Boil " + i.getName());
-				inst.setStartTime(i.getBoilStartTime());
-				inst.setEndTime(i.getBoilEndTime());
+				inst.setStartTime(i.getStartTime());
+				inst.setEndTime(i.getEndTime());
 				list.add(inst);
 			}
 		}
@@ -426,5 +426,19 @@ public class Recipe {
 	 */
 	public void setFermentationStages(int fermentationStages) {
 		this.fermentationStages = fermentationStages;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public int getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(int version) {
+		this.version = version;
 	}
 }

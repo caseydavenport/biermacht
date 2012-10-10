@@ -48,7 +48,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
         grainColorEditText.setText(fermentable.getLovibondColor() +"");
         grainGravEditText.setText(fermentable.getGravity() +"");
         grainWeightEditText.setText(fermentable.getAmount() + "");
-        grainBoilStartTimeEditText.setText(fermentable.getBoilStartTime() + "");
+        grainBoilStartTimeEditText.setText(fermentable.getStartTime() + "");
         
         /*
         // Set up grain type spinner
@@ -107,10 +107,10 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 			double color = Double.parseDouble(grainColorEditText.getText().toString());
 			double grav = Double.parseDouble(grainGravEditText.getText().toString());
 			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
-			double boilStartTime = Double.parseDouble(grainBoilStartTimeEditText.getText().toString());
+			int startTime = Integer.parseInt(grainBoilStartTimeEditText.getText().toString());
 			
-			if (boilStartTime > mRecipe.getBoilTime())
-				boilStartTime = mRecipe.getBoilTime();
+			if (startTime > mRecipe.getBoilTime())
+				startTime = mRecipe.getBoilTime();
 			
 			fermentable.setName(grainName);
 			fermentable.setLovibondColor(color);
@@ -118,7 +118,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 			fermentable.setAmount(weight);
 			fermentable.setFermentableType(Fermentable.GRAIN);
 			fermentable.setEfficiency(1);
-			fermentable.setBoilStartTime(boilStartTime);
+			fermentable.setStartTime(startTime);
 			
 			Utils.updateIngredient(fermentable);
 			mRecipe = Utils.getRecipeWithId(mRecipe.getId());

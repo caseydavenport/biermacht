@@ -21,18 +21,23 @@ public class Hop extends Ingredient {
 	private String type;                        // Bittering, Armoa, Both
 	private String form;                        // Pellet, plug, whole
 	private String origin;                      // Place of origin
-	private ArrayList<String> substitutes;      // Substitute options
+	private ArrayList<String> substitutes;      // Substitute options TODO THIS!
 	
 	// Custom Fields ==================================================
 	// ================================================================
-	private String description;
-	private String hopType;
+	private String description;                 // Short description of flavor / use
+	private int startTime;                      
+	private int endTime;
 	
 	// Static values =================================================
 	// ===============================================================
 	public static final String FORM_PELLET = "Pellet";
 	public static final String FORM_WHOLE = "Whole";
 	public static final String FORM_PLUG = "Plug";
+	
+	public static final String TYPE_BITTERING = "Bittering";
+	public static final String TYPE_AROMA = "Aromatic";
+	public static final String TYPE_BOTH = "Bittering and Aromatic";
 	
 	public static final String USE_BOIL = "Boil";
 	public static final String USE_DRY_HOP = "Dry Hop";
@@ -43,20 +48,26 @@ public class Hop extends Ingredient {
 	public Hop(String name)
 	{
 		super(name);
-		this.setAlphaAcidContent(0);
-		this.setDescription("No Description");
-		this.setBoilStartTime(0);
-		this.setBoilEndTime(60);
-		this.setForm(FORM_PELLET);
+		this.amount = 0;
+		this.alpha = 0;
+		this.use = USE_BOIL;
+		this.type = TYPE_BITTERING;
+		this.form = FORM_PELLET;
+		this.origin = "";
+		this.substitutes = new ArrayList<String>(); // TODO Get this from somewhere
+		this.description = "No description";
 	}
 	
-	public Hop(String name, double aAcid, String desc) {
+	public Hop(String name, double alpha, String desc) {
 		super(name);
-		this.setAlphaAcidContent(aAcid);
-		this.setDescription(desc);
-		this.setBoilStartTime(0);
-		this.setBoilEndTime(60);
-		this.setForm(FORM_PELLET);
+		this.amount = 0;
+		this.alpha = alpha;
+		this.use = USE_BOIL;
+		this.type = TYPE_BITTERING;
+		this.form = FORM_PELLET;
+		this.origin = "";
+		this.substitutes = new ArrayList<String>(); // TODO Get this from somewhere
+		this.description = desc;
 	}
 
 	@Override
@@ -119,7 +130,110 @@ public class Hop extends Ingredient {
 
 	@Override
 	public boolean equals(Object o) {
+		if (o instanceof Hop)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * @return the use
+	 */
+	public String getUse() {
+		return use;
+	}
+
+	/**
+	 * @param use the use to set
+	 */
+	public void setUse(String use) {
+		this.use = use;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public int getTime() {
+		return getEndTime() - getStartTime();
+	}
+
+	/**
+	 * @return the origin
+	 */
+	public String getOrigin() {
+		return origin;
+	}
+
+	/**
+	 * @param origin the origin to set
+	 */
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	/**
+	 * @return the substitutes
+	 */
+	public ArrayList<String> getSubstitutes() {
+		return substitutes;
+	}
+
+	/**
+	 * @param substitutes the substitutes to set
+	 */
+	public void setSubstitutes(ArrayList<String> substitutes) {
+		this.substitutes = substitutes;
+	}
+
+	/**
+	 * @return the hopType
+	 */
+	public String getHopType() {
+		return type;
+	}
+
+	/**
+	 * @param hopType the hopType to set
+	 */
+	public void setHopType(String type) {
+		this.type = type;
+	}
+
+	@Override
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
+	}
+
+	@Override
+	public void setEndTime(int endTime) {
+		this.endTime = endTime;
+	}
+
+	@Override
+	public int getStartTime() {
+		return startTime;
+	}
+
+	@Override
+	public int getEndTime() {
+		return endTime;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	@Override
+	public void setShortDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public void setUnits(String units) {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 }

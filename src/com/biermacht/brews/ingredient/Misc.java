@@ -47,4 +47,46 @@ public class Misc extends Ingredient {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public void setStartTime(int startTime) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEndTime(int endTime) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getStartTime() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getEndTime() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTime() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setShortDescription(String description) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setUnits(String units) {
+		// TODO Auto-generated method stub
+		
+	}
 }

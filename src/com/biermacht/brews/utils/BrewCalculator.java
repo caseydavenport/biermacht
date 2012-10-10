@@ -90,7 +90,7 @@ public class BrewCalculator {
 		double boilTimeFactor;
 		
 		bignessFactor = 1.65 * Math.pow(.000125, r.getOG()-1);
-		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getBoilTime()))/4.15;
+		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()))/4.15;
 		
 		utilization = (float) (bignessFactor * boilTimeFactor);
 		

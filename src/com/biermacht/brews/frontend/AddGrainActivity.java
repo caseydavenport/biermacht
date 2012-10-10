@@ -107,11 +107,11 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			double color = Double.parseDouble(grainColorEditText.getText().toString());
 			double grav = Double.parseDouble(grainGravEditText.getText().toString());
 			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
-			double boilStartTime = Double.parseDouble(grainBoilStartTimeEditText.getText().toString());
-			double boilEndTime = mRecipe.getBoilTime();
+			int startTime = Integer.parseInt(grainBoilStartTimeEditText.getText().toString());
+			int endTime = mRecipe.getBoilTime();
 			
-			if (boilStartTime > mRecipe.getBoilTime())
-				boilStartTime = mRecipe.getBoilTime();
+			if (startTime > mRecipe.getBoilTime())
+				startTime = mRecipe.getBoilTime();
 			
 			Fermentable g = new Fermentable(grainName);
 			g.setLovibondColor(color);
@@ -119,8 +119,8 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			g.setAmount(weight);
 			g.setFermentableType(Fermentable.GRAIN);
 			g.setEfficiency(1);
-			g.setBoilStartTime(boilStartTime);
-			g.setBoilEndTime(boilEndTime);
+			g.setStartTime(startTime);
+			g.setEndTime(endTime);
 			
 			mRecipe.addIngredient(g);
 			mRecipe.update();

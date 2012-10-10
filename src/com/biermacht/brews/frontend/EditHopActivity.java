@@ -44,7 +44,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
         
         hopNameEditText.setText(hop.getName());
         hopAcidsEditText.setText(hop.getAlphaAcidContent() +"");
-        hopStartTimeEditText.setText(hop.getBoilStartTime() +"");
+        hopStartTimeEditText.setText(hop.getStartTime() +"");
         hopWeightEditText.setText(hop.getAmount() + "");
         
         
@@ -103,7 +103,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
 		{	
 			String name = hopNameEditText.getText().toString();
 			double acids = Double.parseDouble(hopAcidsEditText.getText().toString());
-			double boilStartTime = Double.parseDouble(hopStartTimeEditText.getText().toString());
+			int boilStartTime = Integer.parseInt(hopStartTimeEditText.getText().toString());
 			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
 			
 			if (boilStartTime > mRecipe.getBoilTime())
@@ -111,7 +111,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
 			
 			hop.setName(name);
 			hop.setAlphaAcidContent(acids);
-			hop.setBoilStartTime(boilStartTime);
+			hop.setStartTime(boilStartTime);
 			hop.setAmount(weight);
 			
 			Utils.updateIngredient(hop);
