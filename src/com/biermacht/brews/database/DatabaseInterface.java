@@ -58,6 +58,7 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_FR_COL_YIELD,
 			DatabaseHelper.ING_FR_COL_COLOR,
 			DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL,
+			DatabaseHelper.ING_FR_COL_MAX_IN_BATCH,
 			DatabaseHelper.ING_FR_COL_GRAV,
 			DatabaseHelper.ING_FR_COL_EFF,
 			
@@ -166,6 +167,7 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_FR_COL_YIELD, fer.getYield());
 			values.put(DatabaseHelper.ING_FR_COL_COLOR, fer.getLovibondColor());
 			values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
+			values.put(DatabaseHelper.ING_FR_COL_MAX_IN_BATCH, fer.getMaxInBatch());
 			values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
 			values.put(DatabaseHelper.ING_FR_COL_EFF, fer.getEfficiency());
 		}
@@ -215,6 +217,7 @@ public class DatabaseInterface {
 				values.put(DatabaseHelper.ING_FR_COL_YIELD, fer.getYield());
 				values.put(DatabaseHelper.ING_FR_COL_COLOR, fer.getLovibondColor());
 				values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
+				values.put(DatabaseHelper.ING_FR_COL_MAX_IN_BATCH, fer.getMaxInBatch());
 				values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
 				values.put(DatabaseHelper.ING_FR_COL_EFF, fer.getEfficiency());
 			}
@@ -409,6 +412,7 @@ public class DatabaseInterface {
 			float yield = cursor.getFloat(cid);					cid++;
 			float color = cursor.getFloat(cid);					cid++;
 			int afterBoil = cursor.getInt(cid);					cid++;
+			float maxInBatch = cursor.getFloat(cid);			cid++;
 			float gravity = cursor.getFloat(cid);				cid++;
 			float efficiency = cursor.getFloat(cid);			cid++;			
 			
@@ -426,6 +430,7 @@ public class DatabaseInterface {
 			fer.setYield(yield);
 			fer.setLovibondColor(color);
 			fer.setAddAfterBoil(addAfterBoil);
+			fer.setMaxInBatch(maxInBatch);
 			fer.setGravity(gravity);
 			fer.setEfficiency(efficiency);
 			
@@ -435,7 +440,7 @@ public class DatabaseInterface {
 		// Hop specific stuff
 		else if (ingType.equals(Ingredient.HOP))
 		{
-			cid += 6;
+			cid += 7;
 			
 			String type = cursor.getString(cid);				cid++;
 			float alpha = cursor.getFloat(cid);					cid++;

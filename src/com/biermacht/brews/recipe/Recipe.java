@@ -64,7 +64,7 @@ public class Recipe {
 		this.name = s;	     
 		this.setVersion(1);			
 		this.setType(EXTRACT);            
-		this.style = Utils.BEERTYPE_OTHER.toString();     
+		this.style = Utils.BEERSTYLE_OTHER.toString();     
 		this.setBrewer("Unknown Brewer");		     
 		this.batchSize = -1;        
 		this.setBoilSize(-1);		     

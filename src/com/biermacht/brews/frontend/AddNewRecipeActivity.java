@@ -22,14 +22,23 @@ import com.biermacht.brews.utils.Utils;
 
 public class AddNewRecipeActivity extends Activity implements OnClickListener {
 
+	// Data entry view declarations
+	private Spinner beerStyleSpinner;
 	private Spinner beerTypeSpinner;
-	private Spinner brewTypeSpinner;
 	private EditText recipeNameEditText;
 	private EditText recipeDescEditText;
 	private EditText boilTimeEditText;
 	private EditText effEditText;
 	private EditText batchSizeEditText;
-	private String beerType = Utils.BEERTYPE_OTHER.toString();
+	private EditText boilSizeEditText;
+	
+	// Data storage declarations
+	private String style = Utils.BEERSTYLE_OTHER.toString();
+	private String type = Recipe.EXTRACT;
+	private float efficiency = 100;
+	
+	// Spinner array declarations
+	private ArrayList<String> beerStyleArray;
 	private ArrayList<String> beerTypeArray;
 	
     @Override
@@ -43,38 +52,59 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         boilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         effEditText = (EditText) findViewById(R.id.efficiency_edit_text);
         batchSizeEditText = (EditText) findViewById(R.id.batch_volume_edit_text);
+        boilSizeEditText = (EditText) findViewById(R.id.boil_volume_edit_text);
         
         // Default values
         boilTimeEditText.setText(60 +"");
-        effEditText.setText(100 +"");
         batchSizeEditText.setText(5.0 +"");
+        boilSizeEditText.setText(5.0 + "");
         
         //Arraylist of beer types
-        beerTypeArray = Utils.getBeerStyleStringList();
+        beerStyleArray = Utils.getBeerStyleStringList();
         
         // Set up beer type spinner
-        beerTypeSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
-        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, beerTypeArray);  
+        beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
+        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, beerStyleArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        beerTypeSpinner.setAdapter(adapter);
-        beerTypeSpinner.setSelection(0);    
+        beerStyleSpinner.setAdapter(adapter);
+        beerStyleSpinner.setSelection(0);    
         
         // Set up brew type spinner
-        brewTypeSpinner = (Spinner) findViewById(R.id.brew_type_spinner);
-        ArrayList<String> brewTypeArray = new ArrayList<String>();
-        brewTypeArray.add("Extract");
-        brewTypeArray.add("Partial Mash");
-        brewTypeArray.add("All Grain");
-        SpinnerAdapter<String> brewTypeAdapter = new SpinnerAdapter<String>(this, brewTypeArray);  
-        brewTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        brewTypeSpinner.setAdapter(brewTypeAdapter);
-        brewTypeSpinner.setSelection(0); 
+        beerTypeSpinner = (Spinner) findViewById(R.id.brew_type_spinner);
+        beerTypeArray = new ArrayList<String>();
+        beerTypeArray.add("Extract");
+        beerTypeArray.add("Partial Mash");
+        beerTypeArray.add("All Grain");
+        SpinnerAdapter<String> beerTypeAdapter = new SpinnerAdapter<String>(this, beerTypeArray);  
+        beerTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        beerTypeSpinner.setAdapter(beerTypeAdapter);
+        beerTypeSpinner.setSelection(0); 
+        
+        // Handle beer style selector here
+        beerStyleSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                style = beerStyleArray.get(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Blag
+            }
+
+        });
         
         // Handle beer type selector here
         beerTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                beerType = beerTypeArray.get(position);
+                type = beerTypeArray.get(position);
+                
+                if(type.equals(Recipe.EXTRACT))
+                	efficiency = 100;
+                else
+                	efficiency = 75;
+                
+                effEditText.setText(efficiency + "");
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -103,17 +133,18 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 		{
 			boolean readyToGo = true;
 			String recipeName = "Unnamed Brew";
-			String recipeDesc = "";
+			String description = "";
 			Integer boilTime = 1;
-			float eff = 100;
 			float batchSize = 5;
+			float boilSize = 5;
 			
 			try {
 			    recipeName = recipeNameEditText.getText().toString();
-			    recipeDesc = recipeDescEditText.getText().toString();
+			    description = recipeDescEditText.getText().toString();
 				boilTime = Integer.parseInt(boilTimeEditText.getText().toString());
-				eff = Float.parseFloat(effEditText.getText().toString());
+				efficiency = Float.parseFloat(effEditText.getText().toString());
 				batchSize = Float.parseFloat(batchSizeEditText.getText().toString());
+				boilSize = Float.parseFloat(boilSizeEditText.getText().toString());
 			}
 			catch (Exception e)
 			{
@@ -122,20 +153,26 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 			
 			if (recipeName.isEmpty())
 				readyToGo = false;
-			if (eff > 100)
+			if (efficiency > 100)
 				readyToGo = false;
 			
 			if (readyToGo)
 			{
 				Recipe r = Utils.createRecipeWithName(recipeName);
 				
-				if (!recipeDesc.isEmpty())
-					r.setDescription(recipeDesc);
-				
-				r.setStyle(beerType);
-				r.setBoilTime(boilTime);
-				r.setEfficiency(eff);
+				r.setVersion(Utils.getXmlVersion());
+				r.setType(type);
+				r.setStyle(style);
+				r.setBrewer("Biermacht Brews");
 				r.setBatchSize(batchSize);
+				r.setBoilSize(boilSize);
+				r.setBoilTime(boilTime);
+				r.setEfficiency(efficiency);
+				r.setBatchTime(1);
+				
+				if (!description.isEmpty())
+					r.setDescription(description);
+				
 				Utils.updateRecipe(r);
 				finish();
 			}

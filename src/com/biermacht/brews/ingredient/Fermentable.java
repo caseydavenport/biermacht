@@ -18,6 +18,7 @@ public class Fermentable extends Ingredient {
 	// Beer XML 1.0 Optional Fields ===================================
 	// ================================================================
 	private boolean addAfterBoil;                  // True if added after boil
+	private float maxInBatch;					   // Max reccomended in this batch
 	
 	// Custom Fields ==================================================
 	// ================================================================
@@ -42,19 +43,7 @@ public class Fermentable extends Ingredient {
 		this.addAfterBoil = false;
 		this.gravity = 1;
 		this.efficiency = 1;
-	}
-	
-	public Fermentable(String name, String units, double color, double grav, String type)
-	{
-		// TODO - FIX THIS CONSTRUCTOR -- REMOVE UNITS
-		super(name);
-		this.type = type;
-		this.amount = 0;
-		this.yield = 1;
-		this.color = color;
-		this.addAfterBoil = false;
-		this.gravity = grav;
-		this.efficiency = 1;
+		this.setMaxInBatch(0);
 	}
 
 	@Override
@@ -101,7 +90,7 @@ public class Fermentable extends Ingredient {
 
 	public float getPpg() {
 		
-		float adjPPG = (float) (efficiency * gravity);
+		float adjPPG = (float) (efficiency * gravity * yield);
 		
 		return adjPPG;
 	}
@@ -134,16 +123,16 @@ public class Fermentable extends Ingredient {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 17543286 ^ getName().hashCode();
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Fermentable)
-			return true;
-		else
-			return false;
+			if (this.hashCode() == o.hashCode())
+				return true;
+		
+		return false;
 	}
 
 	@Override
@@ -207,6 +196,20 @@ public class Fermentable extends Ingredient {
 	@Override
 	public void setUnits(String units) {
 		// TODO This does nothign for now
+	}
+
+	/**
+	 * @return the maxInBatch
+	 */
+	public float getMaxInBatch() {
+		return maxInBatch;
+	}
+
+	/**
+	 * @param maxInBatch the maxInBatch to set
+	 */
+	public void setMaxInBatch(float maxInBatch) {
+		this.maxInBatch = maxInBatch;
 	}
 }
 
