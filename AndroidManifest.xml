@@ -60,6 +60,15 @@
             android:label="@string/title_activity_edit_hop"
             android:noHistory="true" >
         </activity>
+        <activity
+            android:name=".xml.XMLTEST"
+            android:label="@string/title_activity_xmltest" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

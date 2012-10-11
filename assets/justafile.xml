@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Orders>
+<Order Type="Sales">
+<OrderID>101</OrderID>
+<CustNumber>ABC</CustNumber>
+<OrderDate>01-05-2011</OrderDate>
+<CustPONumber>TEST PO - 123</CustPONumber>
+<OrderTotal>99.99</OrderTotal>
+<OrderLine>
+<OrderlineID>1</OrderlineID>
+<ItemID>MCP-X2</ItemID>
+<ItemDescription>Cuisinart MultiClad Pro</ItemDescription>
+<Quantity>5</Quantity>
+<Price>10.00</Price>
+</OrderLine>
+<OrderLine>
+<OrderlineID>2</OrderlineID>
+<ItemID>DC25-X</ItemID>
+<ItemDescription>Dyson Vacuum Cleaner</ItemDescription>
+<Quantity>1</Quantity>
+<Price>49.99</Price>
+</OrderLine>
+</Order>
+<Order Type="Sales">
+<OrderID>102</OrderID>
+<CustNumber>ABC</CustNumber>
+<OrderDate>03-05-2011</OrderDate>
+<CustPONumber>TEST PO - 126</CustPONumber>
+<OrderTotal>1212.12</OrderTotal>
+<OrderLine>
+<OrderlineID>1</OrderlineID>
+<ItemID>MMM-X123</ItemID>
+<ItemDescription>Houdini Hand Blown Crystal</ItemDescription>
+<Quantity>20</Quantity>
+<Price>20.00</Price>
+</OrderLine>
+<OrderLine>
+<OrderlineID>2</OrderlineID>
+<ItemID>LG123456</ItemID>
+<ItemDescription>French Door Refrigerator</ItemDescription>
+<Quantity>1</Quantity>
+<Price>800.12</Price>
+</OrderLine>
+</Order>
+</Orders>
