@@ -52,8 +52,12 @@ public class BrewCalculator {
 			if (i.getType().equals(Ingredient.FERMENTABLE))
 			{
 				Fermentable g = (Fermentable) i;
+				float ppg = g.getPpg();
+				double amt = g.getAmount();
+				float size = r.getBatchSize();
+				double gVol = .2; // TODO
 				
-				grav += (g.getAmount() * g.getPpg() / (r.getBatchSize()-(g.getAmount()/2.7)))/100;
+				grav += (ppg * amt) / (1000) / (size - gVol);
 			}
 		}
 		return (1 + grav);

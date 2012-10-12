@@ -82,51 +82,11 @@ public class IngredientHandler {
 	
 	
 	 // Fermentables.. http://byo.com/resources/grains
-	public static ArrayList<Ingredient> getFermentablesList2()
+	public static void getFermentablesList2()
 	{
 		// List to return
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-		 
-		Fermentable FERMENTABLE_OTHER = new Fermentable("Custom Fermentable");
-		 				FERMENTABLE_OTHER.setLovibondColor(10);
-		 				FERMENTABLE_OTHER.setGravity(1.030);
-		 				FERMENTABLE_OTHER.setFermentableType(Fermentable.EXTRACT);
-		 
-		Fermentable FERMENTABLE_BLACK_BARLEY = new Fermentable("Black Barley");
-		 				FERMENTABLE_BLACK_BARLEY.setLovibondColor(525);
-		 				FERMENTABLE_BLACK_BARLEY.setGravity(1.025);
-		 				FERMENTABLE_BLACK_BARLEY.setFermentableType(Fermentable.GRAIN);
-		 				list.add(FERMENTABLE_BLACK_BARLEY);
-		 				
-		Fermentable FERMENTABLE_MUNICH_MALT = new Fermentable("Munich Malt");
-						FERMENTABLE_MUNICH_MALT.setLovibondColor(10);
-						FERMENTABLE_MUNICH_MALT.setGravity(1.034);
-						FERMENTABLE_MUNICH_MALT.setFermentableType(Fermentable.GRAIN); // TODO
-						list.add(FERMENTABLE_MUNICH_MALT);
 		
-		Fermentable FERMENTABLE_CHOCOLATE_MALT = new Fermentable("Chocolate Malt");
-						FERMENTABLE_CHOCOLATE_MALT.setLovibondColor(350);
-						FERMENTABLE_CHOCOLATE_MALT.setGravity(1.034);
-						FERMENTABLE_CHOCOLATE_MALT.setFermentableType(Fermentable.GRAIN); // TODO
-						list.add(FERMENTABLE_CHOCOLATE_MALT);
-		
-		Fermentable FERMENTABLE_DEXTRIN_MALT = new Fermentable("Dextrin Malt");
-						FERMENTABLE_DEXTRIN_MALT.setLovibondColor(1.5);
-						FERMENTABLE_DEXTRIN_MALT.setGravity(1.033);
-						FERMENTABLE_DEXTRIN_MALT.setFermentableType(Fermentable.GRAIN); // TODO
-						list.add(FERMENTABLE_DEXTRIN_MALT);
-		
-		Fermentable FERMENTABLE_PALE_MALT_2_ROW = new Fermentable("Pale Malt, 2-row");
-						FERMENTABLE_PALE_MALT_2_ROW.setLovibondColor(1.8);
-						FERMENTABLE_PALE_MALT_2_ROW.setGravity(1.037);
-						FERMENTABLE_PALE_MALT_2_ROW.setFermentableType(Fermentable.GRAIN); // TODO
-						list.add(FERMENTABLE_PALE_MALT_2_ROW);
-		
-		Fermentable FERMENTABLE_PALE_MALT_6_ROW = new Fermentable("Pale Malt, 6-row");
-						FERMENTABLE_PALE_MALT_6_ROW.setLovibondColor(1.8);
-						FERMENTABLE_PALE_MALT_6_ROW.setGravity(1.035);
-						FERMENTABLE_PALE_MALT_6_ROW.setFermentableType(Fermentable.GRAIN); // TODO
-						list.add(FERMENTABLE_PALE_MALT_6_ROW);
 		
 		Fermentable FERMENTABLE_ROASTED_BARELY = new Fermentable("Roasted Barley");
 						FERMENTABLE_ROASTED_BARELY.setLovibondColor(300);
@@ -158,8 +118,6 @@ public class IngredientHandler {
 						list.add(FERMENTABLE_WHITE_WHEAT_MALT);
 		 
 		Collections.sort(list, new IngredientComparator<Ingredient>());
-		list.add(0, FERMENTABLE_OTHER);
-		return list;
 		
 	}
 	

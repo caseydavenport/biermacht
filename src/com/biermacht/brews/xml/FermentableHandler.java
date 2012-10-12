@@ -4,6 +4,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Log;
+
 import com.biermacht.brews.ingredient.Fermentable;
  
 public class FermentableHandler extends DefaultHandler {
@@ -57,6 +59,7 @@ public class FermentableHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("YIELD"))
         {
+        	Log.e("XML Handler", "YIELD!: " + currentValue);
         	double yield = Double.parseDouble(currentValue);
         	fermentable.setYield(yield);
         }

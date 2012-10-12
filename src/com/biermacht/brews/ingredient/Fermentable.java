@@ -62,7 +62,7 @@ public class Fermentable extends Ingredient {
 	}
 
 	public double getGravity() {
-		return 1 + getPpg() / 1000;
+		return 1 + (getPpg()/1000);
 	}
 
 	public void setGravity(double gravity) {
@@ -88,7 +88,7 @@ public class Fermentable extends Ingredient {
 	}
 
 	public float getPpg() {		
-		return (float) (yield * 46) / 100;
+		return (float) (yield * 46)/100;
 	}
 	
 	@Override

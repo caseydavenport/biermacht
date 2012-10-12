@@ -35,6 +35,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private ArrayList<String> grainTypeArray;
 	private String grainType;
 	private Recipe mRecipe;
+	Fermentable fermentable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,18 +72,18 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Fermentable grainObj = new Fermentable("");
+            	fermentable = new Fermentable("");
             	grainType = grainTypeArray.get(position);
                 
                 for (Ingredient i : ingredientHandler.getFermentablesList())
                 {
                 	if (grainType.equals(i.toString()))
-                		grainObj = (Fermentable) i;
+                		fermentable = (Fermentable) i;
                 }
             	
                 grainNameEditText.setText(grainType);
-                grainColorEditText.setText(grainObj.getLovibondColor() +"");
-                grainGravEditText.setText(grainObj.getGravity() +"");
+                grainColorEditText.setText(fermentable.getLovibondColor() +"");
+                grainGravEditText.setText(fermentable.getGravity() +"");
                 grainWeightEditText.setText(5 +"");
                 grainBoilStartTimeEditText.setText(0 + "");
             }
@@ -122,7 +123,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			if (startTime > mRecipe.getBoilTime())
 				startTime = mRecipe.getBoilTime();
 			
-			Fermentable g = new Fermentable(grainName);
+			Fermentable g = fermentable;
 			g.setLovibondColor(color);
 			g.setGravity(grav);
 			g.setAmount(weight);
