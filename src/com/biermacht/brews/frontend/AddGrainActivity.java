@@ -19,9 +19,12 @@ import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
 public class AddGrainActivity extends Activity implements OnClickListener {
+	
+	IngredientHandler ingredientHandler;
 	
 	private Spinner grainTypeSpinner;
 	private EditText grainNameEditText;
@@ -29,7 +32,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
 	private EditText grainBoilStartTimeEditText;
-	private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
+	private ArrayList<String> grainTypeArray;
 	private String grainType;
 	private Recipe mRecipe;
 
@@ -37,6 +40,12 @@ public class AddGrainActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_grain);
+        
+    	// Set up Ingredient Handler
+    	ingredientHandler = MainActivity.ingredientHandler;
+    	
+    	// Set list of ingredients to show
+    	grainTypeArray = Utils.getFermentablesStringList(ingredientHandler.getFermentablesList());
         
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
@@ -65,7 +74,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 Fermentable grainObj = new Fermentable("");
             	grainType = grainTypeArray.get(position);
                 
-                for (Ingredient i : Utils.getFermentablesList())
+                for (Ingredient i : ingredientHandler.getFermentablesList())
                 {
                 	if (grainType.equals(i.toString()))
                 		grainObj = (Fermentable) i;

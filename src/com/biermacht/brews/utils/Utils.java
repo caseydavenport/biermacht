@@ -3,12 +3,8 @@ package com.biermacht.brews.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.util.Log;
-
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.MainActivity;
-import com.biermacht.brews.ingredient.Fermentable;
-import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
@@ -211,16 +207,6 @@ public class Utils {
 		Collections.sort(list, new BeerStyleComparator<BeerStyle>());
 		list.add(0, BEERSTYLE_OTHER);
 		return list;
-	}
-	
-	public static ArrayList<Ingredient> getFermentablesList()
-	{
-		return IngredientHandler.getFermentablesList();
-	}
-	
-	public static ArrayList<Ingredient> getHopsList()
-	{	
-		return IngredientHandler.getHopsList();
 	}
 	
 	public static RecipeReccomendedValues getRecipeReccomendedValues(Recipe r)
@@ -441,13 +427,18 @@ public class Utils {
 		return listToReturn;
 	}
 	
+	public static ArrayList<Ingredient> getHopsList()
+	{	
+		return IngredientHandler.getHopsList();
+	}
+	
 	/**
 	 * Returns a list of strings corresponding to fermentable objects
 	 * @return
 	 */
-	public static ArrayList<String> getFermentablesStringList()
+	public static ArrayList<String> getFermentablesStringList(ArrayList<Ingredient> list)
 	{
-		ArrayList<Ingredient> listA = getFermentablesList();
+		ArrayList<Ingredient> listA = list;
 		ArrayList<String> listToReturn = new ArrayList<String>();
 		
 		for (Ingredient b : listA)

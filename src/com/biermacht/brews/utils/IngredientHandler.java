@@ -1,16 +1,88 @@
 package com.biermacht.brews.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.util.Log;
 
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.xml.FermentableHandler;
 
 public class IngredientHandler {
 	
+	private Context mContext;
+	private ArrayList<Ingredient> fermentablesList;
+	
+	public IngredientHandler(Context c)
+	{
+		this.mContext = c;
+	}
+	
+	/**
+	 * Returns a list of valid fermentables for use in recipes
+	 * @return ArrayList of ingredient objects
+	 */
+	public ArrayList<Ingredient> getFermentablesList()
+	{
+		if (this.fermentablesList == null)
+		{
+			try 
+			{
+				this.fermentablesList = getFermentablesFromXml();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return fermentablesList;
+	}
+	
+	/**
+	 * Gets fermentables from XMl files in assets/Fermentables
+	 * @return ArrayList of Ingredient Objects
+	 * @throws IOException
+	 */
+	private ArrayList<Ingredient> getFermentablesFromXml() throws IOException
+	{
+		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        FermentableHandler myXMLHandler = new FermentableHandler();
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        AssetManager am = mContext.getAssets();
+
+        for (String s : am.list("Fermentables") )
+        {
+	        try 
+	        {
+	        	Log.e("IngrdientHandler", "File Path: " + s);
+	        	
+	            SAXParser sp = spf.newSAXParser();
+	            InputStream is = am.open("Fermentables/" + s);
+	            sp.parse(is, myXMLHandler);
+	 
+	            Fermentable fermentable = myXMLHandler.getFermentable();
+	            list.add(fermentable);
+	        }
+	        catch (Exception e)
+	        {
+	        	Log.e("XML TEST", e.toString());
+	        }
+        }
+        
+        return list;
+	}
+	
+	
 	 // Fermentables.. http://byo.com/resources/grains
-	public static ArrayList<Ingredient> getFermentablesList()
+	public static ArrayList<Ingredient> getFermentablesList2()
 	{
 		// List to return
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();

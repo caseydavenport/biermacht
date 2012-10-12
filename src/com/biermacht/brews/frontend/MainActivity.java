@@ -28,6 +28,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -40,7 +41,10 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ArrayList<Recipe> recipeList;
 	private Recipe selectedRecipe;
 	private int searchOptions;
+	
+	// Poorly done globally used shit
 	public static DatabaseInterface databaseInterface;
+	public static IngredientHandler ingredientHandler;
 	
     //Declare views here
     private ListView listView; 
@@ -61,6 +65,9 @@ public class MainActivity extends Activity implements OnClickListener {
         // Declare my database interface 
         databaseInterface = new DatabaseInterface(getApplicationContext());
         databaseInterface.open();
+        
+        // Declare my ingredient handler
+        ingredientHandler = new IngredientHandler(getApplicationContext());
 
         // Get recipes to display
         recipeList = Utils.getRecipeList(databaseInterface);

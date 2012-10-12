@@ -18,12 +18,12 @@ public class Fermentable extends Ingredient {
 	// Beer XML 1.0 Optional Fields ===================================
 	// ================================================================
 	private boolean addAfterBoil;                  // True if added after boil
-	private float maxInBatch;					   // Max reccomended in this batch
+	private double maxInBatch;					   // Max reccomended in this batch
 	
 	// Custom Fields ==================================================
 	// ================================================================
-	private double gravity;                        // OG Contribution
-	private float efficiency;                      // Efficiency
+	private double gravity;                        // OG Contribution (currently not used)
+	private float efficiency;                      // Efficiency - taken from recipe?
 	private int startTime;						   // Boil start time
 	private int endTime;						   // Boil end time
 	
@@ -41,7 +41,7 @@ public class Fermentable extends Ingredient {
 		this.yield = 1;
 		this.color = 0;
 		this.addAfterBoil = false;
-		this.gravity = 1;
+		this.gravity = 0;
 		this.efficiency = 1;
 		this.setMaxInBatch(0);
 	}
@@ -62,8 +62,7 @@ public class Fermentable extends Ingredient {
 	}
 
 	public double getGravity() {
-		gravity = (double) Math.round(gravity * 1000) / 1000;
-		return gravity;
+		return 1 + getPpg() / 1000;
 	}
 
 	public void setGravity(double gravity) {
@@ -88,11 +87,8 @@ public class Fermentable extends Ingredient {
 		return this.efficiency;
 	}
 
-	public float getPpg() {
-		
-		float adjPPG = (float) (efficiency * gravity * yield);
-		
-		return adjPPG;
+	public float getPpg() {		
+		return (float) (yield * 46) / 100;
 	}
 	
 	@Override
@@ -201,14 +197,14 @@ public class Fermentable extends Ingredient {
 	/**
 	 * @return the maxInBatch
 	 */
-	public float getMaxInBatch() {
+	public double getMaxInBatch() {
 		return maxInBatch;
 	}
 
 	/**
 	 * @param maxInBatch the maxInBatch to set
 	 */
-	public void setMaxInBatch(float maxInBatch) {
+	public void setMaxInBatch(double maxInBatch) {
 		this.maxInBatch = maxInBatch;
 	}
 }

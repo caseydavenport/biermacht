@@ -113,7 +113,7 @@
 		        android:layout_height="40dip"
 		        android:layout_weight="1"
 		        android:background="@drawable/rounded_bg_white"
-		        android:maxLength="6"
+		        android:maxLength="5"
 		        android:paddingLeft="10dip"
 		        android:layout_marginRight="2dip"
 		        android:layout_marginBottom="15dip" />
