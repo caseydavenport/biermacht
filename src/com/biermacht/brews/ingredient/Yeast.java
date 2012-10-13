@@ -1,10 +1,51 @@
 package com.biermacht.brews.ingredient;
 
 public class Yeast extends Ingredient {
+	
+	// Beer XML 1.0 Required Fields ===================================
+	// ================================================================
+	// Name - Inherited
+	// Version - Inherited
+	private String type;								// Ale, Lager, etc
+	private String form;								// Liquid, Dry, etc
+	private double amount;								// Amount in liters
+	
+	// Beer XML 1.0 Optional Fields ===================================
+	// ================================================================
+	private double minTemp;
+	private double maxTemp;
+	private double attenuation;							// Percentage: x / 100
+	private String notes;
+	private String bestFor;
+	
+	// Custom Fields ==================================================
+	// ================================================================
+
+	
+	// Static values =================================================
+	// ===============================================================
+	public static final String ALE = "Ale";
+	public static final String LAGER = "Lager";
+	public static final String WHEAT = "Wheat";
+	public static final String WINE = "Wine";
+	public static final String CHAMPAGNE = "Champagne";
+	
+	public static final String LIQUID = "Liquid";
+	public static final String DRY = "Dry";
+	public static final String SLANT = "Slant";
+	public static final String CULTURE = "Culture";
 
 	public Yeast(String name)
 	{
 		super(name);
+		this.type = ALE;
+		this.form = LIQUID;
+		this.amount = 0;
+		this.minTemp = 0;
+		this.maxTemp = 0;
+		this.attenuation = 75;
+		this.notes = "";
+		this.bestFor = "";
 	}
 
 	@Override
@@ -14,20 +55,17 @@ public class Yeast extends Ingredient {
 
 	@Override
 	public String getShortDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.notes;
 	}
 
 	@Override
 	public double getAmount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.amount;
 	}
 
 	@Override
 	public void setAmount(double amt) {
-		// TODO Auto-generated method stub
-		
+		this.amount = amt;
 	}
 
 	@Override
@@ -50,43 +88,134 @@ public class Yeast extends Ingredient {
 
 	@Override
 	public void setStartTime(int startTime) {
-		// TODO Auto-generated method stub
-		
+		// Start time to come later?
 	}
 
 	@Override
 	public void setEndTime(int endTime) {
-		// TODO Auto-generated method stub
-		
+		// Yeasts shouldn't have an end time...
 	}
 
 	@Override
 	public int getStartTime() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getEndTime() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getTime() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void setShortDescription(String description) {
-		// TODO Auto-generated method stub
-		
+		this.notes = description;
 	}
 
 	@Override
 	public void setUnits(String units) {
-		// TODO Auto-generated method stub
-		
+
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getYeastType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return the form
+	 */
+	public String getForm() {
+		return form;
+	}
+
+	/**
+	 * @param form the form to set
+	 */
+	public void setForm(String form) {
+		this.form = form;
+	}
+
+	/**
+	 * @return the minTemp
+	 */
+	public double getMinTemp() {
+		return minTemp;
+	}
+
+	/**
+	 * @param minTemp the minTemp to set
+	 */
+	public void setMinTemp(double minTemp) {
+		this.minTemp = minTemp;
+	}
+
+	/**
+	 * @return the maxTemp
+	 */
+	public double getMaxTemp() {
+		return maxTemp;
+	}
+
+	/**
+	 * @param maxTemp the maxTemp to set
+	 */
+	public void setMaxTemp(double maxTemp) {
+		this.maxTemp = maxTemp;
+	}
+
+	/**
+	 * @return the attenuation
+	 */
+	public double getAttenuation() {
+		return attenuation;
+	}
+
+	/**
+	 * @param attenuation the attenuation to set
+	 */
+	public void setAttenuation(double attenuation) {
+		this.attenuation = attenuation;
+	}
+
+	/**
+	 * @return the notes
+	 */
+	public String getNotes() {
+		return notes;
+	}
+
+	/**
+	 * @param notes the notes to set
+	 */
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	/**
+	 * @return the bestFor
+	 */
+	public String getBestFor() {
+		return bestFor;
+	}
+
+	/**
+	 * @param bestFor the bestFor to set
+	 */
+	public void setBestFor(String bestFor) {
+		this.bestFor = bestFor;
 	}
 }

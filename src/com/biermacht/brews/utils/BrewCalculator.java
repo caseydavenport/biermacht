@@ -2,11 +2,10 @@ package com.biermacht.brews.utils;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
 
 public class BrewCalculator {
@@ -85,6 +84,38 @@ public class BrewCalculator {
 		ibu = (AAU * utilization * 75)/r.getBatchSize();
 		
 		return ibu;
+	}
+	
+	public static double getFgEstimateFromRecipe(Recipe r)
+	{
+		float OG = r.getOG();
+		double attn;          // Yeast attentuation
+		
+		for (Ingredient i : r.getIngredientList())
+		{
+			if (i.getType().equals(Ingredient.YEAST))
+			{
+				// First, try to determine if we have an attenuation value
+				Yeast y = (Yeast) i;
+				attn = y.getAttenuation();
+				
+				if (attn > 0)
+					return (100-attn)*OG/1000 + 1;
+					
+			}
+		}
+		
+		// If no attenuation value given, base off average for this style
+		// TODO: Or base it off something else...
+		return 0;
+	}
+	
+	public static double getAbvFromRecipe(Recipe r)
+	{
+		double FG = r.getFG();
+		double OG = r.getOG();
+		
+		return (OG-FG) * 131;
 	}
 	
 	public static float getHopUtilization(Recipe r, Hop i)

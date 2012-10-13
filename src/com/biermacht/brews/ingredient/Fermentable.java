@@ -7,7 +7,6 @@ public class Fermentable extends Ingredient {
 	
 	// Beer XML 1.0 Required Fields ===================================
 	// ================================================================
-	
 	// Name - Inherited
 	// Version - Inherited
 	private String type;                           // Grain, Extract, Adjunct

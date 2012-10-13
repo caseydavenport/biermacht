@@ -60,6 +60,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_HP_COL_FORM = "form";
 	public static final String ING_HP_COL_ORIGIN = "origin";
 	
+	public static final String ING_YS_COL_TYPE = "yeastType";
+	public static final String ING_YS_COL_FORM = "yeastForm";
+	public static final String ING_YS_COL_MIN_TEMP = "minTemp";
+	public static final String ING_YS_COL_MAX_TEMP = "maxTempt";
+	public static final String ING_YS_COL_ATTENUATION = "attenuation";
+	public static final String ING_YS_COL_NOTES = "notes";
+	public static final String ING_YS_COL_BEST_FOR = "bestFor";
+	
 	
 	// Table Creation Queries
 	private static final String CREATE_RECIPE_TABLE = "create table " +
@@ -111,7 +119,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_HP_COL_USE + " text, "
 				+ ING_HP_COL_TIME + " int, "
 				+ ING_HP_COL_FORM + " text, "
-				+ ING_HP_COL_ORIGIN + " text"
+				+ ING_HP_COL_ORIGIN + " text, "
+				
+				+ ING_YS_COL_TYPE + " text, "
+				+ ING_YS_COL_FORM + " text, "
+				+ ING_YS_COL_MIN_TEMP + " float, "
+				+ ING_YS_COL_MAX_TEMP + " float, "
+				+ ING_YS_COL_ATTENUATION + " float, "
+				+ ING_YS_COL_NOTES + " text, "
+				+ ING_YS_COL_BEST_FOR + " text"
 			+ ");";
 	
 	// Public Constructor
