@@ -89,7 +89,7 @@ public class FermentableHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("NOTES"))
         {
-        	// TODO: Add support for this field
+        	fermentable.setShortDescription(currentValue);
         }
         
         else if (qName.equalsIgnoreCase("COARSE_FINE_DIFF"))

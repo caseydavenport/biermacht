@@ -13,10 +13,15 @@
    		android:layout_alignParentTop="true"
    		android:background="@drawable/textured_background" >
 	    
+        <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+		<LinearLayout android:id="@+id/placeholder"
+		    android:focusable="true" android:focusableInTouchMode="true"
+		    android:layout_width="0px" android:layout_height="0px"/>
+        
 	    <!-- EditText for Grain Name -->
 	    <TextView android:id="@+id/grain_name_title"
 	        android:text="@string/name"
-	        android:layout_below="@id/grain_type_spinner"
+	        android:layout_below="@id/placeholder"
 	        style="@style/title_light" />
 	    
 	    <EditText

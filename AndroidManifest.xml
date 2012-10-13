@@ -33,41 +33,38 @@
         <activity
             android:name=".frontend.AddNewRecipeActivity"
             android:label="@string/title_activity_add_new_recipe"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.AddGrainActivity"
             android:label="@string/title_activity_add_grain"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.EditGrainActivity"
             android:label="@string/title_activity_edit_grain"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.EditRecipeActivity"
             android:label="@string/title_activity_edit_recipe"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.AddHopsActivity"
             android:label="@string/title_activity_add_hops"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.EditHopActivity"
             android:label="@string/title_activity_edit_hop"
-            android:noHistory="true" >
-        </activity>
-        <activity
-            android:name=".xml.XMLTEST"
-            android:label="@string/title_activity_xmltest" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustResize" >
         </activity>
     </application>
 

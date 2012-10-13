@@ -12,11 +12,16 @@
    		android:layout_above="@+id/bottom_nav"
    		android:layout_alignParentTop="true"
    		android:background="@drawable/textured_background" >
+   		
+        <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+		<LinearLayout android:id="@+id/placeholder"
+		    android:focusable="true" android:focusableInTouchMode="true"
+		    android:layout_width="0px" android:layout_height="0px"/>
     
 	    <!-- EditText for Hop Name -->
 	    <TextView android:id="@+id/hop_name_title"
 	        android:text="@string/name"
-	        android:layout_below="@id/hop_type_spinner"
+	        android:layout_below="@id/placeholder"
 	        style="@style/title_light" />
     
 	    <EditText
