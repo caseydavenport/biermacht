@@ -117,7 +117,6 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 			fermentable.setGravity(grav);
 			fermentable.setAmount(weight);
 			fermentable.setFermentableType(Fermentable.GRAIN);
-			fermentable.setEfficiency(1);
 			fermentable.setStartTime(startTime);
 			
 			Utils.updateIngredient(fermentable);

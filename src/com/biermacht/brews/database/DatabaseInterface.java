@@ -60,7 +60,6 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL,
 			DatabaseHelper.ING_FR_COL_MAX_IN_BATCH,
 			DatabaseHelper.ING_FR_COL_GRAV,
-			DatabaseHelper.ING_FR_COL_EFF,
 			
 			DatabaseHelper.ING_HP_COL_TYPE,
 			DatabaseHelper.ING_HP_COL_ALPHA,
@@ -169,7 +168,6 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
 			values.put(DatabaseHelper.ING_FR_COL_MAX_IN_BATCH, fer.getMaxInBatch());
 			values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
-			values.put(DatabaseHelper.ING_FR_COL_EFF, fer.getEfficiency());
 		}
 		
 		// Hop specific values
@@ -219,7 +217,6 @@ public class DatabaseInterface {
 				values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
 				values.put(DatabaseHelper.ING_FR_COL_MAX_IN_BATCH, fer.getMaxInBatch());
 				values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
-				values.put(DatabaseHelper.ING_FR_COL_EFF, fer.getEfficiency());
 			}
 			
 			// Hop specific values
@@ -413,8 +410,7 @@ public class DatabaseInterface {
 			float color = cursor.getFloat(cid);					cid++;
 			int afterBoil = cursor.getInt(cid);					cid++;
 			float maxInBatch = cursor.getFloat(cid);			cid++;
-			float gravity = cursor.getFloat(cid);				cid++;
-			float efficiency = cursor.getFloat(cid);			cid++;			
+			float gravity = cursor.getFloat(cid);				cid++;			
 			
 			boolean addAfterBoil = (afterBoil == 0) ? false : true;
 			
@@ -432,7 +428,6 @@ public class DatabaseInterface {
 			fer.setAddAfterBoil(addAfterBoil);
 			fer.setMaxInBatch(maxInBatch);
 			fer.setGravity(gravity);
-			fer.setEfficiency(efficiency);
 			
 			return fer;
 		}
@@ -440,7 +435,7 @@ public class DatabaseInterface {
 		// Hop specific stuff
 		else if (ingType.equals(Ingredient.HOP))
 		{
-			cid += 7;
+			cid += 6;
 			
 			String type = cursor.getString(cid);				cid++;
 			float alpha = cursor.getFloat(cid);					cid++;

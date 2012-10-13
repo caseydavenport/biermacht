@@ -52,7 +52,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_FR_COL_ADD_AFTER_BOIL = "addAfterBoil";
 	public static final String ING_FR_COL_MAX_IN_BATCH = "maxInBatch";
 	public static final String ING_FR_COL_GRAV = "gravity";
-	public static final String ING_FR_COL_EFF = "efficiency";
 	
 	public static final String ING_HP_COL_TYPE = "hopType";
 	public static final String ING_HP_COL_ALPHA = "alpha";
@@ -106,7 +105,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_FR_COL_ADD_AFTER_BOIL + " int, "   // SQLITE does not have bool type
 				+ ING_FR_COL_MAX_IN_BATCH + " float, "
 				+ ING_FR_COL_GRAV + " float, " 
-				+ ING_FR_COL_EFF + " float, "
 				
 				+ ING_HP_COL_TYPE + " text, "
 				+ ING_HP_COL_ALPHA + " float, "

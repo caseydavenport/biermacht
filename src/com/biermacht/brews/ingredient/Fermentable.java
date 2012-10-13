@@ -22,8 +22,7 @@ public class Fermentable extends Ingredient {
 	
 	// Custom Fields ==================================================
 	// ================================================================
-	private double gravity;                        // OG Contribution (currently not used)
-	private float efficiency;                      // Efficiency - taken from recipe?
+	private String description;					   // Description of fermentable
 	private int startTime;						   // Boil start time
 	private int endTime;						   // Boil end time
 	
@@ -40,9 +39,7 @@ public class Fermentable extends Ingredient {
 		this.amount = 0;
 		this.yield = 1;
 		this.color = 0;
-		this.addAfterBoil = false;
-		this.gravity = 0;
-		this.efficiency = 1;
+		this.addAfterBoil = false;;
 		this.setMaxInBatch(0);
 	}
 
@@ -61,12 +58,28 @@ public class Fermentable extends Ingredient {
 		this.color = color;
 	}
 
+	/**
+	 * Gets the gravity
+	 * @return
+	 */
 	public double getGravity() {
-		return 1 + (getPpg()/1000);
+		return yieldToGravity(yield);
 	}
 
+	/**
+	 * Sets gravity and yield accordingly
+	 * @param gravity
+	 */
 	public void setGravity(double gravity) {
-		this.gravity = gravity;
+		this.yield = gravityToYield(gravity);
+	}
+	
+	/**
+	 * gets the fermentables points per pound per gallon
+	 * @return
+	 */
+	public float getPpg() {		
+		return (float) (yield * 46)/100;
 	}
 
 	public String getFermentableType() {
@@ -76,21 +89,7 @@ public class Fermentable extends Ingredient {
 	public void setFermentableType(String type){
 		this.type = type;
 	}
-	
-	public void setEfficiency(float e)
-	{
-		this.efficiency = e;
-	}
-	
-	public float getEfficiency()
-	{
-		return this.efficiency;
-	}
 
-	public float getPpg() {		
-		return (float) (yield * 46)/100;
-	}
-	
 	@Override
 	public double getAmount()
 	{
@@ -101,12 +100,6 @@ public class Fermentable extends Ingredient {
 	public void setAmount(double amt)
 	{
 		this.amount = amt;
-	}
-
-	@Override
-	public String getShortDescription() {
-		// TODO
-		return "";
 	}
 
 	@Override
@@ -186,7 +179,12 @@ public class Fermentable extends Ingredient {
 
 	@Override
 	public void setShortDescription(String description) {
-		// TODO Auto-generated method stub
+		this.description = description;
+	}
+	
+	@Override
+	public String getShortDescription() {
+		return this.description;
 	}
 
 	@Override
@@ -206,6 +204,35 @@ public class Fermentable extends Ingredient {
 	 */
 	public void setMaxInBatch(double maxInBatch) {
 		this.maxInBatch = maxInBatch;
+	}
+	
+	/**
+	 * Turns given gravity into a yield
+	 * @param gravity
+	 * @return
+	 */
+	public double gravityToYield(double gravity)
+	{
+		double yield = 0;
+		
+		yield = gravity - 1;
+		yield = yield * 1000;
+		yield = yield * 100 / 46;
+		
+		return yield;
+	}
+	
+	/**
+	 * turns given yield into a gravity
+	 * @param yield
+	 * @return
+	 */
+	public double yieldToGravity(double yield)
+	{
+		double gravity = 0;
+		gravity = 1 + (((yield * 46)/100)/1000);
+		
+		return gravity;
 	}
 }
 
