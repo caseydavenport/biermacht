@@ -15,6 +15,7 @@
         <activity
             android:name=".frontend.MainActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +26,7 @@
         <activity
             android:name=".frontend.DisplayRecipeActivity"
             android:label="@string/title_activity_display_recipe"
+            android:screenOrientation="portrait"
             android:noHistory="true" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -33,36 +35,42 @@
         <activity
             android:name=".frontend.AddNewRecipeActivity"
             android:label="@string/title_activity_add_new_recipe"
+            android:screenOrientation="portrait"
             android:noHistory="true"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.AddGrainActivity"
             android:label="@string/title_activity_add_grain"
+            android:screenOrientation="portrait"
             android:noHistory="true"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.EditGrainActivity"
             android:label="@string/title_activity_edit_grain"
+            android:screenOrientation="portrait"
             android:noHistory="true"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.EditRecipeActivity"
             android:label="@string/title_activity_edit_recipe"
+            android:screenOrientation="portrait"
             android:noHistory="true"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.AddHopsActivity"
             android:label="@string/title_activity_add_hops"
+            android:screenOrientation="portrait"
             android:noHistory="true"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.EditHopActivity"
             android:label="@string/title_activity_edit_hop"
+            android:screenOrientation="portrait"
             android:noHistory="true"
             android:windowSoftInputMode="adjustResize" >
         </activity>

@@ -80,6 +80,19 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 	if (grainType.equals(i.toString()))
                 		fermentable = (Fermentable) i;
                 }
+                
+                // Set whether we want to show name field
+                if (fermentable.getName().equals("Custom Fermentable"))
+                {
+                	grainNameEditText.setVisibility(View.VISIBLE);
+                	findViewById(R.id.grain_name_title).setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                	grainNameEditText.setVisibility(View.GONE);
+                	findViewById(R.id.grain_name_title).setVisibility(View.GONE);
+                }
+                
             	
                 grainNameEditText.setText(grainType);
                 grainColorEditText.setText(fermentable.getLovibondColor() +"");
@@ -124,6 +137,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 				startTime = mRecipe.getBoilTime();
 			
 			Fermentable g = fermentable;
+			g.setName(grainName);
 			g.setLovibondColor(color);
 			g.setGravity(grav);
 			g.setAmount(weight);

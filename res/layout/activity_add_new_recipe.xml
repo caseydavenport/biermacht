@@ -22,7 +22,8 @@
 	        android:paddingLeft="10dip"
 	        android:layout_marginBottom="15dip"
 	        android:layout_below="@id/recipe_name_title"
-	        android:hint="Enter a recipe name" />
+	        android:hint="Enter a recipe name"
+	        android:selectAllOnFocus="true" />
 
 	    
 	    <LinearLayout android:id="@+id/spinner_titles"
@@ -145,6 +146,7 @@
 		    <EditText
 		        android:id="@+id/boil_time_edit_text"
 		        android:inputType="number"
+		        android:selectAllOnFocus="true"
 		        android:maxLength="3"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
@@ -157,6 +159,7 @@
 		    <EditText
 		        android:id="@+id/efficiency_edit_text"
 		        android:inputType="numberDecimal"
+		        android:selectAllOnFocus="true"
 		        android:maxLength="4"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
@@ -213,6 +216,7 @@
 	        <EditText
 		        android:id="@+id/batch_volume_edit_text"
 		        android:inputType="numberDecimal"
+		        android:selectAllOnFocus="true"
 		        android:maxLength="4"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
@@ -225,6 +229,7 @@
 		  	<EditText
 		        android:id="@+id/boil_volume_edit_text"
 		        android:inputType="numberDecimal"
+		        android:selectAllOnFocus="true"
 		        android:maxLength="4"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"

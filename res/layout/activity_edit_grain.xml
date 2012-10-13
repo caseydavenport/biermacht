@@ -28,7 +28,8 @@
 	        android:id="@+id/grain_name_edit_text"
 	        android:hint="@string/enter_name"
 	        android:layout_below="@id/grain_name_title"
-	        style="@style/text_input" />
+	        style="@style/text_input"
+	        android:selectAllOnFocus="true" />
 	    
 	    <LinearLayout android:id="@+id/first_ll"
 	        android:layout_width="fill_parent"
@@ -84,6 +85,7 @@
 		    <EditText
 		        android:id="@+id/grain_color_edit_text"
 		        android:inputType="numberDecimal"
+		        android:selectAllOnFocus="true"
 		        android:layout_width="0dp"
 		        android:layout_height="40dip"
 	       		android:paddingLeft="10dip"
@@ -96,6 +98,7 @@
 		    <EditText
 		        android:id="@+id/grain_grav_edit_text"
 		        android:inputType="numberDecimal"
+		        android:selectAllOnFocus="true"
 		        android:layout_width="0dp"
 		        android:layout_height="40dip"
 		        android:layout_weight="1"
@@ -108,6 +111,7 @@
 		    <EditText
 		        android:id="@+id/grain_weight_edit_text"
 		        android:inputType="numberDecimal"
+		        android:selectAllOnFocus="true"
 		        android:layout_width="0dp"
 		        android:layout_height="40dip"
 		        android:layout_weight="1"
@@ -142,12 +146,12 @@
 		    <EditText
 		        android:id="@+id/start_time_edit_text"
 		        android:inputType="numberDecimal"
+		        android:selectAllOnFocus="true"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="40dip"
 		        android:background="@drawable/rounded_bg_white"
 		        android:padding="10dip"
-		        android:selectAllOnFocus="true"
 		        android:hint="@string/start_time" />
 		    
 		    <!-- Boil time -->

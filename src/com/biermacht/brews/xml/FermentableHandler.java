@@ -140,8 +140,7 @@ public class FermentableHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("POTENTIAL"))
         {
-        	Double gravity = Double.parseDouble(currentValue);
-        	fermentable.setGravity(gravity);
+        	// TODO: FUCK THIS SHIT
         }
         
         else if (qName.equalsIgnoreCase("DISPLAY_COLOR"))
