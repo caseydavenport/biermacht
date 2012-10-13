@@ -149,17 +149,13 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			mRecipe.update();
 			Utils.updateRecipe(mRecipe);
 			
-		    Intent intent = new Intent(AddGrainActivity.this, DisplayRecipeActivity.class);
-		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-		    startActivity(intent);		
+			finish();
 		}
 		
 		// if "CANCEL" button pressed
 		if (v.getId() == R.id.cancel_button)
 		{
-		    Intent intent = new Intent(AddGrainActivity.this, DisplayRecipeActivity.class);
-		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-		    startActivity(intent);	
+			finish();
 		}
 	}
 }

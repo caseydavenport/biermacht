@@ -124,9 +124,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 			mRecipe.update();
 			Utils.updateRecipe(mRecipe);
 
-		    Intent intent = new Intent(EditGrainActivity.this, DisplayRecipeActivity.class);
-		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-		    startActivity(intent);	
+			finish();
 		}
 		
 		// If "DELETE" button pressed
@@ -134,17 +132,13 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 		{
 			Utils.deleteIngredient(fermentable);
 			
-		    Intent intent = new Intent(EditGrainActivity.this, DisplayRecipeActivity.class);
-		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-		    startActivity(intent);	
+			finish();
 		}
 		
 		// if "CANCEL" button pressed
 		if (v.getId() == R.id.cancel_button)
 		{
-		    Intent intent = new Intent(EditGrainActivity.this, DisplayRecipeActivity.class);
-		    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-		    startActivity(intent);	
+			finish();
 		}
 		
 	}

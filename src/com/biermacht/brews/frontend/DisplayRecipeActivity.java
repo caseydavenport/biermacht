@@ -6,29 +6,27 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.PopupMenu;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.fragments.CustomFragment;
+import com.biermacht.brews.frontend.fragments.DetailsViewFragment;
+import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
+import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 
 public class DisplayRecipeActivity extends FragmentActivity implements OnClickListener {
 	
 	private Recipe mRecipe;
-	private Fragment instructionFragment;
-	private Fragment ingredientFragment;
-	private Fragment detailsFragment;
+	private InstructionViewFragment instructionFragment;
+	private IngredientViewFragment ingredientFragment;
+	private DetailsViewFragment detailsFragment;
 	
 	public static Context appContext;
 
@@ -57,9 +55,9 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
 		ActionBar.Tab detailsTab = actionBar.newTab();
 		
 		// Create fragments
-		 ingredientFragment = new CustomFragment(R.layout.ingredient_view, mRecipe);
-		 instructionFragment = new CustomFragment(R.layout.instruction_view, mRecipe);
-		 detailsFragment = new CustomFragment(R.layout.details_view, mRecipe);
+		 ingredientFragment = new IngredientViewFragment(mRecipe);
+		 instructionFragment = new InstructionViewFragment(mRecipe);
+		 detailsFragment = new DetailsViewFragment(mRecipe);
 		
 		// Set Tab text
 		ingredientTab.setText("Ingredients");
@@ -123,7 +121,11 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     {
     	Log.e("DisplayRecipe", "Display Recipe: onResume()");
     	super.onResume();
-    	((CustomFragment) ingredientFragment).update();
+    	
+    	// Call the update methods for each fragment
+    	detailsFragment.update();
+    	ingredientFragment.update();
+    	instructionFragment.update();
     }
 
 	public void onClick(View v) 
