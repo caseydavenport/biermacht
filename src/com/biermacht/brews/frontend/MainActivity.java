@@ -202,6 +202,7 @@ public class MainActivity extends Activity implements OnClickListener {
       if (menuItemIndex == 0)
       {
   		Intent i = new Intent(getApplicationContext(), EditRecipeActivity.class);
+  		i.putExtra("biermacht.brews.recipeID", selectedRecipe.getId());
   		startActivity(i); 
       }
       // Copy recipe selected

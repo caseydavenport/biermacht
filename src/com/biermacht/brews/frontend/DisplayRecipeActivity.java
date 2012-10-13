@@ -103,6 +103,11 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     	    	hop_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
     		    startActivity(hop_intent);
     		    return true;
+    		    
+            case R.id.menu_edit_recipe:
+          		Intent i = new Intent(DisplayRecipeActivity.appContext, EditRecipeActivity.class);
+          		i.putExtra("biermacht.brews.recipeID", mRecipe.getId());
+          		startActivity(i); 
         }
         return super.onOptionsItemSelected(item);
     }
