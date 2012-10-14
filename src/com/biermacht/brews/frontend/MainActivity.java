@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -185,7 +187,7 @@ public class MainActivity extends Activity implements OnClickListener {
         selectedRecipe = recipeList.get(info.position);
         
         menu.setHeaderTitle(title);
-        String[] menuItems = {"Edit Recipe", "Copy Recipe", "Delete Recipe"};
+        String[] menuItems = {"Edit Recipe", "Scale Recipe", "Copy Recipe", "Delete Recipe"};
         
         for (int i = 0; i < menuItems.length; i++) 
         {
@@ -205,8 +207,14 @@ public class MainActivity extends Activity implements OnClickListener {
   		i.putExtra("biermacht.brews.recipeID", selectedRecipe.getId());
   		startActivity(i); 
       }
-      // Copy recipe selected
+      
+      // Scale recipe selected
       else if (menuItemIndex == 1)
+      {
+    	  scaleAlert(selectedRecipe).show();
+      }
+      // Copy recipe selected
+      else if (menuItemIndex == 2)
       {
     	  selectedRecipe.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
     	  Utils.createRecipeFromExisting(selectedRecipe);
@@ -214,7 +222,7 @@ public class MainActivity extends Activity implements OnClickListener {
     	  
       }
       // Delete recipe selected
-      else if (menuItemIndex == 2)
+      else if (menuItemIndex == 3)
       {
     	  deleteAlert(selectedRecipe).show();
       }
@@ -260,5 +268,27 @@ public class MainActivity extends Activity implements OnClickListener {
 		    })
 		    
 		    .setNegativeButton(android.R.string.no, null);
+	}
+	
+	private Builder scaleAlert(final Recipe r)
+	{
+		LayoutInflater factory = LayoutInflater.from(this);
+        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.scale_alert_view, null);
+        final EditText editText = (EditText) alertView.findViewById(R.id.new_volume_edit_text);
+		
+		return new AlertDialog.Builder(this)
+			.setTitle("Scale Recipe")
+			.setView(alertView)
+			.setPositiveButton(R.string.scale, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {	
+					double newVolume = Double.parseDouble(editText.getText().toString());
+					Utils.scaleRecipe(r, newVolume);
+			    	updateRecipeList(getFilteredList(searchView.getText().toString()));
+				}
+				
+		    })
+		    
+		    .setNegativeButton(R.string.cancel, null);
 	}
 }

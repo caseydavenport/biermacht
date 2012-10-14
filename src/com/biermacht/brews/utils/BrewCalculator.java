@@ -53,7 +53,7 @@ public class BrewCalculator {
 				Fermentable g = (Fermentable) i;
 				float ppg = g.getPpg();
 				double amt = g.getAmount();
-				float size = r.getBatchSize();
+				double size = r.getBatchSize();
 				double gVol = .2; // TODO
 				
 				grav += (ppg * amt) / (1000) / (size - gVol);
@@ -62,11 +62,11 @@ public class BrewCalculator {
 		return (1 + grav);
 	}
 	
-	public static float calculateIbuFromRecipe(Recipe r)
+	public static double calculateIbuFromRecipe(Recipe r)
 	{
-		float ibu;
-		float AAU = 0;
-		float utilization = 0;
+		double ibu;
+		double AAU = 0;
+		double utilization = 0;
 		
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 		
@@ -88,7 +88,7 @@ public class BrewCalculator {
 	
 	public static double getFgEstimateFromRecipe(Recipe r)
 	{
-		float OG = r.getOG();
+		double OG = r.getOG();
 		double attn;          // Yeast attentuation
 		
 		for (Ingredient i : r.getIngredientList())

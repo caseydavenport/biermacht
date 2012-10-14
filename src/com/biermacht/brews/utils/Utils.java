@@ -3,6 +3,8 @@ package com.biermacht.brews.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.util.Log;
+
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -471,7 +473,7 @@ public class Utils {
 	 * @param high
 	 * @return
 	 */
-	public static boolean isWithinRange(float a, double low, double high)
+	public static boolean isWithinRange(double a, double low, double high)
 	{
 		if (a <= high && a >= low)
 			return true;
@@ -608,5 +610,26 @@ public class Utils {
 		}
 		
 		return new BeerStyle(null); // TODO: THIS IS SHITTY
+	}
+	
+	public static Recipe scaleRecipe(Recipe r, double newVolume)
+	{
+		double oldVolume = r.getBatchSize();
+		double ratio = newVolume / oldVolume;
+		
+		r.setBatchSize(newVolume);
+		r.setBoilSize(r.getBoilSize() * ratio);
+		
+		Log.e("UTILS", "New Volume: " + newVolume + " Scale: " + ratio);
+		
+		for (Ingredient i : r.getIngredientList())
+		{
+			i.setAmount(i.getAmount() * ratio);
+			updateIngredient(i);
+		}
+		
+		r.update();
+		updateRecipe(r);
+		return r;
 	}
 }

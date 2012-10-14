@@ -23,10 +23,10 @@ public class Recipe {
 	private String type;             // Extract, Grain, Mash
 	private String style;            // Stout, Pilsner, etc.
 	private String brewer;		     // Brewer's name
-	private float batchSize;         // Target size (L)
-	private float boilSize;		     // Pre-boil vol (L)
+	private double batchSize;         // Target size (L)
+	private double boilSize;		     // Pre-boil vol (L)
 	private int boilTime;		     // In Minutes
-	private float efficiency;	     // 100 for extract
+	private double efficiency;	     // 100 for extract
 	private ArrayList<Hop> hops;     // Hops used
 	private ArrayList<Fermentable> fermentables;  // Fermentables used
 	private ArrayList<Yeast> yeasts; // Yeasts used
@@ -36,8 +36,8 @@ public class Recipe {
 	
 	// Beer XML 1.0 Optional Fields ===================================
 	// ================================================================
-	private float OG;			      // Original Gravity
-	private float FG;			      // Final Gravity
+	private double OG;			      // Original Gravity
+	private double FG;			      // Final Gravity
 	private int fermentationStages;   // # of Fermentation stages
 	
 	// Custom Fields ==================================================
@@ -45,9 +45,9 @@ public class Recipe {
 	private long id;                  // id for use in database
 	private String description;       // User input description
 	private int batchTime;            // Total length in weeks
-	private float ABV;                // Alcohol by volume
-	private float bitterness;         // Bitterness in IBU
-	private float color;              // Color - SRM
+	private double ABV;                // Alcohol by volume
+	private double bitterness;         // Bitterness in IBU
+	private double color;              // Color - SRM
 	private ArrayList<Instruction> instructionList;
 	
 	// Static values =================================================
@@ -249,40 +249,40 @@ public class Recipe {
 		}	
 	}
 
-	public float getOG() {
+	public double getOG() {
 		return OG;
 	}
 
-	public void setOG(float gravity) {
-		gravity = (float) Math.round(gravity * 1000) / 1000;
+	public void setOG(double gravity) {
+		gravity = (double) Math.round(gravity * 1000) / 1000;
 		this.OG = gravity;
 	}
 
-	public float getBitterness() {
-		bitterness = (float) Math.round(bitterness * 10) / 10;
+	public double getBitterness() {
+		bitterness = (double) Math.round(bitterness * 10) / 10;
 		return bitterness;
 	}
 
-	public void setBitterness(float bitterness) {
-		bitterness = (float) Math.round(bitterness * 10) / 10;
+	public void setBitterness(double bitterness) {
+		bitterness = (double) Math.round(bitterness * 10) / 10;
 		this.bitterness = bitterness;
 	}
 
-	public float getColor() {
-		color = (float) Math.round(color * 10) / 10;
+	public double getColor() {
+		color = (double) Math.round(color * 10) / 10;
 		return color;
 	}
 
-	public void setColor(float color) {
-		color = (float) Math.round(color * 10) / 10;
+	public void setColor(double color) {
+		color = (double) Math.round(color * 10) / 10;
 		this.color = color;
 	}
 
-	public float getABV() {
+	public double getABV() {
 		return ABV;
 	}
 
-	public void setABV(float aBV) {
+	public void setABV(double aBV) {
 		ABV = aBV;
 	}
 
@@ -302,11 +302,11 @@ public class Recipe {
 		this.id = id;
 	}
 
-	public float getBatchSize() {
+	public double getBatchSize() {
 		return this.batchSize;
 	}
 	
-	public void setBatchSize(float v)
+	public void setBatchSize(double v)
 	{
 		this.batchSize = v;
 	}
@@ -319,11 +319,11 @@ public class Recipe {
 		this.boilTime = boilTime;
 	}
 	
-	public float getEfficiency() {
+	public double getEfficiency() {
 		return efficiency;
 	}
 
-	public void setEfficiency(float efficiency) {
+	public void setEfficiency(double efficiency) {
 		this.efficiency = efficiency;
 	}
 	
@@ -375,14 +375,18 @@ public class Recipe {
 	/**
 	 * @return the boilSize
 	 */
-	public float getBoilSize() {
+	public double getBoilSize() {
 		return boilSize;
 	}
 
 	/**
 	 * @param boilSize the boilSize to set
 	 */
-	public void setBoilSize(float boilSize) {
+	public void setBoilSize(double boilSize) {
+		
+		if (boilSize < batchSize)
+			boilSize = batchSize;
+		
 		this.boilSize = boilSize;
 	}
 
@@ -403,14 +407,14 @@ public class Recipe {
 	/**
 	 * @return the fG
 	 */
-	public float getFG() {
+	public double getFG() {
 		return FG;
 	}
 
 	/**
 	 * @param fG the fG to set
 	 */
-	public void setFG(float fG) {
+	public void setFG(double fG) {
 		FG = fG;
 	}
 
@@ -440,5 +444,20 @@ public class Recipe {
 	 */
 	public void setVersion(int version) {
 		this.version = version;
+	}
+	
+	public ArrayList<Fermentable> getFermentablesList()
+	{
+		return fermentables;
+	}
+	
+	public ArrayList<Hop> getHopsList()
+	{
+		return hops;
+	}
+	
+	public ArrayList<Yeast> getYeastsList()
+	{
+		return yeasts;
 	}
 }

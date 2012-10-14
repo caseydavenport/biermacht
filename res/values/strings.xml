@@ -37,6 +37,7 @@
     <string name="boil_time_hint">minutes</string>
     <string name="batch_volume_hint">Gal</string>
     <string name="efficiency_hint">1 - 100</string>
+    <string name="scale">Scale</string>
 
     <!-- from activity_add_grain.xml -->
     <string name="weight_lbs">Weight (lbs)</string>
@@ -54,7 +55,7 @@
     <!-- from activity_main.xml -->
     <string name="recipe_search_hint">Filter Recipes</string>
     <string name="search_icon_description">Search Icon</string>
-    <string name="title_activity_xml_test">XmlTestActivity</string>
-    <string name="title_activity_xmltest">XMLTEST</string>
+    
+    <string name="new_volume">New volume</string>
 
 </resources>
