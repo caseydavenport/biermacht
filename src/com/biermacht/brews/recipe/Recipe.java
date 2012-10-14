@@ -97,8 +97,10 @@ public class Recipe {
 	public void update()
 	{
 		setColor(BrewCalculator.calculateColorFromRecipe(this));
-		setOG(BrewCalculator.calculateGravityFromRecipe(this));
+		setOG(BrewCalculator.calculateOriginalGravityFromRecipe(this));
 		setBitterness(BrewCalculator.calculateIbuFromRecipe(this));
+		setFG(BrewCalculator.estimateFinalGravityFromRecipe(this));
+		setABV(BrewCalculator.calculateAbvFromRecipe(this));
 	}
 	
 	public void setRecipeName(String name)
@@ -279,10 +281,12 @@ public class Recipe {
 	}
 
 	public double getABV() {
+		ABV = (double) Math.round(ABV * 10) / 10;
 		return ABV;
 	}
 
 	public void setABV(double aBV) {
+		ABV = (double) Math.round(ABV * 10) / 10;
 		ABV = aBV;
 	}
 

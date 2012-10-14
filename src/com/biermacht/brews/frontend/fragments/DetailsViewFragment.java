@@ -28,7 +28,8 @@ public class DetailsViewFragment extends Fragment {
 	LinearLayout pageView;
 	
 	private LinearLayout beerTypeView;
-	private LinearLayout gravityView;
+	private LinearLayout ogView;
+	private LinearLayout fgView;
 	private LinearLayout bitternessView;
 	private LinearLayout colorView;
 	private LinearLayout abvView;
@@ -54,7 +55,8 @@ public class DetailsViewFragment extends Fragment {
 		  
 		  // Add all the detail views here
 		  beerTypeView = (LinearLayout) pageView.findViewById(R.id.beer_type_view);
-		  gravityView = (LinearLayout) pageView.findViewById(R.id.beer_gravity_view);
+		  ogView = (LinearLayout) pageView.findViewById(R.id.beer_OG_view);
+		  fgView = (LinearLayout) pageView.findViewById(R.id.beer_FG_view);
 		  bitternessView = (LinearLayout) pageView.findViewById(R.id.beer_bitterness_view);
 		  colorView = (LinearLayout) pageView.findViewById(R.id.beer_color_view);
 		  abvView = (LinearLayout) pageView.findViewById(R.id.beer_abv_view);
@@ -66,11 +68,17 @@ public class DetailsViewFragment extends Fragment {
 		  tag.setText("Beer Style: ");
 		  content.setText(r.getStyle());
 		  
-		  // Beer gravity detail view
-		  TextView grav_tag = (TextView) gravityView.findViewById(R.id.tag);
-		  TextView grav_content = (TextView) gravityView.findViewById(R.id.content);
-		  grav_tag.setText("Orig. Gravity: ");
-		  grav_content.setText("" + r.getOG() + "");
+		  // Beer OG detail view
+		  TextView og_tag = (TextView) ogView.findViewById(R.id.tag);
+		  TextView og_content = (TextView) ogView.findViewById(R.id.content);
+		  og_tag.setText("Orig. Gravity: ");
+		  og_content.setText("" + r.getOG() + "");
+		  
+		  // Beer FG detail view
+		  TextView fg_tag = (TextView) fgView.findViewById(R.id.tag);
+		  TextView fg_content = (TextView) fgView.findViewById(R.id.content);
+		  fg_tag.setText("FG Estimate: ");
+		  fg_content.setText("" + r.getFG() + "");
 		  
 		  // Beer bitterness detail view
 		  TextView bitt_tag = (TextView) bitternessView.findViewById(R.id.tag);
@@ -100,15 +108,21 @@ public class DetailsViewFragment extends Fragment {
 		  String green = "#44AA44";
 		  String red = "#FF0000";
 		  
-		  Boolean isGravGreen = Utils.isWithinRange(r.getOG(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
+		  Boolean isOGGreen = Utils.isWithinRange(r.getOG(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
+		  Boolean isFGGreen = Utils.isWithinRange(r.getFG(), reccomendedValues.getMinFG(), reccomendedValues.getMaxFG());
 		  Boolean isBitGreen = Utils.isWithinRange(r.getBitterness(), reccomendedValues.getMinBitter(), reccomendedValues.getMaxBitter());
 		  Boolean isColorGreen = Utils.isWithinRange(r.getColor(), reccomendedValues.getMinColor(), reccomendedValues.getMaxColor());
 		  Boolean isAbvGreen = Utils.isWithinRange(r.getABV(), reccomendedValues.getMinAbv(), reccomendedValues.getMaxAbv());
 		  
-		  if (isGravGreen)
-			  grav_content.setTextColor(Color.parseColor(green));
+		  if (isOGGreen)
+			  og_content.setTextColor(Color.parseColor(green));
 		  else
-			  grav_content.setTextColor(Color.parseColor(red));
+			  og_content.setTextColor(Color.parseColor(red));
+		  
+		  if (isFGGreen)
+			  fg_content.setTextColor(Color.parseColor(green));
+		  else
+			  fg_content.setTextColor(Color.parseColor(red));
 		  
 		  if (isBitGreen)
 			  bitt_content.setTextColor(Color.parseColor(green));
@@ -130,9 +144,13 @@ public class DetailsViewFragment extends Fragment {
 		  // ===========================================
 
 		  
-		  // Beer gravity detail view
-		  TextView grav_range = (TextView) gravityView.findViewById(R.id.gravity_range);
-		  grav_range.setText(reccomendedValues.getGravRange());
+		  // Beer OG detail view
+		  TextView og_range = (TextView) ogView.findViewById(R.id.OG_range);
+		  og_range.setText(reccomendedValues.getOGRange());
+		  
+		  // Beer FG detail view
+		  TextView fg_range = (TextView) fgView.findViewById(R.id.FG_range);
+		  fg_range.setText(reccomendedValues.getFGRange());
 		  
 		  // Beer bitterness detail view
 		  TextView bitt_range = (TextView) bitternessView.findViewById(R.id.bitterness_range);
@@ -170,7 +188,8 @@ public class DetailsViewFragment extends Fragment {
 		  
 		  // Add all the detail views here
 		  beerTypeView = (LinearLayout) pageView.findViewById(R.id.beer_type_view);
-		  gravityView = (LinearLayout) pageView.findViewById(R.id.beer_gravity_view);
+		  ogView = (LinearLayout) pageView.findViewById(R.id.beer_OG_view);
+		  fgView = (LinearLayout) pageView.findViewById(R.id.beer_FG_view);
 		  bitternessView = (LinearLayout) pageView.findViewById(R.id.beer_bitterness_view);
 		  colorView = (LinearLayout) pageView.findViewById(R.id.beer_color_view);
 		  abvView = (LinearLayout) pageView.findViewById(R.id.beer_abv_view);
@@ -182,11 +201,17 @@ public class DetailsViewFragment extends Fragment {
 		  tag.setText("Beer Style: ");
 		  content.setText(r.getStyle());
 		  
-		  // Beer gravity detail view
-		  TextView grav_tag = (TextView) gravityView.findViewById(R.id.tag);
-		  TextView grav_content = (TextView) gravityView.findViewById(R.id.content);
-		  grav_tag.setText("Orig. Gravity: ");
-		  grav_content.setText("" + r.getOG() + "");
+		  // Beer OG detail view
+		  TextView og_tag = (TextView) ogView.findViewById(R.id.tag);
+		  TextView og_content = (TextView) ogView.findViewById(R.id.content);
+		  og_tag.setText("Orig. Gravity: ");
+		  og_content.setText("" + r.getOG() + "");
+		  
+		  // Beer FG detail view
+		  TextView fg_tag = (TextView) fgView.findViewById(R.id.tag);
+		  TextView fg_content = (TextView) fgView.findViewById(R.id.content);
+		  fg_tag.setText("FG Estimate: ");
+		  fg_content.setText("" + r.getFG() + "");
 		  
 		  // Beer bitterness detail view
 		  TextView bitt_tag = (TextView) bitternessView.findViewById(R.id.tag);
@@ -216,15 +241,21 @@ public class DetailsViewFragment extends Fragment {
 		  String green = "#44AA44";
 		  String red = "#FF0000";
 		  
-		  Boolean isGravGreen = Utils.isWithinRange(r.getOG(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
+		  Boolean isOGGreen = Utils.isWithinRange(r.getOG(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
+		  Boolean isFGGreen = Utils.isWithinRange(r.getFG(), reccomendedValues.getMinFG(), reccomendedValues.getMaxFG());
 		  Boolean isBitGreen = Utils.isWithinRange(r.getBitterness(), reccomendedValues.getMinBitter(), reccomendedValues.getMaxBitter());
 		  Boolean isColorGreen = Utils.isWithinRange(r.getColor(), reccomendedValues.getMinColor(), reccomendedValues.getMaxColor());
 		  Boolean isAbvGreen = Utils.isWithinRange(r.getABV(), reccomendedValues.getMinAbv(), reccomendedValues.getMaxAbv());
 		  
-		  if (isGravGreen)
-			  grav_content.setTextColor(Color.parseColor(green));
+		  if (isOGGreen)
+			  og_content.setTextColor(Color.parseColor(green));
 		  else
-			  grav_content.setTextColor(Color.parseColor(red));
+			  og_content.setTextColor(Color.parseColor(red));
+		  
+		  if (isFGGreen)
+			  fg_content.setTextColor(Color.parseColor(green));
+		  else
+			  fg_content.setTextColor(Color.parseColor(red));
 		  
 		  if (isBitGreen)
 			  bitt_content.setTextColor(Color.parseColor(green));
@@ -245,9 +276,13 @@ public class DetailsViewFragment extends Fragment {
 		  // RECCOMENDED VALUES VIEWS
 		  // ===========================================
 
-		  // Beer gravity detail view
-		  TextView grav_range = (TextView) gravityView.findViewById(R.id.gravity_range);
-		  grav_range.setText(reccomendedValues.getGravRange());
+		  // Beer OG detail view
+		  TextView og_range = (TextView) ogView.findViewById(R.id.OG_range);
+		  og_range.setText(reccomendedValues.getOGRange());
+		  
+		  // Beer FG detail view
+		  TextView fg_range = (TextView) fgView.findViewById(R.id.FG_range);
+		  fg_range.setText(reccomendedValues.getFGRange());
 		  
 		  // Beer bitterness detail view
 		  TextView bitt_range = (TextView) bitternessView.findViewById(R.id.bitterness_range);

@@ -45,11 +45,18 @@ public class RecipeReccomendedValues {
 	}
 	
 	// Methods for getting RANGE
-	public String getGravRange()
+	public String getOGRange()
 	{
 		if (isEmpty)
 			return "Custom";
 		return minOG + " - " + maxOG;
+	}
+	
+	public String getFGRange()
+	{
+		if (isEmpty)
+			return "Custom";
+		return minFG + " - " + maxFG;
 	}
 	
 	public String getColorRange()

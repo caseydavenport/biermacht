@@ -40,7 +40,7 @@ public class BrewCalculator {
 		return SRM;
 	}
 	
-	public static float calculateGravityFromRecipe(Recipe r)
+	public static double calculateOriginalGravityFromRecipe(Recipe r)
 	{
 		float grav = 0;
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
@@ -59,7 +59,7 @@ public class BrewCalculator {
 				grav += (ppg * amt) / (1000) / (size - gVol);
 			}
 		}
-		return (1 + grav);
+		return 1 + grav*(r.getEfficiency() / 100);
 	}
 	
 	public static double calculateIbuFromRecipe(Recipe r)
@@ -86,7 +86,7 @@ public class BrewCalculator {
 		return ibu;
 	}
 	
-	public static double getFgEstimateFromRecipe(Recipe r)
+	public static double estimateFinalGravityFromRecipe(Recipe r)
 	{
 		double OG = r.getOG();
 		double attn;          // Yeast attentuation
@@ -107,15 +107,15 @@ public class BrewCalculator {
 		
 		// If no attenuation value given, base off average for this style
 		// TODO: Or base it off something else...
-		return 0;
+		return 1.012;
 	}
 	
-	public static double getAbvFromRecipe(Recipe r)
+	public static double calculateAbvFromRecipe(Recipe r)
 	{
 		double FG = r.getFG();
 		double OG = r.getOG();
 		
-		return (OG-FG) * 131;
+		return (OG-FG) * 131 * (r.getEfficiency() / 100);
 	}
 	
 	public static float getHopUtilization(Recipe r, Hop i)
