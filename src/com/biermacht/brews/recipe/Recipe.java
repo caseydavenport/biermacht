@@ -169,8 +169,12 @@ public class Recipe {
 		return description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescription(String description) 
+	{
+		if (description.isEmpty())
+			this.description = "No description provided.";
+		else
+			this.description = description;
 	}
 
 	public String getStyle() {

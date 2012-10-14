@@ -169,9 +169,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 				r.setBoilTime(boilTime);
 				r.setEfficiency(efficiency);
 				r.setBatchTime(1);
-				
-				if (!description.isEmpty())
-					r.setDescription(description);
+				r.setDescription(description);
 				
 				Utils.updateRecipe(r);
 				finish();

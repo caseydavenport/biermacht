@@ -54,7 +54,7 @@ public class BrewCalculator {
 				float ppg = g.getPpg();
 				double amt = g.getAmount();
 				double size = r.getBatchSize();
-				double gVol = .2; // TODO
+				double gVol = .2; // TODO: Actually calculate grain volume!
 				
 				grav += (ppg * amt) / (1000) / (size - gVol);
 			}
@@ -76,8 +76,12 @@ public class BrewCalculator {
 			if (i.getType().equals(Ingredient.HOP))
 			{
 				Hop h = (Hop) i;
-				utilization = getHopUtilization(r, h);
-				AAU += h.getAmount() * h.getAlphaAcidContent();
+				// Only add bitterness if we are boiling the hops!
+				if (h.getUse().equals(Hop.USE_BOIL))
+				{
+					utilization = getHopUtilization(r, h);
+					AAU += h.getAmount() * h.getAlphaAcidContent();
+				}
 			}
 		}
 		
@@ -100,7 +104,7 @@ public class BrewCalculator {
 				attn = y.getAttenuation();
 				
 				if (attn > 0)
-					return (100-attn)*OG/1000 + 1;
+					return (r.getEfficiency() / 100)*(100-attn)*OG/1000 + 1;
 					
 			}
 		}

@@ -193,6 +193,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 			
 			if (readyToGo)
 			{
+				mRecipe.setRecipeName(recipeName);
 				mRecipe.setVersion(Utils.getXmlVersion());
 				mRecipe.setType(type);
 				mRecipe.setStyle(style);
@@ -202,9 +203,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 				mRecipe.setBoilTime(boilTime);
 				mRecipe.setEfficiency(efficiency);
 				mRecipe.setBatchTime(1);
-				
-				if (!description.isEmpty())
-					mRecipe.setDescription(description);
+				mRecipe.setDescription(description);
 				
 				mRecipe.update();
 				Utils.updateRecipe(mRecipe);

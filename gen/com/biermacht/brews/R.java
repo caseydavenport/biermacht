@@ -47,19 +47,20 @@ public final class R {
         public static final int icon_wheat=0x7f020018;
         public static final int icon_yeast=0x7f020019;
         public static final int left_button_bg=0x7f02001a;
-        public static final int plus_icon=0x7f02001b;
-        public static final int right_button_bg=0x7f02001c;
-        public static final int rounded_bg_dark=0x7f02001d;
-        public static final int rounded_bg_white=0x7f02001e;
-        public static final int search_icon=0x7f02001f;
-        public static final int selector=0x7f020020;
-        public static final int tab_selected=0x7f020021;
-        public static final int tab_selected_pressed=0x7f020022;
-        public static final int tab_unselected=0x7f020023;
-        public static final int tab_unselected_blank=0x7f020024;
-        public static final int textured_background=0x7f020025;
-        public static final int textured_background_light=0x7f020026;
-        public static final int up_indicator=0x7f020027;
+        public static final int list_item_selected_pressed=0x7f02001b;
+        public static final int plus_icon=0x7f02001c;
+        public static final int right_button_bg=0x7f02001d;
+        public static final int rounded_bg_dark=0x7f02001e;
+        public static final int rounded_bg_white=0x7f02001f;
+        public static final int search_icon=0x7f020020;
+        public static final int selector=0x7f020021;
+        public static final int tab_selected=0x7f020022;
+        public static final int tab_selected_pressed=0x7f020023;
+        public static final int tab_unselected=0x7f020024;
+        public static final int tab_unselected_blank=0x7f020025;
+        public static final int textured_background=0x7f020026;
+        public static final int textured_background_light=0x7f020027;
+        public static final int up_indicator=0x7f020028;
     }
     public static final class id {
         public static final int ABV_range=0x7f080045;
