@@ -88,14 +88,6 @@ public class EditHopActivity extends Activity implements OnClickListener {
     {
     	super.onResume();
     }
-    
-    @Override
-    public void onBackPressed()
-    {
-	    Intent intent = new Intent(EditHopActivity.this, DisplayRecipeActivity.class);
-	    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-	    startActivity(intent);				
-    }
 
 	public void onClick(View v) {
 		// If "EDIT" button pressed
