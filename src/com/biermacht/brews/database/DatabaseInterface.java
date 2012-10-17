@@ -496,7 +496,7 @@ public class DatabaseInterface {
 		}
 		
 		// Yeast specific stuff
-		else if (ingType.equals(Ingredient.HOP))
+		else if (ingType.equals(Ingredient.YEAST))
 		{
 			cid += 12;
 			

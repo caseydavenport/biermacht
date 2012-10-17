@@ -1,0 +1,139 @@
+package com.biermacht.brews.frontend;
+
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
+import com.biermacht.brews.ingredient.Fermentable;
+import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.Yeast;
+import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.IngredientHandler;
+import com.biermacht.brews.utils.Utils;
+
+public class AddYeastActivity extends Activity implements OnClickListener {
+	
+	IngredientHandler ingredientHandler;
+	
+	private Spinner yeastSpinner;
+	private EditText yeastNameEditText;
+	private ArrayList<String> yeastArray;
+	private String yeastFromSpinner;
+	private ArrayList<String> yeastTypeArray;
+	private ArrayList<String> yeastFormArray;
+	private String yeastType;
+	private String yeastForm;
+	private Recipe mRecipe;
+	Yeast yeast;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_yeast);
+        
+    	// Set up Ingredient Handler
+    	ingredientHandler = MainActivity.ingredientHandler;
+    	
+    	// Set list of ingredients to show
+    	yeastArray = Utils.getIngredientStringList(ingredientHandler.getYeastsList());
+        
+        // Get recipe from calling activity
+        long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
+        mRecipe = Utils.getRecipeWithId(id);
+        
+        // Initialize views and such here
+        yeastNameEditText = (EditText) findViewById(R.id.name_edit_text);
+        
+        // Set up grain type spinner
+        yeastSpinner = (Spinner) findViewById(R.id.ingredient_spinner);
+        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, yeastArray);  
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        yeastSpinner.setAdapter(adapter);
+        yeastSpinner.setSelection(0);    
+        
+        // Handle beer type selector here
+        yeastSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+            	yeast = new Yeast("");
+            	yeastFromSpinner = yeastArray.get(position);
+                
+                for (Ingredient i : ingredientHandler.getYeastsList())
+                {
+                	if (yeastFromSpinner.equals(i.toString()))
+                		yeast = (Yeast) i;
+                }
+                
+                // Set whether we want to show name field
+                if (yeast.getName().equals("Custom Yeast"))
+                {
+                	yeastNameEditText.setVisibility(View.VISIBLE);
+                	findViewById(R.id.name_title).setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                	yeastNameEditText.setVisibility(View.GONE);
+                	findViewById(R.id.name_title).setVisibility(View.GONE);
+                }
+                
+            	
+                yeastNameEditText.setText(yeastFromSpinner);
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });   
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_add_ingredient, menu);
+        return true;
+    }
+    
+    @Override
+    public void onBackPressed()
+    {
+	    Intent intent = new Intent(AddYeastActivity.this, DisplayRecipeActivity.class);
+	    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
+	    startActivity(intent);				
+    }
+
+	public void onClick(View v) {
+		// if "SUBMIT" button pressed
+		if (v.getId() == R.id.submit_button)
+		{
+			String name = yeastNameEditText.getText().toString();
+
+			
+			Yeast y = yeast;
+			y.setName(name);	
+			
+			mRecipe.addIngredient(y);
+			mRecipe.update();
+			Utils.updateRecipe(mRecipe);
+			
+			finish();
+		}
+		
+		// if "CANCEL" button pressed
+		if (v.getId() == R.id.cancel_button)
+		{
+			finish();
+		}
+	}
+}

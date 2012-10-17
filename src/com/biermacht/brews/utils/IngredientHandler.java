@@ -15,12 +15,15 @@ import android.util.Log;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.xml.FermentableHandler;
+import com.biermacht.brews.xml.YeastHandler;
 
 public class IngredientHandler {
 	
 	private Context mContext;
 	private ArrayList<Ingredient> fermentablesList;
+	private ArrayList<Ingredient> yeastsList;
 	
 	public IngredientHandler(Context c)
 	{
@@ -44,6 +47,25 @@ public class IngredientHandler {
 		}
 		
 		return fermentablesList;
+	}
+	
+	/**
+	 * Returns a list of valid yeasts for use in recipes
+	 * @return ArrayList of ingredient objects
+	 */
+	public ArrayList<Ingredient> getYeastsList()
+	{
+		if (this.yeastsList == null)
+		{
+			try 
+			{
+				this.yeastsList = getYeastsFromXml();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return yeastsList;
 	}
 	
 	/**
@@ -73,15 +95,59 @@ public class IngredientHandler {
 	        }
 	        catch (Exception e)
 	        {
-	        	Log.e("XML TEST", e.toString());
+	        	Log.e("IngredientHandler", e.toString());
 	        }
         }
         
         return list;
 	}
 	
+	/**
+	 * Gets fermentables from XMl files in assets/Fermentables
+	 * @return ArrayList of Ingredient Objects
+	 * @throws IOException
+	 */
+	private ArrayList<Ingredient> getYeastsFromXml() throws IOException
+	{
+		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        YeastHandler myXMLHandler = new YeastHandler();
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        AssetManager am = mContext.getAssets();
+
+        for (String s : am.list("Yeasts") )
+        {
+	        try 
+	        {	        	
+	            SAXParser sp = spf.newSAXParser();
+	            InputStream is = am.open("Yeasts/" + s);
+	            sp.parse(is, myXMLHandler);
+	 
+	            Yeast yeast = myXMLHandler.getYeast();
+	            Log.e("IngredientHandler", "Getting ingredient: " + yeast.getName());
+	            list.add(yeast);
+	        }
+	        catch (Exception e)
+	        {
+	        	Log.e("IngredientHandler", e.toString());
+	        }
+        }
+        
+        return list;
+	}
 	
-	 // Fermentables.. http://byo.com/resources/grains
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	 
+	
+	
+	// Fermentables.. http://byo.com/resources/grains
 	public static void getFermentablesList2()
 	{
 		// List to return
@@ -120,6 +186,17 @@ public class IngredientHandler {
 		Collections.sort(list, new IngredientComparator<Ingredient>());
 		
 	}
+	
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	// ================================================================================================================================
+	
 	
 	public static ArrayList<Ingredient> getHopsList()
 	{

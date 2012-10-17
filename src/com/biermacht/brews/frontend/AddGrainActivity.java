@@ -46,7 +46,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
     	ingredientHandler = MainActivity.ingredientHandler;
     	
     	// Set list of ingredients to show
-    	grainTypeArray = Utils.getFermentablesStringList(ingredientHandler.getFermentablesList());
+    	grainTypeArray = Utils.getIngredientStringList(ingredientHandler.getFermentablesList());
         
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);

@@ -34,44 +34,53 @@
         <activity
             android:name=".frontend.AddNewRecipeActivity"
             android:label="@string/title_activity_add_new_recipe"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.AddGrainActivity"
             android:label="@string/title_activity_add_grain"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.EditGrainActivity"
             android:label="@string/title_activity_edit_grain"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.EditRecipeActivity"
             android:label="@string/title_activity_edit_recipe"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.AddHopsActivity"
             android:label="@string/title_activity_add_hops"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.EditHopActivity"
             android:label="@string/title_activity_edit_hop"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name=".frontend.AddYeastActivity"
+            android:label="@string/title_activity_add_yeast" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

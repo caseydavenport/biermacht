@@ -48,7 +48,16 @@ public class FermentableHandler extends DefaultHandler {
 
         else if (qName.equalsIgnoreCase("TYPE"))
         {
-        	fermentable.setFermentableType(qName);
+        	String type = "Invalid Type";
+        	
+        	if (currentValue.equalsIgnoreCase(Fermentable.ADJUNCT))
+        		type = Fermentable.ADJUNCT;
+        	if (currentValue.equalsIgnoreCase(Fermentable.EXTRACT))
+        		type = Fermentable.EXTRACT;
+        	if (currentValue.equalsIgnoreCase(Fermentable.GRAIN))
+        		type = Fermentable.GRAIN;
+        	
+        	fermentable.setFermentableType(type);
         }
         
         else if (qName.equalsIgnoreCase("AMOUNT"))

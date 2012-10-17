@@ -5,6 +5,7 @@ public abstract class Ingredient {
 	// Beer XML 1.0 Required Fields (To be inherited) =================
 	// ================================================================
 	private String name;                    // Ingredient name
+	private int version;					// bXML Version being used
 	
 	// Custom Fields ==================================================
 	// ================================================================
@@ -68,5 +69,19 @@ public abstract class Ingredient {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public int getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(int version) {
+		this.version = version;
 	}
 }

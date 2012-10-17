@@ -435,10 +435,10 @@ public class Utils {
 	}
 	
 	/**
-	 * Returns a list of strings corresponding to fermentable objects
+	 * Returns a list of strings corresponding to ingredient objects
 	 * @return
 	 */
-	public static ArrayList<String> getFermentablesStringList(ArrayList<Ingredient> list)
+	public static ArrayList<String> getIngredientStringList(ArrayList<Ingredient> list)
 	{
 		ArrayList<Ingredient> listA = list;
 		ArrayList<String> listToReturn = new ArrayList<String>();
