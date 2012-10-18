@@ -100,12 +100,14 @@ public class YeastHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("MIN_TEMPERATURE"))
         {
-        	// TODO: Add support for this field
+        	double minTemp = Double.parseDouble(currentValue);
+        	yeast.setMinTemp(minTemp);
         }
         
         else if (qName.equalsIgnoreCase("MAX_TEMPERATURE"))
         {
-        	// TODO: Add support for this field
+        	double maxTemp = Double.parseDouble(currentValue);
+        	yeast.setMaxTemp(maxTemp);
         }
         
         else if (qName.equalsIgnoreCase("FLOCCULATION"))
@@ -115,7 +117,8 @@ public class YeastHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("ATTENUATION"))
         {
-        	// TODO: Add support for this field
+        	double attenuation = Double.parseDouble(currentValue);
+        	yeast.setAttenuation(attenuation);
         }
         
         else if (qName.equalsIgnoreCase("NOTES"))
@@ -125,7 +128,7 @@ public class YeastHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("BEST_FOR"))
         {
-        	// TODO: Add support for this field
+        	yeast.setBestFor(currentValue);
         }
         
         else if (qName.equalsIgnoreCase("MAX_REUSE"))

@@ -104,14 +104,16 @@ public class BrewCalculator {
 				attn = y.getAttenuation();
 				
 				if (attn > 0)
-					return (r.getEfficiency() / 100)*(100-attn)*OG/1000 + 1;
+				{
+					double FG = OG - (attn)*(OG-1)*(.01);
+					return FG;
+				}
 					
 			}
 		}
 		
-		// If no attenuation value given, base off average for this style
-		// TODO: Or base it off something else...
-		return 1.012;
+		// If we don't have any yeast, there's no fermentation!
+		return OG;
 	}
 	
 	public static double calculateAbvFromRecipe(Recipe r)

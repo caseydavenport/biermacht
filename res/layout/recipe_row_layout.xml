@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" 
     android:minHeight="60dp"
-    android:background="#FFFFFF"
+    android:background="@color/transparent"
     android:focusable="false"
     android:orientation="horizontal">
         
@@ -19,7 +19,7 @@
 	        android:layout_margin="14dip"
 	        android:src="@drawable/beer_icon"
 	        android:contentDescription="icon"
-	        android:background="#FFFFFF" />
+	        android:background="@color/transparent" />
         
     </LinearLayout>
     
@@ -38,7 +38,7 @@
 	        android:textSize="17dp"
 	        android:textColor="#333333"
 	        android:text="Beer Name"
-	        android:background="#00FFFFFF" />
+	        android:background="@color/transparent" />
 	    
 	   <TextView android:id="@+id/beer_style"
 	        android:layout_width="fill_parent"
@@ -47,7 +47,7 @@
 	        android:textSize="12dp"
 	        android:layout_marginBottom="5dp"
 	        android:text="Beer Style" 
-	        android:background="#00FFFFFF" />
+	        android:background="@color/transparent" />
     </LinearLayout>
     
     <LinearLayout android:orientation="vertical"
@@ -66,7 +66,7 @@
 	        android:layout_marginTop="5dp"
 	        android:layout_marginRight="10dp"
 	        android:text="0.0"
-	        android:background="#FFFFFF" />
+	        android:background="@color/transparent" />
 	  
 	   <TextView android:id="@+id/unit_text"
 		    android:layout_width="fill_parent"
@@ -75,7 +75,7 @@
 		    android:textSize="12dp"
 		    android:layout_marginBottom="5dp"
 		    android:text="gal" 
-		    android:background="#00FFFFFF" />
+		    android:background="@color/transparent" />
    
    </LinearLayout>
    

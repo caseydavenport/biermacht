@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,10 +12,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
-import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
@@ -29,12 +28,11 @@ public class AddYeastActivity extends Activity implements OnClickListener {
 	
 	private Spinner yeastSpinner;
 	private EditText yeastNameEditText;
+	private EditText amountEditText;
+	private EditText attenuationEditText;
+	private TextView bestForTextView;
 	private ArrayList<String> yeastArray;
-	private String yeastFromSpinner;
-	private ArrayList<String> yeastTypeArray;
-	private ArrayList<String> yeastFormArray;
-	private String yeastType;
-	private String yeastForm;
+	private String yeastFormSpinnerValue;
 	private Recipe mRecipe;
 	Yeast yeast;
 
@@ -46,34 +44,44 @@ public class AddYeastActivity extends Activity implements OnClickListener {
     	// Set up Ingredient Handler
     	ingredientHandler = MainActivity.ingredientHandler;
     	
-    	// Set list of ingredients to show
+    	// Set lists here
     	yeastArray = Utils.getIngredientStringList(ingredientHandler.getYeastsList());
-        
+
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
         mRecipe = Utils.getRecipeWithId(id);
         
         // Initialize views and such here
         yeastNameEditText = (EditText) findViewById(R.id.name_edit_text);
+        amountEditText = (EditText) findViewById(R.id.amount_edit_text);
+        attenuationEditText = (EditText) findViewById(R.id.attenuation_edit_text);
+        bestForTextView = (TextView) findViewById(R.id.best_for_text);
         
-        // Set up grain type spinner
+        // Set some values
+        amountEditText.setText(".120");
+        
+        // Set up yeast spinner
         yeastSpinner = (Spinner) findViewById(R.id.ingredient_spinner);
         SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, yeastArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         yeastSpinner.setAdapter(adapter);
-        yeastSpinner.setSelection(0);    
-        
-        // Handle beer type selector here
+        yeastSpinner.setSelection(0);
+                
+        // Handle yeast selector here
         yeastSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
             	yeast = new Yeast("");
-            	yeastFromSpinner = yeastArray.get(position);
+            	yeastFormSpinnerValue = yeastArray.get(position);
                 
                 for (Ingredient i : ingredientHandler.getYeastsList())
                 {
-                	if (yeastFromSpinner.equals(i.toString()))
+                	if (yeastFormSpinnerValue.equals(i.toString()))
+                	{
                 		yeast = (Yeast) i;
+                		attenuationEditText.setText(yeast.getAttenuation() +"");
+                		bestForTextView.setText(yeast.getBestFor());
+                	}
                 }
                 
                 // Set whether we want to show name field
@@ -87,9 +95,8 @@ public class AddYeastActivity extends Activity implements OnClickListener {
                 	yeastNameEditText.setVisibility(View.GONE);
                 	findViewById(R.id.name_title).setVisibility(View.GONE);
                 }
-                
             	
-                yeastNameEditText.setText(yeastFromSpinner);
+                yeastNameEditText.setText(yeastFormSpinnerValue);
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -118,14 +125,18 @@ public class AddYeastActivity extends Activity implements OnClickListener {
 		if (v.getId() == R.id.submit_button)
 		{
 			String name = yeastNameEditText.getText().toString();
-
+			double attenuation = Double.parseDouble(attenuationEditText.getText().toString());
+			double amount = Double.parseDouble(amountEditText.getText().toString());
 			
 			Yeast y = yeast;
-			y.setName(name);	
+			y.setName(name);
+			y.setAttenuation(attenuation);
+			y.setAmount(amount);
 			
 			mRecipe.addIngredient(y);
 			mRecipe.update();
 			Utils.updateRecipe(mRecipe);
+			
 			
 			finish();
 		}

@@ -416,14 +416,16 @@ public class Recipe {
 	 * @return the fG
 	 */
 	public double getFG() {
-		return FG;
+		this.FG = (double) Math.round(FG * 1000) / 1000;
+		return this.FG;
 	}
 
 	/**
 	 * @param fG the fG to set
 	 */
 	public void setFG(double fG) {
-		FG = fG;
+		fG = (double) Math.round(fG * 1000) / 1000;
+		this.FG = fG;
 	}
 
 	/**

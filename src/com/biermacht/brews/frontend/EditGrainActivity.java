@@ -49,35 +49,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
         grainGravEditText.setText(fermentable.getGravity() +"");
         grainWeightEditText.setText(fermentable.getAmount() + "");
         grainBoilStartTimeEditText.setText(fermentable.getStartTime() + "");
-        
-        /*
-        // Set up grain type spinner
-        grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
-        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, grainTypeArray);  
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        grainTypeSpinner.setAdapter(adapter);
-        grainTypeSpinner.setSelection(0);
-        grainTypeSpinner.setVisibility(View.GONE);
-        */
-        
-        /*
-        // Handle beer type selector here
-        grainTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-            	
-                grainNameEditText.setText(grain.getName());
-                grainColorEditText.setText(grain.getLovibondColor() +"");
-                grainGravEditText.setText(grain.getGravity() +"");
-                grainWeightEditText.setText(grain.getAmount() + "");
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView) {
-            	
-            }
-
-        });  
-        */
+ 
     }
 
     @Override

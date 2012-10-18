@@ -70,8 +70,7 @@ public class Yeast extends Ingredient {
 
 	@Override
 	public String getUnits() {
-		// TODO Auto-generated method stub
-		return "";
+		return "liters";
 	}
 
 	@Override

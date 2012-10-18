@@ -13,6 +13,11 @@
    		android:layout_alignParentTop="true"
    		android:background="@drawable/textured_background" >
    		
+        <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+		<LinearLayout android:id="@+id/placeholder"
+		    android:focusable="true" android:focusableInTouchMode="true"
+		    android:layout_width="0px" android:layout_height="0px"/>
+   		
 	    <!-- Spinner -->
 	    <TextView android:id="@+id/spinner_title"
 	        android:text="@string/yeast"
@@ -49,6 +54,30 @@
 	        android:layout_height="wrap_content"
 	        android:background="#00000000"
 	        android:layout_below="@id/name_edit_text" >
+		  
+		    <TextView android:id="@+id/amount_title"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:background="#00000000"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="left"
+		        android:textSize="15dip"
+		        android:textStyle="bold"
+		        android:textColor="@color/title_color_light"
+		        android:text="@string/amount" />
+		    
+		    <TextView android:id="@+id/attenuation_title"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:background="#00000000"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="left"
+		        android:textSize="15dip"
+		        android:textStyle="bold"
+		        android:textColor="@color/title_color_light"
+		        android:text="Attenuation (%)" />
 		              
 	    </LinearLayout>
 	    
@@ -57,7 +86,34 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="#00000000"
+	        android:layout_marginBottom="15dip"
 	        android:layout_below="@id/first_ll" >
+		    
+	        <EditText
+		        android:id="@+id/amount_edit_text"
+		        android:inputType="number"
+		        android:selectAllOnFocus="true"
+		        android:maxLength="4"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="40dip"
+		        android:layout_marginRight="2dp"
+		        android:background="@drawable/rounded_bg_white"
+		        android:padding="10dip"
+		        android:hint="@string/amount" />
+	        		    
+	        <EditText
+		        android:id="@+id/attenuation_edit_text"
+		        android:inputType="number"
+		        android:selectAllOnFocus="true"
+		        android:maxLength="4"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="40dip"
+		        android:layout_marginRight="2dp"
+		        android:background="@drawable/rounded_bg_white"
+		        android:padding="10dip"
+		        android:hint="Attenuation" />
 			            
 	    </LinearLayout>
 	    
@@ -66,6 +122,18 @@
 	        android:layout_height="wrap_content"
 	        android:background="#00000000"
 	        android:layout_below="@id/second_ll" >
+	        
+	   		<TextView android:id="@+id/best_for_title"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:background="@color/transparent"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="left"
+		        android:textSize="15dip"
+		        android:textStyle="bold"
+		        android:textColor="@color/title_color_light"
+		        android:text="Best For:" />
 		              
 	    </LinearLayout>
 	    
@@ -76,6 +144,18 @@
 	        android:background="#00000000"
 	        android:layout_below="@id/third_ll"
 	        android:layout_marginBottom="15dip" >
+	        
+	   		<TextView android:id="@+id/best_for_text"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/rounded_bg_white"
+		        android:layout_marginBottom="3dip"
+		        android:padding="10dip"
+		        android:gravity="left"
+		        android:textSize="15dip"
+		        android:textColor="#000000"
+		        android:text="" />
 			            
 	    </LinearLayout>
 	    

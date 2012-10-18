@@ -37,6 +37,7 @@
     <string name="boil_time_hint">minutes</string>
     <string name="batch_volume_hint">Gal</string>
     <string name="efficiency_hint">1 - 100</string>
+    <string name="amount">Amount (L)</string>
     <string name="scale">Scale</string>
     <string name="yeast">Yeast</string>
 

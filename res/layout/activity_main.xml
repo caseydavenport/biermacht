@@ -41,23 +41,16 @@
         android:orientation="horizontal"
         android:layout_marginBottom="62dip"
         android:layout_below="@id/recipe_search_view" >
-            
-	    <View android:layout_width="2dip"
-	        android:layout_height="fill_parent" 
-	        android:background="#66000000" />
     
     	<LinearLayout android:orientation="vertical"
     	    android:layout_width="wrap_content"
     	    android:layout_height="wrap_content">
 		    
-		    <View android:layout_width="fill_parent"
-	        	android:layout_height="2dip" 
-	       		android:background="#66000000" />
-		    
 		    <ListView
 		        android:id="@+id/recipe_list"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
+		        android:background="@drawable/rounded_bg_white"
 		        android:padding="0dip"
 		        android:drawSelectorOnTop="true"
 		        android:divider="#66000000"
@@ -73,16 +66,8 @@
 		        android:visibility="gone"
 		        android:onClick="onClick"
 		        android:text="No recipes - Touch the plus to make one!" />
-		    
-		    <View android:layout_width="fill_parent"
-	        	android:layout_height="2dip" 
-	       		android:background="#66000000" />
 	    
 	    </LinearLayout>
-            
-	    <View android:layout_width="2dip"
-	        android:layout_height="fill_parent" 
-	        android:background="#66000000" />
     
     </LinearLayout>
     
