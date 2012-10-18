@@ -56,10 +56,10 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			imageView.setImageResource(R.drawable.icon_hops);
 		else if(ingType == Ingredient.FERMENTABLE)
 			imageView.setImageResource(R.drawable.icon_wheat);
-		else if(ingType == Utils.TYPE_SPICE)
-			imageView.setImageResource(R.drawable.icon_idk);
-		else if (ingType == Utils.TYPE_YEAST)
+		else if (ingType == Ingredient.YEAST)
 			imageView.setImageResource(R.drawable.icon_yeast);
+		else if(ingType == Ingredient.MISC)
+			imageView.setImageResource(R.drawable.icon_idk);
 		else
 			imageView.setImageResource(R.drawable.icon_idk);
 		
