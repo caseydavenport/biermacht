@@ -10,9 +10,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String DATABASE_NAME = "BiermachtBrews";
 	public static final int DATABASE_VERSION = 1;
 	
-	// Tab;es
+	// Tables
 	public static final String TABLE_RECIPES = "RecipeTable";
 	public static final String TABLE_INGREDIENTS = "IngredientTable";
+	public static final String TABLE_SETTINGS = "SettingsTable";
 	
 	// Column name defines for RECIPES
 	public static final String REC_COL_ID = "_id";
@@ -33,7 +34,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String REC_COL_ABV = "ABV";
 	public static final String REC_COL_BITTER = "bitterness";
 	public static final String REC_COL_COLOR = "color";
-
 	
 	// Column name defines for INGREDIENTS
 	public static final String ING_COL_ID = "_id";
@@ -67,9 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_YS_COL_ATTENUATION = "attenuation";
 	public static final String ING_YS_COL_NOTES = "notes";
 	public static final String ING_YS_COL_BEST_FOR = "bestFor";
-	
-	
-	// Table Creation Queries
+			 
 	private static final String CREATE_RECIPE_TABLE = "create table " +
 		TABLE_RECIPES 
 		+ "("
@@ -147,6 +145,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
 	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
+	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTINGS);
 	    onCreate(db);
 	}
 }

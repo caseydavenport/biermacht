@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
+	
+	<ScrollView android:layout_width="fill_parent"
+	    android:background="@drawable/textured_background_light"
+	    android:layout_height="0dp"
+	    android:layout_alignParentTop="true"
+	    android:layout_above="@+id/bottom_nav"
+	    android:minHeight="4000dip" >
+	    	    
+		<LinearLayout android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:padding="10dip" >
+		    
+		    <LinearLayout android:id="@+id/units_view"
+		        android:orientation="vertical"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/rounded_bg_dark"
+		        android:layout_marginBottom="15dip"
+		        android:padding="10dip">
+		        
+			    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+				<LinearLayout android:id="@+id/placeholder"
+				    android:focusable="true" android:focusableInTouchMode="true"
+				    android:layout_width="0px" android:layout_height="0px"/>
+		        
+			    <!-- Brewer Name Title -->
+			    <TextView android:id="@+id/name_title"
+			        android:text="@string/brewer_name"
+			        style="@style/title_light" />
+		        
+		        <EditText
+			        android:id="@+id/name_edit_text"
+			        android:hint="@string/enter_name"
+			        style="@style/text_input"
+			        android:selectAllOnFocus="true" />
+		        
+		        <!-- Units selector -->
+		        <LinearLayout android:id="@+id/beer_bitterness_view"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="@drawable/rounded_bg_white"
+			        android:layout_marginBottom="5dip"
+			        android:padding="10dip" >
+			        
+		            <TextView android:layout_width="0dp"
+		                android:layout_weight="1"
+		                android:layout_height="wrap_content" 
+		                android:layout_gravity="center_vertical"
+		                android:background="@color/transparent"
+		                android:textColor="@color/title_color_dark"
+		                android:text="@string/units" />
+		            
+				    <Spinner
+				        android:id="@+id/units_spinner"
+				        android:layout_width="0dp"
+				        android:layout_weight="3"
+				        android:layout_height="wrap_content"
+				        android:drawSelectorOnTop="false"
+				        android:padding="10dip"
+				        android:background="@drawable/rounded_bg_white"
+				        android:spinnerMode="dialog" />
+		            
+		        </LinearLayout>	
+		         
+		    </LinearLayout>
+		    
+		</LinearLayout>  
+	</ScrollView>
+	
+    <!-- Bottom Bar -->
+    <LinearLayout android:id="@+id/bottom_nav"
+        android:layout_height="70dip"
+        android:background="@drawable/actionbar_background"
+        android:layout_width="fill_parent" 
+        android:padding="15dp"
+        android:layout_alignParentBottom="true">
+	    
+        <!-- Cancel Button -->
+	    <Button
+	        android:id="@+id/cancel_button"
+	        android:onClick="onClick"
+	        android:text="@string/cancel"
+			style="@style/button_left" />
+	
+	    <!-- Submit Button -->
+	    <Button
+	        android:id="@+id/submit_button"
+	        android:onClick="onClick"
+	        android:text="@string/edit"
+	        style="@style/button_right" />
+
+    </LinearLayout>
+</RelativeLayout>

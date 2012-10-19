@@ -2,8 +2,6 @@ package com.biermacht.brews.ingredient;
 
 import java.util.ArrayList;
 
-import com.biermacht.brews.utils.Measurements;
-
 public class Hop extends Ingredient {
 	
 	// Beer XML 1.0 Required Fields ===================================
@@ -116,10 +114,7 @@ public class Hop extends Ingredient {
 
 	@Override
 	public String getUnits() {
-		if(Measurements.useMetric())
-			return "g";
-		else
-			return "oz";
+		return "oz";
 	}
 
 	@Override

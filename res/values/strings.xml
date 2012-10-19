@@ -40,6 +40,8 @@
     <string name="amount">Amount (L)</string>
     <string name="scale">Scale</string>
     <string name="yeast">Yeast</string>
+    <string name="units">Units:</string>
+    <string name="brewer_name">Brewmaster</string>
 
     <!-- from activity_add_grain.xml -->
     <string name="weight_lbs">Weight (lbs)</string>
@@ -58,6 +60,8 @@
     <string name="recipe_search_hint">Filter Recipes</string>
     <string name="search_icon_description">Search Icon</string>
     <string name="new_volume">New volume</string>
-    <string name="title_activity_add_yeast">AddYeastActivity</string>
+    <string name="title_activity_add_yeast">Add Yeast</string>
+    <string name="title_activity_edit_yeast">Edit Yeast</string>
+    <string name="title_activity_settings">Settings</string>
 
 </resources>

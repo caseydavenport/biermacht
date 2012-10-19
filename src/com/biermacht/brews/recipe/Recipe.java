@@ -11,8 +11,8 @@ import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
-import com.biermacht.brews.utils.InstructionComparator;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.comparators.InstructionComparator;
 
 public class Recipe {
 	

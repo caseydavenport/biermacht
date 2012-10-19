@@ -1,8 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
     <item android:id="@+id/menu_new_recipe"
         android:title="Add"
         android:icon="@drawable/plus_icon"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText" />
+        android:showAsAction="ifRoom" />
+    
+    <item android:id="@+id/menu_settings"
+        android:title="Settings"
+        android:orderInCategory="99"
+        android:showAsAction="never" />
     
 </menu>

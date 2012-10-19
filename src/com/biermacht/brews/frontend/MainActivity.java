@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,6 +49,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	// Poorly done globally used shit
 	public static DatabaseInterface databaseInterface;
 	public static IngredientHandler ingredientHandler;
+	public static Boolean isFirstUse;
 	
     //Declare views here
     private ListView listView; 
@@ -58,6 +61,14 @@ public class MainActivity extends Activity implements OnClickListener {
         
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // SHARED PREFERENCES JUNK ALL GOES HERE!
+        SharedPreferences preferences = this.getSharedPreferences("com.biermacht.brews", Context.MODE_PRIVATE);
+        isFirstUse = preferences.getBoolean("com.biermacht.brews.firstUse", false);
+        if (!isFirstUse)
+        {
+        	preferences.edit().putBoolean("com.biermacht.brews.firstUse", true).commit();
+        }
                 
         // Initialize views
         listView = (ListView) findViewById(R.id.recipe_list);
@@ -135,6 +146,11 @@ public class MainActivity extends Activity implements OnClickListener {
     	case R.id.menu_new_recipe:
     		Intent i = new Intent(getApplicationContext(), AddNewRecipeActivity.class);
     		startActivity(i);
+    		break;
+    		
+    	case R.id.menu_settings:
+    		Intent i2 = new Intent(getApplicationContext(), SettingsActivity.class);
+    		startActivity(i2);
     		break;
     	}
     	return true;
@@ -244,12 +260,7 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
 	public void onClick(View v) {
-		Log.e("MAINACTIVITY", "VIEW CLICKED");
-		if (v.getId() == R.id.no_recipes_view)
-		{
-    		Intent i = new Intent(getApplicationContext(), AddNewRecipeActivity.class);
-    		startActivity(i);
-		}
+		
 	}
 	
 	private Builder deleteAlert(final Recipe r)

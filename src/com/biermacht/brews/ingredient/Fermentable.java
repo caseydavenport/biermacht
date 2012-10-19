@@ -1,7 +1,5 @@
 package com.biermacht.brews.ingredient;
 
-import com.biermacht.brews.utils.Measurements;
-
 // Grain subclass of Ingredient
 public class Fermentable extends Ingredient {
 	
@@ -103,10 +101,7 @@ public class Fermentable extends Ingredient {
 
 	@Override
 	public String getUnits() {
-		if (Measurements.useMetric())
-			return Measurements.KILOGRAMS;
-		else
-			return Measurements.POUNDS;
+			return "lbs";
 	}
 
 	@Override

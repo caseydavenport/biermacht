@@ -111,14 +111,6 @@ public class AddYeastActivity extends Activity implements OnClickListener {
         getMenuInflater().inflate(R.menu.activity_add_ingredient, menu);
         return true;
     }
-    
-    @Override
-    public void onBackPressed()
-    {
-	    Intent intent = new Intent(AddYeastActivity.this, DisplayRecipeActivity.class);
-	    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-	    startActivity(intent);				
-    }
 
 	public void onClick(View v) {
 		// if "SUBMIT" button pressed

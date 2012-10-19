@@ -1,4 +1,4 @@
-package com.biermacht.brews.utils;
+package com.biermacht.brews.utils.comparators;
 
 import java.util.Comparator;
 

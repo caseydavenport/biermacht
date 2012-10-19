@@ -8,6 +8,11 @@
     <RelativeLayout android:layout_height="fill_parent"
         android:layout_width="fill_parent"
         android:padding="10dip" >
+        
+        <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+		<LinearLayout android:id="@+id/placeholder"
+		    android:focusable="true" android:focusableInTouchMode="true"
+		    android:layout_width="0px" android:layout_height="0px"/>
     
 	    <TextView android:id="@+id/recipe_name_title"
 	        android:layout_alignParentTop="true"

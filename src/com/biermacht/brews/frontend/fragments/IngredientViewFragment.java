@@ -23,6 +23,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.DisplayRecipeActivity;
 import com.biermacht.brews.frontend.EditGrainActivity;
 import com.biermacht.brews.frontend.EditHopActivity;
+import com.biermacht.brews.frontend.EditYeastActivity;
 import com.biermacht.brews.frontend.adapters.IngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
@@ -73,6 +74,15 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.HOP))
 				{
 			  		Intent editHopIntent = new Intent(DisplayRecipeActivity.appContext, EditHopActivity.class);
+			  		editHopIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
+			  		editHopIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
+			  		startActivity(editHopIntent);
+				}
+				
+				// Yeast Pressed
+				if (ing.getType().equals(Ingredient.YEAST))
+				{
+			  		Intent editHopIntent = new Intent(DisplayRecipeActivity.appContext, EditYeastActivity.class);
 			  		editHopIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
 			  		editHopIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
 			  		startActivity(editHopIntent);

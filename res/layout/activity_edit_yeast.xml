@@ -17,24 +17,6 @@
 		<LinearLayout android:id="@+id/placeholder"
 		    android:focusable="true" android:focusableInTouchMode="true"
 		    android:layout_width="0px" android:layout_height="0px"/>
-   		
-	    <!-- Spinner -->
-	    <TextView android:id="@+id/spinner_title"
-	        android:text="@string/yeast"
-	        android:layout_alignParentTop="true"
-	        style="@style/title_light" />
-	    
-	    <Spinner
-	        android:id="@+id/ingredient_spinner"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:drawSelectorOnTop="false"
-	        android:padding="10dip"
-	        android:background="@drawable/rounded_bg_white"
-	        android:spinnerMode="dialog"
-	        android:layout_marginBottom="15dip"
-	        android:paddingLeft="10dip"
-	        android:layout_below="@id/spinner_title" />
 	    
 	    <!-- EditText for Grain Name -->
 	    <TextView android:id="@+id/name_title"
@@ -175,12 +157,19 @@
 	        android:onClick="onClick"
 	        android:text="@string/cancel"
 			style="@style/button_left" />
+	    
+	    <!-- Delete Button -->
+	    <Button
+	        android:id="@+id/delete_button"
+	        android:onClick="onClick"
+	        android:text="@string/delete"
+	        style="@style/button" />
 	
 	    <!-- Submit Button -->
 	    <Button
 	        android:id="@+id/submit_button"
 	        android:onClick="onClick"
-	        android:text="@string/add"
+	        android:text="@string/edit"
 	        style="@style/button_right" />
 
     </LinearLayout>

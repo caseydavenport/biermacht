@@ -11,16 +11,11 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeReccomendedValues;
+import com.biermacht.brews.utils.comparators.BeerStyleComparator;
+import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 public class Utils {
-	
-	// Ingredient types
-	public static String TYPE_HOPS = "hops";
-	public static String TYPE_YEAST = "yeast";
-	public static String TYPE_MALT = "malt";
-	public static String TYPE_SPICE = "spice";
-	public static String TYPE_OTHER = "other";
-	
+		
 	// Instruction Types
 	public static String INSTRUCTION_TYPE_BOIL = "Brew";
 	public static String INSTRUCTION_TYPE_FERMENT = "Ferment";

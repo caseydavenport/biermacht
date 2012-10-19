@@ -16,6 +16,7 @@ import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
+import com.biermacht.brews.utils.comparators.IngredientComparator;
 import com.biermacht.brews.xml.FermentableHandler;
 import com.biermacht.brews.xml.YeastHandler;
 
