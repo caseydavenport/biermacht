@@ -68,7 +68,6 @@ public class FermentableHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("YIELD"))
         {
-        	Log.e("XML Handler", "YIELD!: " + currentValue);
         	double yield = Double.parseDouble(currentValue);
         	fermentable.setYield(yield);
         }
@@ -81,7 +80,6 @@ public class FermentableHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("ADD_AFTER_BOIL"))
         {
-        	
         	boolean aab = (currentValue.equalsIgnoreCase("FALSE")) ? false : true;
         	fermentable.setAddAfterBoil(aab);
         }
@@ -123,8 +121,11 @@ public class FermentableHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("MAX_IN_BATCH"))
         {
-        	double maxInBatch = Double.parseDouble(currentValue);
-        	fermentable.setMaxInBatch(maxInBatch);
+        	if (currentElement != false)
+        	{
+	        	double maxInBatch = Double.parseDouble(currentValue);
+	        	fermentable.setMaxInBatch(maxInBatch);
+        	}
         }
         
         else if (qName.equalsIgnoreCase("RECOMMEND_MASH"))
@@ -159,7 +160,6 @@ public class FermentableHandler extends DefaultHandler {
 
         else
         {
-        	// TODO: Add support for this field
         }
     }
  

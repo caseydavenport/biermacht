@@ -71,6 +71,7 @@ public class IngredientHandler {
 	
 	/**
 	 * Gets fermentables from XMl files in assets/Fermentables
+	 * Some fermentables from.. http://byo.com/resources/grains
 	 * @return ArrayList of Ingredient Objects
 	 * @throws IOException
 	 */
@@ -134,58 +135,6 @@ public class IngredientHandler {
         }
         
         return list;
-	}
-	
-	// ================================================================================================================================
-	// ================================================================================================================================
-	// ================================================================================================================================
-	// ================================================================================================================================
-	// ================================================================================================================================
-	// ================================================================================================================================
-	// ================================================================================================================================
-	// ================================================================================================================================
-	// ================================================================================================================================
-	 
-	
-	
-	// Fermentables.. http://byo.com/resources/grains
-	public static void getFermentablesList2()
-	{
-		// List to return
-		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-		
-		
-		Fermentable FERMENTABLE_ROASTED_BARELY = new Fermentable("Roasted Barley");
-						FERMENTABLE_ROASTED_BARELY.setLovibondColor(300);
-						FERMENTABLE_ROASTED_BARELY.setGravity(1.025);
-						FERMENTABLE_ROASTED_BARELY.setFermentableType(Fermentable.GRAIN);
-						
-		Fermentable FERMENTABLE_VICTORY_MALT = new Fermentable("Victory Malt");
-						FERMENTABLE_VICTORY_MALT.setLovibondColor(25);
-						FERMENTABLE_VICTORY_MALT.setGravity(1.034);
-						FERMENTABLE_VICTORY_MALT.setFermentableType(Fermentable.GRAIN); // TODO
-						list.add(FERMENTABLE_VICTORY_MALT);
-		
-		Fermentable FERMENTABLE_VIENNA_MALT = new Fermentable("Vienna Malt");
-						FERMENTABLE_VIENNA_MALT.setLovibondColor(3.7);
-						FERMENTABLE_VIENNA_MALT.setGravity(1.035);
-						FERMENTABLE_VIENNA_MALT.setFermentableType(Fermentable.GRAIN); // TODO
-						list.add(FERMENTABLE_VIENNA_MALT);
-		
-		Fermentable FERMENTABLE_WHEAT_MALT = new Fermentable("Wheat Malt");
-						FERMENTABLE_WHEAT_MALT.setLovibondColor(2);
-						FERMENTABLE_WHEAT_MALT.setGravity(1.038);
-						FERMENTABLE_WHEAT_MALT.setFermentableType(Fermentable.GRAIN); //TODO
-						list.add(FERMENTABLE_WHEAT_MALT);
-		
-		Fermentable FERMENTABLE_WHITE_WHEAT_MALT = new Fermentable("White Wheat Malt");
-						FERMENTABLE_WHITE_WHEAT_MALT.setLovibondColor(2);
-						FERMENTABLE_WHITE_WHEAT_MALT.setGravity(1.037);
-						FERMENTABLE_WHITE_WHEAT_MALT.setFermentableType(Fermentable.GRAIN); // TODO
-						list.add(FERMENTABLE_WHITE_WHEAT_MALT);
-		 
-		Collections.sort(list, new IngredientComparator<Ingredient>());
-		
 	}
 	
 	// ================================================================================================================================
