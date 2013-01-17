@@ -99,13 +99,20 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 type = beerTypeArray.get(position);
                 
-                if(type.equals(Recipe.EXTRACT))
+				if(type.equals(Recipe.EXTRACT))
+                {
                 	efficiency = 100;
+                	effEditText.setText(efficiency + "");
+                	effEditText.setEnabled(false);
+                }
                 else
-                	efficiency = 75;
-                
-                effEditText.setText(efficiency + "");
-            }
+				{
+					efficiency = 75;
+				    effEditText.setEnabled(true);
+					effEditText.setText(efficiency + "");
+            	}
+			}
+			
 
             public void onNothingSelected(AdapterView<?> parentView) {
                 // Blag
