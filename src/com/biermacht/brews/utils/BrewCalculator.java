@@ -7,6 +7,8 @@ import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
+import android.util.Log;
+import android.os.*;
 
 public class BrewCalculator {
 	
@@ -64,7 +66,7 @@ public class BrewCalculator {
 	
 	public static double calculateIbuFromRecipe(Recipe r)
 	{
-		double ibu;
+		double ibu = 0;
 		double AAU = 0;
 		double utilization = 0;
 		
@@ -81,11 +83,10 @@ public class BrewCalculator {
 				{
 					utilization = getHopUtilization(r, h);
 					AAU += h.getAmount() * h.getAlphaAcidContent();
+					ibu += (AAU * utilization * 75)/r.getBatchSize();
 				}
 			}
 		}
-		
-		ibu = (AAU * utilization * 75)/r.getBatchSize();
 		
 		return ibu;
 	}
