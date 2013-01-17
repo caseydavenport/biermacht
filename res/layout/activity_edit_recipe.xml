@@ -5,9 +5,13 @@
     android:background="@drawable/textured_background_light"
     android:orientation="vertical" >
        
-    <RelativeLayout android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:padding="10dip" >
+	<RelativeLayout android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+   		android:padding="10dip"
+   		android:layout_margin="10dip"
+   		android:layout_above="@+id/bottom_nav"
+   		android:layout_alignParentTop="true"
+   		android:background="@drawable/textured_background" >
         
         <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
 		<LinearLayout android:id="@+id/placeholder"
