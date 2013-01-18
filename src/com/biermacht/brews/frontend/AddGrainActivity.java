@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Spinner;
 
 import com.biermacht.brews.R;
@@ -32,6 +33,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
 	private EditText grainBoilStartTimeEditText;
+	private TextView grainTypeTextView;
 	private ArrayList<String> grainTypeArray;
 	private String grainType;
 	private Recipe mRecipe;
@@ -60,7 +62,8 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
         grainBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
-        
+        grainTypeTextView = (TextView) findViewById(R.id.fermentable_type_view);
+		
         // Set up grain type spinner
         grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
         SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, grainTypeArray);  
@@ -99,6 +102,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 grainGravEditText.setText(fermentable.getGravity() +"");
                 grainWeightEditText.setText(5 +"");
                 grainBoilStartTimeEditText.setText(0 + "");
+				grainTypeTextView.setText(fermentable.getFermentableType());
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
