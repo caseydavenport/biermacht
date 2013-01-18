@@ -84,14 +84,6 @@ public class AddHopsActivity extends Activity {
         return true;
     }
     
-    @Override
-    public void onBackPressed()
-    {
-	    Intent intent = new Intent(AddHopsActivity.this, DisplayRecipeActivity.class);
-	    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-	    startActivity(intent);				
-    }
-    
 	public void onClick(View v) {
 		// if "SUBMIT" button pressed
 		if (v.getId() == R.id.new_grain_submit_button)
