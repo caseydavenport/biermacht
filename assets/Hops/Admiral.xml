@@ -1,0 +1,21 @@
+<HOP>
+ <NAME>Admiral</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>14.7500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Bittering hops derived from Wye Challenger.  Good high-alpha bittering hops.
+Used for: Ales
+Aroma: Primarily for bittering
+Substitutes: Target, Northdown, Challenger
+</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.6000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

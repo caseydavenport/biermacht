@@ -1,26 +1,24 @@
 <FERMENTABLE>
- <NAME>Barley Hulls</NAME>
+ <NAME>Candi Sugar, Clear</NAME>
  <VERSION>1</VERSION>
- <TYPE>Adjunct</TYPE>
+ <TYPE>Sugar</TYPE>
  <AMOUNT>0.0000000</AMOUNT>
- <YIELD>0.0000000</YIELD>
- <COLOR>0.0000000</COLOR>
+ <YIELD>78.3000000</YIELD>
+ <COLOR>0.5000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
- <ORIGIN>US</ORIGIN>
+ <ORIGIN>Belgium</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Hulls are introduced to improve the speed of lautering when making high gravity or high adjunct beers.
-Hulls are neutral in flavor, body and color, and are inert
-Good for wheat beers, Wits, and others that have high protein mashes.</NOTES>
+ <NOTES>Crystalized Candi Sugar (Sucrose) used in many Belgian Tripels, Dubbels, and holiday ales.  Adds head retention and sweet aroma to beer.  Darker variants also add color.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
  <PROTEIN>11.7000000</PROTEIN>
- <MAX_IN_BATCH>5.0000000</MAX_IN_BATCH>
+ <MAX_IN_BATCH>20.0000000</MAX_IN_BATCH>
  <RECOMMEND_MASH>FALSE</RECOMMEND_MASH>
  <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
  <DISPLAY_AMOUNT>0.0 oz</DISPLAY_AMOUNT>
  <INVENTORY>0.0 oz</INVENTORY>
- <POTENTIAL>1.0000000</POTENTIAL>
- <DISPLAY_COLOR>0.0 SRM</DISPLAY_COLOR>
+ <POTENTIAL>1.0360180</POTENTIAL>
+ <DISPLAY_COLOR>0.5 SRM</DISPLAY_COLOR>
  <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
