@@ -52,7 +52,7 @@ public class FermentableHandler extends DefaultHandler {
         	
         	if (currentValue.equalsIgnoreCase(Fermentable.ADJUNCT))
         		type = Fermentable.ADJUNCT;
-        	if (currentValue.containsIgnoreCase(Fermentable.EXTRACT))
+        	if (currentValue.equalsIgnoreCase(Fermentable.EXTRACT))
         		type = Fermentable.EXTRACT;
         	if (currentValue.equalsIgnoreCase(Fermentable.GRAIN))
         		type = Fermentable.GRAIN;
