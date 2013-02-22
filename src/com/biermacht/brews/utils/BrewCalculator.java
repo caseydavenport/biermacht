@@ -56,9 +56,9 @@ public class BrewCalculator {
 				float ppg = g.getPpg();
 				double amt = g.getAmount();
 				double size = r.getBatchSize();
-				double gVol = .2; // TODO: Actually calculate grain volume!
+				double gVol = 0; // TODO: Actually calculate grain volume!
 				
-				grav += (ppg * amt) / (1000) / (size - gVol);
+				grav += (ppg * amt) / (1010) / (size - gVol);
 			}
 		}
 		return 1 + grav*(r.getEfficiency() / 100);
@@ -106,7 +106,7 @@ public class BrewCalculator {
 				
 				if (attn > 0)
 				{
-					double FG = OG - (attn)*(OG-1)*(.01);
+					double FG = OG - (attn)*(OG-1)*(.007);
 					return FG;
 				}
 					
