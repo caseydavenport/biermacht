@@ -44,13 +44,13 @@ public class BrewCalculator {
 	
 	public static double calculateOriginalGravityFromRecipe(Recipe r)
 	{
-		if (r.getType == Recipe.EXTRACT)
+		if (r.getType().equals(Recipe.EXTRACT))
 			return calculateExtractOG(r);
 		else
 			return 2;
 	}
 	
-	public static double calculateExtractOG(r)
+	public static double calculateExtractOG(Recipe r)
 	{
 		float grav = 0;
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
@@ -64,9 +64,9 @@ public class BrewCalculator {
 				float ppg = g.getPpg();
 				double amt = g.getAmount();
 				double size = r.getBatchSize();
-				double gVol = 0; // TODO: Actually calculate grain volume!
+				double gVol = .2; // TODO: Actually calculate grain volume!
 				
-				grav += (ppg * amt) / (1015) / (size - gVol);
+				grav += (ppg * amt) / (1015) / (size + gVol);
 			}
 		}
 		return 1 + grav;
@@ -114,7 +114,7 @@ public class BrewCalculator {
 				
 				if (attn > 0)
 				{
-					double FG = OG - (attn)*(OG-1)*(.013);
+					double FG = OG - (attn)*(OG-1)*(.0106);
 					return FG;
 				}
 					
