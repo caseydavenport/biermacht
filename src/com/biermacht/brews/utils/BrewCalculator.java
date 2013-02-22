@@ -130,7 +130,7 @@ public class BrewCalculator {
 		float utilization;
 		double bignessFactor;
 		double boilTimeFactor;
-		double kettleFactor = .515; // Varies based on equipment...
+		double kettleFactor = .435; // Varies based on equipment...
 		
 		bignessFactor = Math.pow(.000125, r.getOG()-1);
 		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()));
