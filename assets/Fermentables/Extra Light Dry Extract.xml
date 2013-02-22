@@ -1,16 +1,15 @@
 <FERMENTABLE>
- <NAME>Dark Liquid Extract</NAME>
+ <NAME>Extra Light Dry Extract</NAME>
  <VERSION>1</VERSION>
- <TYPE>Extract</TYPE>
+ <TYPE>Dry Extract</TYPE>
  <AMOUNT>0.0000000</AMOUNT>
- <YIELD>78.0000000</YIELD>
- <COLOR>17.5000000</COLOR>
+ <YIELD>95.0000000</YIELD>
+ <COLOR>3.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Unhopped dark liquid extract.
-Use as a base malt for any dark beer.
-Examples: Porter, Brown ale, Bock, Oktoberfest, Stouts</NOTES>
+ <NOTES>Very light color dry malt extract for general purpose use.
+Use as base or to increase gravity of any ale or lager.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -20,7 +19,7 @@ Examples: Porter, Brown ale, Bock, Oktoberfest, Stouts</NOTES>
  <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
  <DISPLAY_AMOUNT>0.0 oz</DISPLAY_AMOUNT>
  <INVENTORY>0.0 oz</INVENTORY>
- <POTENTIAL>1.0358800</POTENTIAL>
- <DISPLAY_COLOR>17.5 SRM</DISPLAY_COLOR>
+ <POTENTIAL>1.0437000</POTENTIAL>
+ <DISPLAY_COLOR>3.0 SRM</DISPLAY_COLOR>
  <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
