@@ -282,7 +282,7 @@
 				<LinearLayout android:id="@+id/color_space"
 					android:orientation="vertical"
 					android:layout_width="fill_parent"
-					android:layout_height="20dip"
+					android:layout_height="40dip"
 					android:background="@drawable/rounded_bg_dark">
 
 				</LinearLayout>
