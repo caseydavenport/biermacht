@@ -1,0 +1,19 @@
+<HOP>
+ <NAME>Motueka</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Flexible hop developed from Saaz.  Has notable character and aroma, balanced bitterness, and unique flavor.  
+Used for: Lagers, Belgian Ales and Bohemian Pilsner.  
+Substitutes: Saaz</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2500000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

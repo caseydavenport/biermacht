@@ -1,0 +1,20 @@
+<HOP>
+ <NAME>Horizon</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Good dual purpose hops derived from Nugget hops in Oregon (1970)
+Used for: All purpose Ales, Lagers
+Aroma: Pleasant, hoppy
+Substitutes: Magnum or other high alpha hops</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

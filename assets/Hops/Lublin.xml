@@ -1,0 +1,20 @@
+<HOP>
+ <NAME>Lublin</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Poland</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Version of Saaz grown in Poland - also called &#34;Lubelski&#34;
+Used for: Bohemian lagers and Pilsners
+Aroma: Noble, mild flavor similar to Saaz
+Substitutes: Saaz, Tettnanger</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

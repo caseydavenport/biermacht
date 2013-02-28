@@ -1,0 +1,21 @@
+<HOP>
+ <NAME>Northern Brewer</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Also called Hallertauer Northern Brewers
+Used for: Bittering and finishing both ales and lagers of all kinds
+Aroma: Fine, dry, clean bittering hop.  Unique flavor.
+Substitutes: Hallertauer Mittelfrueh, Hallertauer
+Examples: Anchor Steam, Old Peculiar, </NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

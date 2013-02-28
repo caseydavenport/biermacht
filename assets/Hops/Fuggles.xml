@@ -1,0 +1,20 @@
+<HOP>
+ <NAME>Fuggles</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General purpose bittering/aroma for English Ales, Dark Lagers
+Aroma: Mild, soft, grassy, floral aroma
+Substitute: East Kent Goldings, Williamette
+Examples: Samuel Smith&#39;s Pale Ale, Old Peculiar, Thomas Hardy&#39;s Ale</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

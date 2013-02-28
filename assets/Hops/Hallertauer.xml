@@ -1,0 +1,19 @@
+<HOP>
+ <NAME>Hallertauer</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.8000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: German Ales, German/US/Canadian Lagers, Wheat Beers
+Aroma: Pleasant, mild spicy flavor, clean, neutral flavor
+Substitutes: Crystal, Liberty, Hallertauer Mittelfrueh</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

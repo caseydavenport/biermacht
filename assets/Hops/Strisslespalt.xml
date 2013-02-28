@@ -1,0 +1,20 @@
+<HOP>
+ <NAME>Strisslespalt</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>France</ORIGIN>
+ <ALPHA>4.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Aroma hops used widely in the Alsace area of France.
+Used for: Pilsner, lager, wheat
+Aroma: Medium intensity, pleasant, hoppy
+Substitutes: Mt Hood, Crystal, Hallertauer Hersbruck</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.8000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

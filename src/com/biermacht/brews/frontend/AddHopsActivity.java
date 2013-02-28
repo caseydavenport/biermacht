@@ -7,6 +7,7 @@ import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
 import android.os.Bundle;
@@ -21,12 +22,13 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class AddHopsActivity extends Activity {
 	
+	IngredientHandler ingredientHandler;
 	private Spinner hopSpinner;
 	private EditText hopNameEditText;
 	private EditText hopBoilStartTimeEditText;
 	private EditText hopAcidEditText;
 	private EditText hopWeightEditText;
-	private ArrayList<Ingredient> hopTypeArray = Utils.getHopsList();
+	private ArrayList<Ingredient> hopTypeArray;
 	private String hopType;
 	private Recipe mRecipe;
 
@@ -34,6 +36,12 @@ public class AddHopsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hops);
+        
+    	// Set up Ingredient Handler
+    	ingredientHandler = MainActivity.ingredientHandler;
+    	
+    	// Set list of ingredients to show
+    	hopTypeArray = ingredientHandler.getHopsList();
         
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
@@ -59,7 +67,7 @@ public class AddHopsActivity extends Activity {
                 Hop hopObj = new Hop("");
             	hopType = hopTypeArray.get(position).getName();
                 
-                for (Ingredient i : Utils.getHopsList())
+                for (Ingredient i : ingredientHandler.getHopsList())
                 {
                 	if (hopType.equals(i.toString()))
                 		hopObj = (Hop) i;

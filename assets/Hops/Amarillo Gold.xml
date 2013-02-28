@@ -1,0 +1,20 @@
+<HOP>
+ <NAME>Amarillo Gold</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Unknown origin, but character similar to Cascade.  Used for both bitterness and aroma.
+Used for: IPAs, Ales
+Aroma: Citrus, flowery
+Substitutes: Cascade, Centennial</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

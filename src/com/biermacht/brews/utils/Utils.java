@@ -424,11 +424,6 @@ public class Utils {
 		return listToReturn;
 	}
 	
-	public static ArrayList<Ingredient> getHopsList()
-	{	
-		return IngredientHandler.getHopsList();
-	}
-	
 	/**
 	 * Returns a list of strings corresponding to ingredient objects
 	 * @return
@@ -436,22 +431,6 @@ public class Utils {
 	public static ArrayList<String> getIngredientStringList(ArrayList<Ingredient> list)
 	{
 		ArrayList<Ingredient> listA = list;
-		ArrayList<String> listToReturn = new ArrayList<String>();
-		
-		for (Ingredient b : listA)
-		{
-			listToReturn.add(b.toString());
-		}	
-		return listToReturn;
-	}
-	
-	/**
-	 * Returns a list of strings corresponding to hop objects
-	 * @return
-	 */
-	public static ArrayList<String> getHopsStringList()
-	{
-		ArrayList<Ingredient> listA = getHopsList();
 		ArrayList<String> listToReturn = new ArrayList<String>();
 		
 		for (Ingredient b : listA)

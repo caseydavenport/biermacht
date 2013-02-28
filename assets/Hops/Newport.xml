@@ -1,0 +1,19 @@
+<HOP>
+ <NAME>Newport</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha hops released in 2002 as a potential replacement for Galena.  Note that these hops have a large alpha range of 9.8%-17% so check the package!  Fairly pungent.
+Used for: Primarily used for bittering in ales, stouts, barley wine.  
+Substitutes: Galena</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>

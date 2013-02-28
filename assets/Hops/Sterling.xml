@@ -1,0 +1,20 @@
+<HOP>
+ <NAME>Sterling</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Flavor is a cross between Saaz and Mt Hood
+Used for: Lagers, Ales, Pilsners
+Aroma: Herbal, spicy, some floral and citrus hints
+Substitutes: Saaz, Polish Lublin</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 oz</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
