@@ -57,7 +57,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         // Default values
         boilTimeEditText.setText(60 +"");
         batchSizeEditText.setText(5.0 +"");
-        boilSizeEditText.setText(5.0 + "");
+        boilSizeEditText.setText(2.5 + "");
         
         //Arraylist of beer types
         beerStyleArray = Utils.getBeerStyleStringList();

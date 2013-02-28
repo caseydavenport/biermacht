@@ -391,10 +391,6 @@ public class Recipe {
 	 * @param boilSize the boilSize to set
 	 */
 	public void setBoilSize(double boilSize) {
-		
-		if (boilSize < batchSize)
-			boilSize = batchSize;
-		
 		this.boilSize = boilSize;
 	}
 

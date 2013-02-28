@@ -72,6 +72,28 @@ public class BrewCalculator {
 		return 1 + grav;
 	}
 	
+	public static double calculateBoilGrav(Recipe r)
+	{
+		float grav = 0;
+		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
+
+		// http://homebrew.stackexchange.com/questions/1434/wiki-how-do-you-calculate-original-gravity
+		for (Ingredient i : ingredientsList)
+		{
+			if (i.getType().equals(Ingredient.FERMENTABLE))
+			{
+				Fermentable g = (Fermentable) i;
+				float ppg = g.getPpg();
+				double amt = g.getAmount();
+				double size = r.getBoilSize();
+				double gVol = .2; // TODO: Actually calculate grain volume!
+
+				grav += (ppg * amt) / (1015) / (size + gVol);
+			}
+		}
+		return 1 + grav;
+	}
+	
 	public static double calculateIbuFromRecipe(Recipe r)
 	{
 		double ibu = 0;
@@ -138,12 +160,12 @@ public class BrewCalculator {
 		float utilization;
 		double bignessFactor;
 		double boilTimeFactor;
-		double kettleFactor = .435; // Varies based on equipment...
+		double boilGrav = calculateBoilGrav(r);
 		
-		bignessFactor = Math.pow(.000125, r.getOG()-1);
-		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()));
+		bignessFactor = 1.50 * Math.pow(.000125, boilGrav-1);
+		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()))/4.35;
 		
-		utilization = (float) (bignessFactor * boilTimeFactor * kettleFactor);
+		utilization = (float) (bignessFactor * boilTimeFactor);
 		
 		return utilization;
 	}

@@ -31,8 +31,8 @@
     <string name="boil_start_time">Boil Start Time</string>
     <string name="boil_end_time">Boil End Time</string>
     <string name="boil_time">Boil Time (mins)</string>
-    <string name="batch_volume">Batch Volume (gal)</string>
-    <string name="boil_volume">Pre-Boil Volume (gal)</string>
+    <string name="batch_volume">Final Batch Volume (gal)</string>
+    <string name="boil_volume">Boil Volume (gal)</string>
     <string name="efficiency">Efficiency (%)</string>
     <string name="boil_time_hint">minutes</string>
     <string name="batch_volume_hint">Gal</string>

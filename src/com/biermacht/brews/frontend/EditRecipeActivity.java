@@ -188,9 +188,6 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 			if (efficiency > 100)
 				readyToGo = false;
 			
-			if (boilSize < batchSize)
-				boilSize = batchSize;
-			
 			if (readyToGo)
 			{
 				mRecipe.setRecipeName(recipeName);
