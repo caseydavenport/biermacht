@@ -270,6 +270,24 @@
 		        </LinearLayout>
 		         
 		    </LinearLayout>
+			
+			<LinearLayout android:id="@+id/color_view"
+				android:orientation="vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/rounded_bg_dark"
+				android:layout_marginBottom="15dip"
+				android:padding="10dip">
+
+				<LinearLayout android:id="@+id/color_space"
+					android:orientation="vertical"
+					android:layout_width="fill_parent"
+					android:layout_height="20dip"
+					android:background="@drawable/rounded_bg_dark">
+
+				</LinearLayout>
+
+			</LinearLayout>
 		    
 		    <LinearLayout android:id="@+id/units_view"
 		        android:orientation="vertical"

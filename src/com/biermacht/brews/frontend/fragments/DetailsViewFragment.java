@@ -18,6 +18,7 @@ import com.biermacht.brews.frontend.DisplayRecipeActivity;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeReccomendedValues;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.ColorHandler;
 
 public class DetailsViewFragment extends Fragment {
 
@@ -52,6 +53,11 @@ public class DetailsViewFragment extends Fragment {
 		  // View to hold the description
 		  TextView descriptionView = (TextView) pageView.findViewById(R.id.description_view);
 		  descriptionView.setText(r.getDescription());
+		  
+		  // View to hold the beer color
+		  LinearLayout showColorView = (LinearLayout) pageView.findViewById(R.id.color_space);
+		  String color = ColorHandler.getSrmColor(r.getColor());
+		  showColorView.setBackgroundColor(Color.parseColor(color));
 		  
 		  // Add all the detail views here
 		  beerTypeView = (LinearLayout) pageView.findViewById(R.id.beer_type_view);
