@@ -314,7 +314,6 @@
 	   android:layout_alignParentBottom="true"
 	   android:background="@drawable/actionbar_background"
 	   android:layout_width="fill_parent" >
-	    
-	     
 	</LinearLayout>
+	
 </RelativeLayout>

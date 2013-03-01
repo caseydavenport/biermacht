@@ -24,7 +24,7 @@ public class HopsHandler extends DefaultHandler {
  
         currentElement = true;
  
-        if (qName.equals("FERMENTABLE"))
+        if (qName.equals("HOP"))
         {
             hop = new Hop("");
         } 

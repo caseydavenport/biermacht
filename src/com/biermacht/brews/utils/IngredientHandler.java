@@ -72,7 +72,7 @@ public class IngredientHandler {
 	}
 	
 	/**
-	 * Returns a list of valid yeasts for use in recipes
+	 * Returns a list of valid hops for use in recipes
 	 * @return ArrayList of ingredient objects
 	 */
 	public ArrayList<Ingredient> getHopsList()
