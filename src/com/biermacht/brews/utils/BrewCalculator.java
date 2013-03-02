@@ -65,10 +65,14 @@ public class BrewCalculator {
 				double amt = g.getAmount();
 				double size = r.getBatchSize();
 				
-				if (g.getFermentableType().equals(Fermentable.EXTRACT));
+				if (g.getFermentableType().equals(Fermentable.EXTRACT))
+				{
 					grav += (ppg/1000) * (amt) / (size);
-				if (g.getFermentableType().equals(Fermentable.GRAIN));
-					grav += r.getEfficiency() * (ppg/1000) * (amt) / (size);
+				}
+				else if (g.getFermentableType().equals(Fermentable.GRAIN))
+				{
+					grav += (r.getEfficiency()/100) * (ppg/1000) * (amt) / (size);
+				}
 			}
 		}
 		return 1 + grav;
