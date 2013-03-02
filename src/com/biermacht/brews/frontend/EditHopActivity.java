@@ -17,7 +17,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
 	// private Spinner grainTypeSpinner;
 	private EditText hopNameEditText;
 	private EditText hopAcidsEditText;
-	private EditText hopStartTimeEditText;
+	private EditText hopBoilTimeEditText;
 	private EditText hopWeightEditText;
 	// private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private Recipe mRecipe;
@@ -39,12 +39,12 @@ public class EditHopActivity extends Activity implements OnClickListener {
         // Initialize views and such here
         hopNameEditText = (EditText) findViewById(R.id.hop_name_edit_text);
         hopAcidsEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
-        hopStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
+        hopBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
         
         hopNameEditText.setText(hop.getName());
         hopAcidsEditText.setText(hop.getAlphaAcidContent() +"");
-        hopStartTimeEditText.setText(hop.getStartTime() +"");
+        hopBoilTimeEditText.setText(hop.getTime() +"");
         hopWeightEditText.setText(hop.getAmount() + "");
         
         
@@ -95,15 +95,17 @@ public class EditHopActivity extends Activity implements OnClickListener {
 		{	
 			String name = hopNameEditText.getText().toString();
 			double acids = Double.parseDouble(hopAcidsEditText.getText().toString());
-			int boilStartTime = Integer.parseInt(hopStartTimeEditText.getText().toString());
+			int boilTime = Integer.parseInt(hopBoilTimeEditText.getText().toString());
+			int boilStartTime = hop.getEndTime() - boilTime;
 			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
 			
-			if (boilStartTime > mRecipe.getBoilTime())
-				boilStartTime = mRecipe.getBoilTime();
+			if (boilTime > mRecipe.getBoilTime())
+				boilTime = mRecipe.getBoilTime();
 			
 			hop.setName(name);
 			hop.setAlphaAcidContent(acids);
 			hop.setStartTime(boilStartTime);
+			hop.setTime(boilTime);
 			hop.setAmount(weight);
 			
 			Utils.updateIngredient(hop);

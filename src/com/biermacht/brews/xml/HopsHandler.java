@@ -40,7 +40,7 @@ public class HopsHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("NAME"))
         {
         	hop.setName(currentValue);
-        	Log.e("HopsHandler", "Hop Name" + currentValue);
+        	Log.e("HopsHandler", "Hop Name: " + currentValue);
         }
         	
         else if (qName.equalsIgnoreCase("VERSION"))
