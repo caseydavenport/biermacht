@@ -61,10 +61,10 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         // Default values
         recipeNameEditText.setText(mRecipe.getRecipeName());
         recipeDescEditText.setText(mRecipe.getDescription());
-        boilTimeEditText.setText(mRecipe.getBoilTime() + "");
-        effEditText.setText(mRecipe.getEfficiency() +"");
-        batchSizeEditText.setText(mRecipe.getBatchSize() + "");
-        boilSizeEditText.setText(mRecipe.getBoilSize() + "");
+        boilTimeEditText.setText(String.format("%d", mRecipe.getBoilTime()));
+        effEditText.setText(String.format("%2.2f", mRecipe.getEfficiency()));
+        batchSizeEditText.setText(String.format("%2.2f", mRecipe.getBatchSize()));
+        boilSizeEditText.setText(String.format("%2.2f", mRecipe.getBoilSize()));
         
         //Arraylist of beer types
         beerStyleArray = Utils.getBeerStyleStringList();
@@ -130,12 +130,12 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
                 
                 if(type.equals(Recipe.EXTRACT))
                 {
-                	efficiency = 100;
-                	effEditText.setText(efficiency + "");
-                	effEditText.setEnabled(false);
+                	// Eventually add conditional stuff for recipe type
                 }
                 else
-                	effEditText.setEnabled(true);
+                {
+					
+				}
 
             }
 

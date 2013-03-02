@@ -58,6 +58,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         boilTimeEditText.setText(60 +"");
         batchSizeEditText.setText(5.0 +"");
         boilSizeEditText.setText(2.5 + "");
+		effEditText.setText(72 + "");
         
         //Arraylist of beer types
         beerStyleArray = Utils.getBeerStyleStringList();
@@ -101,15 +102,11 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
                 
 				if(type.equals(Recipe.EXTRACT))
                 {
-                	efficiency = 100;
-                	effEditText.setText(efficiency + "");
-                	effEditText.setEnabled(false);
+					// TODO: Make conditional on recipe type
                 }
                 else
 				{
-					efficiency = 75;
-				    effEditText.setEnabled(true);
-					effEditText.setText(efficiency + "");
+					
             	}
 			}
 			

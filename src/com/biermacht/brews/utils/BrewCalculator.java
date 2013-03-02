@@ -167,7 +167,8 @@ public class BrewCalculator {
 				}
 			}
 
-		return ibu;
+		// We scale down because our algorithm returns a few IBU too high.
+		return .94*ibu;
 	}
 	
 	public static double estimateFinalGravityFromRecipe(Recipe r)
@@ -187,8 +188,7 @@ public class BrewCalculator {
 				{
 					double FG = OG - (attn)*(OG-1)*(.0106);
 					return FG;
-				}
-					
+				}	
 			}
 		}
 		
@@ -201,7 +201,7 @@ public class BrewCalculator {
 		double FG = r.getFG();
 		double OG = r.getOG();
 		
-		return (OG-FG) * 131 * (r.getEfficiency() / 100);
+		return (OG-FG) * 131;
 	}
 	
 	public static float getHopUtilization(Recipe r, Hop i)
