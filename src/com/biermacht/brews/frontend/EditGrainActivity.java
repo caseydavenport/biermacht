@@ -19,7 +19,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 	private EditText grainColorEditText;
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
-	private EditText grainBoilStartTimeEditText;
+	private EditText grainBoilTimeEditText;
 	// private ArrayList<String> grainTypeArray = Utils.getFermentablesStringList();
 	private Recipe mRecipe;
 	private Fermentable fermentable;
@@ -42,13 +42,13 @@ public class EditGrainActivity extends Activity implements OnClickListener {
         grainColorEditText = (EditText) findViewById(R.id.grain_color_edit_text);
         grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
-        grainBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
+        grainBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         
         grainNameEditText.setText(fermentable.getName());
         grainColorEditText.setText(fermentable.getLovibondColor() +"");
         grainGravEditText.setText(fermentable.getGravity() +"");
         grainWeightEditText.setText(fermentable.getAmount() + "");
-        grainBoilStartTimeEditText.setText(fermentable.getStartTime() + "");
+        grainBoilTimeEditText.setText(fermentable.getStartTime() + "");
  
     }
 
@@ -71,7 +71,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 			double color = Double.parseDouble(grainColorEditText.getText().toString());
 			double grav = Double.parseDouble(grainGravEditText.getText().toString());
 			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
-			int startTime = Integer.parseInt(grainBoilStartTimeEditText.getText().toString());
+			int startTime = Integer.parseInt(grainBoilTimeEditText.getText().toString());
 			
 			if (startTime > mRecipe.getBoilTime())
 				startTime = mRecipe.getBoilTime();

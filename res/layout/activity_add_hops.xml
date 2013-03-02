@@ -118,7 +118,7 @@
 		    
 		    <!-- Boil time -->
 		    <TextView android:id="@+id/boil_time_title"
-		        android:text="@string/boil_start_time"
+		        android:text="@string/boil_time"
 		        style="@style/title_light" />
 		              
 	    </LinearLayout>
@@ -140,7 +140,7 @@
 		        android:layout_height="40dip"
 		        android:background="@drawable/rounded_bg_white"
 		        android:padding="10dip"
-		        android:hint="@string/start_time" />
+		        android:hint="@string/boil_time" />
 		    
 		    <!-- Boil time -->
 		    <TextView android:id="@+id/boil_time_helper"
@@ -152,7 +152,7 @@
 		        android:gravity="top"
 		        android:textSize="11dip"
 		        android:textColor="#CCC"
-		        android:text="@string/boil_start_time_helper" />
+		        android:text="@string/boil_time_helper" />
 			            
 	    </LinearLayout>
 	    

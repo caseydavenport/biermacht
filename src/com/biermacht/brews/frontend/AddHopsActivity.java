@@ -74,7 +74,7 @@ public class AddHopsActivity extends Activity {
                 }
             	
                 hopNameEditText.setText(hopObj.getName());
-                hopBoilTimeEditText.setText(hopObj.getTime() +"");
+                hopBoilTimeEditText.setText(mRecipe.getBoilTime() + "");
                 hopAcidEditText.setText(hopObj.getAlphaAcidContent() +"");
                 hopWeightEditText.setText(1.0 +"");
             }

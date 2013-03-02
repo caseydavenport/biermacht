@@ -32,7 +32,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainColorEditText;
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
-	private EditText grainBoilStartTimeEditText;
+	private EditText grainBoilTimeEditText;
 	private TextView grainTypeTextView;
 	private ArrayList<String> grainTypeArray;
 	private String grainType;
@@ -61,7 +61,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainColorEditText = (EditText) findViewById(R.id.grain_color_edit_text);
         grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
-        grainBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
+        grainBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         grainTypeTextView = (TextView) findViewById(R.id.fermentable_type_view);
 		
         // Set up grain type spinner
@@ -101,7 +101,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 grainColorEditText.setText(fermentable.getLovibondColor() +"");
                 grainGravEditText.setText(fermentable.getGravity() +"");
                 grainWeightEditText.setText(5 +"");
-                grainBoilStartTimeEditText.setText(0 + "");
+                grainBoilTimeEditText.setText(0 + "");
 				grainTypeTextView.setText(fermentable.getFermentableType());
             }
 
@@ -134,7 +134,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			double color = Double.parseDouble(grainColorEditText.getText().toString());
 			double grav = Double.parseDouble(grainGravEditText.getText().toString());
 			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
-			int startTime = Integer.parseInt(grainBoilStartTimeEditText.getText().toString());
+			int startTime = Integer.parseInt(grainBoilTimeEditText.getText().toString());
 			int endTime = mRecipe.getBoilTime();
 			
 			if (startTime > mRecipe.getBoilTime())

@@ -48,6 +48,7 @@
     <string name="grain_type">Grain Type</string>
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
+	<string name="boil_time_helper">Time that this ingredient is boiled for</string>
     <string name="boil_start_time_helper">Time in minutes after starting the brew that this ingredient gets added to the boil.</string>
     <string name="boil_end_time_helper">This defaults to the recipe boil length! Modify for custom boil time.</string>
 
