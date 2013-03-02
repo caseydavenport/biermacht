@@ -95,7 +95,7 @@ public class IngredientViewFragment extends Fragment {
 		// Set whether or not we show the list view
 		if (ingredientList.size() > 0)
 		{
-			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
+			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList, r);
 			ingredientListView.setVisibility(View.VISIBLE);
 			ingredientListView.setAdapter(ingredientArrayAdapter);
 			registerForContextMenu(ingredientListView);
@@ -125,7 +125,7 @@ public class IngredientViewFragment extends Fragment {
 		// Set whether or not we show the list view
 		if (ingredientList.size() > 0)
 		{
-			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList);
+			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList, r);
 			ingredientListView.setVisibility(View.VISIBLE);
 			ingredientListView.setAdapter(ingredientArrayAdapter);
 			registerForContextMenu(ingredientListView);

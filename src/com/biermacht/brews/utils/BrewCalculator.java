@@ -50,6 +50,33 @@ public class BrewCalculator {
 			return 2;
 	}
 	
+	public static double calculateGrainPercent(Recipe r, Ingredient i)
+	{
+		if(i.getType().equals(Ingredient.FERMENTABLE))
+		{
+			double g_amt = i.getAmount();
+			double tot_amt = getTotalGrainWeight(r);
+			
+			return (g_amt / tot_amt) * 100;
+		}
+		
+		return 0;
+	}
+	
+	public static double getTotalGrainWeight(Recipe r)
+	{
+		double amt = 0;
+		for(Ingredient i : r.getIngredientList())
+		{
+			if (i.getType().equals(Ingredient.FERMENTABLE))
+			{
+				amt += i.getAmount();
+			}
+		}
+		
+		return amt;
+	}
+	
 	public static double calculateExtractOG(Recipe r)
 	{
 		float grav = 0;
@@ -97,14 +124,24 @@ public class BrewCalculator {
 	public static double calculateIbuFromRecipe(Recipe r)
 	{
 		double ibu = 0;
-		double AAU = 0;
-		double utilization = 0;
 		
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 		
 		// http://www.howtobrew.com/section1/chapter5-5.html
 		for (Ingredient i : ingredientsList)
 		{
+			ibu += calculateHopIbu(r, i);
+		}
+		
+		return ibu;
+	}
+	
+	public static double calculateHopIbu(Recipe r, Ingredient i)
+	{
+		double ibu = 0;
+		double AAU = 0;
+		double utilization = 0;
+		
 			if (i.getType().equals(Ingredient.HOP))
 			{
 				Hop h = (Hop) i;
@@ -112,12 +149,11 @@ public class BrewCalculator {
 				if (h.getUse().equals(Hop.USE_BOIL))
 				{
 					utilization = getHopUtilization(r, h);
-					AAU += h.getAmount() * h.getAlphaAcidContent();
-					ibu += (AAU * utilization * 75)/r.getBatchSize();
+					AAU = h.getAmount() * h.getAlphaAcidContent();
+					ibu = (AAU * utilization * 75)/r.getBatchSize();
 				}
 			}
-		}
-		
+
 		return ibu;
 	}
 	
@@ -162,8 +198,9 @@ public class BrewCalculator {
 		double boilTimeFactor;
 		double boilGrav = calculateBoilGrav(r);
 		
-		bignessFactor = 1.50 * Math.pow(.000125, boilGrav-1);
-		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()))/4.35;
+		// Default : 1.65/4.25
+		bignessFactor = 1.7 * Math.pow(.000125, boilGrav-1);
+		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()))/4.10;
 		
 		utilization = (float) (bignessFactor * boilTimeFactor);
 		

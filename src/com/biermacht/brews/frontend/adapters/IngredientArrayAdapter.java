@@ -14,17 +14,22 @@ import android.widget.TextView;
 import com.biermacht.brews.R;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.recipe.*;
+import com.biermacht.brews.utils.*;
+import com.biermacht.brews.ingredient.*;
 
 public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 	
 	private Context context;
 	private List<Ingredient> list;
+	private Recipe r;
 	
-	public IngredientArrayAdapter(Context c, List<Ingredient> list)
+	public IngredientArrayAdapter(Context c, List<Ingredient> list, Recipe r)
 	{
 		super(c, android.R.layout.simple_list_item_1, list);
 		this.context = c;
 		this.list = list;
+		this.r = r;
 	}
 
 	@Override
@@ -44,6 +49,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		TextView amountView = (TextView) row.findViewById(R.id.amount);
 		ImageView imageView = (ImageView) row.findViewById(R.id.ingredient_row_icon);
 		TextView unitView = (TextView) row.findViewById(R.id.unit_text);
+		TextView detailView = (TextView) row.findViewById(R.id.ing_detail_text);
 		
 		labelView.setText(list.get(position).getName());
 		amountView.setText(list.get(position).getAmount() + "");
@@ -51,17 +57,38 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		
 		// Set imageView based on ingredient type
 		String ingType = list.get(position).getType();
+		String detailText = "";
 		
 		if(ingType == Ingredient.HOP)
+		{
+			Hop h = (Hop) list.get(position);
 			imageView.setImageResource(R.drawable.icon_hops);
-		else if(ingType == Ingredient.FERMENTABLE)
+			labelView.setText(h.getName() + ", " + String.format("%1.1f", h.getAlphaAcidContent()) + "%");
+			String s = String.format("%2.2f", BrewCalculator.calculateHopIbu(r, h));
+			detailText += s; 
+			detailText += " IBU";
+		}
+		else if(ingType == Ingredient.FERMENTABLE) 
+		{
 			imageView.setImageResource(R.drawable.icon_wheat);
+			String s = String.format("%2.2f", BrewCalculator.calculateGrainPercent(r, list.get(position)));
+			detailText += s;
+			detailText += " % by weight";
+		}
 		else if (ingType == Ingredient.YEAST)
+		{
 			imageView.setImageResource(R.drawable.icon_yeast);
+		}
 		else if(ingType == Ingredient.MISC)
+		{
 			imageView.setImageResource(R.drawable.icon_idk);
+		}
 		else
+		{
 			imageView.setImageResource(R.drawable.icon_idk);
+		}
+		
+		detailView.setText(detailText);
 		
 		return row;
 	}
