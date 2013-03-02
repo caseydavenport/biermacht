@@ -119,9 +119,15 @@ public class BrewCalculator {
 				float ppg = g.getPpg();
 				double amt = g.getAmount();
 				double size = r.getBoilSize();
-				double gVol = .2; // TODO: Actually calculate grain volume!
 
-				grav += (ppg * amt) / (1015) / (size + gVol);
+				if (g.getFermentableType().equals(Fermentable.EXTRACT))
+				{
+					grav += (ppg/1000) * (amt) / (size);
+				}
+				else if (g.getFermentableType().equals(Fermentable.GRAIN))
+				{
+					grav += (r.getEfficiency()/100) * (ppg/1000) * (amt) / (size);
+				}
 			}
 		}
 		return 1 + grav;
@@ -206,8 +212,8 @@ public class BrewCalculator {
 		double boilGrav = calculateBoilGrav(r);
 		
 		// Default : 1.65/4.25
-		bignessFactor = 1.7 * Math.pow(.000125, boilGrav-1);
-		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()))/4.10;
+		bignessFactor = 1.65 * Math.pow(.000125, boilGrav-1);
+		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()))/4.25;
 		
 		utilization = (float) (bignessFactor * boilTimeFactor);
 		
