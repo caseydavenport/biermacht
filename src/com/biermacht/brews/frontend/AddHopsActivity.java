@@ -25,7 +25,7 @@ public class AddHopsActivity extends Activity {
 	IngredientHandler ingredientHandler;
 	private Spinner hopSpinner;
 	private EditText hopNameEditText;
-	private EditText hopBoilStartTimeEditText;
+	private EditText hopBoilTimeEditText;
 	private EditText hopAcidEditText;
 	private EditText hopWeightEditText;
 	private ArrayList<Ingredient> hopTypeArray;
@@ -49,7 +49,7 @@ public class AddHopsActivity extends Activity {
         
         // Initialize views and such here
         hopNameEditText = (EditText) findViewById(R.id.hop_name_edit_text);
-        hopBoilStartTimeEditText = (EditText) findViewById(R.id.start_time_edit_text);
+        hopBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         hopAcidEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
         hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
         
@@ -74,7 +74,7 @@ public class AddHopsActivity extends Activity {
                 }
             	
                 hopNameEditText.setText(hopObj.getName());
-                hopBoilStartTimeEditText.setText(hopObj.getStartTime() +"");
+                hopBoilTimeEditText.setText(hopObj.getTime() +"");
                 hopAcidEditText.setText(hopObj.getAlphaAcidContent() +"");
                 hopWeightEditText.setText(1.0 +"");
             }
@@ -97,15 +97,17 @@ public class AddHopsActivity extends Activity {
 		if (v.getId() == R.id.new_grain_submit_button)
 		{
 			String hopName = hopNameEditText.getText().toString();
-			int startTime = Integer.parseInt(hopBoilStartTimeEditText.getText().toString());
+			int time = Integer.parseInt(hopBoilTimeEditText.getText().toString());
 			int endTime = mRecipe.getBoilTime();
+			int startTime = endTime - time;
 			double alpha = Double.parseDouble(hopAcidEditText.getText().toString());
 			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
 			
-			if (startTime > mRecipe.getBoilTime())
-				startTime = mRecipe.getBoilTime();
+			if (time > mRecipe.getBoilTime())
+				time = mRecipe.getBoilTime();
 			
 			Hop h = new Hop(hopName);
+			h.setTime(time);
 			h.setStartTime(startTime);
 			h.setEndTime(endTime);
 			h.setAlphaAcidContent(alpha);

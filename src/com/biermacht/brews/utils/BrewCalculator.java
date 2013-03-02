@@ -47,7 +47,7 @@ public class BrewCalculator {
 		if (r.getType().equals(Recipe.EXTRACT))
 			return calculateExtractOG(r);
 		else
-			return 2;
+			return calculateExtractOG(r);
 	}
 	
 	public static double calculateGrainPercent(Recipe r, Ingredient i)
@@ -91,9 +91,15 @@ public class BrewCalculator {
 				float ppg = g.getPpg();
 				double amt = g.getAmount();
 				double size = r.getBatchSize();
-				double gVol = .2; // TODO: Actually calculate grain volume!
 				
-				grav += (ppg * amt) / (1015) / (size + gVol);
+				if (g.getFermentableType().equals(Fermentable.EXTRACT))
+				{
+					grav += (ppg/1000) * (amt) / (size);
+				}
+				else if (g.getFermentableType().equals(Fermentable.GRAIN))
+				{
+					grav += (r.getEfficiency()/100) * (ppg/1000) * (amt) / (size);
+				}
 			}
 		}
 		return 1 + grav;
@@ -151,6 +157,7 @@ public class BrewCalculator {
 					utilization = getHopUtilization(r, h);
 					AAU = h.getAmount() * h.getAlphaAcidContent();
 					ibu = (AAU * utilization * 75)/r.getBatchSize();
+					Log.e("BrewCalculator", "IBU for " + h.getName() + ": " + (AAU * utilization * 75)/r.getBatchSize());
 				}
 			}
 

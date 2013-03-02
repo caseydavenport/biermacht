@@ -149,7 +149,7 @@ public class Hop extends Ingredient {
 	 * @return the time
 	 */
 	public int getTime() {
-		return getEndTime() - getStartTime();
+		return time;
 	}
 
 	/**

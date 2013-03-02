@@ -26,6 +26,7 @@ public class HopsHandler extends DefaultHandler {
  
         if (qName.equals("HOP"))
         {
+        	Log.e("HopsHandler", "Making new hop");
             hop = new Hop("");
         } 
         
@@ -39,6 +40,7 @@ public class HopsHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("NAME"))
         {
         	hop.setName(currentValue);
+        	Log.e("HopsHandler", "Hop Name: " + currentValue);
         }
         	
         else if (qName.equalsIgnoreCase("VERSION"))
@@ -81,7 +83,7 @@ public class HopsHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("TIME"))
         {
-        	hop.setTime(Integer.parseInt(currentValue));
+        	hop.setTime((int) Double.parseDouble(currentValue));
         }
         
         else if (qName.equalsIgnoreCase("NOTES"))
