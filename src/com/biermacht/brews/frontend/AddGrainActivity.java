@@ -136,6 +136,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
 			int startTime = Integer.parseInt(grainBoilTimeEditText.getText().toString());
 			int endTime = mRecipe.getBoilTime();
+			String fermType = grainTypeTextView.getText().toString();
 			
 			if (startTime > mRecipe.getBoilTime())
 				startTime = mRecipe.getBoilTime();
@@ -145,7 +146,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			g.setLovibondColor(color);
 			g.setGravity(grav);
 			g.setAmount(weight);
-			g.setFermentableType(Fermentable.GRAIN);
+			g.setFermentableType(fermType);
 			g.setStartTime(startTime);
 			g.setEndTime(endTime);
 			
