@@ -98,10 +98,10 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 
             	
                 grainNameEditText.setText(grainType);
-                grainColorEditText.setText(fermentable.getLovibondColor() +"");
-                grainGravEditText.setText(fermentable.getGravity() +"");
+                grainColorEditText.setText(String.format("%2.2f", fermentable.getLovibondColor()));
+                grainGravEditText.setText(String.format("%2.3f", fermentable.getGravity()));
                 grainWeightEditText.setText(1 +"");
-                grainBoilTimeEditText.setText(mRecipe.getBoilTime() + "");
+                grainBoilTimeEditText.setText(String.format("%2.2f", mRecipe.getBoilTime()));
 				grainTypeTextView.setText(fermentable.getFermentableType());
             }
 

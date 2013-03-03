@@ -140,7 +140,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 			String description = "";
 			Integer boilTime = 1;
 			float batchSize = 5;
-			float boilSize = 5;
+			double boilSize = 2.5;
 			
 			try {
 			    recipeName = recipeNameEditText.getText().toString();
