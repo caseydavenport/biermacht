@@ -96,6 +96,10 @@ public class BrewCalculator {
 				{
 					grav += (ppg/1000) * (amt) / (size);
 				}
+				else if (g.getFermentableType().equals(Fermentable.SUGAR))
+				{
+					grav += (ppg/1000) * (amt) / (size);
+				}
 				else if (g.getFermentableType().equals(Fermentable.GRAIN))
 				{
 					grav += (r.getEfficiency()/100) * (ppg/1000) * (amt) / (size);
@@ -121,6 +125,10 @@ public class BrewCalculator {
 				double size = r.getBoilSize();
 
 				if (g.getFermentableType().equals(Fermentable.EXTRACT))
+				{
+					grav += (ppg/1000) * (amt) / (size);
+				}
+				else if (g.getFermentableType().equals(Fermentable.SUGAR))
 				{
 					grav += (ppg/1000) * (amt) / (size);
 				}

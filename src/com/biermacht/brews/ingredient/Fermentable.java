@@ -28,7 +28,8 @@ public class Fermentable extends Ingredient {
 	public static final String GRAIN = "Grain";
 	public static final String EXTRACT = "Extract";
 	public static final String ADJUNCT = "Adjunct";
-
+	public static final String SUGAR = "Sugar";
+	
 	public Fermentable(String name)
 	{
 		super(name);
