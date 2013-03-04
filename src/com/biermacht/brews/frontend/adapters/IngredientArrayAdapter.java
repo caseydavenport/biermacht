@@ -72,8 +72,10 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		{
 			imageView.setImageResource(R.drawable.icon_wheat);
 			String s = String.format("%2.2f", BrewCalculator.calculateGrainPercent(r, list.get(position)));
+		    String t = String.format("%2.2f", BrewCalculator.calculateGravityPoints(r, list.get(position)));
 			detailText += s;
-			detailText += " % by weight";
+			detailText += " %, ";
+			detailText += t + " GPts.";
 		}
 		else if (ingType == Ingredient.YEAST)
 		{

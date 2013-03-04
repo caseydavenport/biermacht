@@ -113,35 +113,55 @@ public class DetailsViewFragment extends Fragment {
 		  // Set all the colors appropriately
 		  String green = "#44AA44";
 		  String red = "#FF0000";
+		  String yellow = "#FFAA00";
 		  
-		  Boolean isOGGreen = Utils.isWithinRange(r.getOG(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
-		  Boolean isFGGreen = Utils.isWithinRange(r.getFG(), reccomendedValues.getMinFG(), reccomendedValues.getMaxFG());
-		  Boolean isBitGreen = Utils.isWithinRange(r.getBitterness(), reccomendedValues.getMinBitter(), reccomendedValues.getMaxBitter());
-		  Boolean isColorGreen = Utils.isWithinRange(r.getColor(), reccomendedValues.getMinColor(), reccomendedValues.getMaxColor());
-		  Boolean isAbvGreen = Utils.isWithinRange(r.getABV(), reccomendedValues.getMinAbv(), reccomendedValues.getMaxAbv());
+		  // If its in this range, we're all good - make it green.
+		  Boolean isOG_GOOD = Utils.isWithinRange(r.getOG(), reccomendedValues.getMinOG(), reccomendedValues.getMaxOG());
+		  Boolean isFG_GOOD = Utils.isWithinRange(r.getFG(), reccomendedValues.getMinFG(), reccomendedValues.getMaxFG());
+		  Boolean isBit_GOOD = Utils.isWithinRange(r.getBitterness(), reccomendedValues.getMinBitter(), reccomendedValues.getMaxBitter());
+		  Boolean isColor_GOOD = Utils.isWithinRange(r.getColor(), reccomendedValues.getMinColor(), reccomendedValues.getMaxColor());
+		  Boolean isAbv_GOOD = Utils.isWithinRange(r.getABV(), reccomendedValues.getMinAbv(), reccomendedValues.getMaxAbv());
 		  
-		  if (isOGGreen)
+		  // If it is in this range but not the GOOD ranges above, color it yellow
+	      Boolean isOG_OK = Utils.isWithinRange(r.getOG(), reccomendedValues.getMinOG()-.002, reccomendedValues.getMaxOG()+.002);
+		  Boolean isFG_OK = Utils.isWithinRange(r.getFG(), reccomendedValues.getMinFG()-.002, reccomendedValues.getMaxFG()+.002);
+		  Boolean isBit_OK = Utils.isWithinRange(r.getBitterness(), .9*reccomendedValues.getMinBitter(), 1.1*reccomendedValues.getMaxBitter());
+		  Boolean isColor_OK = Utils.isWithinRange(r.getColor(), reccomendedValues.getMinColor()-3, reccomendedValues.getMaxColor()+3);
+		  Boolean isAbv_OK = Utils.isWithinRange(r.getABV(), reccomendedValues.getMinAbv()-.2, reccomendedValues.getMaxAbv()+.2);
+		
+		  
+		  if (isOG_GOOD)
 			  og_content.setTextColor(Color.parseColor(green));
+		  else if (isOG_OK)
+		  	  og_content.setTextColor(Color.parseColor(yellow));
 		  else
 			  og_content.setTextColor(Color.parseColor(red));
 		  
-		  if (isFGGreen)
+		  if (isFG_GOOD)
 			  fg_content.setTextColor(Color.parseColor(green));
+	      else if (isFG_OK)
+			  fg_content.setTextColor(Color.parseColor(yellow));
 		  else
 			  fg_content.setTextColor(Color.parseColor(red));
 		  
-		  if (isBitGreen)
-			  bitt_content.setTextColor(Color.parseColor(green));
+		  if (isBit_GOOD)
+			  bitt_content.setTextColor(Color.parseColor(green));  
+		  else if (isBit_OK)
+			  bitt_content.setTextColor(Color.parseColor(yellow));
 		  else
 			  bitt_content.setTextColor(Color.parseColor(red));
 		  
-		  if (isColorGreen)
+		  if (isColor_GOOD)
 			  color_content.setTextColor(Color.parseColor(green));
+		  else if (isColor_OK)
+			  color_content.setTextColor(Color.parseColor(yellow));
 		  else
 			  color_content.setTextColor(Color.parseColor(red));
 		  
-		  if (isAbvGreen)
+		  if (isAbv_GOOD)
 			  abv_content.setTextColor(Color.parseColor(green));
+		  else if (isAbv_OK)
+			  abv_content.setTextColor(Color.parseColor(yellow));
 		  else
 			  abv_content.setTextColor(Color.parseColor(red));
 		  
