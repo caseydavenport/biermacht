@@ -79,66 +79,54 @@ public class BrewCalculator {
 	
 	public static double calculateExtractOG(Recipe r)
 	{
-		float grav = 0;
+		float gravity_points = 0;
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 		
 		// http://homebrew.stackexchange.com/questions/1434/wiki-how-do-you-calculate-original-gravity
 		for (Ingredient i : ingredientsList)
 		{
-			if (i.getType().equals(Ingredient.FERMENTABLE))
-			{
-				Fermentable g = (Fermentable) i;
-				float ppg = g.getPpg();
-				double amt = g.getAmount();
-				double size = r.getBatchSize();
-				
-				if (g.getFermentableType().equals(Fermentable.EXTRACT))
-				{
-					grav += (ppg/1000) * (amt) / (size);
-				}
-				else if (g.getFermentableType().equals(Fermentable.SUGAR))
-				{
-					grav += (ppg/1000) * (amt) / (size);
-				}
-				else if (g.getFermentableType().equals(Fermentable.GRAIN))
-				{
-					grav += (r.getEfficiency()/100) * (ppg/1000) * (amt) / (size);
-				}
-			}
+			gravity_points += calculateGravityPoints(r, i);
 		}
-		return 1 + grav;
+		return 1 + gravity_points/1000;
 	}
 	
 	public static double calculateBoilGrav(Recipe r)
 	{
-		float grav = 0;
-		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
-
-		// http://homebrew.stackexchange.com/questions/1434/wiki-how-do-you-calculate-original-gravity
-		for (Ingredient i : ingredientsList)
+		double mGPs = calculateExtractOG(r) - 1;
+		return 1 + (mGPs * r.getBatchSize() / r.getBoilSize());
+	}
+	
+	public static double calculateGravityPoints(Recipe r, Ingredient i)
+	{
+		double pts = 0;
+		if (i.getType().equals(Ingredient.FERMENTABLE))
 		{
-			if (i.getType().equals(Ingredient.FERMENTABLE))
+			Fermentable f = (Fermentable) i;
+			Log.e("BrewCalculator GRAV", f.getName() + ": " + f.getFermentableType());
+			
+			if(f.getFermentableType().equals(Fermentable.EXTRACT))
 			{
-				Fermentable g = (Fermentable) i;
-				float ppg = g.getPpg();
-				double amt = g.getAmount();
-				double size = r.getBoilSize();
-
-				if (g.getFermentableType().equals(Fermentable.EXTRACT))
-				{
-					grav += (ppg/1000) * (amt) / (size);
-				}
-				else if (g.getFermentableType().equals(Fermentable.SUGAR))
-				{
-					grav += (ppg/1000) * (amt) / (size);
-				}
-				else if (g.getFermentableType().equals(Fermentable.GRAIN))
-				{
-					grav += (r.getEfficiency()/100) * (ppg/1000) * (amt) / (size);
-				}
+				pts = f.getAmount() * f.getPpg() / r.getBatchSize();
+			}
+			else if (f.getFermentableType().equals(Fermentable.SUGAR))
+			{
+				pts = f.getAmount() * f.getPpg() / r.getBatchSize();
+			}
+			else if (f.getFermentableType().equals(Fermentable.GRAIN))
+			{
+				pts = 5 * f.getAmount() / r.getBatchSize();
+				
+				if(f.getName().equalsIgnoreCase("Roasted Barley"))
+					pts = 10 * f.getAmount() / r.getBatchSize();
+				if(f.getName().equalsIgnoreCase("Black Patent Malt"))
+					pts = 10 * f.getAmount() / r.getBatchSize();
+			}
+			else
+			{
+				pts = f.getAmount() * f.getPpg() / r.getBatchSize();
 			}
 		}
-		return 1 + grav;
+		return pts;
 	}
 	
 	public static double calculateIbuFromRecipe(Recipe r)
@@ -219,8 +207,10 @@ public class BrewCalculator {
 		double boilTimeFactor;
 		double boilGrav = calculateBoilGrav(r);
 		
+		Log.e("BrewCalculator", "Boil Gravity: " + i.getName() + " " + boilGrav);
+		
 		// Default : 1.65/4.25
-		bignessFactor = 1.65 * Math.pow(.000125, boilGrav-1);
+		bignessFactor = 1.65 * Math.pow(.00025, boilGrav-1);
 		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()))/4.25;
 		
 		utilization = (float) (bignessFactor * boilTimeFactor);
