@@ -364,9 +364,6 @@ public class Recipe {
 					extract_adds += f.getName() + "\n";
 				}
 			}
-			// Remove trailing newline characters
-			steeps = steeps.substring(0, steeps.length()-1);
-			extract_adds = extract_adds.substring(0, extract_adds.length()-1);
 			
 			// Boil hops instructions
 			for(Hop h : getHopsList())
@@ -395,6 +392,9 @@ public class Recipe {
 		// Build up the instruction list
 		if (steeps.length() > 0)
 		{
+			// Remove trailing newline character
+			steeps = steeps.substring(0, steeps.length()-1);
+			
 			inst = new Instruction();
 			inst.setInstructionText(steeps);
 			inst.setInstructionType(Instruction.TYPE_STEEP);
@@ -404,6 +404,9 @@ public class Recipe {
 		}
 		if (extract_adds.length() > 0)
 		{
+			// Remove trailing newline character
+			extract_adds = extract_adds.substring(0, extract_adds.length()-1);
+			
 			inst = new Instruction();
 			inst.setInstructionType(Instruction.TYPE_ADD);
 			inst.setInstructionText(extract_adds);
