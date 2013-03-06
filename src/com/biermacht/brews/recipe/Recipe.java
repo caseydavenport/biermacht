@@ -344,20 +344,97 @@ public class Recipe {
 	private ArrayList<Instruction> generateInstructionsFromIngredients()
 	{
 		ArrayList<Instruction> list = new ArrayList<Instruction>();
-
+		String steeps = "Steep the following:";
+		String extract_adds = "Add extracts:";
+		String yeasts = "Add ";
+		Instruction inst;
 		
-		for (Ingredient i : getIngredientList())
+		// Extract recipe
+		if (true)
 		{
-			Instruction inst = new Instruction();
-			
-			// Gain case
-			if (i.getType().equals(Ingredient.FERMENTABLE) || i.getType().equals(Ingredient.HOP))
+			// Generate steep and extract add instructions
+			for(Fermentable f : getFermentablesList())
 			{
-				inst.setInstructionText("Boil " + i.getName());
-				inst.setStartTime(i.getStartTime());
-				inst.setEndTime(i.getEndTime());
+				if (f.getFermentableType().equals(Fermentable.GRAIN))
+				{
+					steeps += "\n   " + f.getName();
+				}
+				else
+				{
+					extract_adds += "\n  " + f.getName();
+				}
+			}
+			
+			// Boil hops instructions
+			for(Hop h : getHopsList())
+			{
+				inst = new Instruction();
+				if (h.getUse().equals(Hop.USE_BOIL))
+				{
+					inst.setInstructionType(Instruction.TYPE_BOIL);
+					inst.setInstructionText("Boil " + h.getName());
+				}
+				else if (h.getUse().equals(Hop.USE_DRY_HOP))
+				{
+					inst.setInstructionType(Instruction.TYPE_DRY_HOP);
+					inst.setInstructionText("Dry hop " + h.getName());
+				}
+				inst.setStartTime(h.getStartTime());
+				inst.setEndTime(h.getEndTime());
 				list.add(inst);
 			}
+			for (Yeast y : getYeastsList())
+			{
+				yeasts += y.getName() + " yeast";
+			}
+		}
+			
+		// Build up the instruction list
+		if (steeps.length() > 25)
+		{
+			inst = new Instruction();
+			inst.setInstructionText(steeps);
+			inst.setInstructionType(Instruction.TYPE_STEEP);
+			inst.setStartTime(-2);
+			inst.setEndTime(0);
+			list.add(inst);
+		}
+		if (extract_adds.length() > 15)
+		{
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_ADD);
+			inst.setInstructionText(extract_adds);
+			inst.setStartTime(-1);
+			inst.setEndTime(getBoilTime());
+			list.add(inst);
+		}
+		if (true)
+		{
+			// Add a cool wort stage
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_COOL);
+			inst.setInstructionText("Cool wort to 70F");
+			inst.setStartTime(getBoilTime());
+			inst.setEndTime(getBoilTime());
+			list.add(inst);
+		}
+		if (yeasts.length() > 4)
+		{
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_ADD);
+			inst.setInstructionText(yeasts);
+			inst.setStartTime(getBoilTime() + 1);
+			inst.setEndTime(getBoilTime() + 1);
+			list.add(inst);
+		}
+		if (true)
+		{
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_FERMENT);
+			inst.setInstructionText("Ferment till FG = " + getFG());
+			inst.setStartTime(getBoilTime() + 1);
+			inst.setEndTime(getBoilTime() + 1);
+			list.add(inst);
 		}
 		
 		// Sort based on start time

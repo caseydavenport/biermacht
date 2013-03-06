@@ -16,13 +16,7 @@ import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 public class Utils {
 		
-	// Instruction Types
-	public static String INSTRUCTION_TYPE_BOIL = "Brew";
-	public static String INSTRUCTION_TYPE_FERMENT = "Ferment";
-	public static String INSTRUCTION_TYPE_OTHER = "Other";
-	
-	
-	
+
 	// Beer styles... http://www.bjcp.org/docs/2008_stylebook.pdf
 	public static BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
 	public static BeerStyle BEERSTYLE_FRUIT_BEER = new BeerStyle("Fruit Beer");

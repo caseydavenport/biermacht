@@ -9,14 +9,22 @@ public class Instruction {
 	private double startTime;
 	private double endTime;
 	private String duration_units;
-
+	
+	public static String TYPE_OTHER = "Other";
+	public static String TYPE_ADD = "Add";
+	public static String TYPE_STEEP = "Steep";
+	public static String TYPE_BOIL = "Boil";
+	public static String TYPE_COOL = "Cool";
+	public static String TYPE_FERMENT = "Ferment";
+	public static String TYPE_DRY_HOP = "Dry Hop";
+	
 	public Instruction()
 	{
 		this.setInstructionText("Blank Instruction");
 		this.startTime = 0;
 		this.endTime = 0;
 		this.duration_units = "mins";
-		this.instructionType = Utils.INSTRUCTION_TYPE_OTHER;
+		this.instructionType = TYPE_OTHER;
 	}
 
 	public String getInstructionText() {
