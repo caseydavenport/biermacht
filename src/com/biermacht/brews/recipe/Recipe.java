@@ -346,6 +346,7 @@ public class Recipe {
 	{
 		ArrayList<Instruction> list = new ArrayList<Instruction>();
 		HashMap<Integer, String> steeps = new HashMap<Integer, String>();
+		HashMap<Integer, String> hopBoils = new HashMap<Integer, String>();
 		String extract_adds = "";
 		String yeasts = "";
 		Instruction inst;
@@ -385,20 +386,26 @@ public class Recipe {
 			for(Hop h : getHopsList())
 			{
 				inst = new Instruction();
+				// Boil Case
 				if (h.getUse().equals(Hop.USE_BOIL))
 				{
-					inst.setInstructionType(Instruction.TYPE_BOIL);
-					inst.setInstructionText("Boil " + h.getName());
+					if (!hopBoils.containsKey(h.getTime()))
+					{
+						hopBoils.put(h.getTime(), h.getName());
+					}
+					else
+					{
+						// Append to existing duration
+						String s = hopBoils.get(h.getTime());
+						s += "\n";
+						s += h.getName();
+						hopBoils.put(h.getTime(), s);
+					}
 				}
+				// Dry hop case
 				else if (h.getUse().equals(Hop.USE_DRY_HOP))
 				{
-					inst.setInstructionType(Instruction.TYPE_DRY_HOP);
-					inst.setInstructionText("Dry hop " + h.getName());
 				}
-				inst.setStartTime(h.getStartTime());
-				inst.setEndTime(h.getEndTime());
-				inst.setDuration(h.getTime());
-				list.add(inst);
 			}
 			for (Yeast y : getYeastsList())
 			{
@@ -418,6 +425,21 @@ public class Recipe {
 				inst.setDuration(k);
 				inst.setStartTime(-2);
 				inst.setEndTime(-1);
+				list.add(inst);
+			}
+		}
+		// Build up the boil hops instructions
+		if (hopBoils.size() > 0)
+		{
+			// for each k=steep_duration
+			for (Integer k : hopBoils.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(hopBoils.get(k));
+				inst.setInstructionType(Instruction.TYPE_BOIL);
+				inst.setDuration(k);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
 				list.add(inst);
 			}
 		}
