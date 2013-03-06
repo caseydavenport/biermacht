@@ -13,8 +13,8 @@
         android:gravity="center"
         android:layout_marginRight="0dp">
         
-        <TextView android:id="@+id/numbering"
-	        android:layout_width="32dp"
+        <TextView android:id="@+id/tag"
+	        android:layout_width="40dp"
 	        android:layout_height="32dp"
 	        android:gravity="center"
 	        android:layout_margin="14dip"

@@ -344,9 +344,9 @@ public class Recipe {
 	private ArrayList<Instruction> generateInstructionsFromIngredients()
 	{
 		ArrayList<Instruction> list = new ArrayList<Instruction>();
-		String steeps = "Steep the following:";
-		String extract_adds = "Add extracts:";
-		String yeasts = "Add ";
+		String steeps = "";
+		String extract_adds = "";
+		String yeasts = "";
 		Instruction inst;
 		
 		// Extract recipe
@@ -357,13 +357,16 @@ public class Recipe {
 			{
 				if (f.getFermentableType().equals(Fermentable.GRAIN))
 				{
-					steeps += "\n   " + f.getName();
+					steeps += f.getName() + "\n";
 				}
 				else
 				{
-					extract_adds += "\n  " + f.getName();
+					extract_adds += f.getName() + "\n";
 				}
 			}
+			// Remove trailing newline characters
+			steeps = steeps.substring(0, steeps.length()-1);
+			extract_adds = extract_adds.substring(0, extract_adds.length()-1);
 			
 			// Boil hops instructions
 			for(Hop h : getHopsList())
@@ -390,7 +393,7 @@ public class Recipe {
 		}
 			
 		// Build up the instruction list
-		if (steeps.length() > 25)
+		if (steeps.length() > 0)
 		{
 			inst = new Instruction();
 			inst.setInstructionText(steeps);
@@ -399,7 +402,7 @@ public class Recipe {
 			inst.setEndTime(0);
 			list.add(inst);
 		}
-		if (extract_adds.length() > 15)
+		if (extract_adds.length() > 0)
 		{
 			inst = new Instruction();
 			inst.setInstructionType(Instruction.TYPE_ADD);
@@ -408,7 +411,7 @@ public class Recipe {
 			inst.setEndTime(getBoilTime());
 			list.add(inst);
 		}
-		if (true)
+		if (list.size() > 0)
 		{
 			// Add a cool wort stage
 			inst = new Instruction();
@@ -418,7 +421,7 @@ public class Recipe {
 			inst.setEndTime(getBoilTime());
 			list.add(inst);
 		}
-		if (yeasts.length() > 4)
+		if (yeasts.length() > 0)
 		{
 			inst = new Instruction();
 			inst.setInstructionType(Instruction.TYPE_ADD);
@@ -427,7 +430,7 @@ public class Recipe {
 			inst.setEndTime(getBoilTime() + 1);
 			list.add(inst);
 		}
-		if (true)
+		if (list.size() > 0)
 		{
 			inst = new Instruction();
 			inst.setInstructionType(Instruction.TYPE_FERMENT);

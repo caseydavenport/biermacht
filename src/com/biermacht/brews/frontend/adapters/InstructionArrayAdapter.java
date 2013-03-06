@@ -39,14 +39,14 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 			row = inflater.inflate(R.layout.instruction_row_layout, parent, false);
 		}
 		TextView labelView = (TextView) row.findViewById(R.id.label);
-		TextView numberView = (TextView) row.findViewById(R.id.numbering);
+		TextView tagView = (TextView) row.findViewById(R.id.tag);
 		TextView startTimeView = (TextView) row.findViewById(R.id.start_time_view);
 		TextView endTimeView = (TextView) row.findViewById(R.id.end_time_view);
 		
+		tagView.setText(list.get(position).getInstructionType());
 		
 		startTimeView.setText(list.get(position).getStartTime() + " " + list.get(position).getDuration_units());
 		endTimeView.setText(list.get(position).getEndTime() + " " + list.get(position).getDuration_units());
-		numberView.setText(position+1 + ".");
 		labelView.setText(list.get(position).getInstructionText());
 		
 		return row;

@@ -10,13 +10,13 @@ public class Instruction {
 	private double endTime;
 	private String duration_units;
 	
-	public static String TYPE_OTHER = "Other";
+	public static String TYPE_OTHER = "";
 	public static String TYPE_ADD = "Add";
 	public static String TYPE_STEEP = "Steep";
 	public static String TYPE_BOIL = "Boil";
 	public static String TYPE_COOL = "Cool";
-	public static String TYPE_FERMENT = "Ferment";
-	public static String TYPE_DRY_HOP = "Dry Hop";
+	public static String TYPE_FERMENT = "Wait";
+	public static String TYPE_DRY_HOP = "Hop";
 	
 	public Instruction()
 	{

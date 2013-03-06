@@ -114,7 +114,7 @@ public final class R {
         public static final int edit_text=0x7f080046;
         public static final int efficiency_edit_text=0x7f080027;
         public static final int efficiency_title=0x7f080026;
-        public static final int end_time_view=0x7f080063;
+        public static final int end_time_view=0x7f080062;
         public static final int fermentable=0x7f080073;
         public static final int fermentable_type_view=0x7f080004;
         public static final int first_ll=0x7f080007;
@@ -154,7 +154,7 @@ public final class R {
         public static final int no_ingredients_view=0x7f08005f;
         public static final int no_instructions_view=0x7f080066;
         public static final int no_recipes_view=0x7f080040;
-        public static final int numbering=0x7f080061;
+        public static final int numbering=0x7f080064;
         public static final int placeholder=0x7f08002d;
         public static final int recipe_description_edit_text=0x7f080024;
         public static final int recipe_list=0x7f08003f;
@@ -172,11 +172,11 @@ public final class R {
         public static final int spinner_title=0x7f080001;
         public static final int spinner_titles=0x7f08001e;
         public static final int spinners=0x7f080020;
-        public static final int start_time_view=0x7f080062;
+        public static final int start_time_view=0x7f080061;
         public static final int submit_button=0x7f080037;
         public static final int tag=0x7f080049;
         public static final int third_ll=0x7f08000f;
-        public static final int title_row=0x7f080064;
+        public static final int title_row=0x7f080063;
         public static final int unit_text=0x7f08005d;
         public static final int units_spinner=0x7f080044;
         public static final int units_view=0x7f080042;
