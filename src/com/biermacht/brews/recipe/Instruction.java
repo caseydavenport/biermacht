@@ -8,6 +8,7 @@ public class Instruction {
 	private String instructionType;
 	private double startTime;
 	private double endTime;
+	private double duration;
 	private String duration_units;
 	
 	public static String TYPE_OTHER = "";
@@ -23,12 +24,35 @@ public class Instruction {
 		this.setInstructionText("Blank Instruction");
 		this.startTime = 0;
 		this.endTime = 0;
+		this.duration = 0;
 		this.duration_units = "mins";
 		this.instructionType = TYPE_OTHER;
 	}
 
 	public String getInstructionText() {
 		return instructionText;
+	}
+	
+	public void addToText(String s)
+	{
+		instructionText += s;
+	}
+	
+	public Instruction concatInstruction(Instruction i)
+	{
+		Instruction iret = new Instruction();
+		iret.setDuration(i.getDuration());
+		iret.setDuration_units(i.getDuration_units());
+		iret.setEndTime(i.getEndTime());
+		iret.setStartTime(i.getStartTime());
+		iret.setInstructionText(getInstructionText() + "\n" + i.getInstructionText());
+		return iret;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return this.getInstructionText();
 	}
 
 	public void setInstructionText(String instructionText) {
@@ -43,8 +67,13 @@ public class Instruction {
 		this.instructionType = instructionType;
 	}
 
+	public void setDuration(double d)
+	{
+		this.duration = d;
+	}
+	
 	public double getDuration() {
-		return getEndTime() - getStartTime();
+		return duration;
 	}
 
 	public String getDuration_units() {

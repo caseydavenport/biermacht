@@ -40,14 +40,22 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 		}
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView tagView = (TextView) row.findViewById(R.id.tag);
+		TextView durationView = (TextView) row.findViewById(R.id.duration_view);
 		TextView startTimeView = (TextView) row.findViewById(R.id.start_time_view);
 		TextView endTimeView = (TextView) row.findViewById(R.id.end_time_view);
 		
+		// Set what type of instruction it is
 		tagView.setText(list.get(position).getInstructionType());
 		
+		// Set start time, end time, and duration
 		startTimeView.setText(list.get(position).getStartTime() + " " + list.get(position).getDuration_units());
 		endTimeView.setText(list.get(position).getEndTime() + " " + list.get(position).getDuration_units());
+		durationView.setText(list.get(position).getDuration() + " " + list.get(position).getDuration_units());
+		
+		// Set instruction text
 		labelView.setText(list.get(position).getInstructionText());
+		
+		// TODO: Set visibility based on instruction type
 		
 		return row;
 	}

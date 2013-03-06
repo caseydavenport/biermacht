@@ -129,7 +129,7 @@
 	        android:layout_below="@id/second_ll" >
 		    
 		    <!-- Boil time -->
-		    <TextView android:id="@+id/boil_time_title"
+		    <TextView android:id="@+id/time_title"
 		        android:text="@string/boil_start_time"
 		        style="@style/title_light" />
 		              
@@ -144,7 +144,7 @@
 	        android:layout_marginBottom="15dip" >
 	        	    
 		    <EditText
-		        android:id="@+id/boil_time_edit_text"
+		        android:id="@+id/time_edit_text"
 		        android:inputType="numberDecimal"
 		        android:selectAllOnFocus="true"
 		        android:layout_width="0dp"

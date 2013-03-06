@@ -13,6 +13,7 @@ import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.comparators.InstructionComparator;
+import java.util.*;
 
 public class Recipe {
 	
@@ -344,7 +345,7 @@ public class Recipe {
 	private ArrayList<Instruction> generateInstructionsFromIngredients()
 	{
 		ArrayList<Instruction> list = new ArrayList<Instruction>();
-		String steeps = "";
+		HashMap<Integer, String> steeps = new HashMap<Integer, String>();
 		String extract_adds = "";
 		String yeasts = "";
 		Instruction inst;
@@ -355,9 +356,24 @@ public class Recipe {
 			// Generate steep and extract add instructions
 			for(Fermentable f : getFermentablesList())
 			{
+				// We build up a map with K = steep duration
+				// and V = string of steeped grains at duration K
 				if (f.getFermentableType().equals(Fermentable.GRAIN))
 				{
-					steeps += f.getName() + "\n";
+					if (!steeps.containsKey(f.getTime()))
+					{
+						// Add a new entry for that duration
+						steeps.put(f.getTime(), f.getName());	
+					}
+					else
+					{
+						// Append to existing duration
+						String s = steeps.get(f.getTime());
+						s += "\n";
+						s += f.getName();
+						steeps.put(f.getTime(), s);
+					}
+					
 				}
 				else
 				{
@@ -381,6 +397,7 @@ public class Recipe {
 				}
 				inst.setStartTime(h.getStartTime());
 				inst.setEndTime(h.getEndTime());
+				inst.setDuration(h.getTime());
 				list.add(inst);
 			}
 			for (Yeast y : getYeastsList())
@@ -389,18 +406,20 @@ public class Recipe {
 			}
 		}
 			
-		// Build up the instruction list
-		if (steeps.length() > 0)
+		// Build up the steep instructions
+		if (steeps.size() > 0)
 		{
-			// Remove trailing newline character
-			steeps = steeps.substring(0, steeps.length()-1);
-			
-			inst = new Instruction();
-			inst.setInstructionText(steeps);
-			inst.setInstructionType(Instruction.TYPE_STEEP);
-			inst.setStartTime(-2);
-			inst.setEndTime(0);
-			list.add(inst);
+			// for each k=steep_duration
+			for (Integer k : steeps.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(steeps.get(k));
+				inst.setInstructionType(Instruction.TYPE_STEEP);
+				inst.setDuration(k);
+				inst.setStartTime(-2);
+				inst.setEndTime(-1);
+				list.add(inst);
+			}
 		}
 		if (extract_adds.length() > 0)
 		{
@@ -412,6 +431,7 @@ public class Recipe {
 			inst.setInstructionText(extract_adds);
 			inst.setStartTime(-1);
 			inst.setEndTime(getBoilTime());
+			inst.setDuration(getBoilTime());
 			list.add(inst);
 		}
 		if (list.size() > 0)
@@ -422,6 +442,8 @@ public class Recipe {
 			inst.setInstructionText("Cool wort to 70F");
 			inst.setStartTime(getBoilTime());
 			inst.setEndTime(getBoilTime());
+			inst.setDuration(2);
+			inst.setDuration_units("hours");
 			list.add(inst);
 		}
 		if (yeasts.length() > 0)
@@ -431,15 +453,18 @@ public class Recipe {
 			inst.setInstructionText(yeasts);
 			inst.setStartTime(getBoilTime() + 1);
 			inst.setEndTime(getBoilTime() + 1);
+			inst.setDuration(1);
 			list.add(inst);
 		}
 		if (list.size() > 0)
 		{
 			inst = new Instruction();
 			inst.setInstructionType(Instruction.TYPE_FERMENT);
-			inst.setInstructionText("Ferment till FG = " + getFG());
+			inst.setInstructionText("Until FG = " + getFG());
 			inst.setStartTime(getBoilTime() + 1);
 			inst.setEndTime(getBoilTime() + 1);
+			inst.setDuration(5);
+			inst.setDuration_units("days");
 			list.add(inst);
 		}
 		

@@ -44,9 +44,18 @@
     <View android:layout_width="1dip"
         android:layout_height="fill_parent"
         android:background="#44000000" />
+		
+	<TextView android:id="@+id/duration_view"
+	    android:layout_height="fill_parent"
+	    android:layout_width="50dip"
+	    android:gravity="center"
+	    android:layout_marginLeft="2dp"
+	    android:background="@color/transparent" 
+	    android:text=""/>
     
     <!-- Displays the estimated time for this step -->
 	<TextView android:id="@+id/start_time_view"
+		android:visibility="gone"
 	    android:layout_height="fill_parent"
 	    android:layout_width="50dip"
 	    android:gravity="center"
@@ -54,13 +63,17 @@
 	    android:background="@color/transparent" 
 	    android:text="0 mins"/>
 	
-	    <!-- Divider line -->
+	
+	
+	<!-- Divider line -->
     <View android:layout_width="1dip"
+		android:visibility="gone"
         android:layout_height="fill_parent"
-        android:background="#44000000" />
+        android:background="#44000000" /> 
     
     <!-- Displays the estimated time for this step -->
 	<TextView android:id="@+id/end_time_view"
+		android:visibility="gone"
 	    android:layout_height="fill_parent"
 	    android:layout_width="50dip"
 	    android:gravity="center"

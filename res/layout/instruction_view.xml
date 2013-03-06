@@ -29,14 +29,14 @@
 		        android:layout_marginRight="0dp">
 		        
 		        <TextView android:id="@+id/numbering"
-			        android:layout_width="32dp"
+			        android:layout_width="40dp"
 			        android:layout_height="32dp"
 			        android:gravity="center"
 			        android:layout_margin="14dip"
 			        android:textStyle="bold"
 			        android:textSize="15dp"
 			        android:textColor="@color/title_color_light"
-			        android:text="#"
+			        android:text="Type"
 			        android:background="@color/transparent" /> 
 	        
    			</LinearLayout>
@@ -62,34 +62,7 @@
 		    <View android:layout_width="1dip"
 		        android:layout_height="fill_parent"
 		        android:background="#44000000" />
-		    
-		    <!-- Displays the estimated time for this step -->
-			<TextView android:id="@+id/start_time_view"
-			    android:layout_height="fill_parent"
-			    android:layout_width="50dip"
-			    android:gravity="center"
-			    android:layout_marginLeft="2dp"
-			    android:background="#00000000" 
-			    android:textStyle="bold"
-			    android:textColor="@color/title_color_light"
-			    android:text="Start"/>
-			
-			    <!-- Divider line -->
-		    <View android:layout_width="1dip"
-		        android:layout_height="fill_parent"
-		        android:background="#44000000" />
-		    
-		    <!-- Displays the estimated time for this step -->
-			<TextView android:id="@+id/end_time_view"
-			    android:layout_height="fill_parent"
-			    android:layout_width="50dip"
-			    android:gravity="center"
-			    android:layout_marginLeft="2dp"
-			    android:background="#00000000" 
-			    android:textStyle="bold"
-			    android:textColor="@color/title_color_light"
-			    android:text="End"/>
-		
+		    		
 		</LinearLayout>
 			
 			    <ListView

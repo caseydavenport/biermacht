@@ -31,6 +31,7 @@
     <string name="boil_start_time">Boil Start Time</string>
     <string name="boil_end_time">Boil End Time</string>
     <string name="boil_time">Boil Time (mins)</string>
+	<string name="steep_time">Steep Time (mins)</string>
     <string name="batch_volume">Final Batch Volume (gal)</string>
     <string name="boil_volume">Boil Volume (gal)</string>
     <string name="efficiency">Efficiency (%)</string>

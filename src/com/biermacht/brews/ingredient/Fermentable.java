@@ -37,7 +37,7 @@ public class Fermentable extends Ingredient {
 		this.amount = 0;
 		this.yield = 1;
 		this.color = 0;
-		this.addAfterBoil = false;;
+		this.addAfterBoil = false;
 		this.setMaxInBatch(0);
 	}
 

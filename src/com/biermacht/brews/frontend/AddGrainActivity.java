@@ -32,8 +32,9 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainColorEditText;
 	private EditText grainGravEditText;
 	private EditText grainWeightEditText;
-	private EditText grainBoilTimeEditText;
+	private EditText grainTimeEditText;
 	private TextView grainTypeTextView;
+	private TextView boilSteepTextView;
 	private ArrayList<String> grainTypeArray;
 	private String grainType;
 	private Recipe mRecipe;
@@ -61,8 +62,9 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainColorEditText = (EditText) findViewById(R.id.grain_color_edit_text);
         grainGravEditText = (EditText) findViewById(R.id.grain_grav_edit_text);
         grainWeightEditText = (EditText) findViewById(R.id.grain_weight_edit_text);
-        grainBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
+        grainTimeEditText = (EditText) findViewById(R.id.time_edit_text);
         grainTypeTextView = (TextView) findViewById(R.id.fermentable_type_view);
+		boilSteepTextView = (TextView) findViewById(R.id.time_title);	
 		
         // Set up grain type spinner
         grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
@@ -95,18 +97,39 @@ public class AddGrainActivity extends Activity implements OnClickListener {
                 	grainNameEditText.setVisibility(View.GONE);
                 	findViewById(R.id.grain_name_title).setVisibility(View.GONE);
                 }
-                
-            	
+                // Set weather we show boil or steep
+				if (mRecipe.getType().equals(Recipe.EXTRACT))
+				{	
+					if (fermentable.getFermentableType().equals(Fermentable.EXTRACT))
+					{
+						boilSteepTextView.setText(R.string.boil_time);
+						grainTimeEditText.setText(mRecipe.getBoilTime());
+					}
+					else if (fermentable.getFermentableType().equals(Fermentable.GRAIN))
+					{
+						boilSteepTextView.setText(R.string.steep_time);
+						grainTimeEditText.setText(15);
+					}
+					else
+					{
+						boilSteepTextView.setText("Time");
+					}
+            	}
+				else 
+				{
+					// TODO: Partial Mash / All Grain
+				}
+				
                 grainNameEditText.setText(grainType);
                 grainColorEditText.setText(String.format("%2.2f", fermentable.getLovibondColor()));
                 grainGravEditText.setText(String.format("%2.3f", fermentable.getGravity()));
                 grainWeightEditText.setText(1 +"");
-                grainBoilTimeEditText.setText(String.format("%d", mRecipe.getBoilTime()));
+                grainTimeEditText.setText(String.format("%d", mRecipe.getBoilTime()));
 				grainTypeTextView.setText(fermentable.getFermentableType());
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+                // This is never reached?
             }
 
         });   
@@ -134,9 +157,9 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			double color = Double.parseDouble(grainColorEditText.getText().toString());
 			double grav = Double.parseDouble(grainGravEditText.getText().toString());
 			double weight = Double.parseDouble(grainWeightEditText.getText().toString());
-			int boilTime = Integer.parseInt(grainBoilTimeEditText.getText().toString());
+			int cookTime = Integer.parseInt(grainTimeEditText.getText().toString());
 			int endTime = mRecipe.getBoilTime();
-			int startTime = endTime - boilTime;
+			int startTime = endTime - cookTime;
 			String fermType = grainTypeTextView.getText().toString();
 			
 			if (startTime > mRecipe.getBoilTime())
