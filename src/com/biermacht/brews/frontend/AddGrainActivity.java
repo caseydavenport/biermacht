@@ -103,12 +103,12 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 					if (fermentable.getFermentableType().equals(Fermentable.EXTRACT))
 					{
 						boilSteepTextView.setText(R.string.boil_time);
-						grainTimeEditText.setText(mRecipe.getBoilTime());
+						grainTimeEditText.setText(mRecipe.getBoilTime() + "");
 					}
 					else if (fermentable.getFermentableType().equals(Fermentable.GRAIN))
 					{
 						boilSteepTextView.setText(R.string.steep_time);
-						grainTimeEditText.setText(15);
+						grainTimeEditText.setText(15 + "");
 					}
 					else
 					{
