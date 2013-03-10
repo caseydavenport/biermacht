@@ -6,6 +6,7 @@ public class Instruction {
 	
 	private String instructionText;
 	private String instructionType;
+	private int order;
 	private double startTime;
 	private double endTime;
 	private double duration;
@@ -26,6 +27,7 @@ public class Instruction {
 		this.endTime = 0;
 		this.duration = 0;
 		this.duration_units = "mins";
+		this.order = -1;
 		this.instructionType = TYPE_OTHER;
 	}
 
@@ -47,6 +49,16 @@ public class Instruction {
 		iret.setStartTime(i.getStartTime());
 		iret.setInstructionText(getInstructionText() + "\n" + i.getInstructionText());
 		return iret;
+	}
+	
+	public int getOrder()
+	{
+		return this.order;
+	}
+	
+	public void setOrder(int o)
+	{
+		this.order = o;
 	}
 	
 	@Override
