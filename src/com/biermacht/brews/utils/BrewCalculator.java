@@ -92,8 +92,26 @@ public class BrewCalculator {
 	
 	public static double calculateBoilGrav(Recipe r)
 	{
-		double mGPs = calculateExtractOG(r) - 1;
-		return 1 + (mGPs * r.getBatchSize() / r.getBoilSize());
+		// Because this is used for hop utilization calculation,
+		// We want to adjust this based on late extract additions
+		
+		double mGPs = calculateExtractOG(r) - 1; //milliGPs
+		double avgBoilTime = 0;
+		int t=0;
+		
+		for (Fermentable f : r.getFermentablesList())
+		{
+			if (f.getFermentableType().equals(Fermentable.EXTRACT))
+			{
+				t++;
+				avgBoilTime += f.getTime();
+			}
+		}
+		avgBoilTime = avgBoilTime/t;
+		
+		Log.e("BrewCalc", "AVGBOILTIME= " + avgBoilTime);
+		
+		return 1 + (mGPs * r.getBatchSize() / r.getBoilSize())*(avgBoilTime/r.getBoilTime());
 	}
 	
 	public static double calculateGravityPoints(Recipe r, Ingredient i)
