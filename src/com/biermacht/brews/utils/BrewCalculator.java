@@ -99,6 +99,8 @@ public class BrewCalculator {
 		double avgBoilTime = 0;
 		int t=0;
 		
+		// TODO: This is imprecise as it doesn't take into account
+		// how much extract is used as a late addition
 		for (Fermentable f : r.getFermentablesList())
 		{
 			if (f.getFermentableType().equals(Fermentable.EXTRACT))
