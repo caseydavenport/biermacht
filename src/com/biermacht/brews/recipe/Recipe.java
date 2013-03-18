@@ -348,7 +348,7 @@ public class Recipe {
 		HashMap<Integer, String> steeps = new HashMap<Integer, String>();
 		HashMap<Integer, String> hopBoils = new HashMap<Integer, String>();
 		HashMap<Integer, String> dryHops = new HashMap<Integer, String>();
-		String extract_adds = "";
+		HashMap<Integer, String> extracts = new HashMap<Integer, String>();
 		String yeasts = "";
 		Instruction inst;
 		
@@ -377,9 +377,22 @@ public class Recipe {
 					}
 					
 				}
-				else
+				// Handle extracts here
+				else if (f.getFermentableType().equals(Fermentable.EXTRACT))
 				{
-					extract_adds += f.getName() + "\n";
+					if (!extracts.containsKey(f.getTime()))
+					{
+						// Add a new entry for that duration
+						extracts.put(f.getTime(), f.getName());	
+					}
+					else
+					{
+						// Append to existing duration
+						String s = extracts.get(f.getTime());
+						s += "\n";
+						s += f.getName();
+						extracts.put(f.getTime(), s);
+					}
 				}
 			}
 			
@@ -441,19 +454,27 @@ public class Recipe {
 				list.add(inst);
 			}
 		}
-		if (extract_adds.length() > 0)
+		// Build up the extracts instructions
+		if (extracts.size() > 0)
 		{
-			// Remove trailing newline character
-			extract_adds = extract_adds.substring(0, extract_adds.length()-1);
-
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_ADD);
-			inst.setInstructionText(extract_adds);
-			inst.setStartTime(0);
-			inst.setEndTime(getBoilTime());
-			inst.setDuration(getBoilTime());
-			inst.setOrder(1); // Extract adds come second
-			list.add(inst);
+			// for each k=boil_duration
+			for (Integer k : extracts.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionType(Instruction.TYPE_ADD);
+				inst.setInstructionText(extracts.get(k));
+				inst.setDuration(k);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
+				
+				// Order gets set based on if it is a late addition or not
+				if(inst.getStartTime() != 0)
+					inst.setOrder(2); // Same as hop boils
+				else
+					inst.setOrder(1); // Second after steeps
+				
+				list.add(inst);
+			}
 		}
 		// Build up the boil hops instructions
 		if (hopBoils.size() > 0)
