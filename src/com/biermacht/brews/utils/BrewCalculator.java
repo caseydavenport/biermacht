@@ -111,8 +111,6 @@ public class BrewCalculator {
 		}
 		avgBoilTime = avgBoilTime/t;
 		
-		Log.e("BrewCalc", "AVGBOILTIME= " + avgBoilTime);
-		
 		return 1 + (mGPs * r.getBatchSize() / r.getBoilSize())*(avgBoilTime/r.getBoilTime());
 	}
 	

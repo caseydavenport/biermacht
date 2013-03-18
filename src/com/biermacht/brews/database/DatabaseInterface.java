@@ -210,7 +210,6 @@ public class DatabaseInterface {
 	
 	public boolean updateExistingIngredient(Ingredient ing)
 	{
-		Log.e("DBI", "Updating ingredient with ID: " + ing.getId());
 		String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId();
 		
 		// Load up values to store
@@ -264,15 +263,18 @@ public class DatabaseInterface {
 		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
 	}
 	
+	/**
+	* Deletes all ingredients with the given owner id
+	*/
 	private boolean deleteIngredientList(long id) {
 		String whereClause = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
 		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
 	}
 
 	/**
-	 * Takes recipe hashCode as input, deletes if it exists
+	 * Takes id as input, deletes if it exists
 	 * @param id
-	 * @return if it was deleted or not
+	 * @return 1 if it was deleted or 0 if not
 	 */
 	public boolean deleteRecipeIfExists(long id)
 	{
@@ -288,40 +290,36 @@ public class DatabaseInterface {
 	
 	/**
 	 * takes recipe ID and returns the recipe with that ID from the database
+	 * undefined for nonexistent IDs
 	 * @param id
 	 * @return
 	 */
 	public Recipe getRecipeWithId(long id)
 	{
 		Recipe r = new Recipe("Database Problem");
-		Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, null, null, null, null, null);
+		String whereString = DatabaseHelper.REC_COL_ID + "=" + id;
+
+		Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, whereString, null, null, null, null);
 		cursor.moveToFirst();
+		r = cursorToRecipe(cursor);
 		
-		while(r.getId() != id)
-		{
-			r = cursorToRecipe(cursor);
-			cursor.moveToNext();
-			
-			if(cursor.isAfterLast() || r.getId() == id)
-				break;
-		}
+		Log.w("getRecipeWithId", "WHERE" + whereString);
 		return r;
 	}
-	
+
+	/**
+	* Takes ingredient ID and returns the ingredient with that ID from the database
+	* Undefined for nonexistent IDs
+	*/	
 	public Ingredient getIngredientWithId(long id)
 	{
-		Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, null, null, null, null, null);
+		String whereString = DatabaseHelper.ING_COL_ID + "=" + id;
+		Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
 		cursor.moveToFirst();
 		Ingredient i = cursorToIngredient(cursor);
 		
-		while(i.getId() != id)
-		{
-			i = cursorToIngredient(cursor);
-			cursor.moveToNext();
+		i = cursorToIngredient(cursor);
 			
-			if(cursor.isAfterLast() || i.getId() == id)
-				break;
-		}
 		return i;
 	}
 	
@@ -400,19 +398,18 @@ public class DatabaseInterface {
 		return r;
 	}
 
+	// gets the ingredients list for recipe with given ID=id
 	private ArrayList<Ingredient> readIngredientsList(long id) {
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
 		
-		Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, null, null, null, null, null);
+		String whereString = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
+		Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
 		cursor.moveToFirst();
 		
 		while(!cursor.isAfterLast())
 		{
 			Ingredient ing = cursorToIngredient(cursor);
-			
-			if (ing.getOwnerId() == id)
-				list.add(ing);
-			
+			list.add(ing);
 			cursor.moveToNext();
 		}
 		cursor.close();
@@ -432,8 +429,6 @@ public class DatabaseInterface {
 		float amount = cursor.getFloat(cid);					cid++;
 		int startTime = cursor.getInt(cid);						cid++;
 		int endTime = cursor.getInt(cid);						cid++;	
-		
-		Log.e("DBI", "Creating ingredient from cursor... " + name + " oid: " + cursor.getString(1));
 		
 		// Fermentable specific stuff
 		if (ingType.equals(Ingredient.FERMENTABLE))
@@ -527,6 +522,7 @@ public class DatabaseInterface {
 			return yeast;
 		}
 		
+		// Shitty - throw exception eventually TODO
 		return null;
 	}
 }

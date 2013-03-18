@@ -13,7 +13,7 @@ public class ColorHandler {
 	if (d > 40)
 		d = 40;
 	
-	Log.e("ColorHandler", "Received SRM value: " + d);
+	//Log.e("ColorHandler", "Received SRM value: " + d);
 	
 	// Lookup
 	if (d == 0.0) {
@@ -1642,7 +1642,7 @@ public class ColorHandler {
 		bString = "0" + bString;
 	
 	hexColor = "#" + rString + gString + bString;
-	Log.e("ColorHandler", "Produced hex color: " + R + G + B + " : " + hexColor);
+	//Log.e("ColorHandler", "Produced hex color: " + R + G + B + " : " + hexColor);
 	
  	
   return hexColor;
