@@ -28,7 +28,6 @@ public class FermentableHandler extends DefaultHandler {
         {
             fermentable = new Fermentable("");
         } 
-        
     }
  
     @Override
@@ -162,8 +161,10 @@ public class FermentableHandler extends DefaultHandler {
         	// TODO: Add support for this field
         }
 
-        else
+        else if (qName.equalsIgnoreCase("FERMENTABLES"))
         {
+			// This is where we will add the current fermentable
+			// to the list.
         }
     }
  

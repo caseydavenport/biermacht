@@ -4,6 +4,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Log;
+
 import com.biermacht.brews.ingredient.Yeast;
  
 public class YeastHandler extends DefaultHandler {
