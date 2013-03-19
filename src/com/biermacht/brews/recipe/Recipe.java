@@ -347,6 +347,7 @@ public class Recipe {
 		ArrayList<Instruction> list = new ArrayList<Instruction>();
 		HashMap<Integer, String> steeps = new HashMap<Integer, String>();
 		HashMap<Integer, String> hopBoils = new HashMap<Integer, String>();
+		HashMap<Integer, String> dryHops = new HashMap<Integer, String>();
 		String extract_adds = "";
 		String yeasts = "";
 		Instruction inst;
@@ -385,7 +386,6 @@ public class Recipe {
 			// Boil hops instructions
 			for(Hop h : getHopsList())
 			{
-				inst = new Instruction();
 				// Boil Case
 				if (h.getUse().equals(Hop.USE_BOIL))
 				{
@@ -405,6 +405,18 @@ public class Recipe {
 				// Dry hop case
 				else if (h.getUse().equals(Hop.USE_DRY_HOP))
 				{
+					if (!dryHops.containsKey(h.getTime()))
+					{
+						dryHops.put(h.getTime(), h.getName());
+					}
+					else
+					{
+						// Append to existing duration
+						String s = dryHops.get(h.getTime());
+						s += "\n";
+						s += h.getName();
+						dryHops.put(h.getTime(), s);
+					}
 				}
 			}
 			for (Yeast y : getYeastsList())
@@ -423,10 +435,25 @@ public class Recipe {
 				inst.setInstructionText(steeps.get(k));
 				inst.setInstructionType(Instruction.TYPE_STEEP);
 				inst.setDuration(k);
-				inst.setStartTime(-2);
-				inst.setEndTime(-1);
+				inst.setOrder(0); // Steep instructions go first
+				inst.setStartTime(0);
+				inst.setEndTime(k);
 				list.add(inst);
 			}
+		}
+		if (extract_adds.length() > 0)
+		{
+			// Remove trailing newline character
+			extract_adds = extract_adds.substring(0, extract_adds.length()-1);
+
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_ADD);
+			inst.setInstructionText(extract_adds);
+			inst.setStartTime(0);
+			inst.setEndTime(getBoilTime());
+			inst.setDuration(getBoilTime());
+			inst.setOrder(1); // Extract adds come second
+			list.add(inst);
 		}
 		// Build up the boil hops instructions
 		if (hopBoils.size() > 0)
@@ -437,24 +464,12 @@ public class Recipe {
 				inst = new Instruction();
 				inst.setInstructionText(hopBoils.get(k));
 				inst.setInstructionType(Instruction.TYPE_BOIL);
+				inst.setOrder(2); // Third
 				inst.setDuration(k);
 				inst.setStartTime(getBoilTime()-k);
 				inst.setEndTime(getBoilTime());
 				list.add(inst);
 			}
-		}
-		if (extract_adds.length() > 0)
-		{
-			// Remove trailing newline character
-			extract_adds = extract_adds.substring(0, extract_adds.length()-1);
-			
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_ADD);
-			inst.setInstructionText(extract_adds);
-			inst.setStartTime(-1);
-			inst.setEndTime(getBoilTime());
-			inst.setDuration(getBoilTime());
-			list.add(inst);
 		}
 		if (list.size() > 0)
 		{
@@ -465,6 +480,7 @@ public class Recipe {
 			inst.setStartTime(getBoilTime());
 			inst.setEndTime(getBoilTime());
 			inst.setDuration(2);
+			inst.setOrder(3);
 			inst.setDuration_units("hours");
 			list.add(inst);
 		}
@@ -476,6 +492,7 @@ public class Recipe {
 			inst.setStartTime(getBoilTime() + 1);
 			inst.setEndTime(getBoilTime() + 1);
 			inst.setDuration(1);
+			inst.setOrder(4);
 			list.add(inst);
 		}
 		if (list.size() > 0)
@@ -486,11 +503,28 @@ public class Recipe {
 			inst.setStartTime(getBoilTime() + 1);
 			inst.setEndTime(getBoilTime() + 1);
 			inst.setDuration(5);
+			inst.setOrder(5);
 			inst.setDuration_units("days");
 			list.add(inst);
 		}
+		// Build up the dry hops instructions
+		if (dryHops.size() > 0)
+		{
+			// for each k=dry hop duration
+			for (Integer k : dryHops.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(dryHops.get(k));
+				inst.setInstructionType(Instruction.TYPE_DRY_HOP);
+				inst.setOrder(6);
+				inst.setDuration(k);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
+				list.add(inst);
+			}
+		}
 		
-		// Sort based on start time
+		// Sort based on order and then start time
 		Collections.sort(list, new InstructionComparator<Instruction>());
 		
 		return list;

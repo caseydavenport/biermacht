@@ -92,8 +92,26 @@ public class BrewCalculator {
 	
 	public static double calculateBoilGrav(Recipe r)
 	{
-		double mGPs = calculateExtractOG(r) - 1;
-		return 1 + (mGPs * r.getBatchSize() / r.getBoilSize());
+		// Because this is used for hop utilization calculation,
+		// We want to adjust this based on late extract additions
+		
+		double mGPs = calculateExtractOG(r) - 1; //milliGPs
+		double avgBoilTime = 0;
+		int t=0;
+		
+		// TODO: This is imprecise as it doesn't take into account
+		// how much extract is used as a late addition
+		for (Fermentable f : r.getFermentablesList())
+		{
+			if (f.getFermentableType().equals(Fermentable.EXTRACT))
+			{
+				t++;
+				avgBoilTime += f.getTime();
+			}
+		}
+		avgBoilTime = avgBoilTime/t;
+		
+		return 1 + (mGPs * r.getBatchSize() / r.getBoilSize())*(avgBoilTime/r.getBoilTime());
 	}
 	
 	public static double calculateGravityPoints(Recipe r, Ingredient i)
@@ -102,8 +120,7 @@ public class BrewCalculator {
 		if (i.getType().equals(Ingredient.FERMENTABLE))
 		{
 			Fermentable f = (Fermentable) i;
-			Log.e("BrewCalculator GRAV", f.getName() + ": " + f.getFermentableType());
-			
+					
 			if(f.getFermentableType().equals(Fermentable.EXTRACT))
 			{
 				pts = f.getAmount() * f.getPpg() / r.getBatchSize();
@@ -159,7 +176,6 @@ public class BrewCalculator {
 					utilization = getHopUtilization(r, h);
 					AAU = h.getAmount() * h.getAlphaAcidContent();
 					ibu = (AAU * utilization * 75)/r.getBatchSize();
-					Log.e("BrewCalculator", "IBU for " + h.getName() + ": " + (AAU * utilization * 75)/r.getBatchSize());
 				}
 			}
 
@@ -206,8 +222,6 @@ public class BrewCalculator {
 		double bignessFactor;
 		double boilTimeFactor;
 		double boilGrav = calculateBoilGrav(r);
-		
-		Log.e("BrewCalculator", "Boil Gravity: " + i.getName() + " " + boilGrav);
 		
 		// Default : 1.65/4.25
 		bignessFactor = 1.65 * Math.pow(.00025, boilGrav-1);

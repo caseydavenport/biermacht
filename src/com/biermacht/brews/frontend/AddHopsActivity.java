@@ -19,17 +19,22 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
+import com.biermacht.brews.frontend.adapters.*;
+import android.util.*;
 
 public class AddHopsActivity extends Activity {
 	
 	IngredientHandler ingredientHandler;
 	private Spinner hopSpinner;
+	private Spinner hopTypeSpinner;
 	private EditText hopNameEditText;
 	private EditText hopBoilTimeEditText;
 	private EditText hopAcidEditText;
 	private EditText hopWeightEditText;
-	private ArrayList<Ingredient> hopTypeArray;
-	private String hopType;
+	private ArrayList<Ingredient> hopArray;
+	private ArrayList<String> hopTypeArray;
+	private String hop;
+	private String use;
 	private Recipe mRecipe;
 
     @Override
@@ -41,7 +46,7 @@ public class AddHopsActivity extends Activity {
     	ingredientHandler = MainActivity.ingredientHandler;
     	
     	// Set list of ingredients to show
-    	hopTypeArray = ingredientHandler.getHopsList();
+    	hopArray = ingredientHandler.getHopsList();
         
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
@@ -53,23 +58,34 @@ public class AddHopsActivity extends Activity {
         hopAcidEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
         hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
         
-        // Set up hop type spinner
-        hopSpinner = (Spinner) findViewById(R.id.hop_type_spinner);
-        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopTypeArray);  
+        // Set up hop spinner
+        hopSpinner = (Spinner) findViewById(R.id.hop_spinner);
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         hopSpinner.setAdapter(adapter);
         hopSpinner.setSelection(0);    
+		
+		// Set up hop type spinner
+       	hopTypeSpinner = (Spinner) findViewById(R.id.hop_type_spinner);
+        hopTypeArray = new ArrayList<String>();
+        hopTypeArray.add(Hop.USE_BOIL);
+        hopTypeArray.add(Hop.USE_AROMA);
+        hopTypeArray.add(Hop.USE_DRY_HOP);
+        SpinnerAdapter<String> hopTypeAdapter = new SpinnerAdapter<String>(this, hopTypeArray);  
+        hopTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        hopTypeSpinner.setAdapter(hopTypeAdapter);
+        hopTypeSpinner.setSelection(0);
         
-        // Handle beer type selector here
+        // Handle hops selector here
         hopSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Hop hopObj = new Hop("");
-            	hopType = hopTypeArray.get(position).getName();
+            	hop = hopArray.get(position).getName();
                 
                 for (Ingredient i : ingredientHandler.getHopsList())
                 {
-                	if (hopType.equals(i.toString()))
+                	if (hop.equals(i.toString()))
                 		hopObj = (Hop) i;
                 }
             	
@@ -84,7 +100,24 @@ public class AddHopsActivity extends Activity {
             }
 
         });   
+		
+		// Handle beer type selector here
+        hopTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				// Set the type to the selected type...
+				use = hopTypeArray.get(position);
+			}
+
+
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// Blag
+			}
+
+		});
     }
+	
+	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,6 +145,7 @@ public class AddHopsActivity extends Activity {
 			h.setEndTime(endTime);
 			h.setAlphaAcidContent(alpha);
 			h.setAmount(weight);
+			h.setUse(use);
 			h.setForm(Hop.FORM_PELLET);
 			
 			mRecipe.addIngredient(h);

@@ -64,9 +64,17 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			Hop h = (Hop) list.get(position);
 			imageView.setImageResource(R.drawable.icon_hops);
 			labelView.setText(h.getName() + ", " + String.format("%1.1f", h.getAlphaAcidContent()) + "%");
-			String s = String.format("%2.2f", BrewCalculator.calculateHopIbu(r, h));
-			detailText += s; 
-			detailText += " IBU";
+			
+			if(h.getUse().equals(Hop.USE_BOIL) || h.getUse().equals(Hop.USE_AROMA))
+			{
+				String s = String.format("%2.2f", BrewCalculator.calculateHopIbu(r, h));
+				detailText += s; 
+				detailText += " IBU";
+			}
+			else if (h.getUse().equals(Hop.USE_DRY_HOP))
+			{
+				detailText = "Dry Hop";
+			}
 		}
 		else if(ingType == Ingredient.FERMENTABLE) 
 		{
@@ -74,12 +82,13 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			String s = String.format("%2.2f", BrewCalculator.calculateGrainPercent(r, list.get(position)));
 		    String t = String.format("%2.2f", BrewCalculator.calculateGravityPoints(r, list.get(position)));
 			detailText += s;
-			detailText += " %, ";
+			detailText += "%, ";
 			detailText += t + " GPts.";
 		}
 		else if (ingType == Ingredient.YEAST)
 		{
 			imageView.setImageResource(R.drawable.icon_yeast);
+			detailText = ((Yeast) list.get(position)).getAttenuation() + "%";
 		}
 		else if(ingType == Ingredient.MISC)
 		{
@@ -87,7 +96,8 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		}
 		else
 		{
-			imageView.setImageResource(R.drawable.icon_idk);
+			//TODO: Handle this
+			//imageView.setImageResource(R.drawable.icon_idk);
 		}
 		
 		detailView.setText(detailText);
