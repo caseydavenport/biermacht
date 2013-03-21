@@ -303,7 +303,6 @@ public class DatabaseInterface {
 		cursor.moveToFirst();
 		r = cursorToRecipe(cursor);
 		
-		Log.w("getRecipeWithId", "WHERE" + whereString);
 		return r;
 	}
 

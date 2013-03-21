@@ -125,7 +125,6 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     @Override
     public void onResume()
     {
-    	Log.e("DisplayRecipe", "Display Recipe: onResume()");
     	super.onResume();
     	
     	// Call the update methods for each fragment
