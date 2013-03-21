@@ -20,6 +20,8 @@ import com.biermacht.brews.utils.comparators.IngredientComparator;
 import com.biermacht.brews.xml.FermentableHandler;
 import com.biermacht.brews.xml.HopsHandler;
 import com.biermacht.brews.xml.YeastHandler;
+import com.biermacht.brews.xml.*;
+import com.biermacht.brews.recipe.*;
 
 public class IngredientHandler {
 	
@@ -27,6 +29,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> fermentablesList;
 	private ArrayList<Ingredient> yeastsList;
 	private ArrayList<Ingredient> hopsList;
+	private ArrayList<Recipe> recipesList;
 	
 	public IngredientHandler(Context c)
 	{
@@ -88,6 +91,19 @@ public class IngredientHandler {
 		}
 		
 		return hopsList;
+	}
+	
+	public ArrayList<Recipe> getRecipesList()
+	{
+		try
+		{
+			Log.e("IngredientHandler", "getRecipeList()");
+			this.recipesList = getRecipesFromXml();
+		}
+		catch (IOException e)
+		{}
+		
+		return this.recipesList;
 	}
 	
 	/**
@@ -190,5 +206,39 @@ public class IngredientHandler {
         
         return list;
 	}
+	
+	/**
+	 * Gets Recipes from XMl files in assets/Recipes
+	 * @return ArrayList of Ingredient Objects
+	 * @throws IOException
+	 */
+	private ArrayList<Recipe> getRecipesFromXml() throws IOException
+	{
+		ArrayList<Recipe> retlist = new ArrayList<Recipe>();
+        RecipeHandler myXMLHandler = new RecipeHandler();
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        AssetManager am = mContext.getAssets();
+
+        for (String s : am.list("Recipes") )
+        {
+	        try 
+	        {	
+				Log.e("IngredientHandler", s);
+	            SAXParser sp = spf.newSAXParser();
+	            InputStream is = am.open("Recipes/" + s);
+	            sp.parse(is, myXMLHandler);
+
+	            ArrayList<Recipe> list = myXMLHandler.getRecipes();
+	            retlist.addAll(list);
+	        }
+	        catch (Exception e)
+	        {
+	        	Log.e("IngredientHandler", e.toString());
+	        }
+        }
+
+        return retlist;
+	}
+	
 	
 }
