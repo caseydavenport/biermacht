@@ -1,6 +1,6 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +19,7 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeReccomendedValues;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.ColorHandler;
+import android.content.*;
 
 public class DetailsViewFragment extends Fragment {
 
@@ -26,7 +27,8 @@ public class DetailsViewFragment extends Fragment {
 	private Recipe r;
 	private OnItemClickListener mClickListener;
 	private RecipeReccomendedValues reccomendedValues;
-	LinearLayout pageView;
+	View pageView;
+	Context c;
 	
 	private LinearLayout beerTypeView;
 	private LinearLayout ogView;
@@ -36,17 +38,17 @@ public class DetailsViewFragment extends Fragment {
 	private LinearLayout abvView;
 	private LinearLayout boilTimeView;
 	
-	public DetailsViewFragment(Recipe r)
+	public DetailsViewFragment(Context c, Recipe r)
 	{
 		this.resource = R.layout.details_view;
 		this.r = r;
 		this.reccomendedValues = Utils.getRecipeReccomendedValues(r);
+		this.c = c;
 	}
 	
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		pageView = new LinearLayout(DisplayRecipeActivity.appContext);
-		inflater.inflate(resource, pageView);
+		pageView = inflater.inflate(resource, container, false);
 		
 		setHasOptionsMenu(true);
 			  
@@ -190,12 +192,7 @@ public class DetailsViewFragment extends Fragment {
 		  TextView abv_range = (TextView) abvView.findViewById(R.id.ABV_range);
 		  abv_range.setText(reccomendedValues.getAbvRange());
 
-		
-		// Remove all views, then add new ones
-		container.removeAllViews();
-		container.addView(pageView);
-		
-		return inflater.inflate(resource, container, false);
+		return pageView;
 	}
 	
 	public void update()

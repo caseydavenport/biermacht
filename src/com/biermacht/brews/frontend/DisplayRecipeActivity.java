@@ -20,15 +20,18 @@ import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
 import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.frontend.adapters.*;
+import android.support.v4.view.*;
 
 public class DisplayRecipeActivity extends FragmentActivity implements OnClickListener {
 	
 	private Recipe mRecipe;
-	private InstructionViewFragment instructionFragment;
-	private IngredientViewFragment ingredientFragment;
-	private DetailsViewFragment detailsFragment;
+	private long id; // id of recipe we use
+	CollectionPagerAdapter cpAdapter;
+    ViewPager mViewPager;
 	
-	public static Context appContext;
+	
+	private Context appContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,41 +42,16 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
+        id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
         mRecipe = Utils.getRecipeWithId(id);
         
         // Set title based on recipe name
         setTitle(mRecipe.getRecipeName());
-      
-        // Set up ActionBar tabs
-    	final ActionBar actionBar = getActionBar();
-    	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
-		// Create Tabs
-		ActionBar.Tab ingredientTab = actionBar.newTab();
-		ActionBar.Tab instructionTab = actionBar.newTab();
-		ActionBar.Tab detailsTab = actionBar.newTab();
-		
-		// Create fragments
-		 ingredientFragment = new IngredientViewFragment(mRecipe);
-		 instructionFragment = new InstructionViewFragment(mRecipe);
-		 detailsFragment = new DetailsViewFragment(mRecipe);
-		
-		// Set Tab text
-		ingredientTab.setText("Ingredients");
-		instructionTab.setText("Intructions");
-		detailsTab.setText("Details");
-        
-		// Set Tab Listeners
-    	ingredientTab.setTabListener(new MyTabsListener(ingredientFragment));
-    	instructionTab.setTabListener(new MyTabsListener(instructionFragment));
-    	detailsTab.setTabListener(new MyTabsListener(detailsFragment));
-        
-		// Add Tab to bar
-		actionBar.addTab(ingredientTab);
-		actionBar.addTab(instructionTab);
-		actionBar.addTab(detailsTab);
-		
+		// ViewPager and pagerAdapter for slidy tabs!
+        cpAdapter = new CollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(cpAdapter);
     }
 
     @Override
@@ -91,25 +69,25 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
         		return true;
             
             case R.id.add_fermentable:
-    	    	Intent ferm_intent = new Intent(DisplayRecipeActivity.appContext, AddGrainActivity.class);
+    	    	Intent ferm_intent = new Intent(this.appContext, AddGrainActivity.class);
     	    	ferm_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
     		    startActivity(ferm_intent);
     		    return true;
 
             case R.id.add_hop:
-    	    	Intent hop_intent = new Intent(DisplayRecipeActivity.appContext, AddHopsActivity.class);
+    	    	Intent hop_intent = new Intent(this.appContext, AddHopsActivity.class);
     	    	hop_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
     		    startActivity(hop_intent);
     		    return true;
     		    
             case R.id.add_yeast:
-    	    	Intent yeast_intent = new Intent(DisplayRecipeActivity.appContext, AddYeastActivity.class);
+    	    	Intent yeast_intent = new Intent(this.appContext, AddYeastActivity.class);
     	    	yeast_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
     		    startActivity(yeast_intent);
     		    return true;
     		    
             case R.id.menu_edit_recipe:
-          		Intent i = new Intent(DisplayRecipeActivity.appContext, EditRecipeActivity.class);
+          		Intent i = new Intent(this.appContext, EditRecipeActivity.class);
           		i.putExtra("biermacht.brews.recipeID", mRecipe.getId());
           		startActivity(i); 
         }
@@ -127,10 +105,16 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     {
     	super.onResume();
     	
-    	// Call the update methods for each fragment
-    	detailsFragment.update();
-    	ingredientFragment.update();
-    	instructionFragment.update();
+    	// Update what we display
+		mRecipe = Utils.getRecipeWithId(id);
+
+        // Set title based on recipe name
+        setTitle(mRecipe.getRecipeName());
+
+		// ViewPager and pagerAdapter for slidy tabs!
+        cpAdapter = new CollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
+        //mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(cpAdapter);
     }
 
 	public void onClick(View v) 
@@ -138,25 +122,3 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
 		
 	}
 }
-
-class MyTabsListener implements ActionBar.TabListener {
-    public Fragment fragment;
-    
-    public MyTabsListener(Fragment fragment) {
-            this.fragment = fragment;
-    }
-    
-    public void onTabReselected(Tab tab, FragmentTransaction ft) {
-            // Do nothing on tab reselect
-    }
-
-    public void onTabSelected(Tab tab, FragmentTransaction ft) {      
-            ft.replace(R.id.fragment_container, fragment);
-    }
-
-    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-            ft.remove(fragment);
-    }   
-}
-
-

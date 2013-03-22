@@ -2,14 +2,11 @@ package com.biermacht.brews.frontend.fragments;
 
 import java.util.ArrayList;
 
-import android.app.Fragment;
+import android.support.v4.view.*;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -21,6 +18,7 @@ import com.biermacht.brews.frontend.adapters.InstructionArrayAdapter;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
+import android.content.*;
 
 public class InstructionViewFragment extends Fragment {
 
@@ -29,18 +27,19 @@ public class InstructionViewFragment extends Fragment {
 	private OnItemClickListener mClickListener;
 	private ListView instructionListView;
 	private ArrayList<Instruction> instructionList;
-	LinearLayout pageView;
+	View pageView;
+	Context c;
 	
-	public InstructionViewFragment(Recipe r)
+	public InstructionViewFragment(Context c, Recipe r)
 	{
 		this.resource = R.layout.instruction_view;
 		this.r = r;
+		this.c = c;
 	}
 	
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		pageView = new LinearLayout(DisplayRecipeActivity.appContext);
-		inflater.inflate(resource, pageView);
+		pageView = inflater.inflate(resource, container, false);
 		
 		setHasOptionsMenu(true);
 		
@@ -52,7 +51,7 @@ public class InstructionViewFragment extends Fragment {
 		{
 			LinearLayout instructionListTitleView = (LinearLayout) pageView.findViewById(R.id.title_row);
 	  
-			InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
+			InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(c, instructionList);
 			instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
 			instructionListView.setAdapter(instructionArrayAdapter);
 			instructionListView.setVisibility(View.VISIBLE);
@@ -64,11 +63,7 @@ public class InstructionViewFragment extends Fragment {
 			noInstructionsView.setVisibility(View.VISIBLE);
 		}
 		
-		// Remove all views, then add new ones
-		container.removeAllViews();
-		container.addView(pageView);
-		
-		return inflater.inflate(resource, container, false);
+		return pageView;
 	}
 	
 	public void update()
@@ -82,7 +77,7 @@ public class InstructionViewFragment extends Fragment {
 			
 			if (instructionList.size() > 0)
 			{
-				InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(DisplayRecipeActivity.appContext, instructionList);
+				InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(c, instructionList);
 				instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
 				instructionListView.setAdapter(instructionArrayAdapter);
 				instructionListView.setVisibility(View.VISIBLE);

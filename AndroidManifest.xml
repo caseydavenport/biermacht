@@ -32,6 +32,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.biermacht.brews.MainActivity" />
         </activity>
+		<activity
+            android:name=".frontend.CollectionDemoActivity"
+            android:label="@string/title_activity_display_recipe">
+			
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.biermacht.brews.MainActivity" />
+        </activity>
         <activity
             android:name=".frontend.AddNewRecipeActivity"
             android:label="@string/title_activity_add_new_recipe"

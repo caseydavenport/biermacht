@@ -2,7 +2,7 @@ package com.biermacht.brews.frontend.fragments;
 
 import java.util.ArrayList;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +28,7 @@ import com.biermacht.brews.frontend.adapters.IngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
+import android.content.*;
 
 public class IngredientViewFragment extends Fragment {
 
@@ -36,18 +37,19 @@ public class IngredientViewFragment extends Fragment {
 	private OnItemClickListener mClickListener;
 	private ListView ingredientListView;
 	private ArrayList<Ingredient> ingredientList;
-	LinearLayout pageView;
+	View pageView;
+	Context c;
 	
-	public IngredientViewFragment(Recipe r)
+	public IngredientViewFragment(Context c, Recipe r)
 	{
 		this.resource = R.layout.ingredient_view;
 		this.r = r;
+		this.c = c;
 	}
 	
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		pageView = new LinearLayout(DisplayRecipeActivity.appContext);
-		inflater.inflate(resource, pageView);
+		pageView = inflater.inflate(resource, container, false);
 		
 		setHasOptionsMenu(true);
 		
@@ -64,7 +66,7 @@ public class IngredientViewFragment extends Fragment {
 				// Grain pressed
 				if (ing.getType().equals(Ingredient.FERMENTABLE))
 				{
-			  		Intent editGrainIntent = new Intent(DisplayRecipeActivity.appContext, EditGrainActivity.class);
+			  		Intent editGrainIntent = new Intent(c, EditGrainActivity.class);
 			  		editGrainIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
 				    editGrainIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
 			  		startActivity(editGrainIntent);
@@ -73,7 +75,7 @@ public class IngredientViewFragment extends Fragment {
 				// Hop Pressed
 				if (ing.getType().equals(Ingredient.HOP))
 				{
-			  		Intent editHopIntent = new Intent(DisplayRecipeActivity.appContext, EditHopActivity.class);
+			  		Intent editHopIntent = new Intent(c, EditHopActivity.class);
 			  		editHopIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
 			  		editHopIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
 			  		startActivity(editHopIntent);
@@ -82,7 +84,7 @@ public class IngredientViewFragment extends Fragment {
 				// Yeast Pressed
 				if (ing.getType().equals(Ingredient.YEAST))
 				{
-			  		Intent editHopIntent = new Intent(DisplayRecipeActivity.appContext, EditYeastActivity.class);
+			  		Intent editHopIntent = new Intent(c, EditYeastActivity.class);
 			  		editHopIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
 			  		editHopIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
 			  		startActivity(editHopIntent);
@@ -95,7 +97,7 @@ public class IngredientViewFragment extends Fragment {
 		// Set whether or not we show the list view
 		if (ingredientList.size() > 0)
 		{
-			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList, r);
+			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(c, ingredientList, r);
 			ingredientListView.setVisibility(View.VISIBLE);
 			ingredientListView.setAdapter(ingredientArrayAdapter);
 			registerForContextMenu(ingredientListView);
@@ -107,11 +109,7 @@ public class IngredientViewFragment extends Fragment {
 			noIngredientsView.setVisibility(View.VISIBLE);
 		}
 	
-		// Remove all views, then add new ones
-		container.removeAllViews();
-		container.addView(pageView);
-	
-		return inflater.inflate(resource, container, false);
+		return pageView;
 	}
 	
 	public void update()
@@ -125,7 +123,7 @@ public class IngredientViewFragment extends Fragment {
 		// Set whether or not we show the list view
 		if (ingredientList.size() > 0)
 		{
-			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(DisplayRecipeActivity.appContext, ingredientList, r);
+			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(c, ingredientList, r);
 			ingredientListView.setVisibility(View.VISIBLE);
 			ingredientListView.setAdapter(ingredientArrayAdapter);
 			registerForContextMenu(ingredientListView);
