@@ -10,25 +10,28 @@ import com.biermacht.brews.frontend.fragments.*;
 public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 	Recipe r;
 	Context c;
+	IngredientViewFragment ingVf;
+	InstructionViewFragment insVf;
+	DetailsViewFragment detVf;
 
     public CollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
         super(fm);
 		this.r = r;
 		this.c = c;
+		this.ingVf = new IngredientViewFragment(c,r);
+		this.insVf = new InstructionViewFragment(c,r);
+		this.detVf = new DetailsViewFragment(c,r);
     }
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment = new Fragment();
-
+        
 		if (i ==0)
-			fragment = new IngredientViewFragment(c, r);
+			return ingVf;
 		else if (i == 1)
-			fragment = new InstructionViewFragment(c, r);
-        else if (i == 2)
-			fragment = new DetailsViewFragment(c, r);
-
-		return fragment;
+			return insVf;
+        else 
+			return detVf;
     }
 
     @Override
