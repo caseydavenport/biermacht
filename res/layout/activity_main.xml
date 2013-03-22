@@ -2,23 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="@drawable/textured_background_light"
+    android:background="@color/transparent"
     android:orientation="vertical">
+	
+	<TextView android:id="@+id/colored_bar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top"
+		android:paddingTop="4dp"
+		android:paddingBottom="4dp"
+		android:textColor="#fff"
+		android:background="@color/theme_orange"
+		android:layout_alignParentTop="true"
+		android:text="">
+	</TextView>
     
 	<LinearLayout android:id="@+id/recipe_search_view"
 	     android:orientation="horizontal"
 	     android:layout_width="fill_parent"
 	     android:layout_height="50dip"
+		 android:layout_marginTop="10dip"
 	     android:padding="0dip"
-	     android:background="#66000000"
-	     android:layout_alignParentTop="true" >
-        
+	     android:background="#fff"
+	     android:layout_below="@id/colored_bar" >
+		 
         <EditText android:id="@+id/search_bar"
             android:layout_width="0dip" 
             android:layout_weight="1" 
             android:layout_height="fill_parent" 
             android:padding="10dip"
-            android:background="#EEEEEE"
+            android:background="@color/transparent"
             android:hint="@string/recipe_search_hint" />
         
         <ImageView android:id="@+id/search_icon"
@@ -26,7 +39,7 @@
             android:layout_height="fill_parent"
             android:gravity="center"
             android:focusable="false"
-            android:background="#EEEEEE"
+            android:background="@color/transparent"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:contentDescription="@string/search_icon_description"
@@ -70,15 +83,5 @@
 	    </LinearLayout>
     
     </LinearLayout>
-    
-    <!-- Bottom Bar -->
-    <LinearLayout android:id="@+id/recipe_list_bottom_nav"
-        android:layout_height="70dip"
-        android:background="@drawable/actionbar_background"
-        android:layout_width="fill_parent" 
-        android:layout_alignParentBottom="true">
-
-    </LinearLayout>
-    
 </RelativeLayout>
 

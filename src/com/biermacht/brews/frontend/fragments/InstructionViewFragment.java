@@ -49,13 +49,10 @@ public class InstructionViewFragment extends Fragment {
   
 		if (instructionList.size() > 0)
 		{
-			LinearLayout instructionListTitleView = (LinearLayout) pageView.findViewById(R.id.title_row);
-	  
 			InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(c, instructionList);
 			instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
 			instructionListView.setAdapter(instructionArrayAdapter);
 			instructionListView.setVisibility(View.VISIBLE);
-			instructionListTitleView.setVisibility(View.VISIBLE);
 		}
 		else
 		{
@@ -81,14 +78,12 @@ public class InstructionViewFragment extends Fragment {
 				instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
 				instructionListView.setAdapter(instructionArrayAdapter);
 				instructionListView.setVisibility(View.VISIBLE);
-				pageView.findViewById(R.id.title_row).setVisibility(View.VISIBLE);
 				pageView.findViewById(R.id.no_instructions_view).setVisibility(View.GONE);
 			}
 			else
 			{
 				pageView.findViewById(R.id.no_instructions_view).setVisibility(View.VISIBLE);
 				instructionListView.setVisibility(View.GONE);
-				pageView.findViewById(R.id.title_row).setVisibility(View.GONE);
 			}
 		}
 	}

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@color/theme_orange"
-        android:textColor="#fff"
+        android:textColor="@color/actionbar_text_color"
         android:paddingTop="4dp"
         android:paddingBottom="4dp" />
 

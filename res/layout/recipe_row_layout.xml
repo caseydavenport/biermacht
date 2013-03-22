@@ -10,7 +10,7 @@
     <LinearLayout android:orientation="vertical"
         android:layout_width="60dp"
         android:layout_height="fill_parent"
-        android:background="@color/recipe_list_icon_bg"
+        android:background="@color/dark"
         android:layout_marginRight="10dp">
         
         <ImageView android:id="@+id/row_icon"

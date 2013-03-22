@@ -5,14 +5,15 @@
 <!-- ===================================================================== -->
 
     <style name="Theme.Biermacht.Brews" parent="android:Theme.Holo.Light">
-        <item name="android:background">#00DEDEDE</item>
-        <item name="android:actionBarStyle">@style/Theme.Biermacht.Brews.ActionBarStyle</item>
+        <!--
+		<item name="android:background">@color/background_color</item>
+		-->
+		<item name="android:actionBarStyle">@style/Theme.Biermacht.Brews.ActionBarStyle</item>
         <item name="android:actionBarTabStyle">@style/Theme.Biermacht.Brews.ActionBarTabBarStyle</item>
-        <item name="android:homeAsUpIndicator">@drawable/up_indicator</item>
     </style>
     
     <style name="Theme.Biermacht.Brews.ActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
-        <item name="android:background">@drawable/actionbar_background</item>
+        <item name="android:background">@color/background_color</item>
         <item name="android:titleTextStyle">@style/Theme.Biermacht.Brews.ActionBar.TitleTextStyle</item>
     </style>
     
@@ -22,7 +23,7 @@
     </style>
     
     <style name="Theme.Biermacht.Brews.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/actionbar_text_color</item>
     </style>
     
 <!-- ===================================================================== -->

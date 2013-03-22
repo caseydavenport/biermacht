@@ -2,68 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/textured_background_light"
+    android:background="@color/transparent"
     android:orientation="vertical" >
     
 	<LinearLayout android:orientation="vertical"
 	    android:layout_height="0dip"
 	    android:layout_width="fill_parent"
-	    android:background="#00000000"
+	    android:background="@color/transparent"
 	    android:minHeight="4000dip"
 	    android:padding="10dip"
 	    android:layout_weight="10" >
-	    
-	    <LinearLayout android:id="@+id/title_row"
-	        android:layout_width="match_parent"
-	        android:layout_height="40dip"
-	        android:background="@drawable/rounded_bg_dark"
-	        android:visibility="gone"
-	        android:layout_marginBottom="10dip" >
-	        
-	        <LinearLayout android:orientation="vertical"
-		        android:layout_width="60dp"
-		        android:layout_height="fill_parent"
-		        android:background="@color/transparent"
-		        android:layout_gravity="center"
-		        android:gravity="center"
-		        android:layout_marginRight="0dp">
-		        
-		        <TextView android:id="@+id/numbering"
-			        android:layout_width="40dp"
-			        android:layout_height="32dp"
-			        android:gravity="center"
-			        android:layout_margin="14dip"
-			        android:textStyle="bold"
-			        android:textSize="15dp"
-			        android:textColor="@color/title_color_light"
-			        android:text="Type"
-			        android:background="@color/transparent" /> 
-	        
-   			</LinearLayout>
-   			 
-		    <!-- Divider line -->
-		    <View android:layout_width="1dip"
-		        android:layout_height="match_parent"
-		        android:background="#44000000"
-		        android:layout_marginRight="10dp" />
-		       
-		    <TextView android:id="@+id/label"
-		        android:layout_width="0dip"
-		        android:layout_weight="3"
-		        android:layout_height="fill_parent"
-		        android:gravity="center_vertical"
-		        android:textColor="@color/title_color_light"
-		        android:textSize="15dp"
-		        android:textStyle="bold"
-		        android:text="Instruction"
-		        android:background="#00FFFFFF" />
-		    
-		    <!-- Divider line -->
-		    <View android:layout_width="1dip"
-		        android:layout_height="fill_parent"
-		        android:background="#44000000" />
-		    		
-		</LinearLayout>
 			
 			    <ListView
 			        android:id="@+id/instruction_list"
@@ -84,17 +32,4 @@
 			        android:text="No instructions found" /> 
 	        
     </LinearLayout>
-	
-    <View android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#44000000" />
-	        
-     <LinearLayout android:id="@+id/ingredient_bottom_nav"
-        android:layout_height="70dip"
-        android:gravity="center"
-        android:background="@drawable/actionbar_background"
-        android:layout_width="fill_parent" >
-       
-    </LinearLayout>
-
 </LinearLayout>

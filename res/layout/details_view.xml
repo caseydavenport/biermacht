@@ -2,14 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
+	android:background="@color/transparent"
 	android:orientation="vertical" >
 	
 	<ScrollView android:layout_width="fill_parent"
-	    android:background="@drawable/textured_background_light"
-	    android:layout_height="0dp"
+	    android:background="@color/transparent"
+	    android:layout_height="fill_parent"
 	    android:layout_alignParentTop="true"
-	    android:layout_above="@+id/bottom_nav"
-	    android:layout_marginBottom="10dip"
 	    android:minHeight="4000dip" >
 	    
 		<LinearLayout android:layout_width="match_parent"
@@ -36,14 +35,14 @@
 		        	<TextView android:id="@+id/tag"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="tag: " />
 		        	
 		        	<TextView android:id="@+id/content"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="content" />
 		        </LinearLayout>
@@ -59,14 +58,14 @@
 		        	<TextView android:id="@+id/tag"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="tag: " />
 		        	
 		        	<TextView android:id="@+id/content"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:gravity="right"
 		        	    android:layout_marginRight="15dp"
@@ -80,7 +79,7 @@
 		        	<TextView android:id="@+id/OG_range"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="@string/error" />
 		        	
@@ -97,14 +96,14 @@
 		        	<TextView android:id="@+id/tag"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="tag: " />
 		        	
 		        	<TextView android:id="@+id/content"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:gravity="right"
 		        	    android:layout_marginRight="15dp"
@@ -118,7 +117,7 @@
 		        	<TextView android:id="@+id/FG_range"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="@string/error" />
 		        	
@@ -135,14 +134,14 @@
 		        	<TextView android:id="@+id/tag"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="tag: " />
 		        	
 		        	<TextView android:id="@+id/content"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:gravity="right"
 		        	    android:layout_marginRight="15dp"
@@ -156,7 +155,7 @@
 		        	<TextView android:id="@+id/bitterness_range"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="@string/error" />
 		        	
@@ -173,14 +172,14 @@
 		        	<TextView android:id="@id/tag"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="tag: " />
 		        	
 		        	<TextView android:id="@id/content"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:gravity="right"
 		        	    android:layout_marginRight="15dp"
@@ -194,7 +193,7 @@
 		        	<TextView android:id="@+id/color_range"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="@string/error" />
 		        	
@@ -211,14 +210,14 @@
 		        	<TextView android:id="@id/tag"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="tag: " />
 		        	
 		        	<TextView android:id="@id/content"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:gravity="right"
 		        	    android:layout_marginRight="15dp"
@@ -232,7 +231,7 @@
 		        	<TextView android:id="@+id/ABV_range"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="@string/error" />
 		        </LinearLayout>	
@@ -248,14 +247,14 @@
 		        	<TextView android:id="@id/tag"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:text="tag: " />
 		        	
 		        	<TextView android:id="@id/content"
 		        	    android:layout_width="0dip"
 		        	    android:layout_weight="1"
-		        	    android:background="#00000000"
+		        	    android:background="@color/transparent"
 		        	    android:layout_height="fill_parent"
 		        	    android:gravity="right"
 		        	    android:layout_marginRight="15dp"
@@ -304,16 +303,6 @@
 			        android:padding="10dip" />
 			    
 			</LinearLayout>
-		    
 		</LinearLayout>  
 	</ScrollView>
-	
-	<LinearLayout android:id="@+id/bottom_nav"
-	   android:layout_height="70dip"
-	   android:gravity="center"
-	   android:layout_alignParentBottom="true"
-	   android:background="@drawable/actionbar_background"
-	   android:layout_width="fill_parent" >
-	</LinearLayout>
-	
 </RelativeLayout>
