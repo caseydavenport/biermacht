@@ -15,27 +15,15 @@
         <activity
             android:name=".frontend.MainActivity"
             android:label="@string/title_activity_main"
-   
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".frontend.DisplayRecipeActivity"
-            android:label="@string/title_activity_display_recipe"
-           
-		    >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.biermacht.brews.MainActivity" />
-        </activity>
-		<activity
-            android:name=".frontend.CollectionDemoActivity"
             android:label="@string/title_activity_display_recipe">
-			
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.biermacht.brews.MainActivity" />
@@ -43,44 +31,36 @@
         <activity
             android:name=".frontend.AddNewRecipeActivity"
             android:label="@string/title_activity_add_new_recipe"
-
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.AddGrainActivity"
             android:label="@string/title_activity_add_grain"
-            
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.EditGrainActivity"
             android:label="@string/title_activity_edit_grain"
-            
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.EditRecipeActivity"
             android:label="@string/title_activity_edit_recipe"
-            
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.AddHopsActivity"
             android:label="@string/title_activity_add_hops"
-            
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".frontend.EditHopActivity"
             android:label="@string/title_activity_edit_hop"
-            
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.AddYeastActivity"
-            android:label="@string/title_activity_add_yeast"
-            
-			>
+            android:label="@string/title_activity_add_yeast">
         </activity>
         <activity
             android:name=".frontend.EditYeastActivity"
