@@ -22,33 +22,54 @@ public class RecipeHandler extends DefaultHandler {
 	static int FERMENTABLE = 6;
 	static int YEAST = 7;
 	static int YEASTS = 8;
+	static int MISCS = 9;
+	static int MISC = 10;
 	
 	// Hold the current elements
     boolean currentElement = false;
     String currentValue = null;
 
 	// Lists to store all the things
-	ArrayList<Recipe> list = null;
-	ArrayList<Fermentable> fermList = null;
-	ArrayList<Hop> hopList = null;	
-	ArrayList<Yeast> yeastList = null;
+	ArrayList<Recipe> list = new ArrayList<Recipe>();
+	ArrayList<Fermentable> fermList = new ArrayList<Fermentable>();
+	ArrayList<Hop> hopList = new ArrayList<Hop>();	
+	ArrayList<Yeast> yeastList = new ArrayList<Yeast>();
+	ArrayList<Misc> miscList = new ArrayList<Misc>();
 
 	// Objects for each type of thing
 	Recipe r = null;
     Fermentable f = null;
 	Hop h = null;
 	Yeast y = null;
+	Misc misc = null;
 	
 	
 	// How we know what thing we're looking at
 	int thingType = 0;
 
 	/**
-	* This returns a list containing all of the recipes parsed.
+	* The return methods that will return lists of all of the elements
+	* that have been parsed in the current file.
 	*/
     public ArrayList<Recipe> getRecipes() {
         return list;
     }
+	
+	public ArrayList<Fermentable> getFermentables(){
+		return fermList;
+	}
+	
+	public ArrayList<Hop> getHops() {
+		return hopList;
+	}
+	
+	public ArrayList<Yeast> getYeasts() {
+		return yeastList;
+	}
+	
+	public ArrayList<Misc> getMiscs() {
+		return miscList;
+	}
 
 	/**
 	* This gets called whenever we encounter a new start element.  In this function
@@ -64,7 +85,6 @@ public class RecipeHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("RECIPES"))
         {
 			thingType = RECIPES;
-            list = new ArrayList<Recipe>();
         }
 		
 		// We encounter a new recipe
@@ -78,14 +98,12 @@ public class RecipeHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("FERMENTABLES"))
 		{
 			thingType = FERMENTABLES;
-			fermList = new ArrayList<Fermentable>();
 		}
 		
 		// We encounter a new hops list
 		if (qName.equalsIgnoreCase("HOPS"))
 		{
 			thingType = HOPS;
-			hopList = new ArrayList<Hop>();
 		}
 		
 		// We encounter a new hop
@@ -100,11 +118,10 @@ public class RecipeHandler extends DefaultHandler {
 			thingType = FERMENTABLE;
 			f = new Fermentable("");
 		}
-		// We encounter a new yeast
+		// We encounter a new yeast list
 		if (qName.equalsIgnoreCase("YEASTS"))
 		{
 			thingType = YEASTS;
-			yeastList = new ArrayList<Yeast>();
 		}
 
 		// We encounter a new yeast
@@ -113,6 +130,20 @@ public class RecipeHandler extends DefaultHandler {
 			thingType = YEAST;
 			y = new Yeast("");
 		}
+		
+		// Encounter new misc
+		if (qName.equalsIgnoreCase("MISC"))
+		{
+			thingType = MISC;
+			misc = new Misc("");
+		}
+		
+		// Encounter new miscs list
+		if (qName.equalsIgnoreCase("MISCS"))
+		{
+			thingType = MISCS;
+		}
+		
     }
 
 	/**
@@ -150,6 +181,12 @@ public class RecipeHandler extends DefaultHandler {
 			thingType = 0;
 			return;
 		}
+		else if (qName.equalsIgnoreCase("MISCS"))
+		// We have finished a list of miscs
+		{
+			thingType = 0;
+			return;
+		}
 		else if (qName.equalsIgnoreCase("FERMENTABLE"))
 		// Finished a fermentable.  Add it to recipe and fermentables list.
 		{
@@ -172,6 +209,14 @@ public class RecipeHandler extends DefaultHandler {
 			thingType = 0;
 			r.addIngredient(y);
 			yeastList.add(y);
+			return;
+		}
+		else if (qName.equalsIgnoreCase("MISC"))
+		// Finished a misc.  Add to recipe and list
+		{
+			thingType = 0;
+			r.addIngredient(misc);
+			miscList.add(misc);
 			return;
 		}
 		
@@ -592,6 +637,90 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("CULTURE_DATE"))
 			{
 				// TODO: Add support for this field
+			}
+		}
+		
+		else if (thingType == MISC)
+		// We are looking at a misc
+		// Do all of the misc things below
+		// woo.
+		{
+			if (qName.equalsIgnoreCase("NAME"))
+			{
+				misc.setName(currentValue);
+			}
+
+			else if (qName.equalsIgnoreCase("VERSION"))
+			{
+				misc.setVersion(Integer.parseInt(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("TYPE"))
+			{
+				String type = "NULL";
+
+				if (currentValue.equalsIgnoreCase(Misc.TYPE_SPICE))
+					type = Misc.TYPE_SPICE;
+				if (currentValue.equalsIgnoreCase(Misc.TYPE_FINING))
+					type = Misc.TYPE_FINING;
+				if (currentValue.equalsIgnoreCase(Misc.TYPE_FLAVOR))
+					type = Misc.TYPE_FLAVOR;
+				if (currentValue.equalsIgnoreCase(Misc.TYPE_HERB))
+					type = Misc.TYPE_HERB;
+				if (currentValue.equalsIgnoreCase(Misc.TYPE_WATER_AGENT))
+					type = Misc.TYPE_WATER_AGENT;
+				if (currentValue.equalsIgnoreCase(Misc.TYPE_OTHER))
+					type = Misc.TYPE_OTHER;
+
+				misc.setMiscType(type);
+			}
+
+			else if (qName.equalsIgnoreCase("AMOUNT"))
+			{
+				double amt = Double.parseDouble(currentValue);
+				misc.setAmount(amt);
+			}
+			
+			else if (qName.equalsIgnoreCase("TIME"))
+			{
+				misc.setStartTime(0);
+				misc.setEndTime(Integer.parseInt(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("USE"))
+			{
+				String type = "NULL";
+				
+				if (currentValue.equalsIgnoreCase(Misc.USE_BOIL))
+					type = Misc.USE_BOIL;
+				if (currentValue.equalsIgnoreCase(Misc.USE_BOTTLING))
+					type = Misc.USE_BOTTLING;
+				if (currentValue.equalsIgnoreCase(Misc.USE_MASH))
+					type = Misc.USE_MASH;
+				if (currentValue.equalsIgnoreCase(Misc.USE_PRIMARY))
+					type = Misc.USE_PRIMARY;
+				if (currentValue.equalsIgnoreCase(Misc.USE_SECONDARY))
+					type = Misc.USE_SECONDARY;
+					
+				misc.setUse(type);
+			}
+
+			else if (qName.equalsIgnoreCase("NOTES"))
+			{
+				misc.setShortDescription(currentValue);
+			}
+
+			else if (qName.equalsIgnoreCase("AMOUNT_IS_WEIGHT"))
+			{
+				if (currentValue.equalsIgnoreCase("TRUE"))
+					misc.setAmountIsWeight(true);
+				else
+					misc.setAmountIsWeight(false);
+			}
+
+			else if (qName.equalsIgnoreCase("USE_FOR"))
+			{
+				misc.setUseFor(currentValue);
 			}
 		}
     }
