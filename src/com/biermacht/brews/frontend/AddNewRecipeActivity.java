@@ -26,7 +26,6 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 	private Spinner beerStyleSpinner;
 	private Spinner beerTypeSpinner;
 	private EditText recipeNameEditText;
-	private EditText recipeDescEditText;
 	private EditText boilTimeEditText;
 	private EditText effEditText;
 	private EditText batchSizeEditText;
@@ -48,7 +47,6 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         
         // Initialize views and stuff
         recipeNameEditText = (EditText) findViewById(R.id.recipe_name_edit_text);
-        recipeDescEditText = (EditText) findViewById(R.id.recipe_description_edit_text);
         boilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         effEditText = (EditText) findViewById(R.id.efficiency_edit_text);
         batchSizeEditText = (EditText) findViewById(R.id.batch_volume_edit_text);
@@ -137,15 +135,14 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 		{
 			boolean readyToGo = true;
 			String recipeName = "Unnamed Brew";
-			String description = "";
+			String description = "No Description Provided";
 			Integer boilTime = 1;
 			float batchSize = 5;
 			double boilSize = 2.5;
 			
 			try {
 			    recipeName = recipeNameEditText.getText().toString();
-			    description = recipeDescEditText.getText().toString();
-				boilTime = Integer.parseInt(boilTimeEditText.getText().toString());
+			    boilTime = Integer.parseInt(boilTimeEditText.getText().toString());
 				efficiency = Float.parseFloat(effEditText.getText().toString());
 				batchSize = Float.parseFloat(batchSizeEditText.getText().toString());
 				boilSize = Float.parseFloat(boilSizeEditText.getText().toString());
