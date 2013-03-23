@@ -45,7 +45,7 @@
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:textStyle="bold"
 		        android:text="@string/alpha_acids_title" />
 		    
@@ -58,7 +58,7 @@
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="@string/weight_oz" />
 		              
 	    </LinearLayout>

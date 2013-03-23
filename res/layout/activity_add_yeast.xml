@@ -64,7 +64,7 @@
 		        android:gravity="left"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="@string/amount" />
 		    
 		    <TextView android:id="@+id/attenuation_title"
@@ -76,7 +76,7 @@
 		        android:gravity="left"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="Attenuation (%)" />
 		              
 	    </LinearLayout>
@@ -132,7 +132,7 @@
 		        android:gravity="left"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="Best For:" />
 		              
 	    </LinearLayout>

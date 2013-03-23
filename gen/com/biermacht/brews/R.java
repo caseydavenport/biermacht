@@ -11,17 +11,13 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int actionbar_text_color=0x7f040009;
-        public static final int background_color=0x7f040001;
-        public static final int body_background=0x7f040000;
-        public static final int button_color=0x7f040002;
-        public static final int dark=0x7f040007;
-        public static final int foreground=0x7f040008;
-        public static final int recipe_list_icon_bg=0x7f040003;
-        public static final int theme_orange=0x7f04000a;
-        public static final int title_color_dark=0x7f040006;
-        public static final int title_color_light=0x7f040005;
-        public static final int transparent=0x7f040004;
+        public static final int background=0x7f040001;
+        /**  Theme colors for chaning stuff globally 
+         */
+        public static final int button_color=0x7f040000;
+        public static final int theme_orange=0x7f040004;
+        public static final int title_color=0x7f040003;
+        public static final int transparent=0x7f040002;
     }
     public static final class drawable {
         public static final int actionbar_background=0x7f020000;

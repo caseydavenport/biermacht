@@ -53,7 +53,7 @@
 		                android:layout_height="wrap_content" 
 		                android:layout_gravity="center_vertical"
 		                android:background="@color/transparent"
-		                android:textColor="@color/title_color_dark"
+		                android:textColor="@color/title_color"
 		                android:text="@string/units" />
 		            
 				    <Spinner
