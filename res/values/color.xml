@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="body_background">#BCBCBC</color>
-	<color name="background_color">#DDDDDD</color>
+	
+	<!-- Theme colors for chaning stuff globally -->
     <color name="button_color">#FFFFFF</color>
-    <color name="recipe_list_icon_bg">#AAAAAA</color>
+	<color name="background">#DDDDDD</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="title_color_light">#CCCCCC</color>
-    <color name="title_color_dark">#000000</color>
-	<color name="dark">#CFCFCF</color>
-	<color name="foreground">#EFEFEF</color>
-	<color name="actionbar_text_color">#333333</color>
+    <color name="title_color">#333333</color>
     <color name="theme_orange">#E6A627</color>
     
 </resources>

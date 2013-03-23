@@ -5,16 +5,13 @@
 <!-- ===================================================================== -->
 
     <style name="Theme.Biermacht.Brews" parent="android:Theme.Holo.Light">
-        <!--
-		<item name="android:background">@color/background_color</item>
-		-->
 		<item name="android:actionBarStyle">@style/Theme.Biermacht.Brews.ActionBarStyle</item>
         <item name="android:actionBarTabStyle">@style/Theme.Biermacht.Brews.ActionBarTabBarStyle</item>
     </style>
     
     <style name="Theme.Biermacht.Brews.ActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/background_color</item>
-        <item name="android:titleTextStyle">@style/Theme.Biermacht.Brews.ActionBar.TitleTextStyle</item>
+        <item name="android:background">@color/background</item>
+		<item name="android:titleTextStyle">@style/Theme.Biermacht.Brews.ActionBar.TitleTextStyle</item>
     </style>
     
     <style name="Theme.Biermacht.Brews.ActionBarTabBarStyle">
@@ -23,7 +20,7 @@
     </style>
     
     <style name="Theme.Biermacht.Brews.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/actionbar_text_color</item>
+        <item name="android:textColor">@color/title_color</item>
     </style>
     
 <!-- ===================================================================== -->
@@ -57,7 +54,7 @@
     
     <style name="title_light">
 		<item name="android:background">@color/transparent</item>
-		<item name="android:textColor">@color/title_color_light</item>
+		<item name="android:textColor">@color/title_color</item>
 		<item name="android:textStyle">bold</item>
 		<item name="android:textSize">15dip</item>
 		<item name="android:gravity">left</item>
@@ -68,7 +65,7 @@
     
     <style name="title_dark">
 		<item name="android:background">@color/transparent</item>
-		<item name="android:textColor">@color/title_color_dark</item>
+		<item name="android:textColor">@color/title_color</item>
 		<item name="android:textStyle">bold</item>
 		<item name="android:textSize">15dip</item>
 		<item name="android:gravity">left</item>

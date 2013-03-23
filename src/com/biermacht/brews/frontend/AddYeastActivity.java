@@ -21,6 +21,7 @@ import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
+import android.view.*;
 
 public class AddYeastActivity extends Activity implements OnClickListener {
 	
@@ -40,6 +41,9 @@ public class AddYeastActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_yeast);
+		
+		// Set icon as back button
+		getActionBar().setDisplayHomeAsUpEnabled(true);
         
     	// Set up Ingredient Handler
     	ingredientHandler = MainActivity.ingredientHandler;
@@ -110,6 +114,18 @@ public class AddYeastActivity extends Activity implements OnClickListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add_ingredient, menu);
         return true;
+    }
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+    	switch (item.getItemId())
+		{
+            case android.R.id.home:
+        		finish();
+        		return true; 
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 	public void onClick(View v) {

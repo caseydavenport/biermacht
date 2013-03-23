@@ -2,16 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/textured_background_light"
+    android:background="@color/transparent"
     android:orientation="vertical" >
+	
+	<!-- Colored bar at top -->
+	<TextView android:id="@+id/colored_bar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
+		android:paddingTop="4dp"
+		android:paddingBottom="4dp"
+		android:textColor="#fff"
+		android:background="@color/theme_orange"
+		android:layout_alignParentTop="true"
+		android:text="">
+		<requestFocus />
+	</TextView>
        
     <RelativeLayout android:layout_width="match_parent"
     	android:layout_height="match_parent"
    		android:padding="10dip"
    		android:layout_margin="10dip"
    		android:layout_above="@+id/bottom_nav"
-   		android:layout_alignParentTop="true"
-   		android:background="@drawable/textured_background" >
+   		android:layout_below="@id/colored_bar"
+   		android:background="@color/transparent" >
     
 	    <TextView android:id="@+id/recipe_name_title"
 	        android:layout_alignParentTop="true"
@@ -33,7 +49,7 @@
 	    <LinearLayout android:id="@+id/spinner_titles"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/recipe_name_edit_text" >
 
 		    <!-- BeerType spinner -->
@@ -45,7 +61,7 @@
 		        android:gravity="left"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="Beer Style" />
 		              
 	    </LinearLayout>
@@ -55,7 +71,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="15dp"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/spinner_titles" >
 	        
 		   <Spinner
@@ -80,48 +96,24 @@
 		        android:paddingLeft="10dip" />
 			            
 	    </LinearLayout>
-
-	    <!-- EditText for Description -->
-	    <TextView android:id="@+id/description_title"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:background="#00000000"
-	        android:layout_marginBottom="3dip"
-	        android:gravity="left"
-	        android:textSize="15dip"
-	        android:textStyle="bold"
-	        android:textColor="@color/title_color_light"
-	        android:layout_below="@id/spinners"
-	        android:text="Description" />
-	    
-	    <EditText
-	        android:id="@+id/recipe_description_edit_text"
-	        android:layout_width="fill_parent"
-	        android:layout_height="80dip"
-	        android:layout_weight="1"
-	        android:background="@drawable/rounded_bg_white"
-	        android:padding="10dip"
-	        android:layout_marginBottom="15dip"
-	        android:layout_below="@id/description_title"
-	        android:hint="Enter a description (optional)" />
-	    
+		
 	    <LinearLayout android:id="@+id/first_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="#00000000"
-	        android:layout_below="@id/recipe_description_edit_text" >
+	        android:layout_below="@id/spinners" >
 		    
 		    <!-- Boil time -->
 		    <TextView android:id="@+id/boil_length_title"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="@string/boil_time" />
 		    
 		    <!-- Efficiency -->
@@ -129,12 +121,12 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="@string/efficiency" />
 		              
 	    </LinearLayout>
@@ -144,7 +136,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="15dp"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/first_ll" >
 	        	    
 		    <EditText
@@ -178,7 +170,7 @@
 	   	<LinearLayout android:id="@+id/third_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/second_ll" >
 		
 	        <!-- Batch Vol -->
@@ -191,7 +183,7 @@
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="@string/batch_volume" />
 		    		    
 	        <!-- Boil Vol -->
@@ -199,12 +191,12 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="@string/boil_volume" />
 		              
 	    </LinearLayout>
@@ -214,7 +206,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="15dp"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/third_ll" >
 		    
 	        <EditText
@@ -248,10 +240,10 @@
 	
     <!-- Bottom Bar -->
     <LinearLayout android:id="@+id/bottom_nav"
-        android:layout_height="70dip"
-        android:background="@drawable/actionbar_background"
+        android:layout_height="60dip"
+        android:background="@color/transparent"
         android:layout_width="fill_parent" 
-        android:padding="15dp"
+        android:padding="10dp"
         android:layout_alignParentBottom="true">
 	    
         <!-- Cancel Button -->

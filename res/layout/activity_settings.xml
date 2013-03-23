@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
+	android:background="@color/transparent"
 	android:orientation="vertical" >
 	
 	<ScrollView android:layout_width="fill_parent"
-	    android:background="@drawable/textured_background_light"
 	    android:layout_height="0dp"
 	    android:layout_alignParentTop="true"
 	    android:layout_above="@+id/bottom_nav"
+		android:background="@color/transparent"
 	    android:minHeight="4000dip" >
 	    	    
 		<LinearLayout android:layout_width="match_parent"
@@ -20,7 +21,7 @@
 		        android:orientation="vertical"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@drawable/rounded_bg_dark"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="15dip"
 		        android:padding="10dip">
 		        
@@ -53,7 +54,7 @@
 		                android:layout_height="wrap_content" 
 		                android:layout_gravity="center_vertical"
 		                android:background="@color/transparent"
-		                android:textColor="@color/title_color_dark"
+		                android:textColor="@color/title_color"
 		                android:text="@string/units" />
 		            
 				    <Spinner
@@ -75,10 +76,10 @@
 	
     <!-- Bottom Bar -->
     <LinearLayout android:id="@+id/bottom_nav"
-        android:layout_height="70dip"
-        android:background="@drawable/actionbar_background"
+        android:layout_height="60dip"
+        android:background="@color/transparent"
         android:layout_width="fill_parent" 
-        android:padding="15dp"
+        android:padding="10dp"
         android:layout_alignParentBottom="true">
 	    
         <!-- Cancel Button -->

@@ -30,14 +30,15 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
 	CollectionPagerAdapter cpAdapter;
     ViewPager mViewPager;
 	
-	
 	private Context appContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_recipe);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+		// Set icon as back button
+		getActionBar().setDisplayHomeAsUpEnabled(true);
               
         appContext = getApplicationContext();
         
@@ -97,7 +98,6 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
     }
     
     @Override

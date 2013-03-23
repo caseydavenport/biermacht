@@ -2,16 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/textured_background_light"
+    android:background="@color/transparent"
     android:orientation="vertical" >
+	
+	<!-- Colored bar at top -->
+	<TextView android:id="@+id/colored_bar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
+		android:paddingTop="4dp"
+		android:paddingBottom="4dp"
+		android:textColor="#fff"
+		android:background="@color/theme_orange"
+		android:layout_alignParentTop="true"
+		android:text="">
+		<requestFocus />
+	</TextView>
         
     <RelativeLayout android:layout_width="match_parent"
     	android:layout_height="match_parent"
    		android:padding="10dip"
    		android:layout_margin="10dip"
    		android:layout_above="@+id/bottom_nav"
-   		android:layout_alignParentTop="true"
-   		android:background="@drawable/textured_background" >
+   		android:layout_below="@id/colored_bar"
+   		android:background="@color/transparent" >
    		
 	    <!-- Grain Type spinner -->
 	    <TextView android:id="@+id/spinner_title"
@@ -43,9 +59,9 @@
 				android:layout_weight="1"
 				android:layout_height="fill_parent"
 				android:padding="10dip"
-				android:background="#00000055"
+				android:background="@color/transparent"
 				android:gravity="center_vertical|center"
-				android:textColor="#CCC"
+				android:textColor="@color/title_color"
 				android:text="Extract" />
 		</LinearLayout>
 	    
@@ -65,18 +81,18 @@
 	    <LinearLayout android:id="@+id/first_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/grain_name_edit_text" >
 		    
 		    <TextView android:id="@+id/color_title"
 		        android:layout_width="0dp"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:textStyle="bold"
 		        android:text="@string/color" />
 			    
@@ -84,11 +100,11 @@
 		        android:layout_width="0dp"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:textStyle="bold"
 		        android:text="@string/gravity" />
 		    
@@ -96,12 +112,12 @@
 		        android:layout_width="0dp"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
-		        android:textColor="@color/title_color_light"
+		        android:textColor="@color/title_color"
 		        android:text="@string/weight_lbs" />
 		              
 	    </LinearLayout>
@@ -110,7 +126,7 @@
 	        android:orientation="horizontal"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/first_ll" >
 		    
 		    <EditText
@@ -156,7 +172,7 @@
 	    <LinearLayout android:id="@+id/third_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/second_ll" >
 		    
 		    <!-- Boil time -->
@@ -170,7 +186,7 @@
 	        android:orientation="horizontal"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/third_ll"
 	        android:layout_marginBottom="15dip" >
 	        	    
@@ -184,18 +200,6 @@
 		        android:background="@drawable/rounded_bg_white"
 		        android:padding="10dip"
 		        android:hint="@string/boil_time" />
-		    
-		    <!-- Boil time -->
-		    <TextView android:id="@+id/boil_time_helper"
-		        android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="fill_parent"
-		        android:background="#00000000"
-		        android:layout_marginLeft="5dip"
-		        android:gravity="top"
-		        android:textSize="11dip"
-		        android:textColor="#CCC"
-		        android:text="@string/boil_time_helper" />
 			            
 	    </LinearLayout>
 	    
@@ -203,10 +207,10 @@
 	
     <!-- Bottom Bar -->
     <LinearLayout android:id="@+id/bottom_nav"
-        android:layout_height="70dip"
-        android:background="@drawable/actionbar_background"
+        android:layout_height="60dip"
+        android:background="@color/transparent"
         android:layout_width="fill_parent" 
-        android:padding="15dp"
+        android:padding="10dp"
         android:layout_alignParentBottom="true">
 	    
         <!-- Cancel Button -->

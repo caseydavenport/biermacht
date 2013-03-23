@@ -22,6 +22,7 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
+import android.view.*;
 
 public class AddGrainActivity extends Activity implements OnClickListener {
 	
@@ -44,6 +45,9 @@ public class AddGrainActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_grain);
+		
+		// Set icon as back button
+		getActionBar().setDisplayHomeAsUpEnabled(true);
         
     	// Set up Ingredient Handler
     	ingredientHandler = MainActivity.ingredientHandler;
@@ -54,8 +58,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
         mRecipe = Utils.getRecipeWithId(id);
-        
-        Log.e("AddGrain", "ID: " + id);
         
         // Initialize views and such here
         grainNameEditText = (EditText) findViewById(R.id.grain_name_edit_text);
@@ -140,13 +142,17 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         getMenuInflater().inflate(R.menu.activity_add_ingredient, menu);
         return true;
     }
-    
-    @Override
-    public void onBackPressed()
-    {
-	    Intent intent = new Intent(AddGrainActivity.this, DisplayRecipeActivity.class);
-	    intent.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-	    startActivity(intent);				
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+		
+    	switch (item.getItemId())
+		{
+            case android.R.id.home:
+        		finish();
+        		return true; 
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 	public void onClick(View v) {
