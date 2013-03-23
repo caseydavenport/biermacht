@@ -27,7 +27,7 @@
 		 android:layout_marginTop="0dip"
 	     android:padding="0dip"
 		 android:layout_gravity="center"
-	     android:background="@color/background_color"
+	     android:background="@color/transparent"
 	     android:layout_below="@id/colored_bar" >
 		 
         <EditText android:id="@+id/search_bar"
