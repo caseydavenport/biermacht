@@ -8,12 +8,13 @@
     android:orientation="horizontal">
         
     <LinearLayout android:orientation="vertical"
-        android:layout_width="60dp"
+        android:layout_width="40dp"
         android:layout_height="40dp"
 		android:gravity="center|center_vertical"
         android:background="#fff"
 		android:layout_marginTop="10dp"
-        android:layout_marginRight="0dp">
+        android:layout_marginRight="10dp"
+		android:layout_marginLeft="10dp">
         
         <ImageView android:id="@+id/row_icon"
 	        android:layout_width="32dp"
