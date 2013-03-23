@@ -15,10 +15,8 @@
     </style>
     
     <style name="Theme.Biermacht.Brews.ActionBarTabBarStyle">
-		<!--
         <item name="android:background">@drawable/actionbar_tab_bg</item>
         <item name="android:gravity">center</item>
-		-->
     </style>
     
     <style name="Theme.Biermacht.Brews.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
