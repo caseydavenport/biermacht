@@ -73,7 +73,7 @@
 		        android:id="@+id/recipe_list"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@drawable/rounded_bg_white"
+		        android:background="@drawable/bg_white"
 		        android:padding="0dip"
 		        android:drawSelectorOnTop="true"
 		        android:divider="#66000000"
