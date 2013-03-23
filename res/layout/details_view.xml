@@ -13,6 +13,7 @@
 	    
 		<LinearLayout android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
+			android:background="@color/transparent"
 		    android:orientation="vertical"
 		    android:padding="10dip" >
 		    
@@ -20,9 +21,9 @@
 		        android:orientation="vertical"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@drawable/rounded_bg_dark"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="15dip"
-		        android:padding="10dip">
+		        android:padding="0dip">
 		        
 		        <!-- Beer style view -->
 		        <LinearLayout android:id="@+id/beer_type_view"
@@ -274,9 +275,9 @@
 				android:orientation="vertical"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:background="@drawable/rounded_bg_dark"
+				android:background="@color/transparent"
 				android:layout_marginBottom="15dip"
-				android:padding="10dip">
+				android:padding="0dip">
 
 				<LinearLayout android:id="@+id/color_space"
 					android:orientation="vertical"
@@ -292,9 +293,9 @@
 		        android:orientation="vertical"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@drawable/rounded_bg_dark"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="15dip"
-		        android:padding="10dip">
+		        android:padding="0dip">
 		    
 			    <TextView android:id="@+id/description_view"
 			        android:layout_width="fill_parent"
