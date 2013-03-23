@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import com.biermacht.brews.frontend.adapters.*;
 import android.util.*;
+import android.view.*;
 
 public class AddHopsActivity extends Activity {
 	
@@ -41,6 +42,9 @@ public class AddHopsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hops);
+		
+		// Set icon as back button
+		getActionBar().setDisplayHomeAsUpEnabled(true);
         
     	// Set up Ingredient Handler
     	ingredientHandler = MainActivity.ingredientHandler;
@@ -123,6 +127,18 @@ public class AddHopsActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add_hops, menu);
         return true;
+    }
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+    	switch (item.getItemId())
+		{
+            case android.R.id.home:
+        		finish();
+        		return true; 
+        }
+        return super.onOptionsItemSelected(item);
     }
     
 	public void onClick(View v) {

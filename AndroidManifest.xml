@@ -36,7 +36,7 @@
         <activity
             android:name=".frontend.AddGrainActivity"
             android:label="@string/title_activity_add_grain"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.EditGrainActivity"
@@ -51,7 +51,7 @@
         <activity
             android:name=".frontend.AddHopsActivity"
             android:label="@string/title_activity_add_hops"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.EditHopActivity"
