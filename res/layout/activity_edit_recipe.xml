@@ -2,21 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/textured_background_light"
+    android:background="@color/transparent"
     android:orientation="vertical" >
+	
+	<!-- Colored bar at top -->
+	<TextView android:id="@+id/colored_bar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
+		android:paddingTop="4dp"
+		android:paddingBottom="4dp"
+		android:textColor="#fff"
+		android:background="@color/theme_orange"
+		android:layout_alignParentTop="true"
+		android:text="">
+		<requestFocus />
+	</TextView>
        
 	<RelativeLayout android:layout_width="match_parent"
     	android:layout_height="match_parent"
    		android:padding="10dip"
    		android:layout_margin="10dip"
    		android:layout_above="@+id/bottom_nav"
-   		android:layout_alignParentTop="true"
-   		android:background="@drawable/textured_background" >
-        
-        <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
-		<LinearLayout android:id="@+id/placeholder"
-		    android:focusable="true" android:focusableInTouchMode="true"
-		    android:layout_width="0px" android:layout_height="0px"/>
+   		android:layout_below="@id/colored_bar"
+   		android:background="@color/transparent" >
     
 	    <TextView android:id="@+id/recipe_name_title"
 	        android:layout_alignParentTop="true"
@@ -38,14 +49,14 @@
 	    <LinearLayout android:id="@+id/spinner_titles"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/recipe_name_edit_text" >
 
 		    <!-- BeerType spinner -->
 		    <TextView android:id="@+id/beer_style_title"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="left"
 		        android:textSize="15dip"
@@ -60,7 +71,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="15dp"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/spinner_titles" >
 	        
 		   <Spinner
@@ -90,7 +101,7 @@
 	    <TextView android:id="@+id/description_title"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_marginBottom="3dip"
 	        android:gravity="left"
 	        android:textSize="15dip"
@@ -113,7 +124,7 @@
 	    <LinearLayout android:id="@+id/first_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/recipe_description_edit_text" >
 		    
 		    <!-- Boil time -->
@@ -121,7 +132,7 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
@@ -134,7 +145,7 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
@@ -149,7 +160,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="15dp"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/first_ll" >
 	        	    
 		    <EditText
@@ -183,7 +194,7 @@
 	   	<LinearLayout android:id="@+id/third_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/second_ll" >
 		
 	        <!-- Batch Vol -->
@@ -191,7 +202,7 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
@@ -204,7 +215,7 @@
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
-		        android:background="#00000000"
+		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
@@ -219,7 +230,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="15dp"
-	        android:background="#00000000"
+	        android:background="@color/transparent"
 	        android:layout_below="@id/third_ll" >
 		    
 	        <EditText
@@ -253,10 +264,10 @@
 	
     <!-- Bottom Bar -->
     <LinearLayout android:id="@+id/bottom_nav"
-        android:layout_height="70dip"
-        android:background="@drawable/actionbar_background"
+        android:layout_height="60dip"
+        android:background="@color/transparent"
         android:layout_width="fill_parent" 
-        android:padding="15dp"
+        android:padding="10dp"
         android:layout_alignParentBottom="true">
 	    
         <!-- Cancel Button -->
