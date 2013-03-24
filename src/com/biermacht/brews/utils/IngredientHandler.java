@@ -22,6 +22,8 @@ import com.biermacht.brews.xml.HopsHandler;
 import com.biermacht.brews.xml.YeastHandler;
 import com.biermacht.brews.xml.*;
 import com.biermacht.brews.recipe.*;
+import android.content.*;
+import android.net.*;
 
 public class IngredientHandler {
 	
@@ -91,19 +93,6 @@ public class IngredientHandler {
 		}
 		
 		return hopsList;
-	}
-	
-	public ArrayList<Recipe> getRecipesList()
-	{
-		try
-		{
-			Log.e("IngredientHandler", "getRecipeList()");
-			this.recipesList = getRecipesFromXml();
-		}
-		catch (IOException e)
-		{}
-		
-		return this.recipesList;
 	}
 	
 	/**
@@ -212,32 +201,37 @@ public class IngredientHandler {
 	 * @return ArrayList of Ingredient Objects
 	 * @throws IOException
 	 */
-	private ArrayList<Recipe> getRecipesFromXml() throws IOException
+	public ArrayList<Recipe> getRecipesFromXml(String s) throws IOException
 	{
 		ArrayList<Recipe> retlist = new ArrayList<Recipe>();
         RecipeHandler myXMLHandler = new RecipeHandler();
         SAXParserFactory spf = SAXParserFactory.newInstance();
-        AssetManager am = mContext.getAssets();
 
-        for (String s : am.list("Recipes") )
-        {
-	        try 
-	        {	
-				Log.e("IngredientHandler", s);
-	            SAXParser sp = spf.newSAXParser();
-	            InputStream is = am.open("Recipes/" + s);
-	            sp.parse(is, myXMLHandler);
+		Log.e("INGREDIENTHANDLER", s);
+		
+        try 
+	    {	
+			ContentResolver cr = mContext.getContentResolver();
+	        SAXParser sp = spf.newSAXParser();
+	        InputStream is = cr.openInputStream((Uri.parse("file://" + s)));
+	        sp.parse(is, myXMLHandler);
 
-	            ArrayList<Recipe> list = myXMLHandler.getRecipes();
-	            retlist.addAll(list);
-	        }
-	        catch (Exception e)
-	        {
-	        	Log.e("IngredientHandler", e.toString());
-	        }
-        }
+	        ArrayList<Recipe> list = myXMLHandler.getRecipes();
+	        retlist.addAll(list);
+
+	     }
+	     catch (Exception e)
+	     {
+	        Log.e("IngredientHandler", e.toString());
+	     }
 
         return retlist;
+	}
+
+	private InputStream openFileInput(String s)
+	{
+		// TODO: Implement this method
+		return null;
 	}
 	
 	

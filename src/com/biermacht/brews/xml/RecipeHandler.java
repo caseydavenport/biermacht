@@ -684,7 +684,7 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("TIME"))
 			{
 				misc.setStartTime(0);
-				misc.setEndTime(Integer.parseInt(currentValue));
+				misc.setEndTime((int)Float.parseFloat(currentValue));
 			}
 
 			else if (qName.equalsIgnoreCase("USE"))

@@ -34,6 +34,7 @@ import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
+import java.io.*;
 
 public class MainActivity extends Activity implements OnClickListener {
 	
@@ -152,9 +153,46 @@ public class MainActivity extends Activity implements OnClickListener {
     		Intent i2 = new Intent(getApplicationContext(), SettingsActivity.class);
     		startActivity(i2);
     		break;
+			
+		case R.id.menu_import_recipe:
+			Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
+			i3.setType("file/*");
+			startActivityForResult(i3, 1);
     	}
     	return true;
     }
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) 
+	{
+
+  	  if (requestCode == 1) 
+	  {
+     	if(resultCode == RESULT_OK){      
+         	String path = data.getData().getPath().toString();
+			Log.e("MAIN", path);
+			
+			if (path != null)
+			{
+				try
+				{
+					for (Recipe r : ingredientHandler.getRecipesFromXml(path))
+					{
+						r.update();
+						Utils.createRecipeFromExisting(r);
+					}
+					
+				}
+				catch (IOException e)
+				{
+					Log.e("MainActivity", e.toString());
+				}
+			}	
+     	}
+     	if (resultCode == RESULT_CANCELED) {    
+         	//Write your code on no result return 
+     		}
+  		}
+	}
     
     /**
      * Filters the list of all Recipes by the given string
