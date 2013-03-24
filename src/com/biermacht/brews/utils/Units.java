@@ -31,5 +31,41 @@ public class Units {
 	public static final String LITERS = "liters";
 	
 	// Agnostic Units
+	
+	
+	// Functions for converting units below
+	public static double litersToGallons(double l)
+	{
+		return l * .264172052;
+	}
+	
+	public static double gallonsToLiters(double g)
+	{
+		return g * 3.87541178;
+	}
+	
+	public static double kilosToPounds(double k)
+	{
+		return k * 2.204;
+	}
+	
+	public static double kilosToOunces(double k)
+	{
+		return k * 35.2739619;
+	}
+	
+	public static double poundsToKilos(double p)
+	{
+		return p / 2.204;
+	}
 
+	public static double ouncesToGrams(double o)
+	{
+		return o * 28.3495231;
+	}
+	
+	public static double gramsToOunces(double g)
+	{
+		return g / 28.3495231;
+	}
 }

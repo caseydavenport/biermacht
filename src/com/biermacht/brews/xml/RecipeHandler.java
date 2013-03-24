@@ -10,6 +10,7 @@ import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.recipe.*;
 import java.util.*;
 import com.biermacht.brews.ingredient.*;
+import com.biermacht.brews.utils.*;
 
 public class RecipeHandler extends DefaultHandler {
 
@@ -264,12 +265,19 @@ public class RecipeHandler extends DefaultHandler {
 			
 			else if (qName.equalsIgnoreCase("BATCH_SIZE"))
 			{
-				r.setBatchSize(Float.parseFloat(currentValue));
+				double s = Units.litersToGallons(Float.parseFloat(currentValue));
+				r.setBatchSize(s);
 			}
 			
 			else if (qName.equalsIgnoreCase("BOIL_SIZE"))
 			{
-				r.setBoilSize(Float.parseFloat(currentValue));
+				double s = Units.litersToGallons(Float.parseFloat(currentValue));
+				r.setBoilSize(s);
+			}
+			
+			else if (qName.equalsIgnoreCase("BOIL_TIME"))
+			{
+				r.setBoilTime((int)Float.parseFloat(currentValue));
 			}
 			
 			else if (qName.equalsIgnoreCase("EFFICIENCY"))
@@ -314,6 +322,7 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("AMOUNT"))
 			{
 				double amt = Double.parseDouble(currentValue);
+				amt = Units.kilosToPounds(amt);
 				f.setAmount(amt);
 			}
 
@@ -437,7 +446,9 @@ public class RecipeHandler extends DefaultHandler {
 
 			else if (qName.equalsIgnoreCase("AMOUNT"))
 			{
-				h.setAmount(Double.parseDouble(currentValue));
+				double amt = Double.parseDouble(currentValue);
+				amt = Units.kilosToOunces(amt);
+				h.setAmount(amt);
 			}
 
 			else if (qName.equalsIgnoreCase("USE"))
@@ -678,6 +689,10 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("AMOUNT"))
 			{
 				double amt = Double.parseDouble(currentValue);
+				if (misc.getAmountIsWeight())
+					amt = Units.kilosToOunces(amt);
+				else
+					amt = Units.litersToGallons(amt);
 				misc.setAmount(amt);
 			}
 			
