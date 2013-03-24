@@ -15,16 +15,18 @@ import com.biermacht.brews.utils.*;
 public class RecipeHandler extends DefaultHandler {
 
 	// Types of things
-	static int RECIPES = 1;
-	static int RECIPE = 2;
-	static int HOPS = 3;
-	static int FERMENTABLES = 4;
-	static int HOP = 5;
-	static int FERMENTABLE = 6;
-	static int YEAST = 7;
-	static int YEASTS = 8;
-	static int MISCS = 9;
-	static int MISC = 10;
+	private static int RECIPES = 1;
+	private static int RECIPE = 2;
+	private static int HOPS = 3;
+	private static int FERMENTABLES = 4;
+	private static int HOP = 5;
+	private static int FERMENTABLE = 6;
+	private static int YEAST = 7;
+	private static int YEASTS = 8;
+	private static int MISCS = 9;
+	private static int MISC = 10;
+	private static int STYLE = 11;
+	private static int STYLES = 12;
 	
 	// Hold the current elements
     boolean currentElement = false;
@@ -36,6 +38,7 @@ public class RecipeHandler extends DefaultHandler {
 	ArrayList<Hop> hopList = new ArrayList<Hop>();	
 	ArrayList<Yeast> yeastList = new ArrayList<Yeast>();
 	ArrayList<Misc> miscList = new ArrayList<Misc>();
+	ArrayList<BeerStyle> beerStyleList = new ArrayList<BeerStyle>();
 
 	// Objects for each type of thing
 	Recipe r = null;
@@ -43,7 +46,7 @@ public class RecipeHandler extends DefaultHandler {
 	Hop h = null;
 	Yeast y = null;
 	Misc misc = null;
-	
+	BeerStyle style = null;
 	
 	// How we know what thing we're looking at
 	int thingType = 0;
@@ -72,6 +75,10 @@ public class RecipeHandler extends DefaultHandler {
 		return miscList;
 	}
 
+	public ArrayList<BeerStyle> getBeerStyles()
+	{
+		return beerStyleList;
+	}
 	/**
 	* This gets called whenever we encounter a new start element.  In this function
 	* we create the new object to be populated and set the type of what we are looking at
@@ -145,6 +152,19 @@ public class RecipeHandler extends DefaultHandler {
 			thingType = MISCS;
 		}
 		
+		// Encounter new style
+		if (qName.equalsIgnoreCase("STYLE"))
+		{
+			thingType = STYLE;
+			style = new BeerStyle("");
+		}
+		
+		// Encounter new style list
+		if (qName.equalsIgnoreCase("STYLES"))
+		{
+			thingType = STYLES;
+		}
+		
     }
 
 	/**
@@ -159,7 +179,7 @@ public class RecipeHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("RECIPE"))
 		// We've finished a new recipe
 		{
-			Log.e("RecipeHandler", "New recipe added: " + r.getRecipeName());
+			Log.e("RecipeHandler", "New recipe from xml: " + r.getRecipeName());
 			list.add(r);
 			thingType = 0;
 			return;
@@ -184,6 +204,12 @@ public class RecipeHandler extends DefaultHandler {
 		}
 		else if (qName.equalsIgnoreCase("MISCS"))
 		// We have finished a list of miscs
+		{
+			thingType = 0;
+			return;
+		}
+		else if (qName.equalsIgnoreCase("STYLES"))
+		// We have finished a list of styles
 		{
 			thingType = 0;
 			return;
@@ -218,6 +244,14 @@ public class RecipeHandler extends DefaultHandler {
 			thingType = 0;
 			r.addIngredient(misc);
 			miscList.add(misc);
+			return;
+		}
+		else if (qName.equalsIgnoreCase("STYLE"))
+		// Finished a style.  Add to recipe and list
+		{
+			thingType = 0;
+			r.setStyle(style.toString());
+			beerStyleList.add(style);
 			return;
 		}
 		
