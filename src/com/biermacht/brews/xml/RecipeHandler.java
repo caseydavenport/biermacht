@@ -218,8 +218,25 @@ public class RecipeHandler extends DefaultHandler {
 		// Finished a fermentable.  Add it to recipe and fermentables list.
 		{
 			thingType = 0;
-			r.addIngredient(f);
 			fermList.add(f);
+			
+			// BeerXML doesn't specify a time field for fermentables...
+			// We need to hack it up in here...
+			if(r.getType().equals(Recipe.EXTRACT))
+			{
+				if(f.getFermentableType().equals(Fermentable.GRAIN))
+				{
+					f.setStartTime(0);
+					f.setEndTime(20);
+				} 
+				else if (f.getFermentableType().equals(Fermentable.EXTRACT))
+				{
+					f.setStartTime(0);
+					f.setEndTime(r.getBoilTime());
+				}
+			}
+			
+			r.addIngredient(f);
 			return;
 		}
 		else if (qName.equalsIgnoreCase("HOP"))
