@@ -40,6 +40,16 @@ public class Misc extends Ingredient {
 		setVersion(1);
 		setTime(0);
 	}
+	
+	@Override
+	public String toString()
+	{
+		String s = getName();
+		s += getUse() + ", " + getUseFor() + ", " + getAmount() + ", ";
+		s += getShortDescription() + ", " + getMiscType();
+		
+		return s;
+	}
 
 	public void setMiscType(String type)
 	{

@@ -93,6 +93,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		else if(ingType == Ingredient.MISC)
 		{
 			imageView.setImageResource(R.drawable.icon_idk);
+			detailText = ((Misc)list.get(position)).getUseFor();
 		}
 		else
 		{

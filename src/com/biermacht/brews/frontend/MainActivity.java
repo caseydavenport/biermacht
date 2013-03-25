@@ -341,8 +341,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	private Builder importRecipeAlert()
 	{
-		LayoutInflater factory = LayoutInflater.from(this);
-        
 		return new AlertDialog.Builder(this)
 			.setTitle("Import BeerXML Recipe")
 			.setMessage("Press OPEN to search your device for a BeerXML recipe file to import.")

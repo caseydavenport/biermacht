@@ -67,6 +67,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_YS_COL_ATTENUATION = "attenuation";
 	public static final String ING_YS_COL_NOTES = "notes";
 	public static final String ING_YS_COL_BEST_FOR = "bestFor";
+	
+	public static final String ING_MC_COL_TYPE = "miscType";
+	public static final String ING_MC_COL_VERSION = "miscVersion";
+	public static final String ING_MC_COL_AMT_IS_WEIGHT = "amountIsWeight";
+	public static final String ING_MC_COL_USE_FOR = "useFor";
 			 
 	private static final String CREATE_RECIPE_TABLE = "create table " +
 		TABLE_RECIPES 
@@ -125,7 +130,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_YS_COL_MAX_TEMP + " float, "
 				+ ING_YS_COL_ATTENUATION + " float, "
 				+ ING_YS_COL_NOTES + " text, "
-				+ ING_YS_COL_BEST_FOR + " text"
+				+ ING_YS_COL_BEST_FOR + " text, "
+				
+				+ ING_MC_COL_TYPE + " text, "
+				+ ING_MC_COL_VERSION + " int, "
+				+ ING_MC_COL_AMT_IS_WEIGHT + " int, "
+				+ ING_MC_COL_USE_FOR + " text"
+				
 			+ ");";
 	
 	// Public Constructor

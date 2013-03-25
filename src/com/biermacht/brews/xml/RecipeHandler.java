@@ -761,7 +761,7 @@ public class RecipeHandler extends DefaultHandler {
 
 			else if (qName.equalsIgnoreCase("USE"))
 			{
-				String type = "NULL";
+				String type = "NO_TYPE";
 				
 				if (currentValue.equalsIgnoreCase(Misc.USE_BOIL))
 					type = Misc.USE_BOIL;

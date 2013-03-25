@@ -14,6 +14,7 @@ import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.comparators.InstructionComparator;
 import java.util.*;
+import android.util.*;
 
 public class Recipe {
 	
@@ -192,6 +193,7 @@ public class Recipe {
 		list.addAll(hops);
 		list.addAll(fermentables);
 		list.addAll(yeasts);
+		list.addAll(miscs);
 		list.addAll(waters);
 		
 		Collections.sort(list, new IngredientComparator());

@@ -14,6 +14,7 @@ import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.ingredient.*;
 
 public class DatabaseInterface {
 	
@@ -73,7 +74,13 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_YS_COL_MAX_TEMP,
 			DatabaseHelper.ING_YS_COL_ATTENUATION,
 			DatabaseHelper.ING_YS_COL_NOTES,
-			DatabaseHelper.ING_YS_COL_BEST_FOR
+			DatabaseHelper.ING_YS_COL_BEST_FOR,
+			
+			DatabaseHelper.ING_MC_COL_TYPE,
+			DatabaseHelper.ING_MC_COL_VERSION,
+			DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT,
+			DatabaseHelper.ING_MC_COL_USE_FOR
+			
 			};
 	
 	// Constructor
@@ -203,6 +210,17 @@ public class DatabaseInterface {
 				values.put(DatabaseHelper.ING_YS_COL_BEST_FOR, yeast.getBestFor());
 			}
 			
+			// Misc values
+			if (ing.getType().equals(Ingredient.MISC))
+			{
+				Misc misc = (Misc) ing;
+				values.put(DatabaseHelper.ING_MC_COL_TYPE, misc.getMiscType());
+				values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
+				values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.getAmountIsWeight() ? 1 : 0);
+				values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
+				
+			}
+			
 			database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
 			values.clear();
 		}
@@ -258,6 +276,16 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_YS_COL_ATTENUATION, yeast.getAttenuation());
 			values.put(DatabaseHelper.ING_YS_COL_NOTES, yeast.getNotes());
 			values.put(DatabaseHelper.ING_YS_COL_BEST_FOR, yeast.getBestFor());
+		}
+		
+		// Misc values
+		if (ing.getType().equals(Ingredient.MISC))
+		{
+			Misc misc = (Misc) ing;
+			values.put(DatabaseHelper.ING_MC_COL_TYPE, misc.getMiscType());
+			values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
+			values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.getAmountIsWeight() ? 1 : 0);
+			values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
 		}
 		
 		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
@@ -521,7 +549,31 @@ public class DatabaseInterface {
 			return yeast;
 		}
 		
-		// Shitty - throw exception eventually TODO
-		return null;
+		if (ingType.equals(Ingredient.MISC))
+		{
+			cid += 19;
+			
+			Misc misc = new Misc(name);
+			String miscType = cursor.getString(cid);       cid++;
+			int version = cursor.getInt(cid);              cid++;
+			int amtIsWeight = cursor.getInt(cid);          cid++;
+			String useFor = cursor.getString(cid);         cid++;
+			
+			misc.setId(id);
+			misc.setOwnerId(ownerId);
+			misc.setShortDescription(description);
+			misc.setUnits(units);
+			misc.setAmount(amount);
+			misc.setStartTime(startTime);
+			misc.setEndTime(endTime);
+			misc.setMiscType(miscType);
+			misc.setVersion(version);
+			misc.setAmountIsWeight(amtIsWeight > 0 ? true : false);
+			misc.setUseFor(useFor);
+
+			return misc;
+		}
+		
+		return new Misc("No Ingredient Found");
 	}
 }
