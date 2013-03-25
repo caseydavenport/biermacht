@@ -112,31 +112,6 @@ public class IngredientViewFragment extends Fragment {
 		return pageView;
 	}
 	
-	public void update()
-	{
-		// Update the recipe and its fields..
-		r = Utils.getRecipeWithId(r.getId());
-		r.update();
-		ingredientList = r.getIngredientList();
-		 
-		
-		// Set whether or not we show the list view
-		if (ingredientList.size() > 0)
-		{
-			IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(c, ingredientList, r);
-			ingredientListView.setVisibility(View.VISIBLE);
-			ingredientListView.setAdapter(ingredientArrayAdapter);
-			registerForContextMenu(ingredientListView);
-			ingredientListView.setOnItemClickListener(mClickListener);
-			pageView.findViewById(R.id.no_ingredients_view).setVisibility(View.GONE);
-		}
-		else
-		{
-			pageView.findViewById(R.id.no_ingredients_view).setVisibility(View.VISIBLE);
-			ingredientListView.setVisibility(View.GONE);
-		}
-	}
-	
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		inflater.inflate(R.menu.ingredient_menu, menu);

@@ -63,31 +63,6 @@ public class InstructionViewFragment extends Fragment {
 		return pageView;
 	}
 	
-	public void update()
-	{
-		if (pageView != null && instructionListView != null)
-		{
-			// Update the recipe and its fields..
-			r = Utils.getRecipeWithId(r.getId());
-			r.update();
-			instructionList = r.getInstructionList();
-			
-			if (instructionList.size() > 0)
-			{
-				InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(c, instructionList);
-				instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
-				instructionListView.setAdapter(instructionArrayAdapter);
-				instructionListView.setVisibility(View.VISIBLE);
-				pageView.findViewById(R.id.no_instructions_view).setVisibility(View.GONE);
-			}
-			else
-			{
-				pageView.findViewById(R.id.no_instructions_view).setVisibility(View.VISIBLE);
-				instructionListView.setVisibility(View.GONE);
-			}
-		}
-	}
-	
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 			inflater.inflate(R.menu.instruction_menu, menu);
