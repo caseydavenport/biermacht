@@ -47,12 +47,12 @@ public class BeerStyle {
 		if (!(o instanceof BeerStyle))
 			return false;
 		
-		for (int i=0; i < o.toString().length(); i++)
-		{
-			
-		}
+		// Based only off the name
+		if (this.toString().equals(o.toString()))
+			return true;
+		else
+			return false;
 		
-		return true;
 	}
 	
 	public String toString()

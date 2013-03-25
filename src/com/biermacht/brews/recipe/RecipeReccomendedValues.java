@@ -44,17 +44,22 @@ public class RecipeReccomendedValues {
 		this.isEmpty = false;
 	}
 	
+	public boolean isEmpty()
+	{
+		return (getMinOG() < 0) && (getMinFG() < 0);
+	}
+	
 	// Methods for getting RANGE
 	public String getOGRange()
 	{
-		if (isEmpty)
+		if (isEmpty())
 			return "Custom";
 		return minOG + " - " + maxOG;
 	}
 	
 	public String getFGRange()
 	{
-		if (isEmpty)
+		if (isEmpty())
 			return "Custom";
 		return minFG + " - " + maxFG;
 	}
@@ -68,14 +73,14 @@ public class RecipeReccomendedValues {
 	
 	public String getBitterRange()
 	{
-		if (isEmpty)
+		if (isEmpty())
 			return "Custom";
 		return minBitter + " - " + maxBitter;
 	}
 	
 	public String getAbvRange()
 	{
-		if (isEmpty)
+		if (isEmpty())
 			return "Custom";
 		return minAbv + " - " + maxAbv;
 	}

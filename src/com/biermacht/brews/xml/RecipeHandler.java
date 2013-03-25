@@ -250,8 +250,14 @@ public class RecipeHandler extends DefaultHandler {
 		// Finished a style.  Add to recipe and list
 		{
 			thingType = 0;
-			r.setStyle(style.toString());
 			beerStyleList.add(style);
+			r.setStyle(Utils.BEERSTYLE_OTHER.toString()); // Default value
+			
+			// When setting the style, we only set it if we have
+			// a valid style for that name.  Otherwise we set it to OTHER
+			for (BeerStyle s : Utils.getBeerStyleList())
+				if (s.equals(style))
+					r.setStyle(s.toString());
 			return;
 		}
 		
