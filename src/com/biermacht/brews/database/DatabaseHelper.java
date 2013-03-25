@@ -72,7 +72,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_MC_COL_VERSION = "miscVersion";
 	public static final String ING_MC_COL_AMT_IS_WEIGHT = "amountIsWeight";
 	public static final String ING_MC_COL_USE_FOR = "useFor";
-			 
+	
+	// Column define names for styles
+	public static final String STYL_COL_ID = "_id";
+	public static final String STY_COL_OWNER_ID = "styleOwnerId";
+	public static final String STY_COL_NAME = "styleName";
+	public static final String STY_COL_CATEGORY = "styleCategory";
+	public static final String STY_COL_CAT_NUM = "styleCategoryNumber";
+	public static final String STY_COL_STY_LETTER = "styleLetter";
+	public static final String STY_COL_STY_GUIDE = "styleGuide";
+	public static final String STY_COL_TYPE = "styleType";
+	public static final String STY_COL_OG_MIN = "styleOgMin";
+	public static final String STY_COL_OG_MAX = "styleOgMax";
+	public static final String STY_COL_FG_MIN = "styleFgMin";
+	public static final String STY_COL_FG_MAX = "styleFgMax";
+	public static final String STY_COL_IBU_MIN = "styleIbuMin";
+	public static final String STY_COL_IBU_MAX = "styleIbuMax";
+	public static final String STY_COL_SRM_MIN = "styleSrmMin";
+	public static final String STY_COL_SRM_MAX = "styleSrmMax";
+	public static final String STY_COL_CARB_MIN = "styleCarbMin";
+	public static final String STY_COL_CARB_MAX = "styleCarbMax";
+	public static final String STY_COL_ABV_MIN = "styleAbvMin";
+	public static final String STY_COL_ABV_MAX = "styleAbvMax";
+	public static final String STY_COL_NOTES = "styleNotes";
+	public static final String STY_COL_PROFILE = "styleProfile";
+	public static final String STY_COL_INGREDIENTS = "styleIngredients";
+	public static final String STY_COL_EXAMPLES = "styleExamples";
+
+	// Create table strings
 	private static final String CREATE_RECIPE_TABLE = "create table " +
 		TABLE_RECIPES 
 		+ "("
