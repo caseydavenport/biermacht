@@ -13,7 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Tables
 	public static final String TABLE_RECIPES = "RecipeTable";
 	public static final String TABLE_INGREDIENTS = "IngredientTable";
-	public static final String TABLE_SETTINGS = "SettingsTable";
+	public static final String TABLE_STYLES = "StyleTable";
 	
 	// Column name defines for RECIPES
 	public static final String REC_COL_ID = "_id";
@@ -74,7 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_MC_COL_USE_FOR = "useFor";
 	
 	// Column define names for styles
-	public static final String STYL_COL_ID = "_id";
+	public static final String STY_COL_ID = "_id";
 	public static final String STY_COL_OWNER_ID = "styleOwnerId";
 	public static final String STY_COL_NAME = "styleName";
 	public static final String STY_COL_CATEGORY = "styleCategory";
@@ -140,7 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_FR_COL_TYPE + " text, "
 				+ ING_FR_COL_YIELD + " float, "
 				+ ING_FR_COL_COLOR + " float, " 
-				+ ING_FR_COL_ADD_AFTER_BOIL + " int, "   // SQLITE does not have bool type
+				+ ING_FR_COL_ADD_AFTER_BOIL + " int, "
 				+ ING_FR_COL_MAX_IN_BATCH + " float, "
 				+ ING_FR_COL_GRAV + " float, " 
 				
@@ -164,7 +164,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_MC_COL_AMT_IS_WEIGHT + " int, "
 				+ ING_MC_COL_USE_FOR + " text"
 				
+				+ ");";
+			
+	public static final String CREATE_STYLE_TABLE = "create table " +
+		TABLE_STYLES
+		+ "("
+			+ STY_COL_ID + " integer primary key autoincrement, "
+			+ STY_COL_OWNER_ID + " long not null, "
+			+ STY_COL_NAME + " text not null, "
+			+ STY_COL_CATEGORY + " text not null, "
+			+ STY_COL_CAT_NUM + " text not null, "
+			+ STY_COL_STY_LETTER + " text not null, "
+			+ STY_COL_STY_GUIDE + " text not null, "
+			+ STY_COL_TYPE + " text not null, "
+			+ STY_COL_OG_MIN + " float not null, "
+			+ STY_COL_OG_MAX + " float not null, "
+			+ STY_COL_FG_MIN + " float not null, "
+			+ STY_COL_FG_MAX + " float not null, "
+			+ STY_COL_IBU_MIN + " float not null, "
+			+ STY_COL_IBU_MAX + " float not null, "
+			+ STY_COL_SRM_MIN + " float not null, "
+			+ STY_COL_SRM_MAX + " float not null, "
+			+ STY_COL_CARB_MIN + " float, "
+			+ STY_COL_CARB_MAX + " float, "
+			+ STY_COL_ABV_MIN + " float, "
+			+ STY_COL_ABV_MAX + " float, "
+			+ STY_COL_NOTES + " text, "
+			+ STY_COL_PROFILE + " text, "
+			+ STY_COL_INGREDIENTS + " text, "
+			+ STY_COL_EXAMPLES + " text"
 			+ ");";
+	
 	
 	// Public Constructor
 	public DatabaseHelper(Context context)
@@ -177,13 +207,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// Create the table
 		database.execSQL(CREATE_RECIPE_TABLE);
 		database.execSQL(CREATE_INGREDIENT_TABLE);
+		database.execSQL(CREATE_STYLE_TABLE);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
 	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
-	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTINGS);
+	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_STYLES);
 	    onCreate(db);
 	}
 }
