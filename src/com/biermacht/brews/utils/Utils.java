@@ -483,7 +483,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Create a recipe with the given name
+	 * Create a recipe from existing recipe
 	 * @param name
 	 * @return
 	 */

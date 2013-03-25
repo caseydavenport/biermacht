@@ -7,6 +7,7 @@ public class BeerStyle {
 	private String category;
 	private Integer version;
 	private String categoryNumber;
+	private String styleLetter;
 	private String styleGuide;
 	private String  type;
 	private String notes;
@@ -29,6 +30,7 @@ public class BeerStyle {
 		this.reccomendedValues = new RecipeReccomendedValues();
 		setType("");
 		setCategory("");
+		setStyleLetter("");
 		setNotes("");
 		setExamples("");
 		setIngredients("");
@@ -36,6 +38,21 @@ public class BeerStyle {
 		setStyleGuide("");
 		setCategoryNumber("");
 		setVersion(1);
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		// Fist make sure its a BeerStyle
+		if (!(o instanceof BeerStyle))
+			return false;
+		
+		for (int i=0; i < o.toString().length(); i++)
+		{
+			
+		}
+		
+		return true;
 	}
 	
 	public String toString()
@@ -48,6 +65,11 @@ public class BeerStyle {
 		this.name = s;
 	}
 	
+	public String getName()
+	{
+		return this.name;
+	}
+	
 	public void setType(String s)
 	{
 		this.type = s;
@@ -56,6 +78,11 @@ public class BeerStyle {
 	public void setCategory(String s)
 	{
 		this.category = s;
+	}
+	
+	public void setStyleLetter(String s)
+	{
+		this.styleLetter = s;
 	}
 	
 	public void setNotes(String s)

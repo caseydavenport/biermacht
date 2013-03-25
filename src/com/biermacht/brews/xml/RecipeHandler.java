@@ -34,19 +34,19 @@ public class RecipeHandler extends DefaultHandler {
 
 	// Lists to store all the things
 	ArrayList<Recipe> list = new ArrayList<Recipe>();
-	ArrayList<Fermentable> fermList = new ArrayList<Fermentable>();
-	ArrayList<Hop> hopList = new ArrayList<Hop>();	
-	ArrayList<Yeast> yeastList = new ArrayList<Yeast>();
-	ArrayList<Misc> miscList = new ArrayList<Misc>();
+	ArrayList<Ingredient> fermList = new ArrayList<Ingredient>();
+	ArrayList<Ingredient> hopList = new ArrayList<Ingredient>();	
+	ArrayList<Ingredient> yeastList = new ArrayList<Ingredient>();
+	ArrayList<Ingredient> miscList = new ArrayList<Ingredient>();
 	ArrayList<BeerStyle> beerStyleList = new ArrayList<BeerStyle>();
 
 	// Objects for each type of thing
-	Recipe r = null;
-    Fermentable f = null;
-	Hop h = null;
-	Yeast y = null;
-	Misc misc = null;
-	BeerStyle style = null;
+	Recipe r = new Recipe("");
+    Fermentable f = new Fermentable("");
+	Hop h = new Hop("");
+	Yeast y = new Yeast("");
+	Misc misc = new Misc("");
+	BeerStyle style = new BeerStyle("");
 	
 	// How we know what thing we're looking at
 	int thingType = 0;
@@ -59,19 +59,19 @@ public class RecipeHandler extends DefaultHandler {
         return list;
     }
 	
-	public ArrayList<Fermentable> getFermentables(){
+	public ArrayList<Ingredient> getFermentables(){
 		return fermList;
 	}
 	
-	public ArrayList<Hop> getHops() {
+	public ArrayList<Ingredient> getHops() {
 		return hopList;
 	}
 	
-	public ArrayList<Yeast> getYeasts() {
+	public ArrayList<Ingredient> getYeasts() {
 		return yeastList;
 	}
 	
-	public ArrayList<Misc> getMiscs() {
+	public ArrayList<Ingredient> getMiscs() {
 		return miscList;
 	}
 
@@ -770,6 +770,133 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("USE_FOR"))
 			{
 				misc.setUseFor(currentValue);
+			}
+		}
+			
+		else if (thingType == STYLE)
+		// We are looking at a style
+		// Do all of the style things below
+		// woo.
+		{
+			if (qName.equalsIgnoreCase("NAME"))
+			{
+				Log.e("BEERSTYLE", "STyle with name: " + currentValue);
+				style.setName(currentValue);
+			}
+			
+			else if (qName.equalsIgnoreCase("CATEGORY"))
+			{
+				style.setCategory(currentValue);
+			}
+				
+			else if (qName.equalsIgnoreCase("VERSION"))
+			{
+				style.setVersion(Integer.parseInt(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("CATEGORY_NUMBER"))
+			{
+				style.setCategoryNumber(currentValue);
+			}
+			
+			else if (qName.equalsIgnoreCase("STYLE_LETTER"))
+			{
+				style.setStyleLetter(currentValue);
+			}
+			
+			else if (qName.equalsIgnoreCase("STYLE_GUIDE"))
+			{
+				style.setStyleGuide(currentValue);
+			}
+
+			else if (qName.equalsIgnoreCase("TYPE"))
+			{
+				String type = "NULL";
+
+				if (currentValue.equalsIgnoreCase(BeerStyle.TYPE_ALE))
+					type = BeerStyle.TYPE_ALE;
+				if (currentValue.equalsIgnoreCase(BeerStyle.TYPE_CIDER))
+					type = BeerStyle.TYPE_CIDER;
+				if (currentValue.equalsIgnoreCase(BeerStyle.TYPE_LAGER))
+					type = BeerStyle.TYPE_LAGER;
+				if (currentValue.equalsIgnoreCase(BeerStyle.TYPE_MEAD))
+					type = BeerStyle.TYPE_MEAD;
+				if (currentValue.equalsIgnoreCase(BeerStyle.TYPE_MIXED))
+					type = BeerStyle.TYPE_MIXED;
+				if (currentValue.equalsIgnoreCase(BeerStyle.TYPE_WHEAT))
+					type = BeerStyle.TYPE_WHEAT;
+
+				style.setType(type);
+			}
+
+			else if (qName.equalsIgnoreCase("OG_MIN"))
+			{
+				style.setMinOg(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("OG_MAX"))
+			{
+				style.setMaxOg(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("FG_MIN"))
+			{
+				style.setMinFg(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("FG_MAX"))
+			{
+				style.setMaxFg(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("IBU_MIN"))
+			{
+				style.setMinIbu(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("IBU_MAX"))
+			{
+				style.setMaxIbu(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("COLOR_MIN"))
+			{
+				style.setMinColor(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("COLOR_MAX"))
+			{
+				style.setMaxColor(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("ABV_MIN"))
+			{
+				style.setMinAbv(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("ABV_MAX"))
+			{
+				style.setMaxAbv(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("NOTES"))
+			{
+				style.setNotes(currentValue);
+			}
+
+			else if (qName.equalsIgnoreCase("PROFILE"))
+			{
+				style.setProfile(currentValue);
+			}
+
+			else if (qName.equalsIgnoreCase("INGREDIENTS"))
+			{
+				style.setIngredients(currentValue);
+			}
+
+			else if (qName.equalsIgnoreCase("EXAMPLES"))
+			{
+				style.setExamples(currentValue);
 			}
 		}
     }

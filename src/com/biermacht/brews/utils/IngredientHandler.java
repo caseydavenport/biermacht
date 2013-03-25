@@ -32,6 +32,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> yeastsList;
 	private ArrayList<Ingredient> hopsList;
 	private ArrayList<Recipe> recipesList;
+	private ArrayList<BeerStyle> styleList;
 	
 	public IngredientHandler(Context c)
 	{
@@ -94,6 +95,26 @@ public class IngredientHandler {
 		
 		return hopsList;
 	}
+
+	/**
+	 * Returns a list of valid hops for use in recipes
+	 * @return ArrayList of ingredient objects
+	 */
+	public ArrayList<BeerStyle> getStylesList()
+	{
+		if (this.styleList == null)
+		{
+			try 
+			{
+				this.styleList = getStylesFromXml();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return styleList;
+	}
+	
 	
 	/**
 	 * Gets fermentables from XMl files in assets/Fermentables
@@ -104,7 +125,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> getFermentablesFromXml() throws IOException
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        FermentableHandler myXMLHandler = new FermentableHandler();
+        RecipeHandler myXMLHandler = new RecipeHandler();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 
@@ -112,14 +133,11 @@ public class IngredientHandler {
         {
 	        try 
 	        {
-	        	Log.e("IngrdientHandler", "File Path: " + s);
-	        	
 	            SAXParser sp = spf.newSAXParser();
 	            InputStream is = am.open("Fermentables/" + s);
 	            sp.parse(is, myXMLHandler);
 	 
-	            Fermentable fermentable = myXMLHandler.getFermentable();
-	            list.add(fermentable);
+	            list.addAll(myXMLHandler.getFermentables());
 	        }
 	        catch (Exception e)
 	        {
@@ -138,7 +156,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> getYeastsFromXml() throws IOException
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        YeastHandler myXMLHandler = new YeastHandler();
+        RecipeHandler myXMLHandler = new RecipeHandler();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 
@@ -149,10 +167,8 @@ public class IngredientHandler {
 	            SAXParser sp = spf.newSAXParser();
 	            InputStream is = am.open("Yeasts/" + s);
 	            sp.parse(is, myXMLHandler);
-	 
-	            Yeast yeast = myXMLHandler.getYeast();
-	            Log.e("IngredientHandler", "Getting ingredient: " + yeast.getName());
-	            list.add(yeast);
+				
+	            list.addAll(myXMLHandler.getYeasts());
 	        }
 	        catch (Exception e)
 	        {
@@ -171,7 +187,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> getHopsFromXml() throws IOException
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        HopsHandler myXMLHandler = new HopsHandler();
+        RecipeHandler myXMLHandler = new RecipeHandler();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 
@@ -183,13 +199,11 @@ public class IngredientHandler {
 	            InputStream is = am.open("Hops/" + s);
 	            sp.parse(is, myXMLHandler);
 	 
-	            Hop hop = myXMLHandler.getHop();
-	            Log.e("IngredientHandler", "Getting ingredient: " + hop.getName());
-	            list.add(hop);
+	            list.addAll(myXMLHandler.getHops());
 	        }
 	        catch (Exception e)
 	        {
-	        	Log.e("IngredientHandler", e.toString());
+	        	Log.e("getHopsFromXml", e.toString());
 	        }
         }
         
@@ -197,7 +211,38 @@ public class IngredientHandler {
 	}
 	
 	/**
-	 * Gets Recipes from XMl files in assets/Recipes
+	 * Gets hops from XMl files in assets/Hops
+	 * @return ArrayList of Ingredient Objects
+	 * @throws IOException
+	 */
+	private ArrayList<BeerStyle> getStylesFromXml() throws IOException
+	{
+		ArrayList<BeerStyle> list = new ArrayList<BeerStyle>();
+        RecipeHandler myXMLHandler = new RecipeHandler();
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        AssetManager am = mContext.getAssets();
+
+        for (String s : am.list("Styles") )
+        {
+	        try 
+	        {	        	
+	            SAXParser sp = spf.newSAXParser();
+	            InputStream is = am.open("Styles/" + s);
+	            sp.parse(is, myXMLHandler);
+				
+		        list.addAll(myXMLHandler.getBeerStyles());
+	        }
+	        catch (Exception e)
+	        {
+	        	Log.e("getStylesFromXml", e.toString());
+	        }
+        }
+
+        return list;
+	}
+	
+	/**
+	 * Gets Recipes from XMl file passed in path s
 	 * @return ArrayList of Ingredient Objects
 	 * @throws IOException
 	 */
@@ -206,8 +251,6 @@ public class IngredientHandler {
 		ArrayList<Recipe> retlist = new ArrayList<Recipe>();
         RecipeHandler myXMLHandler = new RecipeHandler();
         SAXParserFactory spf = SAXParserFactory.newInstance();
-
-		Log.e("INGREDIENTHANDLER", s);
 		
         try 
 	    {	
@@ -222,17 +265,9 @@ public class IngredientHandler {
 	     }
 	     catch (Exception e)
 	     {
-	        Log.e("IngredientHandler", e.toString());
+	        Log.e("getRecipesFromXml", e.toString());
 	     }
 
         return retlist;
-	}
-
-	private InputStream openFileInput(String s)
-	{
-		// TODO: Implement this method
-		return null;
-	}
-	
-	
+	}	
 }
