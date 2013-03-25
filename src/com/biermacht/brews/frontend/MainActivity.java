@@ -155,9 +155,7 @@ public class MainActivity extends Activity implements OnClickListener {
     		break;
 			
 		case R.id.menu_import_recipe:
-			Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
-			i3.setType("file/*");
-			startActivityForResult(i3, 1);
+			importRecipeAlert().show();
     	}
     	return true;
     }
@@ -306,7 +304,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		return new AlertDialog.Builder(this)
 			.setTitle("Confirm Delete")
 			.setMessage("Do you really want to delete '" + r.getRecipeName() +"'")
-			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setIcon(android.R.drawable.ic_delete)
 			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
@@ -338,6 +336,27 @@ public class MainActivity extends Activity implements OnClickListener {
 				
 		    })
 		    
+		    .setNegativeButton(R.string.cancel, null);
+	}
+	
+	private Builder importRecipeAlert()
+	{
+		LayoutInflater factory = LayoutInflater.from(this);
+        
+		return new AlertDialog.Builder(this)
+			.setTitle("Import BeerXML Recipe")
+			.setMessage("Press OPEN to search your device for a BeerXML recipe file to import.")
+			//.setView(alertView)
+			.setPositiveButton("OPEN", new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+					Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
+					i3.setType("file/*");
+					startActivityForResult(i3, 1);
+				}
+
+		    })
+
 		    .setNegativeButton(R.string.cancel, null);
 	}
 }
