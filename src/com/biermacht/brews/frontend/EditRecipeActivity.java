@@ -68,6 +68,10 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         
         //Arraylist of beer types
         beerStyleArray = Utils.getBeerStyleStringList();
+		if(!beerStyleArray.contains(mRecipe.getStyle().getName()))
+		{
+			beerStyleArray.add(mRecipe.getStyle().getName());
+		}
         
         // Set up beer type spinner
         beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
@@ -80,9 +84,12 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         int pos = 0;
         for (String s : beerStyleArray)
         {
-        	if (s.equals(mRecipe.getStyle()))
+        	if (s.equals(mRecipe.getStyle().getName()))
         		break;
         	pos++;
+			
+			if (pos > beerStyleArray.size())
+				pos = 0;
         }
         
         beerStyleSpinner.setSelection(pos);    
@@ -193,7 +200,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 				mRecipe.setRecipeName(recipeName);
 				mRecipe.setVersion(Utils.getXmlVersion());
 				mRecipe.setType(type);
-				mRecipe.setStyle(style);
+				mRecipe.setStyle(Utils.getBeerStyleFromString(style));
 				mRecipe.setBrewer("Biermacht Brews");
 				mRecipe.setBatchSize(batchSize);
 				mRecipe.setBoilSize(boilSize);

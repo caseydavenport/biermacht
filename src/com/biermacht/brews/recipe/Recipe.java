@@ -23,7 +23,7 @@ public class Recipe {
 	private String name;		     // Recipe name
 	private int version;			 // XML Version -- 1
 	private String type;             // Extract, Grain, Mash
-	private String style;            // Stout, Pilsner, etc.
+	private BeerStyle style;         // Stout, Pilsner, etc.
 	private String brewer;		     // Brewer's name
 	private double batchSize;         // Target size (L)
 	private double boilSize;		     // Pre-boil vol (L)
@@ -66,7 +66,7 @@ public class Recipe {
 		this.name = s;	     
 		this.setVersion(1);			
 		this.setType(EXTRACT);            
-		this.style = Utils.BEERSTYLE_OTHER.toString();     
+		this.style = Utils.BEERSTYLE_OTHER;     
 		this.setBrewer("Unknown Brewer");		     
 		this.batchSize = -1;        
 		this.setBoilSize(-1);		     
@@ -179,11 +179,11 @@ public class Recipe {
 			this.description = description;
 	}
 
-	public String getStyle() {
+	public BeerStyle getStyle() {
 		return style;
 	}
 
-	public void setStyle(String beerStyle) {
+	public void setStyle(BeerStyle beerStyle) {
 		this.style = beerStyle;
 	}
 	

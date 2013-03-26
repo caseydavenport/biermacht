@@ -179,7 +179,6 @@ public class RecipeHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("RECIPE"))
 		// We've finished a new recipe
 		{
-			Log.e("RecipeHandler", "New recipe from xml: " + r.getRecipeName());
 			list.add(r);
 			thingType = 0;
 			return;
@@ -268,14 +267,18 @@ public class RecipeHandler extends DefaultHandler {
 		{
 			thingType = 0;
 			beerStyleList.add(style);
-			r.setStyle(Utils.BEERSTYLE_OTHER.toString()); // Default value
+			r.setStyle(style); // Default value
 			
-			// When setting the style, we only set it if we have
-			// a valid style for that name.  Otherwise we set it to OTHER
+			// Check to see if we have a style the same as this one.
+			// If we do, ours is preferred.
 			for (BeerStyle s : Utils.getBeerStyleList())
 				if (s.equals(style))
-					r.setStyle(s.toString());
+				{
+					r.setStyle(s);
+					return;
+				}
 			return;
+			
 		}
 		
 		/************************************************************
@@ -803,7 +806,6 @@ public class RecipeHandler extends DefaultHandler {
 		{
 			if (qName.equalsIgnoreCase("NAME"))
 			{
-				Log.e("BEERSTYLE", "STyle with name: " + currentValue);
 				style.setName(currentValue);
 			}
 			

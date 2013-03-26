@@ -42,7 +42,7 @@ public class DetailsViewFragment extends Fragment {
 	{
 		this.resource = R.layout.details_view;
 		this.r = r;
-		this.reccomendedValues = Utils.getRecipeReccomendedValues(r);
+		this.reccomendedValues = r.getStyle().getReccomendedValues();
 		this.c = c;
 	}
 	
@@ -74,7 +74,7 @@ public class DetailsViewFragment extends Fragment {
 		  TextView tag = (TextView) beerTypeView.findViewById(R.id.tag);
 		  TextView content = (TextView) beerTypeView.findViewById(R.id.content);
 		  tag.setText("Beer Style: ");
-		  content.setText(r.getStyle());
+		  content.setText(r.getStyle().getName());
 		  
 		  // Beer OG detail view
 		  TextView og_tag = (TextView) ogView.findViewById(R.id.tag);

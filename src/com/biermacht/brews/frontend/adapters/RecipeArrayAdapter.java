@@ -48,7 +48,7 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 		ImageView imageView = (ImageView) row.findViewById(R.id.row_icon);
 		
 		textView.setText(list.get(position).getRecipeName());
-		beerStyleView.setText((list.get(position).getStyle()));
+		beerStyleView.setText((list.get(position).getStyle().getName()));
 		batchVolumeView.setText(String.format("%2.2f", list.get(position).getBatchSize()));
 		
 		// Set beer color here

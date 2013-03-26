@@ -15,6 +15,7 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.ingredient.*;
+import com.biermacht.brews.recipe.*;
 
 public class DatabaseInterface {
 	
@@ -82,6 +83,33 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_MC_COL_USE_FOR
 			
 			};
+		
+	private String[] stylesAllColumns = {
+		DatabaseHelper.STY_COL_ID,
+		DatabaseHelper.STY_COL_OWNER_ID,
+		DatabaseHelper.STY_COL_NAME,
+		DatabaseHelper.STY_COL_CATEGORY,
+		DatabaseHelper.STY_COL_CAT_NUM,
+		DatabaseHelper.STY_COL_STY_LETTER,
+		DatabaseHelper.STY_COL_STY_GUIDE,
+		DatabaseHelper.STY_COL_TYPE,
+		DatabaseHelper.STY_COL_OG_MIN,
+		DatabaseHelper.STY_COL_OG_MAX,
+		DatabaseHelper.STY_COL_FG_MIN,
+		DatabaseHelper.STY_COL_FG_MAX,
+		DatabaseHelper.STY_COL_IBU_MIN,
+		DatabaseHelper.STY_COL_IBU_MAX,
+		DatabaseHelper.STY_COL_SRM_MIN,
+		DatabaseHelper.STY_COL_SRM_MAX,
+		DatabaseHelper.STY_COL_CARB_MIN,
+		DatabaseHelper.STY_COL_CARB_MAX,
+		DatabaseHelper.STY_COL_ABV_MIN,
+		DatabaseHelper.STY_COL_ABV_MAX,
+		DatabaseHelper.STY_COL_NOTES,
+		DatabaseHelper.STY_COL_PROFILE,
+		DatabaseHelper.STY_COL_INGREDIENTS,
+		DatabaseHelper.STY_COL_EXAMPLES
+	};
 	
 	// Constructor
 	public DatabaseInterface(Context context)
@@ -105,7 +133,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
 		values.put(DatabaseHelper.REC_COL_VER, r.getVersion());
 		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
-		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle());
+		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle().getName());
 		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
 		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBatchSize());
 		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBoilSize());
@@ -122,6 +150,7 @@ public class DatabaseInterface {
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id);
+		addStyleToDatabase(r.getStyle(), id);
 		
 		return id;
 	}	
@@ -135,7 +164,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
 		values.put(DatabaseHelper.REC_COL_VER, r.getVersion());
 		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
-		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle());
+		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle().getName());
 		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
 		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBatchSize());
 		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBoilSize());
@@ -152,6 +181,8 @@ public class DatabaseInterface {
 		
 		deleteIngredientList(r.getId());
 		addIngredientListToDatabase(r.getIngredientList(), r.getId());
+		deleteStyle(r.getId());
+		addStyleToDatabase(r.getStyle(), r.getId());
 		
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
 	}
@@ -291,12 +322,53 @@ public class DatabaseInterface {
 		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
 	}
 	
+	public long addStyleToDatabase(BeerStyle s, long ownerId)
+	{
+		// Load up values to store
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHelper.STY_COL_OWNER_ID, ownerId);
+		values.put(DatabaseHelper.STY_COL_NAME, s.getName());
+		values.put(DatabaseHelper.STY_COL_CATEGORY, s.getCategory());
+		values.put(DatabaseHelper.STY_COL_CAT_NUM, s.getCatNum());
+		values.put(DatabaseHelper.STY_COL_STY_LETTER, s.getStyleLetter());
+		values.put(DatabaseHelper.STY_COL_STY_GUIDE, s.getStyleGuide());
+		values.put(DatabaseHelper.STY_COL_TYPE, s.getType());
+		values.put(DatabaseHelper.STY_COL_OG_MIN, s.getMinOg());
+		values.put(DatabaseHelper.STY_COL_OG_MAX, s.getMaxOg());
+		values.put(DatabaseHelper.STY_COL_FG_MIN, s.getMinFg());
+		values.put(DatabaseHelper.STY_COL_FG_MAX, s.getMaxFg());
+		values.put(DatabaseHelper.STY_COL_IBU_MIN, s.getMinIbu());
+		values.put(DatabaseHelper.STY_COL_IBU_MAX, s.getMaxIbu());
+		values.put(DatabaseHelper.STY_COL_SRM_MIN, s.getMinColor());
+		values.put(DatabaseHelper.STY_COL_SRM_MAX, s.getMaxColor());
+		values.put(DatabaseHelper.STY_COL_CARB_MIN, s.getMinCarb());
+		values.put(DatabaseHelper.STY_COL_CARB_MAX, s.getMaxCarb());
+		values.put(DatabaseHelper.STY_COL_ABV_MIN, s.getMinAbv());
+		values.put(DatabaseHelper.STY_COL_ABV_MAX, s.getMaxAbv());
+		values.put(DatabaseHelper.STY_COL_NOTES, s.getNotes());
+		values.put(DatabaseHelper.STY_COL_PROFILE, s.getProfile());
+		values.put(DatabaseHelper.STY_COL_INGREDIENTS, s.getIngredients());
+		values.put(DatabaseHelper.STY_COL_EXAMPLES, s.getExamples());
+
+		long id = database.insert(DatabaseHelper.TABLE_STYLES, null, values);
+		
+		return id;
+	}
+	
 	/**
 	* Deletes all ingredients with the given owner id
 	*/
 	private boolean deleteIngredientList(long id) {
 		String whereClause = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
 		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
+	}
+	
+	/**
+	 * Deletes all styles with given owner id
+	 */
+	private boolean deleteStyle(long id) {
+		String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
+		return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
 	}
 
 	/**
@@ -310,7 +382,12 @@ public class DatabaseInterface {
 		return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null) > 0;
 	}
 	
-
+	/**
+	 * Takes id as input, deletes if it exists
+	 * @param id
+	 * @return 1 if it was deleted or 0 if not
+	 */
+	
 	public boolean deleteIngredientIfExists(long id) {
 		String whereClause = DatabaseHelper.ING_COL_ID + "=" + id;
 		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
@@ -384,7 +461,7 @@ public class DatabaseInterface {
 		String recipeName = cursor.getString(cid);    cid++;
 		int version = cursor.getInt(cid);             cid++;
 		String type = cursor.getString(cid);          cid++;
-		String style = cursor.getString(cid);         cid++;
+		String styleString = cursor.getString(cid);   cid++;
 		String brewer = cursor.getString(cid);        cid++;
 		float batchSize = cursor.getFloat(cid);       cid++;
 		float boilSize = cursor.getFloat(cid);        cid++;
@@ -400,12 +477,12 @@ public class DatabaseInterface {
 		float color = cursor.getFloat(cid);           cid++;
 		
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
+		BeerStyle style = readStyle(id);
 		
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
 		r.setVersion(version);
 		r.setType(type);
-		r.setStyle(style);
 		r.setBrewer(brewer);
 		r.setBatchSize(batchSize);
 		r.setBoilSize(boilSize);
@@ -420,6 +497,7 @@ public class DatabaseInterface {
 		r.setBitterness(bitterness);
 		r.setColor(color);
 		
+		r.setStyle(style);
 		r.setIngredientsList(ingredientsList);
 		
 		return r;
@@ -441,6 +519,77 @@ public class DatabaseInterface {
 		}
 		cursor.close();
 		return list;
+	}
+	
+	// gets the style for recipe with given ID=id
+	private BeerStyle readStyle(long id) {
+		
+		String whereString = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
+		Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString, null, null, null, null);
+		
+		cursor.moveToFirst();
+		BeerStyle style = cursorToStyle(cursor);
+		cursor.close();
+		
+		return style;
+	}
+	
+	private BeerStyle cursorToStyle(Cursor cursor) {
+		int cid = 0;
+		
+		
+		// Get all the values from the cursor
+		long id = cursor.getLong(cid);                          cid++;
+		long ownerId = cursor.getLong(cid);						cid++;
+		String name = cursor.getString(cid);					cid++;
+		String category = cursor.getString(cid);				cid++;
+		String catNumber = cursor.getString(cid);				cid++;
+		String styleLetter = cursor.getString(cid);				cid++;
+		String styleGuide = cursor.getString(cid);				cid++;
+		String type = cursor.getString(cid);					cid++;
+		float minOg = cursor.getFloat(cid);						cid++;
+		float maxOg = cursor.getFloat(cid);						cid++;	
+		float minFg = cursor.getFloat(cid);						cid++;
+		float maxFg = cursor.getFloat(cid);						cid++;	
+		float minIbu = cursor.getFloat(cid);					cid++;
+		float maxIbu = cursor.getFloat(cid);					cid++;	
+		float minSrm = cursor.getFloat(cid);					cid++;
+		float maxSrm = cursor.getFloat(cid);					cid++;	
+		float minCarb = cursor.getFloat(cid);					cid++;
+		float maxCarb = cursor.getFloat(cid);					cid++;	
+		float minAbv = cursor.getFloat(cid);					cid++;
+		float maxAbv = cursor.getFloat(cid);					cid++;
+		String notes = cursor.getString(cid);					cid++;
+		String profile = cursor.getString(cid);					cid++;
+		String ingredients = cursor.getString(cid);				cid++;
+		String examples = cursor.getString(cid);				cid++;
+		
+		// Stick them all in a new object
+		BeerStyle style = new BeerStyle(name);
+		style.setOwnerId(ownerId);
+		style.setCategory(category);
+		style.setCategoryNumber(catNumber);
+		style.setStyleLetter(styleLetter);
+		style.setStyleGuide(styleGuide);
+		style.setType(type);
+		style.setMinOg(minOg);
+		style.setMaxOg(maxOg);
+		style.setMinFg(minFg);
+		style.setMaxFg(maxFg);
+		style.setMinIbu(minIbu);
+		style.setMaxIbu(maxIbu);
+		style.setMinColor(minSrm);
+		style.setMaxColor(maxSrm);
+		style.setMinCarb(minCarb);
+		style.setMaxCarb(maxCarb);
+		style.setMinAbv(minAbv);
+		style.setMaxAbv(maxAbv);
+		style.setProfile(profile);
+		style.setIngredients(ingredients);
+		style.setExamples(examples);
+		style.setNotes(notes);
+		
+		return style;
 	}
 
 	private Ingredient cursorToIngredient(Cursor cursor) {

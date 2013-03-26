@@ -12,7 +12,6 @@ public class RecipeReccomendedValues {
 	private double maxColor;
 	private double minAbv;
 	private double maxAbv;
-	private boolean isEmpty;
 	
 	public RecipeReccomendedValues()
 	{
@@ -20,13 +19,12 @@ public class RecipeReccomendedValues {
 		this.maxOG = 1000;
 		this.minFG = -1;
 		this.maxFG = 1000;
-		this.minBitter = 0;
+		this.minBitter = -1;
 		this.maxBitter = 1000;
-		this.minColor = 0;
+		this.minColor = -1;
 		this.maxColor = 1000;
-		this.minAbv = 0;
+		this.minAbv = -1;
 		this.maxAbv = 1000;
-		this.isEmpty = true;
 	}
 	
 	public RecipeReccomendedValues(double minOG, double maxOG, double minFG, double maxFG, double minBit, double maxBit, double minCol, double maxCol, double minAbv, double maxAbv)
@@ -41,48 +39,77 @@ public class RecipeReccomendedValues {
 		this.maxColor = maxCol;
 		this.minAbv = minAbv;
 		this.maxAbv = maxAbv;
-		this.isEmpty = false;
 	}
 	
-	public boolean isEmpty()
+	public boolean isEmpty(double d)
 	{
-		return (getMinOG() < 0) && (getMinFG() < 0);
+		return (d < 0);
 	}
 	
 	// Methods for getting RANGE
 	public String getOGRange()
 	{
-		if (isEmpty())
+		if (isEmpty(minOG))
 			return "Custom";
-		return minOG + " - " + maxOG;
+		
+		String s = "";
+		s += String.format("%2.3f", minOG);
+		s += " - ";
+		s += String.format("%2.3f", maxOG);
+		
+		return s;
 	}
 	
 	public String getFGRange()
 	{
-		if (isEmpty())
+		if (isEmpty(minFG))
 			return "Custom";
-		return minFG + " - " + maxFG;
+		
+		String s = "";
+		s += String.format("%2.3f", minFG);
+		s += " - ";
+		s += String.format("%2.3f", maxFG);
+		
+		return s;
 	}
 	
 	public String getColorRange()
 	{
-		if (isEmpty)
+		if (isEmpty(minColor))
 			return "Custom";
-		return minColor + " - " + maxColor;
+		
+		String s = "";
+		s += String.format("%2.1f", minColor);
+		s += " - ";
+		s += String.format("%2.1f", maxColor);
+		
+		return s;
 	}
 	
 	public String getBitterRange()
 	{
-		if (isEmpty())
+		if (isEmpty(minBitter))
 			return "Custom";
-		return minBitter + " - " + maxBitter;
+			
+		String s = "";
+		s += String.format("%2.1f", minBitter);
+		s += " - ";
+		s += String.format("%2.1f", maxBitter);
+		
+		return s;
 	}
 	
 	public String getAbvRange()
 	{
-		if (isEmpty())
+		if (isEmpty(minAbv))
 			return "Custom";
-		return minAbv + " - " + maxAbv;
+			
+		String s = "";
+		s += String.format("%2.1f", minAbv);
+		s += " - ";
+		s += String.format("%2.1f", maxAbv);
+		
+		return s;
 	}
 	
 	

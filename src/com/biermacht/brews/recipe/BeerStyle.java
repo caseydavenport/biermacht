@@ -16,6 +16,9 @@ public class BeerStyle {
 	private String examples;
 	private RecipeReccomendedValues reccomendedValues;
 	
+	// More
+	private long ownerId;
+	
 	// Defines
 	public static String TYPE_ALE = "Ale";
 	public static String TYPE_LAGER = "Lager";
@@ -38,6 +41,7 @@ public class BeerStyle {
 		setStyleGuide("");
 		setCategoryNumber("");
 		setVersion(1);
+		setOwnerId(-1);
 	}
 	
 	@Override
@@ -58,6 +62,26 @@ public class BeerStyle {
 	public String toString()
 	{
 		return name;
+	}
+	
+	public void setOwnerId(long i)
+	{
+		this.ownerId = i;
+	}
+	
+	public long getOwnerId()
+	{
+		return this.ownerId;
+	}
+	
+	public void setMinCarb(double d)
+	{
+		// TODO
+	}
+	
+	public void setMaxCarb(double d)
+	{
+		// TODO
 	}
 	
 	public void setName(String s)
@@ -173,5 +197,110 @@ public class BeerStyle {
 	public void setMaxAbv(double d)
 	{
 		this.reccomendedValues.setMaxAbv(d);
+	}
+	
+	public String getCategory()
+	{
+		return this.category;
+	}
+	
+	public String getCatNum()
+	{
+		return this.categoryNumber;
+	}
+	
+	public String getStyleLetter()
+	{
+		return this.styleLetter;
+	}
+	
+	public String getStyleGuide()
+	{
+		return this.styleGuide;
+	}
+	
+	public String getType()
+	{
+		return this.type;
+	}
+	
+	public double getMinOg()
+	{
+		return this.reccomendedValues.getMinOG();
+	}
+	
+	public double getMaxOg()
+	{
+		return this.reccomendedValues.getMaxOG();
+	}
+	
+	public double getMinFg()
+	{
+		return this.reccomendedValues.getMinFG();
+	}
+	
+	public double getMaxFg()
+	{
+		return this.reccomendedValues.getMaxFG();
+	}
+	
+	public double getMinIbu()
+	{
+		return this.reccomendedValues.getMinBitter();
+	}
+	
+	public double getMaxIbu()
+	{
+		return this.reccomendedValues.getMaxBitter();
+	}
+	
+	public double getMinColor()
+	{
+		return this.reccomendedValues.getMinColor();
+	}
+	
+	public double getMaxColor()
+	{
+		return this.reccomendedValues.getMaxColor();
+	}
+	
+	public double getMinCarb()
+	{
+		return 0; // TODO
+	}
+	
+	public double getMaxCarb()
+	{
+		return 0; // TODO
+	}
+	
+	public double getMinAbv()
+	{
+		return this.reccomendedValues.getMinAbv();
+	}
+	
+	public double getMaxAbv()
+	{
+		return this.reccomendedValues.getMaxAbv();
+	}
+	
+	public String getNotes()
+	{
+		return this.notes;
+	}
+	
+	public String getProfile()
+	{
+		return this.profile;
+	}
+	
+	public String getIngredients()
+	{
+		return this.ingredients;
+	}
+	
+	public String getExamples()
+	{
+		return this.examples;
 	}
 }
