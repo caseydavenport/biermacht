@@ -44,6 +44,23 @@ public class BeerStyle {
 		setOwnerId(-1);
 	}
 	
+	public BeerStyle(String name, RecipeReccomendedValues rrv)
+	{
+		setName(name);
+		this.reccomendedValues = rrv;
+		setType("");
+		setCategory("");
+		setStyleLetter("");
+		setNotes("");
+		setExamples("");
+		setIngredients("");
+		setProfile("");
+		setStyleGuide("");
+		setCategoryNumber("");
+		setVersion(1);
+		setOwnerId(-1);
+	}
+	
 	@Override
 	public boolean equals(Object o)
 	{
