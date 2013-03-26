@@ -76,7 +76,7 @@ public class Misc extends Ingredient {
 		this.amountIsWeight = b;
 	}
 	
-	public boolean getAmountIsWeight()
+	public boolean amountIsWeight()
 	{
 		return this.amountIsWeight;
 	}

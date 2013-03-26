@@ -247,7 +247,7 @@ public class DatabaseInterface {
 				Misc misc = (Misc) ing;
 				values.put(DatabaseHelper.ING_MC_COL_TYPE, misc.getMiscType());
 				values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
-				values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.getAmountIsWeight() ? 1 : 0);
+				values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
 				values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
 				
 			}
@@ -315,7 +315,7 @@ public class DatabaseInterface {
 			Misc misc = (Misc) ing;
 			values.put(DatabaseHelper.ING_MC_COL_TYPE, misc.getMiscType());
 			values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
-			values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.getAmountIsWeight() ? 1 : 0);
+			values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
 			values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
 		}
 		
