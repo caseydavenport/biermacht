@@ -57,7 +57,7 @@ public class AddMiscActivity extends Activity {
         mRecipe = Utils.getRecipeWithId(id);
 
         // Initialize views and such here
-        hopNameEditText = (EditText) findViewById(R.id.hop_name_edit_text);
+        hopNameEditText = (EditText) findViewById(R.id.name_edit_text);
         hopBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         hopAcidEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
         hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
