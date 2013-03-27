@@ -87,6 +87,9 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		}
 		else if (ingType == Ingredient.YEAST)
 		{
+			// Display type is always a packet really...
+			amountView.setText("1.00");
+			unitView.setText("pkg");
 			imageView.setImageResource(R.drawable.icon_yeast);
 			detailText = ((Yeast) list.get(position)).getAttenuation() + "%";
 		}

@@ -23,7 +23,7 @@
         
     <RelativeLayout android:layout_width="match_parent"
     	android:layout_height="match_parent"
-   		android:padding="10dip"
+   		android:padding="0dip"
    		android:layout_margin="10dip"
    		android:layout_above="@+id/bottom_nav"
    		android:layout_below="@id/colored_bar"
