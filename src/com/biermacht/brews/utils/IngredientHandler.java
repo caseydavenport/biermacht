@@ -24,6 +24,7 @@ import com.biermacht.brews.xml.*;
 import com.biermacht.brews.recipe.*;
 import android.content.*;
 import android.net.*;
+import com.biermacht.brews.utils.comparators.*;
 
 public class IngredientHandler {
 	
@@ -106,6 +107,7 @@ public class IngredientHandler {
 			try 
 			{
 				this.styleList = getStylesFromXml();
+				this.styleList.add(0, Utils.BEERSTYLE_OTHER);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -230,6 +232,7 @@ public class IngredientHandler {
 	            sp.parse(is, myXMLHandler);
 				
 		        list.addAll(myXMLHandler.getBeerStyles());
+				Collections.sort(list, new BeerStyleComparator<BeerStyle>());
 	        }
 	        catch (Exception e)
 	        {

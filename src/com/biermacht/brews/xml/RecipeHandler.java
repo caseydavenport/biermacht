@@ -298,18 +298,7 @@ public class RecipeHandler extends DefaultHandler {
 		{
 			thingType = 0;
 			beerStyleList.add(style);
-			r.setStyle(style); // Default value
-			
-			// Check to see if we have a style the same as this one.
-			// If we do, ours is preferred.
-			for (BeerStyle s : Utils.getBeerStyleList())
-				if (s.equals(style))
-				{
-					r.setStyle(s);
-					return;
-				}
-			return;
-			
+			r.setStyle(style);
 		}
 		
 		/************************************************************
