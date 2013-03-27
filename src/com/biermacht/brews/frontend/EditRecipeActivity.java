@@ -16,6 +16,8 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.recipe.*;
+import com.biermacht.brews.frontend.adapters.*;
 
 public class EditRecipeActivity extends Activity implements OnClickListener {
 
@@ -30,7 +32,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 	private EditText boilSizeEditText;
 	
 	// Data storage declarations
-	private String style = Utils.BEERSTYLE_OTHER.toString();
+	private BeerStyle style = Utils.BEERSTYLE_OTHER;
 	private String type = Recipe.EXTRACT;
 	private float efficiency = 100;
 	
@@ -38,7 +40,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 	private Recipe mRecipe;
 	
 	// Spinner array declarations
-	private ArrayList<String> beerStyleArray;
+	private ArrayList<BeerStyle> beerStyleArray;
 	private ArrayList<String> beerTypeArray;
 	
     @Override
@@ -67,24 +69,27 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         boilSizeEditText.setText(String.format("%2.2f", mRecipe.getBoilSize()));
         
         //Arraylist of beer types
-        beerStyleArray = Utils.getBeerStyleStringList();
-		if(!beerStyleArray.contains(mRecipe.getStyle().getName()))
+        beerStyleArray = MainActivity.ingredientHandler.getStylesList();
+		
+		// If it doesn't contain the current recipes style,
+		// then it is custom and we add it to the list.
+		if(!beerStyleArray.contains(mRecipe.getStyle()))
 		{
-			beerStyleArray.add(mRecipe.getStyle().getName());
+			beerStyleArray.add(mRecipe.getStyle());
 		}
         
         // Set up beer type spinner
         beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
-        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, beerStyleArray);  
+        BeerStyleSpinnerAdapter<BeerStyle> adapter = new BeerStyleSpinnerAdapter<BeerStyle>(this, beerStyleArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerStyleSpinner.setAdapter(adapter);
         
         
         // Determine the correct selection for the style spinner
         int pos = 0;
-        for (String s : beerStyleArray)
+        for (BeerStyle b : beerStyleArray)
         {
-        	if (s.equals(mRecipe.getStyle().getName()))
+        	if (b.equals(mRecipe.getStyle()))
         		break;
         	pos++;
 			
@@ -200,7 +205,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 				mRecipe.setRecipeName(recipeName);
 				mRecipe.setVersion(Utils.getXmlVersion());
 				mRecipe.setType(type);
-				mRecipe.setStyle(Utils.getBeerStyleFromString(style));
+				mRecipe.setStyle(style);
 				mRecipe.setBrewer("Biermacht Brews");
 				mRecipe.setBatchSize(batchSize);
 				mRecipe.setBoilSize(boilSize);

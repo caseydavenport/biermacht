@@ -19,6 +19,8 @@ import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.*;
+import com.biermacht.brews.frontend.adapters.*;
 
 public class AddNewRecipeActivity extends Activity implements OnClickListener {
 
@@ -32,12 +34,12 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 	private EditText boilSizeEditText;
 	
 	// Data storage declarations
-	private String style = Utils.BEERSTYLE_OTHER.toString();
+	private BeerStyle style = Utils.BEERSTYLE_OTHER;
 	private String type = Recipe.EXTRACT;
 	private float efficiency = 100;
 	
 	// Spinner array declarations
-	private ArrayList<String> beerStyleArray;
+	private ArrayList<BeerStyle> beerStyleArray;
 	private ArrayList<String> beerTypeArray;
 	
     @Override
@@ -57,13 +59,13 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         batchSizeEditText.setText(5.0 +"");
         boilSizeEditText.setText(2.5 + "");
 		effEditText.setText(72 + "");
-        
+		
         //Arraylist of beer types
-        beerStyleArray = Utils.getBeerStyleStringList();
+        beerStyleArray = MainActivity.ingredientHandler.getStylesList();
         
         // Set up beer type spinner
         beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
-        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, beerStyleArray);  
+        BeerStyleSpinnerAdapter<BeerStyle> adapter = new BeerStyleSpinnerAdapter<BeerStyle>(this, beerStyleArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerStyleSpinner.setAdapter(adapter);
         beerStyleSpinner.setSelection(0);    
@@ -163,7 +165,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 				
 				r.setVersion(Utils.getXmlVersion());
 				r.setType(type);
-				r.setStyle(Utils.getBeerStyleFromString(style));
+				r.setStyle(style);
 				r.setBrewer("Biermacht Brews");
 				r.setBatchSize(batchSize);
 				r.setBoilSize(boilSize);

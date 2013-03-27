@@ -167,7 +167,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	  {
      	if(resultCode == RESULT_OK){      
          	String path = data.getData().getPath().toString();
-			Log.e("MAIN", path);
 			
 			if (path != null)
 			{

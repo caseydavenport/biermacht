@@ -31,7 +31,6 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> fermentablesList;
 	private ArrayList<Ingredient> yeastsList;
 	private ArrayList<Ingredient> hopsList;
-	private ArrayList<Recipe> recipesList;
 	private ArrayList<BeerStyle> styleList;
 	
 	public IngredientHandler(Context c)
@@ -141,7 +140,7 @@ public class IngredientHandler {
 	        }
 	        catch (Exception e)
 	        {
-	        	Log.e("IngredientHandler", e.toString());
+	        	Log.e("getFermentablesFromXml", e.toString());
 	        }
         }
         
@@ -172,7 +171,7 @@ public class IngredientHandler {
 	        }
 	        catch (Exception e)
 	        {
-	        	Log.e("IngredientHandler", e.toString());
+	        	Log.e("getYeastsFromXml", e.toString());
 	        }
         }
         
@@ -221,7 +220,7 @@ public class IngredientHandler {
         RecipeHandler myXMLHandler = new RecipeHandler();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
-
+		
         for (String s : am.list("Styles") )
         {
 	        try 
