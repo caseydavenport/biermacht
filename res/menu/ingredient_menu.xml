@@ -18,8 +18,8 @@
 		        android:title="Yeast"
 		        android:orderInCategory="4" />
 		    
-		 	<item android:id="@+id/add_yeast"
-		        android:title="Other"
+		 	<item android:id="@+id/add_misc"
+		        android:title="Misc"
 		        android:orderInCategory="5" />
 	    </menu>
         

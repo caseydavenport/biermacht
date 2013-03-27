@@ -139,19 +139,7 @@
 		        android:padding="10dip"
 		        android:selectAllOnFocus="true"
 		        android:hint="@string/boil_time" />
-		    
-		    <!-- Boil time -->
-		    <TextView android:id="@+id/boil_time_helper"
-		        android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="fill_parent"
-		        android:background="@color/transparent"
-		        android:layout_marginLeft="5dip"
-		        android:gravity="top"
-		        android:textSize="11dip"
-		        android:textColor="#CCC"
-		        android:text="@string/boil_time_helper" />
-			            
+	
 	    </LinearLayout>
 	    
     </RelativeLayout>

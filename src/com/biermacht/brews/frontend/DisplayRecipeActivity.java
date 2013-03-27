@@ -86,6 +86,12 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     	    	yeast_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
     		    startActivity(yeast_intent);
     		    return true;
+				
+			case R.id.add_misc:
+    	    	Intent misc_intent = new Intent(this.appContext, AddMiscActivity.class);
+    	    	misc_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+    		    startActivity(misc_intent);
+    		    return true;
     		    
             case R.id.menu_edit_recipe:
           		Intent i = new Intent(this.appContext, EditRecipeActivity.class);
