@@ -4,75 +4,32 @@
 	android:layout_height="fill_parent"
 	android:background="@color/transparent"
 	android:orientation="vertical" >
+
+	<!-- Colored bar at top -->
+	<TextView android:id="@+id/colored_bar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
+		android:paddingTop="4dp"
+		android:paddingBottom="4dp"
+		android:textColor="#fff"
+		android:background="@color/theme_orange"
+		android:layout_alignParentTop="true"
+		android:text="">
+		<requestFocus />
+	</TextView>    
 	
-	<ScrollView android:layout_width="fill_parent"
+	<ListView android:id="@+id/settings_list" 
+		android:layout_width="fill_parent"
 	    android:layout_height="0dp"
-	    android:layout_alignParentTop="true"
+		android:layout_below="@id/colored_bar"
 	    android:layout_above="@+id/bottom_nav"
 		android:background="@color/transparent"
 	    android:minHeight="4000dip" >
-	    	    
-		<LinearLayout android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="vertical"
-		    android:padding="10dip" >
-		    
-		    <LinearLayout android:id="@+id/units_view"
-		        android:orientation="vertical"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:background="@color/transparent"
-		        android:layout_marginBottom="15dip"
-		        android:padding="10dip">
-		        
-			    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
-				<LinearLayout android:id="@+id/placeholder"
-				    android:focusable="true" android:focusableInTouchMode="true"
-				    android:layout_width="0px" android:layout_height="0px"/>
-		        
-			    <!-- Brewer Name Title -->
-			    <TextView android:id="@+id/name_title"
-			        android:text="@string/brewer_name"
-			        style="@style/title_light" />
-		        
-		        <EditText
-			        android:id="@+id/name_edit_text"
-			        android:hint="@string/enter_name"
-			        style="@style/text_input"
-			        android:selectAllOnFocus="true" />
-		        
-		        <!-- Units selector -->
-		        <LinearLayout android:id="@+id/beer_bitterness_view"
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:background="@drawable/rounded_bg_white"
-			        android:layout_marginBottom="5dip"
-			        android:padding="10dip" >
-			        
-		            <TextView android:layout_width="0dp"
-		                android:layout_weight="1"
-		                android:layout_height="wrap_content" 
-		                android:layout_gravity="center_vertical"
-		                android:background="@color/transparent"
-		                android:textColor="@color/title_color"
-		                android:text="@string/units" />
-		            
-				    <Spinner
-				        android:id="@+id/units_spinner"
-				        android:layout_width="0dp"
-				        android:layout_weight="3"
-				        android:layout_height="wrap_content"
-				        android:drawSelectorOnTop="false"
-				        android:padding="10dip"
-				        android:background="@drawable/rounded_bg_white"
-				        android:spinnerMode="dialog" />
-		            
-		        </LinearLayout>	
-		         
-		    </LinearLayout>
-		    
-		</LinearLayout>  
-	</ScrollView>
+	    	      
+	</ListView>
 	
     <!-- Bottom Bar -->
     <LinearLayout android:id="@+id/bottom_nav"

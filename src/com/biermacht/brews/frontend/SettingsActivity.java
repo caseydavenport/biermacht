@@ -17,14 +17,17 @@ import android.widget.Spinner;
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.utils.Units;
+import com.biermacht.brews.frontend.adapters.*;
+import android.widget.*;
 
 public class SettingsActivity extends Activity implements OnClickListener {
 	
-	private Spinner unitsSpinner;
+	private SettingsItemArrayAdapter mAdapter;
+	private ArrayList<SettingsItem> settingsList;
+	private ListView listView;
 	private EditText nameEditText;
-	private ArrayList<String> measurementSystemsList;
 	
-	// Settings values
+	// Values for possible settings
 	SharedPreferences preferences;
 	private String brewerName;
 	private String measurementSystem;
@@ -36,49 +39,18 @@ public class SettingsActivity extends Activity implements OnClickListener {
         
         // Get settings from shared preferences
         preferences = this.getSharedPreferences("com.biermacht.brews", Context.MODE_PRIVATE);
-        brewerName = preferences.getString("com.biermacht.brews.settings.brewMasterName", "");
+        brewerName = preferences.getString("com.biermacht.brews.settings.brewMasterName", "No name found");
         measurementSystem = preferences.getString("com.biermacht.brews.settings.measurementSystem", Units.IMPERIAL);
 
-        // Views and junk
-        nameEditText = (EditText) findViewById(R.id.name_edit_text);
-        
-        // Set values
-        nameEditText.setText(brewerName);
-        
-        // Create list of measurement systems
-        measurementSystemsList = new ArrayList<String>();
-        measurementSystemsList.add(Units.METRIC);
-        measurementSystemsList.add(Units.IMPERIAL);
-        
-        // Set up grain type spinner
-        unitsSpinner = (Spinner) findViewById(R.id.units_spinner);
-        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, measurementSystemsList);  
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        unitsSpinner.setAdapter(adapter);
-        
-        int pos = 0;
-        for (String s : measurementSystemsList)
-        {
-        	if (s.equals(measurementSystem))
-        		break;
-        	pos++;
-        }
-        unitsSpinner.setSelection(pos);    
-        
-        // Handle beer type selector here
-        unitsSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) 
-            {
-            	measurementSystem = measurementSystemsList.get(position);            
-    	    }
-
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });
-        
+		// Create settings list
+		listView = (ListView) findViewById(R.id.settings_list);
+		settingsList = new ArrayList<SettingsItem>();
+		SettingsItem brewer = new SettingsItem("Brewer", brewerName, "");
+		settingsList.add(brewer);
+		
+		// Set adapter and view
+		mAdapter = new SettingsItemArrayAdapter(this, settingsList);
+		listView.setAdapter(mAdapter);
     }
 
     @Override
