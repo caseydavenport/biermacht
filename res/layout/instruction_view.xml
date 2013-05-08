@@ -10,7 +10,7 @@
 	    android:layout_width="fill_parent"
 	    android:background="@color/transparent"
 	    android:minHeight="4000dip"
-	    android:padding="10dip"
+	    android:padding="0dip"
 	    android:layout_weight="10" >
 			
 			    <ListView
@@ -19,7 +19,7 @@
 			        android:layout_height="wrap_content"
 			        android:drawSelectorOnTop="true"
 			        android:listSelector="@drawable/selector"
-			        android:background="@drawable/rounded_bg_white"
+			        android:background="#fff"
 			        android:visibility="gone" >
 			    </ListView>
 			    
@@ -28,6 +28,7 @@
 			        android:layout_height="72dip" 
 			        android:background="#FFFFFF" 
 			        android:gravity="center"
+					android:layout_margin="10dip"
 			        android:visibility="gone"
 			        android:text="No instructions found" /> 
 	        
