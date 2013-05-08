@@ -3,14 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" 
     android:minHeight="60dp"
-    android:background="@color/transparent"
+    android:background="#fff"
     android:focusable="false"
     android:orientation="horizontal">
 
 	<!-- Linear layout for text type settings -->
     <LinearLayout android:id="@+id/text_type" 
 		android:orientation="vertical"
-		android:background="#fff"
+		android:background="@color/transparent"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"

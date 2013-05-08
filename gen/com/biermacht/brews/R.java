@@ -206,16 +206,17 @@ public final class R {
         public static final int activity_main=0x7f03000a;
         public static final int activity_settings=0x7f03000b;
         public static final int add_ingredient_row=0x7f03000c;
-        public static final int details_view=0x7f03000d;
-        public static final int ingredient_row_layout=0x7f03000e;
-        public static final int ingredient_view=0x7f03000f;
-        public static final int instruction_row_layout=0x7f030010;
-        public static final int instruction_view=0x7f030011;
-        public static final int recipe_row_layout=0x7f030012;
-        public static final int scale_alert_view=0x7f030013;
-        public static final int settings_row_layout=0x7f030014;
-        public static final int spinner_row_dropdown_layout=0x7f030015;
-        public static final int spinner_row_layout=0x7f030016;
+        public static final int alert_edit_text=0x7f03000d;
+        public static final int details_view=0x7f03000e;
+        public static final int ingredient_row_layout=0x7f03000f;
+        public static final int ingredient_view=0x7f030010;
+        public static final int instruction_row_layout=0x7f030011;
+        public static final int instruction_view=0x7f030012;
+        public static final int recipe_row_layout=0x7f030013;
+        public static final int scale_alert_view=0x7f030014;
+        public static final int settings_row_layout=0x7f030015;
+        public static final int spinner_row_dropdown_layout=0x7f030016;
+        public static final int spinner_row_layout=0x7f030017;
     }
     public static final class menu {
         public static final int activity_add_hops=0x7f070000;
