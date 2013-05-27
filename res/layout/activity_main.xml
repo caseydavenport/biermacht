@@ -55,7 +55,18 @@
     
     </LinearLayout>
 	
-	<LinearLayout android:id="@+id/recipe_search_view"
+	<!-- Colored bar at top -->
+	<TextView android:id="@+id/search_border"
+		android:layout_width="fill_parent"
+		android:layout_height="2dp"
+		android:layout_gravity="top"
+		android:textColor="#fff"
+		android:background="#AAAAAA"
+		android:layout_above="@+id/recipe_search_view"
+		android:text="">
+	</TextView>    
+	
+	<LinearLayout android:id="@id/recipe_search_view"
 		android:orientation="horizontal"
 		android:layout_width="fill_parent"
 		android:layout_height="60dip"
