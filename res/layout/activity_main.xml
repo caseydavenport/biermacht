@@ -39,8 +39,6 @@
 		        android:background="@drawable/bg_white"
 		        android:padding="0dip"
 		        android:drawSelectorOnTop="true"
-		        android:divider="#66000000"
-		        android:dividerHeight="1dp"
 		        android:listSelector="@drawable/selector" >
 		    </ListView>
 		    
