@@ -3,6 +3,13 @@ package com.biermacht.brews.utils;
 import android.util.Log;
 
 public class ColorHandler {
+
+
+  // Colors
+  public static String GREEN = "#44AA44";
+  public static String RED = "#FF0000";
+  public static String YELLOW = "#FFAA00";
+	
 	
   public static String getSrmColor(double d)
   {
