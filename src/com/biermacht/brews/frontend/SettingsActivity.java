@@ -25,6 +25,7 @@ import android.widget.*;
 import android.app.*;
 import android.content.*;
 import android.view.*;
+import com.biermacht.brews.utils.*;
 
 public class SettingsActivity extends Activity implements OnClickListener {
 	
@@ -157,7 +158,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 			.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-
+					Utils.deleteAllRecipes();
 				}
 
 		    })

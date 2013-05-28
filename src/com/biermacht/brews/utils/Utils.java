@@ -129,6 +129,21 @@ public class Utils {
 		return MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
 	}
 	
+	public static boolean deleteAllRecipes()
+	{
+		boolean bool = true;
+		
+		for (Recipe r : getRecipeList(MainActivity.databaseInterface))
+		{
+			for (Ingredient i : r.getIngredientList())
+			{
+				deleteIngredient(i);
+			}
+			bool = deleteRecipe(r);
+		}
+		return bool;
+	}
+	
 	/**
 	 * Deletes the given ingredient from database
 	 * @param i
@@ -175,8 +190,6 @@ public class Utils {
 		
 		r.setBatchSize(newVolume);
 		r.setBoilSize(r.getBoilSize() * ratio);
-		
-		Log.e("UTILS", "New Volume: " + newVolume + " Scale: " + ratio);
 		
 		for (Ingredient i : r.getIngredientList())
 		{
