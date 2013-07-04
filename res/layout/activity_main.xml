@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="@color/transparent"
+    android:background="@color/activity_background"
     android:orientation="vertical">
 	
 	<!-- Colored bar at top -->
@@ -69,7 +69,7 @@
 	<LinearLayout android:id="@id/recipe_search_view"
 		android:orientation="horizontal"
 		android:layout_width="fill_parent"
-		android:layout_height="60dip"
+		android:layout_height="40dip"
 		android:layout_marginTop="0dip"
 		android:padding="0dip"
 		android:layout_gravity="center"
@@ -80,10 +80,10 @@
             android:layout_width="0dip" 
             android:layout_weight="1" 
             android:layout_height="40dip" 
-            android:padding="10dip"
+            android:padding="0dip"
 			android:layout_marginLeft="10dip"
-			android:layout_marginTop="10dip"
-			android:layout_marginBottom="10dip"
+			android:layout_marginTop="0dip"
+			android:layout_marginBottom="0dip"
             android:background="#fff"
             android:hint="@string/recipe_search_hint" />
 
@@ -93,8 +93,8 @@
             android:gravity="center"
             android:focusable="false"
             android:background="#fff"
-			android:layout_marginTop="10dip"
-			android:layout_marginBottom="10dip"
+			android:layout_marginTop="0dip"
+			android:layout_marginBottom="0dip"
 			android:layout_marginRight="10dip"
             android:paddingLeft="0dp"
             android:paddingRight="10dp"

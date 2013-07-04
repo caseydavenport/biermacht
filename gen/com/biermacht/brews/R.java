@@ -11,14 +11,16 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int activity_background=0x7f040002;
         public static final int background=0x7f040001;
-        public static final int black_text=0x7f040005;
+        public static final int black_text=0x7f040006;
         /**  Theme colors for chaning stuff globally 
          */
         public static final int button_color=0x7f040000;
-        public static final int theme_orange=0x7f040004;
-        public static final int title_color=0x7f040003;
-        public static final int transparent=0x7f040002;
+        public static final int divider=0x7f040007;
+        public static final int theme_orange=0x7f040005;
+        public static final int title_color=0x7f040004;
+        public static final int transparent=0x7f040003;
     }
     public static final class drawable {
         public static final int actionbar_background=0x7f020000;

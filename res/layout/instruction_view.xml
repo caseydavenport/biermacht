@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
+    android:background="@color/activity_background"
     android:orientation="vertical" >
     
 	<LinearLayout android:orientation="vertical"
@@ -31,6 +31,10 @@
 					android:layout_margin="10dip"
 			        android:visibility="gone"
 			        android:text="No instructions found" /> 
+				
+				<View android:layout_width="fill_parent"
+					android:layout_height="1dip"
+					android:background="@color/divider" />
 	        
     </LinearLayout>
 </LinearLayout>
