@@ -74,7 +74,8 @@
 		android:padding="0dip"
 		android:layout_gravity="center"
 		android:background="#fff"
-		android:layout_alignParentBottom="true" >
+		android:layout_alignParentBottom="true"
+		android:visibility="gone">
 
         <EditText android:id="@+id/search_bar"
             android:layout_width="0dip" 

@@ -55,7 +55,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
 		{
 			titleView.setText(detail.getTitle());
 			valueView.setText(detail.getContent());
-			rangeView.setVisibility(View.INVISIBLE);
+			rangeView.setVisibility(View.GONE);
 		}
 		
 		else if (detail.getType().equals(Detail.TYPE_RANGE))
