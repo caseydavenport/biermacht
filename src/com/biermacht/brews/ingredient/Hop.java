@@ -1,4 +1,5 @@
 package com.biermacht.brews.ingredient;
+import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
 
@@ -95,12 +96,22 @@ public class Hop extends Ingredient {
 	}
 
 	@Override
-	public double getAmount() {
-		return amount;
+	public double getDisplayAmount() {
+		return Units.kilosToOunces(this.amount);
+	}
+	
+	@Override 
+	public double getBeerXmlStandardAmount() {
+		return this.amount;
 	}
 
 	@Override
-	public void setAmount(double amt) {
+	public void setDisplayAmount(double amt) {
+		this.amount = Units.ouncesToKilos(amt);
+	}
+	
+	@Override
+	public void setBeerXmlStandardAmount(double amt) {
 		this.amount = amt;
 	}
 
@@ -113,8 +124,17 @@ public class Hop extends Ingredient {
 	}
 
 	@Override
-	public String getUnits() {
-		return "oz";
+	public String getDisplayUnits() {
+		return Units.OUNCES;
+	}
+	
+	public void setDisplayUnits(String s) {
+		// TODO
+	}
+	
+	@Override
+	public String getBeerXmlStandardUnits() {
+		return Units.KILOGRAMS;
 	}
 
 	@Override
@@ -224,11 +244,5 @@ public class Hop extends Ingredient {
 	@Override
 	public void setShortDescription(String description) {
 		this.description = description;
-	}
-
-	@Override
-	public void setUnits(String units) {
-		// TODO Auto-generated method stub
-		
 	}
 }

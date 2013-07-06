@@ -1,4 +1,5 @@
 package com.biermacht.brews.ingredient;
+import com.biermacht.brews.utils.Units;
 
 public class Yeast extends Ingredient {
 	
@@ -58,19 +59,35 @@ public class Yeast extends Ingredient {
 		return this.notes;
 	}
 
-	@Override
-	public double getAmount() {
+	public String getBeerXmlStandardUnits()
+	{
+		return Units.LITERS;
+	}
+
+	public double getDisplayAmount()
+	{
+		// TODO: We just assume a single yeast pkg
+		return 1;
+	}
+
+	public double getBeerXmlStandardAmount()
+	{
 		return this.amount;
 	}
 
-	@Override
-	public void setAmount(double amt) {
-		this.amount = amt;
+	public void setDisplayAmount(double amt)
+	{
+		// TODO: Implement this method
 	}
 
+	public void setBeerXmlStandardAmount(double amt)
+	{
+		this.amount = amt;
+	}
+	
 	@Override
-	public String getUnits() {
-		return "liters";
+	public String getDisplayUnits() {
+		return Units.PACKAGES;
 	}
 
 	@Override
@@ -116,7 +133,7 @@ public class Yeast extends Ingredient {
 	}
 
 	@Override
-	public void setUnits(String units) {
+	public void setDisplayUnits(String units) {
 
 	}
 

@@ -1,4 +1,5 @@
 package com.biermacht.brews.ingredient;
+import com.biermacht.brews.utils.Units;
 
 // Grain subclass of Ingredient
 public class Fermentable extends Ingredient {
@@ -89,20 +90,41 @@ public class Fermentable extends Ingredient {
 	}
 
 	@Override
-	public double getAmount()
+	public double getDisplayAmount()
 	{
+		return Units.kilosToPounds(this.amount);
+	}
+	
+	@Override 
+	public double getBeerXmlStandardAmount(){
 		return this.amount;
 	}
 	
 	@Override 
-	public void setAmount(double amt)
+	public void setDisplayAmount(double amt)
 	{
+		this.amount = Units.poundsToKilos(amt);
+	}
+	
+	@Override
+	public void setBeerXmlStandardAmount(double amt){
 		this.amount = amt;
 	}
 
 	@Override
-	public String getUnits() {
-			return "lbs";
+	public String getDisplayUnits() {
+			return Units.POUNDS;
+	}
+	
+	@Override
+	public void setDisplayUnits(String s)
+	{
+		// TODO
+	}
+	
+	@Override
+	public String getBeerXmlStandardUnits() {
+		return Units.KILOGRAMS;
 	}
 
 	@Override
@@ -180,11 +202,6 @@ public class Fermentable extends Ingredient {
 	@Override
 	public String getShortDescription() {
 		return this.description;
-	}
-
-	@Override
-	public void setUnits(String units) {
-		// TODO This does nothign for now
 	}
 
 	/**

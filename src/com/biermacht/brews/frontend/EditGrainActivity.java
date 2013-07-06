@@ -50,7 +50,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
         grainNameEditText.setText(fermentable.getName());
         grainColorEditText.setText(String.format("%2.2f", fermentable.getLovibondColor()));
         grainGravEditText.setText(String.format("%2.3f", fermentable.getGravity()));
-        grainWeightEditText.setText(String.format("%2.2f", fermentable.getAmount()));
+        grainWeightEditText.setText(String.format("%2.2f", fermentable.getDisplayAmount()));
         grainBoilTimeEditText.setText(String.format("%d", fermentable.getTime()));
  		
 		
@@ -105,7 +105,7 @@ public class EditGrainActivity extends Activity implements OnClickListener {
 			fermentable.setName(grainName);
 			fermentable.setLovibondColor(color);
 			fermentable.setGravity(grav);
-			fermentable.setAmount(weight);
+			fermentable.setDisplayAmount(weight);
 			//fermentable.setFermentableType(//TODO);
 			fermentable.setStartTime(startTime);
 			fermentable.setEndTime(endTime);

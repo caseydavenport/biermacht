@@ -82,7 +82,7 @@ public class YeastHandler extends DefaultHandler {
         else if (qName.equalsIgnoreCase("AMOUNT"))
         {
         	double amt = Double.parseDouble(currentValue);
-        	yeast.setAmount(amt);
+        	yeast.setBeerXmlStandardAmount(amt);
         }
         
         else if (qName.equalsIgnoreCase("AMOUNT_IS_WEIGHT"))

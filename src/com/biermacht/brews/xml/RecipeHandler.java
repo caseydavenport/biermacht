@@ -258,37 +258,6 @@ public class RecipeHandler extends DefaultHandler {
 		// Finished a misc.  Add to recipe and list
 		{
 			thingType = 0;
-			
-			// We need to handle the units here because
-			// they can be either kilograms or liters
-			if (misc.amountIsWeight())
-			// Amount is in kilograms
-			{
-				if (misc.getAmount() < .1)
-				// Too small. Show it as grams.
-				{
-					misc.setAmount(misc.getAmount() * 1000.0);
-					misc.setUnits(Units.GRAMS);
-				}
-				else
-				// Otherwise it is in grams
-				{
-					misc.setUnits(Units.KILOGRAMS);
-				}
-			}
-			else
-			// Amount is in liters
-			{
-				if (misc.getAmount() < .1)
-				{
-					misc.setAmount(misc.getAmount() * 1000.0);
-					misc.setUnits(Units.MILLILITERS);
-				}
-				else
-				{
-					misc.setUnits(Units.LITERS);
-				}
-			}
 			r.addIngredient(misc);
 			miscList.add(misc);
 			return;
@@ -402,8 +371,7 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("AMOUNT"))
 			{
 				double amt = Double.parseDouble(currentValue);
-				amt = Units.kilosToPounds(amt);
-				f.setAmount(amt);
+				f.setBeerXmlStandardAmount(amt);
 			}
 
 			else if (qName.equalsIgnoreCase("YIELD"))
@@ -527,8 +495,7 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("AMOUNT"))
 			{
 				double amt = Double.parseDouble(currentValue);
-				amt = Units.kilosToOunces(amt);
-				h.setAmount(amt);
+				h.setBeerXmlStandardAmount(amt);
 			}
 
 			else if (qName.equalsIgnoreCase("USE"))
@@ -639,7 +606,7 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("AMOUNT"))
 			{
 				double amt = Double.parseDouble(currentValue);
-				y.setAmount(amt);
+				y.setBeerXmlStandardAmount(amt);
 			}
 
 			else if (qName.equalsIgnoreCase("AMOUNT_IS_WEIGHT"))
@@ -769,7 +736,7 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("AMOUNT"))
 			{
 				double amt = Double.parseDouble(currentValue);
-				misc.setAmount(amt);
+				misc.setBeerXmlStandardAmount(amt);
 			}
 			
 			else if (qName.equalsIgnoreCase("TIME"))

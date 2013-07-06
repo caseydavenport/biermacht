@@ -32,10 +32,28 @@ public abstract class Ingredient {
 	public abstract String getType();
 	public abstract String getShortDescription();
 	public abstract void setShortDescription(String description);
-	public abstract void setUnits(String units);
-	public abstract String getUnits();
-	public abstract double getAmount();
-	public abstract void setAmount(double amt);
+	
+	// Get beerXML 1.0 Units
+	public abstract String getBeerXmlStandardUnits();
+	
+	// Get display units
+	public abstract String getDisplayUnits();
+	
+	// Set display units
+	public abstract void setDisplayUnits(String s);
+	
+	// Returns display amount
+	public abstract double getDisplayAmount();
+	
+	// Takes display amount
+	public abstract void setDisplayAmount(double amt);
+	
+	// Returns amount in units specified by beerXML 1.0
+	public abstract double getBeerXmlStandardAmount();
+
+	// Takes amount in beerXML 1.0 units
+	public abstract void setBeerXmlStandardAmount(double amt);
+	
 	public abstract int hashCode();
 	public abstract boolean equals(Object o);
 	public abstract void setStartTime(int startTime);

@@ -42,7 +42,7 @@ public class EditYeastActivity extends Activity implements OnClickListener {
         // Set some values
         bestForTextView.setText(yeast.getBestFor());
         yeastNameEditText.setText(yeast.getName());
-        amountEditText.setText(yeast.getAmount() + "");
+        amountEditText.setText(yeast.getBeerXmlStandardAmount() + "");
         attenuationEditText.setText(yeast.getAttenuation() + "");
  
     }
@@ -64,7 +64,7 @@ public class EditYeastActivity extends Activity implements OnClickListener {
 			Yeast y = yeast;
 			y.setName(name);
 			y.setAttenuation(attenuation);
-			y.setAmount(amount);
+			y.setDisplayAmount(amount);
 			
 			Utils.updateIngredient(y);
 			mRecipe = Utils.getRecipeWithId(mRecipe.getId());

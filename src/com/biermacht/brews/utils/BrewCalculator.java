@@ -35,7 +35,7 @@ public class BrewCalculator {
 			if (i.getType().equals(Ingredient.FERMENTABLE))
 			{
 				Fermentable g = (Fermentable) i;
-				MCU += g.getAmount() * g.getLovibondColor() / r.getBatchSize();
+				MCU += g.getDisplayAmount() * g.getLovibondColor() / r.getBatchSize();
 			}
 		}
 		SRM = (float) (1.4922*Math.pow(MCU, .6859));
@@ -54,7 +54,7 @@ public class BrewCalculator {
 	{
 		if(i.getType().equals(Ingredient.FERMENTABLE))
 		{
-			double g_amt = i.getAmount();
+			double g_amt = i.getDisplayAmount();
 			double tot_amt = getTotalGrainWeight(r);
 			
 			return (g_amt / tot_amt) * 100;
@@ -70,7 +70,7 @@ public class BrewCalculator {
 		{
 			if (i.getType().equals(Ingredient.FERMENTABLE))
 			{
-				amt += i.getAmount();
+				amt += i.getDisplayAmount();
 			}
 		}
 		
@@ -123,25 +123,29 @@ public class BrewCalculator {
 					
 			if(f.getFermentableType().equals(Fermentable.EXTRACT))
 			{
-				pts = f.getAmount() * f.getPpg() / r.getBatchSize();
+				pts = f.getDisplayAmount() * f.getPpg() / r.getBatchSize();
 			}
 			else if (f.getFermentableType().equals(Fermentable.SUGAR))
 			{
-				pts = f.getAmount() * f.getPpg() / r.getBatchSize();
+				pts = f.getDisplayAmount() * f.getPpg() / r.getBatchSize();
 			}
 			else if (f.getFermentableType().equals(Fermentable.GRAIN))
 			{
-				pts = 5 * f.getAmount() / r.getBatchSize();
+				pts = 5 * f.getDisplayAmount() / r.getBatchSize();
 				
 				if(f.getName().equalsIgnoreCase("Roasted Barley"))
-					pts = 10 * f.getAmount() / r.getBatchSize();
+					pts = 10 * f.getDisplayAmount() / r.getBatchSize();
 				if(f.getName().equalsIgnoreCase("Black Patent Malt"))
-					pts = 10 * f.getAmount() / r.getBatchSize();
+					pts = 10 * f.getDisplayAmount() / r.getBatchSize();
 			}
 			else
 			{
-				pts = f.getAmount() * f.getPpg() / r.getBatchSize();
+				pts = f.getDisplayAmount() * f.getPpg() / r.getBatchSize();
 			}
+		}
+		else if (i.getName().equals("Malto-Dextrin"))
+		{
+			pts = 10 * i.getDisplayAmount() * 40 / r.getBatchSize();
 		}
 		return pts;
 	}
@@ -174,7 +178,7 @@ public class BrewCalculator {
 				if (h.getUse().equals(Hop.USE_BOIL))
 				{
 					utilization = getHopUtilization(r, h);
-					AAU = h.getAmount() * h.getAlphaAcidContent();
+					AAU = h.getDisplayAmount() * h.getAlphaAcidContent();
 					ibu = (AAU * utilization * 75)/r.getBatchSize();
 				}
 			}

@@ -66,7 +66,7 @@ public class FermentableHandler extends DefaultHandler {
         else if (qName.equalsIgnoreCase("AMOUNT"))
         {
         	double amt = Double.parseDouble(currentValue);
-        	fermentable.setAmount(amt);
+        	fermentable.setBeerXmlStandardAmount(amt);
         }
         
         else if (qName.equalsIgnoreCase("YIELD"))

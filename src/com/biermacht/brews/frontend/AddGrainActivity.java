@@ -175,7 +175,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			g.setName(grainName);
 			g.setLovibondColor(color);
 			g.setGravity(grav);
-			g.setAmount(weight);
+			g.setDisplayAmount(weight);
 			g.setFermentableType(fermType);
 			g.setStartTime(startTime);
 			g.setEndTime(endTime);

@@ -1,4 +1,5 @@
 package com.biermacht.brews.ingredient;
+import com.biermacht.brews.utils.Units;
 
 public class Misc extends Ingredient {
 
@@ -26,16 +27,18 @@ public class Misc extends Ingredient {
 	private String notes;
 	
 	// Others
-	private String units;
+	private String displayUnits;
 	private int startTime;
 	private int endTime;
+	private Double displayAmount;
 	
 	public Misc(String name)
 	{
 		super(name);
-		setUnits("");
+		setDisplayUnits("");
 		setAmountIsWeight(false);
-		setAmount(0);
+		setBeerXmlStandardAmount(0);
+		setDisplayAmount(0);
 		setUse("");
 		setVersion(1);
 		setTime(0);
@@ -45,7 +48,7 @@ public class Misc extends Ingredient {
 	public String toString()
 	{
 		String s = getName();
-		s += getUse() + ", " + getUseFor() + ", " + getAmount() + ", ";
+		s += getUse() + ", " + getUseFor() + ", " + getDisplayAmount() + ", ";
 		s += getShortDescription() + ", " + getMiscType();
 		
 		return s;
@@ -102,20 +105,62 @@ public class Misc extends Ingredient {
 	}
 
 	@Override
-	public double getAmount() {
-		return amount;	
+	public double getDisplayAmount() {
+		if (this.displayAmount > 0)
+			return this.displayAmount;
+			
+		String unit = this.getDisplayUnits();
+		if (unit.equals(Units.GALLONS))
+			return Units.litersToGallons(this.amount);
+		if (unit.equals(Units.OUNCES))
+			return Units.kilosToOunces(this.amount);
+		if (unit.equals(Units.POUNDS))
+			return Units.kilosToPounds(this.amount);
+		else
+			return this.amount;
+	}
+	
+	@Override
+	public double getBeerXmlStandardAmount(){
+		return this.amount;
 	}
 
 	@Override
-	public void setAmount(double amt) {
+	public void setDisplayAmount(double amt) {
+		this.displayAmount = amt;
+	}
+	
+	@Override
+	public void setBeerXmlStandardAmount(double amt){
 		this.amount = amt;
 	}
 
 	@Override
-	public String getUnits() {
-		return units;
+	public String getDisplayUnits() {
+		if (!this.displayUnits.equals(""))
+			return this.displayUnits;
+
+		if (this.amountIsWeight())
+			if (this.amount > .113)// .25lbs
+				return Units.POUNDS;
+			else
+				return Units.OUNCES;
+		else
+		if (this.amount > .946) // .25gal
+			return Units.GALLONS;
+		else
+			return Units.LITERS;
 	}
 
+	@Override
+	public String getBeerXmlStandardUnits()
+	{
+		if (this.amountIsWeight())
+			return Units.KILOGRAMS;
+		else
+			return Units.LITERS;
+	}
+	
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
@@ -164,7 +209,7 @@ public class Misc extends Ingredient {
 	}
 
 	@Override
-	public void setUnits(String units) {
-		this.units = units;
+	public void setDisplayUnits(String units) {
+		this.displayUnits = units;
 	}
 }

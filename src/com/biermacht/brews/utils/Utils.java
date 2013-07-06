@@ -193,7 +193,7 @@ public class Utils {
 		
 		for (Ingredient i : r.getIngredientList())
 		{
-			i.setAmount(i.getAmount() * ratio);
+			i.setDisplayAmount(i.getDisplayAmount() * ratio);
 			updateIngredient(i);
 		}
 		

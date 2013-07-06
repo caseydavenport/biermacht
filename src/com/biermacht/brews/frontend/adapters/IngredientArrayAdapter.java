@@ -52,8 +52,8 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		TextView detailView = (TextView) row.findViewById(R.id.ing_detail_text);
 		
 		labelView.setText(list.get(position).getName());
-		amountView.setText(String.format("%2.2f", list.get(position).getAmount()));
-		unitView.setText(list.get(position).getUnits());
+		amountView.setText(String.format("%2.2f", list.get(position).getDisplayAmount()));
+		unitView.setText(list.get(position).getDisplayUnits());
 		
 		// Set imageView based on ingredient type
 		String ingType = list.get(position).getType();

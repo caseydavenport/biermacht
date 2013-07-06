@@ -60,7 +60,7 @@ public class HopsHandler extends DefaultHandler {
         
         else if (qName.equalsIgnoreCase("AMOUNT"))
         {
-        	hop.setAmount(Double.parseDouble(currentValue));
+        	hop.setBeerXmlStandardAmount(Double.parseDouble(currentValue));
         }
         
         else if (qName.equalsIgnoreCase("USE"))

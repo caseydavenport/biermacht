@@ -199,8 +199,8 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
 			values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
 			values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
-			values.put(DatabaseHelper.ING_COL_UNITS, ing.getUnits());
-			values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
+			values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
+			values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
 			values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
 			values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
 			
@@ -267,8 +267,8 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
 		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
 		values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
-		values.put(DatabaseHelper.ING_COL_UNITS, ing.getUnits());
-		values.put(DatabaseHelper.ING_COL_AMT, ing.getAmount());
+		values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
+		values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
 		values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
 		values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
 		
@@ -622,8 +622,8 @@ public class DatabaseInterface {
 			fer.setId(id);
 			fer.setOwnerId(ownerId);
 			fer.setShortDescription(description);
-			fer.setUnits(units);
-			fer.setAmount(amount);
+			fer.setDisplayUnits(units);
+			fer.setBeerXmlStandardAmount(amount);
 			fer.setStartTime(startTime);
 			fer.setEndTime(endTime);
 			fer.setFermentableType(type);
@@ -652,8 +652,8 @@ public class DatabaseInterface {
 			hop.setId(id);
 			hop.setOwnerId(ownerId);
 			hop.setShortDescription(description);
-			hop.setUnits(units);
-			hop.setAmount(amount);
+			hop.setDisplayUnits(units);
+			hop.setBeerXmlStandardAmount(amount);
 			hop.setStartTime(startTime);
 			hop.setEndTime(endTime);
 			hop.setHopType(type);
@@ -683,8 +683,8 @@ public class DatabaseInterface {
 			yeast.setId(id);
 			yeast.setOwnerId(ownerId);
 			yeast.setShortDescription(description);
-			yeast.setUnits(units);
-			yeast.setAmount(amount);
+			yeast.setDisplayUnits(units);
+			yeast.setBeerXmlStandardAmount(amount);
 			yeast.setStartTime(startTime);
 			yeast.setEndTime(endTime);
 			yeast.setType(type);
@@ -711,8 +711,8 @@ public class DatabaseInterface {
 			misc.setId(id);
 			misc.setOwnerId(ownerId);
 			misc.setShortDescription(description);
-			misc.setUnits(units);
-			misc.setAmount(amount);
+			misc.setDisplayUnits(units);
+			misc.setBeerXmlStandardAmount(amount);
 			misc.setStartTime(startTime);
 			misc.setEndTime(endTime);
 			misc.setMiscType(miscType);

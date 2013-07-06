@@ -32,7 +32,7 @@ public class Units {
 	public static final String MILLILITERS = "ml";
 	
 	// Agnostic Units
-	
+	public static final String PACKAGES = "pkg";
 	
 	// Functions for converting units below
 	public static double litersToGallons(double l)
@@ -53,6 +53,11 @@ public class Units {
 	public static double kilosToOunces(double k)
 	{
 		return k * 35.2739619;
+	}
+	
+	public static double ouncesToKilos(double o)
+	{
+		return o / 35.2739619;
 	}
 	
 	public static double poundsToKilos(double p)

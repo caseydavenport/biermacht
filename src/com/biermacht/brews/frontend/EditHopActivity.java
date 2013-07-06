@@ -45,7 +45,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
         hopNameEditText.setText(hop.getName());
         hopAcidsEditText.setText(hop.getAlphaAcidContent() +"");
         hopBoilTimeEditText.setText(hop.getTime() +"");
-        hopWeightEditText.setText(hop.getAmount() + "");
+        hopWeightEditText.setText(hop.getDisplayAmount() + "");
         
         
         /*
@@ -106,7 +106,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
 			hop.setAlphaAcidContent(acids);
 			hop.setStartTime(boilStartTime);
 			hop.setTime(boilTime);
-			hop.setAmount(weight);
+			hop.setDisplayAmount(weight);
 			
 			Utils.updateIngredient(hop);
 			mRecipe = Utils.getRecipeWithId(mRecipe.getId());

@@ -139,7 +139,7 @@ public class AddYeastActivity extends Activity implements OnClickListener {
 			Yeast y = yeast;
 			y.setName(name);
 			y.setAttenuation(attenuation);
-			y.setAmount(amount);
+			y.setDisplayAmount(amount);
 			
 			mRecipe.addIngredient(y);
 			mRecipe.update();

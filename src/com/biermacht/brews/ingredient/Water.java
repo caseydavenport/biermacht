@@ -1,7 +1,8 @@
 package com.biermacht.brews.ingredient;
+import com.biermacht.brews.utils.Units;
 
-public class Water extends Ingredient {
-
+public class Water extends Ingredient
+{
 	public Water(String name)
 	{
 		super(name);
@@ -18,22 +19,44 @@ public class Water extends Ingredient {
 		return null;
 	}
 
-	@Override
-	public double getAmount() {
-		// TODO Auto-generated method stub
+	public double getDisplayAmount()
+	{
+		// TODO: Implement this method
 		return 0;
 	}
 
-	@Override
-	public void setAmount(double amt) {
-		// TODO Auto-generated method stub
-		
+	public double getBeerXmlStandardAmount()
+	{
+		// TODO: Implement this method
+		return 0;
 	}
 
+	public void setDisplayAmount(double amt)
+	{
+		// TODO: Implement this method
+	}
+
+	public void setBeerXmlStandardAmount(double amt)
+	{
+		// TODO: Implement this method
+	}
+	
 	@Override
-	public String getUnits() {
+	public String getDisplayUnits() {
 		// TODO Auto-generated method stub
-		return "";
+		return null;
+	}
+	
+	@Override
+	public void setDisplayUnits(String units) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	public String getBeerXmlStandardUnits()
+	{
+		// TODO: Implement this method
+		return Units.LITERS;
 	}
 
 	@Override
@@ -80,12 +103,6 @@ public class Water extends Ingredient {
 
 	@Override
 	public void setShortDescription(String description) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setUnits(String units) {
 		// TODO Auto-generated method stub
 		
 	}

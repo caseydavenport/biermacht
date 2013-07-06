@@ -160,7 +160,7 @@ public class AddHopsActivity extends Activity {
 			h.setStartTime(startTime);
 			h.setEndTime(endTime);
 			h.setAlphaAcidContent(alpha);
-			h.setAmount(weight);
+			h.setDisplayAmount(weight);
 			h.setUse(use);
 			h.setForm(Hop.FORM_PELLET);
 			
