@@ -27,7 +27,7 @@
 		android:text="Hefeweizen/Weissbier" />
 	
 	<TextView android:id="@+id/range"
-		android:gravity="center"
+		android:gravity="left|center_vertical"
 		android:layout_width="0dip"
 		android:layout_weight="1"
 		android:background="@color/transparent"

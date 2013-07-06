@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="@color/activity_background"
+    android:background="@color/transparent"
     android:orientation="vertical">
 	
 	<!-- Colored bar at top -->
@@ -23,8 +23,9 @@
     
     <LinearLayout android:id="@+id/first_ll"
 		android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:padding="0dip"
+		android:background="@color/activity_background"
         android:orientation="horizontal"
         android:layout_below="@id/colored_bar" >
     
@@ -55,25 +56,14 @@
     
     </LinearLayout>
 	
-	<!-- Colored bar at top -->
-	<TextView android:id="@+id/search_border"
-		android:layout_width="fill_parent"
-		android:layout_height="2dp"
-		android:layout_gravity="top"
-		android:textColor="#fff"
-		android:background="#AAAAAA"
-		android:layout_above="@+id/recipe_search_view"
-		android:text="">
-	</TextView>    
-	
-	<LinearLayout android:id="@id/recipe_search_view"
+	<LinearLayout android:id="@+id/recipe_search_view"
 		android:orientation="horizontal"
 		android:layout_width="fill_parent"
 		android:layout_height="40dip"
 		android:layout_marginTop="0dip"
 		android:padding="0dip"
 		android:layout_gravity="center"
-		android:background="#fff"
+		android:background="@color/activity_background"
 		android:layout_alignParentBottom="true"
 		android:visibility="gone">
 

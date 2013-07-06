@@ -20,13 +20,17 @@
 		android:text="">
 		<requestFocus />
 	</TextView>
+	
+	<ScrollView android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/activity_background"
+   		android:layout_above="@+id/bottom_nav"
+   		android:layout_below="@id/colored_bar">
         
     <RelativeLayout android:layout_width="match_parent"
     	android:layout_height="match_parent"
    		android:padding="10dip"
    		android:layout_margin="0dip"
-   		android:layout_above="@+id/bottom_nav"
-   		android:layout_below="@id/colored_bar"
    		android:background="@color/transparent" >
    		
 	    <!-- Grain Type spinner -->
@@ -204,11 +208,12 @@
 	    </LinearLayout>
 	    
 	</RelativeLayout>
+	</ScrollView>
 	
     <!-- Bottom Bar -->
     <LinearLayout android:id="@+id/bottom_nav"
         android:layout_height="60dip"
-        android:background="@color/transparent"
+        android:background="@color/activity_background"
         android:layout_width="fill_parent" 
         android:padding="10dp"
         android:layout_alignParentBottom="true">
