@@ -42,7 +42,7 @@ public class Units {
 	
 	public static double gallonsToLiters(double g)
 	{
-		return g * 3.87541178;
+		return g / .264172052;
 	}
 	
 	public static double kilosToPounds(double k)
