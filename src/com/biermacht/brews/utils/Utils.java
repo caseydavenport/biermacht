@@ -185,11 +185,11 @@ public class Utils {
 		
 	public static Recipe scaleRecipe(Recipe r, double newVolume)
 	{
-		double oldVolume = r.getBatchSize();
+		double oldVolume = r.getDisplayBatchSize();
 		double ratio = newVolume / oldVolume;
 		
-		r.setBatchSize(newVolume);
-		r.setBoilSize(r.getBoilSize() * ratio);
+		r.setDisplayBatchSize(newVolume);
+		r.setDisplayBoilSize(r.getDisplayBoilSize() * ratio);
 		
 		for (Ingredient i : r.getIngredientList())
 		{

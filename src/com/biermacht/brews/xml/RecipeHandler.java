@@ -315,13 +315,13 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("BATCH_SIZE"))
 			{
 				double s = Units.litersToGallons(Float.parseFloat(currentValue));
-				r.setBatchSize(s);
+				r.setBeerXmlStandardBatchSize(s);
 			}
 			
 			else if (qName.equalsIgnoreCase("BOIL_SIZE"))
 			{
 				double s = Units.litersToGallons(Float.parseFloat(currentValue));
-				r.setBoilSize(s);
+				r.setBeerXmlStandardBoilSize(s);
 			}
 			
 			else if (qName.equalsIgnoreCase("BOIL_TIME"))

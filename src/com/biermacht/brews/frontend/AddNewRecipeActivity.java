@@ -167,8 +167,8 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 				r.setType(type);
 				r.setStyle(style);
 				r.setBrewer("Biermacht Brews");
-				r.setBatchSize(batchSize);
-				r.setBoilSize(boilSize);
+				r.setDisplayBatchSize(batchSize);
+				r.setDisplayBoilSize(boilSize);
 				r.setBoilTime(boilTime);
 				r.setEfficiency(efficiency);
 				r.setBatchTime(1);

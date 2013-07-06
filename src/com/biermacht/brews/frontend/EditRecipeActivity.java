@@ -65,8 +65,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         recipeDescEditText.setText(mRecipe.getDescription());
         boilTimeEditText.setText(String.format("%d", mRecipe.getBoilTime()));
         effEditText.setText(String.format("%2.2f", mRecipe.getEfficiency()));
-        batchSizeEditText.setText(String.format("%2.2f", mRecipe.getBatchSize()));
-        boilSizeEditText.setText(String.format("%2.2f", mRecipe.getBoilSize()));
+        batchSizeEditText.setText(String.format("%2.2f", mRecipe.getDisplayBatchSize()));
+        boilSizeEditText.setText(String.format("%2.2f", mRecipe.getDisplayBoilSize()));
         
         //Arraylist of beer types
         beerStyleArray = MainActivity.ingredientHandler.getStylesList();
@@ -207,8 +207,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 				mRecipe.setType(type);
 				mRecipe.setStyle(style);
 				mRecipe.setBrewer("Biermacht Brews");
-				mRecipe.setBatchSize(batchSize);
-				mRecipe.setBoilSize(boilSize);
+				mRecipe.setDisplayBatchSize(batchSize);
+				mRecipe.setDisplayBoilSize(boilSize);
 				mRecipe.setBoilTime(boilTime);
 				mRecipe.setEfficiency(efficiency);
 				mRecipe.setBatchTime(1);

@@ -135,8 +135,8 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
 		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle().getName());
 		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
-		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBatchSize());
-		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBoilSize());
+		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBeerXmlStandardBatchSize());
+		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBeerXmlStandardBoilSize());
 		values.put(DatabaseHelper.REC_COL_BOIL_TIME, r.getBoilTime());
 		values.put(DatabaseHelper.REC_COL_BOIL_EFF, r.getEfficiency());
 		values.put(DatabaseHelper.REC_COL_OG, r.getOG());
@@ -166,8 +166,8 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
 		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle().getName());
 		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
-		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBatchSize());
-		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBoilSize());
+		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBeerXmlStandardBatchSize());
+		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBeerXmlStandardBoilSize());
 		values.put(DatabaseHelper.REC_COL_BOIL_TIME, r.getBoilTime());
 		values.put(DatabaseHelper.REC_COL_BOIL_EFF, r.getEfficiency());
 		values.put(DatabaseHelper.REC_COL_OG, r.getOG());
@@ -484,8 +484,8 @@ public class DatabaseInterface {
 		r.setVersion(version);
 		r.setType(type);
 		r.setBrewer(brewer);
-		r.setBatchSize(batchSize);
-		r.setBoilSize(boilSize);
+		r.setBeerXmlStandardBatchSize(batchSize);
+		r.setBeerXmlStandardBoilSize(boilSize);
 		r.setBoilTime(boilTime);
 		r.setEfficiency(boilEff);
 		r.setOG(OG);

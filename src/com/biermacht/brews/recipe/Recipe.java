@@ -1,5 +1,6 @@
 package com.biermacht.brews.recipe;
 
+import com.biermacht.brews.utils.Units;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -69,7 +70,7 @@ public class Recipe {
 		this.style = Utils.BEERSTYLE_OTHER;     
 		this.setBrewer("Unknown Brewer");		     
 		this.batchSize = -1;        
-		this.setBoilSize(-1);		     
+		this.setBeerXmlStandardBoilSize(-1);		     
 		this.boilTime = -1;	     
 		this.efficiency = 100;	     
 		this.hops = new ArrayList<Hop>();   
@@ -246,7 +247,7 @@ public class Recipe {
 
 	public ArrayList<Instruction> getInstructionList()
 	{
-		return generateInstructionsFromIngredients(); //instructionList;
+		return generateInstructionsFromIngredients();
 	}
 	
 	// Comparator for sorting ingredients list
@@ -312,12 +313,20 @@ public class Recipe {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	public double getDisplayBatchSize() {
+		return Units.litersToGallons(this.batchSize);
+	}
+	
+	public void setDisplayBatchSize(double size) {
+		this.batchSize = Units.gallonsToLiters(size);
+	}
 
-	public double getBatchSize() {
+	public double getBeerXmlStandardBatchSize() {
 		return this.batchSize;
 	}
 	
-	public void setBatchSize(double v)
+	public void setBeerXmlStandardBatchSize(double v)
 	{
 		this.batchSize = v;
 	}
@@ -355,7 +364,7 @@ public class Recipe {
 		Instruction inst;
 		
 		// Extract recipe
-		if (true)
+		if (this.getType().equals(Recipe.EXTRACT))
 		{
 			// Generate steep and extract add instructions
 			for(Fermentable f : getFermentablesList())
@@ -566,18 +575,27 @@ public class Recipe {
 	public void setBrewer(String brewer) {
 		this.brewer = brewer;
 	}
+	
+	public double getDisplayBoilSize()
+	{
+		return Units.litersToGallons(this.boilSize);
+	}
+	
+	public void setDisplayBoilSize(double size) {
+		this.boilSize = Units.gallonsToLiters(size);
+	}
 
 	/**
 	 * @return the boilSize
 	 */
-	public double getBoilSize() {
+	public double getBeerXmlStandardBoilSize() {
 		return boilSize;
 	}
 
 	/**
 	 * @param boilSize the boilSize to set
 	 */
-	public void setBoilSize(double boilSize) {
+	public void setBeerXmlStandardBoilSize(double boilSize) {
 		this.boilSize = boilSize;
 	}
 
