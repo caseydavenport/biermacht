@@ -35,7 +35,7 @@ public class Recipe {
 	private ArrayList<Yeast> yeasts; // Yeasts used
 	private ArrayList<Misc> miscs;   // Misc ingredients used
 	private ArrayList<Water> waters; // Waters used
-	// TODO: ADD MASH PROFILES
+    private MashProfile mashProfile; // Mash profile for non-extracts	
 	
 	// Beer XML 1.0 Optional Fields ===================================
 	// ================================================================
@@ -78,6 +78,7 @@ public class Recipe {
 		this.yeasts = new ArrayList<Yeast>(); 
 		this.miscs = new ArrayList<Misc>();
 		this.waters = new ArrayList<Water>(); 
+		this.mashProfile = new MashProfile();
 		
 		// Beer XML 1.0 Optional Fields ===================================
 		// ================================================================
@@ -156,6 +157,16 @@ public class Recipe {
 			yeasts.remove((Yeast) i);
 		else if (i.getType().equals(Ingredient.WATER))
 			waters.remove((Water) i);
+	}
+	
+	public MashProfile getMashProfile()
+	{
+		return this.mashProfile;
+	}
+	
+	public void setMashProfile(MashProfile profile)
+	{
+		this.mashProfile = profile;
 	}
 	
 	public void addInstruction(Instruction i)
