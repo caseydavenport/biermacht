@@ -62,7 +62,7 @@
 	        android:layout_below="@id/spinner_titles" >
 
 			<Spinner
-		        android:id="@+id/hop_spinner"
+		        android:id="@+id/misc_spinner"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
 		        android:paddingLeft="10dip" />
 
 			<Spinner
-		        android:id="@+id/hop_type_spinner"
+		        android:id="@+id/misc_type_spinner"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:drawSelectorOnTop="false"
@@ -84,36 +84,11 @@
 
 	    </LinearLayout>
 
-	    <!-- EditText for Misc Name -->
-	    <TextView android:id="@+id/name_title"
-	        android:text="@string/name"
-	        android:layout_below="@id/spinners"
-	        style="@style/title_light" />
-
-	    <EditText
-	        android:id="@+id/name_edit_text"
-	        android:hint="@string/enter_name"
-	        android:layout_below="@id/hop_name_title"
-	        style="@style/text_input"
-	        android:selectAllOnFocus="true" />
-
 	    <LinearLayout android:id="@+id/first_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="@color/transparent"
-	        android:layout_below="@id/hop_name_edit_text" >
-
-		    <TextView android:id="@+id/alpha_acids_title"
-		        android:layout_width="0dp"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        android:background="@color/transparent"
-		        android:layout_marginBottom="3dip"
-		        android:gravity="center"
-		        android:textSize="15dip"
-		        android:textColor="@color/title_color"
-		        android:textStyle="bold"
-		        android:text="@string/alpha_acids_title" />
+	        android:layout_below="@id/spinners" >
 
 		    <TextView android:id="@+id/weight_title"
 		        android:layout_width="0dp"
@@ -121,11 +96,11 @@
 		        android:layout_weight="1"
 		        android:background="@color/transparent"
 		        android:layout_marginBottom="3dip"
-		        android:gravity="center"
+		        android:gravity="left"
 		        android:textSize="15dip"
 		        android:textStyle="bold"
 		        android:textColor="@color/title_color"
-		        android:text="@string/weight_oz" />
+		        android:text="@string/amount" />
 
 	    </LinearLayout>
 
@@ -137,20 +112,7 @@
 	        android:layout_below="@id/first_ll" >
 
 		    <EditText
-		        android:id="@+id/hop_acid_edit_text"
-		        android:inputType="numberDecimal"
-		        android:selectAllOnFocus="true"
-		        android:layout_width="0dp"
-		        android:layout_height="40dip"
-		        android:layout_weight="1"
-		        android:background="@drawable/rounded_bg_white"
-		        android:maxLength="6"
-		        android:paddingLeft="10dip"
-		        android:layout_marginRight="2dip"
-		        android:layout_marginBottom="15dip" />
-
-		    <EditText
-		        android:id="@+id/hop_weight_edit_text"
+		        android:id="@+id/amount_edit_text"
 		        android:inputType="numberDecimal"
 		        android:selectAllOnFocus="true"
 		        android:layout_width="0dp"

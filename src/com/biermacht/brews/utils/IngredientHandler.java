@@ -32,6 +32,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> fermentablesList;
 	private ArrayList<Ingredient> yeastsList;
 	private ArrayList<Ingredient> hopsList;
+	private ArrayList<Ingredient> miscsList;
 	private ArrayList<BeerStyle> styleList;
 	
 	public IngredientHandler(Context c)
@@ -55,7 +56,7 @@ public class IngredientHandler {
 			}
 		}
 		
-		return fermentablesList;
+		return this.fermentablesList;
 	}
 	
 	/**
@@ -74,7 +75,7 @@ public class IngredientHandler {
 			}
 		}
 		
-		return yeastsList;
+		return this.yeastsList;
 	}
 	
 	/**
@@ -93,7 +94,26 @@ public class IngredientHandler {
 			}
 		}
 		
-		return hopsList;
+		return this.hopsList;
+	}
+	
+	/**
+	 * Returns a list of valid miscs for use in recipes
+	 * @return ArrayList of ingredient objects
+	 */
+	public ArrayList<Ingredient> getMiscsList()
+	{
+		if (this.miscsList == null)
+		{
+			try 
+			{
+				this.miscsList = getMiscsFromXml();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return this.miscsList;
 	}
 
 	/**
@@ -237,6 +257,37 @@ public class IngredientHandler {
 	        catch (Exception e)
 	        {
 	        	Log.e("getStylesFromXml", e.toString());
+	        }
+        }
+
+        return list;
+	}
+	
+	/**
+	 * Gets miscs from XMl files in assets/Hops
+	 * @return ArrayList of Ingredient Objects
+	 * @throws IOException
+	 */
+	private ArrayList<Ingredient> getMiscsFromXml() throws IOException
+	{
+		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        RecipeHandler myXMLHandler = new RecipeHandler();
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        AssetManager am = mContext.getAssets();
+
+        for (String s : am.list("Miscs") )
+        {
+	        try 
+	        {	        	
+	            SAXParser sp = spf.newSAXParser();
+	            InputStream is = am.open("Miscs/" + s);
+	            sp.parse(is, myXMLHandler);
+
+	            list.addAll(myXMLHandler.getMiscs());
+	        }
+	        catch (Exception e)
+	        {
+	        	Log.e("getMiscsFromXml", e.toString());
 	        }
         }
 

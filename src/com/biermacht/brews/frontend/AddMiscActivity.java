@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
-import com.biermacht.brews.ingredient.Hop;
+import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.IngredientHandler;
@@ -26,15 +26,14 @@ import android.view.*;
 public class AddMiscActivity extends Activity {
 
 	IngredientHandler ingredientHandler;
-	private Spinner hopSpinner;
-	private Spinner hopTypeSpinner;
-	private EditText hopNameEditText;
-	private EditText hopBoilTimeEditText;
-	private EditText hopAcidEditText;
-	private EditText hopWeightEditText;
-	private ArrayList<Ingredient> hopArray;
-	private ArrayList<String> hopTypeArray;
-	private String hop;
+	private Spinner miscSpinner;
+	private Spinner miscTypeSpinner;
+	private EditText timeEditText;
+	private EditText amountEditText;
+	private ArrayList<Ingredient> miscArray;
+	private ArrayList<String> miscTypeArray;
+	private String misc;
+	private Misc miscObj;
 	private String use;
 	private Recipe mRecipe;
 
@@ -50,53 +49,53 @@ public class AddMiscActivity extends Activity {
     	ingredientHandler = MainActivity.ingredientHandler;
 
     	// Set list of ingredients to show
-    	hopArray = ingredientHandler.getHopsList();
+    	miscArray = ingredientHandler.getMiscsList();
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
         mRecipe = Utils.getRecipeWithId(id);
 
         // Initialize views and such here
-        hopNameEditText = (EditText) findViewById(R.id.name_edit_text);
-        hopBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
-        hopAcidEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
-        hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
+        timeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
+        amountEditText = (EditText) findViewById(R.id.amount_edit_text);
 
-        // Set up hop spinner
-        hopSpinner = (Spinner) findViewById(R.id.hop_spinner);
-        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopArray);  
+        // Set up spinner
+        miscSpinner = (Spinner) findViewById(R.id.misc_spinner);
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, miscArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        hopSpinner.setAdapter(adapter);
-        hopSpinner.setSelection(0);    
+        miscSpinner.setAdapter(adapter);
+        miscSpinner.setSelection(0);    
 
-		// Set up hop type spinner
-       	hopTypeSpinner = (Spinner) findViewById(R.id.hop_type_spinner);
-        hopTypeArray = new ArrayList<String>();
-        hopTypeArray.add(Hop.USE_BOIL);
-        hopTypeArray.add(Hop.USE_AROMA);
-        hopTypeArray.add(Hop.USE_DRY_HOP);
-        SpinnerAdapter<String> hopTypeAdapter = new SpinnerAdapter<String>(this, hopTypeArray);  
-        hopTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        hopTypeSpinner.setAdapter(hopTypeAdapter);
-        hopTypeSpinner.setSelection(0);
+		// Set up type spinner
+       	miscTypeSpinner = (Spinner) findViewById(R.id.misc_type_spinner);
+        miscTypeArray = new ArrayList<String>();
+        miscTypeArray.add(Misc.TYPE_FINING);
+        miscTypeArray.add(Misc.TYPE_FLAVOR);
+        miscTypeArray.add(Misc.TYPE_HERB);
+		miscTypeArray.add(Misc.TYPE_SPICE);
+		miscTypeArray.add(Misc.TYPE_WATER_AGENT);
+		miscTypeArray.add(Misc.TYPE_OTHER);
+		
+        SpinnerAdapter<String> miscTypeAdapter = new SpinnerAdapter<String>(this, miscTypeArray);  
+        miscTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        miscTypeSpinner.setAdapter(miscTypeAdapter);
+        miscTypeSpinner.setSelection(0);
 
-        // Handle hops selector here
-        hopSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        // Handle misc selector here
+        miscSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-					Hop hopObj = new Hop("");
-					hop = hopArray.get(position).getName();
+					miscObj = new Misc("");
+					misc = miscArray.get(position).getName();
 
-					for (Ingredient i : ingredientHandler.getHopsList())
+					for (Ingredient i : ingredientHandler.getMiscsList())
 					{
-						if (hop.equals(i.toString()))
-							hopObj = (Hop) i;
+						if (misc.equals(i.toString()))
+							miscObj = (Misc) i;
 					}
 
-					hopNameEditText.setText(hopObj.getName());
-					hopBoilTimeEditText.setText(mRecipe.getBoilTime() + "");
-					hopAcidEditText.setText(hopObj.getAlphaAcidContent() +"");
-					hopWeightEditText.setText(1.0 +"");
+					timeEditText.setText(mRecipe.getBoilTime() + "");
+					amountEditText.setText(miscObj.getDisplayAmount() + "");
 				}
 
 				public void onNothingSelected(AdapterView<?> parentView) {
@@ -106,11 +105,11 @@ public class AddMiscActivity extends Activity {
 			});   
 
 		// Handle beer type selector here
-        hopTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        miscTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 					// Set the type to the selected type...
-					use = hopTypeArray.get(position);
+					use = miscTypeArray.get(position);
 				}
 
 
@@ -125,7 +124,7 @@ public class AddMiscActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_add_hops, menu);
+        //getMenuInflater().inflate(R.menu.activity_add_miscs, menu);
         return true;
     }
 
@@ -145,24 +144,21 @@ public class AddMiscActivity extends Activity {
 		// if "SUBMIT" button pressed
 		if (v.getId() == R.id.new_grain_submit_button)
 		{
-			String hopName = hopNameEditText.getText().toString();
-			int time = Integer.parseInt(hopBoilTimeEditText.getText().toString());
+			String name = miscObj.getName();
+			int time = Integer.parseInt(timeEditText.getText().toString());
 			int endTime = mRecipe.getBoilTime();
 			int startTime = endTime - time;
-			double alpha = Double.parseDouble(hopAcidEditText.getText().toString());
-			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
+			double amount = Double.parseDouble(amountEditText.getText().toString());
 
 			if (time > mRecipe.getBoilTime())
 				time = mRecipe.getBoilTime();
 
-			Hop h = new Hop(hopName);
+			Misc h = new Misc(name);
 			h.setTime(time);
 			h.setStartTime(startTime);
 			h.setEndTime(endTime);
-			h.setAlphaAcidContent(alpha);
-			h.setDisplayAmount(weight);
+			h.setDisplayAmount(amount);
 			h.setUse(use);
-			h.setForm(Hop.FORM_PELLET);
 
 			mRecipe.addIngredient(h);
 			mRecipe.update();
