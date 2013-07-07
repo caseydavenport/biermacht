@@ -400,7 +400,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.PRO_COL_PH, p.getpH());
 		values.put(DatabaseHelper.PRO_COL_TUN_WEIGHT, p.getBeerXmlStandardTunWeight());
 		values.put(DatabaseHelper.PRO_COL_TUN_SPEC_HEAT, p.getBeerXmlStandardTunSpecHeat());
-		values.put(DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ, p.getEquipmentAdjust());
+		values.put(DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ, (p.getEquipmentAdjust()) ? 1 : 0);
 		
 		long id = database.insert(DatabaseHelper.TABLE_PROFILES, null, values);
 		addMashStepListToDatabase(p.getMashStepList(), id);
@@ -732,6 +732,7 @@ public class DatabaseInterface {
 		String whereString = DatabaseHelper.STE_COL_OWNER_ID + "=" + id;
 		Cursor cursor = database.query(DatabaseHelper.TABLE_STEPS, stepAllColumns, whereString, null, null, null, null);
 
+		cursor.moveToFirst();
 		while(!cursor.isAfterLast())
 		{
 			MashStep step = cursorToMashStep(cursor);
@@ -753,8 +754,8 @@ public class DatabaseInterface {
 		String type = cursor.getString(cid);				    cid++;
 		double infuseAmt = cursor.getDouble(cid);               cid++;
 		double stepTemp = cursor.getDouble(cid);                cid++;
-		Integer stepTime = cursor.getInt(cid);                  cid++;
-		Integer rampTime = cursor.getInt(cid);                  cid++;
+		Double stepTime = cursor.getDouble(cid);                cid++;
+		Double rampTime = cursor.getDouble(cid);                cid++;
 		double endTemp = cursor.getDouble(cid);                 cid++;
 		
 		MashStep s = new MashStep();

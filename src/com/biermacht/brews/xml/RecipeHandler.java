@@ -27,6 +27,10 @@ public class RecipeHandler extends DefaultHandler {
 	private static int MISC = 10;
 	private static int STYLE = 11;
 	private static int STYLES = 12;
+	private static int PROFILE = 13;
+	private static int PROFILES = 14;
+	private static int MASH_STEP = 15;
+	private static int MASH_STEPS = 16;
 	
 	// Hold the current elements
     boolean currentElement = false;
@@ -39,6 +43,8 @@ public class RecipeHandler extends DefaultHandler {
 	ArrayList<Ingredient> yeastList = new ArrayList<Ingredient>();
 	ArrayList<Ingredient> miscList = new ArrayList<Ingredient>();
 	ArrayList<BeerStyle> beerStyleList = new ArrayList<BeerStyle>();
+	ArrayList<MashProfile> mashProfileList = new ArrayList<MashProfile>();
+	ArrayList<MashStep> mashStepList = new ArrayList<MashStep>();
 
 	// Objects for each type of thing
 	Recipe r = new Recipe("");
@@ -47,6 +53,8 @@ public class RecipeHandler extends DefaultHandler {
 	Yeast y = new Yeast("");
 	Misc misc = new Misc("");
 	BeerStyle style = new BeerStyle("");
+	MashProfile profile = new MashProfile();
+	MashStep mashStep = new MashStep();
 	
 	// How we know what thing we're looking at
 	int thingType = 0;
@@ -79,6 +87,17 @@ public class RecipeHandler extends DefaultHandler {
 	{
 		return beerStyleList;
 	}
+	
+	public ArrayList<MashProfile> getMashProfiles()
+	{
+		return mashProfileList;
+	}
+	
+	public ArrayList<MashStep> getMashSteps()
+	{
+		return mashStepList;
+	}
+	
 	/**
 	* This gets called whenever we encounter a new start element.  In this function
 	* we create the new object to be populated and set the type of what we are looking at
@@ -165,6 +184,30 @@ public class RecipeHandler extends DefaultHandler {
 			thingType = STYLES;
 		}
 		
+		// Encounter new mash profile list
+		if (qName.equalsIgnoreCase("MASHS"))
+		{
+			thingType = PROFILES;
+		}
+		
+		// Encounter new mash profile
+		if (qName.equalsIgnoreCase("MASH"))
+		{
+			thingType = PROFILE;
+		}
+		
+		// Encounter new mash step
+		if (qName.equalsIgnoreCase("MASH_STEP"))
+		{
+			thingType = MASH_STEP;
+		}
+		
+		// Encounter new mash step list
+		if (qName.equalsIgnoreCase("MASH_STEPS"))
+		{
+			thingType = MASH_STEPS;
+		}
+		
     }
 
 	/**
@@ -209,6 +252,18 @@ public class RecipeHandler extends DefaultHandler {
 		}
 		else if (qName.equalsIgnoreCase("STYLES"))
 		// We have finished a list of styles
+		{
+			thingType = 0;
+			return;
+		}
+		else if (qName.equalsIgnoreCase("MASH_STEPS"))
+		// Finished a list of mash steps
+		{
+			thingType = 0;
+			return;
+		}
+		else if (qName.equalsIgnoreCase("MASHS"))
+		// Finished a list of MASHES
 		{
 			thingType = 0;
 			return;
@@ -268,6 +323,20 @@ public class RecipeHandler extends DefaultHandler {
 			thingType = 0;
 			beerStyleList.add(style);
 			r.setStyle(style);
+		}
+		else if (qName.equalsIgnoreCase("MASH_STEP"))
+		// Finisehd a mash step, add to list and profile
+		{
+			thingType = 0;
+			mashStepList.add(mashStep);
+			profile.addMashStep(mashStep);
+		}
+		else if (qName.equalsIgnoreCase("MASH"))
+		// Finished a mash profile. Add to recipe and list
+		{
+			thingType = 0;
+			r.setMashProfile(profile);
+			mashProfileList.add(profile);
 		}
 		
 		/************************************************************
@@ -905,6 +974,113 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("EXAMPLES"))
 			{
 				style.setExamples(currentValue);
+			}
+		}
+		
+		else if (thingType == PROFILE)
+		// We are looking at a mash profile
+		// Do all of the profile things below
+		// woo.
+		{
+			if (qName.equalsIgnoreCase("NAME"))
+			{
+				profile.setName(currentValue);
+			}
+			
+			else if (qName.equalsIgnoreCase("VERSION"))
+			{
+				profile.setVersion(Integer.parseInt(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("GRAIN_TEMP"))
+			{
+				profile.setBeerXmlStandardGrainTemp(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("NOTES"))
+			{
+				profile.setNotes(currentValue);
+			}
+
+			else if (qName.equalsIgnoreCase("TUN_TEMP"))
+			{
+				profile.setBeerXmlStandardTunTemp(Double.parseDouble(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("SPARGE_TEMP"))
+			{
+				profile.setBeerXmlStandardSpargeTemp(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("PH"))
+			{
+				profile.setpH(Double.parseDouble(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("TUN_WEIGHT"))
+			{
+				profile.setBeerXmlStandardTunWeight(Double.parseDouble(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("TUN_SPECIFIC_HEAT"))
+			{
+				profile.setBeerXmlStandardTunSpecHeat(Double.parseDouble(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("EQUIP_ADJUST"))
+			{
+				profile.setEquipmentAdjust(currentValue.equalsIgnoreCase("TRUE") ? true : false);
+			}
+		}
+
+		else if (thingType == MASH_STEP)
+		// We are looking at a mash step
+		// Do all of the mash step things below
+		// woo.
+		{
+			if (qName.equalsIgnoreCase("NAME"))
+			{
+				mashStep.setName(currentValue);
+			}
+
+			else if (qName.equalsIgnoreCase("VERSION"))
+			{
+				mashStep.setVersion(Integer.parseInt(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("TYPE"))
+			{
+				if (currentValue.equalsIgnoreCase(MashStep.DECOCTION))
+					mashStep.setType(MashStep.DECOCTION);
+				else if (currentValue.equalsIgnoreCase(MashStep.INFUSION))
+					mashStep.setType(MashStep.INFUSION);
+				else if (currentValue.equalsIgnoreCase(MashStep.TEMPERATURE))
+					mashStep.setType(MashStep.TEMPERATURE);
+			}
+
+			else if (qName.equalsIgnoreCase("INFUSE_AMOUNT"))
+			{
+				mashStep.setBeerXmlStandardInfuseAmount(Double.parseDouble(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("STEP_TIME"))
+			{
+				mashStep.setStepTime(Double.parseDouble(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("STEP_TEMP"))
+			{
+				mashStep.setBeerXmlStandardStepTemp(Double.parseDouble(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("RAMP_TIME"))
+			{
+				mashStep.setRampTime(Double.parseDouble(currentValue));
+			}
+
+			else if (qName.equalsIgnoreCase("END_TEMP"))
+			{
+				mashStep.setBeerXmlStandardEndTemp(Double.parseDouble(currentValue));
 			}
 		}
     }

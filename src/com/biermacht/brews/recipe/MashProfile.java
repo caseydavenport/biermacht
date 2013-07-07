@@ -177,4 +177,9 @@ public class MashProfile
 	{
 		this.mashSteps = list;
 	}
+	
+	public void addMashStep(MashStep step)
+	{
+		this.mashSteps.add(step);
+	}
 }

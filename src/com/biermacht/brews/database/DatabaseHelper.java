@@ -250,8 +250,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ STE_COL_TYPE + " text not null, "
 			+ STE_COL_INFUSE_AMT + " float, "
 			+ STE_COL_STEP_TEMP + " float, "
-			+ STE_COL_STEP_TIME + " int, "
-			+ STE_COL_RAMP_TIME + " int, "
+			+ STE_COL_STEP_TIME + " float, "
+			+ STE_COL_RAMP_TIME + " float, "
 			+ STE_COL_END_TEMP + " float"
 			+");";
 	

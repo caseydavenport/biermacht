@@ -9,12 +9,12 @@ public class MashStep
 	private String type;                    // infusion, temp, decoc
 	private double infuseAmount;            // Amount
 	private double stepTemp;				// Temp for this step in C
-	private int stepTime;				    // Time for this step
+	private double stepTime;				// Time for this step
 
 
 	// Beer XML 1.0 Optional Fields ===================================
 	// ================================================================
-	private int rampTime;		        // Time to ramp temp
+	private double rampTime;		    // Time to ramp temp
 	private double endTemp;             // Final temp for long steps
 	
 	// Custom Fields ==================================================
@@ -92,22 +92,22 @@ public class MashStep
 		return this.stepTemp;
 	}
 
-	public void setStepTime(int time)
+	public void setStepTime(double time)
 	{
 		this.stepTime = time;
 	}
 	
-	public int getStepTime()
+	public double getStepTime()
 	{
 		return this.stepTime;
 	}
 
-	public void setRampTime(int time)
+	public void setRampTime(double time)
 	{
 		this.rampTime = time;
 	}
 	
-	public int getRampTime()
+	public double getRampTime()
 	{
 		return this.rampTime;
 	}
