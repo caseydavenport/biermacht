@@ -7,8 +7,8 @@ public class MashProfile
 	// Beer XML 1.0 Required Fields ===================================
 	// ================================================================
 	private String name;		            // profile name
-	private int version;			        // XML Version -- 1
-	private double grainTemp;              // Grain temp in C
+	private Integer version;			    // XML Version -- 1
+	private double grainTemp;               // Grain temp in C
 	private ArrayList<MashStep> mashSteps;  // List of steps
 	
 	
@@ -19,6 +19,7 @@ public class MashProfile
 	private double pH;              // pH of water
 	private double tunWeight;       // Weight of TUN in kG
 	private double tunSpecificHeat; // Specific heat of TUN
+	private String notes;			// Notes
 	private Boolean equipAdj;       // Adjust for heating of equip?
 	
 	// Custom Fields ==================================================
@@ -37,10 +38,12 @@ public class MashProfile
 		this.setBeerXmlStandardGrainTemp(0);
 		this.mashSteps = new ArrayList<MashStep>();
 	    this.setBeerXmlStandardTunTemp(0);
+		this.setBeerXmlStandardSpargeTemp(0);
 		this.setpH(7);
 		this.setBeerXmlStandardTunWeight(0);
 		this.setBeerXmlStandardTunSpecHeat(0);
 		this.setEquipmentAdjust(false);
+		this.setNotes("");
 		this.id = -1;
 		this.ownerId = -1;
 	}
@@ -55,9 +58,14 @@ public class MashProfile
 		return this.name;
 	}
 
-	public void setVersion(int v)
+	public void setVersion(Integer v)
 	{
 		this.version = v;
+	}
+	
+	public Integer getVersion()
+	{
+		return this.version;
 	}
 
 	public void setBeerXmlStandardGrainTemp(double temp)
@@ -78,6 +86,16 @@ public class MashProfile
 	public double getBeerXmlStandardTunTemp()
 	{
 		return this.tunTemp;
+	}
+	
+	public void setBeerXmlStandardSpargeTemp(double temp)
+	{
+		this.spargeTemp = temp;
+	}
+	
+	public double getBeerXmlStandardSpargeTemp()
+	{
+		return this.spargeTemp;
 	}
 
 	public void setpH(double pH)
@@ -105,7 +123,7 @@ public class MashProfile
 		this.tunSpecificHeat = heat;
 	}
 	
-	public double getBeerXmlStandardTunSpecHead()
+	public double getBeerXmlStandardTunSpecHeat()
 	{
 		return this.tunSpecificHeat;
 	}
@@ -138,5 +156,25 @@ public class MashProfile
 	public long getOwnerId()
 	{
 		return this.ownerId;
+	}
+	
+	public void setNotes(String s)
+	{
+		this.notes = s;
+	}
+	
+	public String getNotes()
+	{
+		return this.notes;
+	}
+	
+	public ArrayList<MashStep> getMashStepList()
+	{
+		return this.mashSteps;
+	}
+	
+	public void setMashStepList(ArrayList<MashStep> list)
+	{
+		this.mashSteps = list;
 	}
 }

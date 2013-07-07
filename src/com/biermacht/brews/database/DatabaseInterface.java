@@ -111,6 +111,34 @@ public class DatabaseInterface {
 		DatabaseHelper.STY_COL_EXAMPLES
 	};
 	
+	private String[] profileAllColumns = {
+		DatabaseHelper.PRO_COL_ID,
+		DatabaseHelper.PRO_COL_OWNER_ID,
+	    DatabaseHelper.PRO_COL_NAME,
+		DatabaseHelper.PRO_COL_VERSION,
+		DatabaseHelper.PRO_COL_GRAIN_TEMP,
+		DatabaseHelper.PRO_COL_NOTES,
+		DatabaseHelper.PRO_COL_TUN_TEMP,
+		DatabaseHelper.PRO_COL_SPARGE_TEMP,
+		DatabaseHelper.PRO_COL_PH,
+		DatabaseHelper.PRO_COL_TUN_WEIGHT,
+		DatabaseHelper.PRO_COL_TUN_SPEC_HEAT,
+		DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ
+	};
+	
+	private String[] stepAllColumns = {
+		DatabaseHelper.STE_COL_ID,
+		DatabaseHelper.STE_COL_OWNER_ID,
+		DatabaseHelper.STE_COL_NAME,
+		DatabaseHelper.STE_COL_VERSION,
+		DatabaseHelper.STE_COL_TYPE,
+		DatabaseHelper.STE_COL_INFUSE_AMT,
+		DatabaseHelper.STE_COL_STEP_TEMP,
+		DatabaseHelper.STE_COL_STEP_TIME,
+		DatabaseHelper.STE_COL_RAMP_TIME,
+		DatabaseHelper.STE_COL_END_TEMP
+	};
+
 	// Constructor
 	public DatabaseInterface(Context context)
 	{
@@ -151,6 +179,7 @@ public class DatabaseInterface {
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id);
 		addStyleToDatabase(r.getStyle(), id);
+		addMashProfileToDatabase(r.getMashProfile(), id);
 		
 		return id;
 	}	
@@ -183,6 +212,8 @@ public class DatabaseInterface {
 		addIngredientListToDatabase(r.getIngredientList(), r.getId());
 		deleteStyle(r.getId());
 		addStyleToDatabase(r.getStyle(), r.getId());
+		deleteMashProfile(r.getId());
+		addMashProfileToDatabase(r.getMashProfile(), r.getId());
 		
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
 	}
@@ -355,6 +386,53 @@ public class DatabaseInterface {
 		return id;
 	}
 	
+	public long addMashProfileToDatabase(MashProfile p, long ownerId)
+	{
+		// Load up values to store
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHelper.PRO_COL_OWNER_ID, ownerId);
+        values.put(DatabaseHelper.PRO_COL_NAME, p.getName());
+	    values.put(DatabaseHelper.PRO_COL_VERSION, p.getVersion());
+		values.put(DatabaseHelper.PRO_COL_GRAIN_TEMP, p.getBeerXmlStandardGrainTemp());
+		values.put(DatabaseHelper.PRO_COL_NOTES, p.getNotes());
+		values.put(DatabaseHelper.PRO_COL_TUN_TEMP, p.getBeerXmlStandardTunTemp());
+		values.put(DatabaseHelper.PRO_COL_SPARGE_TEMP, p.getBeerXmlStandardSpargeTemp());
+		values.put(DatabaseHelper.PRO_COL_PH, p.getpH());
+		values.put(DatabaseHelper.PRO_COL_TUN_WEIGHT, p.getBeerXmlStandardTunWeight());
+		values.put(DatabaseHelper.PRO_COL_TUN_SPEC_HEAT, p.getBeerXmlStandardTunSpecHeat());
+		values.put(DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ, p.getEquipmentAdjust());
+		
+		long id = database.insert(DatabaseHelper.TABLE_PROFILES, null, values);
+		addMashStepListToDatabase(p.getMashStepList(), id);
+		return id;
+	}
+	
+	public void addMashStepListToDatabase(ArrayList<MashStep> l, long ownerId)
+	{
+		for (MashStep step : l)
+		{
+			addMashStepToDatabase(step, ownerId);
+		}
+	}
+	
+	public long addMashStepToDatabase(MashStep s, long ownerId)
+	{
+		// Load up values to store
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHelper.STE_COL_OWNER_ID, ownerId);
+		values.put(DatabaseHelper.STE_COL_NAME, s.getName());
+		values.put(DatabaseHelper.STE_COL_VERSION, s.getVersion());
+		values.put(DatabaseHelper.STE_COL_TYPE, s.getType());
+		values.put(DatabaseHelper.STE_COL_INFUSE_AMT, s.getBeerXmlStandardInfuseAmount());
+		values.put(DatabaseHelper.STE_COL_STEP_TEMP, s.getBeerXmlStandardStepTemp());
+		values.put(DatabaseHelper.STE_COL_STEP_TIME, s.getStepTime());
+		values.put(DatabaseHelper.STE_COL_RAMP_TIME, s.getRampTime());
+		values.put(DatabaseHelper.STE_COL_END_TEMP,	s.getBeerXmlStandardEndTemp());
+		
+		long id = database.insert(DatabaseHelper.TABLE_STEPS, null, values);
+		return id;
+	}
+	
 	/**
 	* Deletes all ingredients with the given owner id
 	*/
@@ -369,6 +447,14 @@ public class DatabaseInterface {
 	private boolean deleteStyle(long id) {
 		String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
 		return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
+	}
+	
+	/**
+	 * Deletes all mash profiles with given owner id
+	 */
+	private boolean deleteMashProfile(long id) {
+		String whereClause = DatabaseHelper.PRO_COL_OWNER_ID + "=" + id;
+		return database.delete(DatabaseHelper.TABLE_PROFILES, whereClause, null) > 0;
 	}
 
 	/**
@@ -478,6 +564,7 @@ public class DatabaseInterface {
 		
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
 		BeerStyle style = readStyle(id);
+		MashProfile profile = readMashProfile(id);
 		
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
@@ -498,6 +585,7 @@ public class DatabaseInterface {
 		r.setColor(color);
 		
 		r.setStyle(style);
+		r.setMashProfile(profile);
 		r.setIngredientsList(ingredientsList);
 		
 		return r;
@@ -536,7 +624,6 @@ public class DatabaseInterface {
 	
 	private BeerStyle cursorToStyle(Cursor cursor) {
 		int cid = 0;
-		
 		
 		// Get all the values from the cursor
 		long id = cursor.getLong(cid);                          cid++;
@@ -591,7 +678,99 @@ public class DatabaseInterface {
 		
 		return style;
 	}
+	
 
+	private MashProfile readMashProfile(long id) {
+
+		String whereString = DatabaseHelper.PRO_COL_OWNER_ID + "=" + id;
+		Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString, null, null, null, null);
+
+		cursor.moveToFirst();
+		MashProfile profile = cursorToMashProfile(cursor);
+		cursor.close();
+
+		return profile;
+	}
+	
+	private MashProfile cursorToMashProfile(Cursor cursor) {
+		int cid = 0;
+
+		long id = cursor.getLong(cid);                          cid++;
+		long ownerId = cursor.getLong(cid);						cid++;
+		String name = cursor.getString(cid);					cid++;
+		Integer version = cursor.getInt(cid);				    cid++;
+		double grainTemp = cursor.getDouble(cid);				cid++;
+		String notes = cursor.getString(cid);                   cid++;
+		double tunTemp = cursor.getDouble(cid);                 cid++;
+		double spargeTemp = cursor.getDouble(cid);              cid++;
+		double pH = cursor.getDouble(cid);                      cid++;
+		double tunWeight = cursor.getDouble(cid);               cid++;
+		double tunSpecHeat = cursor.getDouble(cid);             cid++;
+		int equipAdjInt = cursor.getInt(cid);                   cid++;
+		
+		ArrayList<MashStep> stepsList = readMashStepsList(id);
+		
+		MashProfile p = new MashProfile();
+		p.setId(id);
+		p.setOwnerId(ownerId);
+		p.setName(name);
+		p.setVersion(version);
+		p.setBeerXmlStandardGrainTemp(grainTemp);
+		p.setNotes(notes);
+		p.setBeerXmlStandardTunTemp(tunTemp);
+		p.setBeerXmlStandardSpargeTemp(spargeTemp);
+		p.setpH(pH);
+		p.setBeerXmlStandardTunWeight(tunWeight);
+		p.setBeerXmlStandardTunSpecHeat(tunSpecHeat);
+		p.setEquipmentAdjust(equipAdjInt > 0 ? true: false);
+		p.setMashStepList(stepsList);
+		return p;
+	}
+	
+	private ArrayList<MashStep> readMashStepsList(long id) {
+		ArrayList<MashStep> list = new ArrayList<MashStep>();
+		String whereString = DatabaseHelper.STE_COL_OWNER_ID + "=" + id;
+		Cursor cursor = database.query(DatabaseHelper.TABLE_STEPS, stepAllColumns, whereString, null, null, null, null);
+
+		while(!cursor.isAfterLast())
+		{
+			MashStep step = cursorToMashStep(cursor);
+			list.add(step);
+			cursor.moveToNext();
+		}
+		cursor.close();
+
+		return list;
+	}
+	
+	private MashStep cursorToMashStep(Cursor cursor) {
+		int cid = 0;
+
+		long id = cursor.getLong(cid);                          cid++;
+		long ownerId = cursor.getLong(cid);						cid++;
+		String name = cursor.getString(cid);					cid++;
+		Integer version = cursor.getInt(cid);				    cid++;
+		String type = cursor.getString(cid);				    cid++;
+		double infuseAmt = cursor.getDouble(cid);               cid++;
+		double stepTemp = cursor.getDouble(cid);                cid++;
+		Integer stepTime = cursor.getInt(cid);                  cid++;
+		Integer rampTime = cursor.getInt(cid);                  cid++;
+		double endTemp = cursor.getDouble(cid);                 cid++;
+		
+		MashStep s = new MashStep();
+		s.setId(id);
+		s.setOwnerId(ownerId);
+		s.setName(name);
+		s.setVersion(version);
+		s.setType(type);
+		s.setBeerXmlStandardInfuseAmount(infuseAmt);
+		s.setStepTime(stepTime);
+		s.setBeerXmlStandardStepTemp(stepTemp);
+		s.setRampTime(rampTime);
+		s.setBeerXmlStandardEndTemp(endTemp);
+		return s;
+	}
+	
 	private Ingredient cursorToIngredient(Cursor cursor) {
 		int cid = 0;
 		
