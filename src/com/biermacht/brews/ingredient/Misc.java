@@ -109,14 +109,22 @@ public class Misc extends Ingredient {
 
 	@Override
 	public double getDisplayAmount() {
-		if (this.displayAmount > 0)
-			return this.displayAmount;
+		//if (this.displayAmount > 0)
+			//return this.displayAmount;
 			
 		String unit = this.getDisplayUnits();
+		
 		if (unit.equals(Units.GALLONS))
 			return Units.litersToGallons(this.amount);
+		if (unit.equals(Units.GRAMS))
+			return Units.kilosToGrams(this.amount);
+		if (unit.equals(Units.TEASPOONS))
+			return Units.litersToTeaspoons(this.amount);
 		if (unit.equals(Units.OUNCES))
-			return Units.kilosToOunces(this.amount);
+			if (this.amountIsWeight())
+			    return Units.kilosToOunces(this.amount);
+			else
+			    return Units.litersToOunces(this.amount);
 		if (unit.equals(Units.POUNDS))
 			return Units.kilosToPounds(this.amount);
 		else
@@ -149,10 +157,10 @@ public class Misc extends Ingredient {
 			else
 				return Units.OUNCES;
 		else
-		if (this.amount > .946) // .25gal
-			return Units.GALLONS;
-		else
-			return Units.LITERS;
+		    if (this.amount > .946) // .25gal
+		    	return Units.GALLONS;
+		    else
+			    return Units.OUNCES;
 	}
 
 	@Override

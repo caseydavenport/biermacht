@@ -90,7 +90,7 @@
 	        android:background="@color/transparent"
 	        android:layout_below="@id/spinners" >
 
-		    <TextView android:id="@+id/weight_title"
+		    <TextView android:id="@+id/amount_title"
 		        android:layout_width="0dp"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"

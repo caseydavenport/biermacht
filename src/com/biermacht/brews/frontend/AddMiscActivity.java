@@ -1,27 +1,18 @@
 package com.biermacht.brews.frontend;
 
-import java.util.ArrayList;
-
-import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
-import com.biermacht.brews.ingredient.Misc;
-import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.IngredientHandler;
-import com.biermacht.brews.utils.Utils;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
-import com.biermacht.brews.frontend.adapters.*;
-import android.util.*;
+import android.app.*;
+import android.os.*;
 import android.view.*;
+import android.widget.*;
+import android.widget.AdapterView.*;
+import com.biermacht.brews.*;
+import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.ingredient.*;
+import com.biermacht.brews.recipe.*;
+import com.biermacht.brews.utils.*;
+import java.util.*;
+
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 
 public class AddMiscActivity extends Activity {
 
@@ -30,6 +21,7 @@ public class AddMiscActivity extends Activity {
 	private Spinner miscTypeSpinner;
 	private EditText timeEditText;
 	private EditText amountEditText;
+	private TextView amountTitle;
 	private ArrayList<Ingredient> miscArray;
 	private ArrayList<String> miscTypeArray;
 	private String misc;
@@ -58,6 +50,7 @@ public class AddMiscActivity extends Activity {
         // Initialize views and such here
         timeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         amountEditText = (EditText) findViewById(R.id.amount_edit_text);
+		amountTitle = (TextView) findViewById(R.id.amount_title);
 
         // Set up spinner
         miscSpinner = (Spinner) findViewById(R.id.misc_spinner);
@@ -90,9 +83,8 @@ public class AddMiscActivity extends Activity {
 
 					timeEditText.setText(mRecipe.getBoilTime() + "");
 					amountEditText.setText(miscObj.getDisplayAmount() + "");
-					Log.i("AddMiscActivity", miscObj.getMiscType() + " is the misc type");
-					Log.i("AddMiscActivity", miscTypeArray.indexOf(miscObj.getMiscType()) + " is the index");
 					miscTypeSpinner.setSelection(miscTypeArray.indexOf(miscObj.getMiscType()));
+					amountTitle.setText("Amount (" + miscObj.getDisplayUnits() + ")");
 				}
 
 				public void onNothingSelected(AdapterView<?> parentView) {

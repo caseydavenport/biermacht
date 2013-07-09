@@ -1,4 +1,5 @@
 package com.biermacht.brews.utils;
+import java.util.*;
 
 public class Units {
 	
@@ -24,6 +25,7 @@ public class Units {
 	public static final String OUNCES = "oz";
 	public static final String GALLONS = "gal";
 	public static final String POUNDS = "lbs";
+	public static final String TEASPOONS = "tsp";
 	
 	// Metric Units
 	public static final String KILOGRAMS = "kg";
@@ -33,6 +35,43 @@ public class Units {
 	
 	// Agnostic Units
 	public static final String PACKAGES = "pkg";
+	public static final String ITEMS = "items";
+	
+	// Helper funcs
+	public static String getUnitsFromDisplayAmount(String s)
+	{
+		String unit = "";
+		ArrayList<String> temp = new ArrayList<String>(Arrays.asList(s.split(" ")));
+		if (temp.size() == 2)
+			unit = temp.get(temp.size() - 1);
+			
+		// Assign a Units class standard unit here
+		if (unit.equals("tsp") || unit.equals("teaspoons"))
+			unit = Units.TEASPOONS;
+		if (unit.equals("g") || unit.equals("grams"))
+			unit = Units.GRAMS;
+		if (unit.equals("oz") || unit.equals("ounces"))
+			unit = Units.OUNCES;
+		if (unit.contains("gal"))
+			unit = Units.GALLONS;
+		if (unit.equals("item") || unit.equals("items"))
+			unit = Units.ITEMS;
+		if (unit.contains("package") || unit.equals("pkg"))
+			unit = Units.PACKAGES;
+			
+		return unit;
+	}
+	
+	public static double getAmountFromDisplayAmount(String s)
+	{
+		ArrayList<String> temp = new ArrayList<String>(Arrays.asList(s.split(" ")));
+		if (getUnitsFromDisplayAmount(s).equals(""))
+			return 0;
+		else
+		    if (temp.size() == 2)
+			    return Double.parseDouble(temp.get(0));
+		return 0;
+	}
 	
 	// Functions for converting units below
 	public static double litersToGallons(double l)
@@ -43,6 +82,26 @@ public class Units {
 	public static double gallonsToLiters(double g)
 	{
 		return g / .264172052;
+	}
+	
+	public static double litersToOunces(double l)
+	{
+		return l / .0295735;
+	}
+	
+	public static double ouncesToLiters(double o)
+	{
+		return o * .0295735;
+	}
+	
+	public static double litersToTeaspoons(double l)
+	{
+		return l * 202.884;
+	}
+	
+	public static double teaspoonsToLiters(double t)
+	{
+		return t / 202.884;
 	}
 	
 	public static double kilosToPounds(double k)
@@ -63,6 +122,16 @@ public class Units {
 	public static double poundsToKilos(double p)
 	{
 		return p / 2.204;
+	}
+	
+	public static double kilosToGrams(double k)
+	{
+		return k * 1000;
+	}
+	
+	public static double gramsToKilos(double g)
+	{
+		return g / 1000;
 	}
 
 	public static double ouncesToGrams(double o)

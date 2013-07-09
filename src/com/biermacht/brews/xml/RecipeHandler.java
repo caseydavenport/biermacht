@@ -784,7 +784,7 @@ public class RecipeHandler extends DefaultHandler {
 
 			else if (qName.equalsIgnoreCase("TYPE"))
 			{
-				String type = "NULL";
+				String type = Misc.TYPE_OTHER;
 
 				if (currentValue.equalsIgnoreCase(Misc.TYPE_SPICE))
 					type = Misc.TYPE_SPICE;
@@ -806,6 +806,14 @@ public class RecipeHandler extends DefaultHandler {
 			{
 				double amt = Double.parseDouble(currentValue);
 				misc.setBeerXmlStandardAmount(amt);
+			}
+			
+			else if (qName.equalsIgnoreCase("DISPLAY_AMOUNT"))
+			{
+				String dunit = Units.getUnitsFromDisplayAmount(currentValue);
+				double amt = Units.getAmountFromDisplayAmount(currentValue);
+				misc.setDisplayUnits(dunit);
+				misc.setDisplayAmount(amt);
 			}
 			
 			else if (qName.equalsIgnoreCase("TIME"))
