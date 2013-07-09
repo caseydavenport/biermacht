@@ -101,7 +101,19 @@
 		        android:textStyle="bold"
 		        android:textColor="@color/title_color"
 		        android:text="@string/amount" />
-
+			
+		    <TextView android:id="@+id/use_title"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:background="@color/transparent"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="left"
+		        android:textSize="15dip"
+		        android:textStyle="bold"
+		        android:textColor="@color/title_color"
+		        android:text="@string/use" />
+			
 	    </LinearLayout>
 
 	    <LinearLayout android:id="@+id/second_ll"
@@ -122,6 +134,17 @@
 		        android:background="@drawable/rounded_bg_white"
 		        android:paddingLeft="10dip"
 		        android:layout_marginBottom="15dip" />
+			
+			<Spinner
+		        android:id="@+id/misc_use_spinner"
+		        android:layout_width="0dip"
+				android:layout_weight="1"
+		        android:layout_height="40dip"
+		        android:drawSelectorOnTop="false"
+		        android:padding="7dip"
+		        android:background="@drawable/rounded_bg_white"
+		        android:spinnerMode="dialog"
+		        android:paddingLeft="10dip" />
 
     	</LinearLayout>
 
@@ -132,7 +155,7 @@
 	        android:layout_below="@id/second_ll" >
 
 		    <!-- Boil time -->
-		    <TextView android:id="@+id/boil_time_title"
+		    <TextView android:id="@+id/time_title"
 		        android:text="@string/boil_time"
 		        style="@style/title_light" />
 
@@ -147,7 +170,7 @@
 	        android:layout_marginBottom="15dip" >
 
 		    <EditText
-		        android:id="@+id/boil_time_edit_text"
+		        android:id="@+id/time_edit_text"
 		        android:inputType="numberDecimal"
 		        android:selectAllOnFocus="true"
 		        android:layout_width="0dp"

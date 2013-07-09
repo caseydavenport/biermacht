@@ -19,13 +19,17 @@ public class AddMiscActivity extends Activity {
 	IngredientHandler ingredientHandler;
 	private Spinner miscSpinner;
 	private Spinner miscTypeSpinner;
+	private Spinner miscUseSpinner;
 	private EditText timeEditText;
 	private EditText amountEditText;
 	private TextView amountTitle;
+	private TextView timeTitle;
 	private ArrayList<Ingredient> miscArray;
 	private ArrayList<String> miscTypeArray;
+	private ArrayList<String> miscUseArray;
 	private String misc;
 	private Misc miscObj;
+	private String type;
 	private String use;
 	private Recipe mRecipe;
 
@@ -48,9 +52,10 @@ public class AddMiscActivity extends Activity {
         mRecipe = Utils.getRecipeWithId(id);
 
         // Initialize views and such here
-        timeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
+        timeEditText = (EditText) findViewById(R.id.time_edit_text);
         amountEditText = (EditText) findViewById(R.id.amount_edit_text);
 		amountTitle = (TextView) findViewById(R.id.amount_title);
+		timeTitle = (TextView) findViewById(R.id.time_title);
 
         // Set up spinner
         miscSpinner = (Spinner) findViewById(R.id.misc_spinner);
@@ -74,6 +79,20 @@ public class AddMiscActivity extends Activity {
         miscTypeSpinner.setAdapter(miscTypeAdapter);
         miscTypeSpinner.setSelection(0);
 
+		// Set up use spinner
+		miscUseSpinner = (Spinner) findViewById(R.id.misc_use_spinner);
+		miscUseArray = new ArrayList<String>();
+		miscUseArray.add(Misc.USE_BOIL);
+		miscUseArray.add(Misc.USE_BOTTLING);
+		miscUseArray.add(Misc.USE_MASH);
+		miscUseArray.add(Misc.USE_PRIMARY);
+		miscUseArray.add(Misc.USE_SECONDARY);
+		
+		SpinnerAdapter<String> miscUseAdapter = new SpinnerAdapter<String>(this, miscUseArray);
+		miscUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		miscUseSpinner.setAdapter(miscUseAdapter);
+		miscUseSpinner.setSelection(0);
+
         // Handle misc selector here
         miscSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -83,8 +102,24 @@ public class AddMiscActivity extends Activity {
 
 					timeEditText.setText(mRecipe.getBoilTime() + "");
 					amountEditText.setText(miscObj.getDisplayAmount() + "");
+					
 					miscTypeSpinner.setSelection(miscTypeArray.indexOf(miscObj.getMiscType()));
+					miscUseSpinner.setSelection(miscUseArray.indexOf(miscObj.getUse()));
+					
 					amountTitle.setText("Amount (" + miscObj.getDisplayUnits() + ")");
+					timeTitle.setText(miscObj.getUse() + " time");
+					
+					if (!(miscObj.getUse().equals(Misc.USE_BOIL)||
+					      miscObj.getUse().equals(Misc.USE_MASH)))
+					{
+						  timeTitle.setVisibility(View.GONE);
+						  timeEditText.setVisibility(View.GONE);
+					}
+					else
+					{
+						timeTitle.setVisibility(View.VISIBLE);
+						timeEditText.setVisibility(View.VISIBLE);
+					}
 				}
 
 				public void onNothingSelected(AdapterView<?> parentView) {
@@ -93,12 +128,27 @@ public class AddMiscActivity extends Activity {
 
 			});   
 
-		// Handle beer type selector here
+		// Handle type selector here
         miscTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 					// Set the type to the selected type...
-					use = miscTypeArray.get(position);
+					type = miscTypeArray.get(position);
+				}
+
+
+				public void onNothingSelected(AdapterView<?> parentView) {
+					// Blag
+				}
+
+			});
+
+		// Handle use selector here
+        miscUseSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+					// Set the type to the selected type...
+					use = miscUseArray.get(position);
 				}
 
 
@@ -142,14 +192,15 @@ public class AddMiscActivity extends Activity {
 			if (time > mRecipe.getBoilTime())
 				time = mRecipe.getBoilTime();
 
-			Misc h = new Misc(name);
-			h.setTime(time);
-			h.setStartTime(startTime);
-			h.setEndTime(endTime);
-			h.setDisplayAmount(amount);
-			h.setUse(use);
+			Misc m = new Misc(name);
+			m.setTime(time);
+			m.setStartTime(startTime);
+			m.setEndTime(endTime);
+			m.setDisplayAmount(amount);
+			m.setMiscType(type);
+			m.setUse(use);
 
-			mRecipe.addIngredient(h);
+			mRecipe.addIngredient(m);
 			mRecipe.update();
 			Utils.updateRecipe(mRecipe);
 

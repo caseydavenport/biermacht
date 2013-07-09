@@ -42,7 +42,8 @@
     <string name="batch_volume">Final Batch Size (gal)</string>
     <string name="boil_volume">Boil Size (gal)</string>
     <string name="efficiency">Efficiency (%)</string>
-    
+    <string name="use">Use</string>
+	
 	<!-- Hints for editTexts -->
     <string name="volume_gal_hint">Gal</string>
     <string name="efficiency_hint">1 - 100</string>
