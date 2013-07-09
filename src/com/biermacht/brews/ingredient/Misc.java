@@ -38,6 +38,7 @@ public class Misc extends Ingredient {
 		setDisplayUnits("");
 		setAmountIsWeight(false);
 		setBeerXmlStandardAmount(0);
+		setShortDescription("");
 		setDisplayAmount(0);
 		setUse("");
 		setVersion(1);
@@ -216,6 +217,8 @@ public class Misc extends Ingredient {
 
 	@Override
 	public void setShortDescription(String description) {
+		if (description.isEmpty())
+			description = "No description provided";
 		this.notes = description;
 	}
 
