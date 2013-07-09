@@ -61,7 +61,10 @@ public class Misc extends Ingredient {
 	
 	public String getMiscType()
 	{
-		return this.miscType;
+		if (!miscType.isEmpty() || this.miscType == null)
+		    return this.miscType;
+		else
+			return Misc.TYPE_OTHER;
 	}
 	
 	public void setUse(String u)

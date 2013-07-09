@@ -85,17 +85,14 @@ public class AddMiscActivity extends Activity {
         miscSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-					miscObj = new Misc("");
+					miscObj = (Misc) miscArray.get(position);
 					misc = miscArray.get(position).getName();
-
-					for (Ingredient i : ingredientHandler.getMiscsList())
-					{
-						if (misc.equals(i.toString()))
-							miscObj = (Misc) i;
-					}
 
 					timeEditText.setText(mRecipe.getBoilTime() + "");
 					amountEditText.setText(miscObj.getDisplayAmount() + "");
+					Log.i("AddMiscActivity", miscObj.getMiscType() + " is the misc type");
+					Log.i("AddMiscActivity", miscTypeArray.indexOf(miscObj.getMiscType()) + " is the index");
+					miscTypeSpinner.setSelection(miscTypeArray.indexOf(miscObj.getMiscType()));
 				}
 
 				public void onNothingSelected(AdapterView<?> parentView) {
