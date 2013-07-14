@@ -18,29 +18,35 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.*;
 import com.biermacht.brews.frontend.adapters.*;
+import android.widget.*;
 
 public class AddNewRecipeActivity extends Activity implements OnClickListener {
 
 	// Data entry view declarations
 	private Spinner beerStyleSpinner;
 	private Spinner beerTypeSpinner;
+	private Spinner mashProfileSpinner;
 	private EditText recipeNameEditText;
 	private EditText boilTimeEditText;
 	private EditText effEditText;
 	private EditText batchSizeEditText;
 	private EditText boilSizeEditText;
+	private TextView mashProfileTitle;
 	
 	// Data storage declarations
 	private BeerStyle style = Utils.BEERSTYLE_OTHER;
+	private MashProfile profile = new MashProfile();
 	private String type = Recipe.EXTRACT;
 	private float efficiency = 100;
 	
 	// Spinner array declarations
 	private ArrayList<BeerStyle> beerStyleArray;
 	private ArrayList<String> beerTypeArray;
+	private ArrayList<MashProfile> mashProfileArray;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         effEditText = (EditText) findViewById(R.id.efficiency_edit_text);
         batchSizeEditText = (EditText) findViewById(R.id.batch_volume_edit_text);
         boilSizeEditText = (EditText) findViewById(R.id.boil_volume_edit_text);
+		mashProfileTitle = (TextView) findViewById(R.id.mash_profile_title);
         
         // Default values
         boilTimeEditText.setText(60 +"");
@@ -60,8 +67,9 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         boilSizeEditText.setText(2.5 + "");
 		effEditText.setText(72 + "");
 		
-        //Arraylist of beer types
+        //Arraylists
         beerStyleArray = MainActivity.ingredientHandler.getStylesList();
+		mashProfileArray = MainActivity.ingredientHandler.getMashProfileList();
         
         // Set up beer type spinner
         beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
@@ -69,7 +77,14 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerStyleSpinner.setAdapter(adapter);
         beerStyleSpinner.setSelection(0);    
-        
+		
+		// Set up mash profile spinner
+		mashProfileSpinner = (Spinner) findViewById(R.id.mash_profile_spinner);
+		MashProfileSpinnerAdapter<MashProfile> profAdapter = new MashProfileSpinnerAdapter<MashProfile>(this, mashProfileArray);
+        profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		mashProfileSpinner.setAdapter(profAdapter);
+		mashProfileSpinner.setSelection(0);
+		
         // Set up brew type spinner
         beerTypeSpinner = (Spinner) findViewById(R.id.brew_type_spinner);
         beerTypeArray = new ArrayList<String>();
@@ -93,6 +108,19 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
             }
 
         });
+		
+		// Handle mash profile selector here
+        mashProfileSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			    profile = mashProfileArray.get(position);
+			}
+
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// Blag
+			}
+
+		});
         
         // Handle beer type selector here
         beerTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -102,14 +130,15 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
                 
 				if(type.equals(Recipe.EXTRACT))
                 {
-					// TODO: Make conditional on recipe type
+					mashProfileSpinner.setVisibility(View.GONE);
+					mashProfileTitle.setVisibility(View.GONE);
                 }
                 else
 				{
-					
+					mashProfileSpinner.setVisibility(View.VISIBLE);
+					mashProfileTitle.setVisibility(View.VISIBLE);
             	}
 			}
-			
 
             public void onNothingSelected(AdapterView<?> parentView) {
                 // Blag
@@ -166,6 +195,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 				r.setVersion(Utils.getXmlVersion());
 				r.setType(type);
 				r.setStyle(style);
+				r.setMashProfile(profile);
 				r.setBrewer("Biermacht Brews");
 				r.setDisplayBatchSize(batchSize);
 				r.setDisplayBoilSize(boilSize);

@@ -47,6 +47,31 @@ public class MashProfile
 		this.id = -1;
 		this.ownerId = -1;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return this.name;
+	}
+	
+	@Override 
+	public boolean equals(Object o)
+	{
+		if (!(o instanceof MashProfile))
+			return false;
+		
+		MashProfile other = (MashProfile) o;
+		if(this.hashCode() != other.hashCode())
+			return false;
+		return true;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		int hc = this.getName().hashCode();
+		return hc;
+	}
 
 	public void setName(String name)
 	{

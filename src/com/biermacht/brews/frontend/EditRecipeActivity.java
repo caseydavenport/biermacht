@@ -18,21 +18,24 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
+import android.widget.*;
 
 public class EditRecipeActivity extends Activity implements OnClickListener {
 
 	// Data entry view declarations
 	private Spinner beerStyleSpinner;
 	private Spinner beerTypeSpinner;
+	private Spinner mashProfileSpinner;
 	private EditText recipeNameEditText;
-	private EditText recipeDescEditText;
 	private EditText boilTimeEditText;
 	private EditText effEditText;
 	private EditText batchSizeEditText;
 	private EditText boilSizeEditText;
+	private TextView mashProfileTitle;
 	
 	// Data storage declarations
 	private BeerStyle style = Utils.BEERSTYLE_OTHER;
+	private MashProfile profile = new MashProfile();
 	private String type = Recipe.EXTRACT;
 	private float efficiency = 100;
 	
@@ -42,6 +45,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 	// Spinner array declarations
 	private ArrayList<BeerStyle> beerStyleArray;
 	private ArrayList<String> beerTypeArray;
+	private ArrayList<MashProfile> mashProfileArray;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,15 +58,14 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         
         // Initialize views and stuff
         recipeNameEditText = (EditText) findViewById(R.id.recipe_name_edit_text);
-        recipeDescEditText = (EditText) findViewById(R.id.recipe_description_edit_text);
         boilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         effEditText = (EditText) findViewById(R.id.efficiency_edit_text);
         batchSizeEditText = (EditText) findViewById(R.id.batch_volume_edit_text);
         boilSizeEditText = (EditText) findViewById(R.id.boil_volume_edit_text);
-        
+        mashProfileTitle = (TextView) findViewById(R.id.mash_profile_title);
+		
         // Default values
         recipeNameEditText.setText(mRecipe.getRecipeName());
-        recipeDescEditText.setText(mRecipe.getDescription());
         boilTimeEditText.setText(String.format("%d", mRecipe.getBoilTime()));
         effEditText.setText(String.format("%2.2f", mRecipe.getEfficiency()));
         batchSizeEditText.setText(String.format("%2.2f", mRecipe.getDisplayBatchSize()));
@@ -70,20 +73,26 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         
         //Arraylist of beer types
         beerStyleArray = MainActivity.ingredientHandler.getStylesList();
+		mashProfileArray = MainActivity.ingredientHandler.getMashProfileList();
 		
-		// If it doesn't contain the current recipes style,
+		// If it doesn't contain the current recipes style / profile,
 		// then it is custom and we add it to the list.
 		if(!beerStyleArray.contains(mRecipe.getStyle()))
-		{
 			beerStyleArray.add(mRecipe.getStyle());
-		}
+		if(!mashProfileArray.contains(mRecipe.getMashProfile()))
+			mashProfileArray.add(mRecipe.getMashProfile());
         
         // Set up beer type spinner
         beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
         BeerStyleSpinnerAdapter<BeerStyle> adapter = new BeerStyleSpinnerAdapter<BeerStyle>(this, beerStyleArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerStyleSpinner.setAdapter(adapter);
-        
+		
+		// Set up mash profile spinner
+		mashProfileSpinner = (Spinner) findViewById(R.id.mash_profile_spinner);
+		MashProfileSpinnerAdapter<MashProfile> profAdapter = new MashProfileSpinnerAdapter<MashProfile>(this, mashProfileArray);
+        profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		mashProfileSpinner.setAdapter(profAdapter);
         
         // Determine the correct selection for the style spinner
         int pos = 0;
@@ -109,7 +118,6 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         beerTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerTypeSpinner.setAdapter(beerTypeAdapter);
 
-        
         // Determine the correct selection for the brew type spinner
         pos = 0;
         for (String s : beerTypeArray)
@@ -118,8 +126,17 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         		break;
         	pos++;
         }
-        
         beerTypeSpinner.setSelection(pos); 
+		
+		// Determine the correct selection for the mash profile spinner
+        pos = 0;
+        for (MashProfile p : mashProfileArray)
+        {
+        	if (p.equals(mRecipe.getMashProfile()))
+        		break;
+        	pos++;
+        }
+		mashProfileSpinner.setSelection(pos);
         
         // Handle beer style selector here
         beerStyleSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -133,6 +150,19 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
             }
 
         });
+		
+		// Handle mash profile selector here
+        mashProfileSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				profile = mashProfileArray.get(position);
+			}
+
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// Blag
+			}
+
+		});
         
         // Handle beer type selector here
         beerTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -142,11 +172,13 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
                 
                 if(type.equals(Recipe.EXTRACT))
                 {
-                	// Eventually add conditional stuff for recipe type
+                	mashProfileSpinner.setVisibility(View.GONE);
+					mashProfileTitle.setVisibility(View.GONE);
                 }
                 else
                 {
-					
+					mashProfileSpinner.setVisibility(View.VISIBLE);
+					mashProfileTitle.setVisibility(View.VISIBLE);
 				}
 
             }
@@ -177,14 +209,12 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 		{
 			boolean readyToGo = true;
 			String recipeName = "Unnamed Brew";
-			String description = "";
 			Integer boilTime = 1;
 			float batchSize = 5;
 			float boilSize = 5;
 			
 			try {
 			    recipeName = recipeNameEditText.getText().toString();
-			    description = recipeDescEditText.getText().toString();
 				boilTime = Integer.parseInt(boilTimeEditText.getText().toString());
 				efficiency = Float.parseFloat(effEditText.getText().toString());
 				batchSize = Float.parseFloat(batchSizeEditText.getText().toString());
@@ -206,13 +236,12 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 				mRecipe.setVersion(Utils.getXmlVersion());
 				mRecipe.setType(type);
 				mRecipe.setStyle(style);
-				mRecipe.setBrewer("Biermacht Brews");
+				mRecipe.setMashProfile(profile);
 				mRecipe.setDisplayBatchSize(batchSize);
 				mRecipe.setDisplayBoilSize(boilSize);
 				mRecipe.setBoilTime(boilTime);
 				mRecipe.setEfficiency(efficiency);
 				mRecipe.setBatchTime(1);
-				mRecipe.setDescription(description);
 				
 				mRecipe.update();
 				Utils.updateRecipe(mRecipe);

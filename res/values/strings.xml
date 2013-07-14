@@ -43,6 +43,7 @@
     <string name="boil_volume">Boil Size (gal)</string>
     <string name="efficiency">Efficiency (%)</string>
     <string name="use">Use</string>
+	<string name="mash_profile">Mash Profile</string>
 	
 	<!-- Hints for editTexts -->
     <string name="volume_gal_hint">Gal</string>

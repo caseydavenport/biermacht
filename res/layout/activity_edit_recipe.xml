@@ -101,35 +101,35 @@
 			            
 	    </LinearLayout>
 
-	    <!-- EditText for Description -->
-	    <TextView android:id="@+id/description_title"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:background="@color/transparent"
-	        android:layout_marginBottom="3dip"
-	        android:gravity="left"
-	        android:textSize="15dip"
-	        android:textStyle="bold"
-	        android:textColor="@color/title_color"
-	        android:layout_below="@id/spinners"
-	        android:text="Description" />
-	    
-	    <EditText
-	        android:id="@+id/recipe_description_edit_text"
-	        android:layout_width="fill_parent"
-	        android:layout_height="80dip"
-	        android:layout_weight="1"
-	        android:background="@drawable/rounded_bg_white"
-	        android:padding="10dip"
-	        android:layout_marginBottom="15dip"
-	        android:layout_below="@id/description_title"
-	        android:hint="Enter a description (optional)" />
+		<TextView android:id="@+id/mash_profile_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@color/transparent"
+			android:layout_marginBottom="3dip"
+			android:gravity="center"
+			android:textSize="15dip"
+			android:textStyle="bold"
+			android:textColor="@color/title_color"
+			android:text="@string/mash_profile"
+			android:layout_below="@id/spinners" />
+
+		<Spinner
+			android:id="@+id/mash_profile_spinner"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:drawSelectorOnTop="false"
+			android:padding="10dip"
+			android:background="@drawable/rounded_bg_white"
+			android:spinnerMode="dialog"
+			android:paddingLeft="10dip" 
+			android:layout_marginBottom="15dp"
+			android:layout_below="@id/mash_profile_title" />
 	    
 	    <LinearLayout android:id="@+id/first_ll"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="@color/transparent"
-	        android:layout_below="@id/recipe_description_edit_text" >
+	        android:layout_below="@id/mash_profile_spinner" >
 		    
 		    <!-- Boil time -->
 		    <TextView android:id="@+id/boil_length_title"

@@ -17,10 +17,7 @@ import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
-import com.biermacht.brews.xml.FermentableHandler;
-import com.biermacht.brews.xml.HopsHandler;
-import com.biermacht.brews.xml.YeastHandler;
-import com.biermacht.brews.xml.*;
+import com.biermacht.brews.xml.RecipeHandler;
 import com.biermacht.brews.recipe.*;
 import android.content.*;
 import android.net.*;
@@ -34,6 +31,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> hopsList;
 	private ArrayList<Ingredient> miscsList;
 	private ArrayList<BeerStyle> styleList;
+	private ArrayList<MashProfile> profileList;
 	
 	public IngredientHandler(Context c)
 	{
@@ -117,8 +115,8 @@ public class IngredientHandler {
 	}
 
 	/**
-	 * Returns a list of valid hops for use in recipes
-	 * @return ArrayList of ingredient objects
+	 * Returns a list of valid styles for use in recipes
+	 * @return ArrayList of style objects
 	 */
 	public ArrayList<BeerStyle> getStylesList()
 	{
@@ -134,6 +132,31 @@ public class IngredientHandler {
 		}
 
 		return styleList;
+	}
+	
+	/**
+	 * Returns a list of valid hops for use in recipes
+	 * @return ArrayList of MashProfiles
+	 */
+	public ArrayList<MashProfile> getMashProfileList()
+	{
+		if (this.profileList == null)
+		{
+			try 
+			{
+				this.profileList = getProfilesFromXml();
+				this.profileList.add(0, new MashProfile());
+				for (MashProfile p : profileList)
+				{
+					Log.d("IngredientHandler", p.getName());
+				}
+				//this.profileList.add(0, Utils.BEERSTYLE_OTHER);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return profileList;
 	}
 	
 	
@@ -323,4 +346,34 @@ public class IngredientHandler {
 
         return retlist;
 	}	
+	
+	/**
+	 * Gets MashProfiles from XMl files in assets/Profiles
+	 * @return ArrayList of MashProfile Objects
+	 * @throws IOException
+	 */
+	private ArrayList<MashProfile> getProfilesFromXml() throws IOException
+	{
+		ArrayList<MashProfile> list = new ArrayList<MashProfile>();
+        RecipeHandler myXMLHandler = new RecipeHandler();
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        AssetManager am = mContext.getAssets();
+
+        for (String s : am.list("Profiles") )
+        {
+	        try 
+	        {	        	
+	            SAXParser sp = spf.newSAXParser();
+	            InputStream is = am.open("Profiles/" + s);
+	            sp.parse(is, myXMLHandler);
+
+	            list.addAll(myXMLHandler.getMashProfiles());
+	        }
+	        catch (Exception e)
+	        {
+	        	Log.e("getProfilesFromXml", e.toString());
+	        }
+        }
+        return list;
+	}
 }

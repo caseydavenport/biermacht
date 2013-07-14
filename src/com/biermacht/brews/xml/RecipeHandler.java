@@ -194,12 +194,14 @@ public class RecipeHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("MASH"))
 		{
 			thingType = PROFILE;
+			profile = new MashProfile();
 		}
 		
 		// Encounter new mash step
 		if (qName.equalsIgnoreCase("MASH_STEP"))
 		{
 			thingType = MASH_STEP;
+			mashStep = new MashStep();
 		}
 		
 		// Encounter new mash step list
