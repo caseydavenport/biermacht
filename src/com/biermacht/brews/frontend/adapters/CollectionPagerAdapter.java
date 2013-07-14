@@ -13,6 +13,7 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 	IngredientViewFragment ingVf;
 	InstructionViewFragment insVf;
 	DetailsViewFragment detVf;
+	ProfileViewFragment proVf;
 
     public CollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
         super(fm);
@@ -21,6 +22,7 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 		this.ingVf = new IngredientViewFragment(c,r);
 		this.insVf = new InstructionViewFragment(c,r);
 		this.detVf = new DetailsViewFragment(c,r);
+		this.proVf = new ProfileViewFragment(c,r);
     }
 
     @Override
@@ -30,13 +32,18 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 			return ingVf;
 		else if (i == 1)
 			return insVf;
-        else 
+		else if (i == 2)
 			return detVf;
+        else 
+			return proVf;
     }
 
     @Override
     public int getCount() {
-        return 3;
+		if (r.getType().equals(Recipe.EXTRACT))
+            return 3;
+		else
+			return 4;
     }
 
     @Override
@@ -49,6 +56,8 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 			return "Instructions";
 		else if (position == 2)
 			return "Details";
+		else if (position == 3)
+			return "Mash Profile";
 
         return "Unknown Tab";
     }
