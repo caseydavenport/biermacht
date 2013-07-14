@@ -42,14 +42,6 @@ public class BrewCalculator {
 		return SRM;
 	}
 	
-	public static double calculateOriginalGravityFromRecipe(Recipe r)
-	{
-		if (r.getType().equals(Recipe.EXTRACT))
-			return calculateExtractOG(r);
-		else
-			return calculateExtractOG(r);
-	}
-	
 	public static double calculateGrainPercent(Recipe r, Ingredient i)
 	{
 		if(i.getType().equals(Ingredient.FERMENTABLE))
@@ -77,7 +69,7 @@ public class BrewCalculator {
 		return amt;
 	}
 	
-	public static double calculateExtractOG(Recipe r)
+	public static double calculateOriginalGravityFromRecipe(Recipe r)
 	{
 		float gravity_points = 0;
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
@@ -92,10 +84,18 @@ public class BrewCalculator {
 	
 	public static double calculateBoilGrav(Recipe r)
 	{
+		if (r.getType().equals(Recipe.EXTRACT))
+			return calculateExtractBoilGrav(r);
+		else
+			return calculateAllGrainBoilGrav(r);
+	}
+	
+	public static double calculateExtractBoilGrav(Recipe r)
+	{
 		// Because this is used for hop utilization calculation,
 		// We want to adjust this based on late extract additions
 		
-		double mGPs = calculateExtractOG(r) - 1; //milliGPs
+		double mGPs = calculateOriginalGravityFromRecipe(r) - 1; //milliGPs
 		double avgBoilTime = 0;
 		int t=0;
 		
@@ -103,18 +103,41 @@ public class BrewCalculator {
 		// how much extract is used as a late addition
 		for (Fermentable f : r.getFermentablesList())
 		{
-			if (f.getFermentableType().equals(Fermentable.EXTRACT))
+			if (!f.getFermentableType().equals(Fermentable.GRAIN))
 			{
 				t++;
 				avgBoilTime += f.getTime();
 			}
 		}
-		avgBoilTime = avgBoilTime/t;
-		
+		if (t != 0)
+		    avgBoilTime = avgBoilTime/t;
+		else
+		    avgBoilTime = r.getBoilTime();
+			
 		return 1 + (mGPs * r.getDisplayBatchSize() / r.getDisplayBoilSize())*(avgBoilTime/r.getBoilTime());
+	}
+	public static double calculateAllGrainBoilGrav(Recipe r)
+	{
+		// Because this is used for hop utilization calculation,
+		// We want to adjust this based on late extract additions
+
+		double mGPs = calculateOriginalGravityFromRecipe(r) - 1; //milliGPs
+		return 1 + (mGPs * r.getDisplayBatchSize() / r.getDisplayBoilSize());
 	}
 	
 	public static double calculateGravityPoints(Recipe r, Ingredient i)
+	{
+		if (r.getType().equals(Recipe.EXTRACT))
+			return calculateExtractGravityPoints(r, i);
+		if (r.getType().equals(Recipe.ALL_GRAIN))
+			return calculateAllGrainGravityPoints(r, i);
+		if (r.getType().equals(Recipe.PARTIAL_MASH))
+			return calculateAllGrainGravityPoints(r, i);
+		else
+			return 1;
+	}
+	
+	public static double calculateExtractGravityPoints(Recipe r, Ingredient i)
 	{
 		double pts = 0;
 		if (i.getType().equals(Ingredient.FERMENTABLE))
@@ -137,6 +160,37 @@ public class BrewCalculator {
 					pts = 10 * f.getDisplayAmount() / r.getDisplayBatchSize();
 				if(f.getName().equalsIgnoreCase("Black Patent Malt"))
 					pts = 10 * f.getDisplayAmount() / r.getDisplayBatchSize();
+			}
+			else
+			{
+				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+			}
+		}
+		else if (i.getName().equals("Malto-Dextrin"))
+		{
+			pts = 10 * i.getDisplayAmount() * 40 / r.getDisplayBatchSize();
+		}
+		return pts;
+	}
+	
+	public static double calculateAllGrainGravityPoints(Recipe r, Ingredient i)
+	{
+		double pts = 0;
+		if (i.getType().equals(Ingredient.FERMENTABLE))
+		{
+			Fermentable f = (Fermentable) i;
+
+			if(f.getFermentableType().equals(Fermentable.EXTRACT))
+			{
+				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+			}
+			else if (f.getFermentableType().equals(Fermentable.SUGAR))
+			{
+				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+			}
+			else if (f.getFermentableType().equals(Fermentable.GRAIN))
+			{
+				pts = r.getEfficiency() * f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize() / 100;
 			}
 			else
 			{
@@ -183,7 +237,7 @@ public class BrewCalculator {
 				}
 			}
 
-		// We scale down because our algorithm returns a few IBU too high.
+		// We scale down because our algorithm returns a few IBU too high...
 		return .94*ibu;
 	}
 	

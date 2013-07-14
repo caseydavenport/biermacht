@@ -16,7 +16,6 @@ import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 public class Utils {
 		
-
 	// Beer styles... http://www.bjcp.org/docs/2008_stylebook.pdf
 	public static BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
 

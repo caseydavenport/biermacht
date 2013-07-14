@@ -137,6 +137,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 				{
 					mashProfileSpinner.setVisibility(View.VISIBLE);
 					mashProfileTitle.setVisibility(View.VISIBLE);
+					boilSizeEditText.setText(6.5 + "");
             	}
 			}
 
