@@ -50,12 +50,27 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
 		TextView titleView = (TextView) row.findViewById(R.id.tag);
 		TextView rangeView = (TextView) row.findViewById(R.id.range);
 		TextView valueView = (TextView) row.findViewById(R.id.value);
+		TextView subTextView = (TextView) row.findViewById(R.id.subtext);
+		
+		if (detail.getType().equals(Detail.TYPE_BLANK))
+		{
+			rangeView.setVisibility(View.GONE);
+			titleView.setVisibility(View.GONE);
+			valueView.setVisibility(View.GONE);
+			subTextView.setVisibility(View.GONE);
+		}
 		
 		if (detail.getType().equals(Detail.TYPE_TEXT))
 		{
 			titleView.setText(detail.getTitle());
 			valueView.setText(detail.getContent());
 			rangeView.setVisibility(View.GONE);
+			
+			if (!detail.getSubText().isEmpty())
+			{
+				subTextView.setVisibility(View.VISIBLE);
+				subTextView.setText(detail.getSubText());
+			}
 		}
 		
 		else if (detail.getType().equals(Detail.TYPE_RANGE))

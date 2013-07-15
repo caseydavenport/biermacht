@@ -16,15 +16,39 @@
 		android:textColor="@color/black_text"
 		android:text="Bitterness, IBU: " />
 
-	<TextView android:id="@+id/value"
-		android:gravity="center_vertical|left"
+	<LinearLayout android:orientation="vertical"
 		android:layout_width="0dip"
 		android:layout_weight="1"
+		android:layout_height="fill_parent"
 		android:padding="10dip"
 		android:background="@color/transparent"
-		android:layout_height="fill_parent"
-		android:textColor="@color/black_text"
-		android:text="Hefeweizen/Weissbier" />
+		android:gravity="center_vertical|left" >
+
+	    <TextView android:id="@+id/value"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical"
+	        android:textColor="#333333"
+	        android:text="Beer Name"
+			android:layout_marginTop="0dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginLeft="20dp"
+	        android:background="@color/transparent" />
+
+		<TextView android:id="@+id/subtext"
+			android:visibility="gone"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="top"
+	        android:textSize="12dp"
+			android:layout_marginTop="0dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginLeft="20dp"
+	        android:layout_marginBottom="0dp"
+	        android:text="Beer Style" 
+	        android:background="@color/transparent" />
+	
+	</LinearLayout>
 	
 	<TextView android:id="@+id/range"
 		android:gravity="left|center_vertical"

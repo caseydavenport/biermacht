@@ -53,7 +53,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_edit_recipe);
         
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);
         mRecipe = Utils.getRecipeWithId(id);
         
         // Initialize views and stuff

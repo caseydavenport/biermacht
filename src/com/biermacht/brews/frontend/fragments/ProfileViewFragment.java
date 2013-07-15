@@ -25,20 +25,23 @@ import java.util.*;
 import com.biermacht.brews.frontend.*;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.utils.*;
+import com.biermacht.brews.recipe.*;
 
 public class ProfileViewFragment extends Fragment {
 
 	private int resource;
 	private Recipe r;
 	private OnItemClickListener mClickListener;
-	private RecipeReccomendedValues reccomendedValues;
 	View pageView;
 	Context c;
 
 	// List stuff
-	private DetailArrayAdapter mAdapter;
+	private DetailArrayAdapter detailArrayAdapter;
+	private DetailArrayAdapter mashStepArrayAdapter;
 	private ArrayList<Detail> detailList;
-	private ListView listView;
+	private ArrayList<Detail> mashStepList;
+	private ListView detailsListView;
+	private ListView stepsListView;
 
 	// Details to show
 	Detail beerType;
@@ -50,7 +53,7 @@ public class ProfileViewFragment extends Fragment {
 
 	public ProfileViewFragment(Context c, Recipe r)
 	{
-		this.resource = R.layout.details_view;
+		this.resource = R.layout.profile_view;
 		this.r = r;
 		this.c = c;
 	}
@@ -58,8 +61,11 @@ public class ProfileViewFragment extends Fragment {
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		pageView = inflater.inflate(resource, container, false);
-		listView = (ListView) pageView.findViewById(R.id.details_list);
+		detailsListView = (ListView) pageView.findViewById(R.id.details_list);
+		stepsListView = (ListView) pageView.findViewById(R.id.steps_list);
+		
 		this.detailList = new ArrayList<Detail>();
+		this.mashStepList = new ArrayList<Detail>();
 
 		setHasOptionsMenu(true);
 
@@ -72,7 +78,7 @@ public class ProfileViewFragment extends Fragment {
 		detailList.add(beerType);
 		
 		beerType = new Detail();
-		String t = String.format("%2.2f", r.getMashProfile().getDisplayGrainTemp());
+		String t = String.format("%2.0f", r.getMashProfile().getDisplayGrainTemp());
 		t += " " + Units.FARENHEIT;
 		beerType.setTitle("Grain Temp: ");
 		beerType.setType(Detail.TYPE_TEXT);
@@ -81,7 +87,7 @@ public class ProfileViewFragment extends Fragment {
 		detailList.add(beerType);
 		
 		beerType = new Detail();
-		t = String.format("%2.2f", r.getMashProfile().getDisplayTunTemp());
+		t = String.format("%2.0f", r.getMashProfile().getDisplayTunTemp());
 		t += " " + Units.FARENHEIT;
 		beerType.setTitle("Tun Temp: ");
 		beerType.setType(Detail.TYPE_TEXT);
@@ -90,9 +96,28 @@ public class ProfileViewFragment extends Fragment {
 		detailList.add(beerType);
 		
 		// Adapter stuff
-		mAdapter = new DetailArrayAdapter(c, detailList);
-		listView.setAdapter(mAdapter);
+		detailArrayAdapter = new DetailArrayAdapter(c, detailList);
+		detailsListView.setAdapter(detailArrayAdapter);
+		
+		Detail detail = new Detail();
+		detail.setType(Detail.TYPE_BLANK);
+		mashStepList.add(detail);
+		for (MashStep s : r.getMashProfile().getMashStepList())
+		{
+			detail = new Detail();
+			detail.setTitle(s.getName()+":");
+			detail.setType(Detail.TYPE_TEXT);
+			detail.setFormat("%s");
+			detail.setContent("Hold at " + String.format("%2.0f", s.getDisplayStepTemp()) + " F");
+			detail.setSubText("Ramp to temp in " + s.getRampTime() + " mins");
+			mashStepList.add(detail);
+		}
 
+		// MashSteps list here
+		mashStepArrayAdapter = new DetailArrayAdapter(c, mashStepList);
+		stepsListView.setAdapter(mashStepArrayAdapter);
+		
+		
 		return pageView;
 	}
 

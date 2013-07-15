@@ -15,16 +15,16 @@ public class RecipeReccomendedValues {
 	
 	public RecipeReccomendedValues()
 	{
-		this.minOG = -1;
-		this.maxOG = 1000;
-		this.minFG = -1;
-		this.maxFG = 1000;
-		this.minBitter = -1;
-		this.maxBitter = 1000;
-		this.minColor = -1;
-		this.maxColor = 1000;
-		this.minAbv = -1;
-		this.maxAbv = 1000;
+		this.minOG = 1;
+		this.maxOG = 2;
+		this.minFG = 1;
+		this.maxFG = 2;
+		this.minBitter = 0;
+		this.maxBitter = 200;
+		this.minColor = 0;
+		this.maxColor = 100;
+		this.minAbv = 0;
+		this.maxAbv = 100;
 	}
 	
 	public RecipeReccomendedValues(double minOG, double maxOG, double minFG, double maxFG, double minBit, double maxBit, double minCol, double maxCol, double minAbv, double maxAbv)
@@ -43,7 +43,7 @@ public class RecipeReccomendedValues {
 	
 	public boolean isEmpty(double d)
 	{
-		return (d < 0);
+		return (d <= 0);
 	}
 	
 	// Methods for getting RANGE

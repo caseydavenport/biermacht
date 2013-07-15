@@ -46,6 +46,7 @@
     <string name="efficiency">Efficiency (%)</string>
     <string name="use">Use</string>
 	<string name="mash_profile">Mash Profile</string>
+	<string name="mash_steps">Mash Steps</string>
 	
 	<!-- Hints for editTexts -->
     <string name="volume_gal_hint">Gal</string>

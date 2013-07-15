@@ -5,6 +5,7 @@ public class Detail
 	private String title;
 	private String type;
 	private String content;
+	private String subText;
 	private Double value;
 	private Double min;
 	private Double max;
@@ -16,9 +17,10 @@ public class Detail
 	
 	public Detail()
 	{
-		this.title = "Empty Detail";
+		this.title = "";
 		this.type = TYPE_RANGE;
 		setContent("");
+		setSubText("");
 		this.value = 0.0;
 		this.min = 0.0;
 		this.max = 0.0;
@@ -45,6 +47,11 @@ public class Detail
 		this.content = content;
 	}
 	
+	public void setSubText(String text)
+	{
+		this.subText = text;
+	}
+	
 	public void setValue(Double value)
 	{
 		this.value = value;
@@ -68,6 +75,11 @@ public class Detail
 	public String getContent()
 	{
 		return this.content;
+	}
+	
+	public String getSubText()
+	{
+		return this.subText;
 	}
 	
 	public Double getValue()
