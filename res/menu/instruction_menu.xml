@@ -4,5 +4,4 @@
         android:orderInCategory="1"
         android:icon="@drawable/icon_timer"
         android:showAsAction="ifRoom|withText" />
-
 </menu>

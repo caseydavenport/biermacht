@@ -19,6 +19,7 @@ public class Instruction {
 	public static String TYPE_COOL = "Cool";
 	public static String TYPE_FERMENT = "Wait";
 	public static String TYPE_DRY_HOP = "Hop";
+	public static String TYPE_MASH = "Mash";
 	
 	public Instruction()
 	{
@@ -44,7 +45,7 @@ public class Instruction {
 	{
 		Instruction iret = new Instruction();
 		iret.setDuration(i.getDuration());
-		iret.setDuration_units(i.getDuration_units());
+		iret.setDurationUnits(i.getDuration_units());
 		iret.setEndTime(i.getEndTime());
 		iret.setStartTime(i.getStartTime());
 		iret.setInstructionText(getInstructionText() + "\n" + i.getInstructionText());
@@ -92,7 +93,7 @@ public class Instruction {
 		return duration_units;
 	}
 
-	public void setDuration_units(String duration_units) {
+	public void setDurationUnits(String duration_units) {
 		this.duration_units = duration_units;
 	}
 

@@ -366,213 +366,14 @@ public class Recipe {
 	
 	private ArrayList<Instruction> generateInstructionsFromIngredients()
 	{
-		ArrayList<Instruction> list = new ArrayList<Instruction>();
-		HashMap<Integer, String> steeps = new HashMap<Integer, String>();
-		HashMap<Integer, String> hopBoils = new HashMap<Integer, String>();
-		HashMap<Integer, String> dryHops = new HashMap<Integer, String>();
-		HashMap<Integer, String> extracts = new HashMap<Integer, String>();
-		String yeasts = "";
-		Instruction inst;
-		
-		// Extract recipe
 		if (this.getType().equals(Recipe.EXTRACT))
-		{
-			// Generate steep and extract add instructions
-			for(Fermentable f : getFermentablesList())
-			{
-				// We build up a map with K = steep duration
-				// and V = string of steeped grains at duration K
-				if (f.getFermentableType().equals(Fermentable.GRAIN))
-				{
-					if (!steeps.containsKey(f.getTime()))
-					{
-						// Add a new entry for that duration
-						steeps.put(f.getTime(), f.getName());	
-					}
-					else
-					{
-						// Append to existing duration
-						String s = steeps.get(f.getTime());
-						s += "\n";
-						s += f.getName();
-						steeps.put(f.getTime(), s);
-					}
-					
-				}
-				// Handle extracts here
-				else if (f.getFermentableType().equals(Fermentable.EXTRACT))
-				{
-					if (!extracts.containsKey(f.getTime()))
-					{
-						// Add a new entry for that duration
-						extracts.put(f.getTime(), f.getName());	
-					}
-					else
-					{
-						// Append to existing duration
-						String s = extracts.get(f.getTime());
-						s += "\n";
-						s += f.getName();
-						extracts.put(f.getTime(), s);
-					}
-				}
-			}
-			
-			// Boil hops instructions
-			for(Hop h : getHopsList())
-			{
-				// Boil Case
-				if (h.getUse().equals(Hop.USE_BOIL))
-				{
-					if (!hopBoils.containsKey(h.getTime()))
-					{
-						hopBoils.put(h.getTime(), h.getName());
-					}
-					else
-					{
-						// Append to existing duration
-						String s = hopBoils.get(h.getTime());
-						s += "\n";
-						s += h.getName();
-						hopBoils.put(h.getTime(), s);
-					}
-				}
-				// Dry hop case
-				else if (h.getUse().equals(Hop.USE_DRY_HOP))
-				{
-					if (!dryHops.containsKey(h.getTime()))
-					{
-						dryHops.put(h.getTime(), h.getName());
-					}
-					else
-					{
-						// Append to existing duration
-						String s = dryHops.get(h.getTime());
-						s += "\n";
-						s += h.getName();
-						dryHops.put(h.getTime(), s);
-					}
-				}
-			}
-			for (Yeast y : getYeastsList())
-			{
-				yeasts += y.getName() + " yeast";
-			}
-		}
-			
-		// Build up the steep instructions
-		if (steeps.size() > 0)
-		{
-			// for each k=steep_duration
-			for (Integer k : steeps.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(steeps.get(k));
-				inst.setInstructionType(Instruction.TYPE_STEEP);
-				inst.setDuration(k);
-				inst.setOrder(0); // Steep instructions go first
-				inst.setStartTime(0);
-				inst.setEndTime(k);
-				list.add(inst);
-			}
-		}
-		// Build up the extracts instructions
-		if (extracts.size() > 0)
-		{
-			// for each k=boil_duration
-			for (Integer k : extracts.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionType(Instruction.TYPE_ADD);
-				inst.setInstructionText(extracts.get(k));
-				inst.setDuration(k);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-				
-				// Order gets set based on if it is a late addition or not
-				if(inst.getStartTime() != 0)
-					inst.setOrder(2); // Same as hop boils
-				else
-					inst.setOrder(1); // Second after steeps
-				
-				list.add(inst);
-			}
-		}
-		// Build up the boil hops instructions
-		if (hopBoils.size() > 0)
-		{
-			// for each k=steep_duration
-			for (Integer k : hopBoils.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(hopBoils.get(k));
-				inst.setInstructionType(Instruction.TYPE_BOIL);
-				inst.setOrder(2); // Third
-				inst.setDuration(k);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-				list.add(inst);
-			}
-		}
-		if (list.size() > 0)
-		{
-			// Add a cool wort stage
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_COOL);
-			inst.setInstructionText("Cool wort to 70F");
-			inst.setStartTime(getBoilTime());
-			inst.setEndTime(getBoilTime());
-			inst.setDuration(2);
-			inst.setOrder(3);
-			inst.setDuration_units("hours");
-			list.add(inst);
-		}
-		if (yeasts.length() > 0)
-		{
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_ADD);
-			inst.setInstructionText(yeasts);
-			inst.setStartTime(getBoilTime() + 1);
-			inst.setEndTime(getBoilTime() + 1);
-			inst.setDuration(1);
-			inst.setOrder(4);
-			list.add(inst);
-		}
-		if (list.size() > 0)
-		{
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_FERMENT);
-			inst.setInstructionText("Until FG = " + getFG());
-			inst.setStartTime(getBoilTime() + 1);
-			inst.setEndTime(getBoilTime() + 1);
-			inst.setDuration(5);
-			inst.setOrder(5);
-			inst.setDuration_units("days");
-			list.add(inst);
-		}
-		// Build up the dry hops instructions
-		if (dryHops.size() > 0)
-		{
-			// for each k=dry hop duration
-			for (Integer k : dryHops.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(dryHops.get(k));
-				inst.setInstructionType(Instruction.TYPE_DRY_HOP);
-				inst.setOrder(6);
-				inst.setDuration(k);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-				list.add(inst);
-			}
-		}
-		
-		// Sort based on order and then start time
-		Collections.sort(list, new InstructionComparator<Instruction>());
-		
-		return list;
+			return generateExtractInstructions();
+		if (this.getType().equals(Recipe.ALL_GRAIN))
+			return generateAllGrainInstructions();
+		else
+			return generateAllGrainInstructions();
 	}
-
+	
 	/**
 	 * @return the brewer
 	 */
@@ -681,5 +482,451 @@ public class Recipe {
 	public ArrayList<Yeast> getYeastsList()
 	{
 		return yeasts;
+	}
+	private ArrayList<Instruction> generateAllGrainInstructions()
+	{
+
+		ArrayList<Instruction> list = new ArrayList<Instruction>();
+		ArrayList<MashStep> mashSteps = getMashProfile().getMashStepList();
+		HashMap<Integer, String> mashes = new HashMap<Integer, String>();
+		HashMap<Integer, String> hopBoils = new HashMap<Integer, String>();
+		HashMap<Integer, String> dryHops = new HashMap<Integer, String>();
+		HashMap<Integer, String> extracts = new HashMap<Integer, String>();
+		String yeasts = "";
+		Instruction inst;
+
+	    // Generate mash and extract add instructions
+		for(Fermentable f : getFermentablesList())
+		{
+			// We build up a map with K = steep duration
+			// and V = string of steeped grains at duration K
+			if (f.getFermentableType().equals(Fermentable.GRAIN))
+			{
+				if (!mashes.containsKey(f.getTime()))
+				{
+					// Add a new entry for that duration
+					mashes.put(f.getTime(), f.getName());	
+				}
+				else
+				{
+					// Append to existing duration
+					String s = mashes.get(f.getTime());
+					s += "\n";
+					s += f.getName();
+					mashes.put(f.getTime(), s);
+				}
+
+			}
+			// Handle extracts here
+			else if (f.getFermentableType().equals(Fermentable.EXTRACT))
+			{
+				if (!extracts.containsKey(f.getTime()))
+				{
+					// Add a new entry for that duration
+					extracts.put(f.getTime(), f.getName());	
+				}
+				else
+				{
+					// Append to existing duration
+					String s = extracts.get(f.getTime());
+					s += "\n";
+					s += f.getName();
+					extracts.put(f.getTime(), s);
+				}
+			}
+		}
+
+		// Boil hops instructions
+		for(Hop h : getHopsList())
+		{
+			// Boil Case
+			if (h.getUse().equals(Hop.USE_BOIL))
+			{
+				if (!hopBoils.containsKey(h.getDisplayTime()))
+				{
+					hopBoils.put(h.getDisplayTime(), h.getName());
+				}
+				else
+				{
+					// Append to existing duration
+					String s = hopBoils.get(h.getTime());
+					s += "\n";
+					s += h.getName();
+					hopBoils.put(h.getTime(), s);
+				}
+			}
+			// Dry hop case
+			else if (h.getUse().equals(Hop.USE_DRY_HOP))
+			{
+				if (!dryHops.containsKey(h.getDisplayTime()))
+				{
+					dryHops.put(h.getDisplayTime(), h.getName());
+				}
+				else
+				{
+					// Append to existing duration
+					String s = dryHops.get(h.getTime());
+					s += "\n";
+					s += h.getName();
+					dryHops.put(h.getTime(), s);
+				}
+			}
+		}
+		for (Yeast y : getYeastsList())
+		{
+			yeasts += y.getName() + " yeast";
+		}
+
+		// Build up the add grain to mash instructions
+		if (mashes.size() > 0)
+		{
+			// for each k=steep_duration
+			for (Integer k : mashes.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(mashes.get(k));
+				inst.setInstructionType(Instruction.TYPE_ADD);
+				inst.setDuration(0);
+				inst.setOrder(0); // Mash instructions go first
+				inst.setStartTime(0);
+				inst.setEndTime(k);
+				list.add(inst);
+			}
+		}
+		
+		// Build up mashSteps
+		if (mashSteps.size() > 0)
+		{
+			// for each k=steep_duration
+			for (MashStep s : mashSteps)
+			{
+				if (s.getRampTime() != 0)
+				{
+					inst = new Instruction();
+					String temp = String.format("%2.0f", s.getDisplayStepTemp());
+					String text = "Ramp temperature to " + temp + "F";
+					inst.setInstructionText(text);
+					inst.setInstructionType(Instruction.TYPE_MASH);
+					inst.setDuration(s.getRampTime());
+					inst.setOrder(0); // Mash instructions go first
+					inst.setStartTime(0);
+					inst.setEndTime(s.getRampTime());
+					list.add(inst);
+				}
+				
+				inst = new Instruction();
+				inst.setInstructionText(s.getName());
+				inst.setInstructionType(Instruction.TYPE_MASH);
+				inst.setDuration(s.getStepTime());
+				inst.setOrder(0); // Mash instructions go first
+				inst.setStartTime(0);
+				inst.setEndTime(s.getStepTime());
+				list.add(inst);
+			}
+		}
+		
+		// Build up the extracts instructions
+		if (extracts.size() > 0)
+		{
+			// for each k=boil_duration
+			for (Integer k : extracts.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionType(Instruction.TYPE_ADD);
+				inst.setInstructionText(extracts.get(k));
+				inst.setDuration(k);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
+
+				// Order gets set based on if it is a late addition or not
+				if(inst.getStartTime() != 0)
+					inst.setOrder(2); // Same as hop boils
+				else
+					inst.setOrder(1); // Second after steeps
+
+				list.add(inst);
+			}
+		}
+		// Build up the boil hops instructions
+		if (hopBoils.size() > 0)
+		{
+			// for each k=steep_duration
+			for (Integer k : hopBoils.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(hopBoils.get(k));
+				inst.setInstructionType(Instruction.TYPE_BOIL);
+				inst.setOrder(2); // Third
+				inst.setDuration(k);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
+				list.add(inst);
+			}
+		}
+		if (list.size() > 0)
+		{
+			// Add a cool wort stage
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_COOL);
+			inst.setInstructionText("Cool wort to 70F");
+			inst.setStartTime(getBoilTime());
+			inst.setEndTime(getBoilTime());
+			inst.setDuration(2);
+			inst.setOrder(3);
+			inst.setDurationUnits("hours");
+			list.add(inst);
+		}
+		if (yeasts.length() > 0)
+		{
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_ADD);
+			inst.setInstructionText(yeasts);
+			inst.setStartTime(getBoilTime() + 1);
+			inst.setEndTime(getBoilTime() + 1);
+			inst.setDuration(1);
+			inst.setOrder(4);
+			list.add(inst);
+		}
+		if (list.size() > 0)
+		{
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_FERMENT);
+			inst.setInstructionText("Until FG = " + getFG());
+			inst.setStartTime(getBoilTime() + 1);
+			inst.setEndTime(getBoilTime() + 1);
+			inst.setDuration(5);
+			inst.setOrder(5);
+			inst.setDurationUnits("days");
+			list.add(inst);
+		}
+		// Build up the dry hops instructions
+		if (dryHops.size() > 0)
+		{
+			// for each k=dry hop duration
+			for (Integer k : dryHops.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(dryHops.get(k));
+				inst.setInstructionType(Instruction.TYPE_DRY_HOP);
+				inst.setOrder(6);
+				inst.setDuration(k);
+				inst.setDurationUnits(Units.DAYS);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
+				list.add(inst);
+			}
+		}
+
+		// Sort based on order and then start time
+		Collections.sort(list, new InstructionComparator<Instruction>());
+
+		return list;
+	}
+	
+	private ArrayList<Instruction> generateExtractInstructions()
+	{
+
+		ArrayList<Instruction> list = new ArrayList<Instruction>();
+		HashMap<Integer, String> steeps = new HashMap<Integer, String>();
+		HashMap<Integer, String> hopBoils = new HashMap<Integer, String>();
+		HashMap<Integer, String> dryHops = new HashMap<Integer, String>();
+		HashMap<Integer, String> extracts = new HashMap<Integer, String>();
+		String yeasts = "";
+		Instruction inst;
+
+	    // Generate steep and extract add instructions
+		for(Fermentable f : getFermentablesList())
+		{
+			// We build up a map with K = steep duration
+			// and V = string of steeped grains at duration K
+			if (f.getFermentableType().equals(Fermentable.GRAIN))
+			{
+				if (!steeps.containsKey(f.getTime()))
+				{
+					// Add a new entry for that duration
+					steeps.put(f.getTime(), f.getName());	
+				}
+				else
+				{
+					// Append to existing duration
+					String s = steeps.get(f.getTime());
+					s += "\n";
+					s += f.getName();
+					steeps.put(f.getTime(), s);
+				}
+
+			}
+			// Handle extracts here
+			else if (f.getFermentableType().equals(Fermentable.EXTRACT))
+			{
+				if (!extracts.containsKey(f.getTime()))
+				{
+					// Add a new entry for that duration
+					extracts.put(f.getTime(), f.getName());	
+				}
+				else
+				{
+					// Append to existing duration
+					String s = extracts.get(f.getTime());
+					s += "\n";
+					s += f.getName();
+					extracts.put(f.getTime(), s);
+				}
+			}
+		}
+
+		// Boil hops instructions
+		for(Hop h : getHopsList())
+		{
+			// Boil Case
+			if (h.getUse().equals(Hop.USE_BOIL))
+			{
+				if (!hopBoils.containsKey(h.getTime()))
+				{
+					hopBoils.put(h.getTime(), h.getName());
+				}
+				else
+				{
+					// Append to existing duration
+					String s = hopBoils.get(h.getTime());
+					s += "\n";
+					s += h.getName();
+					hopBoils.put(h.getTime(), s);
+				}
+			}
+			// Dry hop case
+			else if (h.getUse().equals(Hop.USE_DRY_HOP))
+			{
+				if (!dryHops.containsKey(h.getTime()))
+				{
+					dryHops.put(h.getTime(), h.getName());
+				}
+				else
+				{
+					// Append to existing duration
+					String s = dryHops.get(h.getTime());
+					s += "\n";
+					s += h.getName();
+					dryHops.put(h.getTime(), s);
+				}
+			}
+		}
+		for (Yeast y : getYeastsList())
+		{
+			yeasts += y.getName() + " yeast";
+		}
+
+		// Build up the steep instructions
+		if (steeps.size() > 0)
+		{
+			// for each k=steep_duration
+			for (Integer k : steeps.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(steeps.get(k));
+				inst.setInstructionType(Instruction.TYPE_STEEP);
+				inst.setDuration(k);
+				inst.setOrder(0); // Steep instructions go first
+				inst.setStartTime(0);
+				inst.setEndTime(k);
+				list.add(inst);
+			}
+		}
+		// Build up the extracts instructions
+		if (extracts.size() > 0)
+		{
+			// for each k=boil_duration
+			for (Integer k : extracts.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionType(Instruction.TYPE_ADD);
+				inst.setInstructionText(extracts.get(k));
+				inst.setDuration(k);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
+
+				// Order gets set based on if it is a late addition or not
+				if(inst.getStartTime() != 0)
+					inst.setOrder(2); // Same as hop boils
+				else
+					inst.setOrder(1); // Second after steeps
+
+				list.add(inst);
+			}
+		}
+		// Build up the boil hops instructions
+		if (hopBoils.size() > 0)
+		{
+			// for each k=steep_duration
+			for (Integer k : hopBoils.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(hopBoils.get(k));
+				inst.setInstructionType(Instruction.TYPE_BOIL);
+				inst.setOrder(2); // Third
+				inst.setDuration(k);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
+				list.add(inst);
+			}
+		}
+		if (list.size() > 0)
+		{
+			// Add a cool wort stage
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_COOL);
+			inst.setInstructionText("Cool wort to 70F");
+			inst.setStartTime(getBoilTime());
+			inst.setEndTime(getBoilTime());
+			inst.setDuration(2);
+			inst.setOrder(3);
+			inst.setDurationUnits("hours");
+			list.add(inst);
+		}
+		if (yeasts.length() > 0)
+		{
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_ADD);
+			inst.setInstructionText(yeasts);
+			inst.setStartTime(getBoilTime() + 1);
+			inst.setEndTime(getBoilTime() + 1);
+			inst.setDuration(1);
+			inst.setOrder(4);
+			list.add(inst);
+		}
+		if (list.size() > 0)
+		{
+			inst = new Instruction();
+			inst.setInstructionType(Instruction.TYPE_FERMENT);
+			inst.setInstructionText("Until FG = " + getFG());
+			inst.setStartTime(getBoilTime() + 1);
+			inst.setEndTime(getBoilTime() + 1);
+			inst.setDuration(5);
+			inst.setOrder(5);
+			inst.setDurationUnits("days");
+			list.add(inst);
+		}
+		// Build up the dry hops instructions
+		if (dryHops.size() > 0)
+		{
+			// for each k=dry hop duration
+			for (Integer k : dryHops.keySet())
+			{
+				inst = new Instruction();
+				inst.setInstructionText(dryHops.get(k));
+				inst.setInstructionType(Instruction.TYPE_DRY_HOP);
+				inst.setOrder(6);
+				inst.setDuration(k);
+				inst.setDurationUnits(Units.DAYS);
+				inst.setStartTime(getBoilTime()-k);
+				inst.setEndTime(getBoilTime());
+				list.add(inst);
+			}
+		}
+
+		// Sort based on order and then start time
+		Collections.sort(list, new InstructionComparator<Instruction>());
+
+		return list;
 	}
 }

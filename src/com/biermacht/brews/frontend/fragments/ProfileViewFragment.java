@@ -24,6 +24,7 @@ import android.widget.*;
 import java.util.*;
 import com.biermacht.brews.frontend.*;
 import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.utils.*;
 
 public class ProfileViewFragment extends Fragment {
 
@@ -71,7 +72,8 @@ public class ProfileViewFragment extends Fragment {
 		detailList.add(beerType);
 		
 		beerType = new Detail();
-		String t = String.format("%2.2f", r.getMashProfile().getBeerXmlStandardGrainTemp());
+		String t = String.format("%2.2f", r.getMashProfile().getDisplayGrainTemp());
+		t += " " + Units.FARENHEIT;
 		beerType.setTitle("Grain Temp: ");
 		beerType.setType(Detail.TYPE_TEXT);
 		beerType.setFormat("%s");
@@ -79,7 +81,8 @@ public class ProfileViewFragment extends Fragment {
 		detailList.add(beerType);
 		
 		beerType = new Detail();
-		t = String.format("%2.2f", r.getMashProfile().getBeerXmlStandardTunTemp());
+		t = String.format("%2.2f", r.getMashProfile().getDisplayTunTemp());
+		t += " " + Units.FARENHEIT;
 		beerType.setTitle("Tun Temp: ");
 		beerType.setType(Detail.TYPE_TEXT);
 		beerType.setFormat("%s");
@@ -95,7 +98,7 @@ public class ProfileViewFragment extends Fragment {
 
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		inflater.inflate(R.menu.details_menu, menu);
+		inflater.inflate(R.menu.mash_profile_menu, menu);
 	}
 
 }

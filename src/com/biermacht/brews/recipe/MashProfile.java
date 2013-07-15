@@ -1,6 +1,7 @@
 package com.biermacht.brews.recipe;
 
 import java.util.ArrayList;
+import com.biermacht.brews.utils.*;
 
 public class MashProfile
 {
@@ -98,14 +99,29 @@ public class MashProfile
 		this.grainTemp = temp;
 	}
 	
+	public void setDisplayGrainTemp(double temp)
+	{
+		this.grainTemp = Units.farenheitToCelsius(temp);
+	}
+	
 	public double getBeerXmlStandardGrainTemp()
 	{
 		return this.grainTemp;
 	}
 
+	public double getDisplayGrainTemp()
+	{
+		return Units.celsiusToFarenheit(this.grainTemp);
+	}
+	
 	public void setBeerXmlStandardTunTemp(double temp)
 	{
 		this.tunTemp = temp;
+	}
+	
+	public void setDisplayTunTemp(double temp)
+	{
+		this.tunTemp = Units.farenheitToCelsius(temp);
 	}
 	
 	public double getBeerXmlStandardTunTemp()
@@ -113,14 +129,29 @@ public class MashProfile
 		return this.tunTemp;
 	}
 	
+	public double getDisplayTunTemp()
+	{
+		return Units.celsiusToFarenheit(this.tunTemp);
+	}
+	
 	public void setBeerXmlStandardSpargeTemp(double temp)
 	{
 		this.spargeTemp = temp;
 	}
 	
+	public void setDisplaySpargeTemp(double temp)
+	{
+		this.spargeTemp = Units.farenheitToCelsius(temp);
+	}
+	
 	public double getBeerXmlStandardSpargeTemp()
 	{
 		return this.spargeTemp;
+	}
+	
+	public double getDisplaySpargeTemp()
+	{
+		return Units.celsiusToFarenheit(this.spargeTemp);
 	}
 
 	public void setpH(double pH)
@@ -138,9 +169,19 @@ public class MashProfile
 		this.tunWeight = weight;
 	}
 	
+	public void setDisplayTunWeight(double weight)
+	{
+		this.tunWeight = Units.poundsToKilos(weight);
+	}
+	
 	public double getBeerXmlStandardTunWeight()
 	{
 		return this.tunWeight;
+	}
+	
+	public double getDisplayTunWeight()
+	{
+		return Units.kilosToPounds(this.tunWeight);
 	}
 
 	public void setBeerXmlStandardTunSpecHeat(double heat)
@@ -150,6 +191,7 @@ public class MashProfile
 	
 	public double getBeerXmlStandardTunSpecHeat()
 	{
+		// Cal / (g * C)
 		return this.tunSpecificHeat;
 	}
 

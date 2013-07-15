@@ -1,4 +1,5 @@
 package com.biermacht.brews.recipe;
+import com.biermacht.brews.utils.*;
 
 public class MashStep
 {
@@ -90,6 +91,11 @@ public class MashStep
 	public double getBeerXmlStandardStepTemp()
 	{
 		return this.stepTemp;
+	}
+	
+	public double getDisplayStepTemp()
+	{
+		return Units.celsiusToFarenheit(this.stepTemp);
 	}
 
 	public void setStepTime(double time)

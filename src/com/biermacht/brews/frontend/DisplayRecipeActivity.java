@@ -71,32 +71,39 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
             
             case R.id.add_fermentable:
     	    	Intent ferm_intent = new Intent(this.appContext, AddGrainActivity.class);
-    	    	ferm_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+    	    	ferm_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(ferm_intent);
     		    return true;
 
             case R.id.add_hop:
     	    	Intent hop_intent = new Intent(this.appContext, AddHopsActivity.class);
-    	    	hop_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+    	    	hop_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(hop_intent);
     		    return true;
     		    
             case R.id.add_yeast:
     	    	Intent yeast_intent = new Intent(this.appContext, AddYeastActivity.class);
-    	    	yeast_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+    	    	yeast_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(yeast_intent);
     		    return true;
 				
 			case R.id.add_misc:
     	    	Intent misc_intent = new Intent(this.appContext, AddMiscActivity.class);
-    	    	misc_intent.putExtra("com.biermacht.brews.recipeId", mRecipe.getId());
+    	    	misc_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(misc_intent);
     		    return true;
     		    
             case R.id.menu_edit_recipe:
           		Intent i = new Intent(this.appContext, EditRecipeActivity.class);
-          		i.putExtra("biermacht.brews.recipeID", mRecipe.getId());
-          		startActivity(i); 
+          		i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+          		startActivity(i);
+				return true;
+			
+			case R.id.menu_edit_mash_profile:
+				Intent edit_mash = new Intent(this.appContext, EditMashProfileActivity.class);
+				edit_mash.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+				startActivity(edit_mash);
+				return true;
         }
         return super.onOptionsItemSelected(item);
     }

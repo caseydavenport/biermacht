@@ -52,6 +52,11 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:name=".frontend.EditMashProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+		<activity
             android:name=".frontend.AddHopsActivity"
             android:label="@string/title_activity_add_hops"
             android:windowSoftInputMode="adjustResize" >

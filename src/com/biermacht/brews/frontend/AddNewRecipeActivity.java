@@ -132,11 +132,14 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
                 {
 					mashProfileSpinner.setVisibility(View.GONE);
 					mashProfileTitle.setVisibility(View.GONE);
+					effEditText.setText(100 + "");
+					boilSizeEditText.setText(2.5 +"");
                 }
                 else
 				{
 					mashProfileSpinner.setVisibility(View.VISIBLE);
 					mashProfileTitle.setVisibility(View.VISIBLE);
+					effEditText.setText(72 + "");
 					boilSizeEditText.setText(6.5 + "");
             	}
 			}

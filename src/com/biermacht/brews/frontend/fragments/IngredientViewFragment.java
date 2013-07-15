@@ -67,8 +67,8 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.FERMENTABLE))
 				{
 			  		Intent editGrainIntent = new Intent(c, EditGrainActivity.class);
-			  		editGrainIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
-				    editGrainIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
+			  		editGrainIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
+				    editGrainIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
 			  		startActivity(editGrainIntent);
 				}
 			
@@ -76,8 +76,8 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.HOP))
 				{
 			  		Intent editHopIntent = new Intent(c, EditHopActivity.class);
-			  		editHopIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
-			  		editHopIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
+			  		editHopIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
+			  		editHopIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
 			  		startActivity(editHopIntent);
 				}
 				
@@ -85,8 +85,17 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.YEAST))
 				{
 			  		Intent editHopIntent = new Intent(c, EditYeastActivity.class);
-			  		editHopIntent.putExtra("com.biermacht.brews.recipeID", r.getId());
-			  		editHopIntent.putExtra("com.biermacht.brews.grainID", ing.getId());
+			  		editHopIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
+			  		editHopIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
+			  		startActivity(editHopIntent);
+				}
+				
+				// Misc Pressed
+				if (ing.getType().equals(Ingredient.MISC))
+				{
+			  		Intent editHopIntent = new Intent(c, EditYeastActivity.class);
+			  		editHopIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
+			  		editHopIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
 			  		startActivity(editHopIntent);
 				}
 			}

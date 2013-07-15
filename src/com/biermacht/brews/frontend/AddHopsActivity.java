@@ -20,8 +20,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import com.biermacht.brews.frontend.adapters.*;
-import android.util.*;
 import android.view.*;
+import com.biermacht.brews.utils.Units;
+import android.widget.TextView;
+import android.util.*;
 
 public class AddHopsActivity extends Activity {
 	
@@ -30,6 +32,7 @@ public class AddHopsActivity extends Activity {
 	private Spinner hopTypeSpinner;
 	private EditText hopNameEditText;
 	private EditText hopBoilTimeEditText;
+	private TextView hopTimeTitle;
 	private EditText hopAcidEditText;
 	private EditText hopWeightEditText;
 	private ArrayList<Ingredient> hopArray;
@@ -53,7 +56,7 @@ public class AddHopsActivity extends Activity {
     	hopArray = ingredientHandler.getHopsList();
         
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
         mRecipe = Utils.getRecipeWithId(id);
         
         // Initialize views and such here
@@ -61,7 +64,8 @@ public class AddHopsActivity extends Activity {
         hopBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
         hopAcidEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
         hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
-        
+        hopTimeTitle = (TextView) findViewById(R.id.boil_time_title);
+		
         // Set up hop spinner
         hopSpinner = (Spinner) findViewById(R.id.hop_spinner);
         IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopArray);  
@@ -111,6 +115,17 @@ public class AddHopsActivity extends Activity {
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 				// Set the type to the selected type...
 				use = hopTypeArray.get(position);
+				
+				if (use.equals(Hop.USE_DRY_HOP))
+				{
+					hopTimeTitle.setText("Time (days)");
+					hopBoilTimeEditText.setText(5 + "");
+				}
+				else
+				{
+					hopTimeTitle.setText("Time (mins)");
+					hopBoilTimeEditText.setText(mRecipe.getBoilTime() + "");
+				}
 			}
 
 
@@ -145,30 +160,60 @@ public class AddHopsActivity extends Activity {
 		// if "SUBMIT" button pressed
 		if (v.getId() == R.id.new_grain_submit_button)
 		{
-			String hopName = hopNameEditText.getText().toString();
-			int time = Integer.parseInt(hopBoilTimeEditText.getText().toString());
-			int endTime = mRecipe.getBoilTime();
-			int startTime = endTime - time;
-			double alpha = Double.parseDouble(hopAcidEditText.getText().toString());
-			double weight = Double.parseDouble(hopWeightEditText.getText().toString());
+			boolean readyToGo = true;
+			int endTime, startTime;
+			String hopName="";
+			double time=0, alpha=0, weight = 0;
+			try
+			{
+				hopName = hopNameEditText.getText().toString();
+				time = Integer.parseInt(hopBoilTimeEditText.getText().toString());
+				alpha = Double.parseDouble(hopAcidEditText.getText().toString());
+				weight = Double.parseDouble(hopWeightEditText.getText().toString());
+			} catch (Exception e) {
+				Log.d("AddHopsActivity", e.toString());
+				readyToGo = false;
+			}
+		
+		    if (!use.equals(Hop.USE_DRY_HOP))
+			{
+		        endTime = mRecipe.getBoilTime();
+			    startTime = endTime - (int) time;
+				
+				if (time > mRecipe.getBoilTime())
+					time = mRecipe.getBoilTime();
+			}
+			else
+			{
+				time = Units.daysToMinutes(time);
+				startTime = mRecipe.getBoilTime();
+				endTime = startTime + (int) time;
+			}
+						
+			if (hopName.isEmpty())
+				readyToGo = false;
+			if (!(weight > 0))
+				readyToGo = false;
+			if (!(time > 0))
+				readyToGo = false;
 			
-			if (time > mRecipe.getBoilTime())
-				time = mRecipe.getBoilTime();
+			if (readyToGo)
+			{
+				Hop h = new Hop(hopName);
+				h.setDisplayTime((int) time);
+				h.setStartTime(startTime);
+				h.setEndTime(endTime);
+				h.setAlphaAcidContent(alpha);
+				h.setDisplayAmount(weight);
+				h.setUse(use);
+				h.setForm(Hop.FORM_PELLET);
+				
+				mRecipe.addIngredient(h);
+				mRecipe.update();
+				Utils.updateRecipe(mRecipe);
 			
-			Hop h = new Hop(hopName);
-			h.setTime(time);
-			h.setStartTime(startTime);
-			h.setEndTime(endTime);
-			h.setAlphaAcidContent(alpha);
-			h.setDisplayAmount(weight);
-			h.setUse(use);
-			h.setForm(Hop.FORM_PELLET);
-			
-			mRecipe.addIngredient(h);
-			mRecipe.update();
-			Utils.updateRecipe(mRecipe);
-			
-			finish();
+				finish();
+			}
 		}
 		
 		// if "CANCEL" button pressed

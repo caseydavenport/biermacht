@@ -48,7 +48,7 @@ public class AddMiscActivity extends Activity {
     	miscArray = ingredientHandler.getMiscsList();
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra("com.biermacht.brews.recipeId", -1);
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
         mRecipe = Utils.getRecipeWithId(id);
 
         // Initialize views and such here

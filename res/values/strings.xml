@@ -9,6 +9,7 @@
     <string name="title_activity_edit_grain">Edit Grain</string>
     <string name="title_activity_edit_hop">Edit Hop</string>
     <string name="title_activity_edit_recipe">Edit Recipe</string>
+	<string name="title_activity_edit_profile">Edit Mash Profile</string>
     <string name="title_activity_add_hops">Add Hops</string>
 	<string name="title_activity_add_misc">Add Misc</string>
 
@@ -17,6 +18,7 @@
     <string name="menu_add_ingredient">Add Ingredient</string>
     <string name="menu_brew_timer">Brew Timer</string>
     <string name="menu_edit_recipe">Edit Recipe</string>
+	<string name="menu_edit_profile">Edit Mash Profile</string>
 
     <!-- Standard messages -->
     <string name="error">Error</string>

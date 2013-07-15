@@ -19,6 +19,10 @@ public class Utils {
 	// Beer styles... http://www.bjcp.org/docs/2008_stylebook.pdf
 	public static BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
 
+	// Intent put values
+	public static String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
+	public static String INTENT_PROFILE_ID = "biermacht.brews.profile.id";
+	public static String INTENT_INGREDIENT_ID = "biermacht.brews.ingredient.id";
 	
 	/**
 	 * Returns a list of strings corresponding to ingredient objects

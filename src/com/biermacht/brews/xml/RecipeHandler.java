@@ -589,7 +589,7 @@ public class RecipeHandler extends DefaultHandler {
 
 			else if (qName.equalsIgnoreCase("TIME"))
 			{
-				h.setTime((int) Double.parseDouble(currentValue));
+				h.setBeerXmlStandardTime((int) Double.parseDouble(currentValue));
 			}
 
 			else if (qName.equalsIgnoreCase("NOTES"))

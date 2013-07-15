@@ -100,6 +100,22 @@ public class Hop extends Ingredient {
 		return Units.kilosToOunces(this.amount);
 	}
 	
+	public int getDisplayTime()
+	{
+		if (this.getUse().equals(Hop.USE_DRY_HOP))
+			return (int) Units.minutesToDays(this.time);
+		else
+			return this.time;
+	}
+	
+	public void setDisplayTime(int time)
+	{
+		if (this.getUse().equals(Hop.USE_DRY_HOP))
+			this.time = (int) Units.daysToMinutes(time);
+		else
+			this.time = time;
+	}
+	
 	@Override 
 	public double getBeerXmlStandardAmount() {
 		return this.amount;
@@ -168,10 +184,16 @@ public class Hop extends Ingredient {
 	/**
 	 * @return the time
 	 */
-	public int getTime() {
+	public int getBeerXmlStandardTime() {
 		return time;
 	}
 
+	@Override 
+	public int getTime()
+	{
+		return this.getDisplayTime();
+	}
+	
 	/**
 	 * @return the origin
 	 */
@@ -237,7 +259,7 @@ public class Hop extends Ingredient {
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(int time) {
+	public void setBeerXmlStandardTime(int time) {
 		this.time = time;
 	}
 

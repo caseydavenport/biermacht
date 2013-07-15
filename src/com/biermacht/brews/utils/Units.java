@@ -26,16 +26,19 @@ public class Units {
 	public static final String GALLONS = "gal";
 	public static final String POUNDS = "lbs";
 	public static final String TEASPOONS = "tsp";
+	public static final String FARENHEIT = "F";
 	
 	// Metric Units
 	public static final String KILOGRAMS = "kg";
 	public static final String GRAMS = "grams";
 	public static final String LITERS = "liters";
 	public static final String MILLILITERS = "ml";
+	public static final String CELSIUS = "C";
 	
 	// Agnostic Units
 	public static final String PACKAGES = "pkg";
 	public static final String ITEMS = "items";
+	public static final String DAYS = "days";
 	
 	// Helper funcs
 	public static String getUnitsFromDisplayAmount(String s)
@@ -74,11 +77,29 @@ public class Units {
 	}
 	
 	// Functions for converting units below
+	public static double farenheitToCelsius(double f)
+	{
+		return (f - 32)/1.8;
+	}
+	
+	public static double celsiusToFarenheit(double c)
+	{
+		return c*1.8 + 32;
+	}
 	public static double litersToGallons(double l)
 	{
 		return l * .264172052;
 	}
 	
+	public static double minutesToDays(double m)
+	{
+		return m / 1440;
+	}
+	
+	public static double daysToMinutes(double d)
+	{
+		return d * 1440;
+	}
 	public static double gallonsToLiters(double g)
 	{
 		return g / .264172052;

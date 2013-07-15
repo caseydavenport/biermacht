@@ -3,7 +3,7 @@
         android:title="@string/menu_add_ingredient"
         android:orderInCategory="1"
         android:icon="@drawable/plus_icon"
-        android:showAsAction="always" >
+        android:showAsAction="ifRoom|withText" >
         
         <menu>
 		    <item android:id="@+id/add_fermentable"

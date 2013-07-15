@@ -28,8 +28,8 @@ public class EditYeastActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_edit_yeast);
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra("com.biermacht.brews.recipeID", 0);
-        long yeastId = getIntent().getLongExtra("com.biermacht.brews.grainID", 0);
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);
+        long yeastId = getIntent().getLongExtra(Utils.INTENT_INGREDIENT_ID, 0);
         mRecipe = MainActivity.databaseInterface.getRecipeWithId(id);
         yeast = (Yeast) Utils.getIngredientWithId(yeastId);
         

@@ -119,7 +119,7 @@
 	        android:layout_below="@id/second_ll" >
 		    
 		    <!-- Boil time -->
-		    <TextView android:id="@+id/boil_boil_time_title"
+		    <TextView android:id="@+id/boil_time_title"
 		        android:text="@string/boil_time"
 		        style="@style/title_light" />
 		              

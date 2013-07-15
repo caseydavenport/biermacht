@@ -839,7 +839,7 @@ public class DatabaseInterface {
 			hop.setHopType(type);
 			hop.setAlphaAcidContent(alpha);
 			hop.setUse(use);
-			hop.setTime(time);
+			hop.setDisplayTime(time);
 			hop.setForm(form);
 			hop.setOrigin(origin);
 			
