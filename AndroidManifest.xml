@@ -34,7 +34,7 @@
         <activity
             android:name=".frontend.AddNewRecipeActivity"
             android:label="@string/title_activity_add_new_recipe"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.AddGrainActivity"
@@ -49,12 +49,12 @@
         <activity
             android:name=".frontend.EditRecipeActivity"
             android:label="@string/title_activity_edit_recipe"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".frontend.EditMashProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
 		<activity
             android:name=".frontend.AddHopsActivity"
