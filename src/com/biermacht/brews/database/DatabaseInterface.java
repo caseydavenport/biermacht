@@ -80,8 +80,8 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_MC_COL_TYPE,
 			DatabaseHelper.ING_MC_COL_VERSION,
 			DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT,
-			DatabaseHelper.ING_MC_COL_USE_FOR
-			
+			DatabaseHelper.ING_MC_COL_USE_FOR,
+			DatabaseHelper.ING_MC_COL_USE
 			};
 		
 	private String[] stylesAllColumns = {
@@ -280,7 +280,7 @@ public class DatabaseInterface {
 				values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
 				values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
 				values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
-				
+				values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
 			}
 			
 			database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
@@ -348,6 +348,7 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
 			values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
 			values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
+			values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
 		}
 		
 		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
@@ -887,6 +888,7 @@ public class DatabaseInterface {
 			int version = cursor.getInt(cid);              cid++;
 			int amtIsWeight = cursor.getInt(cid);          cid++;
 			String useFor = cursor.getString(cid);         cid++;
+			String use = cursor.getString(cid);            cid++;
 			
 			misc.setId(id);
 			misc.setOwnerId(ownerId);
@@ -898,8 +900,9 @@ public class DatabaseInterface {
 			misc.setMiscType(miscType);
 			misc.setVersion(version);
 			misc.setAmountIsWeight(amtIsWeight > 0 ? true : false);
+			misc.setUse(use);
 			misc.setUseFor(useFor);
-
+			
 			return misc;
 		}
 		

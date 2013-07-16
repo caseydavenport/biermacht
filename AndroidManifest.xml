@@ -74,10 +74,14 @@
             android:name=".frontend.EditYeastActivity"
             android:label="@string/title_activity_edit_yeast" >
         </activity>
-
 		<activity
             android:name=".frontend.AddMiscActivity"
             android:label="@string/title_activity_add_misc"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+		<activity
+            android:name=".frontend.EditMiscActivity"
+            android:label="@string/title_activity_edit_misc"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity

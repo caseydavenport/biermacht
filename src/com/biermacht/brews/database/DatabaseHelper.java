@@ -3,6 +3,9 @@ package com.biermacht.brews.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.util.*;
+import com.biermacht.brews.recipe.*;
+import com.biermacht.brews.utils.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -74,6 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_MC_COL_VERSION = "miscVersion";
 	public static final String ING_MC_COL_AMT_IS_WEIGHT = "amountIsWeight";
 	public static final String ING_MC_COL_USE_FOR = "useFor";
+	public static final String ING_MC_COL_USE = "miscUse";
 	
 	// Column define names for styles
 	public static final String STY_COL_ID = "_id";
@@ -190,8 +194,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_MC_COL_TYPE + " text, "
 				+ ING_MC_COL_VERSION + " int, "
 				+ ING_MC_COL_AMT_IS_WEIGHT + " int, "
-				+ ING_MC_COL_USE_FOR + " text"
-				
+				+ ING_MC_COL_USE_FOR + " text, "
+				+ ING_MC_COL_USE + " text"
 				+ ");";
 			
 	public static final String CREATE_STYLE_TABLE = "create table " +

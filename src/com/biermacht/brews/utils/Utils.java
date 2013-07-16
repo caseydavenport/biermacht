@@ -55,6 +55,10 @@ public class Utils {
 			return false;
 	}
 	
+	public static DatabaseInterface getDatabaseInterface()
+	{
+	    return MainActivity.databaseInterface;
+	}
 	// Methods for dealing with the Database
 	/**
 	 * Get all recipes in the database

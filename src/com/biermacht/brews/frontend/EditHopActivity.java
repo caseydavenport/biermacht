@@ -73,7 +73,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
 
 	public void onClick(View v) {
 		// if "SUBMIT" button pressed
-		if (v.getId() == R.id.new_grain_submit_button)
+		if (v.getId() == R.id.submit_button)
 		{
 			boolean readyToGo = true;
 			int endTime, startTime;
@@ -87,6 +87,7 @@ public class EditHopActivity extends Activity implements OnClickListener {
 				weight = Double.parseDouble(hopWeightEditText.getText().toString());
 			} catch (Exception e) {
 				Log.d("EditHopsActivity", e.toString());
+				Log.d("EditHops", "Setting ready to NO due to exception");
 				readyToGo = false;
 			}
 
@@ -113,18 +114,18 @@ public class EditHopActivity extends Activity implements OnClickListener {
 
 			if (readyToGo)
 			{
-				Hop h = new Hop(hopName);
-				h.setDisplayTime((int) time);
-				h.setStartTime(startTime);
-				h.setEndTime(endTime);
-				h.setAlphaAcidContent(alpha);
-				h.setDisplayAmount(weight);
-				h.setForm(Hop.FORM_PELLET);
+				hop.setName(hopName);
+				hop.setDisplayTime((int) time);
+				hop.setStartTime(startTime);
+				hop.setEndTime(endTime);
+				hop.setAlphaAcidContent(alpha);
+				hop.setDisplayAmount(weight);
+				hop.setForm(Hop.FORM_PELLET);
 
-				mRecipe.addIngredient(h);
+				Utils.updateIngredient(hop);
+				mRecipe = Utils.getRecipeWithId(mRecipe.getId());
 				mRecipe.update();
 				Utils.updateRecipe(mRecipe);
-
 				finish();
 			}
 		}

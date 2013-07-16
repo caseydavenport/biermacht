@@ -12,6 +12,7 @@
 	<string name="title_activity_edit_profile">Edit Mash Profile</string>
     <string name="title_activity_add_hops">Add Hops</string>
 	<string name="title_activity_add_misc">Add Misc</string>
+	<string name="title_activity_edit_misc">Edit Misc</string>
 
     <!-- Menu stuff -->
     <string name="menu_settings">Settings</string>

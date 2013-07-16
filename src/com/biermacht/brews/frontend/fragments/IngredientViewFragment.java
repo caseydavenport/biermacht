@@ -29,6 +29,7 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 import android.content.*;
+import com.biermacht.brews.frontend.*;
 
 public class IngredientViewFragment extends Fragment {
 
@@ -84,19 +85,19 @@ public class IngredientViewFragment extends Fragment {
 				// Yeast Pressed
 				if (ing.getType().equals(Ingredient.YEAST))
 				{
-			  		Intent editHopIntent = new Intent(c, EditYeastActivity.class);
-			  		editHopIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
-			  		editHopIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
-			  		startActivity(editHopIntent);
+			  		Intent editYeastIntent = new Intent(c, EditYeastActivity.class);
+			  		editYeastIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
+			  		editYeastIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
+			  		startActivity(editYeastIntent);
 				}
 				
 				// Misc Pressed
 				if (ing.getType().equals(Ingredient.MISC))
 				{
-			  		Intent editHopIntent = new Intent(c, EditYeastActivity.class);
-			  		editHopIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
-			  		editHopIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
-			  		startActivity(editHopIntent);
+			  		Intent editMiscIntent = new Intent(c, EditMiscActivity.class);
+			  		editMiscIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
+			  		editMiscIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
+			  		startActivity(editMiscIntent);
 				}
 			}
 		};
