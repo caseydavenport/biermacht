@@ -3,20 +3,6 @@ import java.util.*;
 
 public class Units {
 	
-	// ========================== UNITS POLICY!! =========================
-	//
-	//  For the sake of not having to redo a whole bunch of code, we will
-	// 	just convert at the interfaces.  The following units will be used for
-	// 	storage within the database and various java objects in use.
-	//
-	//  Fermentables - POUNDS
-	//  Yeasts - LITERS
-	//  Hops - OUNCES
-	//  Recipe Vol - GALLONS
-	//
-	//	Units will be converted before assignment to java objects
-	// ===================================================================
-	
 	// Unit systems
 	public static final String IMPERIAL = "Imperial";
 	public static final String METRIC = "Metric";
@@ -27,6 +13,8 @@ public class Units {
 	public static final String POUNDS = "lbs";
 	public static final String TEASPOONS = "tsp";
 	public static final String FARENHEIT = "F";
+	public static final String CUP = "Cup";
+	public static final String CUPS = "Cups";
 	
 	// Metric Units
 	public static final String KILOGRAMS = "kg";
@@ -89,6 +77,16 @@ public class Units {
 	public static double litersToGallons(double l)
 	{
 		return l * .264172052;
+	}
+	
+	public static double cupsToLiters(double c)
+	{
+		return c * .236;
+	}
+	
+	public static double litersToCups(double l)
+	{
+		return l / .236;
 	}
 	
 	public static double minutesToDays(double m)

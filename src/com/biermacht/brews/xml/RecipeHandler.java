@@ -813,9 +813,9 @@ public class RecipeHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("DISPLAY_AMOUNT"))
 			{
 				String dunit = Units.getUnitsFromDisplayAmount(currentValue);
-				double amt = Units.getAmountFromDisplayAmount(currentValue);
+				//double amt = Units.getAmountFromDisplayAmount(currentValue);
 				misc.setDisplayUnits(dunit);
-				misc.setDisplayAmount(amt);
+				//misc.setDisplayAmount(amt);
 			}
 			
 			else if (qName.equalsIgnoreCase("TIME"))

@@ -146,7 +146,7 @@ public class EditMiscActivity extends Activity {
 			miscObj.setTime(time);
 			miscObj.setStartTime(startTime);
 			miscObj.setEndTime(endTime);
-			miscObj.setDisplayAmount(amount);
+			miscObj.setDisplayAmount(amount, miscObj.getDisplayUnits());
 			
 			Utils.updateIngredient(miscObj);
 			mRecipe = Utils.getRecipeWithId(mRecipe.getId());

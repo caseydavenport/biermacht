@@ -93,7 +93,7 @@ public class MainActivity extends Activity implements OnClickListener {
 						long id)
 			{	
 			    Intent intent = new Intent(MainActivity.this, DisplayRecipeActivity.class);
-			    intent.putExtra("biermacht.brews.recipeID", recipeList.get(pos).getId());
+			    intent.putExtra(Utils.INTENT_RECIPE_ID, recipeList.get(pos).getId());
 			    startActivity(intent);				
 			}
         };
@@ -255,7 +255,7 @@ public class MainActivity extends Activity implements OnClickListener {
       if (menuItemIndex == 0)
       {
   		Intent i = new Intent(getApplicationContext(), EditRecipeActivity.class);
-  		i.putExtra("biermacht.brews.recipeID", selectedRecipe.getId());
+  		i.putExtra(Utils.INTENT_RECIPE_ID, selectedRecipe.getId());
   		startActivity(i); 
       }
       

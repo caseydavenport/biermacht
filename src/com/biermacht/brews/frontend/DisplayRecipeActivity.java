@@ -43,7 +43,7 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        id = getIntent().getLongExtra("biermacht.brews.recipeID", 0);
+        id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
         mRecipe = Utils.getRecipeWithId(id);
         
         // Set title based on recipe name

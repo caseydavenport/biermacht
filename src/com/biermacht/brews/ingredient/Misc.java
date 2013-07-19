@@ -110,9 +110,7 @@ public class Misc extends Ingredient {
 
 	@Override
 	public double getDisplayAmount() {
-		//if (this.displayAmount > 0)
-			//return this.displayAmount;
-			
+		
 		String unit = this.getDisplayUnits();
 		
 		if (unit.equals(Units.GALLONS))
@@ -128,8 +126,10 @@ public class Misc extends Ingredient {
 			    return Units.litersToOunces(this.amount);
 		if (unit.equals(Units.POUNDS))
 			return Units.kilosToPounds(this.amount);
+		if (unit.equals(Units.CUP) || unit.equals(Units.CUPS))
+			return Units.litersToCups(this.amount);
 		else
-			return this.amount;
+			return -1; // Should show that we couldnt compute
 	}
 	
 	@Override
@@ -138,8 +138,30 @@ public class Misc extends Ingredient {
 	}
 
 	@Override
-	public void setDisplayAmount(double amt) {
-		this.displayAmount = amt;
+	public void setDisplayAmount(double amt)
+	{
+		// Not implemented - use other method
+	}
+	
+	public void setDisplayAmount(double amt, String unit) {
+
+		if (unit.equals(Units.GALLONS))
+			this.amount = Units.gallonsToLiters(amt);
+		else if (unit.equals(Units.GRAMS))
+			this.amount = Units.gramsToKilos(amt);
+		else if (unit.equals(Units.TEASPOONS))
+			this.amount = Units.teaspoonsToLiters(amt);
+		else if (unit.equals(Units.OUNCES))
+			if (this.amountIsWeight())
+			    this.amount = Units.ouncesToKilos(amt);
+			else
+			    this.amount = Units.ouncesToLiters(amt);
+		else if (unit.equals(Units.POUNDS))
+			this.amount = Units.poundsToKilos(amt);
+		else if (unit.equals(Units.CUP) || unit.equals(Units.CUPS))
+			this.amount = Units.cupsToLiters(amt);
+		else
+			this.amount = -1.0; // Should show that we couldnt compute
 	}
 	
 	@Override

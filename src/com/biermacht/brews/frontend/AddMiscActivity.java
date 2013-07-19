@@ -195,7 +195,7 @@ public class AddMiscActivity extends Activity {
 			miscObj.setTime(time);
 			miscObj.setStartTime(startTime);
 			miscObj.setEndTime(endTime);
-			miscObj.setDisplayAmount(amount);
+			miscObj.setDisplayAmount(amount, miscObj.getDisplayUnits());
 			miscObj.setMiscType(type);
 			miscObj.setUse(use);
 
