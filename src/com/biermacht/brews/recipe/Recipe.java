@@ -484,6 +484,11 @@ public class Recipe {
 		this.version = version;
 	}
 	
+	public ArrayList<Misc> getMiscList()
+	{
+		return miscs;
+	}
+	
 	public ArrayList<Fermentable> getFermentablesList()
 	{
 		return fermentables;
