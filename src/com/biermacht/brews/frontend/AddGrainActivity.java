@@ -36,7 +36,6 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private TextView grainTypeTextView;
 	private TextView boilSteepTextView;
 	private ArrayList<Ingredient> grainArray;
-	private String grainType;
 	private Recipe mRecipe;
 	Fermentable fermentable;
 
@@ -114,7 +113,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 					// TODO: Partial Mash / All Grain
 				}
 				
-                grainNameEditText.setText(grainType);
+                grainNameEditText.setText(fermentable.getName());
                 grainColorEditText.setText(String.format("%2.2f", fermentable.getLovibondColor()));
                 grainGravEditText.setText(String.format("%2.3f", fermentable.getGravity()));
                 grainWeightEditText.setText(1 +"");
