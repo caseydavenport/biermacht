@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Spinner;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -34,7 +35,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 	private EditText grainTimeEditText;
 	private TextView grainTypeTextView;
 	private TextView boilSteepTextView;
-	private ArrayList<String> grainTypeArray;
+	private ArrayList<Ingredient> grainArray;
 	private String grainType;
 	private Recipe mRecipe;
 	Fermentable fermentable;
@@ -51,7 +52,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
     	ingredientHandler = MainActivity.ingredientHandler;
     	
     	// Set list of ingredients to show
-    	grainTypeArray = Utils.getIngredientStringList(ingredientHandler.getFermentablesList());
+    	grainArray = ingredientHandler.getFermentablesList();
         
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
@@ -68,7 +69,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 		
         // Set up grain type spinner
         grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
-        SpinnerAdapter adapter = new SpinnerAdapter(this, grainTypeArray);  
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, grainArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         grainTypeSpinner.setAdapter(adapter);
         grainTypeSpinner.setSelection(0);    
@@ -77,14 +78,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
         grainTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-            	fermentable = new Fermentable("");
-            	grainType = grainTypeArray.get(position);
-                
-                for (Ingredient i : ingredientHandler.getFermentablesList())
-                {
-                	if (grainType.equals(i.toString()))
-                		fermentable = (Fermentable) i;
-                }
+            	fermentable = (Fermentable) grainArray.get(position);
                 
                 // Set whether we want to show name field
                 if (fermentable.getName().equals("Custom Fermentable"))
@@ -169,16 +163,15 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 			if (startTime > mRecipe.getBoilTime())
 				startTime = mRecipe.getBoilTime();
 			
-			Fermentable g = fermentable;
-			g.setName(grainName);
-			g.setLovibondColor(color);
-			g.setGravity(grav);
-			g.setDisplayAmount(weight);
-			g.setFermentableType(fermType);
-			g.setStartTime(startTime);
-			g.setEndTime(endTime);
+			fermentable.setName(grainName);
+			fermentable.setLovibondColor(color);
+			fermentable.setGravity(grav);
+			fermentable.setDisplayAmount(weight);
+			fermentable.setFermentableType(fermType);
+			fermentable.setStartTime(startTime);
+			fermentable.setEndTime(endTime);
 			
-			mRecipe.addIngredient(g);
+			mRecipe.addIngredient(fermentable);
 			mRecipe.update();
 			Utils.updateRecipe(mRecipe);
 			
