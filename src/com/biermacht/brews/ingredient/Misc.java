@@ -10,13 +10,6 @@ public class Misc extends Ingredient {
 	public static String TYPE_HERB = "Herb";
 	public static String TYPE_FLAVOR = "Flavor";
 	public static String TYPE_OTHER = "Other";
-
-	// Defines for use of misc ingredient
-	public static String USE_BOIL = "Boil";
-	public static String USE_MASH = "Mash";
-	public static String USE_PRIMARY = "Primary";
-	public static String USE_SECONDARY = "Secondary";
-	public static String USE_BOTTLING = "Bottling";
 	
 	// Required by beerXML
 	private String miscType;

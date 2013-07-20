@@ -1,5 +1,7 @@
 package com.biermacht.brews.recipe;
 
+import android.util.Log;
+
 import com.biermacht.brews.utils.Units;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,9 +14,8 @@ import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
+import com.biermacht.brews.utils.InstructionGenerator;
 import com.biermacht.brews.utils.Utils;
-import com.biermacht.brews.utils.comparators.InstructionComparator;
-import java.util.*;
 
 public class Recipe {
 	
@@ -50,7 +51,7 @@ public class Recipe {
 	private double ABV;                // Alcohol by volume
 	private double bitterness;         // Bitterness in IBU
 	private double color;              // Color - SRM
-	private ArrayList<Instruction> instructionList;
+	private InstructionGenerator instructionGenerator;
 	
 	// Static values =================================================
 	// ===============================================================
@@ -93,17 +94,19 @@ public class Recipe {
 		this.ABV = 0;
 		this.bitterness = 0;
 		this.color = 0; 
-		instructionList = new ArrayList<Instruction>();
+		this.instructionGenerator = new InstructionGenerator(this);
 	}
 	
 	// Public methods
 	public void update()
 	{
+		Log.d("recipe.Recipe", "Updating recipe: " + getRecipeName());
 		setColor(BrewCalculator.calculateColorFromRecipe(this));
 		setOG(BrewCalculator.calculateOriginalGravityFromRecipe(this));
 		setBitterness(BrewCalculator.calculateIbuFromRecipe(this));
 		setFG(BrewCalculator.estimateFinalGravityFromRecipe(this));
 		setABV(BrewCalculator.calculateAbvFromRecipe(this));
+		this.instructionGenerator.generate();
 	}
 	
 	public void setRecipeName(String name)
@@ -156,6 +159,8 @@ public class Recipe {
 			yeasts.remove((Yeast) i);
 		else if (i.getType().equals(Ingredient.WATER))
 			waters.remove((Water) i);
+		
+		update();
 	}
 	
 	public MashProfile getMashProfile()
@@ -166,19 +171,11 @@ public class Recipe {
 	public void setMashProfile(MashProfile profile)
 	{
 		this.mashProfile = profile;
+		update();
 	}
 	
-	public void addInstruction(Instruction i)
+	public String getDescription() 
 	{
-		instructionList.add(i);
-	}
-	
-	public void removeInstruction(String i)
-	{
-
-	}
-	
-	public String getDescription() {
 		return description;
 	}
 
@@ -190,11 +187,13 @@ public class Recipe {
 			this.description = description;
 	}
 
-	public BeerStyle getStyle() {
+	public BeerStyle getStyle() 
+	{
 		return style;
 	}
 
-	public void setStyle(BeerStyle beerStyle) {
+	public void setStyle(BeerStyle beerStyle) 
+	{
 		this.style = beerStyle;
 	}
 	
@@ -211,7 +210,8 @@ public class Recipe {
 		return list;
 	}
 	
-	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) {
+	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) 
+	{
 		
 		for (Ingredient i : ingredientsList)
 		{
@@ -230,109 +230,120 @@ public class Recipe {
 		update();
 	}
 	
-	private void addWater(Ingredient i) {
+	private void addWater(Ingredient i) 
+	{
 		Water w = (Water) i;
 		waters.add(w);
 	}
 
-	private void addYeast(Ingredient i) {
+	private void addYeast(Ingredient i) 
+	{
 		Yeast y = (Yeast) i;
 		yeasts.add(y);
 	}
 
-	private void addMisc(Ingredient i) {
+	private void addMisc(Ingredient i) 
+	{
 		Misc m = (Misc) i;
 		miscs.add(m);
 	}
 
-	private void addFermentable(Ingredient i) {
+	private void addFermentable(Ingredient i) 
+	{
 		Fermentable f = (Fermentable) i;
 		fermentables.add(f);
 	}
 
-	private void addHop(Ingredient i) {
+	private void addHop(Ingredient i) 
+	{
 		Hop h = (Hop) i;
 		hops.add(h);
 	}
 
 	public ArrayList<Instruction> getInstructionList()
 	{
-		return generateInstructionsFromIngredients();
+		return this.instructionGenerator.getInstructions();
 	}
-	
-	// Comparator for sorting ingredients list
-	private class IngredientComparator implements Comparator<Ingredient>
+
+	public double getOG() 
 	{
-
-		public int compare(Ingredient i1, Ingredient i2) {
-			return i1.getType().compareTo(i2.getType());
-		}	
-	}
-
-	public double getOG() {
 		return OG;
 	}
 
-	public void setOG(double gravity) {
+	public void setOG(double gravity) 
+	{
 		gravity = (double) Math.round(gravity * 1000) / 1000;
 		this.OG = gravity;
 	}
 
-	public double getBitterness() {
+	public double getBitterness() 
+	{
 		bitterness = (double) Math.round(bitterness * 10) / 10;
 		return bitterness;
 	}
 
-	public void setBitterness(double bitterness) {
+	public void setBitterness(double bitterness) 
+	{
 		bitterness = (double) Math.round(bitterness * 10) / 10;
 		this.bitterness = bitterness;
 	}
 
-	public double getColor() {
+	public double getColor() 
+	{
 		color = (double) Math.round(color * 10) / 10;
 		return color;
 	}
 
-	public void setColor(double color) {
+	public void setColor(double color) 
+	{
 		color = (double) Math.round(color * 10) / 10;
 		this.color = color;
 	}
 
-	public double getABV() {
+	public double getABV() 
+	{
 		ABV = (double) Math.round(ABV * 10) / 10;
 		return ABV;
 	}
 
-	public void setABV(double aBV) {
+	public void setABV(double aBV) 
+	{
 		ABV = (double) Math.round(ABV * 10) / 10;
 		ABV = aBV;
 	}
 
-	public int getBatchTime() {
+	public int getBatchTime() 
+	{
 		return batchTime;
 	}
 
-	public void setBatchTime(int batchTime) {
+	public void setBatchTime(int batchTime) 
+	{
 		this.batchTime = batchTime;
 	}
 
-	public long getId() {
+	public long getId() 
+	{
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(long id) 
+	{
 		this.id = id;
 	}
 	
-	public double getDisplayBatchSize() {
+	public double getDisplayBatchSize() 
+	{
 		return Units.litersToGallons(this.batchSize);
 	}
 	
-	public void setDisplayBatchSize(double size) {
+	public void setDisplayBatchSize(double size) 
+	{
 		this.batchSize = Units.gallonsToLiters(size);
 	}
 
-	public double getBeerXmlStandardBatchSize() {
+	public double getBeerXmlStandardBatchSize() 
+	{
 		return this.batchSize;
 	}
 	
@@ -341,19 +352,23 @@ public class Recipe {
 		this.batchSize = v;
 	}
 
-	public int getBoilTime() {
+	public int getBoilTime() 
+	{
 		return boilTime;
 	}
 
-	public void setBoilTime(int boilTime) {
+	public void setBoilTime(int boilTime) 
+	{
 		this.boilTime = boilTime;
 	}
 	
-	public double getEfficiency() {
+	public double getEfficiency() 
+	{
 		return efficiency;
 	}
 
-	public void setEfficiency(double efficiency) {
+	public void setEfficiency(double efficiency) 
+	{
 		this.efficiency = efficiency;
 	}
 	
@@ -363,27 +378,19 @@ public class Recipe {
 		return this.getRecipeName();
 	}
 	
-	private ArrayList<Instruction> generateInstructionsFromIngredients()
-	{
-		if (this.getType().equals(Recipe.EXTRACT))
-			return generateExtractInstructions();
-		if (this.getType().equals(Recipe.ALL_GRAIN))
-			return generateAllGrainInstructions();
-		else
-			return generateAllGrainInstructions();
-	}
-	
 	/**
 	 * @return the brewer
 	 */
-	public String getBrewer() {
+	public String getBrewer() 
+	{
 		return brewer;
 	}
 
 	/**
 	 * @param brewer the brewer to set
 	 */
-	public void setBrewer(String brewer) {
+	public void setBrewer(String brewer) 
+	{
 		this.brewer = brewer;
 	}
 	
@@ -392,35 +399,40 @@ public class Recipe {
 		return Units.litersToGallons(this.boilSize);
 	}
 	
-	public void setDisplayBoilSize(double size) {
+	public void setDisplayBoilSize(double size) 
+	{
 		this.boilSize = Units.gallonsToLiters(size);
 	}
 
 	/**
 	 * @return the boilSize
 	 */
-	public double getBeerXmlStandardBoilSize() {
+	public double getBeerXmlStandardBoilSize() 
+	{
 		return boilSize;
 	}
 
 	/**
 	 * @param boilSize the boilSize to set
 	 */
-	public void setBeerXmlStandardBoilSize(double boilSize) {
+	public void setBeerXmlStandardBoilSize(double boilSize) 
+	{
 		this.boilSize = boilSize;
 	}
 
 	/**
 	 * @return the type
 	 */
-	public String getType() {
+	public String getType() 
+	{
 		return type;
 	}
 
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(String type) {
+	public void setType(String type) 
+	{
 		this.type = type;
 	}
 
@@ -443,28 +455,32 @@ public class Recipe {
 	/**
 	 * @return the fermentationStages
 	 */
-	public int getFermentationStages() {
+	public int getFermentationStages() 
+	{
 		return fermentationStages;
 	}
 
 	/**
 	 * @param fermentationStages the fermentationStages to set
 	 */
-	public void setFermentationStages(int fermentationStages) {
+	public void setFermentationStages(int fermentationStages) 
+	{
 		this.fermentationStages = fermentationStages;
 	}
 
 	/**
 	 * @return the version
 	 */
-	public int getVersion() {
+	public int getVersion() 
+	{
 		return version;
 	}
 
 	/**
 	 * @param version the version to set
 	 */
-	public void setVersion(int version) {
+	public void setVersion(int version) 
+	{
 		this.version = version;
 	}
 	
@@ -482,450 +498,23 @@ public class Recipe {
 	{
 		return yeasts;
 	}
-	private ArrayList<Instruction> generateAllGrainInstructions()
+	
+	public int getDisplayFermentationTemp()
 	{
-
-		ArrayList<Instruction> list = new ArrayList<Instruction>();
-		ArrayList<MashStep> mashSteps = getMashProfile().getMashStepList();
-		HashMap<Integer, String> mashes = new HashMap<Integer, String>();
-		HashMap<Integer, String> hopBoils = new HashMap<Integer, String>();
-		HashMap<Integer, String> dryHops = new HashMap<Integer, String>();
-		HashMap<Integer, String> extracts = new HashMap<Integer, String>();
-		String yeasts = "";
-		Instruction inst;
-
-	    // Generate mash and extract add instructions
-		for(Fermentable f : getFermentablesList())
+		for (Yeast y : this.getYeastsList())
 		{
-			// We build up a map with K = steep duration
-			// and V = string of steeped grains at duration K
-			if (f.getFermentableType().equals(Fermentable.GRAIN))
-			{
-				if (!mashes.containsKey(f.getTime()))
-				{
-					// Add a new entry for that duration
-					mashes.put(f.getTime(), f.getName());	
-				}
-				else
-				{
-					// Append to existing duration
-					String s = mashes.get(f.getTime());
-					s += "\n";
-					s += f.getName();
-					mashes.put(f.getTime(), s);
-				}
-
-			}
-			// Handle extracts here
-			else if (f.getFermentableType().equals(Fermentable.EXTRACT))
-			{
-				if (!extracts.containsKey(f.getTime()))
-				{
-					// Add a new entry for that duration
-					extracts.put(f.getTime(), f.getName());	
-				}
-				else
-				{
-					// Append to existing duration
-					String s = extracts.get(f.getTime());
-					s += "\n";
-					s += f.getName();
-					extracts.put(f.getTime(), s);
-				}
-			}
+			return y.getDisplayFermentationTemp();
 		}
-
-		// Boil hops instructions
-		for(Hop h : getHopsList())
-		{
-			// Boil Case
-			if (h.getUse().equals(Hop.USE_BOIL))
-			{
-				if (!hopBoils.containsKey(h.getDisplayTime()))
-				{
-					hopBoils.put(h.getDisplayTime(), h.getName());
-				}
-				else
-				{
-					// Append to existing duration
-					String s = hopBoils.get(h.getTime());
-					s += "\n";
-					s += h.getName();
-					hopBoils.put(h.getTime(), s);
-				}
-			}
-			// Dry hop case
-			else if (h.getUse().equals(Hop.USE_DRY_HOP))
-			{
-				if (!dryHops.containsKey(h.getDisplayTime()))
-				{
-					dryHops.put(h.getDisplayTime(), h.getName());
-				}
-				else
-				{
-					// Append to existing duration
-					String s = dryHops.get(h.getTime());
-					s += "\n";
-					s += h.getName();
-					dryHops.put(h.getTime(), s);
-				}
-			}
-		}
-		for (Yeast y : getYeastsList())
-		{
-			yeasts += y.getName() + " yeast";
-		}
-
-		// Build up the add grain to mash instructions
-		if (mashes.size() > 0)
-		{
-			// for each k=steep_duration
-			for (Integer k : mashes.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(mashes.get(k));
-				inst.setInstructionType(Instruction.TYPE_ADD);
-				inst.setDuration(0);
-				inst.setOrder(0); // Mash instructions go first
-				inst.setStartTime(0);
-				inst.setEndTime(k);
-				list.add(inst);
-			}
-		}
-		
-		// Build up mashSteps
-		if (mashSteps.size() > 0)
-		{
-			// for each k=steep_duration
-			for (MashStep s : mashSteps)
-			{
-				if (s.getRampTime() != 0)
-				{
-					inst = new Instruction();
-					String temp = String.format("%2.0f", s.getDisplayStepTemp());
-					String text = "Ramp temperature to " + temp + "F";
-					inst.setInstructionText(text);
-					inst.setInstructionType(Instruction.TYPE_MASH);
-					inst.setDuration(s.getRampTime());
-					inst.setOrder(0); // Mash instructions go first
-					inst.setStartTime(0);
-					inst.setEndTime(s.getRampTime());
-					list.add(inst);
-				}
-				
-				inst = new Instruction();
-				inst.setInstructionText(s.getName());
-				inst.setInstructionType(Instruction.TYPE_MASH);
-				inst.setDuration(s.getStepTime());
-				inst.setOrder(0); // Mash instructions go first
-				inst.setStartTime(0);
-				inst.setEndTime(s.getStepTime());
-				list.add(inst);
-			}
-		}
-		
-		// Build up the extracts instructions
-		if (extracts.size() > 0)
-		{
-			// for each k=boil_duration
-			for (Integer k : extracts.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionType(Instruction.TYPE_ADD);
-				inst.setInstructionText(extracts.get(k));
-				inst.setDuration(k);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-
-				// Order gets set based on if it is a late addition or not
-				if(inst.getStartTime() != 0)
-					inst.setOrder(2); // Same as hop boils
-				else
-					inst.setOrder(1); // Second after steeps
-
-				list.add(inst);
-			}
-		}
-		// Build up the boil hops instructions
-		if (hopBoils.size() > 0)
-		{
-			// for each k=steep_duration
-			for (Integer k : hopBoils.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(hopBoils.get(k));
-				inst.setInstructionType(Instruction.TYPE_BOIL);
-				inst.setOrder(2); // Third
-				inst.setDuration(k);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-				list.add(inst);
-			}
-		}
-		if (list.size() > 0)
-		{
-			// Add a cool wort stage
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_COOL);
-			inst.setInstructionText("Cool wort to 70F");
-			inst.setStartTime(getBoilTime());
-			inst.setEndTime(getBoilTime());
-			inst.setDuration(2);
-			inst.setOrder(3);
-			inst.setDurationUnits("hours");
-			list.add(inst);
-		}
-		if (yeasts.length() > 0)
-		{
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_ADD);
-			inst.setInstructionText(yeasts);
-			inst.setStartTime(getBoilTime() + 1);
-			inst.setEndTime(getBoilTime() + 1);
-			inst.setDuration(1);
-			inst.setOrder(4);
-			list.add(inst);
-		}
-		if (list.size() > 0)
-		{
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_FERMENT);
-			inst.setInstructionText("Until FG = " + getFG());
-			inst.setStartTime(getBoilTime() + 1);
-			inst.setEndTime(getBoilTime() + 1);
-			inst.setDuration(5);
-			inst.setOrder(5);
-			inst.setDurationUnits("days");
-			list.add(inst);
-		}
-		// Build up the dry hops instructions
-		if (dryHops.size() > 0)
-		{
-			// for each k=dry hop duration
-			for (Integer k : dryHops.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(dryHops.get(k));
-				inst.setInstructionType(Instruction.TYPE_DRY_HOP);
-				inst.setOrder(6);
-				inst.setDuration(k);
-				inst.setDurationUnits(Units.DAYS);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-				list.add(inst);
-			}
-		}
-
-		// Sort based on order and then start time
-		Collections.sort(list, new InstructionComparator<Instruction>());
-
-		return list;
+		return 70;
 	}
 	
-	private ArrayList<Instruction> generateExtractInstructions()
+	// Comparator for sorting ingredients list
+	private class IngredientComparator implements Comparator<Ingredient>
 	{
 
-		ArrayList<Instruction> list = new ArrayList<Instruction>();
-		HashMap<Integer, String> steeps = new HashMap<Integer, String>();
-		HashMap<Integer, String> hopBoils = new HashMap<Integer, String>();
-		HashMap<Integer, String> dryHops = new HashMap<Integer, String>();
-		HashMap<Integer, String> extracts = new HashMap<Integer, String>();
-		String yeasts = "";
-		Instruction inst;
-
-	    // Generate steep and extract add instructions
-		for(Fermentable f : getFermentablesList())
+		public int compare(Ingredient i1, Ingredient i2) 
 		{
-			// We build up a map with K = steep duration
-			// and V = string of steeped grains at duration K
-			if (f.getFermentableType().equals(Fermentable.GRAIN))
-			{
-				if (!steeps.containsKey(f.getTime()))
-				{
-					// Add a new entry for that duration
-					steeps.put(f.getTime(), f.getName());	
-				}
-				else
-				{
-					// Append to existing duration
-					String s = steeps.get(f.getTime());
-					s += "\n";
-					s += f.getName();
-					steeps.put(f.getTime(), s);
-				}
-
-			}
-			// Handle extracts here
-			else if (f.getFermentableType().equals(Fermentable.EXTRACT))
-			{
-				if (!extracts.containsKey(f.getTime()))
-				{
-					// Add a new entry for that duration
-					extracts.put(f.getTime(), f.getName());	
-				}
-				else
-				{
-					// Append to existing duration
-					String s = extracts.get(f.getTime());
-					s += "\n";
-					s += f.getName();
-					extracts.put(f.getTime(), s);
-				}
-			}
-		}
-
-		// Boil hops instructions
-		for(Hop h : getHopsList())
-		{
-			// Boil Case
-			if (h.getUse().equals(Hop.USE_BOIL))
-			{
-				if (!hopBoils.containsKey(h.getTime()))
-				{
-					hopBoils.put(h.getTime(), h.getName());
-				}
-				else
-				{
-					// Append to existing duration
-					String s = hopBoils.get(h.getTime());
-					s += "\n";
-					s += h.getName();
-					hopBoils.put(h.getTime(), s);
-				}
-			}
-			// Dry hop case
-			else if (h.getUse().equals(Hop.USE_DRY_HOP))
-			{
-				if (!dryHops.containsKey(h.getTime()))
-				{
-					dryHops.put(h.getTime(), h.getName());
-				}
-				else
-				{
-					// Append to existing duration
-					String s = dryHops.get(h.getTime());
-					s += "\n";
-					s += h.getName();
-					dryHops.put(h.getTime(), s);
-				}
-			}
-		}
-		for (Yeast y : getYeastsList())
-		{
-			yeasts += y.getName() + " yeast";
-		}
-
-		// Build up the steep instructions
-		if (steeps.size() > 0)
-		{
-			// for each k=steep_duration
-			for (Integer k : steeps.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(steeps.get(k));
-				inst.setInstructionType(Instruction.TYPE_STEEP);
-				inst.setDuration(k);
-				inst.setOrder(0); // Steep instructions go first
-				inst.setStartTime(0);
-				inst.setEndTime(k);
-				list.add(inst);
-			}
-		}
-		// Build up the extracts instructions
-		if (extracts.size() > 0)
-		{
-			// for each k=boil_duration
-			for (Integer k : extracts.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionType(Instruction.TYPE_ADD);
-				inst.setInstructionText(extracts.get(k));
-				inst.setDuration(k);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-
-				// Order gets set based on if it is a late addition or not
-				if(inst.getStartTime() != 0)
-					inst.setOrder(2); // Same as hop boils
-				else
-					inst.setOrder(1); // Second after steeps
-
-				list.add(inst);
-			}
-		}
-		// Build up the boil hops instructions
-		if (hopBoils.size() > 0)
-		{
-			// for each k=steep_duration
-			for (Integer k : hopBoils.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(hopBoils.get(k));
-				inst.setInstructionType(Instruction.TYPE_BOIL);
-				inst.setOrder(2); // Third
-				inst.setDuration(k);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-				list.add(inst);
-			}
-		}
-		if (list.size() > 0)
-		{
-			// Add a cool wort stage
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_COOL);
-			inst.setInstructionText("Cool wort to 70F");
-			inst.setStartTime(getBoilTime());
-			inst.setEndTime(getBoilTime());
-			inst.setDuration(2);
-			inst.setOrder(3);
-			inst.setDurationUnits("hours");
-			list.add(inst);
-		}
-		if (yeasts.length() > 0)
-		{
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_ADD);
-			inst.setInstructionText(yeasts);
-			inst.setStartTime(getBoilTime() + 1);
-			inst.setEndTime(getBoilTime() + 1);
-			inst.setDuration(1);
-			inst.setOrder(4);
-			list.add(inst);
-		}
-		if (list.size() > 0)
-		{
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_FERMENT);
-			inst.setInstructionText("Until FG = " + getFG());
-			inst.setStartTime(getBoilTime() + 1);
-			inst.setEndTime(getBoilTime() + 1);
-			inst.setDuration(5);
-			inst.setOrder(5);
-			inst.setDurationUnits("days");
-			list.add(inst);
-		}
-		// Build up the dry hops instructions
-		if (dryHops.size() > 0)
-		{
-			// for each k=dry hop duration
-			for (Integer k : dryHops.keySet())
-			{
-				inst = new Instruction();
-				inst.setInstructionText(dryHops.get(k));
-				inst.setInstructionType(Instruction.TYPE_DRY_HOP);
-				inst.setOrder(6);
-				inst.setDuration(k);
-				inst.setDurationUnits(Units.DAYS);
-				inst.setStartTime(getBoilTime()-k);
-				inst.setEndTime(getBoilTime());
-				list.add(inst);
-			}
-		}
-
-		// Sort based on order and then start time
-		Collections.sort(list, new InstructionComparator<Instruction>());
-
-		return list;
+			return i1.getType().compareTo(i2.getType());
+		}	
 	}
 }

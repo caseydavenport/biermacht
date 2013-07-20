@@ -192,6 +192,16 @@ public class Yeast extends Ingredient {
 	public void setMaxTemp(double maxTemp) {
 		this.maxTemp = maxTemp;
 	}
+	
+	public int getBeerXmlStandardFermentationTemp()
+	{
+		return (int) ((maxTemp + minTemp) / 2);
+	}
+	
+	public int getDisplayFermentationTemp()
+	{
+		return (int) Units.celsiusToFarenheit(((maxTemp + minTemp) / 2));
+	}
 
 	/**
 	 * @return the attenuation

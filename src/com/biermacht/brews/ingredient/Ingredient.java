@@ -20,6 +20,13 @@ public abstract class Ingredient {
 	public static final String MISC = "Misc";
 	public static final String WATER = "Water";
 	
+	// Defines for use of ingredient
+	public static String USE_BOIL = "Boil";
+	public static String USE_MASH = "Mash";
+	public static String USE_PRIMARY = "Primary";
+	public static String USE_SECONDARY = "Secondary";
+	public static String USE_BOTTLING = "Bottling";
+	
 	// Public constructors
 	public Ingredient(String name)
 	{

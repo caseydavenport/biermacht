@@ -1,5 +1,9 @@
 package com.biermacht.brews.recipe;
 
+import java.util.HashMap;
+
+import android.util.Log;
+
 public class Instruction {
 	
 	private String instructionText;
@@ -9,15 +13,17 @@ public class Instruction {
 	private double endTime;
 	private double duration;
 	private String duration_units;
+	private HashMap<String, Integer> typeToOrder;
 	
-	public static String TYPE_OTHER = "";
-	public static String TYPE_ADD = "Add";
 	public static String TYPE_STEEP = "Steep";
 	public static String TYPE_BOIL = "Boil";
-	public static String TYPE_COOL = "Cool";
-	public static String TYPE_FERMENT = "Wait";
+	public static String TYPE_PRIMARY = "Prim";
+	public static String TYPE_SECONDARY = "Sec";
 	public static String TYPE_DRY_HOP = "Hop";
 	public static String TYPE_MASH = "Mash";
+	public static String TYPE_YEAST = "Yeast";
+	public static String TYPE_COOL = "Cool";
+	public static String TYPE_OTHER = "";
 	
 	public Instruction()
 	{
@@ -28,6 +34,9 @@ public class Instruction {
 		this.duration_units = "mins";
 		this.order = -1;
 		this.instructionType = TYPE_OTHER;
+		
+		typeToOrder = new HashMap<String, Integer>();
+		this.configureHashMap();
 	}
 
 	public String getInstructionText() {
@@ -39,22 +48,31 @@ public class Instruction {
 		instructionText += s;
 	}
 	
-	public Instruction concatInstruction(Instruction i)
-	{
-		Instruction iret = new Instruction();
-		iret.setDuration(i.getDuration());
-		iret.setDurationUnits(i.getDuration_units());
-		iret.setEndTime(i.getEndTime());
-		iret.setStartTime(i.getStartTime());
-		iret.setInstructionText(getInstructionText() + "\n" + i.getInstructionText());
-		return iret;
-	}
-	
+	/**
+	 * Used for ordering of instruction 
+	 */
 	public int getOrder()
 	{
-		return this.order;
+		if (this.order >= 100)
+		{
+			Log.d("recipe.Instruction", "Instruction order out of bounds");
+			return -1;
+		}
+		
+		try
+		{
+			return this.typeToOrder.get(this.getInstructionType());
+		} 
+		catch (Exception e)
+		{
+			Log.d("recipe.Instruction", "Failed to get instruction order");
+			return -1;
+		}
 	}
 	
+	/*
+	 * Sets order within 
+	 */
 	public void setOrder(int o)
 	{
 		this.order = o;
@@ -110,5 +128,18 @@ public class Instruction {
 	public void setEndTime(double endTime) {
 		this.endTime = endTime;
 	}
-
+	
+	private void configureHashMap()
+	{
+		int i = 0;
+		this.typeToOrder.put(TYPE_OTHER, i);	    i +=100;
+		this.typeToOrder.put(TYPE_STEEP, i);	    i +=100;
+		this.typeToOrder.put(TYPE_MASH, i);	   		i +=100;
+		this.typeToOrder.put(TYPE_BOIL, i);	    	i +=100;
+		this.typeToOrder.put(TYPE_COOL, i);	    	i +=100;
+		this.typeToOrder.put(TYPE_YEAST, i);		i +=100;
+		this.typeToOrder.put(TYPE_PRIMARY, i);		i +=100;
+		this.typeToOrder.put(TYPE_SECONDARY, i);	i +=100;
+		this.typeToOrder.put(TYPE_DRY_HOP, i);		i +=100;
+	}
 }

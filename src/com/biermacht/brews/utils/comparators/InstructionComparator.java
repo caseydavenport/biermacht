@@ -11,10 +11,14 @@ public class InstructionComparator<K> implements Comparator<K>
 		Instruction i1 = (Instruction) k1;
 		Instruction i2 = (Instruction) k2;
 		
+		// First compare the ordering field of the instructions
 		if (i1.getOrder() > i2.getOrder())
 			return 1;
 		else if (i1.getOrder() < i2.getOrder())
 			return -1;
+		
+		// If the instructions have the same order, compare based on
+		// innerIndex
 		else if(i1.getOrder() == i2.getOrder())
 		{
 			if (i1.getStartTime() > i2.getStartTime())
