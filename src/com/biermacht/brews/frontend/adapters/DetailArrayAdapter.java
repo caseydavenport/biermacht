@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,8 +91,8 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
 			Boolean isGood = Utils.isWithinRange(detail.getValue(), detail.getMin(), detail.getMax());
 
 			// If it is in this range but not the GOOD ranges above, color it yellow
-			Boolean isOk = Utils.isWithinRange(detail.getValue(), detail.getMin(), detail.getMax());
-		
+			Boolean isOk = Utils.isWithinRange(detail.getValue(), detail.getMinOk(), detail.getMaxOk());
+
 			// Set all the colors appropriately
 			if (isGood)
 				valueView.setTextColor(Color.parseColor(ColorHandler.GREEN));

@@ -69,12 +69,14 @@ public class DetailsViewFragment extends Fragment {
 		originalGravity.setFormat("%2.3f");
 		originalGravity.setMin(reccomendedValues.getMinOG());
 		originalGravity.setMax(reccomendedValues.getMaxOG());
+		originalGravity.setVariance(.002);
 		detailList.add(originalGravity);
 			
 		finalGravity = new Detail();
 		finalGravity.setTitle("Final Gravity: ");
 		finalGravity.setValue(r.getFG());
 		finalGravity.setFormat("%2.3f");
+		finalGravity.setVariance(.002);
 		finalGravity.setMin(reccomendedValues.getMinFG());
 		finalGravity.setMax(reccomendedValues.getMaxFG());
 		detailList.add(finalGravity);
@@ -83,6 +85,7 @@ public class DetailsViewFragment extends Fragment {
 		bitterness.setTitle("Bitterness, IBU: ");
 		bitterness.setValue(r.getBitterness());
 		bitterness.setFormat("%2.1f");
+		bitterness.setVariance(.2);
 		bitterness.setMin(reccomendedValues.getMinBitter());
 		bitterness.setMax(reccomendedValues.getMaxBitter());
 		detailList.add(bitterness);
@@ -91,6 +94,7 @@ public class DetailsViewFragment extends Fragment {
 		color.setTitle("Color, SRM: ");
 		color.setValue(r.getColor());
 		color.setFormat("%2.1f");
+		color.setVariance(.1);
 		color.setMin(reccomendedValues.getMinColor());
 		color.setMax(reccomendedValues.getMaxColor());
 		detailList.add(color);
@@ -99,6 +103,7 @@ public class DetailsViewFragment extends Fragment {
 		abv.setTitle("ABV: ");
 		abv.setValue(r.getABV());
 		abv.setFormat("%2.1f");
+		abv.setVariance(.06);
 		abv.setMin(reccomendedValues.getMinAbv());
 		abv.setMax(reccomendedValues.getMaxAbv());
 		detailList.add(abv);

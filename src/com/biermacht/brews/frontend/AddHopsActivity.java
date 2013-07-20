@@ -28,16 +28,19 @@ public class AddHopsActivity extends Activity {
 	
 	IngredientHandler ingredientHandler;
 	private Spinner hopSpinner;
-	private Spinner hopTypeSpinner;
+	private Spinner hopUseSpinner;
+	private Spinner hopFormSpinner;
 	private EditText hopNameEditText;
 	private EditText hopBoilTimeEditText;
 	private TextView hopTimeTitle;
 	private EditText hopAcidEditText;
 	private EditText hopWeightEditText;
 	private ArrayList<Ingredient> hopArray;
-	private ArrayList<String> hopTypeArray;
+	private ArrayList<String> hopFormArray;
+	private ArrayList<String> hopUseArray;
 	private String hop;
 	private String use;
+	private String form;
 	private Recipe mRecipe;
 
     @Override
@@ -71,17 +74,28 @@ public class AddHopsActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         hopSpinner.setAdapter(adapter);
         hopSpinner.setSelection(0);    
+        
+        // Hop form spinner
+       	hopFormSpinner = (Spinner) findViewById(R.id.form_spinner);
+        hopFormArray = new ArrayList<String>();
+        hopFormArray.add(Hop.FORM_PELLET);
+        hopFormArray.add(Hop.FORM_WHOLE);
+        hopFormArray.add(Hop.FORM_PLUG);
+        SpinnerAdapter hopFormAdapter = new SpinnerAdapter(this, hopFormArray);  
+        hopFormAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        hopFormSpinner.setAdapter(hopFormAdapter);
+        hopFormSpinner.setSelection(0);
 		
-		// Set up hop type spinner
-       	hopTypeSpinner = (Spinner) findViewById(R.id.hop_type_spinner);
-        hopTypeArray = new ArrayList<String>();
-        hopTypeArray.add(Hop.USE_BOIL);
-        hopTypeArray.add(Hop.USE_AROMA);
-        hopTypeArray.add(Hop.USE_DRY_HOP);
-        SpinnerAdapter hopTypeAdapter = new SpinnerAdapter(this, hopTypeArray);  
-        hopTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        hopTypeSpinner.setAdapter(hopTypeAdapter);
-        hopTypeSpinner.setSelection(0);
+		// Set up hop use spinner
+       	hopUseSpinner = (Spinner) findViewById(R.id.use_spinner);
+        hopUseArray = new ArrayList<String>();
+        hopUseArray.add(Hop.USE_BOIL);
+        hopUseArray.add(Hop.USE_AROMA);
+        hopUseArray.add(Hop.USE_DRY_HOP);
+        SpinnerAdapter hopUseAdapter = new SpinnerAdapter(this, hopUseArray);  
+        hopUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        hopUseSpinner.setAdapter(hopUseAdapter);
+        hopUseSpinner.setSelection(0);
         
         // Handle hops selector here
         hopSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -108,12 +122,12 @@ public class AddHopsActivity extends Activity {
 
         });   
 		
-		// Handle beer type selector here
-        hopTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		// Handle use selector here
+        hopUseSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 				// Set the type to the selected type...
-				use = hopTypeArray.get(position);
+				use = hopUseArray.get(position);
 				
 				if (use.equals(Hop.USE_DRY_HOP))
 				{
@@ -127,16 +141,24 @@ public class AddHopsActivity extends Activity {
 				}
 			}
 
-
 			public void onNothingSelected(AdapterView<?> parentView) {
 				// Blag
 			}
-
 		});
-    }
+    
+		// Handle form selector here
+	    hopFormSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 	
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				// Set the type to the selected type...
+				form = hopFormArray.get(position);
+			}
 	
-
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// Blag
+			}
+		});
+	}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add_hops, menu);
@@ -205,7 +227,7 @@ public class AddHopsActivity extends Activity {
 				h.setAlphaAcidContent(alpha);
 				h.setDisplayAmount(weight);
 				h.setUse(use);
-				h.setForm(Hop.FORM_PELLET);
+				h.setForm(form);
 				
 				mRecipe.addIngredient(h);
 				mRecipe.update();

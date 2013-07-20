@@ -48,6 +48,7 @@
     <string name="use">Use</string>
 	<string name="mash_profile">Mash Profile</string>
 	<string name="mash_steps">Mash Steps</string>
+	<string name="form">Form</string>
 	
 	<!-- Hints for editTexts -->
     <string name="volume_gal_hint">Gal</string>

@@ -70,10 +70,11 @@
 		        android:padding="10dip"
 		        android:background="@drawable/rounded_bg_white"
 		        android:spinnerMode="dialog"
+		        android:layout_marginRight="2dip"
 		        android:paddingLeft="10dip" />
 
 			<Spinner
-		        android:id="@+id/hop_type_spinner"
+		        android:id="@+id/use_spinner"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:drawSelectorOnTop="false"
@@ -115,7 +116,7 @@
 		        android:textStyle="bold"
 		        android:text="@string/alpha_acids_title" />
 		    
-		    <TextView android:id="@+id/weight_title"
+			<TextView android:id="@+id/form_title"
 		        android:layout_width="0dp"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
@@ -123,9 +124,9 @@
 		        android:layout_marginBottom="3dip"
 		        android:gravity="center"
 		        android:textSize="15dip"
-		        android:textStyle="bold"
 		        android:textColor="@color/title_color"
-		        android:text="@string/weight_oz" />
+		        android:textStyle="bold"
+		        android:text="@string/form" />
 		              
 	    </LinearLayout>
     
@@ -149,17 +150,16 @@
 		        android:layout_marginRight="2dip"
 		        android:layout_marginBottom="15dip" />
 		    
-		    <EditText
-		        android:id="@+id/hop_weight_edit_text"
-		        android:inputType="numberDecimal"
-		        android:selectAllOnFocus="true"
+		   <Spinner
+		        android:id="@+id/form_spinner"
 		        android:layout_width="0dp"
-		        android:layout_height="40dip"
-		        android:layout_weight="1"
-		        android:maxLength="5"
+		        android:layout_height="40dp"
+				android:layout_weight="1"
+		        android:drawSelectorOnTop="false"
+		        android:padding="5dip"
 		        android:background="@drawable/rounded_bg_white"
-		        android:paddingLeft="10dip"
-		        android:layout_marginBottom="15dip" />
+		        android:spinnerMode="dialog"
+		        android:paddingLeft="10dip" />
 		            
     	</LinearLayout>
     	
@@ -171,8 +171,22 @@
 		    
 		    <!-- Boil time -->
 		    <TextView android:id="@+id/boil_time_title"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="center"
 		        android:text="@string/boil_time"
 		        style="@style/title_light" />
+		    
+		   <TextView android:id="@+id/weight_title"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:layout_marginBottom="3dip"
+		        android:gravity="center"
+		        style="@style/title_light"
+		        android:text="@string/weight_oz" />
 		              
 	    </LinearLayout>
 	    
@@ -193,7 +207,19 @@
 		        android:layout_height="40dip"
 		        android:background="@drawable/rounded_bg_white"
 		        android:padding="10dip"
+		     	android:layout_marginRight="2dip"
 		        android:hint="@string/boil_time" />
+		    
+		   <EditText
+		        android:id="@+id/hop_weight_edit_text"
+		        android:inputType="numberDecimal"
+		        android:selectAllOnFocus="true"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="40dip"
+		        android:maxLength="5"
+		        android:background="@drawable/rounded_bg_white"
+		        android:padding="10dip" />
 			            
 	    </LinearLayout>
 	    

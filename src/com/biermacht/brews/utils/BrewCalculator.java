@@ -235,8 +235,7 @@ public class BrewCalculator {
 				}
 			}
 
-		// We scale down because our algorithm returns a few IBU too high...
-		return .94*ibu;
+		return ibu;
 	}
 	
 	public static double estimateFinalGravityFromRecipe(Recipe r)
@@ -272,7 +271,7 @@ public class BrewCalculator {
 		return (OG-FG) * 131;
 	}
 	
-	public static float getHopUtilization(Recipe r, Hop i)
+	public static double getHopUtilization(Recipe r, Hop i)
 	{
 		float utilization;
 		double bignessFactor;
@@ -285,7 +284,11 @@ public class BrewCalculator {
 		
 		utilization = (float) (bignessFactor * boilTimeFactor);
 		
-		return utilization;
+		// Pellets require a little bit more hops.
+		if (i.getForm().equals(Hop.FORM_PELLET))
+			return .94 * utilization;
+		else
+			return utilization;
 	}
 
 }

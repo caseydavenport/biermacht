@@ -10,6 +10,7 @@ public class Detail
 	private Double min;
 	private Double max;
 	private String format;
+	private Double variance;
 	
 	public static String TYPE_RANGE = "range";
 	public static String TYPE_TEXT = "text";
@@ -24,6 +25,7 @@ public class Detail
 		this.value = 0.0;
 		this.min = 0.0;
 		this.max = 0.0;
+		this.variance = 0.05;
 		setFormat("%s");
 	}
 	
@@ -45,6 +47,13 @@ public class Detail
 	public void setContent(String content)
 	{
 		this.content = content;
+	}
+	
+	public void setVariance(Double v)
+	{
+		// Percentage a value can be above or below
+		// and still fit (out of 1.0)
+		this.variance = v;
 	}
 	
 	public void setSubText(String text)
@@ -92,9 +101,19 @@ public class Detail
 		return this.min;
 	}
 	
+	public double getMinOk()
+	{
+		return this.min / (1 + this.variance);
+	}
+	
 	public Double getMax()
 	{
 		return this.max;
+	}
+	
+	public Double getMaxOk()
+	{
+		return this.max * (1 + this.variance);
 	}
 	
 	public String getFormat()
