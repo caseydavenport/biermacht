@@ -100,7 +100,6 @@ public class Recipe {
 	// Public methods
 	public void update()
 	{
-		Log.d("recipe.Recipe", "Updating recipe: " + getRecipeName());
 		setColor(BrewCalculator.calculateColorFromRecipe(this));
 		setOG(BrewCalculator.calculateOriginalGravityFromRecipe(this));
 		setBitterness(BrewCalculator.calculateIbuFromRecipe(this));

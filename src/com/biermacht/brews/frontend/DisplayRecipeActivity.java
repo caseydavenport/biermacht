@@ -19,6 +19,7 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
 	
 	private Recipe mRecipe;
 	private long id; // id of recipe we use
+	private int currentItem; // For storing current page
 	CollectionPagerAdapter cpAdapter;
     ViewPager mViewPager;
 	
@@ -118,8 +119,16 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
 
 		// ViewPager and pagerAdapter for slidy tabs!
         cpAdapter = new CollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
-        //mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(cpAdapter);
+        mViewPager.setCurrentItem(this.currentItem);
+    }
+    
+    @Override
+    public void onPause()
+    {
+    	super.onPause();
+    	// Save the current page we're looking at
+    	this.currentItem = mViewPager.getCurrentItem();
     }
 
 	public void onClick(View v) 

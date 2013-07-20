@@ -27,6 +27,8 @@ public class Units {
 	public static final String PACKAGES = "pkg";
 	public static final String ITEMS = "items";
 	public static final String DAYS = "days";
+	public static final String MINUTES = "mins";
+	public static final String HOURS = "hours";
 	
 	// Helper funcs
 	public static String getUnitsFromDisplayAmount(String s)

@@ -23,6 +23,7 @@ public class Instruction {
 	public static String TYPE_MASH = "Mash";
 	public static String TYPE_YEAST = "Yeast";
 	public static String TYPE_COOL = "Cool";
+	public static String TYPE_BOTTLING = "Bottle";
 	public static String TYPE_OTHER = "";
 	
 	public Instruction()
@@ -132,14 +133,15 @@ public class Instruction {
 	private void configureHashMap()
 	{
 		int i = 0;
-		this.typeToOrder.put(TYPE_OTHER, i);	    i +=100;
-		this.typeToOrder.put(TYPE_STEEP, i);	    i +=100;
-		this.typeToOrder.put(TYPE_MASH, i);	   		i +=100;
-		this.typeToOrder.put(TYPE_BOIL, i);	    	i +=100;
-		this.typeToOrder.put(TYPE_COOL, i);	    	i +=100;
-		this.typeToOrder.put(TYPE_YEAST, i);		i +=100;
-		this.typeToOrder.put(TYPE_PRIMARY, i);		i +=100;
-		this.typeToOrder.put(TYPE_SECONDARY, i);	i +=100;
-		this.typeToOrder.put(TYPE_DRY_HOP, i);		i +=100;
+		this.typeToOrder.put(TYPE_OTHER, i);	    i+=100;
+		this.typeToOrder.put(TYPE_STEEP, i);	    i+=100;
+		this.typeToOrder.put(TYPE_MASH, i);	   		i+=100;
+		this.typeToOrder.put(TYPE_BOIL, i);	    	i+=100;
+		this.typeToOrder.put(TYPE_COOL, i);	    	i+=100;
+		this.typeToOrder.put(TYPE_YEAST, i);		i+=100;
+		this.typeToOrder.put(TYPE_PRIMARY, i);		i+=100;
+		this.typeToOrder.put(TYPE_SECONDARY, i);	i+=100;
+		this.typeToOrder.put(TYPE_DRY_HOP, i);		i+=100;
+		this.typeToOrder.put(TYPE_BOTTLING, i);     i+=100;
 	}
 }
