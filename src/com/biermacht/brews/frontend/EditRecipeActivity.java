@@ -84,13 +84,13 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         
         // Set up beer type spinner
         beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
-        BeerStyleSpinnerAdapter<BeerStyle> adapter = new BeerStyleSpinnerAdapter<BeerStyle>(this, beerStyleArray);  
+        BeerStyleSpinnerAdapter adapter = new BeerStyleSpinnerAdapter(this, beerStyleArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerStyleSpinner.setAdapter(adapter);
 		
 		// Set up mash profile spinner
 		mashProfileSpinner = (Spinner) findViewById(R.id.mash_profile_spinner);
-		MashProfileSpinnerAdapter<MashProfile> profAdapter = new MashProfileSpinnerAdapter<MashProfile>(this, mashProfileArray);
+		MashProfileSpinnerAdapter profAdapter = new MashProfileSpinnerAdapter(this, mashProfileArray);
         profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		mashProfileSpinner.setAdapter(profAdapter);
         
@@ -114,7 +114,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         beerTypeArray.add("Extract");
         beerTypeArray.add("Partial Mash");
         beerTypeArray.add("All Grain");
-        SpinnerAdapter<String> beerTypeAdapter = new SpinnerAdapter<String>(this, beerTypeArray);  
+        SpinnerAdapter beerTypeAdapter = new SpinnerAdapter(this, beerTypeArray);  
         beerTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerTypeSpinner.setAdapter(beerTypeAdapter);
 

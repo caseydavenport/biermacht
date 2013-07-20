@@ -1,24 +1,16 @@
 package com.biermacht.brews.frontend.fragments;
 
 import android.support.v4.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.DisplayRecipeActivity;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeReccomendedValues;
-import com.biermacht.brews.utils.Utils;
-import com.biermacht.brews.utils.ColorHandler;
 import android.content.*;
 import android.widget.*;
 import java.util.*;

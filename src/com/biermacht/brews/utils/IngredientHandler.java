@@ -12,11 +12,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
-import com.biermacht.brews.ingredient.Fermentable;
-import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.ingredient.Yeast;
-import com.biermacht.brews.utils.comparators.IngredientComparator;
 import com.biermacht.brews.xml.RecipeHandler;
 import com.biermacht.brews.recipe.*;
 import android.content.*;

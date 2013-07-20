@@ -1,7 +1,5 @@
 package com.biermacht.brews.recipe;
 
-import com.biermacht.brews.utils.Utils;
-
 public class Instruction {
 	
 	private String instructionText;

@@ -3,7 +3,6 @@ package com.biermacht.brews.frontend.adapters;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.utils.*;
 import com.biermacht.brews.ingredient.*;

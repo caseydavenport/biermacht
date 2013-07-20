@@ -3,15 +3,11 @@ package com.biermacht.brews.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.util.Log;
-
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.recipe.RecipeReccomendedValues;
-import com.biermacht.brews.utils.comparators.BeerStyleComparator;
 import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 public class Utils {

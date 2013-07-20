@@ -3,7 +3,6 @@ package com.biermacht.brews.frontend;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -66,7 +65,7 @@ public class AddYeastActivity extends Activity implements OnClickListener {
         
         // Set up yeast spinner
         yeastSpinner = (Spinner) findViewById(R.id.ingredient_spinner);
-        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, yeastArray);  
+        SpinnerAdapter adapter = new SpinnerAdapter(this, yeastArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         yeastSpinner.setAdapter(adapter);
         yeastSpinner.setSelection(0);

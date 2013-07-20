@@ -6,7 +6,6 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import com.biermacht.brews.*;
-import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.ingredient.*;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.utils.*;
@@ -66,7 +65,7 @@ public class EditMiscActivity extends Activity {
 		miscUseArray.add(Misc.USE_PRIMARY);
 		miscUseArray.add(Misc.USE_SECONDARY);
 
-		SpinnerAdapter<String> miscUseAdapter = new SpinnerAdapter<String>(this, miscUseArray);
+		SpinnerAdapter miscUseAdapter = new SpinnerAdapter(this, miscUseArray);
 		miscUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		miscUseSpinner.setAdapter(miscUseAdapter);
 		miscUseSpinner.setSelection(miscUseArray.indexOf(miscObj.getUse()));

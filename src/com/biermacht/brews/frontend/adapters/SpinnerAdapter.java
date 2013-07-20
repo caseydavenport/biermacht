@@ -3,18 +3,14 @@ package com.biermacht.brews.frontend.adapters;
 import java.util.List;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.R.id;
-import com.biermacht.brews.R.layout;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SpinnerAdapter<String> extends ArrayAdapter<String> {
+public class SpinnerAdapter extends ArrayAdapter<String> {
 	
 	// Fields
 	private Context context;

@@ -3,16 +3,13 @@ package com.biermacht.brews.frontend.adapters;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.utils.ColorHandler;
 import com.biermacht.brews.frontend.*;
 
 public class SettingsItemArrayAdapter extends ArrayAdapter<SettingsItem> {

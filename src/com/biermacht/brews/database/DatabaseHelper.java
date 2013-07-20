@@ -3,9 +3,6 @@ package com.biermacht.brews.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import java.util.*;
-import com.biermacht.brews.recipe.*;
-import com.biermacht.brews.utils.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 

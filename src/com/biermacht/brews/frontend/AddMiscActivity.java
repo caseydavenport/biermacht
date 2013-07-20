@@ -27,7 +27,6 @@ public class AddMiscActivity extends Activity {
 	private ArrayList<Ingredient> miscArray;
 	private ArrayList<String> miscTypeArray;
 	private ArrayList<String> miscUseArray;
-	private String misc;
 	private Misc miscObj;
 	private String type;
 	private String use;
@@ -74,7 +73,7 @@ public class AddMiscActivity extends Activity {
 		miscTypeArray.add(Misc.TYPE_WATER_AGENT);
 		miscTypeArray.add(Misc.TYPE_OTHER);
 		
-        SpinnerAdapter<String> miscTypeAdapter = new SpinnerAdapter<String>(this, miscTypeArray);  
+        SpinnerAdapter miscTypeAdapter = new SpinnerAdapter(this, miscTypeArray);  
         miscTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         miscTypeSpinner.setAdapter(miscTypeAdapter);
         miscTypeSpinner.setSelection(0);
@@ -88,7 +87,7 @@ public class AddMiscActivity extends Activity {
 		miscUseArray.add(Misc.USE_PRIMARY);
 		miscUseArray.add(Misc.USE_SECONDARY);
 		
-		SpinnerAdapter<String> miscUseAdapter = new SpinnerAdapter<String>(this, miscUseArray);
+		SpinnerAdapter miscUseAdapter = new SpinnerAdapter(this, miscUseArray);
 		miscUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		miscUseSpinner.setAdapter(miscUseAdapter);
 		miscUseSpinner.setSelection(0);
@@ -98,7 +97,6 @@ public class AddMiscActivity extends Activity {
 
 				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 					miscObj = (Misc) miscArray.get(position);
-					misc = miscArray.get(position).getName();
 
 					timeEditText.setText(mRecipe.getBoilTime() + "");
 					amountEditText.setText(miscObj.getDisplayAmount() + "");

@@ -11,14 +11,9 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AdapterView.OnItemClickListener;
-import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.Spinner;
-
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.frontend.adapters.*;
 import android.widget.*;

@@ -1,7 +1,6 @@
 package com.biermacht.brews.frontend;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 import android.widget.TextView;
 import android.util.*;
-import com.biermacht.brews.utils.*;
 
 public class EditHopActivity extends Activity implements OnClickListener {
 	

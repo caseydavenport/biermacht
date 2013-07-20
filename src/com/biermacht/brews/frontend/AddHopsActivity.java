@@ -12,7 +12,6 @@ import com.biermacht.brews.utils.Utils;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -79,7 +78,7 @@ public class AddHopsActivity extends Activity {
         hopTypeArray.add(Hop.USE_BOIL);
         hopTypeArray.add(Hop.USE_AROMA);
         hopTypeArray.add(Hop.USE_DRY_HOP);
-        SpinnerAdapter<String> hopTypeAdapter = new SpinnerAdapter<String>(this, hopTypeArray);  
+        SpinnerAdapter hopTypeAdapter = new SpinnerAdapter(this, hopTypeArray);  
         hopTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         hopTypeSpinner.setAdapter(hopTypeAdapter);
         hopTypeSpinner.setSelection(0);

@@ -13,12 +13,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
-import android.widget.*;
 
 public class EditMashProfileActivity extends Activity implements OnClickListener {
 
@@ -70,7 +68,7 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
 
 		// Set up mash profile spinner
 		mashProfileSpinner = (Spinner) findViewById(R.id.mash_profile_spinner);
-		MashProfileSpinnerAdapter<MashProfile> profAdapter = new MashProfileSpinnerAdapter<MashProfile>(this, mashProfileArray);
+		MashProfileSpinnerAdapter profAdapter = new MashProfileSpinnerAdapter(this, mashProfileArray);
         profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		mashProfileSpinner.setAdapter(profAdapter);
 

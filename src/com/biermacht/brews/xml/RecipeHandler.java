@@ -4,8 +4,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.util.Log;
-
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.recipe.*;
 import java.util.*;

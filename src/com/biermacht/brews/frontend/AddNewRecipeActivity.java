@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -20,7 +18,6 @@ import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.utils.Utils;
-import com.biermacht.brews.utils.*;
 import com.biermacht.brews.frontend.adapters.*;
 import android.widget.*;
 
@@ -73,14 +70,14 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         
         // Set up beer type spinner
         beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
-        BeerStyleSpinnerAdapter<BeerStyle> adapter = new BeerStyleSpinnerAdapter<BeerStyle>(this, beerStyleArray);  
+        BeerStyleSpinnerAdapter adapter = new BeerStyleSpinnerAdapter(this, beerStyleArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerStyleSpinner.setAdapter(adapter);
         beerStyleSpinner.setSelection(0);    
 		
 		// Set up mash profile spinner
 		mashProfileSpinner = (Spinner) findViewById(R.id.mash_profile_spinner);
-		MashProfileSpinnerAdapter<MashProfile> profAdapter = new MashProfileSpinnerAdapter<MashProfile>(this, mashProfileArray);
+		MashProfileSpinnerAdapter profAdapter = new MashProfileSpinnerAdapter(this, mashProfileArray);
         profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		mashProfileSpinner.setAdapter(profAdapter);
 		mashProfileSpinner.setSelection(0);
@@ -91,7 +88,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         beerTypeArray.add("Extract");
         beerTypeArray.add("Partial Mash");
         beerTypeArray.add("All Grain");
-        SpinnerAdapter<String> beerTypeAdapter = new SpinnerAdapter<String>(this, beerTypeArray);  
+        SpinnerAdapter beerTypeAdapter = new SpinnerAdapter(this, beerTypeArray);  
         beerTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerTypeSpinner.setAdapter(beerTypeAdapter);
         beerTypeSpinner.setSelection(0); 

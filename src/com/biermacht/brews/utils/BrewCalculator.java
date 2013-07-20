@@ -7,8 +7,6 @@ import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
-import android.util.Log;
-import android.os.*;
 
 public class BrewCalculator {
 	

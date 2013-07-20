@@ -15,7 +15,6 @@ import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.comparators.InstructionComparator;
 import java.util.*;
-import android.util.*;
 
 public class Recipe {
 	

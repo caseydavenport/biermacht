@@ -3,9 +3,7 @@ package com.biermacht.brews.frontend;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +68,7 @@ public class AddGrainActivity extends Activity implements OnClickListener {
 		
         // Set up grain type spinner
         grainTypeSpinner = (Spinner) findViewById(R.id.grain_type_spinner);
-        SpinnerAdapter<String> adapter = new SpinnerAdapter<String>(this, grainTypeArray);  
+        SpinnerAdapter adapter = new SpinnerAdapter(this, grainTypeArray);  
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         grainTypeSpinner.setAdapter(adapter);
         grainTypeSpinner.setSelection(0);    

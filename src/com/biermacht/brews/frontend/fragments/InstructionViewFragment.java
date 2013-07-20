@@ -2,22 +2,17 @@ package com.biermacht.brews.frontend.fragments;
 
 import java.util.ArrayList;
 
-import android.support.v4.view.*;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.DisplayRecipeActivity;
 import com.biermacht.brews.frontend.adapters.InstructionArrayAdapter;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.Utils;
 import android.content.*;
 
 public class InstructionViewFragment extends Fragment {
