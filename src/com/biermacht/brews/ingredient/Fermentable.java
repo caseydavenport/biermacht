@@ -210,6 +210,15 @@ public class Fermentable extends Ingredient {
 	public double getMaxInBatch() {
 		return maxInBatch;
 	}
+	
+	@Override
+	public String getUse()
+	{
+		if (this.getFermentableType().equals(EXTRACT))
+			return Ingredient.USE_BOIL;
+		else
+			return Ingredient.USE_MASH;
+	}
 
 	/**
 	 * @param maxInBatch the maxInBatch to set

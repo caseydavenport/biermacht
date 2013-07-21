@@ -106,21 +106,23 @@ public class Misc extends Ingredient {
 		
 		String unit = this.getDisplayUnits();
 		
-		if (unit.equals(Units.GALLONS))
+		if (unit.equalsIgnoreCase(Units.GALLONS))
 			return Units.litersToGallons(this.amount);
-		if (unit.equals(Units.GRAMS))
+		if (unit.equalsIgnoreCase(Units.GRAMS))
 			return Units.kilosToGrams(this.amount);
-		if (unit.equals(Units.TEASPOONS))
+		if (unit.equalsIgnoreCase(Units.TEASPOONS))
 			return Units.litersToTeaspoons(this.amount);
-		if (unit.equals(Units.OUNCES))
+		if (unit.equalsIgnoreCase(Units.OUNCES))
 			if (this.amountIsWeight())
 			    return Units.kilosToOunces(this.amount);
 			else
 			    return Units.litersToOunces(this.amount);
-		if (unit.equals(Units.POUNDS))
+		if (unit.equalsIgnoreCase(Units.POUNDS))
 			return Units.kilosToPounds(this.amount);
-		if (unit.equals(Units.CUP) || unit.equals(Units.CUPS))
+		if (unit.equalsIgnoreCase(Units.CUP) || unit.equalsIgnoreCase(Units.CUPS))
 			return Units.litersToCups(this.amount);
+		if (unit.equalsIgnoreCase(Units.ITEMS))
+			return this.amount;
 		else
 			return -1; // Should show that we couldnt compute
 	}
@@ -138,21 +140,23 @@ public class Misc extends Ingredient {
 	
 	public void setDisplayAmount(double amt, String unit) {
 
-		if (unit.equals(Units.GALLONS))
+		if (unit.equalsIgnoreCase(Units.GALLONS))
 			this.amount = Units.gallonsToLiters(amt);
-		else if (unit.equals(Units.GRAMS))
+		else if (unit.equalsIgnoreCase(Units.GRAMS))
 			this.amount = Units.gramsToKilos(amt);
-		else if (unit.equals(Units.TEASPOONS))
+		else if (unit.equalsIgnoreCase(Units.TEASPOONS))
 			this.amount = Units.teaspoonsToLiters(amt);
-		else if (unit.equals(Units.OUNCES))
+		else if (unit.equalsIgnoreCase(Units.OUNCES))
 			if (this.amountIsWeight())
 			    this.amount = Units.ouncesToKilos(amt);
 			else
 			    this.amount = Units.ouncesToLiters(amt);
-		else if (unit.equals(Units.POUNDS))
+		else if (unit.equalsIgnoreCase(Units.POUNDS))
 			this.amount = Units.poundsToKilos(amt);
-		else if (unit.equals(Units.CUP) || unit.equals(Units.CUPS))
+		else if (unit.equalsIgnoreCase(Units.CUP) || unit.equalsIgnoreCase(Units.CUPS))
 			this.amount = Units.cupsToLiters(amt);
+		else if (unit.equalsIgnoreCase(Units.ITEMS))
+			this.amount = amt;
 		else
 			this.amount = -1.0; // Should show that we couldnt compute
 	}

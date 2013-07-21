@@ -1,6 +1,9 @@
 package com.biermacht.brews.recipe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.biermacht.brews.ingredient.Ingredient;
 
 import android.util.Log;
 
@@ -14,6 +17,7 @@ public class Instruction {
 	private double duration;
 	private String duration_units;
 	private HashMap<String, Integer> typeToOrder;
+	private ArrayList<Ingredient> relevantIngredients;
 	
 	public static String TYPE_STEEP = "Steep";
 	public static String TYPE_BOIL = "Boil";
@@ -35,6 +39,7 @@ public class Instruction {
 		this.duration_units = "mins";
 		this.order = -1;
 		this.instructionType = TYPE_OTHER;
+		this.relevantIngredients = new ArrayList<Ingredient>();
 		
 		typeToOrder = new HashMap<String, Integer>();
 		this.configureHashMap();
@@ -62,7 +67,7 @@ public class Instruction {
 		
 		try
 		{
-			return this.typeToOrder.get(this.getInstructionType());
+			return this.typeToOrder.get(this.getInstructionType()) + this.order;
 		} 
 		catch (Exception e)
 		{
@@ -79,14 +84,51 @@ public class Instruction {
 		this.order = o;
 	}
 	
+	public void setRelevantIngredients(ArrayList<Ingredient> i)
+	{
+		this.relevantIngredients = i;
+	}
+	
+	public ArrayList<Ingredient> getRelevantIngredients()
+	{
+		return this.relevantIngredients;
+	}
+	
+	public void addRelevantIngredient(Ingredient i)
+	{
+		this.relevantIngredients.add(i);
+	}
+	
 	@Override
 	public String toString()
 	{
 		return this.getInstructionText();
 	}
 
-	public void setInstructionText(String instructionText) {
+	/**
+	 * Sets instruction text to the value given in instructionText
+	 * @param instructionText
+	 */
+	public void setInstructionText(String instructionText) 
+	{
 		this.instructionText = instructionText;
+	}
+	
+	/**
+	 * Sets the instruction text based on the ingredients
+	 * given in relevant ingredients list for this instruction
+	 */
+	public void setInstructionTextFromIngredients()
+	{
+		String s = "";
+		for (Ingredient i : this.getRelevantIngredients())
+		{
+			if (s.isEmpty())
+				s += i.getName();
+			else
+				s += "\n" + i.getName();
+		}
+		this.instructionText = s;
 	}
 
 	public String getInstructionType() {
@@ -112,22 +154,6 @@ public class Instruction {
 
 	public void setDurationUnits(String duration_units) {
 		this.duration_units = duration_units;
-	}
-
-	public double getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(double startTime) {
-		this.startTime = startTime;
-	}
-
-	public double getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(double endTime) {
-		this.endTime = endTime;
 	}
 	
 	private void configureHashMap()

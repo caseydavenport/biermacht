@@ -21,11 +21,15 @@ public abstract class Ingredient {
 	public static final String WATER = "Water";
 	
 	// Defines for use of ingredient
-	public static String USE_BOIL = "Boil";
-	public static String USE_MASH = "Mash";
-	public static String USE_PRIMARY = "Primary";
-	public static String USE_SECONDARY = "Secondary";
-	public static String USE_BOTTLING = "Bottling";
+	public static final String USE_BOIL = "Boil";
+	public static final String USE_MASH = "Mash";
+	public static final String USE_PRIMARY = "Primary";
+	public static final String USE_SECONDARY = "Secondary";
+	public static final String USE_BOTTLING = "Bottling";
+	public static final String USE_DRY_HOP = "Dry Hop";
+	public static final String USE_FIRST_WORT = "First Wort";
+	public static final String USE_AROMA = "Aroma";
+	public static final String USE_OTHER = "other";
 	
 	// Public constructors
 	public Ingredient(String name)
@@ -73,6 +77,11 @@ public abstract class Ingredient {
 	@Override 
 	public String toString() {
 		return name;
+	}
+	
+	public String getUse()
+	{
+		return Ingredient.USE_OTHER;
 	}
 	
 	// Universal Setters and getters

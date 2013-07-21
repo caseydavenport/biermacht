@@ -37,12 +37,6 @@ public class Hop extends Ingredient {
 	public static final String TYPE_BITTERING = "Bittering";
 	public static final String TYPE_AROMA = "Aromatic";
 	public static final String TYPE_BOTH = "Bittering and Aromatic";
-	
-	public static final String USE_BOIL = "Boil";
-	public static final String USE_DRY_HOP = "Dry Hop";
-	public static final String USE_MASH = "Mash";
-	public static final String USE_FIRST_WORT = "First Wort";
-	public static final String USE_AROMA = "Aroma";
 
 	public Hop(String name)
 	{
