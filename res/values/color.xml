@@ -5,6 +5,7 @@
     <color name="button_color">#FFFFFF</color>
 	<color name="background">#FFFFFF</color>
 	<color name="activity_background">#FFFFFF</color>
+	<color name="activity_background_dark">#EEEEEE</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="title_color">#333333</color>
     <color name="theme_orange">#E6A627</color>

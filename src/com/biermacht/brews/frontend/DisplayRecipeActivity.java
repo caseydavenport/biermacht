@@ -13,6 +13,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.frontend.fragments.*;
 import android.support.v4.view.*;
 
 public class DisplayRecipeActivity extends FragmentActivity implements OnClickListener {
@@ -85,6 +86,10 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     	    	misc_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(misc_intent);
     		    return true;
+    		    
+            case R.id.menu_timer:
+            	cpAdapter.getInstructionViewFragment().toggleTimer();
+            	return true;
     		    
             case R.id.menu_edit_recipe:
           		Intent i = new Intent(this.appContext, EditRecipeActivity.class);

@@ -61,5 +61,10 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 
         return "Unknown Tab";
     }
+    
+    public InstructionViewFragment getInstructionViewFragment()
+    {
+    	return this.insVf;
+    }
 }
 

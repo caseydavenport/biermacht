@@ -37,4 +37,54 @@
 					android:background="@color/divider" />
 	        
     </LinearLayout>
+    
+	<LinearLayout android:id="@+id/timer_view"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="120dip"
+		android:layout_gravity="center"
+		android:visibility="gone"
+		android:background="@color/activity_background">
+				
+   		<View android:layout_width="fill_parent"
+			android:layout_height="1dip"
+			android:background="@color/divider" />
+				
+	    <TextView android:id="@+id/timer"
+	        android:layout_width="fill_parent"
+	        android:layout_height="0dp"
+	        android:layout_weight="1"
+	        android:gravity="center"
+	        android:textSize="40dip"
+	        android:text="00:59:30" />
+				
+	    <LinearLayout android:id="@+id/timer_controls"
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="60dip"
+			android:layout_gravity="center" >
+				
+		    <!-- Prev Button -->
+		    <Button
+		        android:id="@+id/cancel_button"
+		        android:onClick="onClick"
+		        android:text="Prev"
+				style="@style/button" />
+		    
+		    <!-- Pause/Play Button -->
+		    <Button
+		        android:id="@+id/delete_button"
+		        android:onClick="onClick"
+		        android:text="||"
+		        style="@style/button" />
+		
+		    <!-- Next Button -->
+		    <Button
+		        android:id="@+id/submit_button"
+		        android:onClick="onClick"
+		        android:text="Next"
+		        style="@style/button" />
+		    
+		</LinearLayout>
+    </LinearLayout>
 </LinearLayout>
