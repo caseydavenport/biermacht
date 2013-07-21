@@ -22,16 +22,12 @@
 	</TextView>    
     
     <LinearLayout android:id="@+id/first_ll"
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:padding="0dip"
 		android:background="@color/activity_background"
         android:orientation="horizontal"
         android:layout_below="@id/colored_bar" >
-    
-    	<LinearLayout android:orientation="vertical"
-    	    android:layout_width="wrap_content"
-    	    android:layout_height="wrap_content">
 		    
 		    <ListView
 		        android:id="@+id/recipe_list"
@@ -45,16 +41,16 @@
 		    
 		    <TextView android:id="@+id/no_recipes_view"
 		        android:layout_width="fill_parent"
-		        android:layout_height="60dip" 
+		        android:layout_height="fill_parent" 
 		        android:background="#FFFFFF" 
 		        android:gravity="center"
 		        android:visibility="gone"
 		        android:onClick="onClick"
-		        android:text="No recipes - Touch the plus to make one!" />
+		        android:textColor="@color/title_color"
+		        android:textSize="15dp"
+		        android:text="@string/no_recipes" />
 	    
 	    </LinearLayout>
-    
-    </LinearLayout>
 	
 	<LinearLayout android:id="@+id/recipe_search_view"
 		android:orientation="horizontal"

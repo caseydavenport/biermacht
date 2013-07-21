@@ -63,7 +63,7 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
         		return true;
             
             case R.id.add_fermentable:
-    	    	Intent ferm_intent = new Intent(this.appContext, AddGrainActivity.class);
+    	    	Intent ferm_intent = new Intent(this.appContext, AddFermentableActivity.class);
     	    	ferm_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(ferm_intent);
     		    return true;

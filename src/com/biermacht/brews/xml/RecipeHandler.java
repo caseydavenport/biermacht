@@ -278,12 +278,12 @@ public class RecipeHandler extends DefaultHandler {
 			// We need to hack it up in here...
 			if(r.getType().equals(Recipe.EXTRACT))
 			{
-				if(f.getFermentableType().equals(Fermentable.GRAIN))
+				if(f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
 				{
 					f.setStartTime(0);
 					f.setEndTime(20);
 				} 
-				else if (f.getFermentableType().equals(Fermentable.EXTRACT))
+				else if (f.getFermentableType().equals(Fermentable.TYPE_EXTRACT))
 				{
 					f.setStartTime(0);
 					f.setEndTime(r.getBoilTime());
@@ -423,16 +423,16 @@ public class RecipeHandler extends DefaultHandler {
 			{
 				String type = "NULL";
 
-				if (currentValue.equalsIgnoreCase(Fermentable.ADJUNCT))
-					type = Fermentable.ADJUNCT;
-				if (currentValue.equalsIgnoreCase(Fermentable.EXTRACT))
-					type = Fermentable.EXTRACT;
+				if (currentValue.equalsIgnoreCase(Fermentable.TYPE_ADJUNCT))
+					type = Fermentable.TYPE_ADJUNCT;
+				if (currentValue.equalsIgnoreCase(Fermentable.TYPE_EXTRACT))
+					type = Fermentable.TYPE_EXTRACT;
 				if (currentValue.contains("Extract"))
-					type = Fermentable.EXTRACT;
-				if (currentValue.equalsIgnoreCase(Fermentable.GRAIN))
-					type = Fermentable.GRAIN;
-				if (currentValue.equalsIgnoreCase(Fermentable.SUGAR))
-					type = Fermentable.SUGAR;
+					type = Fermentable.TYPE_EXTRACT;
+				if (currentValue.equalsIgnoreCase(Fermentable.TYPE_GRAIN))
+					type = Fermentable.TYPE_GRAIN;
+				if (currentValue.equalsIgnoreCase(Fermentable.TYPE_SUGAR))
+					type = Fermentable.TYPE_SUGAR;
 
 				f.setFermentableType(type);
 			}
@@ -644,16 +644,16 @@ public class RecipeHandler extends DefaultHandler {
 			{
 				String type = "Invalid Type";
 
-				if (currentValue.equalsIgnoreCase(Yeast.ALE))
-					type = Yeast.ALE;
-				if (currentValue.equalsIgnoreCase(Yeast.LAGER))
-					type = Yeast.LAGER;
-				if (currentValue.equalsIgnoreCase(Yeast.WHEAT))
-					type = Yeast.WHEAT;
-				if (currentValue.equalsIgnoreCase(Yeast.WINE))
-					type = Yeast.WINE;
-				if (currentValue.equalsIgnoreCase(Yeast.CHAMPAGNE))
-					type = Yeast.CHAMPAGNE;
+				if (currentValue.equalsIgnoreCase(Yeast.TYPE_ALE))
+					type = Yeast.TYPE_ALE;
+				if (currentValue.equalsIgnoreCase(Yeast.TYPE_LAGER))
+					type = Yeast.TYPE_LAGER;
+				if (currentValue.equalsIgnoreCase(Yeast.TYPE_WHEAT))
+					type = Yeast.TYPE_WHEAT;
+				if (currentValue.equalsIgnoreCase(Yeast.TYPE_WINE))
+					type = Yeast.TYPE_WINE;
+				if (currentValue.equalsIgnoreCase(Yeast.TYPE_CHAMPAGNE))
+					type = Yeast.TYPE_CHAMPAGNE;
 
 				y.setType(type);
 			}
@@ -662,12 +662,12 @@ public class RecipeHandler extends DefaultHandler {
 			{
 				String form = "Invalid Form";
 
-				if (currentValue.equalsIgnoreCase(Yeast.CULTURE))
-					form = Yeast.CULTURE;
-				if (currentValue.equalsIgnoreCase(Yeast.DRY))
-					form = Yeast.DRY;
-				if (currentValue.equalsIgnoreCase(Yeast.LIQUID))
-					form = Yeast.LIQUID;
+				if (currentValue.equalsIgnoreCase(Yeast.FORM_CULTURE))
+					form = Yeast.FORM_CULTURE;
+				if (currentValue.equalsIgnoreCase(Yeast.FORM_DRY))
+					form = Yeast.FORM_DRY;
+				if (currentValue.equalsIgnoreCase(Yeast.FORM_LIQUID))
+					form = Yeast.FORM_LIQUID;
 
 				y.setForm(form);
 			}

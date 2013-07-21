@@ -101,7 +101,7 @@ public class BrewCalculator {
 		// how much extract is used as a late addition
 		for (Fermentable f : r.getFermentablesList())
 		{
-			if (!f.getFermentableType().equals(Fermentable.GRAIN))
+			if (!f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
 			{
 				t++;
 				avgBoilTime += f.getTime();
@@ -142,15 +142,15 @@ public class BrewCalculator {
 		{
 			Fermentable f = (Fermentable) i;
 					
-			if(f.getFermentableType().equals(Fermentable.EXTRACT))
+			if(f.getFermentableType().equals(Fermentable.TYPE_EXTRACT))
 			{
 				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
 			}
-			else if (f.getFermentableType().equals(Fermentable.SUGAR))
+			else if (f.getFermentableType().equals(Fermentable.TYPE_SUGAR))
 			{
 				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
 			}
-			else if (f.getFermentableType().equals(Fermentable.GRAIN))
+			else if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
 			{
 				pts = 5 * f.getDisplayAmount() / r.getDisplayBatchSize();
 				
@@ -178,15 +178,15 @@ public class BrewCalculator {
 		{
 			Fermentable f = (Fermentable) i;
 
-			if(f.getFermentableType().equals(Fermentable.EXTRACT))
+			if(f.getFermentableType().equals(Fermentable.TYPE_EXTRACT))
 			{
 				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
 			}
-			else if (f.getFermentableType().equals(Fermentable.SUGAR))
+			else if (f.getFermentableType().equals(Fermentable.TYPE_SUGAR))
 			{
 				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
 			}
-			else if (f.getFermentableType().equals(Fermentable.GRAIN))
+			else if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
 			{
 				pts = r.getEfficiency() * f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize() / 100;
 			}

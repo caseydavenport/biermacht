@@ -25,22 +25,22 @@ public class Yeast extends Ingredient {
 	
 	// Static values =================================================
 	// ===============================================================
-	public static final String ALE = "Ale";
-	public static final String LAGER = "Lager";
-	public static final String WHEAT = "Wheat";
-	public static final String WINE = "Wine";
-	public static final String CHAMPAGNE = "Champagne";
+	public static final String TYPE_ALE = "Ale";
+	public static final String TYPE_LAGER = "Lager";
+	public static final String TYPE_WHEAT = "Wheat";
+	public static final String TYPE_WINE = "Wine";
+	public static final String TYPE_CHAMPAGNE = "Champagne";
 	
-	public static final String LIQUID = "Liquid";
-	public static final String DRY = "Dry";
-	public static final String SLANT = "Slant";
-	public static final String CULTURE = "Culture";
+	public static final String FORM_LIQUID = "Liquid";
+	public static final String FORM_DRY = "Dry";
+	public static final String FORM_SLANT = "Slant";
+	public static final String FORM_CULTURE = "Culture";
 
 	public Yeast(String name)
 	{
 		super(name);
-		this.type = ALE;
-		this.form = LIQUID;
+		this.type = TYPE_ALE;
+		this.form = FORM_LIQUID;
 		this.amount = 0;
 		this.minTemp = 0;
 		this.maxTemp = 0;

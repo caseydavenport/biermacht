@@ -26,15 +26,15 @@ public class Fermentable extends Ingredient {
 	
 	// Static values =================================================
 	// ===============================================================
-	public static final String GRAIN = "Grain";
-	public static final String EXTRACT = "Extract";
-	public static final String ADJUNCT = "Adjunct";
-	public static final String SUGAR = "Sugar";
+	public static final String TYPE_GRAIN = "Grain";
+	public static final String TYPE_EXTRACT = "Extract";
+	public static final String TYPE_ADJUNCT = "Adjunct";
+	public static final String TYPE_SUGAR = "Sugar";
 	
 	public Fermentable(String name)
 	{
 		super(name);
-		this.type = GRAIN;
+		this.type = TYPE_GRAIN;
 		this.amount = 0;
 		this.yield = 1;
 		this.color = 0;
@@ -214,7 +214,7 @@ public class Fermentable extends Ingredient {
 	@Override
 	public String getUse()
 	{
-		if (this.getFermentableType().equals(EXTRACT))
+		if (this.getFermentableType().equals(TYPE_EXTRACT))
 			return Ingredient.USE_BOIL;
 		else
 			return Ingredient.USE_MASH;

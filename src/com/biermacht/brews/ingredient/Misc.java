@@ -2,16 +2,9 @@ package com.biermacht.brews.ingredient;
 import com.biermacht.brews.utils.Units;
 
 public class Misc extends Ingredient {
-
-	// Defines for type of misc ingredient
-	public static String TYPE_SPICE = "Spice";
-	public static String TYPE_FINING = "Fining";
-	public static String TYPE_WATER_AGENT = "Water Agent";
-	public static String TYPE_HERB = "Herb";
-	public static String TYPE_FLAVOR = "Flavor";
-	public static String TYPE_OTHER = "Other";
 	
-	// Required by beerXML
+	// Beer XML 1.0 Required Fields (To be inherited) =================
+	// ================================================================
 	private String miscType;
 	private String use;
 	private Double amount;
@@ -19,11 +12,21 @@ public class Misc extends Ingredient {
 	private String useFor;
 	private String notes;
 	
-	// Others
+	// Custom Fields ==================================================
+	// ================================================================
 	private String displayUnits;
 	private int startTime;
 	private int endTime;
 	private Double displayAmount;
+	
+	// Static values =================================================
+	// ===============================================================
+	public static String TYPE_SPICE = "Spice";
+	public static String TYPE_FINING = "Fining";
+	public static String TYPE_WATER_AGENT = "Water Agent";
+	public static String TYPE_HERB = "Herb";
+	public static String TYPE_FLAVOR = "Flavor";
+	public static String TYPE_OTHER = "Other";
 	
 	public Misc(String name)
 	{

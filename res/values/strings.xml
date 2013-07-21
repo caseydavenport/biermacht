@@ -5,8 +5,8 @@
     <string name="title_activity_main">Recipes</string>
     <string name="title_activity_display_recipe">Recipe Details</string>
     <string name="title_activity_add_new_recipe">Add New Recipe</string>
-    <string name="title_activity_add_grain">Add Grain</string>
-    <string name="title_activity_edit_grain">Edit Grain</string>
+    <string name="title_activity_add_fermentable">Add Fermentable</string>
+    <string name="title_activity_edit_fermentable">Edit Fermentable</string>
     <string name="title_activity_edit_hop">Edit Hop</string>
     <string name="title_activity_edit_recipe">Edit Recipe</string>
 	<string name="title_activity_edit_profile">Edit Mash Profile</string>
@@ -35,6 +35,7 @@
     <string name="units">Units:</string>
     <string name="brewer_name">Brewmaster</string>
 	<string name="amount">Amount (L)</string>
+	<string name="no_recipes">Hmm... I can\'t seem to find any recipes!</string>
 		
 	<!-- Titles for editTexts / fields -->
     <string name="enter_name">Enter a name</string>
@@ -55,9 +56,9 @@
     <string name="efficiency_hint">1 - 100</string>
     <string name="minutes_hint">minutes</string>
 	
-    <!-- from activity_add_grain.xml -->
+    <!-- from activity_add_fermentable.xml -->
     <string name="weight_lbs">Weight (lbs)</string>
-    <string name="grain_type">Grain Type</string>
+    <string name="fermentable_type">Fermentable Type</string>
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
 		

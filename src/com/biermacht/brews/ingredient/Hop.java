@@ -34,6 +34,7 @@ public class Hop extends Ingredient {
 	public static final String FORM_WHOLE = "Whole";
 	public static final String FORM_PLUG = "Plug";
 	
+	// Hop types
 	public static final String TYPE_BITTERING = "Bittering";
 	public static final String TYPE_AROMA = "Aromatic";
 	public static final String TYPE_BOTH = "Bittering and Aromatic";

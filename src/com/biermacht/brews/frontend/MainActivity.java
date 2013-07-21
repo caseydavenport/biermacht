@@ -289,9 +289,15 @@ public class MainActivity extends Activity implements OnClickListener {
         recipeList = l;
         
         if (l.size() == 0)
+        {
         	noRecipesView.setVisibility(View.VISIBLE);
+        	listView.setVisibility(View.GONE);
+        }
         else
+        {
         	noRecipesView.setVisibility(View.GONE);
+        	listView.setVisibility(View.VISIBLE);
+        }
     }
 
 	public void onClick(View v) {

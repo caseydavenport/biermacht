@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.EditGrainActivity;
+import com.biermacht.brews.frontend.EditFermentableActivity;
 import com.biermacht.brews.frontend.EditHopActivity;
 import com.biermacht.brews.frontend.EditYeastActivity;
 import com.biermacht.brews.frontend.adapters.IngredientArrayAdapter;
@@ -62,7 +62,7 @@ public class IngredientViewFragment extends Fragment {
 				// Grain pressed
 				if (ing.getType().equals(Ingredient.FERMENTABLE))
 				{
-			  		Intent editGrainIntent = new Intent(c, EditGrainActivity.class);
+			  		Intent editGrainIntent = new Intent(c, EditFermentableActivity.class);
 			  		editGrainIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
 				    editGrainIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
 			  		startActivity(editGrainIntent);
