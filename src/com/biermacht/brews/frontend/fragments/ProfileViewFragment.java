@@ -8,6 +8,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
+
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
 import android.content.*;
@@ -28,19 +30,15 @@ public class ProfileViewFragment extends Fragment {
 
 	// List stuff
 	private DetailArrayAdapter detailArrayAdapter;
-	private DetailArrayAdapter mashStepArrayAdapter;
-	private ArrayList<Detail> detailList;
-	private ArrayList<Detail> mashStepList;
-	private ListView detailsListView;
-	private ListView stepsListView;
+	private ArrayList<Detail> mashDetailList;
+	private ArrayList<Detail> fermDetailList;
+	private ViewGroup profileView;
+	private ViewGroup mashProfileView;
+	private ViewGroup fermentationProfileView;
+	private View view;
 
 	// Details to show
-	Detail beerType;
-	Detail originalGravity;
-	Detail finalGravity;
-	Detail abv;
-	Detail color;
-	Detail bitterness;
+	Detail detail;
 
 	public ProfileViewFragment(Context c, Recipe r)
 	{
@@ -49,67 +47,105 @@ public class ProfileViewFragment extends Fragment {
 		this.c = c;
 	}
 
-	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	@Override 
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		pageView = inflater.inflate(resource, container, false);
-		detailsListView = (ListView) pageView.findViewById(R.id.details_list);
-		stepsListView = (ListView) pageView.findViewById(R.id.steps_list);
-		
-		this.detailList = new ArrayList<Detail>();
-		this.mashStepList = new ArrayList<Detail>();
-
 		setHasOptionsMenu(true);
-
-		// Configure details
-		beerType = new Detail();
-		beerType.setTitle("Profile Name: ");
-		beerType.setType(Detail.TYPE_TEXT);
-		beerType.setFormat("%s");
-		beerType.setContent(r.getMashProfile().getName());
-		detailList.add(beerType);
+		pageView = inflater.inflate(resource, container, false);
+		profileView = (ViewGroup) pageView.findViewById(R.id.profile_view);
+		mashProfileView = (ViewGroup) pageView.findViewById(R.id.mash_profile_view);
+		fermentationProfileView = (ViewGroup) pageView.findViewById(R.id.fermentation_profile_view);
 		
-		beerType = new Detail();
-		String t = String.format("%2.0f", r.getMashProfile().getDisplayGrainTemp());
-		t += " " + Units.FARENHEIT;
-		beerType.setTitle("Grain Temp: ");
-		beerType.setType(Detail.TYPE_TEXT);
-		beerType.setFormat("%s");
-		beerType.setContent(t);
-		detailList.add(beerType);
+		this.mashDetailList = new ArrayList<Detail>();
+		this.fermDetailList = new ArrayList<Detail>();
 		
-		beerType = new Detail();
-		t = String.format("%2.0f", r.getMashProfile().getDisplayTunTemp());
-		t += " " + Units.FARENHEIT;
-		beerType.setTitle("Tun Temp: ");
-		beerType.setType(Detail.TYPE_TEXT);
-		beerType.setFormat("%s");
-		beerType.setContent(t);
-		detailList.add(beerType);
+		// Decide on which profiles to show
+		if (r.getType().equals(Recipe.EXTRACT))
+			mashProfileView.setVisibility(View.GONE);
 		
-		// Adapter stuff
-		detailArrayAdapter = new DetailArrayAdapter(c, detailList);
-		detailsListView.setAdapter(detailArrayAdapter);
-		
-		Detail detail = new Detail();
-		detail.setType(Detail.TYPE_BLANK);
-		mashStepList.add(detail);
-		for (MashStep s : r.getMashProfile().getMashStepList())
-		{
-			detail = new Detail();
-			detail.setTitle(s.getName()+":");
-			detail.setType(Detail.TYPE_TEXT);
-			detail.setFormat("%s");
-			detail.setContent("Hold at " + String.format("%2.0f", s.getDisplayStepTemp()) + " F");
-			detail.setSubText("Ramp to temp in " + s.getRampTime() + " mins");
-			mashStepList.add(detail);
-		}
-
-		// MashSteps list here
-		mashStepArrayAdapter = new DetailArrayAdapter(c, mashStepList);
-		stepsListView.setAdapter(mashStepArrayAdapter);
-		
+		this.configureMashView(inflater, container);
+		this.configureFermentationView(inflater, container);
 		
 		return pageView;
+	}
+	
+	private void configureMashView(LayoutInflater inflater, ViewGroup container)
+	{
+		// Configure details
+		detail = new Detail();
+		detail.setTitle("Profile Name: ");
+		detail.setType(Detail.TYPE_TEXT);
+		detail.setFormat("%s");
+		detail.setContent(r.getMashProfile().getName());
+		mashDetailList.add(detail);
+		
+		detail = new Detail();
+		String t = String.format("%2.0f", r.getMashProfile().getDisplayGrainTemp());
+		t += " " + Units.FARENHEIT;
+		detail.setTitle("Grain Temp: ");
+		detail.setType(Detail.TYPE_TEXT);
+		detail.setFormat("%s");
+		detail.setContent(t);
+		mashDetailList.add(detail);
+		
+		detail = new Detail();
+		t = String.format("%d", r.getMashProfile().getNumberOfSteps());
+		detail.setTitle("Mash Steps: ");
+		detail.setType(Detail.TYPE_TEXT);
+		detail.setFormat("%s");
+		detail.setContent(t);
+		mashDetailList.add(detail);
+		
+		detailArrayAdapter = new DetailArrayAdapter(c, mashDetailList);
+		mashProfileView.addView(detailArrayAdapter.getView(0, null, container));
+		mashProfileView.addView(detailArrayAdapter.getView(1, null, container));
+		mashProfileView.addView(detailArrayAdapter.getView(2, null, container));
+	}
+	
+	private void configureFermentationView(LayoutInflater inflater, ViewGroup container)
+	{
+		// Configure details
+		detail = new Detail();
+		detail.setTitle("Num. Stages: ");
+		detail.setType(Detail.TYPE_TEXT);
+		detail.setFormat("%s");
+		detail.setContent(r.getFermentationStages()+"");
+		fermDetailList.add(detail);
+		
+		for (int i = 1; i <= r.getFermentationStages(); i++)
+		{
+			String type = "";
+			
+			if (i == 1)
+				type = "Primary:";
+			if (i == 2)
+				type = "Secondary:";
+			if (i == 3)
+				type = "Tertiary:";
+			if (i > 3)
+				break;
+			
+			detail = new Detail();
+			String content = r.getFermentationAge(i) + " " + Units.DAYS;
+			String subtext = "At "
+					         + String.format("%2.0f", r.getDisplayFermentationTemp(i))
+					         + "F";
+			
+			detail.setTitle(type);
+			detail.setType(Detail.TYPE_TEXT);
+			detail.setFormat("%s");
+			detail.setContent(content);
+			detail.setSubText(subtext);
+			fermDetailList.add(detail);
+		}
+		
+		detailArrayAdapter = new DetailArrayAdapter(c, fermDetailList);
+		
+		fermentationProfileView.addView(detailArrayAdapter.getView(0, null, container));
+		
+		for (int i=1; i <= r.getFermentationStages(); i++)
+			fermentationProfileView.addView(detailArrayAdapter.getView(i, null, container));
+		
 	}
 
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)

@@ -42,6 +42,12 @@ public class Recipe {
 	private double OG;			      // Original Gravity
 	private double FG;			      // Final Gravity
 	private int fermentationStages;   // # of Fermentation stages
+	private int primaryAge;			  // Time in primary in days
+	private double primaryTemp;		  // Temp in primary in C
+	private int secondaryAge;		  // Time in Secondary in days
+	private double secondaryTemp;	  // Temp in primary in C
+	private int tertiaryAge;		  // Time in tertiary in days
+	private double tertiaryTemp;	  // Temp in primary in C
 	
 	// Custom Fields ==================================================
 	// ================================================================
@@ -51,13 +57,19 @@ public class Recipe {
 	private double ABV;                // Alcohol by volume
 	private double bitterness;         // Bitterness in IBU
 	private double color;              // Color - SRM
-	private InstructionGenerator instructionGenerator;
+	private InstructionGenerator instructionGenerator; // Generates instructions
+	private double measuredOG;         // Brew day stat: measured OG
+	private double measuredFG;         // Brew stat: measured FG
 	
 	// Static values =================================================
 	// ===============================================================
 	public static final String EXTRACT = "Extract";
 	public static final String ALL_GRAIN = "All Grain";
 	public static final String PARTIAL_MASH = "Partial Mash";
+	
+	public static final int STAGE_PRIMARY = 1;
+	public static final int STAGE_SECONDARY = 2;
+	public static final int STAGE_TERTIARY = 3;
 	
 	// Public constructors
 	public Recipe(String s)
@@ -85,6 +97,12 @@ public class Recipe {
 		this.OG = 1;
 		this.setFG(1);
 		this.setFermentationStages(1);
+		this.primaryAge = 5;
+		this.secondaryAge = 0;
+		this.tertiaryAge = 0;
+		this.primaryTemp = 21;
+		this.secondaryTemp = 0;
+		this.tertiaryTemp = 0;
 		
 		// Custom Fields ==================================================
 		// ================================================================
@@ -95,6 +113,8 @@ public class Recipe {
 		this.bitterness = 0;
 		this.color = 0; 
 		this.instructionGenerator = new InstructionGenerator(this);
+		this.measuredOG = 0;
+		this.measuredFG = 0;
 	}
 	
 	// Public methods
@@ -503,6 +523,26 @@ public class Recipe {
 		return yeasts;
 	}
 	
+	public double getMeasuredOG()
+	{
+		return this.measuredOG;
+	}
+	
+	public double getMeasuredFG()
+	{
+		return this.measuredFG;
+	}
+	
+	public void setMeasuredOG(double d)
+	{
+		this.measuredOG = d;
+	}
+	
+	public void setMeasuredFG(double d)
+	{
+		this.measuredFG = d;
+	}
+	
 	public int getDisplayFermentationTemp()
 	{
 		for (Yeast y : this.getYeastsList())
@@ -510,6 +550,95 @@ public class Recipe {
 			return y.getDisplayFermentationTemp();
 		}
 		return 70;
+	}
+	
+	public void setNumberFermentationStages(int stages)
+	{
+		this.fermentationStages = stages;
+	}
+	
+	public void setFermentationAge(int stage, int age)
+	{
+		switch (stage)
+		{
+			case STAGE_PRIMARY:
+				this.primaryAge = age;
+			case STAGE_SECONDARY:
+				this.secondaryAge = age;
+			case STAGE_TERTIARY:
+				this.tertiaryAge = age;
+		}
+	}
+	
+	public int getFermentationAge(int stage)
+	{
+		switch (stage)
+		{
+			case STAGE_PRIMARY:
+				return this.primaryAge;
+			case STAGE_SECONDARY:
+				return this.secondaryAge;
+			case STAGE_TERTIARY:
+				return this.tertiaryAge;
+			default:
+				return 7;
+		}
+	}
+	
+	public void setBeerXmlStandardFermentationTemp(int stage, double temp)
+	{
+		switch (stage)
+		{
+			case STAGE_PRIMARY:
+				this.primaryTemp = temp;
+			case STAGE_SECONDARY:
+				this.secondaryTemp = temp;
+			case STAGE_TERTIARY:
+				this.tertiaryTemp = temp;
+		}
+	}
+	
+	public double getBeerXmlStandardFermentationTemp(int stage)
+	{
+		switch (stage)
+		{
+			case STAGE_PRIMARY:
+				return this.primaryTemp;
+			case STAGE_SECONDARY:
+				return this.secondaryTemp;
+			case STAGE_TERTIARY:
+				return this.tertiaryTemp;
+			default:
+				return 21;
+		}
+	}
+	
+	public void setDisplayFermentationTemp(int stage, double temp)
+	{
+		switch (stage)
+		{
+			case STAGE_PRIMARY:
+				this.primaryTemp = Units.farenheitToCelsius(temp);
+			case STAGE_SECONDARY:
+				this.secondaryTemp = Units.farenheitToCelsius(temp);
+			case STAGE_TERTIARY:
+				this.tertiaryTemp = Units.farenheitToCelsius(temp);
+		}
+	}
+	
+	public double getDisplayFermentationTemp(int stage)
+	{
+		switch (stage)
+		{
+			case STAGE_PRIMARY:
+				return Units.celsiusToFarenheit(this.primaryTemp);
+			case STAGE_SECONDARY:
+				return Units.celsiusToFarenheit(this.secondaryTemp);
+			case STAGE_TERTIARY:
+				return Units.celsiusToFarenheit(this.tertiaryTemp);
+			default:
+				return Units.celsiusToFarenheit(21);
+		}
 	}
 	
 	// Comparator for sorting ingredients list

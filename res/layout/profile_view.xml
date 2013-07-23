@@ -4,27 +4,35 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
 	android:background="@color/activity_background" >
-
-		<ListView android:id="@+id/details_list" 
-			android:layout_width="fill_parent"
-	    	android:layout_height="wrap_content"
-			android:background="@color/transparent"
-			android:layout_alignParentTop="true">
-		</ListView>
-
-		<View android:layout_width="fill_parent"
-			android:layout_height="1dip"
-			android:background="@color/divider" />
-		
-		<ListView android:id="@+id/steps_list" 
-			android:layout_width="fill_parent"
-	    	android:layout_height="wrap_content"
-			android:background="@color/transparent"
-			android:layout_below="@id/details_list" >
-		</ListView>
 	
-		<View android:layout_width="fill_parent"
-			android:layout_height="1dip"
-			android:background="@color/divider" />
+	<ScrollView android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/activity_background" >
+		
+	    <LinearLayout android:id="@+id/profile_view"
+	        android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:padding="10dip"
+			android:orientation="vertical" >
+					
+		    <LinearLayout android:id="@+id/mash_profile_view"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginBottom="15dip"
+		        android:orientation="vertical"
+		        android:background="@drawable/rounded_bg_white">
+
+		    </LinearLayout>
+		    
+		    <LinearLayout android:id="@+id/fermentation_profile_view"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+				android:layout_marginBottom="15dip"
+		        android:orientation="vertical"
+		        android:background="@drawable/rounded_bg_white">   
+		    </LinearLayout>
+		</LinearLayout>
+
+	</ScrollView>
 
 </LinearLayout>

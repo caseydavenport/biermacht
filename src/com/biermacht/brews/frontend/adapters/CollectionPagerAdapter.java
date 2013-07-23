@@ -40,9 +40,6 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-		if (r.getType().equals(Recipe.EXTRACT))
-            return 3;
-		else
 			return 4;
     }
 
@@ -57,7 +54,7 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 		else if (position == 2)
 			return "Details";
 		else if (position == 3)
-			return "Mash Profile";
+			return "Profiles";
 
         return "Unknown Tab";
     }

@@ -235,6 +235,11 @@ public class MashProfile
 		return this.notes;
 	}
 	
+	public int getNumberOfSteps()
+	{
+		return this.mashSteps.size();
+	}
+	
 	public ArrayList<MashStep> getMashStepList()
 	{
 		return this.mashSteps;

@@ -40,6 +40,14 @@ public class DatabaseInterface {
 			DatabaseHelper.REC_COL_ABV,
 			DatabaseHelper.REC_COL_BITTER,
 			DatabaseHelper.REC_COL_COLOR,
+			DatabaseHelper.REC_COL_MEAS_OG,
+			DatabaseHelper.REC_COL_MEAS_OG,
+			DatabaseHelper.REC_COL_PRIMARY_TEMP,
+			DatabaseHelper.REC_COL_PRIMARY_AGE,
+			DatabaseHelper.REC_COL_SECONDARY_TEMP,
+			DatabaseHelper.REC_COL_SECONDARY_AGE,
+			DatabaseHelper.REC_COL_TERTIARY_TEMP,
+			DatabaseHelper.REC_COL_TERTIARY_AGE
 			};
 	
 	private String[] ingredientAllColumns = {
@@ -173,6 +181,12 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
+		values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
+		values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
+		values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
+		values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
+		values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
+		values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id);
@@ -205,6 +219,14 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
+		values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
+		values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
+		values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
+		values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
+		values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
+		values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
+		values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
+		values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
 		
 		deleteIngredientList(r.getId());
 		addIngredientListToDatabase(r.getIngredientList(), r.getId());
@@ -560,6 +582,14 @@ public class DatabaseInterface {
 		float ABV = cursor.getFloat(cid);             cid++;
 		float bitterness = cursor.getFloat(cid);      cid++;
 		float color = cursor.getFloat(cid);           cid++;
+		float measOG = cursor.getFloat(cid);          cid++;
+		float measFG = cursor.getFloat(cid);          cid++;
+		float primaryTemp = cursor.getFloat(cid);     cid++;
+		int primaryAge = cursor.getInt(cid);          cid++;
+		float secondaryTemp = cursor.getFloat(cid);   cid++;
+		int secondaryAge = cursor.getInt(cid);        cid++;
+		float tertiaryTemp = cursor.getFloat(cid);    cid++;
+		int tertiaryAge = cursor.getInt(cid);         cid++;
 		
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
 		BeerStyle style = readStyle(id);
@@ -582,6 +612,14 @@ public class DatabaseInterface {
 		r.setABV(ABV);
 		r.setBitterness(bitterness);
 		r.setColor(color);
+		r.setMeasuredFG(measFG);
+		r.setMeasuredOG(measOG);
+		r.setFermentationAge(Recipe.STAGE_PRIMARY, primaryAge);
+		r.setFermentationAge(Recipe.STAGE_PRIMARY, secondaryAge);
+		r.setFermentationAge(Recipe.STAGE_PRIMARY, tertiaryAge);
+		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY, primaryTemp);
+		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY, secondaryTemp);
+		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY, tertiaryTemp);
 		
 		r.setStyle(style);
 		r.setMashProfile(profile);

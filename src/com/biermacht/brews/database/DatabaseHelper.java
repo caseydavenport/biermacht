@@ -36,6 +36,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String REC_COL_ABV = "ABV";
 	public static final String REC_COL_BITTER = "bitterness";
 	public static final String REC_COL_COLOR = "color";
+	public static final String REC_COL_MEAS_OG = "measuredOG";
+	public static final String REC_COL_MEAS_FG = "measuredFG";
+	public static final String REC_COL_PRIMARY_TEMP = "primaryTemp";
+	public static final String REC_COL_PRIMARY_AGE = "primaryAge";
+	public static final String REC_COL_SECONDARY_TEMP = "secondaryTemp";
+	public static final String REC_COL_SECONDARY_AGE = "secondaryAge";
+	public static final String REC_COL_TERTIARY_TEMP = "tertiaryTemp";
+	public static final String REC_COL_TERTIARY_AGE = "tertiaryAge";
 	
 	// Column name defines for INGREDIENTS
 	public static final String ING_COL_ID = "_id";
@@ -149,7 +157,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ REC_COL_BATCH_TIME + " int not null, "
 			+ REC_COL_ABV + " float not null, " 
 			+ REC_COL_BITTER + " float not null, " 
-			+ REC_COL_COLOR + " float not null"
+			+ REC_COL_COLOR + " float not null, "
+			+ REC_COL_MEAS_OG + " float, "
+			+ REC_COL_MEAS_FG + " float, "
+			+ REC_COL_PRIMARY_TEMP + " float, "
+			+ REC_COL_PRIMARY_AGE + " integer, "
+			+ REC_COL_SECONDARY_TEMP + " float, "
+			+ REC_COL_SECONDARY_AGE + " integer, "
+			+ REC_COL_TERTIARY_TEMP + " float, "
+			+ REC_COL_TERTIARY_AGE + " integer "
 
 		+ ");";
 	
