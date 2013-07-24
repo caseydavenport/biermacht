@@ -290,5 +290,21 @@ public class BrewCalculator {
 		else
 			return utilization;
 	}
+	
+	/**
+	 * Adjusts a gravity reading based on temperature
+	 * @param mg - Measured gravity
+	 * @param temp - Measured temperature (F)
+	 * @param ct - Temperature to which to calibrate (F)
+	 * @return - Calibrated gravity
+	 */
+	public static double adjustGravityForTemp(double mg, double temp, double ct)
+	{
+		double cg; // Corrected grav
+		cg = mg * (1.00130346 - 0.000134722124 * temp + 0.00000204052596 * temp*temp - 0.00000000232820948 * temp*temp*temp);
+		cg = cg / (1.00130346 - 0.000134722124 * ct + 0.00000204052596 * ct*ct - 0.00000000232820948 * ct*ct*ct);
+		
+		return cg;
+	}
 
 }

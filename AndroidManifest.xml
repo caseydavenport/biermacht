@@ -86,10 +86,14 @@
             android:label="@string/title_activity_edit_misc"
             android:windowSoftInputMode="adjustResize" >
         </activity>
+    	<activity
+            android:name=".frontend.EditFermentationProfileActivity"
+            android:label="@string/title_activity_edit_fermentation_profile"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
         <activity
             android:name=".frontend.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
     </application>
-
 </manifest>

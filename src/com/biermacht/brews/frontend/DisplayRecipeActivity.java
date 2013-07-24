@@ -103,6 +103,12 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
 				edit_mash.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
 				startActivity(edit_mash);
 				return true;
+			
+			case R.id.menu_edit_fermentation_profile:
+				Intent edit_ferm = new Intent(this.appContext, EditFermentationProfileActivity.class);
+				edit_ferm.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+				startActivity(edit_ferm);
+				return true;
         }
         return super.onOptionsItemSelected(item);
     }

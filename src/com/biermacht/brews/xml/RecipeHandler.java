@@ -402,6 +402,41 @@ public class RecipeHandler extends DefaultHandler {
 			{
 				r.setEfficiency(Float.parseFloat(currentValue));
 			}
+			
+			else if (qName.equalsIgnoreCase("FERMENTATION_STAGES"))
+			{
+				r.setFermentationStages(Integer.parseInt(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("PRIMARY_AGE"))
+			{
+				r.setFermentationAge(Recipe.STAGE_PRIMARY, Integer.parseInt(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("PRIMARY_TEMP"))
+			{
+				r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY, Float.parseFloat(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("SECONDARY_AGE"))
+			{
+				r.setFermentationAge(Recipe.STAGE_SECONDARY, Integer.parseInt(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("SECONDARY_TEMP"))
+			{
+				r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY, Float.parseFloat(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("TERTIARY_AGE"))
+			{
+				r.setFermentationAge(Recipe.STAGE_TERTIARY, Integer.parseInt(currentValue));
+			}
+			
+			else if (qName.equalsIgnoreCase("TERTIARY_TEMP"))
+			{
+				r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY, Float.parseFloat(currentValue));
+			}
 		}
 		
 		if (thingType == FERMENTABLE)
