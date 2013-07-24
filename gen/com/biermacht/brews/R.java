@@ -11,18 +11,23 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int activity_background=0x7f040002;
-        public static final int activity_background_dark=0x7f040003;
-        public static final int background=0x7f040001;
-        public static final int black_text=0x7f040008;
-        /**  Theme colors for chaning stuff globally 
+        public static final int activity_background=0x7f040003;
+        public static final int activity_background_dark=0x7f040004;
+        public static final int background=0x7f040002;
+        /**   Colors for text 
          */
-        public static final int button_color=0x7f040000;
+        public static final int black_text=0x7f040008;
+        public static final int button_color=0x7f040001;
+        /**   Colors for views 
+         */
         public static final int divider=0x7f040009;
+        public static final int profile_title_bg=0x7f040005;
         public static final int selected=0x7f040007;
-        public static final int theme_orange=0x7f040006;
-        public static final int title_color=0x7f040005;
-        public static final int transparent=0x7f040004;
+        /**  Theme colors 
+         */
+        public static final int theme_orange=0x7f040000;
+        public static final int title_color=0x7f040006;
+        public static final int transparent=0x7f04000a;
     }
     public static final class drawable {
         public static final int actionbar_background=0x7f020000;
@@ -57,35 +62,36 @@ public final class R {
         public static final int left_button_bg=0x7f02001d;
         public static final int list_item_selected_pressed=0x7f02001e;
         public static final int plus_icon=0x7f02001f;
-        public static final int right_button_bg=0x7f020020;
-        public static final int rounded_bg_white=0x7f020021;
-        public static final int save_icon=0x7f020022;
-        public static final int search_icon=0x7f020023;
-        public static final int selector=0x7f020024;
-        public static final int settings_icon=0x7f020025;
-        public static final int tab_selected=0x7f020026;
-        public static final int tab_selected_pressed=0x7f020027;
-        public static final int tab_unselected=0x7f020028;
-        public static final int tab_unselected_blank=0x7f020029;
-        public static final int textured_background=0x7f02002a;
-        public static final int textured_background_light=0x7f02002b;
-        public static final int up_indicator=0x7f02002c;
+        public static final int profile_title_bg=0x7f020020;
+        public static final int right_button_bg=0x7f020021;
+        public static final int rounded_bg_white=0x7f020022;
+        public static final int save_icon=0x7f020023;
+        public static final int search_icon=0x7f020024;
+        public static final int selector=0x7f020025;
+        public static final int settings_icon=0x7f020026;
+        public static final int tab_selected=0x7f020027;
+        public static final int tab_selected_pressed=0x7f020028;
+        public static final int tab_unselected=0x7f020029;
+        public static final int tab_unselected_blank=0x7f02002a;
+        public static final int textured_background=0x7f02002b;
+        public static final int textured_background_light=0x7f02002c;
+        public static final int up_indicator=0x7f02002d;
     }
     public static final class id {
-        public static final int add_fermentable=0x7f080073;
-        public static final int add_hop=0x7f080074;
-        public static final int add_misc=0x7f080076;
-        public static final int add_yeast=0x7f080075;
+        public static final int add_fermentable=0x7f080074;
+        public static final int add_hop=0x7f080075;
+        public static final int add_misc=0x7f080077;
+        public static final int add_yeast=0x7f080076;
         public static final int alpha_acids_title=0x7f08001c;
         public static final int amount=0x7f080056;
         public static final int amount_edit_text=0x7f080027;
         public static final int amount_title=0x7f080025;
         public static final int attenuation_edit_text=0x7f08003d;
         public static final int attenuation_title=0x7f08003c;
-        public static final int batch_volume=0x7f080067;
+        public static final int batch_volume=0x7f080068;
         public static final int batch_volume_edit_text=0x7f080035;
         public static final int batch_volume_title=0x7f080033;
-        public static final int beer_style=0x7f080066;
+        public static final int beer_style=0x7f080067;
         public static final int beer_style_title=0x7f08002b;
         public static final int beer_type_spinner=0x7f08002c;
         public static final int best_for_text=0x7f08003f;
@@ -101,7 +107,7 @@ public final class R {
         public static final int color_title=0x7f080009;
         public static final int colored_bar=0x7f080000;
         public static final int delete_button=0x7f080043;
-        public static final int description_view=0x7f08006d;
+        public static final int description_view=0x7f08006e;
         public static final int details_list=0x7f080051;
         public static final int duration_view=0x7f08005a;
         public static final int edit_grain_submit_button=0x7f080044;
@@ -109,8 +115,9 @@ public final class R {
         public static final int efficiency_edit_text=0x7f080032;
         public static final int efficiency_title=0x7f080031;
         public static final int end_time_view=0x7f08005c;
-        public static final int fermentable=0x7f080077;
+        public static final int fermentable=0x7f080078;
         public static final int fermentable_type_view=0x7f080005;
+        public static final int fermentation_profile_title=0x7f080065;
         public static final int fermentation_profile_view=0x7f080064;
         public static final int first_ll=0x7f080008;
         public static final int form_spinner=0x7f08001f;
@@ -123,7 +130,7 @@ public final class R {
         public static final int grain_type_spinner=0x7f080004;
         public static final int grain_weight_edit_text=0x7f08000f;
         public static final int gravity_title=0x7f08000a;
-        public static final int hop=0x7f080078;
+        public static final int hop=0x7f080079;
         public static final int hop_acid_edit_text=0x7f08001e;
         public static final int hop_name_edit_text=0x7f08001b;
         public static final int hop_name_title=0x7f08001a;
@@ -139,14 +146,14 @@ public final class R {
         public static final int mash_profile_spinner=0x7f08002f;
         public static final int mash_profile_title=0x7f08002e;
         public static final int mash_profile_view=0x7f080063;
-        public static final int menu_add_ing=0x7f080072;
-        public static final int menu_edit_mash_profile=0x7f08007c;
-        public static final int menu_edit_recipe=0x7f080071;
-        public static final int menu_import_recipe=0x7f080070;
-        public static final int menu_new_recipe=0x7f08006f;
-        public static final int menu_settings=0x7f08006e;
-        public static final int menu_timer=0x7f08007b;
-        public static final int misc=0x7f08007a;
+        public static final int menu_add_ing=0x7f080073;
+        public static final int menu_edit_mash_profile=0x7f08007d;
+        public static final int menu_edit_recipe=0x7f080072;
+        public static final int menu_import_recipe=0x7f080071;
+        public static final int menu_new_recipe=0x7f080070;
+        public static final int menu_settings=0x7f08006f;
+        public static final int menu_timer=0x7f08007c;
+        public static final int misc=0x7f08007b;
         public static final int misc_spinner=0x7f080023;
         public static final int misc_type_spinner=0x7f080024;
         public static final int misc_use_spinner=0x7f080028;
@@ -154,7 +161,7 @@ public final class R {
         public static final int name_title=0x7f08003a;
         public static final int new_grain_submit_button=0x7f080015;
         public static final int new_recipe_submit_button=0x7f080037;
-        public static final int new_volume_edit_text=0x7f080068;
+        public static final int new_volume_edit_text=0x7f080069;
         public static final int no_ingredients_view=0x7f080059;
         public static final int no_instructions_view=0x7f08005e;
         public static final int no_recipes_view=0x7f080046;
@@ -167,12 +174,12 @@ public final class R {
         public static final int recipe_name_edit_text=0x7f08002a;
         public static final int recipe_name_title=0x7f080029;
         public static final int recipe_search_view=0x7f080047;
-        public static final int row_icon=0x7f080065;
+        public static final int row_icon=0x7f080066;
         public static final int search_bar=0x7f080048;
         public static final int search_icon=0x7f080049;
         public static final int second_ll=0x7f08000c;
         public static final int select_ingredient_type_button=0x7f08004b;
-        public static final int selected_view=0x7f08006c;
+        public static final int selected_view=0x7f08006d;
         public static final int settings_list=0x7f08004a;
         public static final int spinner_layout=0x7f080003;
         public static final int spinner_title=0x7f080002;
@@ -182,21 +189,21 @@ public final class R {
         public static final int submit_button=0x7f080040;
         public static final int subtext=0x7f08004f;
         public static final int tag=0x7f08004d;
-        public static final int text=0x7f08006b;
-        public static final int text_type=0x7f080069;
+        public static final int text=0x7f08006c;
+        public static final int text_type=0x7f08006a;
         public static final int third_ll=0x7f080010;
         public static final int time_edit_text=0x7f080013;
         public static final int time_title=0x7f080011;
         public static final int timer=0x7f080060;
         public static final int timer_controls=0x7f080061;
         public static final int timer_view=0x7f08005f;
-        public static final int title=0x7f08006a;
+        public static final int title=0x7f08006b;
         public static final int unit_text=0x7f080057;
         public static final int use_spinner=0x7f080019;
         public static final int use_title=0x7f080026;
         public static final int value=0x7f08004e;
         public static final int weight_title=0x7f08000b;
-        public static final int yeast=0x7f080079;
+        public static final int yeast=0x7f08007a;
     }
     public static final class layout {
         public static final int activity_add_fermentable=0x7f030000;
@@ -217,16 +224,17 @@ public final class R {
         public static final int alert_edit_text=0x7f03000f;
         public static final int detail_row_layout=0x7f030010;
         public static final int details_view=0x7f030011;
-        public static final int ingredient_row_layout=0x7f030012;
-        public static final int ingredient_view=0x7f030013;
-        public static final int instruction_row_layout=0x7f030014;
-        public static final int instruction_view=0x7f030015;
-        public static final int profile_view=0x7f030016;
-        public static final int recipe_row_layout=0x7f030017;
-        public static final int scale_alert_view=0x7f030018;
-        public static final int settings_row_layout=0x7f030019;
-        public static final int spinner_row_dropdown_layout=0x7f03001a;
-        public static final int spinner_row_layout=0x7f03001b;
+        public static final int divider=0x7f030012;
+        public static final int ingredient_row_layout=0x7f030013;
+        public static final int ingredient_view=0x7f030014;
+        public static final int instruction_row_layout=0x7f030015;
+        public static final int instruction_view=0x7f030016;
+        public static final int profile_view=0x7f030017;
+        public static final int recipe_row_layout=0x7f030018;
+        public static final int scale_alert_view=0x7f030019;
+        public static final int settings_row_layout=0x7f03001a;
+        public static final int spinner_row_dropdown_layout=0x7f03001b;
+        public static final int spinner_row_layout=0x7f03001c;
     }
     public static final class menu {
         public static final int activity_add_hops=0x7f070000;
@@ -251,7 +259,7 @@ public final class R {
     }
     public static final class string {
         public static final int add=0x7f050012;
-        public static final int alpha_acids_title=0x7f050033;
+        public static final int alpha_acids_title=0x7f050034;
         public static final int amount=0x7f05001d;
         /**  Activity names 
          */
@@ -267,19 +275,20 @@ public final class R {
         public static final int delete=0x7f050014;
         public static final int edit=0x7f050013;
         public static final int efficiency=0x7f050026;
-        public static final int efficiency_hint=0x7f05002c;
-        public static final int end_time=0x7f050031;
+        public static final int efficiency_hint=0x7f05002d;
+        public static final int end_time=0x7f050032;
         /**  Titles for editTexts / fields 
          */
         public static final int enter_name=0x7f05001f;
         /**  Standard messages 
          */
         public static final int error=0x7f050011;
-        public static final int fermentable_type=0x7f05002f;
-        public static final int form=0x7f05002a;
+        public static final int fermentable_type=0x7f050030;
+        public static final int fermentation_profile=0x7f050029;
+        public static final int form=0x7f05002b;
         public static final int gravity=0x7f050016;
         public static final int mash_profile=0x7f050028;
-        public static final int mash_steps=0x7f050029;
+        public static final int mash_steps=0x7f05002a;
         public static final int menu_add_ingredient=0x7f05000d;
         public static final int menu_brew_timer=0x7f05000e;
         public static final int menu_edit_profile=0x7f050010;
@@ -287,46 +296,46 @@ public final class R {
         /**  Menu stuff 
          */
         public static final int menu_settings=0x7f05000c;
-        public static final int minutes_hint=0x7f05002d;
+        public static final int minutes_hint=0x7f05002e;
         public static final int name=0x7f050018;
-        public static final int new_volume=0x7f050038;
+        public static final int new_volume=0x7f050039;
         public static final int no_recipes=0x7f05001e;
         /**  from activity_main.xml 
          */
-        public static final int recipe_search_hint=0x7f050036;
+        public static final int recipe_search_hint=0x7f050037;
         public static final int scale=0x7f050019;
-        public static final int search_icon_description=0x7f050037;
+        public static final int search_icon_description=0x7f050038;
         /**  from activity_add_hops.xml 
          */
-        public static final int select_hop=0x7f050032;
+        public static final int select_hop=0x7f050033;
         /**  from activity_add_misc.xm 
          */
-        public static final int select_misc=0x7f050035;
-        public static final int start_time=0x7f050030;
+        public static final int select_misc=0x7f050036;
+        public static final int start_time=0x7f050031;
         public static final int steep_time=0x7f050023;
         public static final int title_activity_add_fermentable=0x7f050004;
         public static final int title_activity_add_hops=0x7f050009;
         public static final int title_activity_add_misc=0x7f05000a;
         public static final int title_activity_add_new_recipe=0x7f050003;
-        public static final int title_activity_add_yeast=0x7f050039;
+        public static final int title_activity_add_yeast=0x7f05003a;
         public static final int title_activity_display_recipe=0x7f050002;
         public static final int title_activity_edit_fermentable=0x7f050005;
         public static final int title_activity_edit_hop=0x7f050006;
         public static final int title_activity_edit_misc=0x7f05000b;
         public static final int title_activity_edit_profile=0x7f050008;
         public static final int title_activity_edit_recipe=0x7f050007;
-        public static final int title_activity_edit_yeast=0x7f05003a;
+        public static final int title_activity_edit_yeast=0x7f05003b;
         public static final int title_activity_main=0x7f050001;
-        public static final int title_activity_settings=0x7f05003b;
+        public static final int title_activity_settings=0x7f05003c;
         public static final int units=0x7f05001b;
         public static final int use=0x7f050027;
         /**  Hints for editTexts 
          */
-        public static final int volume_gal_hint=0x7f05002b;
+        public static final int volume_gal_hint=0x7f05002c;
         /**  from activity_add_fermentable.xml 
          */
-        public static final int weight_lbs=0x7f05002e;
-        public static final int weight_oz=0x7f050034;
+        public static final int weight_lbs=0x7f05002f;
+        public static final int weight_oz=0x7f050035;
         public static final int yeast=0x7f05001a;
     }
     public static final class style {

@@ -98,7 +98,9 @@ public class ProfileViewFragment extends Fragment {
 		
 		detailArrayAdapter = new DetailArrayAdapter(c, mashDetailList);
 		mashProfileView.addView(detailArrayAdapter.getView(0, null, container));
+		mashProfileView.addView(inflater.inflate(R.layout.divider, container, false));
 		mashProfileView.addView(detailArrayAdapter.getView(1, null, container));
+		mashProfileView.addView(inflater.inflate(R.layout.divider, container, false));
 		mashProfileView.addView(detailArrayAdapter.getView(2, null, container));
 	}
 	
@@ -126,16 +128,15 @@ public class ProfileViewFragment extends Fragment {
 				break;
 			
 			detail = new Detail();
-			String content = r.getFermentationAge(i) + " " + Units.DAYS;
-			String subtext = "At "
+			String content = r.getFermentationAge(i) + " " + Units.DAYS
+					         + " at "
 					         + String.format("%2.0f", r.getDisplayFermentationTemp(i))
-					         + "F";
+					         + " F";
 			
 			detail.setTitle(type);
 			detail.setType(Detail.TYPE_TEXT);
 			detail.setFormat("%s");
 			detail.setContent(content);
-			detail.setSubText(subtext);
 			fermDetailList.add(detail);
 		}
 		
@@ -144,7 +145,10 @@ public class ProfileViewFragment extends Fragment {
 		fermentationProfileView.addView(detailArrayAdapter.getView(0, null, container));
 		
 		for (int i=1; i <= r.getFermentationStages(); i++)
+		{
+			fermentationProfileView.addView(inflater.inflate(R.layout.divider, container, false));
 			fermentationProfileView.addView(detailArrayAdapter.getView(i, null, container));
+		}
 		
 	}
 

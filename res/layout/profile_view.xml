@@ -21,6 +21,13 @@
 		        android:layout_marginBottom="15dip"
 		        android:orientation="vertical"
 		        android:background="@drawable/rounded_bg_white">
+		        
+		        <TextView android:id="@+id/mash_profile_title"
+		            android:layout_width="match_parent"
+		            android:layout_height="30dp" 
+		            android:gravity="center"
+		            android:background="@drawable/profile_title_bg"
+		            android:text="@string/mash_profile" />
 
 		    </LinearLayout>
 		    
@@ -29,7 +36,15 @@
 		        android:layout_height="wrap_content"
 				android:layout_marginBottom="15dip"
 		        android:orientation="vertical"
-		        android:background="@drawable/rounded_bg_white">   
+		        android:background="@drawable/rounded_bg_white"> 
+		        
+		        <TextView android:id="@+id/fermentation_profile_title"
+		            android:layout_width="match_parent"
+		            android:layout_height="30dp" 
+		            android:gravity="center"
+		            android:background="@drawable/profile_title_bg"
+		            android:text="@string/fermentation_profile" />
+		        
 		    </LinearLayout>
 		</LinearLayout>
 

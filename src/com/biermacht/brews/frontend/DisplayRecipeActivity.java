@@ -2,6 +2,7 @@ package com.biermacht.brews.frontend;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -134,6 +135,11 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     	super.onPause();
     	// Save the current page we're looking at
     	this.currentItem = mViewPager.getCurrentItem();
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
 	public void onClick(View v) 

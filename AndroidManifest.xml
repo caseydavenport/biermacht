@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name=".frontend.DisplayRecipeActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_display_recipe">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
