@@ -119,7 +119,7 @@ public class IngredientViewFragment extends Fragment {
 	
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		inflater.inflate(R.menu.ingredient_menu, menu);
+		inflater.inflate(R.menu.fragment_ingredient_menu, menu);
 	}
 	
 }

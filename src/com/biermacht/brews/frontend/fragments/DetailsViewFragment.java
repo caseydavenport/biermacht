@@ -117,7 +117,7 @@ public class DetailsViewFragment extends Fragment {
 
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		inflater.inflate(R.menu.details_menu, menu);
+		inflater.inflate(R.menu.fragment_details_menu, menu);
 	}
 	
 }

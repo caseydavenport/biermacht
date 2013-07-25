@@ -154,7 +154,7 @@ public class ProfileViewFragment extends Fragment {
 
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		inflater.inflate(R.menu.edit_profile_menu, menu);
+		inflater.inflate(R.menu.fragment_profile_menu, menu);
 	}
 
 }
