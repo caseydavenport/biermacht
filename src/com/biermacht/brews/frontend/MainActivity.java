@@ -46,6 +46,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ArrayList<Recipe> recipeList;
 	private Recipe selectedRecipe;
 	private int searchOptions;
+	private ArrayList<String> menuItems;
 	
 	// Poorly done globally used shit
 	public static DatabaseInterface databaseInterface;
@@ -56,6 +57,16 @@ public class MainActivity extends Activity implements OnClickListener {
     private ListView listView; 
     private EditText searchView;
     private TextView noRecipesView;
+    
+    // Static menu items
+    private static String EDIT_RECIPE = "Edit Recipe";
+    private static String SCALE_RECIPE = "Scale Recipe";
+    private static String COPY_RECIPE = "Copy Recipe";
+    private static String DELETE_RECIPE = "Delete Recipe";
+    private static String EDIT_FERM = "Edit Fermentation Profile";
+    private static String EDIT_MASH = "Edit Mash Profile";
+    private static String EXPORT_RECIPE = "Export as BeerXML";
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -238,21 +249,31 @@ public class MainActivity extends Activity implements OnClickListener {
         selectedRecipe = recipeList.get(info.position);
         
         menu.setHeaderTitle(title);
-        String[] menuItems = {"Edit Recipe", "Scale Recipe", "Copy Recipe", "Delete Recipe"};
+        menuItems = new ArrayList<String>();
         
-        for (int i = 0; i < menuItems.length; i++) 
+        // Build menu items
+        menuItems.add(EDIT_RECIPE);
+        if (!selectedRecipe.getType().equals(Recipe.EXTRACT))
+        	menuItems.add(EDIT_MASH);
+        menuItems.add(EDIT_FERM);
+        menuItems.add(SCALE_RECIPE);
+        menuItems.add(COPY_RECIPE);
+        menuItems.add(DELETE_RECIPE);
+        
+        for (int i = 0; i < menuItems.size(); i++) 
         {
-          menu.add(Menu.NONE, i, i, menuItems[i]);
+          menu.add(Menu.NONE, i, i, menuItems.get(i));
         }
       }
     }
     
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-      int menuItemIndex = item.getItemId();
+      String selected = menuItems.get(item.getItemId());
+      
       
       // Edit recipe selected
-      if (menuItemIndex == 0)
+      if (selected.equals(EDIT_RECIPE))
       {
   		Intent i = new Intent(getApplicationContext(), EditRecipeActivity.class);
   		i.putExtra(Utils.INTENT_RECIPE_ID, selectedRecipe.getId());
@@ -260,12 +281,12 @@ public class MainActivity extends Activity implements OnClickListener {
       }
       
       // Scale recipe selected
-      else if (menuItemIndex == 1)
+      else if (selected.equals(SCALE_RECIPE))
       {
     	  scaleAlert(selectedRecipe).show();
       }
       // Copy recipe selected
-      else if (menuItemIndex == 2)
+      else if (selected.equals(COPY_RECIPE))
       {
     	  selectedRecipe.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
     	  Utils.createRecipeFromExisting(selectedRecipe);
@@ -273,9 +294,25 @@ public class MainActivity extends Activity implements OnClickListener {
     	  
       }
       // Delete recipe selected
-      else if (menuItemIndex == 3)
+      else if (selected.equals(DELETE_RECIPE))
       {
     	  deleteAlert(selectedRecipe).show();
+      }
+      
+      // Edit fermentation selected
+      else if (selected.equals(EDIT_FERM))
+      {
+    		Intent i = new Intent(getApplicationContext(), EditFermentationProfileActivity.class);
+      		i.putExtra(Utils.INTENT_RECIPE_ID, selectedRecipe.getId());
+      		startActivity(i); 
+      }
+      
+      // Edit fermentation selected
+      else if (selected.equals(EDIT_MASH))
+      {
+    		Intent i = new Intent(getApplicationContext(), EditMashProfileActivity.class);
+      		i.putExtra(Utils.INTENT_RECIPE_ID, selectedRecipe.getId());
+      		startActivity(i); 
       }
 
       return true;

@@ -244,18 +244,16 @@ public final class R {
         public static final int activity_add_ingredient=0x7f070001;
         public static final int activity_add_new_recipe=0x7f070002;
         public static final int activity_add_yeast=0x7f070003;
-        public static final int activity_display_message=0x7f070004;
-        public static final int activity_edit_hop=0x7f070005;
-        public static final int activity_edit_ingredient=0x7f070006;
-        public static final int activity_edit_recipe=0x7f070007;
-        public static final int activity_edit_yeast=0x7f070008;
-        public static final int activity_main=0x7f070009;
-        public static final int activity_settings=0x7f07000a;
-        public static final int activity_xmltest=0x7f07000b;
-        public static final int fragment_details_menu=0x7f07000c;
-        public static final int fragment_ingredient_menu=0x7f07000d;
-        public static final int fragment_instruction_menu=0x7f07000e;
-        public static final int fragment_profile_menu=0x7f07000f;
+        public static final int activity_edit_hop=0x7f070004;
+        public static final int activity_edit_ingredient=0x7f070005;
+        public static final int activity_edit_recipe=0x7f070006;
+        public static final int activity_edit_yeast=0x7f070007;
+        public static final int activity_main=0x7f070008;
+        public static final int activity_settings=0x7f070009;
+        public static final int fragment_details_menu=0x7f07000a;
+        public static final int fragment_ingredient_menu=0x7f07000b;
+        public static final int fragment_instruction_menu=0x7f07000c;
+        public static final int fragment_profile_menu=0x7f07000d;
     }
     public static final class string {
         public static final int add=0x7f050013;
