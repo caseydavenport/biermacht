@@ -124,7 +124,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 	private Builder setBrewer()
 	{
 		LayoutInflater factory = LayoutInflater.from(this);
-        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_edit_text, null);
+        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text, null);
         final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
 		editText.setHint("Enter your name");
 		editText.setText(brewerName);

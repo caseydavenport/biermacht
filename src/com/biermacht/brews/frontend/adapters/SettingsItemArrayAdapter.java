@@ -36,7 +36,7 @@ public class SettingsItemArrayAdapter extends ArrayAdapter<SettingsItem> {
 		{
 			// Get inflater
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			row = inflater.inflate(R.layout.settings_row_layout, parent, false);
+			row = inflater.inflate(R.layout.row_layout_settings_item, parent, false);
 		}
 
 		TextView titleView = (TextView) row.findViewById(R.id.title);

@@ -325,7 +325,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Builder scaleAlert(final Recipe r)
 	{
 		LayoutInflater factory = LayoutInflater.from(this);
-        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.scale_alert_view, null);
+        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_scale, null);
         final EditText editText = (EditText) alertView.findViewById(R.id.new_volume_edit_text);
 		
 		return new AlertDialog.Builder(this)

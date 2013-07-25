@@ -39,7 +39,7 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 		{
 			// Get inflater
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			row = inflater.inflate(R.layout.recipe_row_layout, parent, false);
+			row = inflater.inflate(R.layout.row_layout_recipe, parent, false);
 		}
 		
 		TextView textView = (TextView) row.findViewById(R.id.label);

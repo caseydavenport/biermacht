@@ -39,7 +39,7 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_edit_mash_profile);
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);

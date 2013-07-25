@@ -42,7 +42,7 @@ public class ProfileViewFragment extends Fragment {
 
 	public ProfileViewFragment(Context c, Recipe r)
 	{
-		this.resource = R.layout.profile_view;
+		this.resource = R.layout.fragment_profile_view;
 		this.r = r;
 		this.c = c;
 	}

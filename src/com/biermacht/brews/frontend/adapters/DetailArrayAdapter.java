@@ -43,7 +43,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
 		{
 			// Get inflater
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			row = inflater.inflate(R.layout.detail_row_layout, parent, false);
+			row = inflater.inflate(R.layout.row_layout_detail, parent, false);
 		}
 
 		TextView titleView = (TextView) row.findViewById(R.id.tag);

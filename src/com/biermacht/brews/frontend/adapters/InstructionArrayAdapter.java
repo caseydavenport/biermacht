@@ -34,7 +34,7 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 		{
 			// Get inflater
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			row = inflater.inflate(R.layout.instruction_row_layout, parent, false);
+			row = inflater.inflate(R.layout.row_layout_instruction, parent, false);
 		}
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView tagView = (TextView) row.findViewById(R.id.tag);

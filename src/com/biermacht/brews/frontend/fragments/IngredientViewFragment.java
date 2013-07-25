@@ -38,7 +38,7 @@ public class IngredientViewFragment extends Fragment {
 	
 	public IngredientViewFragment(Context c, Recipe r)
 	{
-		this.resource = R.layout.ingredient_view;
+		this.resource = R.layout.fragment_ingredient_view;
 		this.r = r;
 		this.c = c;
 	}

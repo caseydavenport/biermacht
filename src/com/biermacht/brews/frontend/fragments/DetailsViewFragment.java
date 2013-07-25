@@ -41,7 +41,7 @@ public class DetailsViewFragment extends Fragment {
 	
 	public DetailsViewFragment(Context c, Recipe r)
 	{
-		this.resource = R.layout.details_view;
+		this.resource = R.layout.fragment_details_view;
 		this.r = r;
 		this.c = c;
 		this.reccomendedValues = r.getStyle().getReccomendedValues();

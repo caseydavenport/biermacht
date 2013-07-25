@@ -29,7 +29,7 @@ public class InstructionViewFragment extends Fragment {
 	
 	public InstructionViewFragment(Context c, Recipe r)
 	{
-		this.resource = R.layout.instruction_view;
+		this.resource = R.layout.fragment_instruction_view;
 		this.r = r;
 		this.c = c;
 	}
