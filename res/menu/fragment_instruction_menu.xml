@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">    
+    <item android:id="@+id/menu_timer"
+        android:title="@string/menu_brew_timer"
+        android:orderInCategory="1"
+        android:icon="@drawable/icon_timer"
+        android:showAsAction="ifRoom|withText" />
+</menu>
