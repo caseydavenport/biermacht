@@ -45,9 +45,9 @@ public class Recipe {
 	private int primaryAge;			  // Time in primary in days
 	private double primaryTemp;		  // Temp in primary in C
 	private int secondaryAge;		  // Time in Secondary in days
-	private double secondaryTemp;	  // Temp in primary in C
+	private double secondaryTemp;	  // Temp in secondary in C
 	private int tertiaryAge;		  // Time in tertiary in days
-	private double tertiaryTemp;	  // Temp in primary in C
+	private double tertiaryTemp;	  // Temp in tertiary in C
 	
 	// Custom Fields ==================================================
 	// ================================================================
@@ -543,7 +543,7 @@ public class Recipe {
 		this.measuredFG = d;
 	}
 	
-	public int getDisplayFermentationTemp()
+	public int getDisplayCoolToFermentationTemp()
 	{
 		for (Yeast y : this.getYeastsList())
 		{

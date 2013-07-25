@@ -78,10 +78,11 @@ public final class R {
         public static final int up_indicator=0x7f02002d;
     }
     public static final class id {
-        public static final int add_fermentable=0x7f080079;
-        public static final int add_hop=0x7f08007a;
-        public static final int add_misc=0x7f08007c;
-        public static final int add_yeast=0x7f08007b;
+        public static final int add_fermentable=0x7f08007b;
+        public static final int add_hop=0x7f08007c;
+        public static final int add_misc=0x7f08007e;
+        public static final int add_yeast=0x7f08007d;
+        public static final int age_edit_text=0x7f080072;
         public static final int alpha_acids_title=0x7f08001c;
         public static final int amount=0x7f080065;
         public static final int amount_edit_text=0x7f080027;
@@ -115,7 +116,7 @@ public final class R {
         public static final int efficiency_edit_text=0x7f080032;
         public static final int efficiency_title=0x7f080031;
         public static final int end_time_view=0x7f080069;
-        public static final int fermentable=0x7f08007d;
+        public static final int fermentable=0x7f08007f;
         public static final int fermentable_type_view=0x7f080005;
         public static final int fermentation_profile_title=0x7f08005c;
         public static final int fermentation_profile_view=0x7f08005b;
@@ -130,7 +131,7 @@ public final class R {
         public static final int grain_type_spinner=0x7f080004;
         public static final int grain_weight_edit_text=0x7f08000f;
         public static final int gravity_title=0x7f08000a;
-        public static final int hop=0x7f08007e;
+        public static final int hop=0x7f080080;
         public static final int hop_acid_edit_text=0x7f08001e;
         public static final int hop_name_edit_text=0x7f08001b;
         public static final int hop_name_title=0x7f08001a;
@@ -147,15 +148,15 @@ public final class R {
         public static final int mash_profile_spinner=0x7f08002f;
         public static final int mash_profile_title=0x7f08002e;
         public static final int mash_profile_view=0x7f08005a;
-        public static final int menu_add_ing=0x7f080076;
-        public static final int menu_edit_fermentation_profile=0x7f080078;
-        public static final int menu_edit_mash_profile=0x7f080077;
-        public static final int menu_edit_recipe=0x7f080075;
-        public static final int menu_import_recipe=0x7f080074;
-        public static final int menu_new_recipe=0x7f080073;
-        public static final int menu_settings=0x7f080072;
-        public static final int menu_timer=0x7f080081;
-        public static final int misc=0x7f080080;
+        public static final int menu_add_ing=0x7f080078;
+        public static final int menu_edit_fermentation_profile=0x7f08007a;
+        public static final int menu_edit_mash_profile=0x7f080079;
+        public static final int menu_edit_recipe=0x7f080077;
+        public static final int menu_import_recipe=0x7f080076;
+        public static final int menu_new_recipe=0x7f080075;
+        public static final int menu_settings=0x7f080074;
+        public static final int menu_timer=0x7f080083;
+        public static final int misc=0x7f080082;
         public static final int misc_spinner=0x7f080023;
         public static final int misc_type_spinner=0x7f080024;
         public static final int misc_use_spinner=0x7f080028;
@@ -193,6 +194,7 @@ public final class R {
         public static final int submit_button=0x7f080040;
         public static final int subtext=0x7f08005f;
         public static final int tag=0x7f08005d;
+        public static final int temp_edit_text=0x7f080073;
         public static final int text=0x7f08006f;
         public static final int text_type=0x7f08006d;
         public static final int third_ll=0x7f080010;
@@ -207,7 +209,7 @@ public final class R {
         public static final int use_title=0x7f080026;
         public static final int value=0x7f08005e;
         public static final int weight_title=0x7f08000b;
-        public static final int yeast=0x7f08007f;
+        public static final int yeast=0x7f080081;
     }
     public static final class layout {
         public static final int activity_add_fermentable=0x7f030000;
@@ -239,6 +241,7 @@ public final class R {
         public static final int row_layout_settings_item=0x7f03001a;
         public static final int spinner_row_dropdown_layout=0x7f03001b;
         public static final int spinner_row_layout=0x7f03001c;
+        public static final int view_edit_fermentation_stage=0x7f03001d;
     }
     public static final class menu {
         public static final int activity_add_hops=0x7f070000;

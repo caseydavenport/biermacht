@@ -70,11 +70,13 @@
         </activity>
         <activity
             android:name=".frontend.AddYeastActivity"
-            android:label="@string/title_activity_add_yeast">
+            android:label="@string/title_activity_add_yeast"
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".frontend.EditYeastActivity"
-            android:label="@string/title_activity_edit_yeast" >
+            android:label="@string/title_activity_edit_yeast"
+            android:windowSoftInputMode="adjustResize" >
         </activity>
 		<activity
             android:name=".frontend.AddMiscActivity"
@@ -93,7 +95,8 @@
         </activity>
         <activity
             android:name=".frontend.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:windowSoftInputMode="adjustResize" >
         </activity>
     </application>
 </manifest>

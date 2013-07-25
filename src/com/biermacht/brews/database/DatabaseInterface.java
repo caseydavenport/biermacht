@@ -615,8 +615,8 @@ public class DatabaseInterface {
 		r.setMeasuredFG(measFG);
 		r.setMeasuredOG(measOG);
 		r.setFermentationAge(Recipe.STAGE_PRIMARY, primaryAge);
-		r.setFermentationAge(Recipe.STAGE_PRIMARY, secondaryAge);
-		r.setFermentationAge(Recipe.STAGE_PRIMARY, tertiaryAge);
+		r.setFermentationAge(Recipe.STAGE_SECONDARY, secondaryAge);
+		r.setFermentationAge(Recipe.STAGE_TERTIARY, tertiaryAge);
 		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY, primaryTemp);
 		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY, secondaryTemp);
 		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY, tertiaryTemp);

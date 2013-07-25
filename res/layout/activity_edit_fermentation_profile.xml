@@ -31,7 +31,8 @@
 			android:layout_height="wrap_content"
 			android:padding="10dip"
 			android:layout_margin="0dip"
-			android:background="@color/transparent" >
+			android:background="@color/transparent"
+			android:orientation="vertical" >
 			
 			<LinearLayout android:id="@+id/num_stages_layout"
 					android:orientation="horizontal"
