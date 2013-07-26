@@ -76,7 +76,12 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		}
 		else if(ingType == Ingredient.FERMENTABLE) 
 		{
-			imageView.setImageResource(R.drawable.icon_wheat);
+			Fermentable f = (Fermentable) list.get(position);
+			if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
+				imageView.setImageResource(R.drawable.icon_wheat);
+			else
+				imageView.setImageResource(R.drawable.icon_extract);
+			
 			String s = String.format("%2.2f", BrewCalculator.calculateGrainPercent(r, list.get(position)));
 		    String t = String.format("%2.2f", BrewCalculator.calculateGravityPoints(r, list.get(position)));
 			detailText += s;
