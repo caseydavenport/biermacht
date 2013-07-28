@@ -43,3 +43,4 @@ bin/classes.dex
 bin/resources.ap_
 bin/*
 *.apk
+bin/*
