@@ -44,3 +44,4 @@ bin/resources.ap_
 bin/*
 *.apk
 bin/*
+gen/*
