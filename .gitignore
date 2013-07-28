@@ -45,3 +45,5 @@ bin/*
 *.apk
 bin/*
 gen/*
+.idea/*
+*.iml
