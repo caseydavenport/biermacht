@@ -86,7 +86,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="10dp"
             android:contentDescription="@string/search_icon_description"
-            android:src="@drawable/search_icon" />
+            android:src="@drawable/action_search" />
 
     </LinearLayout>
 	

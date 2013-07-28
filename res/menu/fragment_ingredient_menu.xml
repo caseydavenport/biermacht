@@ -2,7 +2,7 @@
     <item android:id="@+id/menu_add_ing"
         android:title="@string/menu_add_ingredient"
         android:orderInCategory="1"
-        android:icon="@drawable/plus_icon"
+        android:icon="@drawable/content_new"
         android:showAsAction="ifRoom|withText" >
         
         <menu>
