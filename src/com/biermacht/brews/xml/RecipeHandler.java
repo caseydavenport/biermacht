@@ -720,12 +720,12 @@ public class RecipeHandler extends DefaultHandler {
 
 			else if (qName.equalsIgnoreCase("LABORATORY"))
 			{
-				// TODO: Add support for this field
+				y.setLaboratory(currentValue);
 			}
 
 			else if (qName.equalsIgnoreCase("PRODUCT_ID"))
 			{
-				// TODO: Add support for this field
+				y.setProductId(currentValue);
 			}
 
 			else if (qName.equalsIgnoreCase("MIN_TEMPERATURE"))

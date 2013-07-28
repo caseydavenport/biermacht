@@ -209,6 +209,7 @@ public class IngredientHandler {
 	            sp.parse(is, myXMLHandler);
 				
 	            list.addAll(myXMLHandler.getYeasts());
+                Collections.sort(list, new IngredientComparator<Ingredient>());
 	        }
 	        catch (Exception e)
 	        {

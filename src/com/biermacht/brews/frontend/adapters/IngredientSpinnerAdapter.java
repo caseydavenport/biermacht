@@ -39,7 +39,7 @@ public class IngredientSpinnerAdapter extends ArrayAdapter<Ingredient> {
 		
 		Ingredient ing = list.get(position);
 		
-		textView.setText(ing.getName());
+		textView.setText(ing.toString());
 		descView.setText(ing.getShortDescription());
 		
 		return row;
@@ -63,7 +63,7 @@ public class IngredientSpinnerAdapter extends ArrayAdapter<Ingredient> {
 		
 		Ingredient ing = list.get(position);
 		
-		textView.setText(ing.getName());
+		textView.setText(ing.toString());
 		descView.setText(ing.getShortDescription());
 		
 		descView.setVisibility(View.VISIBLE);

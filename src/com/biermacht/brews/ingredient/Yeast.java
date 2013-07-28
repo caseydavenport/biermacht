@@ -18,6 +18,8 @@ public class Yeast extends Ingredient {
 	private double attenuation;							// Percentage: x / 100
 	private String notes;
 	private String bestFor;
+    private String productid;
+    private String lab;
 	
 	// Custom Fields ==================================================
 	// ================================================================
@@ -47,7 +49,15 @@ public class Yeast extends Ingredient {
 		this.attenuation = 75;
 		this.notes = "";
 		this.bestFor = "";
+        this.productid = "";
+        this.lab = "";
 	}
+
+    @Override
+    public String toString()
+    {
+        return this.getLaboratory() + " " + this.getProductid() + " - " + this.getName();
+    }
 
 	@Override
 	public String getType() {
@@ -244,4 +254,24 @@ public class Yeast extends Ingredient {
 	public void setBestFor(String bestFor) {
 		this.bestFor = bestFor;
 	}
+
+    public void setProductId(String s)
+    {
+        this.productid = s;
+    }
+
+    public void setLaboratory(String s)
+    {
+        this.lab = s;
+    }
+
+    public String getLaboratory()
+    {
+        return this.lab;
+    }
+
+    public String getProductid()
+    {
+        return this.productid;
+    }
 }
