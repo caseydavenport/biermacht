@@ -31,6 +31,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 	private EditText effEditText;
 	private EditText batchSizeEditText;
 	private EditText boilSizeEditText;
+    private EditText measuredOGEditText;
+    private EditText measuredFGEditText;
 	private TextView mashProfileTitle;
 	
 	// Data storage declarations
@@ -63,6 +65,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         batchSizeEditText = (EditText) findViewById(R.id.batch_volume_edit_text);
         boilSizeEditText = (EditText) findViewById(R.id.boil_volume_edit_text);
         mashProfileTitle = (TextView) findViewById(R.id.mash_profile_title);
+        measuredFGEditText = (EditText) findViewById(R.id.measured_fg_edit_text);
+        measuredOGEditText = (EditText) findViewById(R.id.measured_og_edit_text);
 		
         // Default values
         recipeNameEditText.setText(mRecipe.getRecipeName());
@@ -70,6 +74,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         effEditText.setText(String.format("%2.2f", mRecipe.getEfficiency()));
         batchSizeEditText.setText(String.format("%2.2f", mRecipe.getDisplayBatchSize()));
         boilSizeEditText.setText(String.format("%2.2f", mRecipe.getDisplayBoilSize()));
+        measuredOGEditText.setText(String.format("%2.3f", mRecipe.getMeasuredOG()));
+        measuredFGEditText.setText(String.format("%2.3f", mRecipe.getMeasuredFG()));
         
         //Arraylist of beer types
         beerStyleArray = MainActivity.ingredientHandler.getStylesList();
@@ -212,6 +218,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 			Integer boilTime = 1;
 			float batchSize = 5;
 			float boilSize = 5;
+            float measuredOg = 1;
+            float measuredFg = 1;
 			
 			try {
 			    recipeName = recipeNameEditText.getText().toString();
@@ -219,6 +227,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 				efficiency = Float.parseFloat(effEditText.getText().toString());
 				batchSize = Float.parseFloat(batchSizeEditText.getText().toString());
 				boilSize = Float.parseFloat(boilSizeEditText.getText().toString());
+                measuredOg = Float.parseFloat(measuredOGEditText.getText().toString());
+                measuredFg = Float.parseFloat(measuredFGEditText.getText().toString());
 			}
 			catch (Exception e)
 			{
@@ -242,6 +252,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 				mRecipe.setBoilTime(boilTime);
 				mRecipe.setEfficiency(efficiency);
 				mRecipe.setBatchTime(1);
+                mRecipe.setMeasuredFG(measuredFg);
+                mRecipe.setMeasuredOG(measuredOg);
 				
 				mRecipe.update();
 				Utils.updateRecipe(mRecipe);

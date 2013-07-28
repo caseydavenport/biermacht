@@ -1,5 +1,6 @@
 package com.biermacht.brews.frontend.fragments;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class ProfileViewFragment extends Fragment {
 	private ViewGroup profileView;
 	private ViewGroup mashProfileView;
 	private ViewGroup fermentationProfileView;
+    private ViewGroup bjcpProfileView;
 	private View view;
 
 	// Details to show
@@ -55,6 +57,7 @@ public class ProfileViewFragment extends Fragment {
 		profileView = (ViewGroup) pageView.findViewById(R.id.profile_view);
 		mashProfileView = (ViewGroup) pageView.findViewById(R.id.mash_profile_view);
 		fermentationProfileView = (ViewGroup) pageView.findViewById(R.id.fermentation_profile_view);
+        bjcpProfileView = (ViewGroup) pageView.findViewById(R.id.bjcp_profile_view);
 		
 		this.mashDetailList = new ArrayList<Detail>();
 		this.fermDetailList = new ArrayList<Detail>();
@@ -65,6 +68,7 @@ public class ProfileViewFragment extends Fragment {
 		
 		this.configureMashView(inflater, container);
 		this.configureFermentationView(inflater, container);
+        this.configureBjcpView(inflater, container);
 		
 		return pageView;
 	}
@@ -151,6 +155,15 @@ public class ProfileViewFragment extends Fragment {
 		}
 		
 	}
+
+    private void configureBjcpView(LayoutInflater inflater, ViewGroup container)
+    {
+        TextView tv = new TextView(c);
+        tv.setPadding(20,20,20,20);
+        tv.setTextColor(Color.DKGRAY);
+        tv.setText(r.getStyle().getNotes());
+        bjcpProfileView.addView(tv);
+    }
 
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{

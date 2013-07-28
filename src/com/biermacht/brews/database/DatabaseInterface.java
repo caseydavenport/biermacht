@@ -41,7 +41,7 @@ public class DatabaseInterface {
 			DatabaseHelper.REC_COL_BITTER,
 			DatabaseHelper.REC_COL_COLOR,
 			DatabaseHelper.REC_COL_MEAS_OG,
-			DatabaseHelper.REC_COL_MEAS_OG,
+			DatabaseHelper.REC_COL_MEAS_FG,
 			DatabaseHelper.REC_COL_PRIMARY_TEMP,
 			DatabaseHelper.REC_COL_PRIMARY_AGE,
 			DatabaseHelper.REC_COL_SECONDARY_TEMP,

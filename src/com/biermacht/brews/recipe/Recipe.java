@@ -640,6 +640,33 @@ public class Recipe {
 				return Units.celsiusToFarenheit(21);
 		}
 	}
+
+    public double getMeasuredABV()
+    {
+        if (this.getMeasuredFG() > 0 && this.getMeasuredOG() > this.getMeasuredFG())
+            return (this.getMeasuredOG() - this.getMeasuredFG()) * 131;
+        else
+            return 0;
+    }
+
+    public double getMeasuredEfficiency()
+    {
+        double gravP, measGravP;
+        double eff = 100;
+
+        if (!this.getType().equals(Recipe.EXTRACT))
+            eff = getEfficiency();
+
+        if (this.getMeasuredFG() > 0 && this.getMeasuredOG() > this.getMeasuredFG())
+        {
+            gravP = (BrewCalculator.calculateOriginalGravityFromRecipe(this)-1)/(eff/100);
+            measGravP = this.getMeasuredOG() - 1;
+            Log.d("Recipe", " calcd: " + gravP + " meas: " + measGravP + " eff: " + eff);
+            return 100 * measGravP / gravP;
+        }
+        else
+            return 0;
+    }
 	
 	// Comparator for sorting ingredients list
 	private class IngredientComparator implements Comparator<Ingredient>

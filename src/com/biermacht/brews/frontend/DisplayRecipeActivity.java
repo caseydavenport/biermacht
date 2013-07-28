@@ -59,33 +59,34 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
     	switch (item.getItemId()) {
             case android.R.id.home:
         		finish();
         		return true;
-            
+
             case R.id.add_fermentable:
-    	    	Intent ferm_intent = new Intent(this.appContext, AddFermentableActivity.class);
-    	    	ferm_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
-    		    startActivity(ferm_intent);
+    	    	i = new Intent(this.appContext, AddFermentableActivity.class);
+    	    	i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+    		    startActivity(i);
     		    return true;
 
             case R.id.add_hop:
-    	    	Intent hop_intent = new Intent(this.appContext, AddHopsActivity.class);
-    	    	hop_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
-    		    startActivity(hop_intent);
+    	    	i = new Intent(this.appContext, AddHopsActivity.class);
+    	    	i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+    		    startActivity(i);
     		    return true;
     		    
             case R.id.add_yeast:
-    	    	Intent yeast_intent = new Intent(this.appContext, AddYeastActivity.class);
-    	    	yeast_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
-    		    startActivity(yeast_intent);
+    	    	i = new Intent(this.appContext, AddYeastActivity.class);
+    	    	i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+    		    startActivity(i);
     		    return true;
 				
 			case R.id.add_misc:
-    	    	Intent misc_intent = new Intent(this.appContext, AddMiscActivity.class);
-    	    	misc_intent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
-    		    startActivity(misc_intent);
+    	    	i = new Intent(this.appContext, AddMiscActivity.class);
+    	    	i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+    		    startActivity(i);
     		    return true;
     		    
             case R.id.menu_timer:
@@ -93,21 +94,21 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
             	return true;
     		    
             case R.id.menu_edit_recipe:
-          		Intent i = new Intent(this.appContext, EditRecipeActivity.class);
+          		i = new Intent(this.appContext, EditRecipeActivity.class);
           		i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
           		startActivity(i);
 				return true;
 			
 			case R.id.menu_edit_mash_profile:
-				Intent edit_mash = new Intent(this.appContext, EditMashProfileActivity.class);
-				edit_mash.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
-				startActivity(edit_mash);
+				i = new Intent(this.appContext, EditMashProfileActivity.class);
+				i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+				startActivity(i);
 				return true;
 			
 			case R.id.menu_edit_fermentation_profile:
-				Intent edit_ferm = new Intent(this.appContext, EditFermentationProfileActivity.class);
-				edit_ferm.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
-				startActivity(edit_ferm);
+				i = new Intent(this.appContext, EditFermentationProfileActivity.class);
+				i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+				startActivity(i);
 				return true;
         }
         return super.onOptionsItemSelected(item);

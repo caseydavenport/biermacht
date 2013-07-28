@@ -19,8 +19,9 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_add_ingredient">Add Ingredient</string>
     <string name="menu_brew_timer">Brew Timer</string>
+    <string name ="menu_edit_details">Edit Details</string>
     <string name="menu_edit_recipe">Edit Recipe</string>
-	<string name="menu_edit_profile">Edit Mash Profile</string>
+	<string name="menu_edit_profile">Edit Profile</string>
 
     <!-- Standard messages -->
     <string name="error">Error</string>
@@ -50,8 +51,11 @@
     <string name="use">Use</string>
 	<string name="mash_profile">Mash Profile</string>
 	<string name="fermentation_profile">Fermentation Profile</string>
+    <string name="bjcp_profile">BJCP Style Profile</string>
 	<string name="mash_steps">Mash Steps</string>
 	<string name="form">Form</string>
+    <string name="measured_og">Measured OG</string>
+    <string name="measured_fg">Measured FG</string>
 	
 	<!-- Hints for editTexts -->
     <string name="volume_gal_hint">Gal</string>

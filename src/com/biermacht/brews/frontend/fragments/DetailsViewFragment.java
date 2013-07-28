@@ -35,6 +35,7 @@ public class DetailsViewFragment extends Fragment {
 	Detail beerType;
 	Detail originalGravity;
 	Detail finalGravity;
+    Detail eff;
 	Detail abv;
 	Detail color;
 	Detail bitterness;
@@ -71,6 +72,16 @@ public class DetailsViewFragment extends Fragment {
 		originalGravity.setMax(reccomendedValues.getMaxOG());
 		originalGravity.setVariance(.002);
 		detailList.add(originalGravity);
+
+        originalGravity = new Detail();
+        originalGravity.setTitle("Measured OG: ");
+        originalGravity.setValue(r.getMeasuredOG());
+        originalGravity.setFormat("%2.3f");
+        originalGravity.setMin(reccomendedValues.getMinOG());
+        originalGravity.setMax(reccomendedValues.getMaxOG());
+        originalGravity.setVariance(.002);
+        if (r.getMeasuredOG() > 0)
+            detailList.add(originalGravity);
 			
 		finalGravity = new Detail();
 		finalGravity.setTitle("Final Gravity: ");
@@ -80,7 +91,17 @@ public class DetailsViewFragment extends Fragment {
 		finalGravity.setMin(reccomendedValues.getMinFG());
 		finalGravity.setMax(reccomendedValues.getMaxFG());
 		detailList.add(finalGravity);
-			
+
+        finalGravity = new Detail();
+        finalGravity.setTitle("Measured FG: ");
+        finalGravity.setValue(r.getMeasuredFG());
+        finalGravity.setFormat("%2.3f");
+        finalGravity.setVariance(.002);
+        finalGravity.setMin(reccomendedValues.getMinFG());
+        finalGravity.setMax(reccomendedValues.getMaxFG());
+        if (r.getMeasuredFG() > 0)
+            detailList.add(finalGravity);
+
 		bitterness = new Detail();
 		bitterness.setTitle("Bitterness, IBU: ");
 		bitterness.setValue(r.getBitterness());
@@ -100,13 +121,33 @@ public class DetailsViewFragment extends Fragment {
 		detailList.add(color);
 			
 		abv = new Detail();
-		abv.setTitle("ABV: ");
+		abv.setTitle("Estimated ABV: ");
 		abv.setValue(r.getABV());
 		abv.setFormat("%2.1f");
 		abv.setVariance(.06);
 		abv.setMin(reccomendedValues.getMinAbv());
 		abv.setMax(reccomendedValues.getMaxAbv());
 		detailList.add(abv);
+
+        abv = new Detail();
+        abv.setTitle("Measured ABV: ");
+        abv.setValue(r.getMeasuredABV());
+        abv.setFormat("%2.1f");
+        abv.setVariance(.06);
+        abv.setMin(reccomendedValues.getMinAbv());
+        abv.setMax(reccomendedValues.getMaxAbv());
+        if (r.getMeasuredABV() > 0)
+            detailList.add(abv);
+
+        eff = new Detail();
+        eff.setTitle("Efficiency: ");
+        eff.setValue(r.getMeasuredEfficiency());
+        eff.setFormat("%2.0f");
+        eff.setVariance(.1);
+        eff.setMin(65.0);
+        eff.setMax(100.0);
+        if (r.getMeasuredEfficiency() > 0 && !r.getType().equals(Recipe.EXTRACT))
+            detailList.add(eff);
 			
 		// Adapter stuff
 		mAdapter = new DetailArrayAdapter(c, detailList);

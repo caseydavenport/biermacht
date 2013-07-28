@@ -46,6 +46,22 @@
 		            android:text="@string/fermentation_profile" />
 		        
 		    </LinearLayout>
+
+            <LinearLayout android:id="@+id/bjcp_profile_view"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="15dip"
+                          android:orientation="vertical"
+                          android:background="@drawable/rounded_bg_white">
+
+                <TextView android:id="@+id/bjcp_profile_title"
+                          android:layout_width="match_parent"
+                          android:layout_height="30dp"
+                          android:gravity="center"
+                          android:background="@drawable/profile_title_bg"
+                          android:text="@string/bjcp_profile" />
+
+            </LinearLayout>
 		</LinearLayout>
 
 	</ScrollView>
