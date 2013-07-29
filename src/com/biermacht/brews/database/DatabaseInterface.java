@@ -2,6 +2,7 @@ package com.biermacht.brews.database;
 
 import java.util.ArrayList;
 
+import android.util.Log;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -47,7 +48,19 @@ public class DatabaseInterface {
 			DatabaseHelper.REC_COL_SECONDARY_TEMP,
 			DatabaseHelper.REC_COL_SECONDARY_AGE,
 			DatabaseHelper.REC_COL_TERTIARY_TEMP,
-			DatabaseHelper.REC_COL_TERTIARY_AGE
+			DatabaseHelper.REC_COL_TERTIARY_AGE,
+            DatabaseHelper.REC_COL_TASTE_NOTES,
+            DatabaseHelper.REC_COL_TASTE_RATING,
+            DatabaseHelper.REC_COL_BOTTLE_AGE,
+            DatabaseHelper.REC_COL_BOTTLE_TEMP,
+            DatabaseHelper.REC_COL_BREW_DATE,
+            DatabaseHelper.REC_COL_CARBONATION,
+            DatabaseHelper.REC_COL_FORCED_CARB,
+            DatabaseHelper.REC_COL_PRIMING_SUGAR_NAME,
+            DatabaseHelper.REC_COL_CARB_TEMP,
+            DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV,
+            DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR,
+            DatabaseHelper.REC_COL_CALORIES,
 			};
 	
 	private String[] ingredientAllColumns = {
@@ -60,6 +73,7 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_COL_AMT,
 			DatabaseHelper.ING_COL_START_TIME,
 			DatabaseHelper.ING_COL_END_TIME,
+            DatabaseHelper.ING_COL_INVENTORY,
 			
 			DatabaseHelper.ING_FR_COL_TYPE,
 			DatabaseHelper.ING_FR_COL_YIELD,
@@ -142,7 +156,10 @@ public class DatabaseInterface {
 		DatabaseHelper.STE_COL_STEP_TEMP,
 		DatabaseHelper.STE_COL_STEP_TIME,
 		DatabaseHelper.STE_COL_RAMP_TIME,
-		DatabaseHelper.STE_COL_END_TEMP
+		DatabaseHelper.STE_COL_END_TEMP,
+        DatabaseHelper.STE_COL_WATER_GRAIN_RATIO,
+        DatabaseHelper.STE_COL_DESCRIPTION,
+        DatabaseHelper.STE_COL_ORDER
 	};
 
 	// Constructor
@@ -187,6 +204,18 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
 		values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
 		values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
+        values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
+        values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
+        values.put(DatabaseHelper.REC_COL_BOTTLE_AGE, r.getBottleAge());
+        values.put(DatabaseHelper.REC_COL_BOTTLE_TEMP, r.getBeerXmlStandardBottleTemp());
+        values.put(DatabaseHelper.REC_COL_BREW_DATE, r.getBrewDate());
+        values.put(DatabaseHelper.REC_COL_CARBONATION, r.getCarbonation());
+        values.put(DatabaseHelper.REC_COL_FORCED_CARB, r.isForceCarbonated());
+        values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_NAME, r.getPrimingSugarName());
+        values.put(DatabaseHelper.REC_COL_CARB_TEMP, r.getBeerXmlStandardCarbonationTemp());
+        values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV, r.getPrimingSugarEquiv());
+        values.put(DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR, r.getKegPrimingFactor());
+        values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id);
@@ -227,6 +256,18 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
 		values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
 		values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
+        values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
+        values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
+        values.put(DatabaseHelper.REC_COL_BOTTLE_AGE, r.getBottleAge());
+        values.put(DatabaseHelper.REC_COL_BOTTLE_TEMP, r.getBeerXmlStandardBottleTemp());
+        values.put(DatabaseHelper.REC_COL_BREW_DATE, r.getBrewDate());
+        values.put(DatabaseHelper.REC_COL_CARBONATION, r.getCarbonation());
+        values.put(DatabaseHelper.REC_COL_FORCED_CARB, r.isForceCarbonated());
+        values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_NAME, r.getPrimingSugarName());
+        values.put(DatabaseHelper.REC_COL_CARB_TEMP, r.getBeerXmlStandardCarbonationTemp());
+        values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV, r.getPrimingSugarEquiv());
+        values.put(DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR, r.getKegPrimingFactor());
+        values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
 		
 		deleteIngredientList(r.getId());
 		addIngredientListToDatabase(r.getIngredientList(), r.getId());
@@ -254,6 +295,7 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
 			values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
 			values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
+            values.put(DatabaseHelper.ING_COL_INVENTORY, ing.getBeerXmlStandardInventory());
 			
 			// Grain specific values
 			if (ing.getType().equals(Ingredient.FERMENTABLE))
@@ -322,6 +364,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
 		values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
 		values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
+        values.put(DatabaseHelper.ING_COL_INVENTORY, ing.getBeerXmlStandardInventory());
 		
 		// Grain specific values
 		if (ing.getType().equals(Ingredient.FERMENTABLE))
@@ -449,6 +492,9 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.STE_COL_STEP_TIME, s.getStepTime());
 		values.put(DatabaseHelper.STE_COL_RAMP_TIME, s.getRampTime());
 		values.put(DatabaseHelper.STE_COL_END_TEMP,	s.getBeerXmlStandardEndTemp());
+        values.put(DatabaseHelper.STE_COL_WATER_GRAIN_RATIO, s.getBeerXmlStandardWaterToGrainRatio());
+        values.put(DatabaseHelper.STE_COL_DESCRIPTION, s.getDescription());
+        values.put(DatabaseHelper.STE_COL_ORDER, s.getOrder());
 		
 		long id = database.insert(DatabaseHelper.TABLE_STEPS, null, values);
 		return id;
@@ -590,6 +636,18 @@ public class DatabaseInterface {
 		int secondaryAge = cursor.getInt(cid);        cid++;
 		float tertiaryTemp = cursor.getFloat(cid);    cid++;
 		int tertiaryAge = cursor.getInt(cid);         cid++;
+        String tasteNotes = cursor.getString(cid);    cid++;
+        int tasteRating = cursor.getInt(cid);         cid++;
+        int bottleAge = cursor.getInt(cid);           cid++;
+        double bottleTemp = cursor.getFloat(cid);     cid++;
+        String brewDate = cursor.getString(cid);      cid++;
+        double carbonation = cursor.getFloat(cid);    cid++;
+        int isForceCarbed = cursor.getInt(cid);       cid++;
+        String primingSugar = cursor.getString(cid);  cid++;
+        double carbTemp = cursor.getFloat(cid);       cid++;
+        double sugarEquivalent = cursor.getFloat(cid);   cid++;
+        double kegPrimingFactor = cursor.getDouble(cid); cid++;
+        int calories = cursor.getInt(cid);               cid++;
 		
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
 		BeerStyle style = readStyle(id);
@@ -620,6 +678,18 @@ public class DatabaseInterface {
 		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY, primaryTemp);
 		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY, secondaryTemp);
 		r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY, tertiaryTemp);
+        r.setTasteNotes(tasteNotes);
+        r.setTasteRating(tasteRating);
+        r.setBottleAge(bottleAge);
+        r.setBeerXmlStandardBottleTemp(bottleTemp);
+        r.setBrewDate(brewDate);
+        r.setCarbonation(carbonation);
+        r.setIsForceCarbonated(isForceCarbed > 0);
+        r.setPrimingSugarName(primingSugar);
+        r.setBeerXmlStandardCarbonationTemp(carbTemp);
+        r.setPrimingSugarEquiv(sugarEquivalent);
+        r.setKegPrimingFactor(kegPrimingFactor);
+        r.setCalories(calories);
 		
 		r.setStyle(style);
 		r.setMashProfile(profile);
@@ -760,7 +830,7 @@ public class DatabaseInterface {
 		p.setBeerXmlStandardTunWeight(tunWeight);
 		p.setBeerXmlStandardTunSpecHeat(tunSpecHeat);
 		p.setEquipmentAdjust(equipAdjInt > 0 ? true: false);
-		p.setMashStepList(stepsList);
+		p.setMashStepList(stepsList, false);
 		return p;
 	}
 	
@@ -794,6 +864,9 @@ public class DatabaseInterface {
 		Double stepTime = cursor.getDouble(cid);                cid++;
 		Double rampTime = cursor.getDouble(cid);                cid++;
 		double endTemp = cursor.getDouble(cid);                 cid++;
+        double waterGrainRatio = cursor.getDouble(cid);         cid++;
+        String description = cursor.getString(cid);             cid++;
+        int order = cursor.getInt(cid);                         cid++;
 		
 		MashStep s = new MashStep();
 		s.setId(id);
@@ -806,6 +879,9 @@ public class DatabaseInterface {
 		s.setBeerXmlStandardStepTemp(stepTemp);
 		s.setRampTime(rampTime);
 		s.setBeerXmlStandardEndTemp(endTemp);
+        s.setBeerXmlStandardWaterToGrainRatio(waterGrainRatio);
+        s.setDescription(description);
+        s.setOrder(order);
 		return s;
 	}
 	
@@ -821,7 +897,8 @@ public class DatabaseInterface {
 		String units = cursor.getString(cid);					cid++;
 		float amount = cursor.getFloat(cid);					cid++;
 		int startTime = cursor.getInt(cid);						cid++;
-		int endTime = cursor.getInt(cid);						cid++;	
+		int endTime = cursor.getInt(cid);						cid++;
+        float inventory = cursor.getFloat(cid);                 cid++;
 		
 		// Fermentable specific stuff
 		if (ingType.equals(Ingredient.FERMENTABLE))
@@ -837,6 +914,7 @@ public class DatabaseInterface {
 			
 			Fermentable fer = new Fermentable(name);
 			fer.setId(id);
+            fer.setBeerXmlStandardInventory(inventory);
 			fer.setOwnerId(ownerId);
 			fer.setShortDescription(description);
 			fer.setDisplayUnits(units);
@@ -866,6 +944,7 @@ public class DatabaseInterface {
 			String origin = cursor.getString(cid);				cid++;
 			
 			Hop hop = new Hop(name);
+            hop.setBeerXmlStandardInventory(inventory);
 			hop.setId(id);
 			hop.setOwnerId(ownerId);
 			hop.setShortDescription(description);
@@ -897,6 +976,7 @@ public class DatabaseInterface {
 			String bestFor = cursor.getString(cid);				cid++;
 			
 			Yeast yeast = new Yeast(name);
+            yeast.setBeerXmlStandardInventory(inventory);
 			yeast.setId(id);
 			yeast.setOwnerId(ownerId);
 			yeast.setShortDescription(description);
@@ -927,6 +1007,7 @@ public class DatabaseInterface {
 			String use = cursor.getString(cid);            cid++;
 			
 			misc.setId(id);
+            misc.setBeerXmlStandardInventory(inventory);
 			misc.setOwnerId(ownerId);
 			misc.setShortDescription(description);
 			misc.setDisplayUnits(units);

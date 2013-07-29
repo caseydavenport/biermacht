@@ -1,6 +1,9 @@
 package com.biermacht.brews.recipe;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import com.biermacht.brews.utils.*;
 
 public class MashProfile
@@ -242,16 +245,74 @@ public class MashProfile
 	
 	public ArrayList<MashStep> getMashStepList()
 	{
-		return this.mashSteps;
+        Collections.sort(this.mashSteps, new MashStepComparator());
+		return  this.mashSteps;
 	}
-	
-	public void setMashStepList(ArrayList<MashStep> list)
+
+    /**
+     * Sets mash step list to given list.  Assumes list is
+     * in the desired order and overrides orders if reorder set
+     * to true
+     * @param list
+     */
+	public void setMashStepList(ArrayList<MashStep> list, boolean reorder)
 	{
 		this.mashSteps = list;
+
+        if (reorder)
+        {
+            // Reassign orders of steps.
+            for(MashStep m : getMashStepList())
+                m.setOrder(getMashStepList().indexOf(m));
+        }
 	}
-	
-	public void addMashStep(MashStep step)
+
+    /**
+     * places mashStep at the given spot in the list
+     * @param order
+     * @param step
+     */
+	public void addMashStep(int order, MashStep step)
 	{
-		this.mashSteps.add(step);
+		this.mashSteps.add(order, step);
+
+        // Reassign orders of steps.
+        for(MashStep m : getMashStepList())
+            m.setOrder(getMashStepList().indexOf(m));
 	}
+
+    /**
+     * Removes the given step, returns true if success
+     * @param step
+     * @return
+     */
+    public boolean removeMashStep(MashStep step)
+    {
+        return this.mashSteps.remove(step);
+    }
+
+    /**
+     * Appends mash step to end of mashStep list
+     * @param step
+     */
+    public void addMashStep(MashStep step)
+    {
+        // Set order of new step
+        step.setOrder(mashSteps.size() + 1);
+
+        // Add to list
+        this.mashSteps.add(step);
+    }
+
+    // Comparator for sorting ingredients list
+    private class MashStepComparator implements Comparator<MashStep>
+    {
+        public int compare(MashStep i1, MashStep i2)
+        {
+            if (i1.getOrder() > i2.getOrder())
+                return 1;
+            else
+                return -1;
+        }
+    }
 }

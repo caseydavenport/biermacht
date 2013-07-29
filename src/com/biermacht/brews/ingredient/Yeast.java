@@ -56,7 +56,7 @@ public class Yeast extends Ingredient {
     @Override
     public String toString()
     {
-        return this.getLaboratory() + " " + this.getProductid() + " - " + this.getName();
+        return this.getLaboratory() + " " + this.getProductId() + " - " + this.getName();
     }
 
 	@Override
@@ -87,7 +87,7 @@ public class Yeast extends Ingredient {
 
 	public void setDisplayAmount(double amt)
 	{
-		// TODO: Implement this method
+		this.amount = amt;
 	}
 
 	public void setBeerXmlStandardAmount(double amt)
@@ -270,7 +270,7 @@ public class Yeast extends Ingredient {
         return this.lab;
     }
 
-    public String getProductid()
+    public String getProductId()
     {
         return this.productid;
     }

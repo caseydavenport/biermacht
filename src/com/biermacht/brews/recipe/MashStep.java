@@ -17,11 +17,14 @@ public class MashStep
 	// ================================================================
 	private double rampTime;		    // Time to ramp temp
 	private double endTemp;             // Final temp for long steps
+    private String description;         // Description of step
+    private double waterToGrainRatio;   // Water to grain ratio (L/kg)
 	
 	// Custom Fields ==================================================
 	// ================================================================
 	private long ownerId;				// id for parent mash profile
 	private long id;                    // id for use in database
+    private int order;                  // Order in step list
 
 	// Static values =================================================
 	// ===============================================================
@@ -39,8 +42,11 @@ public class MashStep
 		this.setStepTime(60);
 		this.setRampTime(0);
 		this.setBeerXmlStandardEndTemp(0.0);
+        this.setDescription("");
+        this.setDisplayWaterToGrainRatio(1.25);
 		this.id = -1;
 		this.ownerId = -1;
+        this.order = 1;
 	}
 
 	public void setName(String name)
@@ -97,6 +103,46 @@ public class MashStep
 	{
 		return Units.celsiusToFarenheit(this.stepTemp);
 	}
+
+    public double getBeerXmlStandardWaterToGrainRatio()
+    {
+        return this.waterToGrainRatio;
+    }
+
+    public double getDisplayWaterToGrainRatio()
+    {
+        return Units.LPKGtoQPLB(this.waterToGrainRatio);
+    }
+
+    public void setBeerXmlStandardWaterToGrainRatio(double d)
+    {
+        this.waterToGrainRatio = d;
+    }
+
+    public void setDisplayWaterToGrainRatio(double d)
+    {
+        this.waterToGrainRatio = Units.QPLBtoLPKG(d);
+    }
+
+    public void setOrder(int i)
+    {
+        this.order = i;
+    }
+
+    public int getOrder()
+    {
+        return this.order;
+    }
+
+    public void setDescription(String s)
+    {
+        this.description = s;
+    }
+
+    public String getDescription()
+    {
+        return this.description;
+    }
 
 	public void setStepTime(double time)
 	{

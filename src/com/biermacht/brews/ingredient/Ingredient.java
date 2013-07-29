@@ -11,6 +11,7 @@ public abstract class Ingredient {
 	// ================================================================
 	private long id;                        // Lookup ID for database                  
 	private long ownerId;                   // ID of recipe that contains this
+    private double inventory;               // Amount in inventory (standard units)
 	
 	// Static values =================================================
 	// ===============================================================
@@ -83,8 +84,18 @@ public abstract class Ingredient {
 	{
 		return Ingredient.USE_OTHER;
 	}
-	
-	// Universal Setters and getters
+
+    // Universal Setters and getters
+    public double getBeerXmlStandardInventory()
+    {
+        return this.inventory;
+    }
+
+    public void setBeerXmlStandardInventory(double d)
+    {
+        this.inventory = d;
+    }
+
 	public String getName() {
 		return name;
 	}

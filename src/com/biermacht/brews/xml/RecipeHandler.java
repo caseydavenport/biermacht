@@ -1125,6 +1125,18 @@ public class RecipeHandler extends DefaultHandler {
 			{
 				mashStep.setBeerXmlStandardEndTemp(Double.parseDouble(currentValue));
 			}
+
+            else if (qName.equalsIgnoreCase("DESCRIPTION"))
+            {
+                mashStep.setDescription(currentValue);
+            }
+
+            else if (qName.equalsIgnoreCase("WATER_GRAIN_RATIO"))
+            {
+                // TODO: check units
+                String[] splits = currentValue.split(" ");
+                mashStep.setBeerXmlStandardWaterToGrainRatio(Double.parseDouble(splits[0]));
+            }
 		}
     }
 

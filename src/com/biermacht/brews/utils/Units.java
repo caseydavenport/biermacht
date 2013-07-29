@@ -15,6 +15,7 @@ public class Units {
 	public static final String FARENHEIT = "F";
 	public static final String CUP = "Cup";
 	public static final String CUPS = "Cups";
+    public static final String QUARTS_PER_POUND = "q/lb";
 	
 	// Metric Units
 	public static final String KILOGRAMS = "kg";
@@ -22,6 +23,7 @@ public class Units {
 	public static final String LITERS = "liters";
 	public static final String MILLILITERS = "ml";
 	public static final String CELSIUS = "C";
+    public static final String LITERS_PER_KG = "L/kg";
 	
 	// Agnostic Units
 	public static final String PACKAGES = "pkg";
@@ -76,6 +78,17 @@ public class Units {
 	{
 		return c*1.8 + 32;
 	}
+
+    public static double LPKGtoQPLB(double d)
+    {
+        return d * .479305709;
+    }
+
+    public static double QPLBtoLPKG(double d)
+    {
+        return d / .479305709;
+    }
+
 	public static double litersToGallons(double l)
 	{
 		return l * .264172052;

@@ -48,6 +48,18 @@ public class Recipe {
 	private double secondaryTemp;	  // Temp in secondary in C
 	private int tertiaryAge;		  // Time in tertiary in days
 	private double tertiaryTemp;	  // Temp in tertiary in C
+    private String tasteNotes;        // Taste notes
+    private int tasteRating;          // Taste score out of 50
+    private int bottleAge;            // Bottle age in days
+    private double bottleTemp;        // Bottle temp in C
+    private boolean isForceCarbonated;// True if force carb is used
+    private double carbonation;       // Volumes of carbonation
+    private String brewDate;          // Date brewed
+    private String primingSugarName;  // Name of sugar for priming
+    private double primingSugarEquiv; // Equivalent amount of priming sugar to be used
+    private double kegPrimingFactor;  // factor - use less sugar when kegging vs bottles
+    private double carbonationTemp;   // Carbonation temperature in C
+    private int calories;             // Calories (KiloCals)
 	
 	// Custom Fields ==================================================
 	// ================================================================
@@ -640,6 +652,147 @@ public class Recipe {
 				return Units.celsiusToFarenheit(21);
 		}
 	}
+
+    public String getTasteNotes()
+    {
+        return this.tasteNotes;
+    }
+
+    public void setTasteNotes(String s)
+    {
+        this.tasteNotes = s;
+    }
+
+    public int getTasteRating()
+    {
+        return this.tasteRating;
+    }
+
+    public void setTasteRating(int i)
+    {
+        this.tasteRating = i;
+    }
+
+    public int getBottleAge()
+    {
+        return this.bottleAge;
+    }
+
+    public void setBottleAge(int i)
+    {
+        this.bottleAge = i;
+    }
+
+    public double getBeerXmlStandardBottleTemp()
+    {
+        return this.bottleTemp;
+    }
+
+    public void setBeerXmlStandardBottleTemp(double d)
+    {
+        this.bottleTemp = d;
+    }
+
+    public void setDisplayBottleTemp(double d)
+    {
+        this.bottleTemp = Units.farenheitToCelsius(d);
+    }
+
+    public double getDisplayBottleTemp()
+    {
+        return Units.celsiusToFarenheit(this.bottleTemp);
+    }
+
+    public boolean isForceCarbonated()
+    {
+        return this.isForceCarbonated;
+    }
+
+    public void setIsForceCarbonated(boolean b)
+    {
+        this.isForceCarbonated = b;
+    }
+
+    public double getCarbonation()
+    {
+        return this.carbonation;
+    }
+
+    public void setCarbonation (double d)
+    {
+        this.carbonation = d;
+    }
+
+    public String getBrewDate()
+    {
+        return this.brewDate;
+    }
+
+    public void setBrewDate(String s)
+    {
+        this.brewDate = s;
+    }
+
+    public String getPrimingSugarName()
+    {
+        return this.primingSugarName;
+    }
+
+    public void setPrimingSugarName(String s)
+    {
+        this.primingSugarName = s;
+    }
+
+    public double getPrimingSugarEquiv()
+    {
+        // TODO
+        return 0.0;
+    }
+
+    public void setPrimingSugarEquiv(double d)
+    {
+        this.primingSugarEquiv = d;
+    }
+
+    public double getBeerXmlStandardCarbonationTemp()
+    {
+        return this.carbonationTemp;
+    }
+
+    public void setBeerXmlStandardCarbonationTemp(double d)
+    {
+        this.carbonationTemp = d;
+    }
+
+    public void setDisplayCarbonationTemp(double d)
+    {
+        this.carbonationTemp = Units.farenheitToCelsius(d);
+    }
+
+    public double getDisplayCarbonationTemp()
+    {
+        return Units.celsiusToFarenheit(this.carbonationTemp);
+    }
+
+    public double getKegPrimingFactor()
+    {
+        return this.kegPrimingFactor;
+    }
+
+    public void setKegPrimingFactor(double d)
+    {
+        this.kegPrimingFactor = d;
+    }
+
+    public int getCalories()
+    {
+        return this.calories;
+    }
+
+    public void setCalories(int i)
+    {
+        this.calories = i;
+    }
 
     public double getMeasuredABV()
     {

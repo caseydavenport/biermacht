@@ -44,6 +44,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String REC_COL_SECONDARY_AGE = "secondaryAge";
 	public static final String REC_COL_TERTIARY_TEMP = "tertiaryTemp";
 	public static final String REC_COL_TERTIARY_AGE = "tertiaryAge";
+    public static final String REC_COL_TASTE_NOTES = "tasteNotes";
+    public static final String REC_COL_TASTE_RATING = "tasteRating";
+    public static final String REC_COL_BOTTLE_AGE = "bottleAge";
+    public static final String REC_COL_BOTTLE_TEMP = "bottleTemp";
+    public static final String REC_COL_BREW_DATE = "brewDate";
+    public static final String REC_COL_CARBONATION = "carbonation";
+    public static final String REC_COL_FORCED_CARB = "forcedCarb";
+    public static final String REC_COL_PRIMING_SUGAR_NAME = "primingSugarName";
+    public static final String REC_COL_CARB_TEMP = "carbonationTemp";
+    public static final String REC_COL_PRIMING_SUGAR_EQUIV = "primingSugarEquiv";
+    public static final String REC_COL_KEG_PRIMING_FACTOR = "kegPrimingFactor";
+    public static final String REC_COL_CALORIES = "calories";
 	
 	// Column name defines for INGREDIENTS
 	public static final String ING_COL_ID = "_id";
@@ -55,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_COL_AMT = "amount";
 	public static final String ING_COL_START_TIME = "startTime";
 	public static final String ING_COL_END_TIME = "endTime";
+    public static final String ING_COL_INVENTORY = "inventory";
 	
 	public static final String ING_FR_COL_TYPE = "ferType";
 	public static final String ING_FR_COL_YIELD = "yield";
@@ -135,6 +148,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String STE_COL_STEP_TIME = "stepStepTime";
 	public static final String STE_COL_RAMP_TIME = "stepRampTime";
 	public static final String STE_COL_END_TEMP = "stepEndTemp";
+    public static final String STE_COL_WATER_GRAIN_RATIO = "stepWaterGrainRatio";
+    public static final String STE_COL_DESCRIPTION = "stepDescription";
+    public static final String STE_COL_ORDER = "stepOrder";
 	
 	// Create table strings
 	private static final String CREATE_RECIPE_TABLE = "create table " +
@@ -165,8 +181,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ REC_COL_SECONDARY_TEMP + " float, "
 			+ REC_COL_SECONDARY_AGE + " integer, "
 			+ REC_COL_TERTIARY_TEMP + " float, "
-			+ REC_COL_TERTIARY_AGE + " integer "
-
+			+ REC_COL_TERTIARY_AGE + " integer, "
+            + REC_COL_TASTE_NOTES + " string, "
+            + REC_COL_TASTE_RATING + " integer, "
+            + REC_COL_BOTTLE_AGE + " integer, "
+            + REC_COL_BOTTLE_TEMP + " float, "
+            + REC_COL_BREW_DATE + " string, "
+            + REC_COL_CARBONATION + " float, "
+            + REC_COL_FORCED_CARB + " integer, "
+            + REC_COL_PRIMING_SUGAR_NAME + " string, "
+            + REC_COL_CARB_TEMP + " float, "
+            + REC_COL_PRIMING_SUGAR_EQUIV + " float, "
+            + REC_COL_KEG_PRIMING_FACTOR + " float, "
+            + REC_COL_CALORIES + " integer "
 		+ ");";
 	
 	private static final String CREATE_INGREDIENT_TABLE = "create table " +
@@ -181,6 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_COL_AMT + " float not null, "
 				+ ING_COL_START_TIME + " int not null, "
 				+ ING_COL_END_TIME + " int not null, "
+                + ING_COL_INVENTORY + " float, "
 				
 				+ ING_FR_COL_TYPE + " text, "
 				+ ING_FR_COL_YIELD + " float, "
@@ -269,7 +297,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ STE_COL_STEP_TEMP + " float, "
 			+ STE_COL_STEP_TIME + " float, "
 			+ STE_COL_RAMP_TIME + " float, "
-			+ STE_COL_END_TEMP + " float"
+			+ STE_COL_END_TEMP + " float, "
+            + STE_COL_WATER_GRAIN_RATIO + " float, "
+            + STE_COL_DESCRIPTION + " text, "
+            + STE_COL_ORDER + " integer "
 			+");";
 	
 	// Public Constructor
