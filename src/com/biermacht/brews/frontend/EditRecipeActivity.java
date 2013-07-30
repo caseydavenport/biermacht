@@ -171,7 +171,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         recipeNameViewTitle.setText("Recipe Name");
 
         timeViewTitle = (TextView) timeView.findViewById(R.id.title);
-        timeViewTitle.setText("Time (mins)");
+        timeViewTitle.setText("Boil Time (mins)");
 
         efficiencyViewTitle = (TextView) efficiencyView.findViewById(R.id.title);
         efficiencyViewTitle.setText("Predicted Efficiency");
