@@ -207,10 +207,10 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         boilSizeViewText.setText(String.format("%2.2f", mRecipe.getDisplayBoilSize()));
 
         measuredFGViewText = (TextView) measuredFGView.findViewById(R.id.text);
-        measuredFGViewText.setText(String.format("%2.3f", mRecipe.getMeasuredOG()));
+        measuredFGViewText.setText(String.format("%2.3f", mRecipe.getMeasuredFG()));
 
         measuredOGViewText = (TextView) measuredOGView.findViewById(R.id.text);
-        measuredOGViewText.setText(String.format("%2.3f", mRecipe.getMeasuredFG()));
+        measuredOGViewText.setText(String.format("%2.3f", mRecipe.getMeasuredOG()));
 
         /**
         //Arraylist of beer types
