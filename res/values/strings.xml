@@ -29,6 +29,7 @@
     <string name="edit">Save</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
     <string name="gravity">Gravity</string>
     <string name="color">Color</string>
     <string name="name">Name</string>
