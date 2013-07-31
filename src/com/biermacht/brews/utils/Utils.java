@@ -14,6 +14,7 @@ public class Utils {
 		
 	// Beer styles... http://www.bjcp.org/docs/2008_stylebook.pdf
 	public static BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
+    public static Recipe NEW_RECIPE = new Recipe("New Recipe");
 
 	// Intent put values
 	public static String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
@@ -90,7 +91,7 @@ public class Utils {
 	
 	/**
 	 * Create a recipe from existing recipe
-	 * @param name
+	 * @param r
 	 * @return
 	 */
 	public static Recipe createRecipeFromExisting(Recipe r)

@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.EditText;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
 
@@ -28,6 +28,9 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 
     // Main view - holds all the rows
     private ViewGroup mainView;
+
+    // Alert builder
+    private AlertBuilder alertBuilder;
 
     // Important things
     private OnClickListener onClickListener;
@@ -82,10 +85,13 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_recipe);
+        setContentView(R.layout.activity_add_edit_recipe);
 
         // Get the inflater
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Create alert builder
+        alertBuilder = new AlertBuilder(this);
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);
@@ -113,19 +119,19 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 
                 AlertDialog alert;
                 if (v.equals(recipeNameView))
-                    alert = editTextStringAlert(recipeNameViewText, recipeNameViewTitle).create();
+                    alert = alertBuilder.editTextStringAlert(recipeNameViewText, recipeNameViewTitle).create();
                 else if (v.equals(timeView))
-                    alert = editTextIntegerAlert(timeViewText, timeViewTitle).create();
+                    alert = alertBuilder.editTextIntegerAlert(timeViewText, timeViewTitle).create();
                 else if (v.equals(efficiencyView))
-                    alert = editTextFloatAlert(efficiencyViewText, efficiencyViewTitle).create();
+                    alert = alertBuilder.editTextFloatAlert(efficiencyViewText, efficiencyViewTitle).create();
                 else if (v.equals(batchSizeView))
-                    alert = editTextFloatAlert(batchSizeViewText, batchSizeViewTitle).create();
+                    alert = alertBuilder.editTextFloatAlert(batchSizeViewText, batchSizeViewTitle).create();
                 else if (v.equals(boilSizeView))
-                    alert = editTextFloatAlert(boilSizeViewText, boilSizeViewTitle).create();
+                    alert = alertBuilder.editTextFloatAlert(boilSizeViewText, boilSizeViewTitle).create();
                 else if (v.equals(measuredFGView))
-                    alert = editTextFloatAlert(measuredFGViewText, measuredFGViewTitle).create();
+                    alert = alertBuilder.editTextFloatAlert(measuredFGViewText, measuredFGViewTitle).create();
                 else if (v.equals(measuredOGView))
-                    alert = editTextFloatAlert(measuredOGViewText, measuredOGViewTitle).create();
+                    alert = alertBuilder.editTextFloatAlert(measuredOGViewText, measuredOGViewTitle).create();
                 else
                     return; // In case its none of those views...
 
@@ -308,6 +314,8 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 		// Submit Button pressed
 		if (v.getId() == R.id.submit_button)
 		{
+            Log.d("EditRecipe", "Submit button pressed");
+
 			boolean readyToGo = true;
 			String recipeName = "Unnamed Brew";
 			Integer boilTime = 1;
@@ -327,13 +335,14 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 			}
 			catch (Exception e)
 			{
+                Log.d("EditRecipe", "Hit Exception: " + e.toString());
 				readyToGo = false;
 			}
 			
 			if (recipeName.isEmpty())
 				readyToGo = false;
 			if (efficiency > 100)
-				readyToGo = false;
+				efficiency = 100;
 			
 			if (readyToGo)
 			{
@@ -356,68 +365,4 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 			}
 		}
 	}
-
-    // Builders for all of the alerts
-    private AlertDialog.Builder editTextStringAlert(final TextView text, final TextView title)
-    {
-        LayoutInflater factory = LayoutInflater.from(this);
-        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_string, null);
-        final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
-        editText.setText(text.getText().toString());
-
-        return new AlertDialog.Builder(this)
-                .setTitle(title.getText().toString())
-                .setView(alertView)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        text.setText(editText.getText().toString());
-                    }
-
-                })
-
-                .setNegativeButton(R.string.cancel, null);
-    }
-
-    private AlertDialog.Builder editTextIntegerAlert(final TextView text, final TextView title)
-    {
-        LayoutInflater factory = LayoutInflater.from(this);
-        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_integer, null);
-        final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
-        editText.setText(text.getText().toString());
-
-        return new AlertDialog.Builder(this)
-                .setTitle(title.getText().toString())
-                .setView(alertView)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        text.setText(editText.getText().toString());
-                    }
-
-                })
-
-                .setNegativeButton(R.string.cancel, null);
-    }
-
-    private AlertDialog.Builder editTextFloatAlert(final TextView text, final TextView title)
-    {
-        LayoutInflater factory = LayoutInflater.from(this);
-        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_float_2_4, null);
-        final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
-        editText.setText(text.getText().toString());
-
-        return new AlertDialog.Builder(this)
-                .setTitle(title.getText().toString())
-                .setView(alertView)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        text.setText(editText.getText().toString());
-                    }
-
-                })
-
-                .setNegativeButton(R.string.cancel, null);
-    }
 }

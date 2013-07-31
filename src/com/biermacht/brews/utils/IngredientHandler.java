@@ -142,11 +142,6 @@ public class IngredientHandler {
 			{
 				this.profileList = getProfilesFromXml();
 				this.profileList.add(0, new MashProfile());
-				for (MashProfile p : profileList)
-				{
-					Log.d("IngredientHandler", p.getName());
-				}
-				//this.profileList.add(0, Utils.BEERSTYLE_OTHER);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

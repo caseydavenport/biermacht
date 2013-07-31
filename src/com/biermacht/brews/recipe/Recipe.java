@@ -93,10 +93,10 @@ public class Recipe {
 		this.setType(EXTRACT);            
 		this.style = Utils.BEERSTYLE_OTHER;     
 		this.setBrewer("Unknown Brewer");		     
-		this.batchSize = -1;        
-		this.setBeerXmlStandardBoilSize(-1);		     
-		this.boilTime = -1;	     
-		this.efficiency = 100;	     
+		this.setDisplayBatchSize(5);
+		this.setDisplayBoilSize(2.5);
+        this.setBoilTime(60);
+		this.setEfficiency(100);
 		this.hops = new ArrayList<Hop>();   
 		this.fermentables = new ArrayList<Fermentable>();  
 		this.yeasts = new ArrayList<Yeast>(); 
