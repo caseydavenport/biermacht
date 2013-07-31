@@ -6,13 +6,13 @@
               android:minHeight="60dp"
               android:background="#fff"
               android:focusable="false"
-              android:orientation="horizontal">
+              android:orientation="vertical">
 
     <!-- Linear layout for text type settings -->
     <LinearLayout android:id="@+id/text_type"
                   android:orientation="vertical"
                   android:background="@color/transparent"
-                  android:layout_width="0dp"
+                  android:layout_width="fill_parent"
                   android:layout_weight="1"
                   android:layout_gravity="center_vertical"
                   android:layout_height="wrap_content" >
@@ -43,4 +43,11 @@
                   android:background="@color/transparent" />
     </LinearLayout>
 
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="1dip"
+                  android:orientation="vertical"
+                  android:padding="0dp"
+                  android:background="@color/divider" >
+
+    </LinearLayout>
 </LinearLayout>

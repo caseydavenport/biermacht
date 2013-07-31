@@ -2,7 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:padding="10dp"
+    android:minHeight="60dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:background="@color/white" >
     
     <TextView android:id="@+id/selected_view"
         android:layout_width="fill_parent"
@@ -10,7 +14,8 @@
         android:padding="0dip"
         android:textSize="17dp"
         android:gravity="center_vertical"
-        android:background="#FFFFFF" />
+        android:text="Style name"
+        android:background="@color/transparent" />
     
    <TextView android:id="@+id/description_view"
         android:layout_width="fill_parent"
@@ -19,6 +24,6 @@
         android:textSize="12dp"
         android:text="Description"
         android:visibility="gone"
-        android:background="#00FFFFFF" />
+        android:background="@color/transparent" />
 
 </LinearLayout>

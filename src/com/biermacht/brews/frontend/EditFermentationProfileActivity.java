@@ -101,7 +101,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 
 		// Set up num stages spinner
         numStagesSpinner = (Spinner) findViewById(R.id.num_stages_spinner);
-		SpinnerAdapter profAdapter = new SpinnerAdapter(this, numStagesArray);
+		SpinnerAdapter profAdapter = new SpinnerAdapter(this, numStagesArray, "Num Stages");
         profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         numStagesSpinner.setAdapter(profAdapter);
 

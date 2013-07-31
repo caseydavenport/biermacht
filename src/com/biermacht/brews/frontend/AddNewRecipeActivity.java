@@ -88,7 +88,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         beerTypeArray.add("Extract");
         beerTypeArray.add("Partial Mash");
         beerTypeArray.add("All Grain");
-        SpinnerAdapter beerTypeAdapter = new SpinnerAdapter(this, beerTypeArray);  
+        SpinnerAdapter beerTypeAdapter = new SpinnerAdapter(this, beerTypeArray, "Recipe Type");
         beerTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         beerTypeSpinner.setAdapter(beerTypeAdapter);
         beerTypeSpinner.setSelection(0); 

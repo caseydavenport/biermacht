@@ -13,6 +13,7 @@
 	
 	<!--  Colors for text -->
 	<color name="black_text">#333333</color>
+    <color name="white">#FFFFFF</color>
 	
 	<!--  Colors for views -->
 	<color name="divider">#22000000</color>

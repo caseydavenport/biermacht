@@ -81,7 +81,7 @@ public class AddHopsActivity extends Activity {
         hopFormArray.add(Hop.FORM_PELLET);
         hopFormArray.add(Hop.FORM_WHOLE);
         hopFormArray.add(Hop.FORM_PLUG);
-        SpinnerAdapter hopFormAdapter = new SpinnerAdapter(this, hopFormArray);  
+        SpinnerAdapter hopFormAdapter = new SpinnerAdapter(this, hopFormArray, "Hop Form");
         hopFormAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         hopFormSpinner.setAdapter(hopFormAdapter);
         hopFormSpinner.setSelection(0);
@@ -92,7 +92,7 @@ public class AddHopsActivity extends Activity {
         hopUseArray.add(Hop.USE_BOIL);
         hopUseArray.add(Hop.USE_AROMA);
         hopUseArray.add(Hop.USE_DRY_HOP);
-        SpinnerAdapter hopUseAdapter = new SpinnerAdapter(this, hopUseArray);  
+        SpinnerAdapter hopUseAdapter = new SpinnerAdapter(this, hopUseArray, "Hop Use");
         hopUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         hopUseSpinner.setAdapter(hopUseAdapter);
         hopUseSpinner.setSelection(0);

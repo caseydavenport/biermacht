@@ -65,7 +65,7 @@ public class EditMiscActivity extends Activity {
 		miscUseArray.add(Misc.USE_PRIMARY);
 		miscUseArray.add(Misc.USE_SECONDARY);
 
-		SpinnerAdapter miscUseAdapter = new SpinnerAdapter(this, miscUseArray);
+		SpinnerAdapter miscUseAdapter = new SpinnerAdapter(this, miscUseArray, "Misc Use");
 		miscUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		miscUseSpinner.setAdapter(miscUseAdapter);
 		miscUseSpinner.setSelection(miscUseArray.indexOf(miscObj.getUse()));

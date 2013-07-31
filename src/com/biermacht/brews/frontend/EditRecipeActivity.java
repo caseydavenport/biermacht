@@ -16,6 +16,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
@@ -24,15 +26,11 @@ import android.widget.*;
 
 public class EditRecipeActivity extends Activity implements OnClickListener {
 
-	// Data entry view declarations
-	//private Spinner beerStyleSpinner;
-	//private Spinner beerTypeSpinner;
+    // Main view - holds all the rows
     private ViewGroup mainView;
-	//private Spinner mashProfileSpinner;
 
     // Important things
     private OnClickListener onClickListener;
-    private WindowManager windowManager;
 
     // Rows to be displayed
 	private View recipeNameView;
@@ -42,6 +40,9 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 	private View boilSizeView;
     private View measuredOGView;
     private View measuredFGView;
+    private Spinner styleSpinner;
+    private Spinner typeSpinner;
+    private Spinner profileSpinner;
 
     // Titles
     private TextView recipeNameViewTitle;
@@ -74,14 +75,33 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 	private Recipe mRecipe;
 	
 	// Spinner array declarations
-	private ArrayList<BeerStyle> beerStyleArray;
-	private ArrayList<String> beerTypeArray;
-	private ArrayList<MashProfile> mashProfileArray;
+	private ArrayList<BeerStyle> styleArray;
+	private ArrayList<String> typeArray;
+	private ArrayList<MashProfile> profileArray;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
+
+        // Get the inflater
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Get recipe from calling activity
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);
+        mRecipe = Utils.getRecipeWithId(id);
+        style = mRecipe.getStyle();
+        profile = mRecipe.getMashProfile();
+        type = mRecipe.getType();
+        efficiency = mRecipe.getEfficiency();
+
+        // Get array of styles and mash profiles
+        styleArray = MainActivity.ingredientHandler.getStylesList();
+        profileArray = MainActivity.ingredientHandler.getMashProfileList();
+        typeArray = new ArrayList<String>();
+        typeArray.add(Recipe.EXTRACT);
+        typeArray.add(Recipe.PARTIAL_MASH);
+        typeArray.add(Recipe.ALL_GRAIN);
 
         // On click listener
         onClickListener = new View.OnClickListener() {
@@ -109,28 +129,18 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
                 else
                     return; // In case its none of those views...
 
+                // Force keyboard open and show popup
                 alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 alert.show();
             }
         };
-
-        // Window manager
-        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-
-        // Get the inflater
-        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        
-        // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);
-        mRecipe = Utils.getRecipeWithId(id);
-        style = mRecipe.getStyle();
-        profile = mRecipe.getMashProfile();
-        type = mRecipe.getType();
-        efficiency = mRecipe.getEfficiency();
         
         // Initialize views and stuff
         mainView = (ViewGroup) findViewById(R.id.main_layout);
         recipeNameView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        styleSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        typeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        profileSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
         timeView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         efficiencyView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         batchSizeView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);;
@@ -138,7 +148,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         measuredFGView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         measuredOGView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
-        // Set onClickListeners
+        // Set onClickListeners for edit text views
         recipeNameView.setOnClickListener(onClickListener);
         timeView.setOnClickListener(onClickListener);
         efficiencyView.setOnClickListener(onClickListener);
@@ -147,22 +157,19 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         measuredFGView.setOnClickListener(onClickListener);
         measuredOGView.setOnClickListener(onClickListener);
 
-        // Add views to main view
+        /************************************************************************
+         ************* Add views to main view  **********************************
+         *************************************************************************/
         mainView.addView(recipeNameView);
-        mainView.addView(inflater.inflate(R.layout.divider, mainView, false));
+        mainView.addView(styleSpinner);
+        mainView.addView(typeSpinner);
+        mainView.addView(profileSpinner);
         mainView.addView(timeView);
-        mainView.addView(inflater.inflate(R.layout.divider, mainView, false));
         mainView.addView(efficiencyView);
-        mainView.addView(inflater.inflate(R.layout.divider, mainView, false));
         mainView.addView(batchSizeView);
-        mainView.addView(inflater.inflate(R.layout.divider, mainView, false));
         mainView.addView(boilSizeView);
-        mainView.addView(inflater.inflate(R.layout.divider, mainView, false));
         mainView.addView(measuredOGView);
-        mainView.addView(inflater.inflate(R.layout.divider, mainView, false));
         mainView.addView(measuredFGView);
-        mainView.addView(inflater.inflate(R.layout.divider, mainView, false));
-
 
         /************************************************************************
         ************* Get titles, set values   **********************************
@@ -211,126 +218,77 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 
         measuredOGViewText = (TextView) measuredOGView.findViewById(R.id.text);
         measuredOGViewText.setText(String.format("%2.3f", mRecipe.getMeasuredOG()));
-
-        /**
-        //Arraylist of beer types
-        beerStyleArray = MainActivity.ingredientHandler.getStylesList();
-		mashProfileArray = MainActivity.ingredientHandler.getMashProfileList();
 		
 		// If it doesn't contain the current recipes style / profile,
 		// then it is custom and we add it to the list.
-		if(!beerStyleArray.contains(mRecipe.getStyle()))
-			beerStyleArray.add(mRecipe.getStyle());
-		if(!mashProfileArray.contains(mRecipe.getMashProfile()))
-			mashProfileArray.add(mRecipe.getMashProfile());
+        // TODO: We should include custom stuff without having to check here
+		if(!styleArray.contains(mRecipe.getStyle()))
+			styleArray.add(mRecipe.getStyle());
+		if(!profileArray.contains(mRecipe.getMashProfile()))
+			profileArray.add(mRecipe.getMashProfile());
         
-        // Set up beer type spinner
-        beerStyleSpinner = (Spinner) findViewById(R.id.beer_type_spinner);
-        BeerStyleSpinnerAdapter adapter = new BeerStyleSpinnerAdapter(this, beerStyleArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        beerStyleSpinner.setAdapter(adapter);
+        // Set up style spinner here
+        BeerStyleSpinnerAdapter styleAdapter = new BeerStyleSpinnerAdapter(this, styleArray);
+        styleAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        styleSpinner.setAdapter(styleAdapter);
+        styleSpinner.setSelection(styleArray.indexOf(mRecipe.getStyle()));
 		
 		// Set up mash profile spinner
-		mashProfileSpinner = (Spinner) findViewById(R.id.mash_profile_spinner);
-		MashProfileSpinnerAdapter profAdapter = new MashProfileSpinnerAdapter(this, mashProfileArray);
-        profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-		mashProfileSpinner.setAdapter(profAdapter);
-        
-        // Determine the correct selection for the style spinner
-        int pos = 0;
-        for (BeerStyle b : beerStyleArray)
-        {
-        	if (b.equals(mRecipe.getStyle()))
-        		break;
-        	pos++;
-			
-			if (pos > beerStyleArray.size())
-				pos = 0;
-        }
-        
-        beerStyleSpinner.setSelection(pos);
+		MashProfileSpinnerAdapter profileAdapter = new MashProfileSpinnerAdapter(this, profileArray);
+        profileAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		profileSpinner.setAdapter(profileAdapter);
+        profileSpinner.setSelection(profileArray.indexOf(mRecipe.getMashProfile()));
         
         // Set up brew type spinner
-        beerTypeSpinner = (Spinner) findViewById(R.id.brew_type_spinner);
-        beerTypeArray = new ArrayList<String>();
-        beerTypeArray.add("Extract");
-        beerTypeArray.add("Partial Mash");
-        beerTypeArray.add("All Grain");
-        SpinnerAdapter beerTypeAdapter = new SpinnerAdapter(this, beerTypeArray);
-        beerTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        beerTypeSpinner.setAdapter(beerTypeAdapter);
-
-        // Determine the correct selection for the brew type spinner
-        pos = 0;
-        for (String s : beerTypeArray)
-        {
-        	if (s.equals(mRecipe.getType()))
-        		break;
-        	pos++;
-        }
-        beerTypeSpinner.setSelection(pos);
-		
-		// Determine the correct selection for the mash profile spinner
-        pos = 0;
-        for (MashProfile p : mashProfileArray)
-        {
-        	if (p.equals(mRecipe.getMashProfile()))
-        		break;
-        	pos++;
-        }
-		mashProfileSpinner.setSelection(pos);
+        SpinnerAdapter typeAdapter = new SpinnerAdapter(this, typeArray, "Recipe Type");
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        typeSpinner.setAdapter(typeAdapter);
+        typeSpinner.setSelection(typeArray.indexOf(mRecipe.getType()));
         
         // Handle beer style selector here
-        beerStyleSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                style = beerStyleArray.get(position);
+        styleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                style = styleArray.get(position);
             }
 
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Blag
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
             }
 
         });
-		
-		// Handle mash profile selector here
-        mashProfileSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				profile = mashProfileArray.get(position);
+		// Handle mash profile selector here
+        profileSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+				profile = profileArray.get(position);
 			}
 
-			public void onNothingSelected(AdapterView<?> parentView) {
-				// Blag
+			public void onNothingSelected(AdapterView<?> parentView)
+            {
 			}
 
 		});
-        
-        // Handle beer type selector here
-        beerTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+        // Handle type selector here
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                type = beerTypeArray.get(position);
+                type = typeArray.get(position);
                 
                 if(type.equals(Recipe.EXTRACT))
-                {
-                	mashProfileSpinner.setVisibility(View.GONE);
-					mashProfileTitle.setVisibility(View.GONE);
-                }
+                	profileSpinner.setVisibility(View.GONE);
                 else
-                {
-					mashProfileSpinner.setVisibility(View.VISIBLE);
-					mashProfileTitle.setVisibility(View.VISIBLE);
-				}
-
+					profileSpinner.setVisibility(View.VISIBLE);
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Blag
             }
 
         });
-         */
     }
 
     @Override

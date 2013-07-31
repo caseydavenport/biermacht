@@ -15,17 +15,41 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
 	// Fields
 	private Context context;
 	private List<String> list;
+    private String title;
 
 	// Constructor
-	public SpinnerAdapter(Context context, List<String> list)
+	public SpinnerAdapter(Context context, List<String> list, String title)
 	{
 		super(context, android.R.layout.simple_spinner_item, list);
 		this.context = context;
 		this.list = list;
+        this.title = title;
 	}
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        // View to return
+        View row = convertView;
+
+        if (row == null)
+        {
+            // Get inflater
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(R.layout.row_layout_edit_text, parent, false);
+        }
+
+        TextView titleView = (TextView) row.findViewById(R.id.title);
+        TextView textView = (TextView) row.findViewById(R.id.text);
+
+        textView.setText((CharSequence) list.get(position));
+        titleView.setText(title);
+
+        return row;
+    }
 	
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent)
+	public View getDropDownView(int position, View convertView, ViewGroup parent)
 	{
 		// View to return
 		View row = convertView;

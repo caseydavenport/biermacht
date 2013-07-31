@@ -73,7 +73,7 @@ public class AddMiscActivity extends Activity {
 		miscTypeArray.add(Misc.TYPE_WATER_AGENT);
 		miscTypeArray.add(Misc.TYPE_OTHER);
 		
-        SpinnerAdapter miscTypeAdapter = new SpinnerAdapter(this, miscTypeArray);  
+        SpinnerAdapter miscTypeAdapter = new SpinnerAdapter(this, miscTypeArray, "Misc Type");
         miscTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         miscTypeSpinner.setAdapter(miscTypeAdapter);
         miscTypeSpinner.setSelection(0);
@@ -87,7 +87,7 @@ public class AddMiscActivity extends Activity {
 		miscUseArray.add(Misc.USE_PRIMARY);
 		miscUseArray.add(Misc.USE_SECONDARY);
 		
-		SpinnerAdapter miscUseAdapter = new SpinnerAdapter(this, miscUseArray);
+		SpinnerAdapter miscUseAdapter = new SpinnerAdapter(this, miscUseArray, "Misc Use");
 		miscUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		miscUseSpinner.setAdapter(miscUseAdapter);
 		miscUseSpinner.setSelection(0);

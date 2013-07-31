@@ -25,9 +25,31 @@ public class MashProfileSpinnerAdapter extends ArrayAdapter<MashProfile> {
 		this.context = context;
 		this.list = list;
 	}
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        // View to return
+        View row = convertView;
+
+        if (row == null)
+        {
+            // Get inflater
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(R.layout.row_layout_edit_text, parent, false);
+        }
+
+        TextView titleView = (TextView) row.findViewById(R.id.title);
+        TextView textView = (TextView) row.findViewById(R.id.text);
+
+        textView.setText((CharSequence) list.get(position).getName());
+        titleView.setText("Mash Profile");
+
+        return row;
+    }
 	
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent)
+	public View getDropDownView(int position, View convertView, ViewGroup parent)
 	{
 		// View to return
 		View row = convertView;
