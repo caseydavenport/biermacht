@@ -17,7 +17,7 @@ import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.frontend.fragments.*;
 import android.support.v4.view.*;
 
-public class DisplayRecipeActivity extends FragmentActivity implements OnClickListener {
+public class DisplayRecipeActivity extends FragmentActivity {
 	
 	private Recipe mRecipe;
 	private long id; // id of recipe we use
@@ -40,10 +40,10 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
         // Get recipe from calling activity
         id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
         mRecipe = Utils.getRecipeWithId(id);
-        
+
         // Set title based on recipe name
         setTitle(mRecipe.getRecipeName());
-		
+
 		// ViewPager and pagerAdapter for slidy tabs!
         cpAdapter = new CollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -148,9 +148,4 @@ public class DisplayRecipeActivity extends FragmentActivity implements OnClickLi
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
-	public void onClick(View v) 
-	{
-		
-	}
 }
