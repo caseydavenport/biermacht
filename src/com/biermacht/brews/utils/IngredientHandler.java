@@ -173,6 +173,7 @@ public class IngredientHandler {
 	            sp.parse(is, myXMLHandler);
 	 
 	            list.addAll(myXMLHandler.getFermentables());
+                Collections.sort(list, new IngredientComparator());
 	        }
 	        catch (Exception e)
 	        {
@@ -204,7 +205,7 @@ public class IngredientHandler {
 	            sp.parse(is, myXMLHandler);
 				
 	            list.addAll(myXMLHandler.getYeasts());
-                Collections.sort(list, new IngredientComparator<Ingredient>());
+                Collections.sort(list, new IngredientComparator());
 	        }
 	        catch (Exception e)
 	        {
@@ -236,6 +237,7 @@ public class IngredientHandler {
 	            sp.parse(is, myXMLHandler);
 	 
 	            list.addAll(myXMLHandler.getHops());
+                Collections.sort(list, new IngredientComparator());
 	        }
 	        catch (Exception e)
 	        {
@@ -299,6 +301,7 @@ public class IngredientHandler {
 	            sp.parse(is, myXMLHandler);
 
 	            list.addAll(myXMLHandler.getMiscs());
+                Collections.sort(list, new IngredientComparator());
 	        }
 	        catch (Exception e)
 	        {
@@ -329,7 +332,6 @@ public class IngredientHandler {
 
 	        ArrayList<Recipe> list = myXMLHandler.getRecipes();
 	        retlist.addAll(list);
-
 	     }
 	     catch (Exception e)
 	     {

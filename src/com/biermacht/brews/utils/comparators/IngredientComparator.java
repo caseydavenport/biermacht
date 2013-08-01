@@ -1,10 +1,17 @@
 package com.biermacht.brews.utils.comparators;
 
+import com.biermacht.brews.ingredient.Ingredient;
 import java.util.Comparator;
 
-public class IngredientComparator<Ingredient> implements Comparator<Ingredient>
+// Comparator for sorting ingredients list
+public class IngredientComparator implements Comparator<Ingredient>
 {
-	public int compare(Ingredient s1, Ingredient s2) {
-		return s1.toString().compareToIgnoreCase(s2.toString());
-	}
+
+    public int compare(Ingredient i1, Ingredient i2)
+    {
+        // If of same time, alphabetize, otherwise sort based on type
+        if (i1.getType().equals(i2.getType()))
+            return i1.getName().compareTo(i2.getName());
+        return i1.getType().compareTo(i2.getType());
+    }
 }

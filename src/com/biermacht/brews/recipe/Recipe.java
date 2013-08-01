@@ -16,6 +16,7 @@ import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.InstructionGenerator;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.comparators.IngredientComparator;
 
 public class Recipe {
 	
@@ -820,17 +821,4 @@ public class Recipe {
         else
             return 0;
     }
-	
-	// Comparator for sorting ingredients list
-	private class IngredientComparator implements Comparator<Ingredient>
-	{
-
-		public int compare(Ingredient i1, Ingredient i2) 
-		{
-            // If of same time, alphabetize, otherwise sort based on type
-            if (i1.getType().equals(i2.getType()))
-                return i1.getName().compareTo(i2.getName());
-			return i1.getType().compareTo(i2.getType());
-		}	
-	}
 }

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +33,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.tasks.InitializeAssets;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 import java.io.*;
@@ -66,7 +68,6 @@ public class MainActivity extends Activity implements OnClickListener {
     private static String EDIT_FERM = "Edit Fermentation Profile";
     private static String EDIT_MASH = "Edit Mash Profile";
     private static String EXPORT_RECIPE = "Export as BeerXML";
-    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,9 @@ public class MainActivity extends Activity implements OnClickListener {
         // Declare my ingredient handler
         ingredientHandler = new IngredientHandler(getApplicationContext());
 
+        // Async Initialize Assets
+        new InitializeAssets(ingredientHandler).execute("");
+
         // Get recipes to display
         recipeList = Utils.getRecipeList(databaseInterface);
         
@@ -107,7 +111,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			    intent.putExtra(Utils.INTENT_RECIPE_ID, recipeList.get(pos).getId());
 			    startActivity(intent);				
 			}
-        };
+             };
         
         // Set up the textWatcher for search bar
         mTextWatcher = new TextWatcher() {
@@ -134,7 +138,7 @@ public class MainActivity extends Activity implements OnClickListener {
         updateRecipeList(recipeList);
         listView.setOnItemClickListener(mClickListener);
         registerForContextMenu(listView);
-        
+
     }
     
     @Override
