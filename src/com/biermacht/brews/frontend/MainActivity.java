@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -184,21 +185,7 @@ public class MainActivity extends Activity implements OnClickListener {
          	String path = data.getData().getPath().toString();
 			
 			if (path != null)
-			{
-				try
-				{
-					for (Recipe r : ingredientHandler.getRecipesFromXml(path))
-					{
-						r.update();
-						Utils.createRecipeFromExisting(r);
-					}
-					
-				}
-				catch (IOException e)
-				{
-					Log.e("MainActivity", e.toString());
-				}
-			}	
+                new ImportRecipes(this, path, ingredientHandler).execute("");
      	}
      	if (resultCode == RESULT_CANCELED) {    
          	//Write your code on no result return 
@@ -321,8 +308,13 @@ public class MainActivity extends Activity implements OnClickListener {
 
       return true;
     }
-    
-    private void updateRecipeList(ArrayList<Recipe> l)
+
+    /**
+     * Takes given list of recipes and displays them.  Also
+     * sets recipelist field to the new list
+     * @param l
+     */
+    public void updateRecipeList(ArrayList<Recipe> l)
     {
         // Set up my listView with title and ArrayAdapter
         mAdapter = new RecipeArrayAdapter(getApplicationContext(), l);
@@ -403,4 +395,63 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		    .setNegativeButton(R.string.cancel, null);
 	}
+
+    private class ImportRecipes extends AsyncTask<String, Void, String> {
+
+        private String path;
+        private IngredientHandler ingredientHandler;
+        private Context context;
+        private ProgressDialog progress;
+
+        public ImportRecipes(Context c, String path, IngredientHandler i)
+        {
+            this.path = path;
+            this.ingredientHandler = i;
+            this.context = c;
+        }
+
+        @Override
+        protected String doInBackground(String... params)
+        {
+            try
+            {
+                for (Recipe r : ingredientHandler.getRecipesFromXml(path))
+                {
+                    r.update();
+                    Utils.createRecipeFromExisting(r);
+                }
+            }
+            catch (IOException e)
+            {
+                Log.e("ImportRecipes", e.toString());
+            }
+
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+            progress.dismiss();
+            updateRecipeList(Utils.getRecipeList(databaseInterface));
+            Log.d("ImportRecipes", "Finished importing recipes");
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            progress = new ProgressDialog(context);
+            progress.setMessage("Importing...");
+            progress.setIndeterminate(false);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setCancelable(true);
+            progress.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
 }

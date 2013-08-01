@@ -1,12 +1,15 @@
 package com.biermacht.brews.frontend;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import com.biermacht.brews.R;
+import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.frontend.adapters.*;
 import android.widget.*;
@@ -29,6 +33,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 	private ListView listView;
 	private EditText nameEditText;
 	private OnItemClickListener mClickListener;
+    private Context context;
 	
 	// Values for possible settings
 	SharedPreferences preferences;
@@ -46,6 +51,9 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		
 		// Set icon as back button
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get context
+        context = this;
         
         // Get settings from shared preferences
         preferences = this.getSharedPreferences("com.biermacht.brews", Context.MODE_PRIVATE);
@@ -153,11 +161,47 @@ public class SettingsActivity extends Activity implements OnClickListener {
 			.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					Utils.deleteAllRecipes();
+                    new DeleteRecipes().execute("");
 				}
 
 		    })
 
 		    .setNegativeButton(R.string.cancel, null);
 	}
+
+    private class DeleteRecipes extends AsyncTask<String, Void, String> {
+
+        private ProgressDialog progress;
+
+        @Override
+        protected String doInBackground(String... params)
+        {
+            Utils.deleteAllRecipes();
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+            progress.dismiss();
+            Log.d("DeleteAllRecipes", "Finished deleting recipes");
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            progress = new ProgressDialog(context);
+            progress.setMessage("Deleting all recipes...");
+            progress.setIndeterminate(false);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setCancelable(true);
+            progress.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
 }
