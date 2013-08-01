@@ -46,28 +46,27 @@
         android:layout_width="fill_parent"
         android:padding="10dp"
         android:layout_alignParentBottom="true">
-	    
+
         <!-- Cancel Button -->
-	    <Button
-	        android:id="@+id/cancel_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="fill_parent"
-	        android:textColor="@drawable/button_text"
-	        android:onClick="onClick"
-	        android:background="@drawable/left_button_bg"
-	        android:text="@string/cancel" />
-	
-	    <!-- Submit Button -->
-	    <Button
-	        android:id="@+id/submit_button"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="fill_parent"
-	        android:textColor="@drawable/button_text"
-	        android:onClick="onClick"
-	        android:background="@drawable/right_button_bg"
-	        android:text="@string/edit" />
+        <Button
+                android:id="@+id/cancel_button"
+                android:onClick="onClick"
+                android:text="@string/cancel"
+                style="@style/button_left" />
+
+        <!-- Delete Button -->
+        <Button
+                android:id="@+id/delete_button"
+                android:onClick="onClick"
+                android:text="@string/delete"
+                style="@style/button" />
+
+        <!-- Submit Button -->
+        <Button
+                android:id="@+id/submit_button"
+                android:onClick="onClick"
+                android:text="@string/edit"
+                style="@style/button_right" />
 
     </LinearLayout>
 

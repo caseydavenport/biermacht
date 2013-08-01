@@ -81,13 +81,19 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_edit_recipe);
+        setContentView(R.layout.activity_add_edit);
+
+        // Set icon as back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Get the inflater
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Create alert builder
         alertBuilder = new AlertBuilder(this);
+
+        // Disable delete button for this view
+        findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Set values
         mRecipe = Utils.NEW_RECIPE;
@@ -132,7 +138,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
             }
         };
 
-        // Initialize views and stuff
+        // Initialize each of the rows to be displayed
         mainView = (ViewGroup) findViewById(R.id.main_layout);
         recipeNameView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         styleSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
@@ -279,8 +285,6 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
     }
 
 	public void onClick(View v) {
-
-        Log.d("AddNewRecipe", "Button pressed, which one?");
 		
 		// Cancel Button Pressed
 		if (v.getId() == R.id.cancel_button)

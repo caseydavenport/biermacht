@@ -58,7 +58,7 @@ public class AddMiscActivity extends Activity {
 
         // Set up spinner
         miscSpinner = (Spinner) findViewById(R.id.misc_spinner);
-        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, miscArray);  
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, miscArray, "Misc Selector");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         miscSpinner.setAdapter(adapter);
         miscSpinner.setSelection(0);    

@@ -65,7 +65,7 @@ public class AddYeastActivity extends Activity implements OnClickListener {
         
         // Set up yeast spinner
         yeastSpinner = (Spinner) findViewById(R.id.ingredient_spinner);
-        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, yeastArray);
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, yeastArray, "Yeast Selector");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         yeastSpinner.setAdapter(adapter);
         yeastSpinner.setSelection(0);

@@ -85,7 +85,10 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_edit_recipe);
+        setContentView(R.layout.activity_add_edit);
+
+        // Set icon as back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Get the inflater
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -93,9 +96,14 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         // Create alert builder
         alertBuilder = new AlertBuilder(this);
 
+        // Disable delete button for this view
+        findViewById(R.id.delete_button).setVisibility(View.GONE);
+
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
+
+        // Get values from recipe
         style = mRecipe.getStyle();
         profile = mRecipe.getMashProfile();
         type = mRecipe.getType();

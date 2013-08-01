@@ -70,7 +70,7 @@ public class AddHopsActivity extends Activity {
 		
         // Set up hop spinner
         hopSpinner = (Spinner) findViewById(R.id.hop_spinner);
-        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopArray);  
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopArray, "Hop Selector");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         hopSpinner.setAdapter(adapter);
         hopSpinner.setSelection(0);    

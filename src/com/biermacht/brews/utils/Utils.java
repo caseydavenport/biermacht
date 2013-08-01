@@ -12,7 +12,7 @@ import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 public class Utils {
 		
-	// Beer styles... http://www.bjcp.org/docs/2008_stylebook.pdf
+	// New items, and objects of type "other"
 	public static BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
     public static Recipe NEW_RECIPE = new Recipe("New Recipe");
 
@@ -20,6 +20,9 @@ public class Utils {
 	public static String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
 	public static String INTENT_PROFILE_ID = "biermacht.brews.profile.id";
 	public static String INTENT_INGREDIENT_ID = "biermacht.brews.ingredient.id";
+
+    // Constants
+    public static int INVALID_ID = -1; // TODO: Throw exceptions in get methods if this is passed
 	
 	/**
 	 * Returns a list of strings corresponding to ingredient objects
