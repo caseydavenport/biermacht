@@ -1,11 +1,14 @@
 package com.biermacht.brews.frontend;
 
 import android.app.*;
+import android.content.Context;
 import android.os.*;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import com.biermacht.brews.*;
+import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.ingredient.*;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.utils.*;
@@ -15,89 +18,257 @@ import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 
 public class EditMiscActivity extends Activity {
 
-	IngredientHandler ingredientHandler;
-	private Spinner miscUseSpinner;
-	private EditText timeEditText;
-	private EditText amountEditText;
-	private TextView amountTitle;
-	private TextView timeTitle;
-	private EditText nameEditText;
-	private ArrayList<String> miscUseArray;
-	private Misc miscObj;
-	private Recipe mRecipe;
+    // Main view - holds all the rows
+    private ViewGroup mainView;
+
+    // Alert builder
+    private AlertBuilder alertBuilder;
+
+    // Important things
+    private View.OnClickListener onClickListener;
+
+    // LayoutInflater
+    LayoutInflater inflater;
+
+    // Recipe we are editing
+    private Recipe mRecipe;
+
+    // IngredientHandler to get ingredient arrays
+    IngredientHandler ingredientHandler;
+
+    // Holds the currently selected misc, and misc being edited
+    Misc misc, selectedMisc;
+
+    // Editable rows to display
+    private Spinner miscSpinner;
+    private Spinner typeSpinner;
+    private Spinner useSpinner;
+    private View nameView;
+    private View amountView;
+    private View timeView;
+
+    // Titles from rows
+    private TextView nameViewTitle;
+    private TextView amountViewTitle;
+    private TextView timeViewTitle;
+
+    // Content from rows
+    private TextView nameViewText;
+    private TextView amountViewText;
+    private TextView timeViewText;
+
+    // Spinner array declarations
+    private ArrayList<Ingredient> miscArray;
+    private ArrayList<String> typeArray;
+    private ArrayList<String> useArray;
+
+    // Data storage for spinners
+    private String type;
+    private String use;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_misc);
+        setContentView(R.layout.activity_add_edit);
 
-		// Set icon as back button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+        // Set icon as back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
-    	// Set up Ingredient Handler
-    	ingredientHandler = MainActivity.ingredientHandler;
+        // Get the Ingredient Handler
+        ingredientHandler = MainActivity.ingredientHandler;
 
-        // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
-		long miscId = getIntent().getLongExtra(Utils.INTENT_INGREDIENT_ID, -1);
+        // Get the list of ingredients to show
+        miscArray = new ArrayList<Ingredient>();
+        miscArray.addAll(ingredientHandler.getMiscsList());
+
+        // Get the inflater
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Create alert builder
+        alertBuilder = new AlertBuilder(this);
+
+        // Enable delete button for this view
+        findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
+
+        // Get recipe and misc from calling activity
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
+        long miscId = getIntent().getLongExtra(Utils.INTENT_INGREDIENT_ID, Utils.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
-		miscObj = (Misc) Utils.getIngredientWithId(miscId);
+        misc = (Misc) Utils.getIngredientWithId(miscId);
+
+        // On click listener
+        onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /************************************************************
+                 * Options for clicking on each of the editable views
+                 ************************************************************/
+
+                AlertDialog alert;
+                if (v.equals(nameView))
+                    alert = alertBuilder.editTextStringAlert(nameViewText, nameViewTitle).create();
+                else if (v.equals(amountView))
+                    alert = alertBuilder.editTextFloatAlert(amountViewText, amountViewTitle).create();
+                else if (v.equals(timeView))
+                    alert = alertBuilder.editTextFloatAlert(timeViewText, timeViewTitle).create();
+                else
+                    return; // In case its none of those views...
+
+                // Force keyboard open and show popup
+                alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                alert.show();
+            }
+        };
 
         // Initialize views and such here
-		nameEditText = (EditText) findViewById(R.id.name_edit_text);
-        timeEditText = (EditText) findViewById(R.id.time_edit_text);
-        amountEditText = (EditText) findViewById(R.id.amount_edit_text);
-		amountTitle = (TextView) findViewById(R.id.amount_title);
-		timeTitle = (TextView) findViewById(R.id.time_title);
-		
-		// set values
-		nameEditText.setText(miscObj.getName());
-		timeEditText.setText(miscObj.getTime()+"");
-		amountEditText.setText(miscObj.getDisplayAmount()+"");
-		amountTitle.setText("Amount (" + miscObj.getDisplayUnits() + ")");
-		
-		// Set up use spinner
-		miscUseSpinner = (Spinner) findViewById(R.id.misc_use_spinner);
-		miscUseArray = new ArrayList<String>();
-		miscUseArray.add(Misc.USE_BOIL);
-		miscUseArray.add(Misc.USE_BOTTLING);
-		miscUseArray.add(Misc.USE_MASH);
-		miscUseArray.add(Misc.USE_PRIMARY);
-		miscUseArray.add(Misc.USE_SECONDARY);
+        mainView = (ViewGroup) findViewById(R.id.main_layout);
+        nameView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        amountView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        timeView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        miscSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        typeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        useSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
 
-		SpinnerAdapter miscUseAdapter = new SpinnerAdapter(this, miscUseArray, "Misc Use");
-		miscUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-		miscUseSpinner.setAdapter(miscUseAdapter);
-		miscUseSpinner.setSelection(miscUseArray.indexOf(miscObj.getUse()));
+        // Set the onClickListener for each row
+        nameView.setOnClickListener(onClickListener);
+        amountView.setOnClickListener(onClickListener);
+        timeView.setOnClickListener(onClickListener);
 
-   
-		// Handle use selector here
-        miscUseSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        /************************************************************************
+         ************* Add views to main view  **********************************
+         *************************************************************************/
+        mainView.addView(miscSpinner);
+        mainView.addView(nameView);
+        mainView.addView(useSpinner);
+        mainView.addView(typeSpinner);
+        mainView.addView(timeView);
+        mainView.addView(amountView);
 
-				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-					// Set the type to the selected type...
-					miscObj.setUse(miscUseArray.get(position));
-					
-					timeTitle.setText(miscObj.getUse() + " time");
-					if (!(miscObj.getUse().equals(Misc.USE_BOIL)||
-						miscObj.getUse().equals(Misc.USE_MASH)))
-					{
-						timeTitle.setVisibility(View.GONE);
-						timeEditText.setVisibility(View.GONE);
-					}
-					else
-					{
-						timeTitle.setVisibility(View.VISIBLE);
-						timeEditText.setVisibility(View.VISIBLE);
-					}
-				}
+        /************************************************************************
+         ************* Get titles, set values   **********************************
+         *************************************************************************/
+        nameViewTitle = (TextView) nameView.findViewById(R.id.title);
+        nameViewTitle.setText("Name");
 
+        amountViewTitle = (TextView) amountView.findViewById(R.id.title);
+        amountViewTitle.setText("Amount (L)");
 
-				public void onNothingSelected(AdapterView<?> parentView) {
-					// Blag
-				}
+        timeViewTitle = (TextView) timeView.findViewById(R.id.title);
+        timeViewTitle.setText("Time (mins)");
 
-			});
+        /************************************************************************
+         ************* Get content views, set values   **************************
+         *************************************************************************/
+        nameViewText = (TextView) nameView.findViewById(R.id.text);
+        amountViewText = (TextView) amountView.findViewById(R.id.text);
+        timeViewText = (TextView) timeView.findViewById(R.id.text);
+
+        // If this misc is not in the array, add it
+        if (!miscArray.contains(misc))
+            miscArray.add(0, misc);
+
+        // Set up spinner
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, miscArray, "Misc Selector");
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        miscSpinner.setAdapter(adapter);
+        miscSpinner.setSelection(miscArray.indexOf(misc));
+
+        // Set up type spinner
+        typeArray = new ArrayList<String>();
+        typeArray.add(Misc.TYPE_FINING);
+        typeArray.add(Misc.TYPE_FLAVOR);
+        typeArray.add(Misc.TYPE_HERB);
+        typeArray.add(Misc.TYPE_SPICE);
+        typeArray.add(Misc.TYPE_WATER_AGENT);
+        typeArray.add(Misc.TYPE_OTHER);
+
+        SpinnerAdapter miscTypeAdapter = new SpinnerAdapter(this, typeArray, "Misc Type");
+        miscTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        typeSpinner.setAdapter(miscTypeAdapter);
+        typeSpinner.setSelection(typeArray.indexOf(misc.getMiscType()));
+
+        // Set up use spinner
+        useArray = new ArrayList<String>();
+        useArray.add(Misc.USE_BOIL);
+        useArray.add(Misc.USE_BOTTLING);
+        useArray.add(Misc.USE_MASH);
+        useArray.add(Misc.USE_PRIMARY);
+        useArray.add(Misc.USE_SECONDARY);
+
+        SpinnerAdapter miscUseAdapter = new SpinnerAdapter(this, useArray, "Misc Use");
+        miscUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        useSpinner.setAdapter(miscUseAdapter);
+        useSpinner.setSelection(useArray.indexOf(misc.getUse()));
+
+        // Handle misc selector here
+        miscSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedMisc = (Misc) miscArray.get(position);
+
+                nameViewText.setText(selectedMisc.getName());
+
+                timeViewText.setText(String.format("%d", misc.getTime()));
+                amountViewText.setText(String.format("%2.2f", misc.getDisplayAmount()));
+
+                typeSpinner.setSelection(typeArray.indexOf(selectedMisc.getMiscType()));
+                useSpinner.setSelection(useArray.indexOf(selectedMisc.getUse()));
+
+                amountViewTitle.setText("Amount (" + selectedMisc.getDisplayUnits() + ")");
+                timeViewTitle.setText(selectedMisc.getUse() + " time");
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+            }
+
+        });
+
+        // Handle type selector here
+        typeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                type = typeArray.get(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+            }
+
+        });
+
+        // Handle use selector here
+        useSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                use = useArray.get(position);
+
+                if (use.equals(Misc.USE_BOTTLING))
+                {
+                    timeView.setVisibility(View.GONE);
+                }
+                else
+                {
+                    timeView.setVisibility(View.VISIBLE);
+                    String units = "";
+                    if (use.equals(Misc.USE_PRIMARY)||use.equals(Misc.USE_SECONDARY))
+                        units = Units.DAYS;
+                    else if (use.equals(Misc.USE_BOIL)||use.equals(Misc.USE_MASH))
+                        units = Units.MINUTES;
+                    else
+                        units = Units.MINUTES;
+
+                    timeViewTitle.setText(use + " Time" + " (" + units + ")");
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+            }
+
+        });
     }
 
     @Override
@@ -106,67 +277,65 @@ public class EditMiscActivity extends Activity {
         return true;
     }
 
-	@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-    	switch (item.getItemId())
-		{
+        switch (item.getItemId())
+        {
             case android.R.id.home:
-        		finish();
-        		return true; 
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-	public void onClick(View v) {
-		// if edit button pressed
-		if (v.getId() == R.id.edit_grain_submit_button)
-		{
-			int startTime, endTime;
-			String name = nameEditText.getText().toString();
-			int time = Integer.parseInt(timeEditText.getText().toString());
-			double amount = Double.parseDouble(amountEditText.getText().toString());
+    public void onClick(View v) {
+        // if "SUBMIT" button pressed
+        if (v.getId() == R.id.submit_button)
+        {
+            boolean readyToGo = true;
 
-			if (miscObj.getUse().equals(Misc.USE_BOIL))
-			{
-				if (time > mRecipe.getBoilTime())
-					time = mRecipe.getBoilTime();
-				
-				endTime = mRecipe.getBoilTime();
-				startTime = endTime - time;
-			}
-			else
-			{
-				startTime = mRecipe.getBoilTime();
-				endTime = startTime + time;	
-			}
-			
-			miscObj.setName(name);
-			miscObj.setTime(time);
-			miscObj.setStartTime(startTime);
-			miscObj.setEndTime(endTime);
-			miscObj.setDisplayAmount(amount, miscObj.getDisplayUnits());
-			
-			Utils.updateIngredient(miscObj);
-			mRecipe = Utils.getRecipeWithId(mRecipe.getId());
-			mRecipe.update();
-			Utils.updateRecipe(mRecipe);
+            try {
+                String name = nameViewText.getText().toString();
+                int time = Integer.parseInt(timeViewText.getText().toString());
+                int endTime = mRecipe.getBoilTime();
+                int startTime = endTime - time;
+                double amount = Double.parseDouble(amountViewText.getText().toString());
 
-			finish();
-		}
-		
-		// If "DELETE" button pressed
-		if (v.getId() == R.id.delete_button)
-		{
-			Utils.deleteIngredient(miscObj);
+                if (time > mRecipe.getBoilTime())
+                    time = mRecipe.getBoilTime();
 
-			finish();
-		}
-		
-		// if "CANCEL" button pressed
-		if (v.getId() == R.id.cancel_button)
-		{
-			finish();
-		}
-	}
+                misc.setName(name);
+                misc.setTime(time);
+                misc.setStartTime(startTime);
+                misc.setEndTime(endTime);
+                misc.setDisplayAmount(amount, misc.getDisplayUnits());
+                misc.setMiscType(type);
+                misc.setUse(use);
+            } catch (Exception e)
+            {
+                Log.d("EditMiscActivity", "Exception on submit: " + e.toString());
+                readyToGo = false;
+            }
+
+            if (readyToGo)
+            {
+                Utils.updateIngredient(misc);
+                finish();
+            }
+        }
+
+        // If "DELETE" button pressed
+        if (v.getId() == R.id.delete_button)
+        {
+            Utils.deleteIngredient(misc);
+            finish();
+        }
+
+        // if "CANCEL" button pressed
+        if (v.getId() == R.id.cancel_button)
+        {
+            finish();
+        }
+    }
 }

@@ -167,18 +167,6 @@ public class Recipe {
 		update();
 	}
 	
-	public void removeIngredient(String i)
-	{
-		for (Ingredient ingredient : getIngredientList())
-		{
-			if(i.equals(ingredient.toString()));
-			{
-				removeIngredient(ingredient);
-			}
-		}
-		update();
-	}
-	
 	private void removeIngredient(Ingredient i)
 	{
 		if (i.getType().equals(Ingredient.HOP))

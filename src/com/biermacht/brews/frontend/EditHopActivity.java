@@ -161,8 +161,8 @@ public class EditHopActivity extends Activity {
         mainView.addView(nameView);
         mainView.addView(formSpinner);
         mainView.addView(useSpinner);
-        mainView.addView(amountView);
         mainView.addView(timeView);
+        mainView.addView(amountView);
         mainView.addView(alphaAcidView);
 
         /************************************************************************

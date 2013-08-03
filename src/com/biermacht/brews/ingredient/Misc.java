@@ -17,7 +17,6 @@ public class Misc extends Ingredient {
 	private String displayUnits;
 	private int startTime;
 	private int endTime;
-	private Double displayAmount;
 	
 	// Static values =================================================
 	// ===============================================================
@@ -44,11 +43,7 @@ public class Misc extends Ingredient {
 	@Override
 	public String toString()
 	{
-		String s = getName();
-		s += getUse() + ", " + getUseFor() + ", " + getDisplayAmount() + ", ";
-		s += getShortDescription() + ", " + getMiscType();
-		
-		return s;
+        return this.getName();
 	}
 
 	public void setMiscType(String type)
@@ -197,14 +192,17 @@ public class Misc extends Ingredient {
 	
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return 0;
+        int hc = this.getName().hashCode();
+        hc = ((hc ^ 14523) << 2) ^ 55 >> 2;
+        return hc;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+        if (o instanceof Misc)
+            if (this.hashCode() == o.hashCode())
+                return true;
+        return false;
 	}
 
 	@Override
