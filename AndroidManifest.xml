@@ -98,5 +98,11 @@
             android:label="@string/title_activity_settings"
             android:windowSoftInputMode="adjustResize" >
         </activity>
+        <activity
+            android:name=".frontend.BrewTimerActivity"
+            android:label="@string/title_activity_brew_timer"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
     </application>
 </manifest>

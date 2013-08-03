@@ -110,7 +110,7 @@ public class Recipe {
 		this.OG = 1;
 		this.setFG(1);
 		this.setFermentationStages(1);
-		this.primaryAge = 5;
+		this.primaryAge = 14;
 		this.secondaryAge = 0;
 		this.tertiaryAge = 0;
 		this.primaryTemp = 21;

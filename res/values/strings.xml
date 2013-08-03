@@ -84,5 +84,6 @@
     <string name="title_activity_add_yeast">Add Yeast</string>
     <string name="title_activity_edit_yeast">Edit Yeast</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_brew_timer">Brew Timer</string>
 
 </resources>

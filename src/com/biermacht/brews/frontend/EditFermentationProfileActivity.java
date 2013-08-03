@@ -43,15 +43,19 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_fermentation_profile);
+        setContentView(R.layout.activity_add_edit);
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
+
+        // Disable delete button for this view
+        findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Initialize views and stuff
         mainLayout = (LinearLayout) findViewById(R.id.main_layout);
+        numStagesSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainLayout, false);
 		primaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage, mainLayout, false);
 		secondaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage, mainLayout, false);
 		tertiaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage, mainLayout, false);
@@ -66,13 +70,10 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 		title.setText("Tertiary:");
 
         // Add sublayouts
-        mainLayout.addView(inflater.inflate(R.layout.divider, mainLayout, false));
+        mainLayout.addView(numStagesSpinner);
         mainLayout.addView(primaryLayout);
-        mainLayout.addView(inflater.inflate(R.layout.divider, mainLayout, false));
         mainLayout.addView(secondaryLayout);
-        mainLayout.addView(inflater.inflate(R.layout.divider, mainLayout, false));
         mainLayout.addView(tertiaryLayout);
-        mainLayout.addView(inflater.inflate(R.layout.divider, mainLayout, false));
      
         // Default values
         View v = new View(this);
@@ -100,8 +101,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
         numStagesArray.add("3");
 
 		// Set up num stages spinner
-        numStagesSpinner = (Spinner) findViewById(R.id.num_stages_spinner);
-		SpinnerAdapter profAdapter = new SpinnerAdapter(this, numStagesArray, "Num Stages");
+		SpinnerAdapter profAdapter = new SpinnerAdapter(this, numStagesArray, "Number of Stages");
         profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         numStagesSpinner.setAdapter(profAdapter);
 

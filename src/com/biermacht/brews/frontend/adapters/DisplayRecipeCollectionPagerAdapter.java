@@ -7,7 +7,7 @@ import com.biermacht.brews.frontend.fragments.*;
 
 // Since this is an object collection, use a FragmentStatePagerAdapter,
 // and NOT a FragmentPagerAdapter.
-public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
+public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
 	Recipe r;
 	Context c;
 	IngredientViewFragment ingVf;
@@ -15,7 +15,7 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 	DetailsViewFragment detVf;
 	ProfileViewFragment proVf;
 
-    public CollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
+    public DisplayRecipeCollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
         super(fm);
 		this.r = r;
 		this.c = c;
