@@ -128,8 +128,18 @@ public class Fermentable extends Ingredient {
 	}
 
 	@Override
+    /**
+     * Used for calculating if two fermentables are equal.
+     * We want to match on the following fields:
+     *         * Name
+     *         * SRM Color
+     *         * Gravity contribution
+     */
 	public int hashCode() {
-		return 17543286 ^ getName().hashCode();
+		int hc = this.getName().hashCode();
+        hc = hc ^ (int) this.getLovibondColor();
+        hc = hc ^ (int) (this.getGravity() * 1234);
+        return hc;
 	}
 
 	@Override
@@ -137,7 +147,6 @@ public class Fermentable extends Ingredient {
 		if (o instanceof Fermentable)
 			if (this.hashCode() == o.hashCode())
 				return true;
-		
 		return false;
 	}
 

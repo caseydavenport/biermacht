@@ -84,7 +84,8 @@ public class EditFermentableActivity extends Activity implements OnClickListener
         ingredientHandler = MainActivity.ingredientHandler;
 
         // Get the list of ingredients to show
-        fermentablesArray = ingredientHandler.getFermentablesList();
+        fermentablesArray = new ArrayList<Ingredient>();
+        fermentablesArray.addAll(ingredientHandler.getFermentablesList());
 
         // Get the inflater
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -290,6 +291,7 @@ public class EditFermentableActivity extends Activity implements OnClickListener
 
             if (readyToGo)
             {
+                // Update the ingredient, and finish the activity
                 Utils.updateIngredient(fermentable);
                 finish();
             }
