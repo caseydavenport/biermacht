@@ -6,10 +6,14 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -25,119 +29,222 @@ import android.widget.TextView;
 import android.util.*;
 
 public class AddHopsActivity extends Activity {
-	
-	IngredientHandler ingredientHandler;
-	private Spinner hopSpinner;
-	private Spinner hopUseSpinner;
-	private Spinner hopFormSpinner;
-	private EditText hopNameEditText;
-	private EditText hopBoilTimeEditText;
-	private TextView hopTimeTitle;
-	private EditText hopAcidEditText;
-	private EditText hopWeightEditText;
-	private ArrayList<Ingredient> hopArray;
-	private ArrayList<String> hopFormArray;
-	private ArrayList<String> hopUseArray;
-	private String hop;
-	private String use;
-	private String form;
-	private Recipe mRecipe;
+
+    // Main view - holds all the rows
+    private ViewGroup mainView;
+
+    // Alert builder
+    private AlertBuilder alertBuilder;
+
+    // Important things
+    private View.OnClickListener onClickListener;
+
+    // LayoutInflater
+    LayoutInflater inflater;
+
+    // Recipe we are editing
+    private Recipe mRecipe;
+
+    // IngredientHandler to get ingredient arrays
+    IngredientHandler ingredientHandler;
+
+    // Holds the currently selected hop, and hop being edited
+    Hop hop;
+
+    // Editable rows to display
+    private Spinner hopsSpinner;
+    private Spinner useSpinner;
+    private Spinner formSpinner;
+    private View nameView;
+    private View amountView;
+    private View timeView;
+    private View alphaAcidView;
+
+    // Titles from rows
+    private TextView nameViewTitle;
+    private TextView amountViewTitle;
+    private TextView timeViewTitle;
+    private TextView alphaAcidViewTitle;
+
+    // Content from rows
+    private TextView nameViewText;
+    private TextView amountViewText;
+    private TextView timeViewText;
+    private TextView alphaAcidViewText;
+
+    // Spinner array declarations
+    private ArrayList<Ingredient> hopsArray;
+    private ArrayList<String> formArray;
+    private ArrayList<String> useArray;
+
+    // Data storage variables for spinners
+    String use;
+    String form;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_hops);
-		
-		// Set icon as back button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-        
-    	// Set up Ingredient Handler
-    	ingredientHandler = MainActivity.ingredientHandler;
-    	
-    	// Set list of ingredients to show
-    	hopArray = ingredientHandler.getHopsList();
-        
+        setContentView(R.layout.activity_add_edit);
+
+        // Set icon as back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get the Ingredient Handler
+        ingredientHandler = MainActivity.ingredientHandler;
+
+        // Get the list of ingredients to show
+        hopsArray = new ArrayList<Ingredient>();
+        hopsArray.addAll(ingredientHandler.getHopsList());
+
+        // Get the inflater
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Create alert builder
+        alertBuilder = new AlertBuilder(this);
+
+        // Disable delete button for this view
+        findViewById(R.id.delete_button).setVisibility(View.GONE);
+
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
+        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
-        
+
+        // On click listener
+        onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /************************************************************
+                 * Options for clicking on each of the editable views
+                 ************************************************************/
+
+                AlertDialog alert;
+                if (v.equals(nameView))
+                    alert = alertBuilder.editTextStringAlert(nameViewText, nameViewTitle).create();
+                else if (v.equals(amountView))
+                    alert = alertBuilder.editTextFloatAlert(amountViewText, amountViewTitle).create();
+                else if (v.equals(timeView))
+                    alert = alertBuilder.editTextFloatAlert(timeViewText, timeViewTitle).create();
+                else if (v.equals(alphaAcidView))
+                    alert = alertBuilder.editTextFloatAlert(alphaAcidViewText, alphaAcidViewTitle).create();
+
+                else
+                    return; // In case its none of those views...
+
+                // Force keyboard open and show popup
+                alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                alert.show();
+            }
+        };
+
         // Initialize views and such here
-        hopNameEditText = (EditText) findViewById(R.id.hop_name_edit_text);
-        hopBoilTimeEditText = (EditText) findViewById(R.id.boil_time_edit_text);
-        hopAcidEditText = (EditText) findViewById(R.id.hop_acid_edit_text);
-        hopWeightEditText = (EditText) findViewById(R.id.hop_weight_edit_text);
-        hopTimeTitle = (TextView) findViewById(R.id.boil_time_title);
-		
-        // Set up hop spinner
-        hopSpinner = (Spinner) findViewById(R.id.hop_spinner);
-        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopArray, "Hop Selector");
+        mainView = (ViewGroup) findViewById(R.id.main_layout);
+        nameView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        amountView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        timeView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        alphaAcidView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        hopsSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        formSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        useSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+
+        // Set the onClickListener for each row
+        nameView.setOnClickListener(onClickListener);
+        amountView.setOnClickListener(onClickListener);
+        timeView.setOnClickListener(onClickListener);
+        alphaAcidView.setOnClickListener(onClickListener);
+
+        /************************************************************************
+         ************* Add views to main view  **********************************
+         *************************************************************************/
+        mainView.addView(hopsSpinner);
+        mainView.addView(nameView);
+        mainView.addView(formSpinner);
+        mainView.addView(useSpinner);
+        mainView.addView(amountView);
+        mainView.addView(timeView);
+        mainView.addView(alphaAcidView);
+
+        /************************************************************************
+         ************* Get titles, set values   **********************************
+         *************************************************************************/
+        nameViewTitle = (TextView) nameView.findViewById(R.id.title);
+        nameViewTitle.setText("Name");
+
+        amountViewTitle = (TextView) amountView.findViewById(R.id.title);
+        amountViewTitle.setText("Amount (oz)");
+
+        timeViewTitle = (TextView) timeView.findViewById(R.id.title);
+        timeViewTitle.setText("Time");
+
+        alphaAcidViewTitle = (TextView) alphaAcidView.findViewById(R.id.title);
+        alphaAcidViewTitle.setText("Alpha Acids (%)");
+
+        /************************************************************************
+         ************* Get content views, set values   **************************
+         *************************************************************************/
+        nameViewText = (TextView) nameView.findViewById(R.id.text);
+        amountViewText = (TextView) amountView.findViewById(R.id.text);
+        timeViewText = (TextView) timeView.findViewById(R.id.text);
+        alphaAcidViewText = (TextView) alphaAcidView.findViewById(R.id.text);
+
+        // Set up hops spinner
+        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopsArray, "Hop Selector");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        hopSpinner.setAdapter(adapter);
-        hopSpinner.setSelection(0);    
+        hopsSpinner.setAdapter(adapter);
+        hopsSpinner.setSelection(0);
         
         // Hop form spinner
-       	hopFormSpinner = (Spinner) findViewById(R.id.form_spinner);
-        hopFormArray = new ArrayList<String>();
-        hopFormArray.add(Hop.FORM_PELLET);
-        hopFormArray.add(Hop.FORM_WHOLE);
-        hopFormArray.add(Hop.FORM_PLUG);
-        SpinnerAdapter hopFormAdapter = new SpinnerAdapter(this, hopFormArray, "Hop Form");
+        formArray = new ArrayList<String>();
+        formArray.add(Hop.FORM_PELLET);
+        formArray.add(Hop.FORM_WHOLE);
+        formArray.add(Hop.FORM_PLUG);
+        SpinnerAdapter hopFormAdapter = new SpinnerAdapter(this, formArray, "Form");
         hopFormAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        hopFormSpinner.setAdapter(hopFormAdapter);
-        hopFormSpinner.setSelection(0);
+        formSpinner.setAdapter(hopFormAdapter);
+        formSpinner.setSelection(0);
 		
 		// Set up hop use spinner
-       	hopUseSpinner = (Spinner) findViewById(R.id.use_spinner);
-        hopUseArray = new ArrayList<String>();
-        hopUseArray.add(Hop.USE_BOIL);
-        hopUseArray.add(Hop.USE_AROMA);
-        hopUseArray.add(Hop.USE_DRY_HOP);
-        SpinnerAdapter hopUseAdapter = new SpinnerAdapter(this, hopUseArray, "Hop Use");
+        useArray = new ArrayList<String>();
+        useArray.add(Hop.USE_BOIL);
+        useArray.add(Hop.USE_AROMA);
+        useArray.add(Hop.USE_DRY_HOP);
+        SpinnerAdapter hopUseAdapter = new SpinnerAdapter(this, useArray, "Usage");
         hopUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        hopUseSpinner.setAdapter(hopUseAdapter);
-        hopUseSpinner.setSelection(0);
+        useSpinner.setAdapter(hopUseAdapter);
+        useSpinner.setSelection(0);
         
         // Handle hops selector here
-        hopSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        hopsSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Hop hopObj = new Hop("");
-            	hop = hopArray.get(position).getName();
-                
-                for (Ingredient i : ingredientHandler.getHopsList())
-                {
-                	if (hop.equals(i.toString()))
-                		hopObj = (Hop) i;
-                }
+            	hop = (Hop) hopsArray.get(position);
             	
-                hopNameEditText.setText(hopObj.getName());
-                hopBoilTimeEditText.setText(mRecipe.getBoilTime() + "");
-                hopAcidEditText.setText(hopObj.getAlphaAcidContent() +"");
-                hopWeightEditText.setText(1.0 +"");
+                nameViewText.setText(hop.getName());
+                timeViewText.setText(mRecipe.getBoilTime() + "");
+                alphaAcidViewText.setText(String.format("%2.2f", hop.getAlphaAcidContent()));
+                amountViewText.setText(1.0 +"");
             }
 
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
             }
 
         });   
 		
 		// Handle use selector here
-        hopUseSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        useSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				// Set the type to the selected type...
-				use = hopUseArray.get(position);
+				use = useArray.get(position);
 				
 				if (use.equals(Hop.USE_DRY_HOP))
 				{
-					hopTimeTitle.setText("Time (days)");
-					hopBoilTimeEditText.setText(5 + "");
+					timeViewTitle.setText("Time (days)");
+					timeViewText.setText(5 + "");
 				}
 				else
 				{
-					hopTimeTitle.setText("Time (mins)");
-					hopBoilTimeEditText.setText(mRecipe.getBoilTime() + "");
+					timeViewTitle.setText("Time (mins)");
+					timeViewText.setText(mRecipe.getBoilTime() + "");
 				}
 			}
 
@@ -147,11 +254,11 @@ public class AddHopsActivity extends Activity {
 		});
     
 		// Handle form selector here
-	    hopFormSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+	    formSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 	
-			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				// Set the type to the selected type...
-				form = hopFormArray.get(position);
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                form = formArray.get(position);
 			}
 	
 			public void onNothingSelected(AdapterView<?> parentView) {
@@ -179,7 +286,7 @@ public class AddHopsActivity extends Activity {
     
 	public void onClick(View v) {
 		// if "SUBMIT" button pressed
-		if (v.getId() == R.id.new_grain_submit_button)
+		if (v.getId() == R.id.submit_button)
 		{
 			boolean readyToGo = true;
 			int endTime, startTime;
@@ -187,49 +294,47 @@ public class AddHopsActivity extends Activity {
 			double time=0, alpha=0, weight = 0;
 			try
 			{
-				hopName = hopNameEditText.getText().toString();
-				time = Integer.parseInt(hopBoilTimeEditText.getText().toString());
-				alpha = Double.parseDouble(hopAcidEditText.getText().toString());
-				weight = Double.parseDouble(hopWeightEditText.getText().toString());
-			} catch (Exception e) {
-				Log.d("AddHopsActivity", e.toString());
+				hopName = nameViewText.getText().toString();
+				time = Integer.parseInt(timeViewText.getText().toString());
+				alpha = Double.parseDouble(alphaAcidViewText.getText().toString());
+				weight = Double.parseDouble(amountViewText.getText().toString());
+
+                if (hopName.isEmpty())
+                    readyToGo = false;
+
+                if (!use.equals(Hop.USE_DRY_HOP))
+                {
+                    endTime = mRecipe.getBoilTime();
+                    startTime = endTime - (int) time;
+
+                    if (time > mRecipe.getBoilTime())
+                        time = mRecipe.getBoilTime();
+                }
+                else
+                {
+                    time = Units.daysToMinutes(time);
+                    startTime = mRecipe.getBoilTime();
+                    endTime = startTime + (int) time;
+                }
+
+                hop.setName(hopName);
+                hop.setDisplayTime((int) time);
+                hop.setStartTime(startTime);
+                hop.setEndTime(endTime);
+                hop.setAlphaAcidContent(alpha);
+                hop.setDisplayAmount(weight);
+                hop.setUse(use);
+                hop.setForm(form);
+
+			} catch (Exception e)
+            {
+				Log.d("AddHopsActivity", "Exception on submit: " + e.toString());
 				readyToGo = false;
 			}
-		
-		    if (!use.equals(Hop.USE_DRY_HOP))
-			{
-		        endTime = mRecipe.getBoilTime();
-			    startTime = endTime - (int) time;
-				
-				if (time > mRecipe.getBoilTime())
-					time = mRecipe.getBoilTime();
-			}
-			else
-			{
-				time = Units.daysToMinutes(time);
-				startTime = mRecipe.getBoilTime();
-				endTime = startTime + (int) time;
-			}
-						
-			if (hopName.isEmpty())
-				readyToGo = false;
-			if (!(weight > 0))
-				readyToGo = false;
-			if (!(time > 0))
-				readyToGo = false;
 			
 			if (readyToGo)
 			{
-				Hop h = new Hop(hopName);
-				h.setDisplayTime((int) time);
-				h.setStartTime(startTime);
-				h.setEndTime(endTime);
-				h.setAlphaAcidContent(alpha);
-				h.setDisplayAmount(weight);
-				h.setUse(use);
-				h.setForm(form);
-				
-				mRecipe.addIngredient(h);
+				mRecipe.addIngredient(hop);
 				mRecipe.update();
 				Utils.updateRecipe(mRecipe);
 			

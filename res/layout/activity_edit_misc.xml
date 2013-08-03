@@ -36,7 +36,6 @@
 	    <!-- EditText for Misc Name -->
 	    <TextView android:id="@+id/name_title"
 	        android:text="@string/name"
-	        android:layout_below="@id/placeholder"
 	        style="@style/title_light" />
 
 	    <EditText

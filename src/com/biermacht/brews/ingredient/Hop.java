@@ -150,16 +150,17 @@ public class Hop extends Ingredient {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return 0;
+        int hc = this.getName().hashCode();
+        hc = hc ^ (int) (getAlphaAcidContent() * 1234);
+        return hc;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Hop)
-			return true;
-		else
-			return false;
+        if (o instanceof Hop)
+            if (this.hashCode() == o.hashCode())
+                return true;
+        return false;
 	}
 
 	/**
@@ -225,7 +226,7 @@ public class Hop extends Ingredient {
 	}
 
 	/**
-	 * @param hopType the hopType to set
+	 * @param type the hopType to set
 	 */
 	public void setHopType(String type) {
 		this.type = type;

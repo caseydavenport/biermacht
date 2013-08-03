@@ -56,7 +56,7 @@ public class Yeast extends Ingredient {
     @Override
     public String toString()
     {
-        return this.getLaboratory() + " " + this.getProductId() + " - " + this.getName();
+        return this.getName();
     }
 
 	@Override
@@ -66,7 +66,13 @@ public class Yeast extends Ingredient {
 
 	@Override
 	public String getShortDescription() {
-		return this.notes;
+        String s = this.getLaboratory();
+        s += " " + this.getProductId();
+
+        if (s.length() > 3)
+            s += ": ";
+         s += this.notes;
+		return s;
 	}
 
 	public String getBeerXmlStandardUnits()
@@ -102,14 +108,17 @@ public class Yeast extends Ingredient {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return 0;
+        int hc = this.getName().hashCode();
+        hc = hc ^ (int) (this.getAttenuation() * 1234);
+        return hc;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+        if (o instanceof Yeast)
+            if (this.hashCode() == o.hashCode())
+                return true;
+        return false;
 	}
 
 	@Override
