@@ -14,41 +14,138 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.comparators.InstructionComparator;
 
 public class InstructionGenerator {
-	
+
+    // Holds all the instructions
 	private ArrayList<Instruction> list;
+
+    // Holds instructions of each type
+    private ArrayList<Instruction> steepsList;
+    private ArrayList<Instruction> boilsList;
+    private ArrayList<Instruction> dryHopsList;
+    private ArrayList<Instruction> yeastsList;
+    private ArrayList<Instruction> mashesList;
+    private ArrayList<Instruction> mashStepsList;
+    private ArrayList<Instruction> bottlingList;
+
+
 	private Recipe r;
 	private Instruction inst;
 	
 	public InstructionGenerator(Recipe r)
 	{
 		this.list = new ArrayList<Instruction>();
+        this.steepsList = new ArrayList<Instruction>();
+        this.boilsList = new ArrayList<Instruction>();
+        this.dryHopsList = new ArrayList<Instruction>();
+        this.yeastsList = new ArrayList<Instruction>();
+        this.mashesList = new ArrayList<Instruction>();
+        this.mashStepsList = new ArrayList<Instruction>();
+        this.bottlingList = new ArrayList<Instruction>();
+
 		this.r = r;
 		this.inst = new Instruction();
 	}
 	
 	public void generate()
 	{
-		// Clear the list
+		// Clear the lists
 		this.list.removeAll(this.list);
+        this.steepsList.removeAll(this.steepsList);
+        this.boilsList.removeAll(this.boilsList);
+        this.dryHopsList.removeAll(this.dryHopsList);
+        this.yeastsList.removeAll(this.yeastsList);
+        this.mashesList.removeAll(this.mashesList);
+        this.mashStepsList.removeAll(this.mashStepsList);
+        this.bottlingList.removeAll(this.bottlingList);
 		
 		// Generate instructions for each instruction type
 		this.steeps();
 		this.boils();
 		this.dryHops();
 		this.yeasts();
-		this.miscs();
 		this.mashes();
 		this.mashSteps();
 		this.bottling();
-		
-		// Sort based on order and then start time
-		Collections.sort(list, new InstructionComparator<Instruction>());
+
+        // Configure the lists
+        this.configureLists();
+
+        // We run miscs after all of this, because it depends
+        // on items being in 'list'
+        this.miscs();
+
+        // Sort based on order and then start time
+        Collections.sort(list, new InstructionComparator<Instruction>());
 	}
 	
 	public ArrayList<Instruction> getInstructions()
 	{
 		return list;
 	}
+
+    private void configureLists()
+    {
+        // Sort based on order and then start time
+        Collections.sort(steepsList, new InstructionComparator<Instruction>());
+        Collections.sort(boilsList, new InstructionComparator<Instruction>());
+        Collections.sort(dryHopsList, new InstructionComparator<Instruction>());
+        Collections.sort(yeastsList, new InstructionComparator<Instruction>());
+        Collections.sort(mashesList, new InstructionComparator<Instruction>());
+        Collections.sort(mashStepsList, new InstructionComparator<Instruction>());
+        Collections.sort(bottlingList, new InstructionComparator<Instruction>());
+
+        // Tag the first instruction in each set
+        // Set the duration of each type
+        if (!steepsList.isEmpty())
+            steepsList.get(steepsList.size()-1).setLastInType(true);
+
+        if (!boilsList.isEmpty())
+            boilsList.get(boilsList.size()-1).setLastInType(true);
+
+        if (!dryHopsList.isEmpty())
+            dryHopsList.get(dryHopsList.size()-1).setLastInType(true);
+
+        if (!yeastsList.isEmpty())
+            yeastsList.get(yeastsList.size()-1).setLastInType(true);
+
+        if (!mashesList.isEmpty())
+            mashesList.get(mashesList.size()-1).setLastInType(true);
+
+        if (!mashStepsList.isEmpty())
+            mashStepsList.get(mashStepsList.size()-1).setLastInType(true);
+
+        if (!bottlingList.isEmpty())
+            bottlingList.get(bottlingList.size()-1).setLastInType(true);
+
+
+        // Add all the lists to the main list
+        list.addAll(steepsList);
+        list.addAll(boilsList);
+        list.addAll(dryHopsList);
+        list.addAll(yeastsList);
+        list.addAll(mashesList);
+        list.addAll(mashStepsList);
+        list.addAll(bottlingList);
+
+        // Set next task starting times
+        for (int i=0; i < (list.size() - 1); i++)
+        {
+            if (!list.get(i).isLastInType())
+                list.get(i).setNextDuration(list.get(i+1).getDuration());
+        }
+    }
+
+    private double getDuration(ArrayList<Instruction> i)
+    {
+        double max_duration = 0;
+        for (Instruction inst : i)
+        {
+            if (inst.getDuration() > max_duration)
+                max_duration = inst.getDuration();
+        }
+
+        return max_duration;
+    }
 	
 	/**
 	 * Generates steep instructions from the recipe
@@ -95,7 +192,7 @@ public class InstructionGenerator {
 					inst.setDurationUnits(Units.MINUTES);
 					inst.setOrder(0); // Steep instructions go first
 					inst.setInstructionTextFromIngredients();
-					list.add(inst);
+                    steepsList.add(inst);
 				}
 			}
 		}
@@ -147,7 +244,7 @@ public class InstructionGenerator {
 				inst.setDurationUnits(Units.MINUTES);
 				inst.setOrder(r.getBoilTime()-time);
 				inst.setInstructionTextFromIngredients();
-				list.add(inst);
+                boilsList.add(inst);
 			}
 		}
 	}
@@ -191,7 +288,7 @@ public class InstructionGenerator {
 				inst.setDurationUnits(Units.DAYS);
 				inst.setOrder(r.getBoilTime()-time);
 				inst.setInstructionTextFromIngredients();
-				list.add(inst);
+                dryHopsList.add(inst);
 			}
 		}
 	}
@@ -219,7 +316,7 @@ public class InstructionGenerator {
 			inst.setDurationUnits(Units.HOURS);
 			inst.setInstructionTextFromIngredients();
 			inst.setOrder(0);
-			list.add(inst);
+            bottlingList.add(inst);
 		}
 	}
 
@@ -242,7 +339,7 @@ public class InstructionGenerator {
 			inst.setDuration(1);
 			inst.setInstructionTextFromIngredients();
 			inst.setOrder(0);
-			list.add(inst);
+            yeastsList.add(inst);
 		}
 	}
 	
@@ -306,7 +403,7 @@ public class InstructionGenerator {
 					inst.setInstructionType(Instruction.TYPE_MASH);
 					inst.setDuration(s.getStepTime());
 					inst.setOrder(0);
-					list.add(inst);
+                    mashStepsList.add(inst);
 				}
 			}
 		}
@@ -353,7 +450,7 @@ public class InstructionGenerator {
 					inst.setInstructionType(Instruction.TYPE_MASH);
 					inst.setDuration(0); // TODO
 					inst.setOrder(0);
-					list.add(inst);
+                    mashesList.add(inst);
 				}
 			}
 		}

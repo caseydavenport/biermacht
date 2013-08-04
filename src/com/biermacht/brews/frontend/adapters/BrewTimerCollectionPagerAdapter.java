@@ -31,10 +31,11 @@ public class BrewTimerCollectionPagerAdapter extends FragmentStatePagerAdapter {
         instructionFragmentList = new ArrayList<Fragment>();
 
         for (Instruction i : r.getInstructionList())
-        {
-            BrewTimerStepFragment f = new BrewTimerStepFragment(c, r, i);
-            instructionFragmentList.add(f);
-        }
+            if (i.showInBrewTimer())
+            {
+                BrewTimerStepFragment f = new BrewTimerStepFragment(c, r, i);
+                instructionFragmentList.add(f);
+            }
     }
 
     @Override

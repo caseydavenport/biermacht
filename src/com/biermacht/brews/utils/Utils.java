@@ -65,6 +65,38 @@ public class Utils {
 	{
 	    return MainActivity.databaseInterface;
 	}
+
+    public static int getHours(double time, String units)
+    {
+        int num_hours = 0;
+        if (units.equals(Units.MINUTES))
+            for (int i = 60; i <= time; i += 60)
+                num_hours++;
+        if (units.equals(Units.HOURS))
+            num_hours = (int) time;
+        return num_hours;
+    }
+
+    public static int getMinutes(double time, String units)
+    {
+        int num_minutes = 0;
+        int num_hours = 0;
+
+        if (units.equals(Units.HOURS))
+        {
+            time = 60 * time;
+            units = Units.MINUTES;
+        }
+
+        if (units.equals(Units.MINUTES))
+        {
+            num_hours = getHours(time, units);
+            num_minutes = (int) (time - (60 * num_hours));
+        }
+
+        return num_minutes;
+    }
+
 	// Methods for dealing with the Database
 	/**
 	 * Get all recipes in the database

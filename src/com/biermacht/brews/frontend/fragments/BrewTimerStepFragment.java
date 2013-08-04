@@ -27,13 +27,12 @@ public class BrewTimerStepFragment extends Fragment {
 	private int resource;
 	private Recipe r;
     private Instruction i;
-	private OnItemClickListener mClickListener;
-    private LayoutInflater inflater;
 	Context c;
 
     // Views
     ViewGroup pageView;
     TextView titleView;
+    TextView descriptionView;
 
 	public BrewTimerStepFragment(Context c, Recipe r, Instruction i)
 	{
@@ -41,7 +40,6 @@ public class BrewTimerStepFragment extends Fragment {
 		this.r = r;
 		this.c = c;
         this.i = i;
-        inflater = LayoutInflater.from(c);
 	}
 
     @Override
@@ -50,12 +48,21 @@ public class BrewTimerStepFragment extends Fragment {
         return i.getInstructionType();
     }
 
+    public Instruction getInstruction()
+    {
+        return this.i;
+    }
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
         // Get views
 		pageView = (LinearLayout) inflater.inflate(resource, container, false);
         titleView = (TextView) pageView.findViewById(R.id.title);
+        descriptionView = (TextView) pageView.findViewById(R.id.description);
+
+        descriptionView.setText("Next step begins at " + i.getNextDuration()
+                                 + " " + i.getDurationUnits() + " remaining");
 
         View ingredientView;
         TextView ingredientViewTitle;

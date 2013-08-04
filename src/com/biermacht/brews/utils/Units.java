@@ -67,6 +67,16 @@ public class Units {
 			    return Double.parseDouble(temp.get(0));
 		return 0;
 	}
+
+    public static int toSeconds(double time, String units)
+    {
+        if (units.equals(MINUTES))
+            return (int) (time * 60);
+        if (units.equals(HOURS))
+            return (int) (time * 3600);
+
+        return 0;
+    }
 	
 	// Functions for converting units below
 	public static double farenheitToCelsius(double f)

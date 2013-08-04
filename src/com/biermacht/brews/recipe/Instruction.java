@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.utils.Units;
 
 import android.util.Log;
 
@@ -12,10 +13,10 @@ public class Instruction {
 	private String instructionText;
 	private String instructionType;
 	private int order;
-	private double startTime;
-	private double endTime;
 	private double duration;
-	private String duration_units;
+	private String durationUnits;
+    private double nextDuration;        // Time the next instruction starts
+    private boolean lastInType;       // Last of this type
 	private HashMap<String, Integer> typeToOrder;
 	private ArrayList<Ingredient> relevantIngredients;
 	
@@ -25,21 +26,31 @@ public class Instruction {
 	public static String TYPE_SECONDARY = "Sec";
 	public static String TYPE_DRY_HOP = "Hop";
 	public static String TYPE_MASH = "Mash";
+    public static String TYPE_RAMP = "Ramp";
 	public static String TYPE_YEAST = "Yeast";
 	public static String TYPE_COOL = "Cool";
 	public static String TYPE_BOTTLING = "Bottle";
 	public static String TYPE_OTHER = "";
+
+    // Defines for timer types
+    public static String TIMER_TYPE_STEEP = "Steep Timer";
+    public static String TIMER_TYPE_BOIL = "Boil Timer";
+    public static String TIMER_TYPE_MASH = "Mash Timer";
+    public static String TIMER_TYPE_NONE = "No Timer";
+
+    public static int FIRST_INSTRUCTION_IN_SET = 0;
+    public static int LAST_INSTRUCTION_IN_SET = -1;
 	
 	public Instruction()
 	{
 		this.setInstructionText("Blank Instruction");
-		this.startTime = 0;
-		this.endTime = 0;
 		this.duration = 0;
-		this.duration_units = "mins";
+		this.durationUnits = Units.MINUTES;
 		this.order = -1;
 		this.instructionType = TYPE_OTHER;
 		this.relevantIngredients = new ArrayList<Ingredient>();
+        this.setLastInType(false);
+        this.setNextDuration(0);
 		
 		typeToOrder = new HashMap<String, Integer>();
 		this.configureHashMap();
@@ -83,6 +94,26 @@ public class Instruction {
 	{
 		this.order = o;
 	}
+
+    public void setNextDuration(double i)
+    {
+        this.nextDuration = i;
+    }
+
+    public double getNextDuration()
+    {
+        return this.nextDuration;
+    }
+
+    public void setLastInType(boolean b)
+    {
+        this.lastInType = b;
+    }
+
+    public boolean isLastInType()
+    {
+        return lastInType;
+    }
 	
 	public void setRelevantIngredients(ArrayList<Ingredient> i)
 	{
@@ -143,17 +174,33 @@ public class Instruction {
 	{
 		this.duration = d;
 	}
+
+    public boolean showInBrewTimer()
+    {
+        if (this.getInstructionType().equals(TYPE_BOIL))
+            return true;
+        if (this.getInstructionType().equals(TYPE_STEEP))
+            return true;
+        if (this.getInstructionType().equals(TYPE_MASH))
+            return true;
+        if (this.getInstructionType().equals(TYPE_COOL))
+            return true;
+        if (this.getInstructionType().equals(TYPE_YEAST))
+            return true;
+
+        return false;
+    }
 	
 	public double getDuration() {
 		return duration;
 	}
 
-	public String getDuration_units() {
-		return duration_units;
+	public String getDurationUnits() {
+		return durationUnits;
 	}
 
-	public void setDurationUnits(String duration_units) {
-		this.duration_units = duration_units;
+	public void setDurationUnits(String d) {
+		this.durationUnits = d;
 	}
 	
 	private void configureHashMap()
