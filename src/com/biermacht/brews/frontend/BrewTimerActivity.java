@@ -125,10 +125,12 @@ public class BrewTimerActivity extends FragmentActivity {
         }
     }
 
-    // Receiver stuff
+    // Receiver + alarm manager + intent + wakelock stuff
     private BCReceiver bcr;
     AlarmManager am;
     PendingIntent pi;
+    PowerManager pm;
+    PowerManager.WakeLock wakeLock;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,6 +146,8 @@ public class BrewTimerActivity extends FragmentActivity {
         registerReceiver(bcr, new IntentFilter(Utils.BROADCASE_TIMER) );
         pi = PendingIntent.getBroadcast(this, 0, new Intent(Utils.BROADCASE_TIMER), 0);
         am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "BrewTimerWakeLock");
 
         // Configure formatter used for timer values
         nft = new java.text.DecimalFormat("#00.###");
@@ -244,12 +248,13 @@ public class BrewTimerActivity extends FragmentActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
     	switch (item.getItemId()) {
             case android.R.id.home:
+                if (wakeLock.isHeld())
+                    wakeLock.release();
         		finish();
         		return true;
         }
@@ -305,6 +310,7 @@ public class BrewTimerActivity extends FragmentActivity {
         mViewPager.setCurrentItem(currentItem);
         am.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 1000, pi );
         playPauseButton.setImageResource(R.drawable.av_pause);
+        wakeLock.acquire();
         stopAlarm();
     }
 
@@ -410,6 +416,8 @@ public class BrewTimerActivity extends FragmentActivity {
     protected void onDestroy() {
         am.cancel(pi);
         unregisterReceiver(bcr);
+        if (wakeLock.isHeld())
+            wakeLock.release();
         super.onDestroy();
     }
 
@@ -429,6 +437,8 @@ public class BrewTimerActivity extends FragmentActivity {
             }
             case R.id.stop_button:
             {
+                if (wakeLock.isHeld())
+                    wakeLock.release();
                 stop();
                 break;
             }

@@ -1,5 +1,7 @@
 package com.biermacht.brews.utils.comparators;
 
+import android.util.Log;
+
 import java.util.Comparator;
 import com.biermacht.brews.recipe.Instruction;
 
@@ -19,6 +21,7 @@ public class InstructionComparator<K> implements Comparator<K>
 		
 		// If the instructions have the same order, wtf?
 		// This should (hopefully) never be reached.
+        Log.d("InstructionComparator", "Instruction orders are equal.  This should not happen");
 		return 1; 
 	}
 }

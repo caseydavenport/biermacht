@@ -293,6 +293,9 @@ public class EditFermentableActivity extends Activity implements OnClickListener
             {
                 // Update the ingredient, and finish the activity
                 Utils.updateIngredient(fermentable);
+                mRecipe = Utils.getRecipeWithId(mRecipe.getId());
+                mRecipe.update();
+                Utils.updateRecipe(mRecipe);
                 finish();
             }
         }

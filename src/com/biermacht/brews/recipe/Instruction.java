@@ -70,11 +70,10 @@ public class Instruction {
 	 */
 	public int getOrder()
 	{
-		if (this.order >= 100)
-		{
-			Log.d("recipe.Instruction", "Instruction order out of bounds");
-			return -1;
-		}
+        // If our order is over 100, mod it down so it fits within
+        // the designated 100 orders per instruction type
+		if (this.order >= 100 || this.order < 0)
+            this.order = this.order % 100;
 		
 		try
 		{

@@ -178,7 +178,7 @@ public class InstructionGenerator {
 					}
 				}
 			}
-			
+
 			// Build up the steep instructions
 			if (ingredients.size() > 0)
 			{
@@ -190,7 +190,7 @@ public class InstructionGenerator {
 					inst.setInstructionType(Instruction.TYPE_STEEP);
 					inst.setDuration(time);
 					inst.setDurationUnits(Units.MINUTES);
-					inst.setOrder(0); // Steep instructions go first
+					inst.setOrder(-1 * time);                // Inversely proportional to time
 					inst.setInstructionTextFromIngredients();
                     steepsList.add(inst);
 				}

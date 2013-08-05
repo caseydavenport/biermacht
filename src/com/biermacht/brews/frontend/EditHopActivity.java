@@ -317,7 +317,6 @@ public class EditHopActivity extends Activity {
                 }
                 else
                 {
-                    time = Units.daysToMinutes(time);
                     startTime = mRecipe.getBoilTime();
                     endTime = startTime + (int) time;
                 }
