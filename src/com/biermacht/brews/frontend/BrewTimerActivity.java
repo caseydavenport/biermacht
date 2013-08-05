@@ -325,12 +325,10 @@ public class BrewTimerActivity extends FragmentActivity {
     public void stop()
     {
         timerState = STOPPED;
-        mViewPager.setCurrentItem(0);
         hoursView.setText(nft.format(Utils.getHours(i.getDuration(), i.getDurationUnits())) + "");
         minutesView.setText(nft.format(Utils.getMinutes(i.getDuration(), i.getDurationUnits())) + "");
         secondsView.setText(nft.format(0) + "");
         playPauseButton.setImageResource(R.drawable.av_play);
-        stopAlarm();
     }
 
     public int getTimerSeconds()
@@ -439,6 +437,8 @@ public class BrewTimerActivity extends FragmentActivity {
             {
                 if (wakeLock.isHeld())
                     wakeLock.release();
+                mViewPager.setCurrentItem(0);
+                stopAlarm();
                 stop();
                 break;
             }
