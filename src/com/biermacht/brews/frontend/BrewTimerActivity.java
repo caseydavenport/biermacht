@@ -381,7 +381,7 @@ public class BrewTimerActivity extends FragmentActivity {
                 .setAutoCancel(true)
                 .setContentTitle("Step complete!")
                 .setContentText("Click to return to brew timer")
-                .addAction(R.drawable.icon_timer_light, "Title", contentIntent);
+                .addAction(R.drawable.icon_timer_light, mRecipe.getRecipeName(), contentIntent);
 
         nm.notify(NOTIFICATION_ID, builder.build());
 
