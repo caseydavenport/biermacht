@@ -59,24 +59,21 @@
                   android:layout_gravity="center" >
 
         <!-- Prev Button -->
-        <Button
-                android:id="@+id/previous_button"
+        <ImageButton
+                android:id="@+id/stop_button"
                 android:onClick="onClick"
-                android:text="Prev"
                 style="@style/button" />
 
         <!-- Pause/Play Button -->
-        <Button
+        <ImageButton
                 android:id="@+id/play_pause_button"
                 android:onClick="onClick"
-                android:text="||"
                 style="@style/button" />
 
         <!-- Next Button -->
-        <Button
-                android:id="@+id/next_button"
+        <ImageButton
+                android:id="@+id/go_to_current_button"
                 android:onClick="onClick"
-                android:text="Next"
                 style="@style/button" />
 
     </LinearLayout>

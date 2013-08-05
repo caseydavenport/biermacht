@@ -26,6 +26,16 @@ public class Utils {
 	public static String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
 	public static String INTENT_PROFILE_ID = "biermacht.brews.profile.id";
 	public static String INTENT_INGREDIENT_ID = "biermacht.brews.ingredient.id";
+    public static String INTENT_TYPE = "biermacht.brews.intent.type";
+
+    // Broadcast actions
+    public static String BROADCASE_TIMER = "biermacht.brews.timer";
+    public static String BROADCAST_TIMER_VALUE = "biermacht.brews.broadcast.timer.seconds";
+
+    // Intent types
+    public static String INTENT_TYPE_UPDATE_TIMER = "biermacht.brews.intent.update.timer";
+
+
 
     // Constants
     public static int INVALID_ID = -1; // TODO: Throw exceptions in get methods if this is passed

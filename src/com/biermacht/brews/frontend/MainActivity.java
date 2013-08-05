@@ -69,6 +69,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private static String EDIT_FERM = "Edit Fermentation Profile";
     private static String EDIT_MASH = "Edit Mash Profile";
     private static String EXPORT_RECIPE = "Export as BeerXML";
+    private static String BREW_TIMER = "Brew Timer";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -247,6 +248,7 @@ public class MainActivity extends Activity implements OnClickListener {
         if (!selectedRecipe.getType().equals(Recipe.EXTRACT))
         	menuItems.add(EDIT_MASH);
         menuItems.add(EDIT_FERM);
+        menuItems.add(BREW_TIMER);
         menuItems.add(SCALE_RECIPE);
         menuItems.add(COPY_RECIPE);
         menuItems.add(DELETE_RECIPE);
@@ -296,6 +298,14 @@ public class MainActivity extends Activity implements OnClickListener {
     		Intent i = new Intent(getApplicationContext(), EditFermentationProfileActivity.class);
       		i.putExtra(Utils.INTENT_RECIPE_ID, selectedRecipe.getId());
       		startActivity(i); 
+      }
+
+      // Edit fermentation selected
+      else if (selected.equals(BREW_TIMER))
+      {
+          Intent i = new Intent(getApplicationContext(), BrewTimerActivity.class);
+          i.putExtra(Utils.INTENT_RECIPE_ID, selectedRecipe.getId());
+          startActivity(i);
       }
       
       // Edit fermentation selected

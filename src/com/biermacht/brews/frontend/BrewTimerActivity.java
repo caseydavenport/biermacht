@@ -1,26 +1,40 @@
 package com.biermacht.brews.frontend;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.BrewTimerCollectionPagerAdapter;
-import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter;
 import com.biermacht.brews.frontend.fragments.BrewTimerStepFragment;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
@@ -34,7 +48,9 @@ public class BrewTimerActivity extends FragmentActivity {
 	private int currentItem; // For storing current page being viewed
     private int pausedItem; // Stores the item we paused on.
 	BrewTimerCollectionPagerAdapter cpAdapter;
-    private Handler timerHandler;
+
+    // ID used for the notification
+    private static int NOTIFICATION_ID = 31;
 
     // Formatter for timer values
     java.text.DecimalFormat nft;
@@ -55,40 +71,64 @@ public class BrewTimerActivity extends FragmentActivity {
     TextView secondsView;
     View timerControls;
 
+    // Buttons
+    ImageButton stopButton;
+    ImageButton playPauseButton;
+    ImageButton goToCurrentButton;
+
     // LayoutInflater
     LayoutInflater inflater;
 
-    // Currently seletected fragment and instruction
+    // Ringtone
+    private Ringtone ringtone;
+
+    // Currently SELECTED (not counting down) fragment and instruction
     BrewTimerStepFragment f;
     Instruction i;
 
     // Application context
 	private Context appContext;
 
-    // Runnable for updating the time
-    private Runnable mUpdateTimeTask = new Runnable() {
-
+    // Broadcast receiver
+    private class BCReceiver extends BroadcastReceiver
+    {
         int seconds;
 
-        public void run()
+        @Override
+        public void onReceive(Context c, Intent i)
         {
+            // Set the timer
             seconds = getTimerSeconds() - 1;
             setTimerFromSeconds(seconds);
-            timerHandler.postDelayed(mUpdateTimeTask, 1000);
+
+            // Fragment and instruction for the step we are currently counting down
+            BrewTimerStepFragment frag = (BrewTimerStepFragment) cpAdapter.getItem(currentItem);
+            Instruction ci = frag.getInstruction();
 
             // When we get to the next step, raise alarm, pause timer,
             // and switch views
-            if (seconds == Units.toSeconds(i.getNextDuration(), i.getDurationUnits()))
+            if (seconds == Units.toSeconds(ci.getNextDuration(), ci.getDurationUnits()))
             {
                 pause();
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                startAlarm();
+                currentItem = currentItem + 1;
+                mViewPager.setCurrentItem(currentItem);
             }
 
-            // Stop if we've reached the end of a sections
+            // Stop if we've reached the end of a section
             if (seconds == 0)
                 stop();
+
+            // If the timer is running, schedule a new tick
+            if (timerState == RUNNING)
+                am.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 1000, pi );
         }
-    };
+    }
+
+    // Receiver stuff
+    private BCReceiver bcr;
+    AlarmManager am;
+    PendingIntent pi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,13 +137,21 @@ public class BrewTimerActivity extends FragmentActivity {
 
         // Timer is not yet running
         timerState = STOPPED;
+        currentItem = 0;
 
-        // Configure formatter for timer values
+        // Broadcast receiver, alarm manager, intent, for counting down
+        bcr = new BCReceiver();
+        registerReceiver(bcr, new IntentFilter(Utils.BROADCASE_TIMER) );
+        pi = PendingIntent.getBroadcast(this, 0, new Intent(Utils.BROADCASE_TIMER), 0);
+        am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+
+        // Configure formatter used for timer values
         nft = new java.text.DecimalFormat("#00.###");
         nft.setDecimalSeparatorAlwaysShown(false);
 
-        // Timer handler
-        timerHandler = new Handler();
+        // Set up ringtone alarm for alerts
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
         
 		// Set icon as back button
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -118,7 +166,7 @@ public class BrewTimerActivity extends FragmentActivity {
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
+        id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
 
         // Set title based on recipe name
@@ -131,6 +179,15 @@ public class BrewTimerActivity extends FragmentActivity {
         hoursView = (TextView) timerControls.findViewById(R.id.hours);
         minutesView = (TextView) timerControls.findViewById(R.id.minutes);
         secondsView = (TextView) timerControls.findViewById(R.id.seconds);
+
+        // Get buttons
+        stopButton = (ImageButton) timerControls.findViewById(R.id.stop_button);
+        playPauseButton = (ImageButton) timerControls.findViewById(R.id.play_pause_button);
+        goToCurrentButton = (ImageButton) timerControls.findViewById(R.id.go_to_current_button);
+
+        // Set button backrounds
+        stopButton.setImageResource(R.drawable.av_stop);
+        playPauseButton.setImageResource(R.drawable.av_play);
 
 		// ViewPager and pagerAdapter for slidy tabs!
         cpAdapter = new BrewTimerCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
@@ -151,10 +208,20 @@ public class BrewTimerActivity extends FragmentActivity {
 
                 if (timerState == STOPPED)
                 {
+                    currentItem = mViewPager.getCurrentItem();
                     hoursView.setText(nft.format(Utils.getHours(i.getDuration(), i.getDurationUnits())) + "");
                     minutesView.setText(nft.format(Utils.getMinutes(i.getDuration(), i.getDurationUnits())) + "");
                     secondsView.setText(nft.format(0) + "");
+
+                    goToCurrentButton.setImageResource(R.drawable.navigation_accept);
                 }
+
+                if (position == currentItem)
+                    goToCurrentButton.setImageResource(R.drawable.navigation_accept);
+                else if (position < currentItem)
+                    goToCurrentButton.setImageResource(R.drawable.navigation_next_item);
+                else if (position > currentItem)
+                    goToCurrentButton.setImageResource(R.drawable.navigation_previous_item);
             }
 
             @Override
@@ -177,6 +244,7 @@ public class BrewTimerActivity extends FragmentActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
@@ -197,6 +265,7 @@ public class BrewTimerActivity extends FragmentActivity {
     public void onResume()
     {
     	super.onResume();
+        stopAlarm();
     	
     	// Update what we display
 		mRecipe = Utils.getRecipeWithId(id);
@@ -214,12 +283,11 @@ public class BrewTimerActivity extends FragmentActivity {
     public void onPause()
     {
     	super.onPause();
-    	// Save the current page we're looking at
-    	this.currentItem = mViewPager.getCurrentItem();
     }
     
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig)
+    {
         super.onConfigurationChanged(newConfig);
     }
 
@@ -234,23 +302,29 @@ public class BrewTimerActivity extends FragmentActivity {
     public void play()
     {
         timerState = RUNNING;
-        timerHandler.removeCallbacks(mUpdateTimeTask);
-        timerHandler.postDelayed(mUpdateTimeTask, 1000);
+        mViewPager.setCurrentItem(currentItem);
+        am.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 1000, pi );
+        playPauseButton.setImageResource(R.drawable.av_pause);
+        stopAlarm();
     }
 
     public void pause()
     {
         timerState = PAUSED;
-        timerHandler.removeCallbacks(mUpdateTimeTask);
+        mViewPager.setCurrentItem(currentItem);
+        playPauseButton.setImageResource(R.drawable.av_play);
+        stopAlarm();
     }
 
     public void stop()
     {
         timerState = STOPPED;
-        timerHandler.removeCallbacks(mUpdateTimeTask);
+        mViewPager.setCurrentItem(0);
         hoursView.setText(nft.format(Utils.getHours(i.getDuration(), i.getDurationUnits())) + "");
         minutesView.setText(nft.format(Utils.getMinutes(i.getDuration(), i.getDurationUnits())) + "");
         secondsView.setText(nft.format(0) + "");
+        playPauseButton.setImageResource(R.drawable.av_play);
+        stopAlarm();
     }
 
     public int getTimerSeconds()
@@ -280,6 +354,65 @@ public class BrewTimerActivity extends FragmentActivity {
         secondsView.setText(nft.format(seconds) + "");
     }
 
+    public void startAlarm()
+    {
+        Context ctx = getApplicationContext();
+
+        Intent notificationIntent = new Intent(ctx, BrewTimerActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        notificationIntent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+
+        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Resources res = ctx.getResources();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+
+        builder.setContentIntent(contentIntent)
+                .setSmallIcon(R.drawable.icon_timer_light)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.icon_timer_light))
+                .setTicker("Brew step complete")
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
+                .setContentTitle("Step complete!")
+                .setContentText("Click to return to brew timer")
+                .addAction(R.drawable.icon_timer_light, "Title", contentIntent);
+
+        nm.notify(NOTIFICATION_ID, builder.build());
+
+        // Turn screen on
+        Window wind;
+        wind = this.getWindow();
+        wind.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        wind.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        wind.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+
+        ringtone.play();
+    }
+
+    // Clears the notification in the notification bar that is created
+    // when we start the alarm
+    public void clearNotification()
+    {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NOTIFICATION_ID);
+    }
+
+    // Turns off the ringing alarm, then clears the notification
+    public void stopAlarm()
+    {
+        ringtone.stop();
+        clearNotification();
+    }
+
+    @Override
+    protected void onDestroy() {
+        am.cancel(pi);
+        unregisterReceiver(bcr);
+        super.onDestroy();
+    }
+
     public void onClick(View v) {
         switch (v.getId())
         {
@@ -288,13 +421,13 @@ public class BrewTimerActivity extends FragmentActivity {
                 togglePlayPause();
                 break;
             }
-            case R.id.next_button:
+            case R.id.go_to_current_button:
             {
-                stop();
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                mViewPager.setCurrentItem(currentItem);
+                stopAlarm();
                 break;
             }
-            case R.id.previous_button:
+            case R.id.stop_button:
             {
                 stop();
                 break;
