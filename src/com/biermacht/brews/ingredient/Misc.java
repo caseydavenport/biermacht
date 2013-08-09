@@ -1,4 +1,7 @@
 package com.biermacht.brews.ingredient;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.biermacht.brews.utils.Units;
 
 public class Misc extends Ingredient {
@@ -39,6 +42,63 @@ public class Misc extends Ingredient {
 		setVersion(1);
 		setTime(0);
 	}
+
+    public Misc(Parcel p)
+    {
+        super(p);
+
+        // Required
+        setMiscType(p.readString());
+        setUse(p.readString());
+        setBeerXmlStandardAmount(p.readDouble());
+        setAmountIsWeight(p.readInt() > 0 ? true : false);
+        setUseFor(p.readString());
+        setShortDescription(p.readString());
+
+        // Optional
+        setDisplayUnits(p.readString());
+        setStartTime(p.readInt());
+        setEndTime(p.readInt());
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+        super.writeToParcel(p, flags);
+
+        // Required
+        p.writeString(getMiscType());
+        p.writeString(getUse());
+        p.writeDouble(getBeerXmlStandardAmount());
+        p.writeInt(amountIsWeight ? 1 : 0);
+        p.writeString(getUseFor());
+        p.writeString(getShortDescription());
+
+        // Optional
+        p.writeString(getDisplayUnits());
+        p.writeInt(getStartTime());
+        p.writeInt(getEndTime());
+    }
+
+    public static final Parcelable.Creator<Misc> CREATOR =
+            new Parcelable.Creator<Misc>() {
+                @Override
+                public Misc createFromParcel(Parcel p)
+                {
+                    return new Misc(p);
+                }
+
+                @Override
+                public Misc[] newArray(int size) {
+                    return null;
+                }
+            };
 	
 	@Override
 	public String toString()

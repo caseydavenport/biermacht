@@ -92,6 +92,7 @@ public class IngredientViewFragment extends Fragment {
 			  		Intent editMiscIntent = new Intent(c, EditMiscActivity.class);
 			  		editMiscIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
 			  		editMiscIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
+                    editMiscIntent.putExtra(Utils.INTENT_INGREDIENT, ing);
 			  		startActivity(editMiscIntent);
 				}
 			}

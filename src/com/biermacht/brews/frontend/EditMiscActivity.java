@@ -92,9 +92,8 @@ public class EditMiscActivity extends Activity {
 
         // Get recipe and misc from calling activity
         long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
-        long miscId = getIntent().getLongExtra(Utils.INTENT_INGREDIENT_ID, Utils.INVALID_ID);
-        mRecipe = Utils.getRecipeWithId(id);
-        misc = (Misc) Utils.getIngredientWithId(miscId);
+        Utils.getRecipeWithId(id);
+        misc = (Misc) getIntent().getParcelableExtra(Utils.INTENT_INGREDIENT);
 
         // On click listener
         onClickListener = new View.OnClickListener() {

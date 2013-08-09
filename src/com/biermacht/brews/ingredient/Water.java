@@ -1,4 +1,6 @@
 package com.biermacht.brews.ingredient;
+import android.os.Parcel;
+
 import com.biermacht.brews.utils.Units;
 
 public class Water extends Ingredient
@@ -7,6 +9,25 @@ public class Water extends Ingredient
 	{
 		super(name);
 	}
+
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    /**
+     * THIS IS HOW WE SERIALIZE THIS OBJECT INTO
+     * A PARCEL
+     * @param p
+     * @param flags
+     */
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+
+    }
 
 	@Override
 	public String getType() {

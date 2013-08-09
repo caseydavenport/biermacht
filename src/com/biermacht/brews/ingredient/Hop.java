@@ -1,4 +1,6 @@
 package com.biermacht.brews.ingredient;
+import android.os.Parcel;
+
 import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
@@ -51,18 +53,24 @@ public class Hop extends Ingredient {
 		this.substitutes = new ArrayList<String>(); // TODO Get this from somewhere
 		this.description = "No description";
 	}
-	
-	public Hop(String name, double alpha, String desc) {
-		super(name);
-		this.amount = 0;
-		this.alpha = alpha;
-		this.use = USE_BOIL;
-		this.type = TYPE_BITTERING;
-		this.form = FORM_PELLET;
-		this.origin = "";
-		this.substitutes = new ArrayList<String>(); // TODO Get this from somewhere
-		this.description = desc;
-	}
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    /**
+     * THIS IS HOW WE SERIALIZE THIS OBJECT INTO
+     * A PARCEL
+     * @param p
+     * @param flags
+     */
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+
+    }
 
 	@Override
 	public String getType() {

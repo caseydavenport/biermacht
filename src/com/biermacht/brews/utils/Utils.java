@@ -26,6 +26,7 @@ public class Utils {
 	public static String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
 	public static String INTENT_PROFILE_ID = "biermacht.brews.profile.id";
 	public static String INTENT_INGREDIENT_ID = "biermacht.brews.ingredient.id";
+    public static String INTENT_INGREDIENT = "biermacht.brews.ingredient";
     public static String INTENT_TYPE = "biermacht.brews.intent.type";
 
     // Broadcast actions

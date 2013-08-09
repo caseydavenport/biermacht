@@ -1,6 +1,9 @@
 package com.biermacht.brews.ingredient;
 
-public abstract class Ingredient {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public abstract class Ingredient implements Parcelable {
 	
 	// Beer XML 1.0 Required Fields (To be inherited) =================
 	// ================================================================
@@ -39,7 +42,27 @@ public abstract class Ingredient {
 		this.id = -1;
 		this.ownerId = -1;
 	}
-	
+
+    public Ingredient(Parcel p)
+    {
+        setName(p.readString());
+        setVersion(p.readInt());
+        setId(p.readLong());
+        setOwnerId(p.readLong());
+        setBeerXmlStandardInventory(p.readDouble());
+    }
+
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+        // Should be called by all sub-classes
+        p.writeString(name);
+        p.writeInt(version);
+        p.writeLong(id);
+        p.writeLong(ownerId);
+        p.writeDouble(inventory);
+    }
+
 	// Abstract methods of Ingredient
 	public abstract String getType();
 	public abstract String getShortDescription();
