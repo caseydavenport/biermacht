@@ -107,9 +107,8 @@ public class EditHopActivity extends Activity {
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
-        long hopId = getIntent().getLongExtra(Utils.INTENT_INGREDIENT_ID, Utils.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
-        hop = (Hop) Utils.getIngredientWithId(hopId);
+        hop = (Hop) getIntent().getParcelableExtra(Utils.INTENT_INGREDIENT);
 
         // On click listener
         onClickListener = new View.OnClickListener() {

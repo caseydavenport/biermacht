@@ -253,7 +253,8 @@ public class Misc extends Ingredient {
 	@Override
 	public int hashCode() {
         int hc = this.getName().hashCode();
-        hc = ((hc ^ 14523) << 2) ^ 55 >> 2;
+        hc = hc ^ this.getUse().hashCode();
+        hc = hc ^ this.getMiscType().hashCode();
         return hc;
 	}
 

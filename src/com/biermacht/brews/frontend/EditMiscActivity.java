@@ -92,7 +92,7 @@ public class EditMiscActivity extends Activity {
 
         // Get recipe and misc from calling activity
         long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
-        Utils.getRecipeWithId(id);
+        mRecipe = Utils.getRecipeWithId(id);
         misc = (Misc) getIntent().getParcelableExtra(Utils.INTENT_INGREDIENT);
 
         // On click listener
@@ -314,6 +314,7 @@ public class EditMiscActivity extends Activity {
             } catch (Exception e)
             {
                 Log.d("EditMiscActivity", "Exception on submit: " + e.toString());
+                e.printStackTrace();
                 readyToGo = false;
             }
 

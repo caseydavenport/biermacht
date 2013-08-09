@@ -1,5 +1,6 @@
 package com.biermacht.brews.ingredient;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.biermacht.brews.utils.Units;
 
@@ -54,23 +55,65 @@ public class Hop extends Ingredient {
 		this.description = "No description";
 	}
 
+    public Hop(Parcel p)
+    {
+        super(p);
+        this.substitutes = new ArrayList<String>();
+        setBeerXmlStandardAmount(p.readDouble());
+        setAlphaAcidContent(p.readDouble());
+        setUse(p.readString());
+        setDisplayTime(p.readInt());
+
+        setHopType(p.readString());
+        setForm(p.readString());
+        setOrigin(p.readString());
+        p.readStringList(this.substitutes);
+        setShortDescription(p.readString());
+        setStartTime(p.readInt());
+        setEndTime(p.readInt());
+    }
+
     @Override
     public int describeContents()
     {
         return 0;
     }
 
-    /**
-     * THIS IS HOW WE SERIALIZE THIS OBJECT INTO
-     * A PARCEL
-     * @param p
-     * @param flags
-     */
     @Override
     public void writeToParcel(Parcel p, int flags)
     {
+        super.writeToParcel(p, flags);
 
+        // Required
+        p.writeDouble(getBeerXmlStandardAmount());
+        p.writeDouble(getAlphaAcidContent());
+        p.writeString(getUse());
+        p.writeInt(getTime());
+
+        // Optional
+        p.writeString(getHopType());
+        p.writeString(getForm());
+        p.writeString(getOrigin());
+        p.writeStringList(substitutes);
+
+        p.writeString(getShortDescription());
+        p.writeInt(getStartTime());
+        p.writeInt(getEndTime());
     }
+
+    public static final Parcelable.Creator<Hop> CREATOR =
+            new Parcelable.Creator<Hop>() {
+                @Override
+                public Hop createFromParcel(Parcel p)
+                {
+                    return new Hop(p);
+                }
+
+                @Override
+                public Hop[] newArray(int size) {
+                    return null;
+                }
+            };
 
 	@Override
 	public String getType() {

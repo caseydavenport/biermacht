@@ -286,6 +286,7 @@ public class EditFermentableActivity extends Activity implements OnClickListener
             }
             catch (Exception e) {
                 Log.d("AddFermentable", "Hit exception on submit: " + e.toString());
+                e.printStackTrace();
                 readyToGo = false;
             }
 
