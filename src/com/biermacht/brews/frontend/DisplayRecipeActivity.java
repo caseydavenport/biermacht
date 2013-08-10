@@ -1,19 +1,25 @@
 package com.biermacht.brews.frontend;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.frontend.adapters.*;
 
 import android.support.v4.view.*;
+
+import java.io.IOException;
 
 public class DisplayRecipeActivity extends FragmentActivity {
 	
@@ -22,6 +28,68 @@ public class DisplayRecipeActivity extends FragmentActivity {
 	private int currentItem; // For storing current page
 	DisplayRecipeCollectionPagerAdapter cpAdapter;
     ViewPager mViewPager;
+
+    private class UpdateTask extends AsyncTask<String, Void, String> {
+
+        private Context context;
+        private ProgressDialog progress;
+
+        public UpdateTask(Context c)
+        {
+            this.context = c;
+        }
+
+        @Override
+        protected String doInBackground(String... params)
+        {
+            appContext = getApplicationContext();
+
+            // Get recipe from calling activity
+            id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
+            mRecipe = Utils.getRecipeWithId(id);
+
+            // ViewPager and pagerAdapter for Slidy tabs!
+            cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
+            mViewPager = (ViewPager) findViewById(R.id.pager);
+
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+            progress.dismiss();
+
+            // Set icon as back button
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+
+            // Set title based on recipe name
+            setTitle(mRecipe.getRecipeName());
+
+            // Set Adapter
+            mViewPager.setAdapter(cpAdapter);
+
+            // Set to the current item
+            mViewPager.setCurrentItem(currentItem);
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            progress = new ProgressDialog(context);
+            progress.setMessage("Loading Recipe");
+            progress.setIndeterminate(false);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setCancelable(true);
+            progress.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
 	
 	private Context appContext;
 
@@ -29,23 +97,12 @@ public class DisplayRecipeActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_recipe);
-        
-		// Set icon as back button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-              
-        appContext = getApplicationContext();
-        
-        // Get recipe from calling activity
-        id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, -1);
-        mRecipe = Utils.getRecipeWithId(id);
 
-        // Set title based on recipe name
-        setTitle(mRecipe.getRecipeName());
+        // Set current item to be the first
+        currentItem = 0;
 
-		// ViewPager and pagerAdapter for slidy tabs!
-        cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(cpAdapter);
+        // Update Asynchronously
+        new UpdateTask(this).execute("");
     }
 
     @Override
@@ -123,17 +180,9 @@ public class DisplayRecipeActivity extends FragmentActivity {
     public void onResume()
     {
     	super.onResume();
-    	
-    	// Update what we display
-		mRecipe = Utils.getRecipeWithId(id);
 
-        // Set title based on recipe name
-        setTitle(mRecipe.getRecipeName());
-
-		// ViewPager and pagerAdapter for slidy tabs!
-        cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
-        mViewPager.setAdapter(cpAdapter);
-        mViewPager.setCurrentItem(this.currentItem);
+        // Update Asynchronously
+        new UpdateTask(this).execute("");
     }
     
     @Override

@@ -227,6 +227,7 @@ public class EditYeastActivity extends Activity implements OnClickListener {
             } catch (Exception e)
             {
                 Log.d("EditYeastActivity", "Exception on submit: " + e.toString());
+                e.printStackTrace();
                 readyToGo = false;
             }
 

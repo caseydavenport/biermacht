@@ -71,7 +71,7 @@ public class Yeast extends Ingredient {
     @Override
     public void writeToParcel(Parcel p, int flags)
     {
-
+        super.writeToParcel(p, flags);
     }
 
     @Override

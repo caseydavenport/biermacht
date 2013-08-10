@@ -17,7 +17,6 @@
         android:theme="@style/Theme.Biermacht.Brews" >
         <activity
             android:name=".frontend.MainActivity"
-            android:uiOptions="splitActionBarWhenNarrow"
             android:label="@string/title_activity_main"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>

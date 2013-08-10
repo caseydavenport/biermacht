@@ -60,7 +60,7 @@ public class Fermentable extends Ingredient {
     @Override
     public void writeToParcel(Parcel p, int flags)
     {
-
+        super.writeToParcel(p, flags);
     }
 
 	@Override
