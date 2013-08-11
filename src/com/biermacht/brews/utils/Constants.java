@@ -9,6 +9,9 @@ public class Constants {
 	public static BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
     public static Recipe NEW_RECIPE = new Recipe("New Recipe");
 
+    // Master recipe - used as parent for custom ingredients
+    public static long MASTER_RECIPE_ID = 1;
+
 	// Intent put values
 	public static String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
 	public static String INTENT_PROFILE_ID = "biermacht.brews.profile.id";

@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,8 @@ import com.biermacht.brews.frontend.EditMashProfileActivity;
 import com.biermacht.brews.frontend.EditRecipeActivity;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
-import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
 import java.util.ArrayList;
@@ -138,11 +136,18 @@ public class RecipesFragment extends Fragment {
         listView.setOnItemClickListener(mClickListener);
         registerForContextMenu(listView);
 
-        // Turn off options menu
-		setHasOptionsMenu(false);
+        // Turn on options menu
+		setHasOptionsMenu(true);
 		
 		return pageView;
 	}
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.activity_main, menu);
+    }
 
     /**
      * Filters the list of all Recipes by the given string

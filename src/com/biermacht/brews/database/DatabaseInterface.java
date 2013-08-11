@@ -610,6 +610,26 @@ public class DatabaseInterface {
 
         return list;
     }
+
+    /**
+     * Returns ingredients from the given database with the given ingredient type
+     */
+    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(int databaseid)
+    {
+        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + databaseid;
+        Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast())
+        {
+            list.add(cursorToIngredient(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return list;
+    }
 	
 	/**
 	 * returns arraylist of all recipes in database
@@ -620,8 +640,11 @@ public class DatabaseInterface {
 		ArrayList<Recipe> list = new ArrayList<Recipe>();
 
 		Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, null, null, null, null, null);
-		
 		cursor.moveToFirst();
+
+        // Move one forward, so we skip the master recipe
+        cursor.moveToNext();
+
 		while(!cursor.isAfterLast())
 		{
 			list.add(cursorToRecipe(cursor));

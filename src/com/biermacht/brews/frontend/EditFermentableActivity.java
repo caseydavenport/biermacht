@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Spinner;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -295,7 +296,14 @@ public class EditFermentableActivity extends Activity implements OnClickListener
             {
                 // Update the ingredient, and finish the activity
                 Utils.updateIngredient(fermentable);
-                mRecipe = Utils.getRecipeWithId(mRecipe.getId());
+                try
+                {
+                    mRecipe = Utils.getRecipeWithId(mRecipe.getId());
+                }
+                catch (RecipeNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
                 mRecipe.update();
                 Utils.updateRecipe(mRecipe);
                 finish();

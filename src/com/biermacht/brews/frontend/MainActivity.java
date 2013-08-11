@@ -26,6 +26,7 @@ import android.widget.ListView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
+import com.biermacht.brews.frontend.fragments.EditIngredientsFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
@@ -63,6 +64,7 @@ public class MainActivity extends Activity{
     private static String DRAWER_GRAVITY = "Gravity Calculator";
     private static String DRAWER_MASH_EDIT = "Mash Profile Editor";
     private static String DRAWER_EQUIP_EDIT = "Equipment Editor";
+    private static String DRAWER_INGRED_EDIT = "Ingredient Editor";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,9 @@ public class MainActivity extends Activity{
             // We've used the app! Woo!
         	preferences.edit().putBoolean(Constants.PREF_USED_BEFORE, true).commit();
             new ImportXmlIngredientsTask(this).execute("");
+
+            // Create the master recipe - used a placeholder for stuff
+            Utils.createRecipeWithName("Master Recipe");
         }
         else
         {
@@ -98,6 +103,7 @@ public class MainActivity extends Activity{
         // Create list for drawer
         drawerItems = new ArrayList<String>();
         drawerItems.add(DRAWER_RECIPES);
+        drawerItems.add(DRAWER_INGRED_EDIT);
         drawerItems.add(DRAWER_MASH_EDIT);
         drawerItems.add(DRAWER_EQUIP_EDIT);
         drawerItems.add(DRAWER_GRAVITY);
@@ -137,12 +143,6 @@ public class MainActivity extends Activity{
         selectedItem = 0;
         updateFragments();
     }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
-    }
 
     @Override
     public void onResume()
@@ -177,8 +177,33 @@ public class MainActivity extends Activity{
 			
 		case R.id.menu_import_recipe:
 			importRecipeAlert().show();
-    	}
-    	return true;
+            break;
+
+        case R.id.add_fermentable:
+            i = new Intent(this, AddCustomFermentableActivity.class);
+            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            startActivity(i);
+            break;
+
+        case R.id.add_hop:
+            i = new Intent(this, AddHopsActivity.class);
+            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            startActivity(i);
+            break;
+
+        case R.id.add_yeast:
+            i = new Intent(this, AddYeastActivity.class);
+            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            startActivity(i);
+            break;
+
+        case R.id.add_misc:
+            i = new Intent(this, AddMiscActivity.class);
+            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            startActivity(i);
+            break;
+        }
+        return true;
     }
 
     private AlertDialog.Builder importRecipeAlert()
@@ -265,6 +290,7 @@ public class MainActivity extends Activity{
     {
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(new RecipesFragment());
+        fragmentList.add(new EditIngredientsFragment());
         selectItem(selectedItem);
     }
 

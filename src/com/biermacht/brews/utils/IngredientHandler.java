@@ -66,7 +66,7 @@ public class IngredientHandler {
 				fermentablesList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.FERMENTABLE));
                 fermentablesList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.FERMENTABLE));
 		}
-		
+        Collections.sort(fermentablesList, new IngredientComparator());
 		return this.fermentablesList;
 	}
 	
@@ -82,7 +82,8 @@ public class IngredientHandler {
             yeastsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.YEAST));
             yeastsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.YEAST));
 		}
-		
+
+        Collections.sort(yeastsList, new IngredientComparator());
 		return this.yeastsList;
 	}
 	
@@ -98,7 +99,8 @@ public class IngredientHandler {
             hopsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.HOP));
             hopsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.HOP));
 		}
-		
+
+        Collections.sort(hopsList, new IngredientComparator());
 		return this.hopsList;
 	}
 	
@@ -115,6 +117,7 @@ public class IngredientHandler {
             miscsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.MISC));
 		}
 
+        Collections.sort(miscsList, new IngredientComparator());
 		return this.miscsList;
 	}
 

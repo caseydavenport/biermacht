@@ -8,6 +8,7 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import com.biermacht.brews.*;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.ingredient.*;
 import com.biermacht.brews.recipe.*;
@@ -90,10 +91,22 @@ public class EditMiscActivity extends Activity {
         // Enable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
 
-        // Get recipe and misc from calling activity
+        // Get recipe id
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-        mRecipe = Utils.getRecipeWithId(id);
+
+        // Acquire misc
         misc = (Misc) getIntent().getParcelableExtra(Constants.INTENT_INGREDIENT);
+
+        // Acquire recipe
+        try
+        {
+            mRecipe = Utils.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
 
         // On click listener
         onClickListener = new View.OnClickListener() {

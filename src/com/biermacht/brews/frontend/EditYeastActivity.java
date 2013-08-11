@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -99,8 +100,20 @@ public class EditYeastActivity extends Activity implements OnClickListener {
         // Get recipe and yeast from calling activity
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
         long yeastId = getIntent().getLongExtra(Constants.INTENT_INGREDIENT_ID, Constants.INVALID_ID);
-        mRecipe = Utils.getRecipeWithId(id);
+
+        // Acquire ingredient
         yeast = (Yeast) Utils.getIngredientWithId(yeastId);
+
+        // Acquire recipe
+        try
+        {
+            mRecipe = Utils.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
 
         // On click listener
         onClickListener = new View.OnClickListener() {

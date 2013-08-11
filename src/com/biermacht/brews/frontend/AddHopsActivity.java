@@ -3,6 +3,7 @@ package com.biermacht.brews.frontend;
 import java.util.ArrayList;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -108,7 +109,17 @@ public class AddHopsActivity extends Activity {
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-        mRecipe = Utils.getRecipeWithId(id);
+
+        // Acquire recipe
+        try
+        {
+            mRecipe = Utils.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
 
         // On click listener
         onClickListener = new View.OnClickListener() {

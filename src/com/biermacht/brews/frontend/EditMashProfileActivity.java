@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
@@ -44,8 +45,20 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-        mRecipe = Utils.getRecipeWithId(id);
+
+        // Acquire profile
 		mashProfile = mRecipe.getMashProfile();
+
+        // Acquire recipe
+        try
+        {
+            mRecipe = Utils.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
 		
 		// Initialize data containers
 		name = mashProfile.getName();

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
@@ -45,9 +46,19 @@ public class DisplayRecipeActivity extends FragmentActivity {
         {
             appContext = getApplicationContext();
 
-            // Get recipe from calling activity
+            // Get recipe id from calling activity
             id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-            mRecipe = Utils.getRecipeWithId(id);
+
+            // Acquire recipe
+            try
+            {
+                mRecipe = Utils.getRecipeWithId(id);
+            }
+            catch (RecipeNotFoundException e)
+            {
+                e.printStackTrace();
+                finish();
+            }
 
             // ViewPager and pagerAdapter for Slidy tabs!
             cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);

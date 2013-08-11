@@ -1,7 +1,5 @@
 package com.biermacht.brews.frontend.adapters;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,23 +9,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.ingredient.Fermentable;
+import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.recipe.*;
-import com.biermacht.brews.utils.*;
-import com.biermacht.brews.ingredient.*;
+import com.biermacht.brews.ingredient.Misc;
+import com.biermacht.brews.ingredient.Yeast;
+import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.BrewCalculator;
 
-public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
-	
+import java.util.List;
+
+public class CustomIngredientArrayAdapter extends ArrayAdapter<Ingredient> {
+
 	private Context context;
 	private List<Ingredient> list;
-	private Recipe r;
-	
-	public IngredientArrayAdapter(Context c, List<Ingredient> list, Recipe r)
+
+	public CustomIngredientArrayAdapter(Context c, List<Ingredient> list)
 	{
 		super(c, android.R.layout.simple_list_item_1, list);
 		this.context = c;
 		this.list = list;
-		this.r = r;
 	}
 
 	@Override
@@ -50,8 +51,10 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		TextView detailView = (TextView) row.findViewById(R.id.ing_detail_text);
 		
 		labelView.setText(list.get(position).getName());
-		amountView.setText(String.format("%2.2f", list.get(position).getDisplayAmount()));
-		unitView.setText(list.get(position).getDisplayUnits());
+
+        // Hide amouunt and unit views
+        amountView.setVisibility(View.GONE);
+        unitView.setVisibility(View.GONE);
 		
 		// Set imageView based on ingredient type
 		String ingType = list.get(position).getType();
@@ -62,17 +65,8 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			Hop h = (Hop) list.get(position);
 			imageView.setImageResource(R.drawable.icon_hops);
 			labelView.setText(h.getName() + ", " + String.format("%1.1f", h.getAlphaAcidContent()) + "%");
-			
-			if(h.getUse().equals(Hop.USE_BOIL) || h.getUse().equals(Hop.USE_AROMA))
-			{
-				String s = String.format("%2.2f", BrewCalculator.calculateHopIbu(r, h));
-				detailText += s; 
-				detailText += " IBU";
-			}
-			else if (h.getUse().equals(Hop.USE_DRY_HOP))
-			{
-				detailText = "Dry Hop";
-			}
+
+            detailText = "Hop";
 		}
 		else if(ingType == Ingredient.FERMENTABLE) 
 		{
@@ -82,11 +76,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			else
 				imageView.setImageResource(R.drawable.icon_extract);
 			
-			String s = String.format("%2.2f", BrewCalculator.calculateGrainPercent(r, list.get(position)));
-		    String t = String.format("%2.2f", BrewCalculator.calculateGravityPoints(r, list.get(position)));
-			detailText += s;
-			detailText += "%, ";
-			detailText += t + " GPts.";
+            detailText = "Fermentable";
 		}
 		else if (ingType == Ingredient.YEAST)
 		{
@@ -94,7 +84,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			amountView.setText("1.00");
 			unitView.setText("pkg");
 			imageView.setImageResource(R.drawable.icon_yeast);
-			detailText = ((Yeast) list.get(position)).getAttenuation() + "%";
+			detailText = "Yeast";
 		}
 		else if(ingType == Ingredient.MISC)
 		{
@@ -104,7 +94,6 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		else
 		{
 			//TODO: Handle this
-			//imageView.setImageResource(R.drawable.icon_idk);
 		}
 
 		detailView.setText(detailText);

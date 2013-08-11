@@ -36,30 +36,30 @@ public class IngredientViewFragment extends Fragment {
 	private ArrayList<Ingredient> ingredientList;
 	View pageView;
 	Context c;
-	
+
 	public IngredientViewFragment(Context c, Recipe r)
 	{
 		this.resource = R.layout.fragment_ingredient_view;
 		this.r = r;
 		this.c = c;
 	}
-	
+
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		pageView = inflater.inflate(resource, container, false);
-		
+
 		setHasOptionsMenu(true);
-		
+
 		// Initialize important junk
 		ingredientListView = (ListView) pageView.findViewById(R.id.ingredient_list);
-			
+
         // Set up the onClickListener
-		mClickListener = new OnItemClickListener() 
+		mClickListener = new OnItemClickListener()
 		{
 			public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id)
-			{	
+			{
 				Ingredient ing = r.getIngredientList().get(pos);
-			
+
 				// Grain pressed
 				if (ing.getType().equals(Ingredient.FERMENTABLE))
 				{
@@ -68,7 +68,7 @@ public class IngredientViewFragment extends Fragment {
 				    editGrainIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
 			  		startActivity(editGrainIntent);
 				}
-			
+
 				// Hop Pressed
 				if (ing.getType().equals(Ingredient.HOP))
 				{
@@ -77,7 +77,7 @@ public class IngredientViewFragment extends Fragment {
                     editHopIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
 			  		startActivity(editHopIntent);
 				}
-				
+
 				// Yeast Pressed
 				if (ing.getType().equals(Ingredient.YEAST))
 				{
@@ -86,7 +86,7 @@ public class IngredientViewFragment extends Fragment {
 			  		editYeastIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
 			  		startActivity(editYeastIntent);
 				}
-				
+
 				// Misc Pressed
 				if (ing.getType().equals(Ingredient.MISC))
 				{
@@ -97,9 +97,9 @@ public class IngredientViewFragment extends Fragment {
 				}
 			}
 		};
-          
+
 		ingredientList = r.getIngredientList();
-		  
+
 		// Set whether or not we show the list view
 		if (ingredientList.size() > 0)
 		{
@@ -114,13 +114,14 @@ public class IngredientViewFragment extends Fragment {
 			TextView noIngredientsView = (TextView) pageView.findViewById(R.id.no_ingredients_view);
 			noIngredientsView.setVisibility(View.VISIBLE);
 		}
-	
+
 		return pageView;
 	}
-	
+
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
+        super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.fragment_ingredient_menu, menu);
 	}
-	
+
 }

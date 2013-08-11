@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
@@ -103,7 +104,17 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-        mRecipe = Utils.getRecipeWithId(id);
+
+        // Acquire recipe
+        try
+        {
+            mRecipe = Utils.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
 
         // Get values from recipe
         style = mRecipe.getStyle();

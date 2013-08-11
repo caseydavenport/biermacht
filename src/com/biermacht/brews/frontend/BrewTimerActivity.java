@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.adapters.BrewTimerCollectionPagerAdapter;
 import com.biermacht.brews.frontend.fragments.BrewTimerStepFragment;
 import com.biermacht.brews.recipe.Instruction;
@@ -172,7 +174,17 @@ public class BrewTimerActivity extends FragmentActivity {
         
         // Get recipe from calling activity
         id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-        mRecipe = Utils.getRecipeWithId(id);
+
+        // Acquire recipe
+        try
+        {
+            mRecipe = Utils.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
 
         // Set title based on recipe name
         setTitle("Brew Timer");
@@ -272,9 +284,17 @@ public class BrewTimerActivity extends FragmentActivity {
     {
     	super.onResume();
         stopAlarm();
-    	
-    	// Update what we display
-		mRecipe = Utils.getRecipeWithId(id);
+
+        // Acquire recipe
+        try
+        {
+            mRecipe = Utils.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
 
         // Set title based on recipe name
         setTitle("Brew Timer");

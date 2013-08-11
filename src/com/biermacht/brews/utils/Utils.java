@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.biermacht.brews.database.DatabaseInterface;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.AddNewRecipeActivity;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -146,12 +147,12 @@ public class Utils {
 		
 		for (Recipe r : getRecipeList(MainActivity.databaseInterface))
 		{
-			for (Ingredient i : r.getIngredientList())
-			{
-                if (i.getDatabaseId() == Constants.INGREDIENT_DB_DEFAULT)
-				    deleteIngredient(i);
-			}
-			bool = deleteRecipe(r);
+                for (Ingredient i : r.getIngredientList())
+                {
+                    if (i.getDatabaseId() == Constants.INGREDIENT_DB_DEFAULT)
+                        deleteIngredient(i);
+                }
+                bool = deleteRecipe(r);
 		}
 		return bool;
 	}
@@ -171,10 +172,20 @@ public class Utils {
 	 * @param id
 	 * @return
 	 */
-	public static Recipe getRecipeWithId(long id)
+	public static Recipe getRecipeWithId(long id) throws RecipeNotFoundException
 	{
+        // If we receive a special ID, handle that here
+        if (id == Constants.INVALID_ID)
+            throw new RecipeNotFoundException("Could not find recipe for id: " + id);
+
+        // Actually perform the lookup
 		return MainActivity.databaseInterface.getRecipeWithId(id);
 	}
+
+    public static Recipe getMasterRecipe()
+    {
+        return MainActivity.databaseInterface.getRecipeWithId(Constants.MASTER_RECIPE_ID);
+    }
 	
 	/**
 	 * Gets ingredient with given ID from database
@@ -215,6 +226,14 @@ public class Utils {
     public static ArrayList<Ingredient> getIngredientsFromVirtualDatabase(int dbid, String type)
     {
         return MainActivity.databaseInterface.getIngredientsFromVirtualDatabase(dbid, type);
+    }
+
+    /**
+     * Returns all ingredients in the given database with the given ingredient type
+     */
+    public static ArrayList<Ingredient> getIngredientsFromVirtualDatabase(int dbid)
+    {
+        return MainActivity.databaseInterface.getIngredientsFromVirtualDatabase(dbid);
     }
 	
 	/**

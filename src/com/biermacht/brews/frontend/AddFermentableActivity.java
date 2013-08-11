@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Spinner;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -29,19 +30,22 @@ import android.view.*;
 public class AddFermentableActivity extends Activity implements OnClickListener {
 
     // Main view - holds all the rows
-    private ViewGroup mainView;
+    public ViewGroup mainView;
 
     // Alert builder
-    private AlertBuilder alertBuilder;
+    public AlertBuilder alertBuilder;
 
     // Important things
-    private OnClickListener onClickListener;
+    public OnClickListener onClickListener;
 
     // LayoutInflater
     LayoutInflater inflater;
 
     // Recipe we are editing
-    private Recipe mRecipe;
+    public Recipe mRecipe;
+
+    // IDs received in intent
+    long id;
 
     // IngredientHandler to get ingredient arrays
     IngredientHandler ingredientHandler;
@@ -50,29 +54,29 @@ public class AddFermentableActivity extends Activity implements OnClickListener 
     Fermentable fermentable;
 
     // Editable rows to display
-    private Spinner fermentableSpinner;
-    private View nameView;
-    private View colorView;
-    private View gravityView;
-    private View amountView;
-    private View timeView;
+    public Spinner fermentableSpinner;
+    public View nameView;
+    public View colorView;
+    public View gravityView;
+    public View amountView;
+    public View timeView;
 
     // Titles from rows
-    private TextView nameViewTitle;
-    private TextView colorViewTitle;
-    private TextView gravityViewTitle;
-    private TextView amountViewTitle;
-    private TextView timeViewTitle;
+    public TextView nameViewTitle;
+    public TextView colorViewTitle;
+    public TextView gravityViewTitle;
+    public TextView amountViewTitle;
+    public TextView timeViewTitle;
 
     // Content from rows
-    private TextView nameViewText;
-    private TextView colorViewText;
-    private TextView gravityViewText;
-    private TextView amountViewText;
-    private TextView timeViewText;
+    public TextView nameViewText;
+    public TextView colorViewText;
+    public TextView gravityViewText;
+    public TextView amountViewText;
+    public TextView timeViewText;
 
     // Spinner array declarations
-    private ArrayList<Ingredient> fermentablesArray;
+    public ArrayList<Ingredient> fermentablesArray;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,8 +102,18 @@ public class AddFermentableActivity extends Activity implements OnClickListener 
         findViewById(R.id.delete_button).setVisibility(View.GONE);
         
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-        mRecipe = Utils.getRecipeWithId(id);
+        id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+
+        // Acquire recipe
+        try
+        {
+            mRecipe = Utils.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
 
         // On click listener
         onClickListener = new View.OnClickListener() {

@@ -72,7 +72,8 @@ public class InstructionViewFragment extends Fragment {
 	
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-			inflater.inflate(R.menu.fragment_instruction_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+	    inflater.inflate(R.menu.fragment_instruction_menu, menu);
 	}
 	
 }
