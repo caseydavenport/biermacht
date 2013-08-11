@@ -3,6 +3,8 @@ package com.biermacht.brews.ingredient;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.biermacht.brews.utils.Constants;
+
 public abstract class Ingredient implements Parcelable {
 	
 	// Beer XML 1.0 Required Fields (To be inherited) =================
@@ -15,6 +17,7 @@ public abstract class Ingredient implements Parcelable {
 	private long id;                        // Lookup ID for database                  
 	private long ownerId;                   // ID of recipe that contains this
     private double inventory;               // Amount in inventory (standard units)
+    private int databaseId;                // Which virtual database to store this ing in
 	
 	// Static values =================================================
 	// ===============================================================
@@ -41,7 +44,8 @@ public abstract class Ingredient implements Parcelable {
 		this.name = name;
 		this.id = -1;
 		this.ownerId = -1;
-	}
+        this.databaseId = Constants.INGREDIENT_DB_DEFAULT;
+    }
 
     public Ingredient(Parcel p)
     {
@@ -50,6 +54,7 @@ public abstract class Ingredient implements Parcelable {
         setId(p.readLong());
         setOwnerId(p.readLong());
         setBeerXmlStandardInventory(p.readDouble());
+        setDatabaseId(p.readInt());
     }
 
     @Override
@@ -61,6 +66,7 @@ public abstract class Ingredient implements Parcelable {
         p.writeLong(id);
         p.writeLong(ownerId);
         p.writeDouble(inventory);
+        p.writeInt(databaseId);
     }
 
 	// Abstract methods of Ingredient
@@ -107,6 +113,24 @@ public abstract class Ingredient implements Parcelable {
 	{
 		return Ingredient.USE_OTHER;
 	}
+
+    public boolean setShowInLists()
+    {
+        if (this.databaseId > Constants.INGREDIENT_DB_DEFAULT)
+            return true;
+        else
+            return false;
+    }
+
+    public int getDatabaseId()
+    {
+        return this.databaseId;
+    }
+
+    public void setDatabaseId(int i)
+    {
+        this.databaseId = i;
+    }
 
     // Universal Setters and getters
     public double getBeerXmlStandardInventory()

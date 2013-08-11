@@ -9,6 +9,7 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
@@ -106,7 +107,7 @@ public class AddHopsActivity extends Activity {
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
+        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
 
         // On click listener

@@ -15,6 +15,7 @@ import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.ingredient.*;
 import com.biermacht.brews.recipe.*;
+import com.biermacht.brews.utils.Constants;
 
 public class DatabaseInterface {
 	
@@ -66,6 +67,7 @@ public class DatabaseInterface {
 	private String[] ingredientAllColumns = {
 			DatabaseHelper.ING_COL_ID,
 			DatabaseHelper.ING_COL_OWNER_ID,
+            DatabaseHelper.ING_COL_DB_ID,
 			DatabaseHelper.ING_COL_TYPE,
 			DatabaseHelper.ING_COL_NAME,
 			DatabaseHelper.ING_COL_DESC,
@@ -279,76 +281,82 @@ public class DatabaseInterface {
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
 	}
 
-	private void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id) {
-		
-		// Load up values to store
-		ContentValues values = new ContentValues();
-		
+	public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id)
+    {
 		for (Ingredient ing : ingredientList)
 		{
-			// Load up values to store
-			values.put(DatabaseHelper.ING_COL_OWNER_ID, id);
-			values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
-			values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
-			values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
-			values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
-			values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
-			values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
-			values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
-            values.put(DatabaseHelper.ING_COL_INVENTORY, ing.getBeerXmlStandardInventory());
-			
-			// Grain specific values
-			if (ing.getType().equals(Ingredient.FERMENTABLE))
-			{
-				Fermentable fer = (Fermentable) ing;
-				values.put(DatabaseHelper.ING_FR_COL_TYPE, fer.getFermentableType());
-				values.put(DatabaseHelper.ING_FR_COL_YIELD, fer.getYield());
-				values.put(DatabaseHelper.ING_FR_COL_COLOR, fer.getLovibondColor());
-				values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
-				values.put(DatabaseHelper.ING_FR_COL_MAX_IN_BATCH, fer.getMaxInBatch());
-				values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
-			}
-			
-			// Hop specific values
-			if (ing.getType().equals(Ingredient.HOP))
-			{
-				Hop hop = (Hop) ing;
-				values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
-				values.put(DatabaseHelper.ING_HP_COL_ALPHA, hop.getAlphaAcidContent());
-				values.put(DatabaseHelper.ING_HP_COL_USE, hop.getUse());
-				values.put(DatabaseHelper.ING_HP_COL_TIME, hop.getTime());
-				values.put(DatabaseHelper.ING_HP_COL_FORM, hop.getForm());
-				values.put(DatabaseHelper.ING_HP_COL_ORIGIN, hop.getOrigin());
-			}
-			
-			// Yeast specific values
-			if (ing.getType().equals(Ingredient.YEAST))
-			{
-				Yeast yeast = (Yeast) ing;
-				values.put(DatabaseHelper.ING_YS_COL_TYPE, yeast.getYeastType());
-				values.put(DatabaseHelper.ING_YS_COL_FORM, yeast.getForm());
-				values.put(DatabaseHelper.ING_YS_COL_MIN_TEMP, yeast.getMinTemp() );
-				values.put(DatabaseHelper.ING_YS_COL_MAX_TEMP, yeast.getMaxTemp());
-				values.put(DatabaseHelper.ING_YS_COL_ATTENUATION, yeast.getAttenuation());
-				values.put(DatabaseHelper.ING_YS_COL_NOTES, yeast.getNotes());
-				values.put(DatabaseHelper.ING_YS_COL_BEST_FOR, yeast.getBestFor());
-			}
-			
-			// Misc values
-			if (ing.getType().equals(Ingredient.MISC))
-			{
-				Misc misc = (Misc) ing;
-				values.put(DatabaseHelper.ING_MC_COL_TYPE, misc.getMiscType());
-				values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
-				values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
-				values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
-				values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
-			}
-			
-			database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
-			values.clear();
+            addIngredientToDatabase(ing, id);
 		}
 	}
+
+    public void addIngredientToDatabase(Ingredient ing, long id)
+    {
+        // values stored here
+        ContentValues values = new ContentValues();
+
+        // Load up values to store
+        values.put(DatabaseHelper.ING_COL_OWNER_ID, id);
+        values.put(DatabaseHelper.ING_COL_DB_ID, ing.getDatabaseId());
+        values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
+        values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
+        values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
+        values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
+        values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
+        values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
+        values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
+        values.put(DatabaseHelper.ING_COL_INVENTORY, ing.getBeerXmlStandardInventory());
+
+        // Grain specific values
+        if (ing.getType().equals(Ingredient.FERMENTABLE))
+        {
+            Fermentable fer = (Fermentable) ing;
+            values.put(DatabaseHelper.ING_FR_COL_TYPE, fer.getFermentableType());
+            values.put(DatabaseHelper.ING_FR_COL_YIELD, fer.getYield());
+            values.put(DatabaseHelper.ING_FR_COL_COLOR, fer.getLovibondColor());
+            values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
+            values.put(DatabaseHelper.ING_FR_COL_MAX_IN_BATCH, fer.getMaxInBatch());
+            values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
+        }
+
+        // Hop specific values
+        if (ing.getType().equals(Ingredient.HOP))
+        {
+            Hop hop = (Hop) ing;
+            values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
+            values.put(DatabaseHelper.ING_HP_COL_ALPHA, hop.getAlphaAcidContent());
+            values.put(DatabaseHelper.ING_HP_COL_USE, hop.getUse());
+            values.put(DatabaseHelper.ING_HP_COL_TIME, hop.getTime());
+            values.put(DatabaseHelper.ING_HP_COL_FORM, hop.getForm());
+            values.put(DatabaseHelper.ING_HP_COL_ORIGIN, hop.getOrigin());
+        }
+
+        // Yeast specific values
+        if (ing.getType().equals(Ingredient.YEAST))
+        {
+            Yeast yeast = (Yeast) ing;
+            values.put(DatabaseHelper.ING_YS_COL_TYPE, yeast.getYeastType());
+            values.put(DatabaseHelper.ING_YS_COL_FORM, yeast.getForm());
+            values.put(DatabaseHelper.ING_YS_COL_MIN_TEMP, yeast.getMinTemp() );
+            values.put(DatabaseHelper.ING_YS_COL_MAX_TEMP, yeast.getMaxTemp());
+            values.put(DatabaseHelper.ING_YS_COL_ATTENUATION, yeast.getAttenuation());
+            values.put(DatabaseHelper.ING_YS_COL_NOTES, yeast.getNotes());
+            values.put(DatabaseHelper.ING_YS_COL_BEST_FOR, yeast.getBestFor());
+        }
+
+        // Misc values
+        if (ing.getType().equals(Ingredient.MISC))
+        {
+            Misc misc = (Misc) ing;
+            values.put(DatabaseHelper.ING_MC_COL_TYPE, misc.getMiscType());
+            values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
+            values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
+            values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
+            values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
+        }
+
+        database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
+        values.clear();
+    }
 	
 	public boolean updateExistingIngredient(Ingredient ing)
 	{
@@ -357,6 +365,7 @@ public class DatabaseInterface {
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.ING_COL_OWNER_ID, ing.getOwnerId());
+        values.put(DatabaseHelper.ING_COL_DB_ID, ing.getDatabaseId());
 		values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
 		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
 		values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
@@ -579,6 +588,28 @@ public class DatabaseInterface {
 			
 		return i;
 	}
+
+    /**
+     * Returns ingredients from the given database with the given ingredient type
+     */
+    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(int databaseid, String type)
+    {
+        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + databaseid + " AND " +
+                             DatabaseHelper.ING_COL_TYPE + "=?";
+        String[] args = {type};
+        Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, args, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast())
+        {
+            list.add(cursorToIngredient(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return list;
+    }
 	
 	/**
 	 * returns arraylist of all recipes in database
@@ -593,8 +624,7 @@ public class DatabaseInterface {
 		cursor.moveToFirst();
 		while(!cursor.isAfterLast())
 		{
-			Recipe recipe = cursorToRecipe(cursor);
-			list.add(recipe);
+			list.add(cursorToRecipe(cursor));
 			cursor.moveToNext();
 		}
 		
@@ -891,6 +921,7 @@ public class DatabaseInterface {
 		// Ingredient type agnostic stuff
 		long id = cursor.getLong(cid);                          cid++;
 		long ownerId = cursor.getLong(cid);						cid++;
+        int databaseId = cursor.getInt(cid);                    cid++;
 		String ingType = cursor.getString(cid);					cid++;
 		String name = cursor.getString(cid);					cid++;
 		String description = cursor.getString(cid);				cid++;
@@ -914,6 +945,7 @@ public class DatabaseInterface {
 			
 			Fermentable fer = new Fermentable(name);
 			fer.setId(id);
+            fer.setDatabaseId(databaseId);
             fer.setBeerXmlStandardInventory(inventory);
 			fer.setOwnerId(ownerId);
 			fer.setShortDescription(description);
@@ -944,6 +976,7 @@ public class DatabaseInterface {
 			String origin = cursor.getString(cid);				cid++;
 			
 			Hop hop = new Hop(name);
+            hop.setDatabaseId(databaseId);
             hop.setBeerXmlStandardInventory(inventory);
 			hop.setId(id);
 			hop.setOwnerId(ownerId);
@@ -976,6 +1009,7 @@ public class DatabaseInterface {
 			String bestFor = cursor.getString(cid);				cid++;
 			
 			Yeast yeast = new Yeast(name);
+            yeast.setDatabaseId(databaseId);
             yeast.setBeerXmlStandardInventory(inventory);
 			yeast.setId(id);
 			yeast.setOwnerId(ownerId);
@@ -1007,6 +1041,7 @@ public class DatabaseInterface {
 			String use = cursor.getString(cid);            cid++;
 			
 			misc.setId(id);
+            misc.setDatabaseId(databaseId);
             misc.setBeerXmlStandardInventory(inventory);
 			misc.setOwnerId(ownerId);
 			misc.setShortDescription(description);

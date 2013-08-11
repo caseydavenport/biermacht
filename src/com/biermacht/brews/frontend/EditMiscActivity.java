@@ -91,9 +91,9 @@ public class EditMiscActivity extends Activity {
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
 
         // Get recipe and misc from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
+        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
-        misc = (Misc) getIntent().getParcelableExtra(Utils.INTENT_INGREDIENT);
+        misc = (Misc) getIntent().getParcelableExtra(Constants.INTENT_INGREDIENT);
 
         // On click listener
         onClickListener = new View.OnClickListener() {

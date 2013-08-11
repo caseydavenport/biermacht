@@ -17,48 +17,8 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 public class Utils {
-		
-	// New items, and objects of type "other"
-	public static BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
-    public static Recipe NEW_RECIPE = new Recipe("New Recipe");
-
-	// Intent put values
-	public static String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
-	public static String INTENT_PROFILE_ID = "biermacht.brews.profile.id";
-	public static String INTENT_INGREDIENT_ID = "biermacht.brews.ingredient.id";
-    public static String INTENT_INGREDIENT = "biermacht.brews.ingredient";
-    public static String INTENT_TYPE = "biermacht.brews.intent.type";
-
-    // Broadcast actions
-    public static String BROADCASE_TIMER = "biermacht.brews.timer";
-    public static String BROADCAST_TIMER_VALUE = "biermacht.brews.broadcast.timer.seconds";
-
-    // Intent types
-    public static String INTENT_TYPE_UPDATE_TIMER = "biermacht.brews.intent.update.timer";
-
-
-
-    // Constants
-    public static int INVALID_ID = -1; // TODO: Throw exceptions in get methods if this is passed
-	
 	/**
-	 * Returns a list of strings corresponding to ingredient objects
-	 * @return
-	 */
-	public static ArrayList<String> getIngredientStringList(ArrayList<Ingredient> list)
-	{
-		ArrayList<Ingredient> listA = list;
-		ArrayList<String> listToReturn = new ArrayList<String>();
-		
-		for (Ingredient b : listA)
-		{
-			listToReturn.add(b.toString());
-		}	
-		return listToReturn;
-	}
-	
-	/**
-	 * Determins if the given value is within the given range
+	 * Determines if the given value is within the given range
 	 * @param a
 	 * @param low
 	 * @param high
@@ -70,11 +30,6 @@ public class Utils {
 			return true;
 		else
 			return false;
-	}
-	
-	public static DatabaseInterface getDatabaseInterface()
-	{
-	    return MainActivity.databaseInterface;
 	}
 
     public static int getHours(double time, String units)
@@ -193,7 +148,8 @@ public class Utils {
 		{
 			for (Ingredient i : r.getIngredientList())
 			{
-				deleteIngredient(i);
+                if (i.getDatabaseId() == Constants.INGREDIENT_DB_DEFAULT)
+				    deleteIngredient(i);
 			}
 			bool = deleteRecipe(r);
 		}
@@ -229,9 +185,39 @@ public class Utils {
 	{
 		return MainActivity.databaseInterface.getIngredientWithId(id);
 	}
+
+    /**
+     * Adds an ingredient to the permanent database.  This database is for XML imported
+     * ingredients, and is displayed in selection lists
+     */
+    public static void addIngredientListToPermanentDatabase(ArrayList<Ingredient> list, long ownerId)
+    {
+        for (Ingredient i : list)
+        {
+            i.setDatabaseId(Constants.INGREDIENT_DB_PERMANENT);
+            MainActivity.databaseInterface.addIngredientToDatabase(i, ownerId);
+        }
+    }
+
+    /**
+     * Adds an ingredient to the custom database.  This database is for user defined
+     * ingredients, and is displayed in selection lists
+     */
+    public static void addIngredientToCustomDatabase(Ingredient i, long ownerId)
+    {
+        i.setDatabaseId(Constants.INGREDIENT_DB_CUSTOM);
+        MainActivity.databaseInterface.addIngredientToDatabase(i, ownerId);
+    }
+
+    /**
+     * Returns all ingredients in the given database with the given ingredient type
+     */
+    public static ArrayList<Ingredient> getIngredientsFromVirtualDatabase(int dbid, String type)
+    {
+        return MainActivity.databaseInterface.getIngredientsFromVirtualDatabase(dbid, type);
+    }
 	
 	/**
-	 * 
 	 * @return Beer XML standard version in use
 	 */
 	public static int getXmlVersion()

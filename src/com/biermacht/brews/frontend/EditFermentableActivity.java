@@ -20,6 +20,7 @@ import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 import android.view.*;
@@ -97,8 +98,8 @@ public class EditFermentableActivity extends Activity implements OnClickListener
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
-        long grainId = getIntent().getLongExtra(Utils.INTENT_INGREDIENT_ID, Utils.INVALID_ID);
+        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+        long grainId = getIntent().getLongExtra(Constants.INTENT_INGREDIENT_ID, Constants.INVALID_ID);
         mRecipe = MainActivity.databaseInterface.getRecipeWithId(id);
 
         // Get the fermentable from the database

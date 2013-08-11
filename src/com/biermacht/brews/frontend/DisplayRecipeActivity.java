@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.frontend.adapters.*;
@@ -45,7 +46,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
             appContext = getApplicationContext();
 
             // Get recipe from calling activity
-            id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
+            id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
             mRecipe = Utils.getRecipeWithId(id);
 
             // ViewPager and pagerAdapter for Slidy tabs!
@@ -122,49 +123,49 @@ public class DisplayRecipeActivity extends FragmentActivity {
 
             case R.id.add_fermentable:
     	    	i = new Intent(this.appContext, AddFermentableActivity.class);
-    	    	i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+    	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
 
             case R.id.add_hop:
     	    	i = new Intent(this.appContext, AddHopsActivity.class);
-    	    	i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+    	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
     		    
             case R.id.add_yeast:
     	    	i = new Intent(this.appContext, AddYeastActivity.class);
-    	    	i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+    	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
 				
 			case R.id.add_misc:
     	    	i = new Intent(this.appContext, AddMiscActivity.class);
-    	    	i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+    	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
     		    
             case R.id.menu_timer:
             	i = new Intent(this.appContext, BrewTimerActivity.class);
-                i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+                i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
                 startActivity(i);
             	return true;
     		    
             case R.id.menu_edit_recipe:
           		i = new Intent(this.appContext, EditRecipeActivity.class);
-          		i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+          		i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
           		startActivity(i);
 				return true;
 			
 			case R.id.menu_edit_mash_profile:
 				i = new Intent(this.appContext, EditMashProfileActivity.class);
-				i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+				i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
 				startActivity(i);
 				return true;
 			
 			case R.id.menu_edit_fermentation_profile:
 				i = new Intent(this.appContext, EditFermentationProfileActivity.class);
-				i.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+				i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
 				startActivity(i);
 				return true;
         }

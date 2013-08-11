@@ -33,7 +33,27 @@ public class IngredientHandler {
 	{
 		this.mContext = c;
 	}
-	
+
+    // First time use - put ingredients into SQLite
+    public void ImportIngredientAssets()
+    {
+        try
+        {
+            this.fermentablesList = getFermentablesFromXml();
+            this.yeastsList = getFermentablesFromXml();
+            this.hopsList = getHopsFromXml();
+            this.miscsList = getMiscsFromXml();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Add them all to the database
+        Utils.addIngredientListToPermanentDatabase(fermentablesList, Constants.OWNER_NONE);
+        Utils.addIngredientListToPermanentDatabase(yeastsList, Constants.OWNER_NONE);
+        Utils.addIngredientListToPermanentDatabase(hopsList, Constants.OWNER_NONE);
+        Utils.addIngredientListToPermanentDatabase(miscsList, Constants.OWNER_NONE);
+    }
+
 	/**
 	 * Returns a list of valid fermentables for use in recipes
 	 * @return ArrayList of ingredient objects
@@ -42,12 +62,9 @@ public class IngredientHandler {
 	{
 		if (this.fermentablesList == null)
 		{
-			try 
-			{
-				this.fermentablesList = getFermentablesFromXml();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+                fermentablesList = new ArrayList<Ingredient>();
+				fermentablesList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.FERMENTABLE));
+                fermentablesList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.FERMENTABLE));
 		}
 		
 		return this.fermentablesList;
@@ -61,12 +78,9 @@ public class IngredientHandler {
 	{
 		if (this.yeastsList == null)
 		{
-			try 
-			{
-				this.yeastsList = getYeastsFromXml();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+            yeastsList = new ArrayList<Ingredient>();
+            yeastsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.YEAST));
+            yeastsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.YEAST));
 		}
 		
 		return this.yeastsList;
@@ -80,12 +94,9 @@ public class IngredientHandler {
 	{
 		if (this.hopsList == null)
 		{
-			try 
-			{
-				this.hopsList = getHopsFromXml();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+            hopsList = new ArrayList<Ingredient>();
+            hopsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.HOP));
+            hopsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.HOP));
 		}
 		
 		return this.hopsList;
@@ -99,12 +110,9 @@ public class IngredientHandler {
 	{
 		if (this.miscsList == null)
 		{
-			try 
-			{
-				this.miscsList = getMiscsFromXml();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+            miscsList = new ArrayList<Ingredient>();
+            miscsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.MISC));
+            miscsList.addAll(Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.MISC));
 		}
 
 		return this.miscsList;
@@ -121,7 +129,7 @@ public class IngredientHandler {
 			try 
 			{
 				this.styleList = getStylesFromXml();
-				this.styleList.add(0, Utils.BEERSTYLE_OTHER);
+				this.styleList.add(0, Constants.BEERSTYLE_OTHER);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

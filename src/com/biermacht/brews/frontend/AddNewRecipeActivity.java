@@ -23,6 +23,7 @@ import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.utils.AlertBuilder;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.frontend.adapters.*;
 import android.widget.*;
@@ -97,7 +98,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Set values
-        mRecipe = Utils.NEW_RECIPE;
+        mRecipe = Constants.NEW_RECIPE;
         style = mRecipe.getStyle();
         profile = mRecipe.getMashProfile();
         type = mRecipe.getType();

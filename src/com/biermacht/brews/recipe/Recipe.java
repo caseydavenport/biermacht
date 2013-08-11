@@ -2,6 +2,7 @@ package com.biermacht.brews.recipe;
 
 import android.util.Log;
 
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,7 +93,7 @@ public class Recipe {
 		this.name = s;	     
 		this.setVersion(1);			
 		this.setType(EXTRACT);            
-		this.style = Utils.BEERSTYLE_OTHER;     
+		this.style = Constants.BEERSTYLE_OTHER;
 		this.setBrewer("Unknown Brewer");		     
 		this.setDisplayBatchSize(5);
 		this.setDisplayBoilSize(2.5);

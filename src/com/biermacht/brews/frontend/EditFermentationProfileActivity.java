@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
@@ -47,7 +48,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
+        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
 
         // Disable delete button for this view

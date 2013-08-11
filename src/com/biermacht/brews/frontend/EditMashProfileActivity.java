@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
@@ -42,7 +43,7 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
         setContentView(R.layout.activity_edit_mash_profile);
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, 0);
+        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
 		mashProfile = mRecipe.getMashProfile();
 		

@@ -60,6 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Column name defines for INGREDIENTS
 	public static final String ING_COL_ID = "_id";
 	public static final String ING_COL_OWNER_ID = "ownerId";
+    public static final String ING_COL_DB_ID = "databaseId";
 	public static final String ING_COL_TYPE = "ingType";
 	public static final String ING_COL_NAME = "name";
 	public static final String ING_COL_DESC = "description";
@@ -201,6 +202,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ "("
 				+ ING_COL_ID + " integer primary key autoincrement, "
 				+ ING_COL_OWNER_ID + " long not null, "
+                + ING_COL_DB_ID + " int not null, "
 				+ ING_COL_TYPE + " text not null, "
 				+ ING_COL_NAME + " text not null, "
 				+ ING_COL_DESC + " text not null, "

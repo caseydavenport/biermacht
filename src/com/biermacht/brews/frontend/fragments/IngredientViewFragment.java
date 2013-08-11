@@ -22,6 +22,7 @@ import com.biermacht.brews.frontend.EditYeastActivity;
 import com.biermacht.brews.frontend.adapters.IngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
 import android.content.*;
 import com.biermacht.brews.frontend.*;
@@ -63,8 +64,8 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.FERMENTABLE))
 				{
 			  		Intent editGrainIntent = new Intent(c, EditFermentableActivity.class);
-			  		editGrainIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
-				    editGrainIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
+			  		editGrainIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
+				    editGrainIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
 			  		startActivity(editGrainIntent);
 				}
 			
@@ -72,8 +73,8 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.HOP))
 				{
 			  		Intent editHopIntent = new Intent(c, EditHopActivity.class);
-			  		editHopIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
-                    editHopIntent.putExtra(Utils.INTENT_INGREDIENT, ing);
+			  		editHopIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
+                    editHopIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
 			  		startActivity(editHopIntent);
 				}
 				
@@ -81,8 +82,8 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.YEAST))
 				{
 			  		Intent editYeastIntent = new Intent(c, EditYeastActivity.class);
-			  		editYeastIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
-			  		editYeastIntent.putExtra(Utils.INTENT_INGREDIENT_ID, ing.getId());
+			  		editYeastIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
+			  		editYeastIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
 			  		startActivity(editYeastIntent);
 				}
 				
@@ -90,8 +91,8 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.MISC))
 				{
 			  		Intent editMiscIntent = new Intent(c, EditMiscActivity.class);
-			  		editMiscIntent.putExtra(Utils.INTENT_RECIPE_ID, r.getId());
-                    editMiscIntent.putExtra(Utils.INTENT_INGREDIENT, ing);
+			  		editMiscIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
+                    editMiscIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
 			  		startActivity(editMiscIntent);
 				}
 			}

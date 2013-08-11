@@ -38,6 +38,7 @@ import com.biermacht.brews.frontend.adapters.BrewTimerCollectionPagerAdapter;
 import com.biermacht.brews.frontend.fragments.BrewTimerStepFragment;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Utils;
 
@@ -143,8 +144,8 @@ public class BrewTimerActivity extends FragmentActivity {
 
         // Broadcast receiver, alarm manager, intent, for counting down
         bcr = new BCReceiver();
-        registerReceiver(bcr, new IntentFilter(Utils.BROADCASE_TIMER) );
-        pi = PendingIntent.getBroadcast(this, 0, new Intent(Utils.BROADCASE_TIMER), 0);
+        registerReceiver(bcr, new IntentFilter(Constants.BROADCAST_TIMER) );
+        pi = PendingIntent.getBroadcast(this, 0, new Intent(Constants.BROADCAST_TIMER), 0);
         am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
         pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "BrewTimerWakeLock");
@@ -170,7 +171,7 @@ public class BrewTimerActivity extends FragmentActivity {
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        id = getIntent().getLongExtra(Utils.INTENT_RECIPE_ID, Utils.INVALID_ID);
+        id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
         mRecipe = Utils.getRecipeWithId(id);
 
         // Set title based on recipe name
@@ -364,7 +365,7 @@ public class BrewTimerActivity extends FragmentActivity {
 
         Intent notificationIntent = new Intent(ctx, BrewTimerActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        notificationIntent.putExtra(Utils.INTENT_RECIPE_ID, mRecipe.getId());
+        notificationIntent.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
 
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 

@@ -7,10 +7,10 @@ import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
-public class InitializeAssets extends AsyncTask<String, Void, String> {
+public class InitializeTask extends AsyncTask<String, Void, String> {
 
     private IngredientHandler ingredientHandler;
-    public InitializeAssets(IngredientHandler i)
+    public InitializeTask(IngredientHandler i)
     {
         this.ingredientHandler = i;
     }

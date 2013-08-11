@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
@@ -29,7 +28,9 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.tasks.InitializeAssets;
+import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
+import com.biermacht.brews.tasks.InitializeTask;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 import java.io.*;
@@ -42,7 +43,7 @@ public class MainActivity extends Activity{
 	// Poorly done globally used shit
 	public static DatabaseInterface databaseInterface;
 	public static IngredientHandler ingredientHandler;
-	public static Boolean isFirstUse;
+	public static Boolean usedBefore;
 	
     //Declare views here
     private ListView drawerListView;
@@ -68,13 +69,27 @@ public class MainActivity extends Activity{
         
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Instantiate my ingredient handler
+        ingredientHandler = new IngredientHandler(getApplicationContext());
+
+        // Instantiate my database interface
+        databaseInterface = new DatabaseInterface(getApplicationContext());
+        databaseInterface.open();
         
         // SHARED PREFERENCES JUNK ALL GOES HERE!
-        SharedPreferences preferences = this.getSharedPreferences("com.biermacht.brews", Context.MODE_PRIVATE);
-        isFirstUse = preferences.getBoolean("com.biermacht.brews.firstUse", false);
-        if (!isFirstUse)
+        SharedPreferences preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+        usedBefore = preferences.getBoolean(Constants.PREF_USED_BEFORE, false);
+        if (!usedBefore)
         {
-        	preferences.edit().putBoolean("com.biermacht.brews.firstUse", true).commit();
+            // We've used the app! Woo!
+        	preferences.edit().putBoolean(Constants.PREF_USED_BEFORE, true).commit();
+            new ImportXmlIngredientsTask(this).execute("");
+        }
+        else
+        {
+            // Async Initialize Assets on startup
+            new InitializeTask(ingredientHandler).execute("");
         }
                 
         // Initialize views
@@ -83,9 +98,9 @@ public class MainActivity extends Activity{
         // Create list for drawer
         drawerItems = new ArrayList<String>();
         drawerItems.add(DRAWER_RECIPES);
-        drawerItems.add(DRAWER_GRAVITY);
         drawerItems.add(DRAWER_MASH_EDIT);
         drawerItems.add(DRAWER_EQUIP_EDIT);
+        drawerItems.add(DRAWER_GRAVITY);
 
         // Set the adapter and click listener for the list view
         drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.row_layout_drawer_item, drawerItems));
@@ -104,7 +119,7 @@ public class MainActivity extends Activity{
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view)
             {
-                getActionBar().setTitle(R.string.title_activity_main);
+                getActionBar().setTitle(drawerItems.get(selectedItem));
             }
 
             /** Called when a drawer has settled in a completely open state. */
@@ -117,20 +132,10 @@ public class MainActivity extends Activity{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-        
-        // Declare my database interface 
-        databaseInterface = new DatabaseInterface(getApplicationContext());
-        databaseInterface.open();
-        
-        // Declare my ingredient handler
-        ingredientHandler = new IngredientHandler(getApplicationContext());
 
         // Set up fragment List
         selectedItem = 0;
         updateFragments();
-
-        // Async Initialize Assets on startup
-        new InitializeAssets(ingredientHandler).execute("");
     }
     
     @Override
@@ -244,7 +249,7 @@ public class MainActivity extends Activity{
 
         // Highlight the selected item, update the title, and close the drawer
         drawerListView.setItemChecked(pos, true);
-        setTitle("");
+        setTitle(drawerItems.get(pos));
         mDrawerLayout.closeDrawer(drawerListView);
 
         // Set currently selected item
@@ -254,6 +259,13 @@ public class MainActivity extends Activity{
     @Override
     public void setTitle(CharSequence title) {
         getActionBar().setTitle(title);
+    }
+
+    private void updateFragments()
+    {
+        fragmentList = new ArrayList<Fragment>();
+        fragmentList.add(new RecipesFragment());
+        selectItem(selectedItem);
     }
 
     private class ImportRecipes extends AsyncTask<String, Void, String> {
@@ -313,12 +325,5 @@ public class MainActivity extends Activity{
         @Override
         protected void onProgressUpdate(Void... values) {
         }
-    }
-
-    private void updateFragments()
-    {
-        fragmentList = new ArrayList<Fragment>();
-        fragmentList.add(new RecipesFragment());
-        selectItem(selectedItem);
     }
 }
