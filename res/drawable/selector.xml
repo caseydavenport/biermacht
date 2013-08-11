@@ -4,24 +4,21 @@
 	<!-- pressed -->
 	<item android:state_pressed="true" >
 		<shape android:shape="rectangle" android:padding="10dp" >  
-			<solid android:color="@color/selected"/> 
-			<stroke android:width="1px" android:color="#33354d" />
+			<solid android:color="@color/selected"/>
 		</shape>
 	</item>
 
 	<!-- focused -->
 	<item android:state_focused="true" >
 		<shape android:shape="rectangle" android:padding="10dp" >  
-			<solid android:color="@color/selected"/> 
-			<stroke android:width="1px" android:color="#33354d" />
+			<solid android:color="@color/selected"/>
 		</shape>
 	</item>
 
 	<!-- default -->
 	<item>
 		<shape android:shape="rectangle">  
-			<solid android:color="@color/transparent"/> 
-			<stroke android:width="0px" android:color="#BFBFBF" />
+			<solid android:color="@color/transparent"/>
 		</shape>
 	</item>
 

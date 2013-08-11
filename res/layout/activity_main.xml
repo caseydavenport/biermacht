@@ -1,94 +1,26 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@color/transparent"
-    android:orientation="vertical">
-	
-	<!-- Colored bar at top -->
-	<TextView android:id="@+id/colored_bar"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="top"
-		android:focusable="true"
-		android:focusableInTouchMode="true"
-		android:paddingTop="4dp"
-		android:paddingBottom="4dp"
-		android:textColor="#fff"
-		android:background="@color/theme_orange"
-		android:layout_alignParentTop="true"
-		android:text="">
-		<requestFocus />
-	</TextView>    
-    
-    <LinearLayout android:id="@+id/first_ll"
-		android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:padding="0dip"
-		android:background="@color/activity_background"
-        android:orientation="horizontal"
-        android:layout_below="@id/colored_bar" >
-		    
-		    <ListView
-		        android:id="@+id/recipe_list"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:background="@drawable/bg_white"
-		        android:padding="0dip"
-		        android:drawSelectorOnTop="true"
-		        android:listSelector="@drawable/selector" >
-		    </ListView>
-		    
-		    <TextView android:id="@+id/no_recipes_view"
-		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent" 
-		        android:background="#FFFFFF" 
-		        android:gravity="center"
-		        android:visibility="gone"
-		        android:onClick="onClick"
-		        android:textColor="@color/title_color"
-		        android:textSize="15dp"
-		        android:text="@string/no_recipes" />
-	    
-	    </LinearLayout>
-	
-	<LinearLayout android:id="@+id/recipe_search_view"
-		android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="40dip"
-		android:layout_marginTop="0dip"
-		android:padding="0dip"
-		android:layout_gravity="center"
-		android:background="@color/activity_background"
-		android:layout_alignParentBottom="true"
-		android:visibility="gone">
+<android.support.v4.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText android:id="@+id/search_bar"
-            android:layout_width="0dip" 
-            android:layout_weight="1" 
-            android:layout_height="40dip" 
-            android:padding="0dip"
-			android:layout_marginLeft="10dip"
-			android:layout_marginTop="0dip"
-			android:layout_marginBottom="0dip"
-            android:background="#fff"
-            android:hint="@string/recipe_search_hint" />
+    <!-- The main content view -->
+    <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <ImageView android:id="@+id/search_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="40dip"
-            android:gravity="center"
-            android:focusable="false"
-            android:background="#fff"
-			android:layout_marginTop="0dip"
-			android:layout_marginBottom="0dip"
-			android:layout_marginRight="10dip"
-            android:paddingLeft="0dp"
-            android:paddingRight="10dp"
-            android:contentDescription="@string/search_icon_description"
-            android:src="@drawable/action_search" />
+    <!-- The navigation drawer -->
+    <ListView android:id="@+id/drawer_list"
+              android:layout_width="300dp"
+              android:layout_height="match_parent"
+              android:layout_gravity="start"
+              android:choiceMode="singleChoice"
+              android:divider="@color/drawer_divider"
+              android:dividerHeight="0dp"
+              android:drawSelectorOnTop="true"
+              android:listSelector="@color/divider"
+              android:background="@color/drawer_background"/>
 
-    </LinearLayout>
-	
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
 

@@ -4,7 +4,7 @@
 <!-- pressed -->
 <item android:state_pressed="true" >
 	<shape android:shape="rectangle" android:padding="10dp" >  
-	 	<solid android:color="@color/theme_orange"/> 
+	 	<solid android:color="@color/theme_main"/>
 	 	<stroke android:width="1px" android:color="#33354d" />
 	 	<corners android:bottomRightRadius="10dp"
 		   android:bottomLeftRadius="0dp"
@@ -16,7 +16,7 @@
 <!-- focused -->
 <item android:state_focused="true" >
 	<shape android:shape="rectangle" android:padding="10dp" >  
-	 	<solid android:color="@color/theme_orange"/> 
+	 	<solid android:color="@color/theme_main"/>
 	 	<stroke android:width="1px" android:color="#33354d" />
 	 	<corners android:bottomRightRadius="10dp"
 		   android:bottomLeftRadius="0dp"

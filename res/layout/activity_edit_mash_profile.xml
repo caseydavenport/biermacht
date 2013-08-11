@@ -15,7 +15,7 @@
 		android:paddingTop="4dp"
 		android:paddingBottom="4dp"
 		android:textColor="#fff"
-		android:background="@color/theme_orange"
+		android:background="@color/theme_main"
 		android:layout_alignParentTop="true"
 		android:text="">
 		<requestFocus />

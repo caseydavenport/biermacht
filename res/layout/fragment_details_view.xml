@@ -8,9 +8,9 @@
 	<ListView android:id="@+id/details_list" 
 		android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
 		android:background="@color/transparent"
-	    android:minHeight="4000dip" >
+        android:listSelector="@drawable/selector" >
 	</ListView>
 	
 	<View android:layout_width="fill_parent"
