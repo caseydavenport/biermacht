@@ -44,6 +44,27 @@ public class AlertBuilder {
                 .setNegativeButton(R.string.cancel, null);
     }
 
+    public AlertDialog.Builder editTextMultilineStringAlert(final TextView text, final TextView title)
+    {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_multiline, null);
+        final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
+        editText.setText(text.getText().toString());
+
+        return new AlertDialog.Builder(context)
+                .setTitle(title.getText().toString())
+                .setView(alertView)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        text.setText(editText.getText().toString());
+                    }
+
+                })
+
+                .setNegativeButton(R.string.cancel, null);
+    }
+
     public AlertDialog.Builder editTextIntegerAlert(final TextView text, final TextView title)
     {
         LayoutInflater factory = LayoutInflater.from(context);

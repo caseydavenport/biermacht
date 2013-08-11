@@ -336,9 +336,6 @@ public class EditHopActivity extends Activity {
 
                 hop.setName(hopName);
                 hop.setDisplayTime((int) time);
-                hop.setStartTime(startTime);
-                hop.setEndTime(endTime);
-                hop.setDisplayTime((int) time);
                 hop.setAlphaAcidContent(alpha);
                 hop.setDisplayAmount(weight);
                 hop.setUse(use);

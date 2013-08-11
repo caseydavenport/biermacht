@@ -29,16 +29,16 @@ public class AddMiscActivity extends Activity {
     private View.OnClickListener onClickListener;
 
     // LayoutInflater
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
 
     // Recipe we are editing
-    private Recipe mRecipe;
+    public Recipe mRecipe;
 
     // IngredientHandler to get ingredient arrays
     IngredientHandler ingredientHandler;
 
     // Holds the currently selected misc, and misc being edited
-    Misc misc;
+    public Misc misc;
 
     // Editable rows to display
     private Spinner miscSpinner;
@@ -54,9 +54,9 @@ public class AddMiscActivity extends Activity {
     private TextView timeViewTitle;
 
     // Content from rows
-    private TextView nameViewText;
-    private TextView amountViewText;
-    private TextView timeViewText;
+    public TextView nameViewText;
+    public TextView amountViewText;
+    public TextView timeViewText;
 
     // Spinner array declarations
     private ArrayList<Ingredient> miscArray;
@@ -64,8 +64,8 @@ public class AddMiscActivity extends Activity {
     private ArrayList<String> useArray;
 
     // Data storage for spinners
-	private String type;
-	private String use;
+	public String type;
+    public String use;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -312,8 +312,6 @@ public class AddMiscActivity extends Activity {
 
                 misc.setName(name);
                 misc.setTime(time);
-                misc.setStartTime(startTime);
-                misc.setEndTime(endTime);
                 misc.setDisplayAmount(amount, misc.getDisplayUnits());
                 misc.setMiscType(type);
                 misc.setUse(use);

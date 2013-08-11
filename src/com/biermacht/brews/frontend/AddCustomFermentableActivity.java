@@ -36,9 +36,48 @@ import java.util.ArrayList;
  */
 public class AddCustomFermentableActivity extends AddFermentableActivity {
 
+    // Views for rows
+    public View descriptionView;
+
+    // Titles from rows
+    public TextView descriptionViewTitle;
+
+    // Content from rows
+    public TextView descriptionViewText;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Create the description view
+        descriptionView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        descriptionView.setOnClickListener(onClickListener);
+        descriptionViewText = (TextView) descriptionView.findViewById(R.id.text);
+        descriptionViewTitle = (TextView) descriptionView.findViewById(R.id.title);
+        descriptionViewText.setText("No Description Provided");
+        descriptionViewTitle.setText("Description");
+
+        // Remove views we don't like
+        mainView.removeView(amountView);
+
+        // Add views we do!
+        mainView.addView(descriptionView);
+    }
+
+    @Override
+    public void onMissedClick(View v)
+    {
+        AlertDialog alert;
+        if (v.equals(descriptionView))
+            alert = alertBuilder.editTextMultilineStringAlert(descriptionViewText, descriptionViewTitle).create();
+        else
+        {
+            return;
+        }
+
+        // Force keyboard open and show popup
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alert.show();
     }
 
     @Override
@@ -66,7 +105,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
             boolean readyToGo = true;
             int time, endTime, startTime;
             double color, grav, amount;
-            String name;
+            String name, desc;
 
             try
             {
@@ -77,6 +116,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
                 time = Integer.parseInt(timeViewText.getText().toString());
                 endTime = mRecipe.getBoilTime();
                 startTime = endTime - time;
+                desc = descriptionViewText.getText().toString();
 
                 if (startTime > mRecipe.getBoilTime())
                     startTime = mRecipe.getBoilTime();
@@ -85,8 +125,8 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
                 fermentable.setLovibondColor(color);
                 fermentable.setGravity(grav);
                 fermentable.setDisplayAmount(amount);
-                fermentable.setStartTime(startTime);
-                fermentable.setEndTime(endTime);
+                fermentable.setTime(time);
+                fermentable.setShortDescription(desc);
             }
             catch (Exception e) {
                 Log.d("AddFermentable", "Hit exception on submit: " + e.toString());

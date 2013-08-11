@@ -283,8 +283,7 @@ public class EditFermentableActivity extends Activity implements OnClickListener
                 fermentable.setLovibondColor(color);
                 fermentable.setGravity(grav);
                 fermentable.setDisplayAmount(amount);
-                fermentable.setStartTime(startTime);
-                fermentable.setEndTime(endTime);
+                fermentable.setTime(time);
             }
             catch (Exception e) {
                 Log.d("AddFermentable", "Hit exception on submit: " + e.toString());

@@ -9,9 +9,9 @@ public class Yeast extends Ingredient {
 	// ================================================================
 	// Name - Inherited
 	// Version - Inherited
+    // Amount - Inherited
 	private String type;								// Ale, Lager, etc
 	private String form;								// Liquid, Dry, etc
-	private double amount;								// Amount in liters
 	
 	// Beer XML 1.0 Optional Fields ===================================
 	// ================================================================
@@ -143,29 +143,16 @@ public class Yeast extends Ingredient {
 	}
 
 	@Override
-	public void setStartTime(int startTime) {
-		// Start time to come later?
-	}
-
-	@Override
-	public void setEndTime(int endTime) {
-		// Yeasts shouldn't have an end time...
-	}
-
-	@Override
-	public int getStartTime() {
+	public int getTime()
+    {
 		return 0;
 	}
 
-	@Override
-	public int getEndTime() {
-		return 0;
-	}
-
-	@Override
-	public int getTime() {
-		return 0;
-	}
+    @Override
+    public void setTime(int time)
+    {
+        this.time = time;
+    }
 
 	@Override
 	public void setShortDescription(String description) {

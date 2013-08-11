@@ -40,7 +40,7 @@ public class IngredientHandler {
         try
         {
             this.fermentablesList = getFermentablesFromXml();
-            this.yeastsList = getFermentablesFromXml();
+            this.yeastsList = getYeastsFromXml();
             this.hopsList = getHopsFromXml();
             this.miscsList = getMiscsFromXml();
         } catch (IOException e) {

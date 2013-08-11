@@ -11,13 +11,15 @@ public abstract class Ingredient implements Parcelable {
 	// ================================================================
 	private String name;                    // Ingredient name
 	private int version;					// bXML Version being used
+    public double amount;                  // Amount in beerXML standard units
+    public int time;                       // Time ingredient is used - units vary based on use
 	
 	// Custom Fields ==================================================
 	// ================================================================
 	private long id;                        // Lookup ID for database                  
 	private long ownerId;                   // ID of recipe that contains this
     private double inventory;               // Amount in inventory (standard units)
-    private int databaseId;                // Which virtual database to store this ing in
+    private int databaseId;                 // Which virtual database to store this ing in
 	
 	// Static values =================================================
 	// ===============================================================
@@ -55,6 +57,7 @@ public abstract class Ingredient implements Parcelable {
         setOwnerId(p.readLong());
         setBeerXmlStandardInventory(p.readDouble());
         setDatabaseId(p.readInt());
+        setTime(p.readInt());
     }
 
     @Override
@@ -67,6 +70,7 @@ public abstract class Ingredient implements Parcelable {
         p.writeLong(ownerId);
         p.writeDouble(inventory);
         p.writeInt(databaseId);
+        p.writeInt(getTime());
     }
 
 	// Abstract methods of Ingredient
@@ -97,10 +101,7 @@ public abstract class Ingredient implements Parcelable {
 	
 	public abstract int hashCode();
 	public abstract boolean equals(Object o);
-	public abstract void setStartTime(int startTime);
-	public abstract void setEndTime(int endTime);
-	public abstract int getStartTime();
-	public abstract int getEndTime();
+    public abstract void setTime(int time);
 	public abstract int getTime();
 	
 	// Public Methods

@@ -45,7 +45,7 @@ public class AddHopsActivity extends Activity {
     LayoutInflater inflater;
 
     // Recipe we are editing
-    private Recipe mRecipe;
+    public Recipe mRecipe;
 
     // IngredientHandler to get ingredient arrays
     IngredientHandler ingredientHandler;
@@ -69,10 +69,10 @@ public class AddHopsActivity extends Activity {
     private TextView alphaAcidViewTitle;
 
     // Content from rows
-    private TextView nameViewText;
-    private TextView amountViewText;
-    private TextView timeViewText;
-    private TextView alphaAcidViewText;
+    public TextView nameViewText;
+    public TextView amountViewText;
+    public TextView timeViewText;
+    public TextView alphaAcidViewText;
 
     // Spinner array declarations
     private ArrayList<Ingredient> hopsArray;
@@ -331,8 +331,6 @@ public class AddHopsActivity extends Activity {
 
                 hop.setName(hopName);
                 hop.setDisplayTime((int) time);
-                hop.setStartTime(startTime);
-                hop.setEndTime(endTime);
                 hop.setAlphaAcidContent(alpha);
                 hop.setDisplayAmount(weight);
                 hop.setUse(use);

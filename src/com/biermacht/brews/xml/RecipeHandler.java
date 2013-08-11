@@ -280,13 +280,11 @@ public class RecipeHandler extends DefaultHandler {
 			{
 				if(f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
 				{
-					f.setStartTime(0);
-					f.setEndTime(20);
+                    f.setTime(20);
 				} 
 				else if (f.getFermentableType().equals(Fermentable.TYPE_EXTRACT))
 				{
-					f.setStartTime(0);
-					f.setEndTime(r.getBoilTime());
+                    f.setTime(r.getBoilTime());
 				}
 			}
 			
@@ -853,8 +851,7 @@ public class RecipeHandler extends DefaultHandler {
 			
 			else if (qName.equalsIgnoreCase("TIME"))
 			{
-				misc.setStartTime(0);
-				misc.setEndTime((int)Float.parseFloat(currentValue));
+				misc.setTime((int)Float.parseFloat(currentValue));
 			}
 
 			else if (qName.equalsIgnoreCase("USE"))

@@ -66,8 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_COL_DESC = "description";
 	public static final String ING_COL_UNITS = "units";
 	public static final String ING_COL_AMT = "amount";
-	public static final String ING_COL_START_TIME = "startTime";
-	public static final String ING_COL_END_TIME = "endTime";
+	public static final String ING_COL_TIME = "time";
     public static final String ING_COL_INVENTORY = "inventory";
 	
 	public static final String ING_FR_COL_TYPE = "ferType";
@@ -80,7 +79,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_HP_COL_TYPE = "hopType";
 	public static final String ING_HP_COL_ALPHA = "alpha";
 	public static final String ING_HP_COL_USE = "use";
-	public static final String ING_HP_COL_TIME = "time";
 	public static final String ING_HP_COL_FORM = "form";
 	public static final String ING_HP_COL_ORIGIN = "origin";
 	
@@ -208,8 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_COL_DESC + " text not null, "
 				+ ING_COL_UNITS + " text not null, "
 				+ ING_COL_AMT + " float not null, "
-				+ ING_COL_START_TIME + " int not null, "
-				+ ING_COL_END_TIME + " int not null, "
+				+ ING_COL_TIME + " int not null, "
                 + ING_COL_INVENTORY + " float, "
 				
 				+ ING_FR_COL_TYPE + " text, "
@@ -222,7 +219,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_HP_COL_TYPE + " text, "
 				+ ING_HP_COL_ALPHA + " float, "
 				+ ING_HP_COL_USE + " text, "
-				+ ING_HP_COL_TIME + " int, "
 				+ ING_HP_COL_FORM + " text, "
 				+ ING_HP_COL_ORIGIN + " text, "
 				

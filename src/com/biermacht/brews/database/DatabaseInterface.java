@@ -73,8 +73,7 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_COL_DESC,
 			DatabaseHelper.ING_COL_UNITS,
 			DatabaseHelper.ING_COL_AMT,
-			DatabaseHelper.ING_COL_START_TIME,
-			DatabaseHelper.ING_COL_END_TIME,
+			DatabaseHelper.ING_COL_TIME,
             DatabaseHelper.ING_COL_INVENTORY,
 			
 			DatabaseHelper.ING_FR_COL_TYPE,
@@ -87,7 +86,6 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_HP_COL_TYPE,
 			DatabaseHelper.ING_HP_COL_ALPHA,
 			DatabaseHelper.ING_HP_COL_USE,
-			DatabaseHelper.ING_HP_COL_TIME,
 			DatabaseHelper.ING_HP_COL_FORM,
 			DatabaseHelper.ING_HP_COL_ORIGIN,
 			
@@ -302,8 +300,7 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
         values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
         values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
-        values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
-        values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
+        values.put(DatabaseHelper.ING_COL_TIME, ing.getTime());
         values.put(DatabaseHelper.ING_COL_INVENTORY, ing.getBeerXmlStandardInventory());
 
         // Grain specific values
@@ -325,7 +322,6 @@ public class DatabaseInterface {
             values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
             values.put(DatabaseHelper.ING_HP_COL_ALPHA, hop.getAlphaAcidContent());
             values.put(DatabaseHelper.ING_HP_COL_USE, hop.getUse());
-            values.put(DatabaseHelper.ING_HP_COL_TIME, hop.getTime());
             values.put(DatabaseHelper.ING_HP_COL_FORM, hop.getForm());
             values.put(DatabaseHelper.ING_HP_COL_ORIGIN, hop.getOrigin());
         }
@@ -371,8 +367,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
 		values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
 		values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
-		values.put(DatabaseHelper.ING_COL_START_TIME, ing.getStartTime());
-		values.put(DatabaseHelper.ING_COL_END_TIME, ing.getEndTime());
+		values.put(DatabaseHelper.ING_COL_TIME, ing.getTime());
         values.put(DatabaseHelper.ING_COL_INVENTORY, ing.getBeerXmlStandardInventory());
 		
 		// Grain specific values
@@ -394,7 +389,6 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
 			values.put(DatabaseHelper.ING_HP_COL_ALPHA, hop.getAlphaAcidContent());
 			values.put(DatabaseHelper.ING_HP_COL_USE, hop.getUse());
-			values.put(DatabaseHelper.ING_HP_COL_TIME, hop.getTime());
 			values.put(DatabaseHelper.ING_HP_COL_FORM, hop.getForm());
 			values.put(DatabaseHelper.ING_HP_COL_ORIGIN, hop.getOrigin());
 		}
@@ -950,8 +944,7 @@ public class DatabaseInterface {
 		String description = cursor.getString(cid);				cid++;
 		String units = cursor.getString(cid);					cid++;
 		float amount = cursor.getFloat(cid);					cid++;
-		int startTime = cursor.getInt(cid);						cid++;
-		int endTime = cursor.getInt(cid);						cid++;
+		int time = cursor.getInt(cid);						    cid++;
         float inventory = cursor.getFloat(cid);                 cid++;
 		
 		// Fermentable specific stuff
@@ -974,8 +967,7 @@ public class DatabaseInterface {
 			fer.setShortDescription(description);
 			fer.setDisplayUnits(units);
 			fer.setBeerXmlStandardAmount(amount);
-			fer.setStartTime(startTime);
-			fer.setEndTime(endTime);
+            fer.setTime(time);
 			fer.setFermentableType(type);
 			fer.setYield(yield);
 			fer.setLovibondColor(color);
@@ -994,7 +986,6 @@ public class DatabaseInterface {
 			String type = cursor.getString(cid);				cid++;
 			float alpha = cursor.getFloat(cid);					cid++;
 			String use = cursor.getString(cid);					cid++;
-			int time = cursor.getInt(cid);						cid++;
 			String form = cursor.getString(cid);				cid++;
 			String origin = cursor.getString(cid);				cid++;
 			
@@ -1006,8 +997,6 @@ public class DatabaseInterface {
 			hop.setShortDescription(description);
 			hop.setDisplayUnits(units);
 			hop.setBeerXmlStandardAmount(amount);
-			hop.setStartTime(startTime);
-			hop.setEndTime(endTime);
 			hop.setHopType(type);
 			hop.setAlphaAcidContent(alpha);
 			hop.setUse(use);
@@ -1021,7 +1010,7 @@ public class DatabaseInterface {
 		// Yeast specific stuff
 		else if (ingType.equals(Ingredient.YEAST))
 		{
-			cid += 12;
+			cid += 11;
 			
 			String type = cursor.getString(cid);				cid++;
 			String form = cursor.getString(cid);				cid++;
@@ -1039,8 +1028,7 @@ public class DatabaseInterface {
 			yeast.setShortDescription(description);
 			yeast.setDisplayUnits(units);
 			yeast.setBeerXmlStandardAmount(amount);
-			yeast.setStartTime(startTime);
-			yeast.setEndTime(endTime);
+            yeast.setTime(time);
 			yeast.setType(type);
 			yeast.setForm(form);
 			yeast.setMinTemp(minTemp);
@@ -1054,7 +1042,7 @@ public class DatabaseInterface {
 		
 		if (ingType.equals(Ingredient.MISC))
 		{
-			cid += 19;
+			cid += 18;
 			
 			Misc misc = new Misc(name);
 			String miscType = cursor.getString(cid);       cid++;
@@ -1070,8 +1058,7 @@ public class DatabaseInterface {
 			misc.setShortDescription(description);
 			misc.setDisplayUnits(units);
 			misc.setBeerXmlStandardAmount(amount);
-			misc.setStartTime(startTime);
-			misc.setEndTime(endTime);
+            misc.setTime(time);
 			misc.setMiscType(miscType);
 			misc.setVersion(version);
 			misc.setAmountIsWeight(amtIsWeight > 0 ? true : false);

@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -186,19 +185,19 @@ public class MainActivity extends Activity{
             break;
 
         case R.id.add_hop:
-            i = new Intent(this, AddHopsActivity.class);
+            i = new Intent(this, AddCustomHopsActivity.class);
             i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
             startActivity(i);
             break;
 
         case R.id.add_yeast:
-            i = new Intent(this, AddYeastActivity.class);
+            i = new Intent(this, AddCustomYeastActivity.class);
             i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
             startActivity(i);
             break;
 
         case R.id.add_misc:
-            i = new Intent(this, AddMiscActivity.class);
+            i = new Intent(this, AddCustomMiscActivity.class);
             i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
             startActivity(i);
             break;

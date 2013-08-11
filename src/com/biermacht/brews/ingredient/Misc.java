@@ -10,7 +10,6 @@ public class Misc extends Ingredient {
 	// ================================================================
 	private String miscType;
 	private String use;
-	private Double amount;
 	private boolean amountIsWeight;
 	private String useFor;
 	private String notes;
@@ -57,8 +56,6 @@ public class Misc extends Ingredient {
 
         // Optional
         setDisplayUnits(p.readString());
-        setStartTime(p.readInt());
-        setEndTime(p.readInt());
     }
 
     @Override
@@ -82,8 +79,6 @@ public class Misc extends Ingredient {
 
         // Optional
         p.writeString(getDisplayUnits());
-        p.writeInt(getStartTime());
-        p.writeInt(getEndTime());
     }
 
     public static final Parcelable.Creator<Misc> CREATOR =
@@ -267,33 +262,14 @@ public class Misc extends Ingredient {
 	}
 
 	@Override
-	public void setStartTime(int startTime) {
-		this.startTime = startTime;
+	public int getTime()
+    {
+		return time;
 	}
 
-	@Override
-	public void setEndTime(int endTime) {
-		this.endTime = endTime;
-	}
-
-	@Override
-	public int getStartTime() {
-		return startTime;
-	}
-
-	@Override
-	public int getEndTime() {
-		return endTime;
-	}
-
-	@Override
-	public int getTime() {
-		return endTime - startTime;
-	}
-	
+    @Override
 	public void setTime(int i) {
-		this.startTime = 0;
-		this.endTime = i;
+        this.time = i;
 	}
 
 	@Override

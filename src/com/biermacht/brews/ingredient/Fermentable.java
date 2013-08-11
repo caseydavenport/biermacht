@@ -11,7 +11,6 @@ public class Fermentable extends Ingredient {
 	// Name - Inherited
 	// Version - Inherited
 	private String type;                           // Grain, Extract, Adjunct
-	private double amount;                         // Amount of fermentable used
 	private double yield;                          // Dry yeild / raw yield
 	private double color;                          // Color in Lovibond (SRM)
 	
@@ -172,29 +171,15 @@ public class Fermentable extends Ingredient {
 	}
 
 	@Override
-	public void setStartTime(int startTime) {
-		this.startTime = startTime;
-	}
-
-	@Override
-	public void setEndTime(int endTime) {
-		this.endTime = endTime;
-	}
-
-	@Override
-	public int getStartTime() {
-		return startTime;
-	}
-
-	@Override
-	public int getEndTime() {
-		return endTime;
-	}
-
-	@Override
 	public int getTime() {
-		return getEndTime() - getStartTime();
+		return time;
 	}
+
+    @Override
+    public void setTime(int time)
+    {
+        this.time = time;
+    }
 
 	/**
 	 * @return the yield

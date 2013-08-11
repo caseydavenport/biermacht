@@ -46,13 +46,13 @@ public class AddYeastActivity extends Activity implements OnClickListener {
     LayoutInflater inflater;
 
     // Recipe we are editing
-    private Recipe mRecipe;
+    public Recipe mRecipe;
 
     // IngredientHandler to get ingredient arrays
-    IngredientHandler ingredientHandler;
+    public IngredientHandler ingredientHandler;
 
     // Holds the currently selected yeast, and yeast being edited
-    Yeast yeast;
+    public Yeast yeast;
 
     // Editable rows to display
     private Spinner yeastSpinner;
@@ -66,9 +66,9 @@ public class AddYeastActivity extends Activity implements OnClickListener {
     private TextView attenuationViewTitle;
 
     // Content from rows
-    private TextView nameViewText;
-    private TextView amountViewText;
-    private TextView attenuationViewText;
+    public TextView nameViewText;
+    public TextView amountViewText;
+    public TextView attenuationViewText;
 
     // Spinner array declarations
     private ArrayList<Ingredient> yeastsArray;

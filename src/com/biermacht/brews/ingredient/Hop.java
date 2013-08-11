@@ -13,7 +13,6 @@ public class Hop extends Ingredient {
 	
 	// Name - Inherited
 	// Version - Inherited
-	private double amount;                      // Weight in kg
 	private double alpha;                       // Alpha in %
 	private String use;                         // Boil, Dry Hop, etc
 	private int time;                           // Time (mins) - variable based on use
@@ -28,8 +27,6 @@ public class Hop extends Ingredient {
 	// Custom Fields ==================================================
 	// ================================================================
 	private String description;                 // Short description of flavor / use
-	private int startTime;                      
-	private int endTime;
 	
 	// Static values =================================================
 	// ===============================================================
@@ -69,8 +66,6 @@ public class Hop extends Ingredient {
         setOrigin(p.readString());
         p.readStringList(this.substitutes);
         setShortDescription(p.readString());
-        setStartTime(p.readInt());
-        setEndTime(p.readInt());
     }
 
     @Override
@@ -97,8 +92,6 @@ public class Hop extends Ingredient {
         p.writeStringList(substitutes);
 
         p.writeString(getShortDescription());
-        p.writeInt(getStartTime());
-        p.writeInt(getEndTime());
     }
 
     public static final Parcelable.Creator<Hop> CREATOR =
@@ -240,6 +233,12 @@ public class Hop extends Ingredient {
 	{
 		return this.getDisplayTime();
 	}
+
+    @Override
+    public void setTime(int time)
+    {
+        setDisplayTime(time);
+    }
 	
 	/**
 	 * @return the origin
@@ -265,7 +264,8 @@ public class Hop extends Ingredient {
 	/**
 	 * @param substitutes the substitutes to set
 	 */
-	public void setSubstitutes(ArrayList<String> substitutes) {
+	public void setSubstitutes(ArrayList<String> substitutes)
+    {
 		this.substitutes = substitutes;
 	}
 
@@ -281,26 +281,6 @@ public class Hop extends Ingredient {
 	 */
 	public void setHopType(String type) {
 		this.type = type;
-	}
-
-	@Override
-	public void setStartTime(int startTime) {
-		this.startTime = startTime;
-	}
-
-	@Override
-	public void setEndTime(int endTime) {
-		this.endTime = endTime;
-	}
-
-	@Override
-	public int getStartTime() {
-		return startTime;
-	}
-
-	@Override
-	public int getEndTime() {
-		return endTime;
 	}
 
 	/**

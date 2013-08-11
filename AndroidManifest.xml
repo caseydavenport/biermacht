@@ -109,5 +109,23 @@
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >
         </activity>
+        <activity
+                android:name=".frontend.AddCustomHopsActivity"
+                android:label="@string/title_activity_add_hops"
+                android:configChanges="orientation|screenSize"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+                android:name=".frontend.AddCustomMiscActivity"
+                android:label="@string/title_activity_add_misc"
+                android:configChanges="orientation|screenSize"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+                android:name=".frontend.AddCustomYeastActivity"
+                android:label="@string/title_activity_add_yeast"
+                android:configChanges="orientation|screenSize"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
     </application>
 </manifest>

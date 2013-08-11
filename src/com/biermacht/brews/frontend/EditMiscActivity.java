@@ -319,8 +319,6 @@ public class EditMiscActivity extends Activity {
 
                 misc.setName(name);
                 misc.setTime(time);
-                misc.setStartTime(startTime);
-                misc.setEndTime(endTime);
                 misc.setDisplayAmount(amount, misc.getDisplayUnits());
                 misc.setMiscType(type);
                 misc.setUse(use);
