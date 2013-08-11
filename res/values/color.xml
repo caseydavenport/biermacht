@@ -13,9 +13,9 @@
 	<color name="selected">#22000000</color>
 
     <!-- Colors for drawer -->
-    <color name="drawer_background">#EEE</color>
-    <color name="drawer_text">#222</color>
-    <color name="drawer_selector">#DDD</color>
+    <color name="drawer_background">#FFF</color>
+    <color name="drawer_text">#000</color>
+    <color name="drawer_selector">#EEE</color>
     <color name="drawer_divider">#22000000</color>
 	
 	<!--  Colors for text -->
