@@ -10,4 +10,4 @@
     android:textSize="20sp"
     android:background="@drawable/drawer_selector"
     android:minHeight="60dp"
-    biermacht:typeface="Roboto-Thin.ttf"/>
+    biermacht:typeface="Roboto-Light.ttf"/>
