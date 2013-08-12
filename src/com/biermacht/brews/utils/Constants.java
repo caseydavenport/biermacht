@@ -1,7 +1,11 @@
 package com.biermacht.brews.utils;
 
+import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Constants {
 		
@@ -36,4 +40,8 @@ public class Constants {
     public static String PREF_LAST_OPENED = "com.biermacht.brews.lastOpened";
 
     // Other Constants
+    private static String[] hop_uses = {Hop.USE_BOIL, Hop.USE_AROMA, Hop.USE_DRY_HOP};
+    private static String [] hop_forms = {Hop.FORM_PELLET, Hop.FORM_WHOLE, Hop.FORM_PLUG};
+    public static ArrayList<String> HOP_USES = new ArrayList<String>(Arrays.asList(hop_uses));
+    public static ArrayList<String> HOP_FORMS = new ArrayList<String>(Arrays.asList(hop_forms));
 }
