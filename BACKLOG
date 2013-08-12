@@ -10,10 +10,8 @@ feature: Reverse engineering capabilities --> Modify desired traits
 
 feature: Determine the best matching beer type for a given recipe!
 
-TODO:	 Need to calculate boil time dynamically using ingredients.
-	 Also, need to clean up how we are handling boil time across
-	 recipes and different types of ingredients.
-
-TODO:	 Update calculations to include efficiency and boil time for ingredients
-
 TODO:	 Add ability to use metric units
+TODO:    Add Style viewing tool
+TODO:    Add ability to store recipe notes
+TODO:    Mash Editor
+TODO:    Equipment Editor
