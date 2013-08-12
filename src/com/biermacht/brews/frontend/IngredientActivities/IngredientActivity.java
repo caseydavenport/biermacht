@@ -106,7 +106,6 @@ public abstract class IngredientActivity extends Activity implements OnClickList
         getIngredientList();
         Log.d("IngredientActivity", "Received " + ingredientList.size() + " ingredients");
 
-
         // Get the inflater
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
