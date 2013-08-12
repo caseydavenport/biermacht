@@ -16,6 +16,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
@@ -52,7 +53,7 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
         // Acquire recipe
         try
         {
-            mRecipe = Utils.getRecipeWithId(id);
+            mRecipe = Database.getRecipeWithId(id);
         }
         catch (RecipeNotFoundException e)
         {
@@ -151,7 +152,7 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
 				mRecipe.setMashProfile(mashProfile);
 				
 				mRecipe.update();
-				Utils.updateRecipe(mRecipe);
+                Database.updateRecipe(mRecipe);
 				finish();
 			}
 		}

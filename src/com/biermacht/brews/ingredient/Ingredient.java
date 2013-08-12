@@ -19,7 +19,7 @@ public abstract class Ingredient implements Parcelable {
 	private long id;                        // Lookup ID for database                  
 	private long ownerId;                   // ID of recipe that contains this
     private double inventory;               // Amount in inventory (standard units)
-    private int databaseId;                 // Which virtual database to store this ing in
+    private long databaseId;                // Which virtual database to store this ing in
 	
 	// Static values =================================================
 	// ===============================================================
@@ -51,13 +51,14 @@ public abstract class Ingredient implements Parcelable {
 
     public Ingredient(Parcel p)
     {
-        setName(p.readString());
-        setVersion(p.readInt());
-        setId(p.readLong());
-        setOwnerId(p.readLong());
-        setBeerXmlStandardInventory(p.readDouble());
-        setDatabaseId(p.readInt());
-        setTime(p.readInt());
+        name = p.readString();
+        version = p.readInt();
+        amount = p.readDouble();
+        id = p.readLong();
+        ownerId = p.readLong();
+        inventory = p.readDouble();
+        databaseId = p.readLong();
+        time = p.readInt();
     }
 
     @Override
@@ -66,11 +67,12 @@ public abstract class Ingredient implements Parcelable {
         // Should be called by all sub-classes
         p.writeString(name);
         p.writeInt(version);
+        p.writeDouble(amount);
         p.writeLong(id);
         p.writeLong(ownerId);
         p.writeDouble(inventory);
-        p.writeInt(databaseId);
-        p.writeInt(getTime());
+        p.writeLong(databaseId);
+        p.writeInt(time);
     }
 
 	// Abstract methods of Ingredient
@@ -115,20 +117,12 @@ public abstract class Ingredient implements Parcelable {
 		return Ingredient.USE_OTHER;
 	}
 
-    public boolean setShowInLists()
-    {
-        if (this.databaseId > Constants.INGREDIENT_DB_DEFAULT)
-            return true;
-        else
-            return false;
-    }
-
-    public int getDatabaseId()
+    public long getDatabaseId()
     {
         return this.databaseId;
     }
 
-    public void setDatabaseId(int i)
+    public void setDatabaseId(long i)
     {
         this.databaseId = i;
     }

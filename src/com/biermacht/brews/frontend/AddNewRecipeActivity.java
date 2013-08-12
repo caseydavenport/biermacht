@@ -24,6 +24,7 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.frontend.adapters.*;
 import android.widget.*;
@@ -339,7 +340,7 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 			
 			if (readyToGo)
 			{
-				Recipe r = Utils.createRecipeWithName(recipeName);
+				Recipe r = Database.createRecipeWithName(recipeName);
 				
 				r.setVersion(Utils.getXmlVersion());
 				r.setType(type);
@@ -352,8 +353,8 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 				r.setEfficiency(efficiency);
 				r.setBatchTime(1);
 				r.setDescription(description);
-				
-				Utils.updateRecipe(r);
+
+                Database.updateRecipe(r);
 				finish();
 			}
 		}

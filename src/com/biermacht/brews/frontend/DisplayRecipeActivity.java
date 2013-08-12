@@ -7,21 +7,23 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.frontend.IngredientActivities.AddFermentableActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddHopsActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.IngredientHandler;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.frontend.adapters.*;
 
 import android.support.v4.view.*;
-
-import java.io.IOException;
 
 public class DisplayRecipeActivity extends FragmentActivity {
 	
@@ -52,7 +54,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
             // Acquire recipe
             try
             {
-                mRecipe = Utils.getRecipeWithId(id);
+                mRecipe = Database.getRecipeWithId(id);
             }
             catch (RecipeNotFoundException e)
             {

@@ -17,15 +17,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.EditFermentableActivity;
-import com.biermacht.brews.frontend.EditHopActivity;
-import com.biermacht.brews.frontend.EditYeastActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditCustomFermentableActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditHopActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditMiscActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditYeastActivity;
 import com.biermacht.brews.frontend.adapters.CustomIngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.Database;
+
 import android.content.*;
-import com.biermacht.brews.frontend.*;
+
 import com.biermacht.brews.utils.comparators.IngredientComparator;
 
 public class EditIngredientsFragment extends Fragment {
@@ -47,7 +49,7 @@ public class EditIngredientsFragment extends Fragment {
         c = getActivity();
 
         // Get ingredient list
-        ingredientList = Utils.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM);
+        ingredientList = Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM);
         Collections.sort(ingredientList, new IngredientComparator());
 
         // Initialize important junk
@@ -63,7 +65,7 @@ public class EditIngredientsFragment extends Fragment {
                 // Grain pressed
                 if (ing.getType().equals(Ingredient.FERMENTABLE))
                 {
-                    Intent editGrainIntent = new Intent(c, EditFermentableActivity.class);
+                    Intent editGrainIntent = new Intent(c, EditCustomFermentableActivity.class);
                     editGrainIntent.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
                     editGrainIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
                     startActivity(editGrainIntent);
@@ -74,6 +76,7 @@ public class EditIngredientsFragment extends Fragment {
                 {
                     Intent editHopIntent = new Intent(c, EditHopActivity.class);
                     editHopIntent.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+                    editHopIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
                     editHopIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
                     startActivity(editHopIntent);
                 }
@@ -92,6 +95,7 @@ public class EditIngredientsFragment extends Fragment {
                 {
                     Intent editMiscIntent = new Intent(c, EditMiscActivity.class);
                     editMiscIntent.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+                    editMiscIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
                     editMiscIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
                     startActivity(editMiscIntent);
                 }

@@ -218,7 +218,7 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
-		addIngredientListToDatabase(r.getIngredientList(), id);
+		addIngredientListToDatabase(r.getIngredientList(), id, Constants.INGREDIENT_DB_DEFAULT);
 		addStyleToDatabase(r.getStyle(), id);
 		addMashProfileToDatabase(r.getMashProfile(), id);
 		
@@ -268,9 +268,9 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV, r.getPrimingSugarEquiv());
         values.put(DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR, r.getKegPrimingFactor());
         values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
-		
+
 		deleteIngredientList(r.getId());
-		addIngredientListToDatabase(r.getIngredientList(), r.getId());
+		addIngredientListToDatabase(r.getIngredientList(), r.getId(), Constants.INGREDIENT_DB_DEFAULT);
 		deleteStyle(r.getId());
 		addStyleToDatabase(r.getStyle(), r.getId());
 		deleteMashProfile(r.getId());
@@ -279,22 +279,22 @@ public class DatabaseInterface {
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
 	}
 
-	public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id)
+	public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id, long dbid)
     {
 		for (Ingredient ing : ingredientList)
 		{
-            addIngredientToDatabase(ing, id);
+            addIngredientToDatabase(ing, id, dbid);
 		}
 	}
 
-    public void addIngredientToDatabase(Ingredient ing, long id)
+    public void addIngredientToDatabase(Ingredient ing, long id, long dbid)
     {
         // values stored here
         ContentValues values = new ContentValues();
 
         // Load up values to store
         values.put(DatabaseHelper.ING_COL_OWNER_ID, id);
-        values.put(DatabaseHelper.ING_COL_DB_ID, ing.getDatabaseId());
+        values.put(DatabaseHelper.ING_COL_DB_ID, dbid);
         values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
         values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
         values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
@@ -350,12 +350,14 @@ public class DatabaseInterface {
             values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
         }
 
-        database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
+        long ingid = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
+        Log.d("addIngredientToDatabase", "Adding ingredient with id / dbid = " + ingid + "/" + dbid);
         values.clear();
     }
 	
 	public boolean updateExistingIngredient(Ingredient ing)
 	{
+        Log.d("UpdateExistingIngredient", "Updating Existing Ingredient in database: " + ing.getDatabaseId());
 		String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId();
 		
 		// Load up values to store
@@ -544,8 +546,10 @@ public class DatabaseInterface {
 	 * @return 1 if it was deleted or 0 if not
 	 */
 	
-	public boolean deleteIngredientIfExists(long id) {
-		String whereClause = DatabaseHelper.ING_COL_ID + "=" + id;
+	public boolean deleteIngredientIfExists(long id, long dbid) {
+        Log.d("deleteIngredientIfExists", "Looking for ingredient with id / dbid = " + id + "/" + dbid);
+		String whereClause = DatabaseHelper.ING_COL_ID + "=" + id + " AND " +
+                             DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
 		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
 	}
 	
@@ -586,7 +590,7 @@ public class DatabaseInterface {
     /**
      * Returns ingredients from the given database with the given ingredient type
      */
-    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(int databaseid, String type)
+    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long databaseid, String type)
     {
         ArrayList<Ingredient> list = new ArrayList<Ingredient>();
         String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + databaseid + " AND " +
@@ -608,7 +612,7 @@ public class DatabaseInterface {
     /**
      * Returns ingredients from the given database with the given ingredient type
      */
-    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(int databaseid)
+    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long databaseid)
     {
         ArrayList<Ingredient> list = new ArrayList<Ingredient>();
         String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + databaseid;
@@ -938,7 +942,7 @@ public class DatabaseInterface {
 		// Ingredient type agnostic stuff
 		long id = cursor.getLong(cid);                          cid++;
 		long ownerId = cursor.getLong(cid);						cid++;
-        int databaseId = cursor.getInt(cid);                    cid++;
+        long databaseId = cursor.getLong(cid);                  cid++;
 		String ingType = cursor.getString(cid);					cid++;
 		String name = cursor.getString(cid);					cid++;
 		String description = cursor.getString(cid);				cid++;

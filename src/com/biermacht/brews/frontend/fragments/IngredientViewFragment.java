@@ -16,16 +16,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.EditFermentableActivity;
-import com.biermacht.brews.frontend.EditHopActivity;
-import com.biermacht.brews.frontend.EditYeastActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditFermentableActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditHopActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditMiscActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditYeastActivity;
 import com.biermacht.brews.frontend.adapters.IngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Utils;
+
 import android.content.*;
-import com.biermacht.brews.frontend.*;
 
 public class IngredientViewFragment extends Fragment {
 
@@ -74,6 +74,7 @@ public class IngredientViewFragment extends Fragment {
 				{
 			  		Intent editHopIntent = new Intent(c, EditHopActivity.class);
 			  		editHopIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
+                    editHopIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
                     editHopIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
 			  		startActivity(editHopIntent);
 				}
@@ -92,6 +93,7 @@ public class IngredientViewFragment extends Fragment {
 				{
 			  		Intent editMiscIntent = new Intent(c, EditMiscActivity.class);
 			  		editMiscIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
+                    editMiscIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
                     editMiscIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
 			  		startActivity(editMiscIntent);
 				}

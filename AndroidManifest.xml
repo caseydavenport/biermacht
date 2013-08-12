@@ -38,17 +38,17 @@
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name="com.biermacht.brews.frontend.AddFermentableActivity"
+            android:name=".frontend.IngredientActivities.AddFermentableActivity"
             android:label="@string/title_activity_add_fermentable"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name="com.biermacht.brews.frontend.EditFermentableActivity"
+            android:name=".frontend.IngredientActivities.EditFermentableActivity"
             android:label="@string/title_activity_edit_fermentable"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name=".frontend.EditRecipeActivity"
+            android:name=".frontend.IngredientActivities.EditRecipeActivity"
             android:label="@string/title_activity_edit_recipe"
             android:windowSoftInputMode="adjustResize" >
         </activity>
@@ -58,32 +58,32 @@
             android:windowSoftInputMode="adjustResize" >
         </activity>
 		<activity
-            android:name=".frontend.AddHopsActivity"
+            android:name=".frontend.IngredientActivities.AddHopsActivity"
             android:label="@string/title_activity_add_hops"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name=".frontend.EditHopActivity"
+            android:name=".frontend.IngredientActivities.EditHopActivity"
             android:label="@string/title_activity_edit_hop"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name=".frontend.AddYeastActivity"
+            android:name=".frontend.IngredientActivities.AddYeastActivity"
             android:label="@string/title_activity_add_yeast"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name=".frontend.EditYeastActivity"
+            android:name=".frontend.IngredientActivities.EditYeastActivity"
             android:label="@string/title_activity_edit_yeast"
             android:windowSoftInputMode="adjustResize" >
         </activity>
 		<activity
-            android:name=".frontend.AddMiscActivity"
+            android:name=".frontend.IngredientActivities.AddMiscActivity"
             android:label="@string/title_activity_add_misc"
             android:windowSoftInputMode="adjustResize" >
         </activity>
 		<activity
-            android:name=".frontend.EditMiscActivity"
+            android:name=".frontend.IngredientActivities.EditMiscActivity"
             android:label="@string/title_activity_edit_misc"
             android:windowSoftInputMode="adjustResize" >
         </activity>
@@ -104,25 +104,31 @@
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-                android:name=".frontend.AddCustomFermentableActivity"
+                android:name=".frontend.IngredientActivities.AddCustomFermentableActivity"
                 android:label="@string/title_activity_add_fermentable"
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-                android:name=".frontend.AddCustomHopsActivity"
+                android:name=".frontend.IngredientActivities.EditCustomFermentableActivity"
+                android:label="@string/title_activity_edit_fermentable"
+                android:configChanges="orientation|screenSize"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+                android:name=".frontend.IngredientActivities.AddCustomHopsActivity"
                 android:label="@string/title_activity_add_hops"
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-                android:name=".frontend.AddCustomMiscActivity"
+                android:name=".frontend.IngredientActivities.AddCustomMiscActivity"
                 android:label="@string/title_activity_add_misc"
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-                android:name=".frontend.AddCustomYeastActivity"
+                android:name=".frontend.IngredientActivities.AddCustomYeastActivity"
                 android:label="@string/title_activity_add_yeast"
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >

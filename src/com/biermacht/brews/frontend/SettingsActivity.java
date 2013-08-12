@@ -176,7 +176,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
         @Override
         protected String doInBackground(String... params)
         {
-            Utils.deleteAllRecipes();
+            Database.deleteAllRecipes();
             return "Executed";
         }
 

@@ -15,7 +15,6 @@ public class Hop extends Ingredient {
 	// Version - Inherited
 	private double alpha;                       // Alpha in %
 	private String use;                         // Boil, Dry Hop, etc
-	private int time;                           // Time (mins) - variable based on use
 	
 	// Beer XML 1.0 Optional Fields ===================================
 	// ================================================================
@@ -56,22 +55,14 @@ public class Hop extends Ingredient {
     {
         super(p);
         this.substitutes = new ArrayList<String>();
-        setBeerXmlStandardAmount(p.readDouble());
-        setAlphaAcidContent(p.readDouble());
-        setUse(p.readString());
-        setDisplayTime(p.readInt());
+        alpha = p.readDouble();
+        use = p.readString();
 
-        setHopType(p.readString());
-        setForm(p.readString());
-        setOrigin(p.readString());
+        type = p.readString();
+        form = p.readString();
+        origin = p.readString();
         p.readStringList(this.substitutes);
-        setShortDescription(p.readString());
-    }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
+        description = p.readString();
     }
 
     @Override
@@ -80,18 +71,21 @@ public class Hop extends Ingredient {
         super.writeToParcel(p, flags);
 
         // Required
-        p.writeDouble(getBeerXmlStandardAmount());
-        p.writeDouble(getAlphaAcidContent());
-        p.writeString(getUse());
-        p.writeInt(getTime());
+        p.writeDouble(alpha);
+        p.writeString(use);
 
         // Optional
-        p.writeString(getHopType());
-        p.writeString(getForm());
-        p.writeString(getOrigin());
+        p.writeString(type);
+        p.writeString(form);
+        p.writeString(origin);
         p.writeStringList(substitutes);
+        p.writeString(description);
+    }
 
-        p.writeString(getShortDescription());
+    @Override
+    public int describeContents()
+    {
+        return 0;
     }
 
     public static final Parcelable.Creator<Hop> CREATOR =

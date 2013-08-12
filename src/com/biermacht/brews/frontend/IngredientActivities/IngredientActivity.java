@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,19 +12,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
-import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
 
@@ -47,6 +47,7 @@ public abstract class IngredientActivity extends Activity implements OnClickList
 
     // IDs received in intent
     long recipeId;
+    long ingredientId;
 
     // IngredientHandler to get ingredient arrays
     IngredientHandler ingredientHandler;
@@ -101,8 +102,10 @@ public abstract class IngredientActivity extends Activity implements OnClickList
     	// Get the Ingredient Handler
     	ingredientHandler = MainActivity.ingredientHandler;
 
-        // Get the list of ingredients to show
+        // Get the list of ingredients to show.
         getIngredientList();
+        Log.d("IngredientActivity", "Received " + ingredientList.size() + " ingredients");
+
 
         // Get the inflater
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -194,11 +197,12 @@ public abstract class IngredientActivity extends Activity implements OnClickList
     public void getValuesFromIntent()
     {
         recipeId = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+        ingredientId = getIntent().getLongExtra(Constants.INTENT_INGREDIENT_ID, Constants.INVALID_ID);
 
         // Acquire recipe
         try
         {
-            mRecipe = Utils.getRecipeWithId(recipeId);
+            mRecipe = Database.getRecipeWithId(recipeId);
         }
         catch (RecipeNotFoundException e)
         {
@@ -247,6 +251,7 @@ public abstract class IngredientActivity extends Activity implements OnClickList
         catch (Exception e)
         {
             Log.d("AddIngredient", "Could not acquire values: " + e.toString());
+            e.printStackTrace();
             readyToGo = false;
         }
 

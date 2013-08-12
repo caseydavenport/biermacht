@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -26,12 +27,13 @@ import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
 import java.util.ArrayList;
 
-public class AddYeastActivity extends Activity implements OnClickListener {
+public class EditYeastActivity extends Activity implements OnClickListener {
 
     // Main view - holds all the rows
     private ViewGroup mainView;
@@ -46,13 +48,13 @@ public class AddYeastActivity extends Activity implements OnClickListener {
     LayoutInflater inflater;
 
     // Recipe we are editing
-    public Recipe mRecipe;
+    private Recipe mRecipe;
 
     // IngredientHandler to get ingredient arrays
-    public IngredientHandler ingredientHandler;
+    IngredientHandler ingredientHandler;
 
     // Holds the currently selected yeast, and yeast being edited
-    public Yeast yeast;
+    Yeast yeast, selectedYeast;
 
     // Editable rows to display
     private Spinner yeastSpinner;
@@ -66,9 +68,9 @@ public class AddYeastActivity extends Activity implements OnClickListener {
     private TextView attenuationViewTitle;
 
     // Content from rows
-    public TextView nameViewText;
-    public TextView amountViewText;
-    public TextView attenuationViewText;
+    private TextView nameViewText;
+    private TextView amountViewText;
+    private TextView attenuationViewText;
 
     // Spinner array declarations
     private ArrayList<Ingredient> yeastsArray;
@@ -95,15 +97,19 @@ public class AddYeastActivity extends Activity implements OnClickListener {
         alertBuilder = new AlertBuilder(this);
 
         // Disable delete button for this view
-        findViewById(R.id.delete_button).setVisibility(View.GONE);
+        findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
 
         // Get recipe and yeast from calling activity
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+        long yeastId = getIntent().getLongExtra(Constants.INTENT_INGREDIENT_ID, Constants.INVALID_ID);
+
+        // Acquire ingredient
+        yeast = (Yeast) Database.getIngredientWithId(yeastId);
 
         // Acquire recipe
         try
         {
-            mRecipe = Utils.getRecipeWithId(id);
+            mRecipe = Database.getRecipeWithId(id);
         }
         catch (RecipeNotFoundException e)
         {
@@ -174,20 +180,24 @@ public class AddYeastActivity extends Activity implements OnClickListener {
         amountViewText = (TextView) amountView.findViewById(R.id.text);
         attenuationViewText = (TextView) attenuationView.findViewById(R.id.text);
 
+        // If this yeast is not in the array, add it
+        if (!yeastsArray.contains(yeast))
+            yeastsArray.add(0, yeast);
+
         // Set up type spinner
         IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, yeastsArray, "Yeast");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         yeastSpinner.setAdapter(adapter);
-        yeastSpinner.setSelection(0);
+        yeastSpinner.setSelection(yeastsArray.indexOf(yeast));
 
         // Handle type spinner selections here
         yeastSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                yeast = (Yeast) yeastsArray.get(position);
+                selectedYeast = (Yeast) yeastsArray.get(position);
 
-                nameViewText.setText(yeast.getName());
-                attenuationViewText.setText(String.format("%2.0f", yeast.getAttenuation()));
+                nameViewText.setText(selectedYeast.getName());
+                attenuationViewText.setText(String.format("%2.0f", selectedYeast.getAttenuation()));
                 amountViewText.setText(String.format("%2.2f", yeast.getBeerXmlStandardAmount()));
             }
 
@@ -216,10 +226,10 @@ public class AddYeastActivity extends Activity implements OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClick(View v) {
-        // if "SUBMIT" button pressed
-        if (v.getId() == R.id.submit_button)
-        {
+	public void onClick(View v) {
+		// if "SUBMIT" button pressed
+		if (v.getId() == R.id.submit_button)
+		{
             boolean readyToGo = true;
             try
             {
@@ -233,23 +243,28 @@ public class AddYeastActivity extends Activity implements OnClickListener {
             } catch (Exception e)
             {
                 Log.d("EditYeastActivity", "Exception on submit: " + e.toString());
+                e.printStackTrace();
                 readyToGo = false;
             }
 
             if (readyToGo)
             {
-                mRecipe.addIngredient(yeast);
-                mRecipe.update();
-                Utils.updateRecipe(mRecipe);
-
-                finish();
+			    Database.updateIngredient(yeast);
+		        finish();
             }
-        }
-
-        // if "CANCEL" button pressed
-        if (v.getId() == R.id.cancel_button)
-        {
-            finish();
-        }
-    }
+		}
+		
+		// If "DELETE" button pressed
+		if (v.getId() == R.id.delete_button)
+		{
+			Database.deleteIngredientWithId(yeast.getId(), Constants.INGREDIENT_DB_DEFAULT);
+			finish();
+		}
+		
+		// if "CANCEL" button pressed
+		if (v.getId() == R.id.cancel_button)
+		{
+			finish();
+		}
+	}
 }

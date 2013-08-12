@@ -20,6 +20,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
@@ -54,7 +55,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
         // Acquire recipe
         try
         {
-            mRecipe = Utils.getRecipeWithId(id);
+            mRecipe = Database.getRecipeWithId(id);
         }
         catch (RecipeNotFoundException e)
         {
@@ -199,7 +200,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 			if (readyToGo)
 			{	
 				mRecipe.update();
-				Utils.updateRecipe(mRecipe);
+                Database.updateRecipe(mRecipe);
 				finish();
 			}
 		}

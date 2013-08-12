@@ -28,11 +28,12 @@ import com.biermacht.brews.frontend.BrewTimerActivity;
 import com.biermacht.brews.frontend.DisplayRecipeActivity;
 import com.biermacht.brews.frontend.EditFermentationProfileActivity;
 import com.biermacht.brews.frontend.EditMashProfileActivity;
-import com.biermacht.brews.frontend.EditRecipeActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class RecipesFragment extends Fragment {
         c = getActivity();
 
         // Get recipes to display
-        recipeList = Utils.getRecipeList(databaseInterface);
+        recipeList = Database.getRecipeList(databaseInterface);
 
         // Set up the onClickListener
         mClickListener = new AdapterView.OnItemClickListener()
@@ -156,7 +157,7 @@ public class RecipesFragment extends Fragment {
      */
     private ArrayList<Recipe> getFilteredList(String s)
     {
-        recipeList = Utils.getRecipeList(databaseInterface);
+        recipeList = Database.getRecipeList(databaseInterface);
         ArrayList<Recipe> filteredList = new ArrayList<Recipe>();
 
         for (Recipe r : recipeList)
@@ -235,7 +236,7 @@ public class RecipesFragment extends Fragment {
         else if (selected.equals(COPY_RECIPE))
         {
             selectedRecipe.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
-            Utils.createRecipeFromExisting(selectedRecipe);
+            Database.createRecipeFromExisting(selectedRecipe);
             updateRecipeList(getFilteredList(searchView.getText().toString()));
 
         }
@@ -305,7 +306,7 @@ public class RecipesFragment extends Fragment {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.deleteRecipe(r);
+                        Database.deleteRecipe(r);
                         updateRecipeList(getFilteredList(searchView.getText().toString()));
                     }
 

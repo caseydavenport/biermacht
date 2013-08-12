@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
 import java.util.ArrayList;
 
@@ -17,13 +17,15 @@ import android.view.WindowManager;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.recipe.*;
+import com.biermacht.brews.utils.Utils;
 
 import android.widget.*;
 
@@ -108,7 +110,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         // Acquire recipe
         try
         {
-            mRecipe = Utils.getRecipeWithId(id);
+            mRecipe = Database.getRecipeWithId(id);
         }
         catch (RecipeNotFoundException e)
         {
@@ -393,7 +395,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
                 mRecipe.setMeasuredOG(measuredOg);
 				
 				mRecipe.update();
-				Utils.updateRecipe(mRecipe);
+				Database.updateRecipe(mRecipe);
 				finish();
 			}
 		}

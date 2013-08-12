@@ -6,6 +6,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.ingredient.Ingredient;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class IngredientSpinnerAdapter extends ArrayAdapter<Ingredient> {
 	public IngredientSpinnerAdapter(Context context, List<Ingredient> list, String title)
 	{
 		super(context, android.R.layout.simple_spinner_item, list);
+        Log.d("IngredientSpinnerAdapter", "Creating spinner adapter with length: " + list.size());
 		this.context = context;
 		this.list = list;
         this.title = title;

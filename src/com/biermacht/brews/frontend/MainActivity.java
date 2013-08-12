@@ -25,12 +25,17 @@ import android.widget.ListView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseInterface;
+import com.biermacht.brews.frontend.IngredientActivities.AddCustomFermentableActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddCustomHopsActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddCustomMiscActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddCustomYeastActivity;
 import com.biermacht.brews.frontend.fragments.EditIngredientsFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 import java.io.*;
@@ -88,7 +93,7 @@ public class MainActivity extends Activity{
             new ImportXmlIngredientsTask(this).execute("");
 
             // Create the master recipe - used a placeholder for stuff
-            Utils.createRecipeWithName("Master Recipe");
+            Database.createRecipeWithName("Master Recipe");
         }
         else
         {
@@ -315,7 +320,7 @@ public class MainActivity extends Activity{
                 for (Recipe r : ingredientHandler.getRecipesFromXml(path))
                 {
                     r.update();
-                    Utils.createRecipeFromExisting(r);
+                    Database.createRecipeFromExisting(r);
                 }
             }
             catch (IOException e)

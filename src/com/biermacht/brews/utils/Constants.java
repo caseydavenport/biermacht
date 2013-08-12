@@ -20,9 +20,9 @@ public class Constants {
     public static int INVALID_ID = -1; // TODO: Throw exceptions in get methods if this is passed
 
     // Different databases for ingredients
-    public static int INGREDIENT_DB_PERMANENT = 2;  // Imported from assets.  Save these.
-    public static int INGREDIENT_DB_CUSTOM = 1;     // Custom made ingredients. Save these
-    public static int INGREDIENT_DB_DEFAULT = 0;    // Used by default for regular recipes
+    public static long INGREDIENT_DB_PERMANENT = 2;  // Imported from assets.  Save these.
+    public static long INGREDIENT_DB_CUSTOM = 1;     // Custom made ingredients. Save these
+    public static long INGREDIENT_DB_DEFAULT = 0;    // Used by default for regular recipes
 
     // No owner ID for use in database
     public static long OWNER_NONE = -1;

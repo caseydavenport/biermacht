@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,9 +8,7 @@ import android.view.View;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Utils;
-
-import java.util.ArrayList;
+import com.biermacht.brews.utils.Database;
 
 public class AddCustomMiscActivity extends AddMiscActivity {
 
@@ -67,7 +65,7 @@ public class AddCustomMiscActivity extends AddMiscActivity {
 
             if (readyToGo)
             {
-                Utils.addIngredientToCustomDatabase(misc, Constants.MASTER_RECIPE_ID);
+                Database.addIngredientToVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, misc, Constants.MASTER_RECIPE_ID);
                 finish();
             }
 		}

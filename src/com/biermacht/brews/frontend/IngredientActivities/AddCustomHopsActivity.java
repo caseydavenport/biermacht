@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +10,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
-import com.biermacht.brews.utils.Utils;
-
-import java.util.ArrayList;
+import com.biermacht.brews.utils.Database;
 
 public class AddCustomHopsActivity extends AddHopsActivity {
 
@@ -88,7 +86,7 @@ public class AddCustomHopsActivity extends AddHopsActivity {
 			
 			if (readyToGo)
 			{
-                Utils.addIngredientToCustomDatabase(hop, Constants.MASTER_RECIPE_ID);
+                Database.addIngredientToVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, hop, Constants.MASTER_RECIPE_ID);
 				finish();
 			}
 		}

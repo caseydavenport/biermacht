@@ -1,18 +1,14 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Utils;
-
-import java.util.ArrayList;
+import com.biermacht.brews.utils.Database;
 
 public class AddCustomYeastActivity extends AddYeastActivity {
 
@@ -62,7 +58,7 @@ public class AddCustomYeastActivity extends AddYeastActivity {
 
             if (readyToGo)
             {
-                Utils.addIngredientToCustomDatabase(yeast, Constants.MASTER_RECIPE_ID);
+                Database.addIngredientToVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, yeast, Constants.MASTER_RECIPE_ID);
                 finish();
             }
         }

@@ -18,9 +18,6 @@ public class InitializeTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         ingredientHandler.getStylesList();
-        ingredientHandler.getFermentablesList();
-        ingredientHandler.getHopsList();
-        ingredientHandler.getYeastsList();
         ingredientHandler.getMashProfileList();
 
         return "Executed";

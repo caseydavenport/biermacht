@@ -1,9 +1,10 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
 import java.util.ArrayList;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -12,7 +13,7 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
-import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.Database;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,7 +31,7 @@ import com.biermacht.brews.utils.Units;
 import android.widget.TextView;
 import android.util.*;
 
-public class EditHopActivity extends Activity {
+public class AddHopsActivity extends Activity {
 
     // Main view - holds all the rows
     private ViewGroup mainView;
@@ -45,13 +46,13 @@ public class EditHopActivity extends Activity {
     LayoutInflater inflater;
 
     // Recipe we are editing
-    private Recipe mRecipe;
+    public Recipe mRecipe;
 
     // IngredientHandler to get ingredient arrays
     IngredientHandler ingredientHandler;
 
     // Holds the currently selected hop, and hop being edited
-    Hop hop, selectedHop;
+    Hop hop;
 
     // Editable rows to display
     private Spinner hopsSpinner;
@@ -69,10 +70,10 @@ public class EditHopActivity extends Activity {
     private TextView alphaAcidViewTitle;
 
     // Content from rows
-    private TextView nameViewText;
-    private TextView amountViewText;
-    private TextView timeViewText;
-    private TextView alphaAcidViewText;
+    public TextView nameViewText;
+    public TextView amountViewText;
+    public TextView timeViewText;
+    public TextView alphaAcidViewText;
 
     // Spinner array declarations
     private ArrayList<Ingredient> hopsArray;
@@ -105,18 +106,15 @@ public class EditHopActivity extends Activity {
         alertBuilder = new AlertBuilder(this);
 
         // Disable delete button for this view
-        findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
 
-        // Acquire Hop
-        hop = (Hop) getIntent().getParcelableExtra(Constants.INTENT_INGREDIENT);
-
         // Acquire recipe
         try
         {
-            mRecipe = Utils.getRecipeWithId(id);
+            mRecipe = Database.getRecipeWithId(id);
         }
         catch (RecipeNotFoundException e)
         {
@@ -201,20 +199,12 @@ public class EditHopActivity extends Activity {
         timeViewText = (TextView) timeView.findViewById(R.id.text);
         alphaAcidViewText = (TextView) alphaAcidView.findViewById(R.id.text);
 
-        // If this yeast is not in the array, add it
-        if (!hopsArray.contains(hop))
-            hopsArray.add(0, hop);
-
-        // Get the use and form
-        use = hop.getUse();
-        form = hop.getForm();
-
         // Set up hops spinner
         IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, hopsArray, "Hop Selector");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         hopsSpinner.setAdapter(adapter);
-        hopsSpinner.setSelection(hopsArray.indexOf(hop));
-
+        hopsSpinner.setSelection(0);
+        
         // Hop form spinner
         formArray = new ArrayList<String>();
         formArray.add(Hop.FORM_PELLET);
@@ -223,9 +213,9 @@ public class EditHopActivity extends Activity {
         SpinnerAdapter hopFormAdapter = new SpinnerAdapter(this, formArray, "Form");
         hopFormAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         formSpinner.setAdapter(hopFormAdapter);
-        formSpinner.setSelection(formArray.indexOf(form));
-
-        // Set up hop use spinner
+        formSpinner.setSelection(0);
+		
+		// Set up hop use spinner
         useArray = new ArrayList<String>();
         useArray.add(Hop.USE_BOIL);
         useArray.add(Hop.USE_AROMA);
@@ -233,89 +223,94 @@ public class EditHopActivity extends Activity {
         SpinnerAdapter hopUseAdapter = new SpinnerAdapter(this, useArray, "Usage");
         hopUseAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         useSpinner.setAdapter(hopUseAdapter);
-        useSpinner.setSelection(useArray.indexOf(use));
-
+        useSpinner.setSelection(0);
+        
         // Handle hops selector here
         hopsSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
+            
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selectedHop = (Hop) hopsArray.get(position);
-
-                nameViewText.setText(selectedHop.getName());
-                timeViewText.setText(String.format("%d", hop.getDisplayTime()));
-                alphaAcidViewText.setText(String.format("%2.2f", selectedHop.getAlphaAcidContent()));
-                amountViewText.setText(String.format("%2.0f", hop.getDisplayAmount()));
+            	hop = (Hop) hopsArray.get(position);
+            	
+                nameViewText.setText(hop.getName());
+                timeViewText.setText(mRecipe.getBoilTime() + "");
+                alphaAcidViewText.setText(String.format("%2.2f", hop.getAlphaAcidContent()));
+                amountViewText.setText(1.0 +"");
             }
 
             public void onNothingSelected(AdapterView<?> parentView)
             {
             }
 
-        });
-
-        // Handle use selector here
+        });   
+		
+		// Handle use selector here
         useSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                use = useArray.get(position);
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				use = useArray.get(position);
+				
+				if (use.equals(Hop.USE_DRY_HOP))
+				{
+					timeViewTitle.setText("Time (days)");
+					timeViewText.setText(5 + "");
+				}
+				else
+				{
+					timeViewTitle.setText("Time (mins)");
+					timeViewText.setText(mRecipe.getBoilTime() + "");
+				}
+			}
 
-                if (use.equals(Hop.USE_DRY_HOP))
-                    timeViewTitle.setText("Time (days)");
-                else
-                    timeViewTitle.setText("Time (mins)");
-
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Blag
-            }
-        });
-
-        // Handle form selector here
-        formSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// Blag
+			}
+		});
+    
+		// Handle form selector here
+	    formSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+	
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 form = formArray.get(position);
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Blag
-            }
-        });
-    }
+			}
+	
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// Blag
+			}
+		});
+	}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add_hops, menu);
         return true;
     }
-
-    @Override
+	
+	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId())
-        {
+    	switch (item.getItemId())
+		{
             case android.R.id.home:
-                finish();
-                return true;
+        		finish();
+        		return true; 
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void onClick(View v) {
-        // if "SUBMIT" button pressed
-        if (v.getId() == R.id.submit_button)
-        {
-            boolean readyToGo = true;
-            int endTime, startTime;
-            String hopName="";
-            double time=0, alpha=0, weight = 0;
-            try
-            {
-                hopName = nameViewText.getText().toString();
-                time = Integer.parseInt(timeViewText.getText().toString());
-                alpha = Double.parseDouble(alphaAcidViewText.getText().toString());
-                weight = Double.parseDouble(amountViewText.getText().toString());
+    
+	public void onClick(View v) {
+		// if "SUBMIT" button pressed
+		if (v.getId() == R.id.submit_button)
+		{
+			boolean readyToGo = true;
+			int endTime, startTime;
+			String hopName="";
+			double time=0, alpha=0, weight = 0;
+			try
+			{
+				hopName = nameViewText.getText().toString();
+				time = Integer.parseInt(timeViewText.getText().toString());
+				alpha = Double.parseDouble(alphaAcidViewText.getText().toString());
+				weight = Double.parseDouble(amountViewText.getText().toString());
 
                 if (hopName.isEmpty())
                     readyToGo = false;
@@ -330,6 +325,7 @@ public class EditHopActivity extends Activity {
                 }
                 else
                 {
+                    time = Units.daysToMinutes(time);
                     startTime = mRecipe.getBoilTime();
                     endTime = startTime + (int) time;
                 }
@@ -341,30 +337,26 @@ public class EditHopActivity extends Activity {
                 hop.setUse(use);
                 hop.setForm(form);
 
-            } catch (Exception e)
+			} catch (Exception e)
             {
-                Log.d("AddHopsActivity", "Exception on submit: " + e.toString());
-                readyToGo = false;
-            }
-
-            if (readyToGo)
-            {
-                Utils.updateIngredient(hop);
-                finish();
-            }
-        }
-
-        // If "DELETE" button pressed
-        if (v.getId() == R.id.delete_button)
-        {
-            Utils.deleteIngredient(hop);
-            finish();
-        }
-
-        // if "CANCEL" button pressed
-        if (v.getId() == R.id.cancel_button)
-        {
-            finish();
-        }
-    }
+				Log.d("AddHopsActivity", "Exception on submit: " + e.toString());
+				readyToGo = false;
+			}
+			
+			if (readyToGo)
+			{
+				mRecipe.addIngredient(hop);
+				mRecipe.update();
+				Database.updateRecipe(mRecipe);
+			
+				finish();
+			}
+		}
+		
+		// if "CANCEL" button pressed
+		if (v.getId() == R.id.cancel_button)
+		{
+			finish();
+		}
+	}
 }

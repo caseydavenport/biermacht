@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.app.*;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.*;
 import android.widget.AdapterView.*;
 import com.biermacht.brews.*;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.ingredient.*;
 import com.biermacht.brews.recipe.*;
@@ -97,7 +98,7 @@ public class AddMiscActivity extends Activity {
         // Acquire recipe
         try
         {
-            mRecipe = Utils.getRecipeWithId(id);
+            mRecipe = Database.getRecipeWithId(id);
         }
         catch (RecipeNotFoundException e)
         {
@@ -325,7 +326,7 @@ public class AddMiscActivity extends Activity {
             {
                 mRecipe.addIngredient(misc);
                 mRecipe.update();
-                Utils.updateRecipe(mRecipe);
+                Database.updateRecipe(mRecipe);
                 finish();
             }
 		}

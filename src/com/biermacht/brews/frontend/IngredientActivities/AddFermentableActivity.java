@@ -1,4 +1,4 @@
-package com.biermacht.brews.frontend;
+package com.biermacht.brews.frontend.IngredientActivities;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,8 @@ import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import android.view.*;
 
 public class AddFermentableActivity extends IngredientActivity {
@@ -161,7 +162,7 @@ public class AddFermentableActivity extends IngredientActivity {
     @Override
     public void onDeletePressed()
     {
-
+        // Must be overriden
     }
 
     @Override
@@ -207,8 +208,7 @@ public class AddFermentableActivity extends IngredientActivity {
     public void onFinished()
     {
         mRecipe.addIngredient(fermentable);
-        mRecipe.update();
-        Utils.updateRecipe(mRecipe);
+        Database.updateRecipe(mRecipe);
         finish();
     }
 }
