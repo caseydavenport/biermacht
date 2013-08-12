@@ -102,10 +102,6 @@ public abstract class IngredientActivity extends Activity implements OnClickList
     	// Get the Ingredient Handler
     	ingredientHandler = MainActivity.ingredientHandler;
 
-        // Get the list of ingredients to show.
-        getIngredientList();
-        Log.d("IngredientActivity", "Received " + ingredientList.size() + " ingredients");
-
         // Get the inflater
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -117,6 +113,10 @@ public abstract class IngredientActivity extends Activity implements OnClickList
 
         // Get recipe from calling activity
         getValuesFromIntent();
+
+        // Get the list of ingredients to show.
+        getIngredientList();
+        Log.d("IngredientActivity", "Received " + ingredientList.size() + " ingredients");
 
         // On click listener
         onClickListener = new OnClickListener() {

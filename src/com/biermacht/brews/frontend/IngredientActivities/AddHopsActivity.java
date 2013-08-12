@@ -3,20 +3,13 @@ package com.biermacht.brews.frontend.IngredientActivities;
 import java.util.ArrayList;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
-import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
-import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Database;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -25,9 +18,7 @@ import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import com.biermacht.brews.frontend.adapters.*;
 import android.view.*;
-import com.biermacht.brews.utils.Units;
 import android.widget.TextView;
-import android.util.*;
 
 public class AddHopsActivity extends IngredientActivity {
 
@@ -35,19 +26,19 @@ public class AddHopsActivity extends IngredientActivity {
     Hop hop;
 
     // Editable rows to display
-    private Spinner useSpinner;
-    private Spinner formSpinner;
-    private View alphaAcidView;
+    public Spinner useSpinner;
+    public Spinner formSpinner;
+    public View alphaAcidView;
 
     // Titles from rows
-    private TextView alphaAcidViewTitle;
+    public TextView alphaAcidViewTitle;
 
     // Content from rows
     public TextView alphaAcidViewText;
 
     // Spinner array declarations
-    private ArrayList<String> formArray;
-    private ArrayList<String> useArray;
+    public ArrayList<String> formArray;
+    public ArrayList<String> useArray;
 
     // Storage for acquired values
     String use;
