@@ -42,7 +42,7 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
     public void setValues()
     {
         nameViewText.setText(fermentable.getName());
-        colorViewText.setText(String.format("%2.0f", fermentable.getLovibondColor()));
+        colorViewText.setText(String.format("%2.2f", fermentable.getLovibondColor()));
         gravityViewText.setText(String.format("%2.3f", fermentable.getGravity()));
         timeViewText.setText("60");
         amountViewText.setText("1");

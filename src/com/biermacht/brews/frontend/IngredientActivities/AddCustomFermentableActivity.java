@@ -84,7 +84,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
 
         // Set values
         nameViewText.setText(fermentable.getName());
-        colorViewText.setText("5");
+        colorViewText.setText("5.00");
         gravityViewText.setText("1.037");
         timeViewText.setText("60");
         amountViewText.setText("1");
