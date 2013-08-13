@@ -14,14 +14,11 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
-import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +29,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
@@ -433,7 +429,9 @@ public class BrewTimerActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
+        ringtone.stop();
         am.cancel(pi);
         unregisterReceiver(bcr);
         if (wakeLock.isHeld())
