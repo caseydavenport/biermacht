@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,6 +18,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
+import com.biermacht.brews.frontend.fragments.BrewTimerStepFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
@@ -26,12 +28,14 @@ import com.biermacht.brews.frontend.adapters.*;
 import android.support.v4.view.*;
 
 public class DisplayRecipeActivity extends FragmentActivity {
-	
+
 	private Recipe mRecipe;
 	private long id; // id of recipe we use
 	private int currentItem; // For storing current page
 	DisplayRecipeCollectionPagerAdapter cpAdapter;
     ViewPager mViewPager;
+    ViewPager.OnPageChangeListener pageListener;
+    Menu menu;
 
     private class UpdateTask extends AsyncTask<String, Void, String> {
 
@@ -46,11 +50,6 @@ public class DisplayRecipeActivity extends FragmentActivity {
         @Override
         protected String doInBackground(String... params)
         {
-            appContext = getApplicationContext();
-
-            // Get recipe id from calling activity
-            id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-
             // Acquire recipe
             try
             {
@@ -63,8 +62,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
             }
 
             // ViewPager and pagerAdapter for Slidy tabs!
-            cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
-            mViewPager = (ViewPager) findViewById(R.id.pager);
+            cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, context);
 
             return "Executed";
         }
@@ -86,6 +84,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
 
             // Set to the current item
             mViewPager.setCurrentItem(currentItem);
+            mViewPager.setOnPageChangeListener(pageListener);
         }
 
         @Override
@@ -98,13 +97,19 @@ public class DisplayRecipeActivity extends FragmentActivity {
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setCancelable(true);
             progress.show();
+
+            // Get appContext
+            appContext = context;
+
+            // Get recipe id from calling activity
+            id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
         }
     }
-	
+
 	private Context appContext;
 
     @Override
@@ -115,17 +120,57 @@ public class DisplayRecipeActivity extends FragmentActivity {
         // Set current item to be the first
         currentItem = 0;
 
+        // Set on page change listener
+        pageListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float offset, int offsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                currentItem = position;
+                updateOptionsMenu();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        };
+
         // Update Asynchronously
         new UpdateTask(this).execute("");
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // getMenuInflater().inflate(R.menu.activity_display_recipe, menu);
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        this.menu = menu;
+        menu.removeItem(R.id.menu_add_ing);
+        menu.removeItem(R.id.menu_edit_recipe);
+        menu.removeItem(R.id.menu_timer);
+        menu.removeItem(R.id.menu_profile_dropdown);
+
+        switch (currentItem)
+        {
+            case 0:
+                getMenuInflater().inflate(R.menu.fragment_ingredient_menu, menu);
+                break;
+            case 1:
+                getMenuInflater().inflate(R.menu.fragment_instruction_menu, menu);
+                break;
+            case 2:
+                getMenuInflater().inflate(R.menu.fragment_details_menu, menu);
+                break;
+            case 3:
+                getMenuInflater().inflate(R.menu.fragment_profile_menu, menu);
+                break;
+        }
         return true;
     }
 
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
@@ -145,37 +190,37 @@ public class DisplayRecipeActivity extends FragmentActivity {
     	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
-    		    
+
             case R.id.add_yeast:
     	    	i = new Intent(this.appContext, AddYeastActivity.class);
     	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
-				
+
 			case R.id.add_misc:
     	    	i = new Intent(this.appContext, AddMiscActivity.class);
     	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
-    		    
+
             case R.id.menu_timer:
             	i = new Intent(this.appContext, BrewTimerActivity.class);
                 i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
                 startActivity(i);
             	return true;
-    		    
+
             case R.id.menu_edit_recipe:
           		i = new Intent(this.appContext, EditRecipeActivity.class);
           		i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
           		startActivity(i);
 				return true;
-			
+
 			case R.id.menu_edit_mash_profile:
 				i = new Intent(this.appContext, EditMashProfileActivity.class);
 				i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
 				startActivity(i);
 				return true;
-			
+
 			case R.id.menu_edit_fermentation_profile:
 				i = new Intent(this.appContext, EditFermentationProfileActivity.class);
 				i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
@@ -184,19 +229,49 @@ public class DisplayRecipeActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
-    
-    @Override
+
     public void onResume()
     {
-    	super.onResume();
+        super.onResume();
+        Log.d("DisplayRecipeActivity", "onResume");
 
-        // Update Asynchronously
-        new UpdateTask(this).execute("");
+        try
+        {
+            mRecipe = Database.getRecipeWithId(id);
+        }
+        catch (RecipeNotFoundException e)
+        {
+            e.printStackTrace();
+            finish();
+        }
+
+        // TODO: Temporary hack to fix dumb bug
+        if (currentItem == 1)
+            currentItem = 0;
+
+        // pagerAdapter for Slidy tabs!
+        cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(cpAdapter);
+        mViewPager.setOnPageChangeListener(pageListener);
+        getActionBar().setTitle(mRecipe.getRecipeName());
+        mViewPager.setCurrentItem(currentItem);
+        updateOptionsMenu();
+    }
+
+    public void updateOptionsMenu()
+    {
+        if (menu != null)
+            onCreateOptionsMenu(menu);
+        else
+        {
+            mViewPager.setCurrentItem(0);
+        }
     }
     
     @Override

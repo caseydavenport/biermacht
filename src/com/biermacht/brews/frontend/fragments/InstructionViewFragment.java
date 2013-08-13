@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
@@ -23,7 +24,6 @@ public class InstructionViewFragment extends Fragment {
 	private OnItemClickListener mClickListener;
 	private ListView instructionListView;
 	private ArrayList<Instruction> instructionList;
-	private LinearLayout timerView;
 	View pageView;
 	Context c;
 	
@@ -37,12 +37,11 @@ public class InstructionViewFragment extends Fragment {
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		pageView = inflater.inflate(resource, container, false);
-		
-		setHasOptionsMenu(true);
+
+        setHasOptionsMenu(false);
 		
 		// Initialize important junk
 		instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
-		timerView = (LinearLayout) pageView.findViewById(R.id.timer_view);
 		instructionList = r.getInstructionList();
   
 		if (instructionList.size() > 0)
@@ -60,20 +59,4 @@ public class InstructionViewFragment extends Fragment {
 		
 		return pageView;
 	}
-	
-	public void toggleTimer()
-	{
-		if (timerView.getVisibility() == View.VISIBLE)
-			timerView.setVisibility(View.GONE);
-		else
-			timerView.setVisibility(View.VISIBLE);
-			
-	}
-	
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-        super.onCreateOptionsMenu(menu, inflater);
-	    inflater.inflate(R.menu.fragment_instruction_menu, menu);
-	}
-	
 }

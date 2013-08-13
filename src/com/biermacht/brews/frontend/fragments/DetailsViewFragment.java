@@ -2,6 +2,7 @@ package com.biermacht.brews.frontend.fragments;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,6 +47,8 @@ public class DetailsViewFragment extends Fragment {
 		this.r = r;
 		this.c = c;
 		this.reccomendedValues = r.getStyle().getReccomendedValues();
+
+        setRetainInstance(true);
 	}
 	
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -53,8 +56,8 @@ public class DetailsViewFragment extends Fragment {
 		pageView = inflater.inflate(resource, container, false);
 		listView = (ListView) pageView.findViewById(R.id.details_list);
 		this.detailList = new ArrayList<Detail>();
-		
-		setHasOptionsMenu(true);
+
+        setHasOptionsMenu(false);
 			
 		// Configure details
 		beerType = new Detail();
@@ -155,11 +158,4 @@ public class DetailsViewFragment extends Fragment {
 		  
 		return pageView;
 	}
-
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-        super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.fragment_details_menu, menu);
-	}
-	
 }

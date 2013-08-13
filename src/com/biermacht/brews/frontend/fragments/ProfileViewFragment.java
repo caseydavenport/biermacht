@@ -3,6 +3,7 @@ package com.biermacht.brews.frontend.fragments;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,7 +53,7 @@ public class ProfileViewFragment extends Fragment {
 	@Override 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		setHasOptionsMenu(true);
+        setHasOptionsMenu(false);
 		pageView = inflater.inflate(resource, container, false);
 		profileView = (ViewGroup) pageView.findViewById(R.id.profile_view);
 		mashProfileView = (ViewGroup) pageView.findViewById(R.id.mash_profile_view);
@@ -164,11 +165,4 @@ public class ProfileViewFragment extends Fragment {
         tv.setText(r.getStyle().getNotes());
         bjcpProfileView.addView(tv);
     }
-
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-        super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.fragment_profile_menu, menu);
-	}
-
 }

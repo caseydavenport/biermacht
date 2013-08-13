@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,10 +49,11 @@ public class IngredientViewFragment extends Fragment {
 	{
 		pageView = inflater.inflate(resource, container, false);
 
-		setHasOptionsMenu(true);
+		setHasOptionsMenu(false);
 
 		// Initialize important junk
 		ingredientListView = (ListView) pageView.findViewById(R.id.ingredient_list);
+        ingredientList = r.getIngredientList();
 
         // Set up the onClickListener
 		mClickListener = new OnItemClickListener()
@@ -100,8 +102,6 @@ public class IngredientViewFragment extends Fragment {
 			}
 		};
 
-		ingredientList = r.getIngredientList();
-
 		// Set whether or not we show the list view
 		if (ingredientList.size() > 0)
 		{
@@ -119,11 +119,4 @@ public class IngredientViewFragment extends Fragment {
 
 		return pageView;
 	}
-
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-        super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.fragment_ingredient_menu, menu);
-	}
-
 }
