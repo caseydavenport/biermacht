@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -51,6 +53,9 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+
+        // Set icon as back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Acquire recipe
         try
@@ -158,6 +163,17 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add_new_recipe, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 	public void onClick(View v) {

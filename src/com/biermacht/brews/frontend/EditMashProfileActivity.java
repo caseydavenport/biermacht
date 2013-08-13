@@ -3,8 +3,10 @@ package com.biermacht.brews.frontend;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -47,8 +49,8 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
 
-        // Acquire profile
-		mashProfile = mRecipe.getMashProfile();
+        // Set icon as back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Acquire recipe
         try
@@ -60,6 +62,9 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
             e.printStackTrace();
             finish();
         }
+
+        // Acquire profile
+        mashProfile = mRecipe.getMashProfile();
 		
 		// Initialize data containers
 		name = mashProfile.getName();
@@ -116,6 +121,17 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add_new_recipe, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 	public void onClick(View v) {
