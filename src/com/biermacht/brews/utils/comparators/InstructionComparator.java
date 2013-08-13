@@ -22,6 +22,7 @@ public class InstructionComparator<K> implements Comparator<K>
 		// If the instructions have the same order, wtf?
 		// This should (hopefully) never be reached.
         Log.d("InstructionComparator", "Instruction orders are equal.  This should not happen");
+        Log.d("InstructionComparator", "Instructions: " + i1.toString() + " " + i2.toString());
 		return 1; 
 	}
 }
