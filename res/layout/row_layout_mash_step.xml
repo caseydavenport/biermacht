@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/row_layout_edit_text"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:minHeight="60dp"
+              android:background="@color/transparent"
+              android:focusable="false"
+              android:orientation="horizontal">
+
+    <!-- Linear layout for text type settings -->
+    <LinearLayout android:id="@+id/text_type"
+                  android:orientation="vertical"
+                  android:background="@color/transparent"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical" >
+
+        <TextView android:id="@+id/title"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_vertical"
+                  android:textSize="18dp"
+                  android:textColor="#333"
+                  android:text="Beer Name"
+                  android:layout_marginTop="5dp"
+                  android:layout_marginRight="20dp"
+                  android:layout_marginLeft="20dp"
+                  android:background="@color/transparent" />
+
+        <TextView android:id="@+id/text"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="top"
+                  android:textSize="16dp"
+                  android:textColor="#777"
+                  android:layout_marginTop="0dp"
+                  android:layout_marginRight="20dp"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginBottom="5dp"
+                  android:text="Beer Style"
+                  android:background="@color/transparent" />
+    </LinearLayout>
+
+</LinearLayout>

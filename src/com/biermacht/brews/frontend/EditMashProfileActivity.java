@@ -4,23 +4,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.biermacht.brews.DragDropList.DragSortController;
 import com.biermacht.brews.DragDropList.DragSortListView;
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.recipe.*;
@@ -28,59 +35,98 @@ import com.biermacht.brews.frontend.adapters.*;
 
 public class EditMashProfileActivity extends Activity implements OnClickListener {
 
-	// Data entry view declarations
-	private Spinner mashProfileSpinner;
-	private EditText nameEditText;
-	private EditText effEditText;
-	
-	// Data storage declarations
-	private double efficiency;
-	private String name;
 
-	// Recipe
-	private Recipe mRecipe;
-	private MashProfile mashProfile;
-	
-	// Arrays
-	private ArrayList<MashProfile> mashProfileArray;
+    // Main view - holds all the rows
+    private ViewGroup mainView;
 
-    // DragDrop view suff
-    private DragSortListView listView;
-    ArrayAdapter<String> adapter;
+    // Alert builder
+    private AlertBuilder alertBuilder;
 
+    // Important things
+    private OnClickListener onClickListener;
+
+    // Rows to be displayed
+    private Spinner spinner;
+    private View nameView;
+    private View efficiencyView;
+
+    // Title divider
+    private View mashStepTitleView;
+    private TextView mashStepTitleViewText;
+
+
+    // Titles
+    private TextView nameViewTitle;
+    private TextView efficiencyViewTitle;
+
+
+    // Contents
+    private TextView nameViewText;
+    private TextView efficiencyViewText;
+
+    // LayoutInflater
+    LayoutInflater inflater;
+
+    // Data storage declarations
+    private double efficiency;
+    private String name;
+
+    // Recipe + mashProfile we are editing
+    private Recipe mRecipe;
+    private MashProfile mProfile;
+
+    // Spinner array declarations
+    private ArrayList<MashProfile> profileArray;
+    private ArrayList<MashStep> mashStepArray;
+
+    // DragDrop ListView stuff
+    private DragSortListView dragDropListView;
+    private MashStepArrayAdapter dragDropAdapter;
+
+    // Callback for when a view is dropped
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener()
     {
         @Override
-        public void drop(int from, int to)
+        public void drop(int oldPosition, int newPosition)
         {
-            if (from != to)
+            if (oldPosition != newPosition)
             {
-                String item = adapter.getItem(from);
-                adapter.remove(item);
-                adapter.insert(item, to);
+                MashStep step = dragDropAdapter.getItem(oldPosition);
+                dragDropAdapter.remove(step);
+                dragDropAdapter.insert(step, newPosition);
             }
         }
     };
 
+    // Callback for when a view is removed from the list
     private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener()
     {
         @Override
-        public void remove(int which)
+        public void remove(int pos)
         {
-            adapter.remove(adapter.getItem(which));
+            dragDropAdapter.remove(dragDropAdapter.getItem(pos));
         }
     };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_mash_profile);
-
-        // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+        setContentView(R.layout.activity_add_edit);
 
         // Set icon as back button
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get the inflater
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Create alert builder
+        alertBuilder = new AlertBuilder(this);
+
+        // Disable delete button for this view
+        findViewById(R.id.delete_button).setVisibility(View.GONE);
+
+        // Get recipe from calling activity
+        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
 
         // Acquire recipe
         try
@@ -94,78 +140,131 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
         }
 
         // Acquire profile
-        mashProfile = mRecipe.getMashProfile();
+        mProfile = mRecipe.getMashProfile();
 		
 		// Initialize data containers
-		name = mashProfile.getName();
+		name = mProfile.getName();
 		efficiency = mRecipe.getEfficiency();
 
+        // Get lists
+        profileArray = MainActivity.ingredientHandler.getMashProfileList();
+        mashStepArray = mProfile.getMashStepList();
+
+        // On click listener
+        onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /************************************************************
+                 * Options for clicking on each of the editable views
+                 ************************************************************/
+
+                AlertDialog alert;
+                if (v.equals(nameView))
+                    alert = alertBuilder.editTextStringAlert(nameViewText, nameViewTitle).create();
+                else if (v.equals(efficiencyView))
+                    alert = alertBuilder.editTextIntegerAlert(efficiencyViewText, efficiencyViewTitle).create();
+                else
+                    return; // In case its none of those views...
+
+                // Force keyboard open and show popup
+                alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                alert.show();
+            }
+        };
+
         // Initialize views and stuff
-        nameEditText = (EditText) findViewById(R.id.name_edit_text);
-        effEditText = (EditText) findViewById(R.id.efficiency_edit_text);
-        listView = (DragSortListView) findViewById(R.id.listview);
+        mainView = (ViewGroup) findViewById(R.id.main_layout);
+        nameView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        efficiencyView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        spinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        dragDropListView = (DragSortListView) inflater.inflate(R.layout.view_drag_drop_list, mainView, false);
 
-        // Drag list view shit
-        String[] names = {"Name", "This", "an", "is", "awful"};
-        ArrayList<String> list = new ArrayList<String>(Arrays.asList(names));
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
-        listView.setDropListener(onDrop);
-        listView.setRemoveListener(onRemove);
+        // mash step list title
+        mashStepTitleView = inflater.inflate(R.layout.view_title, mainView, false);
+        mashStepTitleViewText = (TextView) mashStepTitleView.findViewById(R.id.title);
+        mashStepTitleViewText.setText("Mash Steps");
 
-        DragSortController controller = new DragSortController(listView);
+        // Set onClickListeners for edit text views
+        nameView.setOnClickListener(onClickListener);
+        efficiencyView.setOnClickListener(onClickListener);
+
+        /************************************************************************
+         ************* Add views to main view  **********************************
+         *************************************************************************/
+        mainView.addView(spinner);
+        mainView.addView(nameView);
+        mainView.addView(efficiencyView);
+        mainView.addView(mashStepTitleView);
+        mainView.addView(dragDropListView);
+
+        /************************************************************************
+         ************* Get titles, set values   **********************************
+         *************************************************************************/
+        nameViewTitle = (TextView) nameView.findViewById(R.id.title);
+        nameViewTitle.setText("Name");
+
+        efficiencyViewTitle = (TextView) efficiencyView.findViewById(R.id.title);
+        efficiencyViewTitle.setText("Efficiency (%)");
+
+        /************************************************************************
+         ************* Get content views, set values   **************************
+         *************************************************************************/
+        nameViewText = (TextView) nameView.findViewById(R.id.text);
+        nameViewText.setText(mProfile.getName());
+
+        efficiencyViewText = (TextView) efficiencyView.findViewById(R.id.text);
+        efficiencyViewText.setText(String.format("%2.2f", mRecipe.getEfficiency()));
+
+        // If it doesn't contain the current profile
+        // then it is custom and we add it to the list.
+        // TODO: We should include custom stuff without having to check here
+        if(!profileArray.contains(mRecipe.getMashProfile()))
+            profileArray.add(mRecipe.getMashProfile());
+
+        // Set up mash profile spinner
+        MashProfileSpinnerAdapter profileAdapter = new MashProfileSpinnerAdapter(this, profileArray);
+        profileAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(profileAdapter);
+        spinner.setSelection(profileArray.indexOf(mProfile));
+
+        // Handle mash profile selector here
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                mProfile = profileArray.get(position);
+                mashStepArray = mProfile.getMashStepList();
+                nameViewText.setText(mProfile.getName());
+
+                updateMashStepList();
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+            }
+
+        });
+
+        updateMashStepList();
+    }
+
+    private void updateMashStepList()
+    {
+        // Drag list view
+        dragDropAdapter = new MashStepArrayAdapter(this, mashStepArray);
+        dragDropListView.setAdapter(dragDropAdapter);
+        dragDropListView.setDropListener(onDrop);
+        dragDropListView.setRemoveListener(onRemove);
+
+        DragSortController controller = new DragSortController(dragDropListView);
         controller.setDragHandleId(R.id.row_icon);
-        //controller.setClickRemoveId(R.id.);
         controller.setRemoveEnabled(true);
         controller.setSortEnabled(true);
         controller.setDragInitMode(1);
-        //controller.setRemoveMode(removeMode);
 
-        listView.setFloatViewManager(controller);
-        listView.setOnTouchListener(controller);
-        listView.setDragEnabled(true);
-     
-        // Default values
-        effEditText.setText(String.format("%2.2f", mRecipe.getEfficiency()));
-     	nameEditText.setText(mashProfile.getName());
-		
-        //Arraylist of Profiles
-        mashProfileArray = MainActivity.ingredientHandler.getMashProfileList();
-
-		// If it doesn't contain the current recipes profile,
-		// then it is custom and we add it to the list.
-		if(!mashProfileArray.contains(mRecipe.getMashProfile()))
-			mashProfileArray.add(mRecipe.getMashProfile());
-
-		// Set up mash profile spinner
-		mashProfileSpinner = (Spinner) findViewById(R.id.mash_profile_spinner);
-		MashProfileSpinnerAdapter profAdapter = new MashProfileSpinnerAdapter(this, mashProfileArray);
-        profAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-		mashProfileSpinner.setAdapter(profAdapter);
-
-		// Determine the correct selection for the mash profile spinner
-        int pos = 0;
-        for (MashProfile p : mashProfileArray)
-        {
-        	if (p.equals(mRecipe.getMashProfile()))
-        		break;
-        	pos++;
-        }
-		mashProfileSpinner.setSelection(pos);
-
-		// Handle mash profile selector here
-        mashProfileSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-					mashProfile = mashProfileArray.get(position);
-					nameEditText.setText(mashProfile.getName());
-				}
-
-				public void onNothingSelected(AdapterView<?> parentView) {
-					// Blag
-				}
-
-			});
+        dragDropListView.setFloatViewManager(controller);
+        dragDropListView.setOnTouchListener(controller);
+        dragDropListView.setDragEnabled(true);
     }
 
     @Override
@@ -197,9 +296,10 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
 		if (v.getId() == R.id.submit_button)
 		{
 			boolean readyToGo = true;	
-			try {
-				efficiency = Float.parseFloat(effEditText.getText().toString());
-			    name = nameEditText.getText().toString();
+			try
+            {
+				efficiency = Float.parseFloat(efficiencyViewText.getText().toString());
+			    name = nameViewText.getText().toString();
 			}
 			catch (Exception e)
 			{
@@ -213,12 +313,9 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
 
 			if (readyToGo)
 			{
-				mashProfile.setName(name);
-				
+				mProfile.setName(name);
 				mRecipe.setEfficiency(efficiency);
-				mRecipe.setMashProfile(mashProfile);
-				
-				mRecipe.update();
+				mRecipe.setMashProfile(mProfile);
                 Database.updateRecipe(mRecipe);
 				finish();
 			}

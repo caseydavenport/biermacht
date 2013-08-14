@@ -2387,7 +2387,15 @@ public class DragSortListView extends ListView {
         }
         if ((mDragFlags & DRAG_POS_Y) == 0) {
             if (lastPos >= mSrcPos) {
-                bottomLimit = Math.min(getChildAt(mSrcPos - firstPos).getBottom(), bottomLimit);
+                try
+                {
+                    bottomLimit = Math.min(getChildAt(mSrcPos - firstPos).getBottom(), bottomLimit);
+                } catch (Exception e)
+                {
+                    Log.d("DragSortListView.java", "Exception in that spot..");
+                    e.printStackTrace();
+                }
+
             }
         }
 

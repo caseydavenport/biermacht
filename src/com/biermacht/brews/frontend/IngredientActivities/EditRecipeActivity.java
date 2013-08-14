@@ -166,16 +166,16 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         
         // Initialize views and stuff
         mainView = (ViewGroup) findViewById(R.id.main_layout);
-        recipeNameView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        recipeNameView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         styleSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
         typeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
         profileSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
-        timeView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        efficiencyView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        batchSizeView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);;
-        boilSizeView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        measuredFGView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        measuredOGView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        timeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        efficiencyView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        batchSizeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);;
+        boilSizeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        measuredFGView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        measuredOGView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
         // Set onClickListeners for edit text views
         recipeNameView.setOnClickListener(onClickListener);
