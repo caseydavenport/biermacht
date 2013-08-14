@@ -881,7 +881,7 @@ public class DatabaseInterface {
 		p.setBeerXmlStandardTunWeight(tunWeight);
 		p.setBeerXmlStandardTunSpecHeat(tunSpecHeat);
 		p.setEquipmentAdjust(equipAdjInt > 0 ? true: false);
-		p.setMashStepList(stepsList, false);
+		p.setMashStepList(stepsList);
 		return p;
 	}
 	

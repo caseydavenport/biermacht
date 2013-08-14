@@ -160,7 +160,8 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
 
         // Get lists
         profileArray = MainActivity.ingredientHandler.getMashProfileList();
-        mashStepArray = mProfile.getMashStepList();
+        mashStepArray = new ArrayList<MashStep>();
+        mashStepArray.addAll(mProfile.getMashStepList());
 
         // On click listener
         onClickListener = new View.OnClickListener() {
@@ -245,8 +246,9 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 mProfile = profileArray.get(position);
-                mashStepArray = mProfile.getMashStepList();
                 nameViewText.setText(mProfile.getName());
+                mashStepArray.removeAll(mashStepArray);
+                mashStepArray.addAll(mProfile.getMashStepList());
 
                 updateMashStepList();
             }
@@ -318,6 +320,7 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
 			{
 				mProfile.setName(name);
 				mRecipe.setEfficiency(efficiency);
+                mProfile.setMashStepList(mashStepArray);
 				mRecipe.setMashProfile(mProfile);
                 Database.updateRecipe(mRecipe);
 				finish();

@@ -256,16 +256,9 @@ public class MashProfile
      * to true
      * @param list
      */
-	public void setMashStepList(ArrayList<MashStep> list, boolean reorder)
+	public void setMashStepList(ArrayList<MashStep> list)
 	{
 		this.mashSteps = list;
-
-        if (reorder)
-        {
-            // Reassign orders of steps.
-            for(MashStep m : getMashStepList())
-                m.setOrder(getMashStepList().indexOf(m));
-        }
 	}
 
     /**
