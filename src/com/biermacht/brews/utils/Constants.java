@@ -1,5 +1,6 @@
 package com.biermacht.brews.utils;
 
+import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
@@ -42,6 +43,8 @@ public class Constants {
     // Other Constants
     private static String[] hop_uses = {Hop.USE_BOIL, Hop.USE_AROMA, Hop.USE_DRY_HOP};
     private static String [] hop_forms = {Hop.FORM_PELLET, Hop.FORM_WHOLE, Hop.FORM_PLUG};
+    private static String [] ferm_types = {Fermentable.TYPE_EXTRACT, Fermentable.TYPE_GRAIN, Fermentable.TYPE_SUGAR, Fermentable.TYPE_ADJUNCT};
     public static ArrayList<String> HOP_USES = new ArrayList<String>(Arrays.asList(hop_uses));
     public static ArrayList<String> HOP_FORMS = new ArrayList<String>(Arrays.asList(hop_forms));
+    public static ArrayList<String> FERMENTABLE_TYPES = new ArrayList<String>(Arrays.asList(ferm_types));
 }

@@ -3,6 +3,7 @@ package com.biermacht.brews.frontend.IngredientActivities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
@@ -18,6 +19,18 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
 
         // Enable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
+
+        // Handle fermentable type selections
+        fermentableTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                type = typeList.get(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
     }
 
     @Override
@@ -47,6 +60,7 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
         descriptionViewText.setText(fermentable.getShortDescription());
         timeViewText.setText("60");
         amountViewText.setText("1");
+        fermentableTypeSpinner.setSelection(typeList.indexOf(fermentable.getFermentableType()));
     }
 
     @Override
