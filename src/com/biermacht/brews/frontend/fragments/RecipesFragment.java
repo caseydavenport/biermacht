@@ -2,12 +2,15 @@ package com.biermacht.brews.frontend.fragments;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,8 +37,10 @@ import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class RecipesFragment extends Fragment {
@@ -96,9 +101,6 @@ public class RecipesFragment extends Fragment {
         // Get Context
         c = getActivity();
 
-        // Get recipes to display
-        recipeList = Database.getRecipeList(databaseInterface);
-
         // Set up the onClickListener
         mClickListener = new AdapterView.OnItemClickListener()
         {
@@ -133,7 +135,7 @@ public class RecipesFragment extends Fragment {
         searchView.addTextChangedListener(mTextWatcher);
 
         // Set up my listView with title and ArrayAdapter
-        updateRecipeList(recipeList);
+        new GetRecipeListFromDatabaseTask(getActivity()).execute("");
         listView.setOnItemClickListener(mClickListener);
         registerForContextMenu(listView);
 
@@ -335,5 +337,50 @@ public class RecipesFragment extends Fragment {
                 })
 
                 .setNegativeButton(R.string.cancel, null);
+    }
+
+    private class GetRecipeListFromDatabaseTask extends AsyncTask<String, Void, String> {
+
+        private Context context;
+        private ProgressDialog progress;
+
+        public GetRecipeListFromDatabaseTask(Context c)
+        {
+            this.context = c;
+        }
+
+        @Override
+        protected String doInBackground(String... params)
+        {
+            // Get recipes to display
+            recipeList = Database.getRecipeList(databaseInterface);
+
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+            progress.dismiss();
+            updateRecipeList(recipeList);
+            Log.d("readRecipesFromDatabase", "Finished reading recipes");
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            progress = new ProgressDialog(context);
+            progress.setMessage("Importing...");
+            progress.setIndeterminate(false);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setCancelable(true);
+            progress.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
     }
 }
