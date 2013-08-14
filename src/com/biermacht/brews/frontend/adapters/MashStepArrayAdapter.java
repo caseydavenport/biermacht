@@ -41,8 +41,10 @@ public class MashStepArrayAdapter extends ArrayAdapter<MashStep> {
 		TextView titleView = (TextView) row.findViewById(R.id.title);
 		TextView textView = (TextView) row.findViewById(R.id.text);
 
+        String temp = String.format("%2.0f", list.get(position).getDisplayStepTemp());
+        String time = String.format("%2.0f", list.get(position).getStepTime());
         titleView.setText(list.get(position).getName());
-        textView.setText("Some additional text here!");
+        textView.setText(time + " mins at " + temp + " F");
 
 		return row;
 	}

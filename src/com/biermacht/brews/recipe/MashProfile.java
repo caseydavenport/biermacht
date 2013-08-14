@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import com.biermacht.brews.utils.*;
+import com.biermacht.brews.utils.comparators.MashStepComparator;
 
 public class MashProfile
 {
@@ -302,17 +303,5 @@ public class MashProfile
 
         // Add to list
         this.mashSteps.add(step);
-    }
-
-    // Comparator for sorting ingredients list
-    private class MashStepComparator implements Comparator<MashStep>
-    {
-        public int compare(MashStep i1, MashStep i2)
-        {
-            if (i1.getOrder() > i2.getOrder())
-                return 1;
-            else
-                return -1;
-        }
     }
 }

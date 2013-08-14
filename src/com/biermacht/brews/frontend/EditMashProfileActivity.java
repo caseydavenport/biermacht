@@ -94,6 +94,12 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
                 MashStep step = dragDropAdapter.getItem(oldPosition);
                 dragDropAdapter.remove(step);
                 dragDropAdapter.insert(step, newPosition);
+
+                // Set new orders for all the steps
+                for (MashStep s : mashStepArray)
+                {
+                    s.setOrder(mashStepArray.indexOf(s));
+                }
             }
         }
     };
@@ -105,6 +111,12 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
         public void remove(int pos)
         {
             dragDropAdapter.remove(dragDropAdapter.getItem(pos));
+
+            // Set new orders for all the steps
+            for (MashStep s : mashStepArray)
+            {
+                s.setOrder(mashStepArray.indexOf(s));
+            }
         }
     };
 
@@ -255,15 +267,6 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
         dragDropListView.setAdapter(dragDropAdapter);
         dragDropListView.setDropListener(onDrop);
         dragDropListView.setRemoveListener(onRemove);
-
-        DragSortController controller = new DragSortController(dragDropListView);
-        controller.setDragHandleId(R.id.row_icon);
-        controller.setRemoveEnabled(true);
-        controller.setSortEnabled(true);
-        controller.setDragInitMode(1);
-
-        dragDropListView.setFloatViewManager(controller);
-        dragDropListView.setOnTouchListener(controller);
         dragDropListView.setDragEnabled(true);
     }
 
