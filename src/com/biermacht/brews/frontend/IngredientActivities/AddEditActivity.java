@@ -28,7 +28,7 @@ import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
 
-public abstract class IngredientActivity extends Activity implements OnClickListener {
+public abstract class AddEditActivity extends Activity implements OnClickListener {
 
     // Main view - holds all the rows
     public ViewGroup mainView;
@@ -48,6 +48,7 @@ public abstract class IngredientActivity extends Activity implements OnClickList
     // IDs received in intent
     long recipeId;
     long ingredientId;
+    long mashProfileId;
 
     // IngredientHandler to get ingredient arrays
     IngredientHandler ingredientHandler;
@@ -56,7 +57,7 @@ public abstract class IngredientActivity extends Activity implements OnClickList
     Ingredient ingredient;
 
     // Editable rows to display
-    public Spinner ingredientSpinner;
+    public Spinner spinnerView;
     public View nameView;
     public View amountView;
     public View timeView;
@@ -80,13 +81,13 @@ public abstract class IngredientActivity extends Activity implements OnClickList
     public ArrayList<Ingredient> ingredientList;
 
     // Listeners
-    OnItemSelectedListener ingredientSpinnerListener;
+    OnItemSelectedListener spinnerListener;
 
     // Abstract methods
     public abstract void onMissedClick(View v);
-    public abstract void createIngredientSpinner();
-    public abstract void configureIngredientSpinnerListener();
-    public abstract void getIngredientList();
+    public abstract void createSpinner();
+    public abstract void configureSpinnerListener();
+    public abstract void getList();
     public abstract void onCancelPressed();
     public abstract void onDeletePressed();
     public abstract void onFinished();
@@ -111,12 +112,11 @@ public abstract class IngredientActivity extends Activity implements OnClickList
         // Disable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
-        // Get recipe from calling activity
+        // Get recipe and other ids from calling activity
         getValuesFromIntent();
 
-        // Get the list of ingredients to show.
-        getIngredientList();
-        Log.d("IngredientActivity", "Received " + ingredientList.size() + " ingredients");
+        // Get the list to show
+        getList();
 
         // On click listener
         onClickListener = new OnClickListener() {
@@ -150,7 +150,7 @@ public abstract class IngredientActivity extends Activity implements OnClickList
         nameView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         amountView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         timeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        ingredientSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        spinnerView = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
 
         // Set the onClickListener for each row
         nameView.setOnClickListener(onClickListener);
@@ -160,7 +160,7 @@ public abstract class IngredientActivity extends Activity implements OnClickList
         /************************************************************************
          ************* Add views to main view  **********************************
          *************************************************************************/
-        mainView.addView(ingredientSpinner);
+        mainView.addView(spinnerView);
         mainView.addView(nameView);
         mainView.addView(timeView);
         mainView.addView(amountView);
@@ -184,19 +184,23 @@ public abstract class IngredientActivity extends Activity implements OnClickList
         timeViewText = (TextView) timeView.findViewById(R.id.text);
         amountViewText = (TextView) amountView.findViewById(R.id.text);
 
+        // Set any initial values here.
+        setInitialValues();
+
         // Set up type spinner
-        createIngredientSpinner();
-        setIngredientSelection();
+        createSpinner();
+        setInitialSpinnerSelection();
 
         // Handle type spinner selections here
-        configureIngredientSpinnerListener();
-        ingredientSpinner.setOnItemSelectedListener(ingredientSpinnerListener);
+        configureSpinnerListener();
+        spinnerView.setOnItemSelectedListener(spinnerListener);
     }
 
     public void getValuesFromIntent()
     {
         recipeId = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
         ingredientId = getIntent().getLongExtra(Constants.INTENT_INGREDIENT_ID, Constants.INVALID_ID);
+        mashProfileId = getIntent().getLongExtra(Constants.INTENT_PROFILE_ID, Constants.INVALID_ID);
 
         // Acquire recipe
         try
@@ -210,9 +214,15 @@ public abstract class IngredientActivity extends Activity implements OnClickList
         }
     }
 
-    public void setIngredientSelection()
+    public void setInitialSpinnerSelection()
     {
-        ingredientSpinner.setSelection(0);
+        spinnerView.setSelection(0);
+    }
+
+    public void setInitialValues()
+    {
+        amountViewText.setText("1.0");
+        timeViewText.setText("60");
     }
 
     @Override
@@ -249,7 +259,7 @@ public abstract class IngredientActivity extends Activity implements OnClickList
         }
         catch (Exception e)
         {
-            Log.d("AddIngredient", "Could not acquire values: " + e.toString());
+            Log.d("onSubmitPressed", "Could not acquire values: " + e.toString());
             e.printStackTrace();
             readyToGo = false;
         }

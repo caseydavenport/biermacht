@@ -15,11 +15,10 @@ import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import android.view.*;
 
-public class AddFermentableActivity extends IngredientActivity {
+public class AddFermentableActivity extends AddEditActivity {
 
     // Holds the currently selected fermentable
     Fermentable fermentable;
@@ -95,30 +94,30 @@ public class AddFermentableActivity extends IngredientActivity {
     }
 
     @Override
-    public void getIngredientList()
+    public void getList()
     {
         ingredientList = new ArrayList<Ingredient>();
         ingredientList.addAll(ingredientHandler.getFermentablesList());
     }
 
     @Override
-    public void setIngredientSelection()
+    public void setInitialSpinnerSelection()
     {
-        ingredientSpinner.setSelection(0);
+        spinnerView.setSelection(0);
     }
 
     @Override
-    public void createIngredientSpinner()
+    public void createSpinner()
     {
         IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, ingredientList, "Fermentable");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        ingredientSpinner.setAdapter(adapter);
+        spinnerView.setAdapter(adapter);
     }
 
     @Override
-    public void configureIngredientSpinnerListener()
+    public void configureSpinnerListener()
     {
-        ingredientSpinnerListener = new OnItemSelectedListener() {
+        spinnerListener = new OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 fermentable = (Fermentable) ingredientList.get(position);

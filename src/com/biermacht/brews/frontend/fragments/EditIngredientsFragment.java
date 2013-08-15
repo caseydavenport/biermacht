@@ -53,7 +53,7 @@ public class EditIngredientsFragment extends Fragment {
         Collections.sort(list, new IngredientComparator());
 
         // Initialize important junk
-        listView = (ListView) pageView.findViewById(R.id.ingredient_list);
+        listView = (ListView) pageView.findViewById(R.id.listview);
 
         // Set up the onClickListener
         mClickListener = new OnItemClickListener()

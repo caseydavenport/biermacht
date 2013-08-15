@@ -45,10 +45,10 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
     }
 
     @Override
-    public void getIngredientList()
+    public void getList()
     {
         // Get ingredient list
-        super.getIngredientList();
+        super.getList();
     }
 
     @Override

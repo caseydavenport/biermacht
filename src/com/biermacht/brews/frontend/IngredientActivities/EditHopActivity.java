@@ -1,39 +1,19 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
-import com.biermacht.brews.frontend.MainActivity;
-import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Hop;
-import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.ingredient.Yeast;
-import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.utils.IngredientHandler;
-import com.biermacht.brews.utils.Utils;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
-import com.biermacht.brews.frontend.adapters.*;
 import android.view.*;
-import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
-
-import android.widget.TextView;
-import android.util.*;
 
 public class EditHopActivity extends AddHopsActivity {
 
@@ -87,9 +67,9 @@ public class EditHopActivity extends AddHopsActivity {
     }
 
     @Override
-    public void configureIngredientSpinnerListener()
+    public void configureSpinnerListener()
     {
-        ingredientSpinnerListener = new OnItemSelectedListener() {
+        spinnerListener = new OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedHop = (Hop) ingredientList.get(position);
@@ -108,9 +88,9 @@ public class EditHopActivity extends AddHopsActivity {
     }
 
     @Override
-    public void getIngredientList()
+    public void getList()
     {
-        super.getIngredientList();
+        super.getList();
 
         if (!ingredientList.contains(hop))
         {
@@ -120,9 +100,9 @@ public class EditHopActivity extends AddHopsActivity {
     }
 
     @Override
-    public void setIngredientSelection()
+    public void setInitialSpinnerSelection()
     {
-        ingredientSpinner.setSelection(ingredientList.indexOf(hop));
+        spinnerView.setSelection(ingredientList.indexOf(hop));
     }
 
     @Override

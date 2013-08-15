@@ -20,7 +20,7 @@ import com.biermacht.brews.frontend.adapters.*;
 import android.view.*;
 import android.widget.TextView;
 
-public class AddHopsActivity extends IngredientActivity {
+public class AddHopsActivity extends AddEditActivity {
 
     // Holds the currently selected hop, and hop being edited
     Hop hop;
@@ -138,31 +138,31 @@ public class AddHopsActivity extends IngredientActivity {
     }
 
     @Override
-    public void getIngredientList()
+    public void getList()
     {
         ingredientList = new ArrayList<Ingredient>();
         ingredientList.addAll(ingredientHandler.getHopsList());
     }
 
     @Override
-    public void setIngredientSelection()
+    public void setInitialSpinnerSelection()
     {
-        ingredientSpinner.setSelection(0);
+        spinnerView.setSelection(0);
     }
 
     @Override
-    public void createIngredientSpinner()
+    public void createSpinner()
     {
         // Ingredient Spinner
         IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, ingredientList, "Hop");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        ingredientSpinner.setAdapter(adapter);
+        spinnerView.setAdapter(adapter);
     }
 
     @Override
-    public void configureIngredientSpinnerListener()
+    public void configureSpinnerListener()
     {
-        ingredientSpinnerListener = new OnItemSelectedListener() {
+        spinnerListener = new OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 hop = (Hop) ingredientList.get(position);

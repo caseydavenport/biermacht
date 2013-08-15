@@ -78,7 +78,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
         // Remove views we don't like
         mainView.removeView(amountView);
         mainView.removeView(timeView);
-        mainView.removeView(ingredientSpinner);
+        mainView.removeView(spinnerView);
 
         // Add views we do!
         mainView.addView(fermentableTypeSpinner);

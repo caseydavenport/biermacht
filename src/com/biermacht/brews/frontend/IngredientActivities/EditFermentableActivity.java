@@ -39,9 +39,9 @@ public class EditFermentableActivity extends AddFermentableActivity {
     }
 
     @Override
-    public void getIngredientList()
+    public void getList()
     {
-        super.getIngredientList();
+        super.getList();
 
         if (!ingredientList.contains(fermentable))
         {
@@ -51,15 +51,15 @@ public class EditFermentableActivity extends AddFermentableActivity {
     }
 
     @Override
-    public void setIngredientSelection()
+    public void setInitialSpinnerSelection()
     {
-        ingredientSpinner.setSelection(ingredientList.indexOf(fermentable));
+        spinnerView.setSelection(ingredientList.indexOf(fermentable));
     }
 
     @Override
-    public void configureIngredientSpinnerListener()
+    public void configureSpinnerListener()
     {
-        ingredientSpinnerListener = new AdapterView.OnItemSelectedListener() {
+        spinnerListener = new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedFermentable = (Fermentable) ingredientList.get(position);
