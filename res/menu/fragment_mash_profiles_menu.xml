@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_new_mash_profile"
+          android:title="New Mash Profile"
+          android:orderInCategory="1"
+          android:icon="@drawable/content_new"
+          android:showAsAction="ifRoom|withText" />
+</menu>
+
+
+
+

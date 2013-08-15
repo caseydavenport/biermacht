@@ -25,10 +25,10 @@ public class DatabaseInterface {
 	
 	private String[] recipeAllColumns = {
 			DatabaseHelper.REC_COL_ID,
+            DatabaseHelper.REC_COL_DB_ID,
 			DatabaseHelper.REC_COL_NAME,
 			DatabaseHelper.REC_COL_VER,
 			DatabaseHelper.REC_COL_TYPE,
-			DatabaseHelper.REC_COL_STYLE,
 			DatabaseHelper.REC_COL_BREWER,
 			DatabaseHelper.REC_COL_BATCH_SIZE,
 			DatabaseHelper.REC_COL_BOIL_SIZE,
@@ -105,61 +105,64 @@ public class DatabaseInterface {
 			};
 		
 	private String[] stylesAllColumns = {
-		DatabaseHelper.STY_COL_ID,
-		DatabaseHelper.STY_COL_OWNER_ID,
-		DatabaseHelper.STY_COL_NAME,
-		DatabaseHelper.STY_COL_CATEGORY,
-		DatabaseHelper.STY_COL_CAT_NUM,
-		DatabaseHelper.STY_COL_STY_LETTER,
-		DatabaseHelper.STY_COL_STY_GUIDE,
-		DatabaseHelper.STY_COL_TYPE,
-		DatabaseHelper.STY_COL_OG_MIN,
-		DatabaseHelper.STY_COL_OG_MAX,
-		DatabaseHelper.STY_COL_FG_MIN,
-		DatabaseHelper.STY_COL_FG_MAX,
-		DatabaseHelper.STY_COL_IBU_MIN,
-		DatabaseHelper.STY_COL_IBU_MAX,
-		DatabaseHelper.STY_COL_SRM_MIN,
-		DatabaseHelper.STY_COL_SRM_MAX,
-		DatabaseHelper.STY_COL_CARB_MIN,
-		DatabaseHelper.STY_COL_CARB_MAX,
-		DatabaseHelper.STY_COL_ABV_MIN,
-		DatabaseHelper.STY_COL_ABV_MAX,
-		DatabaseHelper.STY_COL_NOTES,
-		DatabaseHelper.STY_COL_PROFILE,
-		DatabaseHelper.STY_COL_INGREDIENTS,
-		DatabaseHelper.STY_COL_EXAMPLES
+            DatabaseHelper.STY_COL_ID,
+            DatabaseHelper.STY_COL_OWNER_ID,
+            DatabaseHelper.STY_COL_DB_ID,
+            DatabaseHelper.STY_COL_NAME,
+            DatabaseHelper.STY_COL_CATEGORY,
+            DatabaseHelper.STY_COL_CAT_NUM,
+            DatabaseHelper.STY_COL_STY_LETTER,
+            DatabaseHelper.STY_COL_STY_GUIDE,
+            DatabaseHelper.STY_COL_TYPE,
+            DatabaseHelper.STY_COL_OG_MIN,
+            DatabaseHelper.STY_COL_OG_MAX,
+            DatabaseHelper.STY_COL_FG_MIN,
+            DatabaseHelper.STY_COL_FG_MAX,
+            DatabaseHelper.STY_COL_IBU_MIN,
+            DatabaseHelper.STY_COL_IBU_MAX,
+            DatabaseHelper.STY_COL_SRM_MIN,
+            DatabaseHelper.STY_COL_SRM_MAX,
+            DatabaseHelper.STY_COL_CARB_MIN,
+            DatabaseHelper.STY_COL_CARB_MAX,
+            DatabaseHelper.STY_COL_ABV_MIN,
+            DatabaseHelper.STY_COL_ABV_MAX,
+            DatabaseHelper.STY_COL_NOTES,
+            DatabaseHelper.STY_COL_PROFILE,
+            DatabaseHelper.STY_COL_INGREDIENTS,
+            DatabaseHelper.STY_COL_EXAMPLES
 	};
 	
 	private String[] profileAllColumns = {
-		DatabaseHelper.PRO_COL_ID,
-		DatabaseHelper.PRO_COL_OWNER_ID,
-	    DatabaseHelper.PRO_COL_NAME,
-		DatabaseHelper.PRO_COL_VERSION,
-		DatabaseHelper.PRO_COL_GRAIN_TEMP,
-		DatabaseHelper.PRO_COL_NOTES,
-		DatabaseHelper.PRO_COL_TUN_TEMP,
-		DatabaseHelper.PRO_COL_SPARGE_TEMP,
-		DatabaseHelper.PRO_COL_PH,
-		DatabaseHelper.PRO_COL_TUN_WEIGHT,
-		DatabaseHelper.PRO_COL_TUN_SPEC_HEAT,
-		DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ
+            DatabaseHelper.PRO_COL_ID,
+            DatabaseHelper.PRO_COL_OWNER_ID,
+            DatabaseHelper.PRO_COL_DB_ID,
+            DatabaseHelper.PRO_COL_NAME,
+            DatabaseHelper.PRO_COL_VERSION,
+            DatabaseHelper.PRO_COL_GRAIN_TEMP,
+            DatabaseHelper.PRO_COL_NOTES,
+            DatabaseHelper.PRO_COL_TUN_TEMP,
+            DatabaseHelper.PRO_COL_SPARGE_TEMP,
+            DatabaseHelper.PRO_COL_PH,
+            DatabaseHelper.PRO_COL_TUN_WEIGHT,
+            DatabaseHelper.PRO_COL_TUN_SPEC_HEAT,
+            DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ
 	};
 	
 	private String[] stepAllColumns = {
-		DatabaseHelper.STE_COL_ID,
-		DatabaseHelper.STE_COL_OWNER_ID,
-		DatabaseHelper.STE_COL_NAME,
-		DatabaseHelper.STE_COL_VERSION,
-		DatabaseHelper.STE_COL_TYPE,
-		DatabaseHelper.STE_COL_INFUSE_AMT,
-		DatabaseHelper.STE_COL_STEP_TEMP,
-		DatabaseHelper.STE_COL_STEP_TIME,
-		DatabaseHelper.STE_COL_RAMP_TIME,
-		DatabaseHelper.STE_COL_END_TEMP,
-        DatabaseHelper.STE_COL_WATER_GRAIN_RATIO,
-        DatabaseHelper.STE_COL_DESCRIPTION,
-        DatabaseHelper.STE_COL_ORDER
+            DatabaseHelper.STE_COL_ID,
+            DatabaseHelper.STE_COL_OWNER_ID,
+            DatabaseHelper.STE_COL_DB_ID,
+            DatabaseHelper.STE_COL_NAME,
+            DatabaseHelper.STE_COL_VERSION,
+            DatabaseHelper.STE_COL_TYPE,
+            DatabaseHelper.STE_COL_INFUSE_AMT,
+            DatabaseHelper.STE_COL_STEP_TEMP,
+            DatabaseHelper.STE_COL_STEP_TIME,
+            DatabaseHelper.STE_COL_RAMP_TIME,
+            DatabaseHelper.STE_COL_END_TEMP,
+            DatabaseHelper.STE_COL_WATER_GRAIN_RATIO,
+            DatabaseHelper.STE_COL_DESCRIPTION,
+            DatabaseHelper.STE_COL_ORDER
 	};
 
 	// Constructor
@@ -181,10 +184,10 @@ public class DatabaseInterface {
 	{
 		// Load up values to store
 		ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.REC_COL_DB_ID, Constants.DATABASE_DEFAULT);
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
 		values.put(DatabaseHelper.REC_COL_VER, r.getVersion());
 		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
-		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle().getName());
 		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
 		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBeerXmlStandardBatchSize());
 		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBeerXmlStandardBoilSize());
@@ -218,9 +221,9 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
-		addIngredientListToDatabase(r.getIngredientList(), id, Constants.INGREDIENT_DB_DEFAULT);
+		addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_DEFAULT);
 		addStyleToDatabase(r.getStyle(), id);
-		addMashProfileToDatabase(r.getMashProfile(), id);
+		addMashProfileToDatabase(r.getMashProfile(), id, Constants.DATABASE_DEFAULT);
 		
 		return id;
 	}	
@@ -234,7 +237,6 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
 		values.put(DatabaseHelper.REC_COL_VER, r.getVersion());
 		values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
-		values.put(DatabaseHelper.REC_COL_STYLE, r.getStyle().getName());
 		values.put(DatabaseHelper.REC_COL_BREWER, r.getBrewer());
 		values.put(DatabaseHelper.REC_COL_BATCH_SIZE, r.getBeerXmlStandardBatchSize());
 		values.put(DatabaseHelper.REC_COL_BOIL_SIZE, r.getBeerXmlStandardBoilSize());
@@ -270,11 +272,11 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
 
 		deleteIngredientList(r.getId());
-		addIngredientListToDatabase(r.getIngredientList(), r.getId(), Constants.INGREDIENT_DB_DEFAULT);
+		addIngredientListToDatabase(r.getIngredientList(), r.getId(), Constants.DATABASE_DEFAULT);
 		deleteStyle(r.getId());
 		addStyleToDatabase(r.getStyle(), r.getId());
 		deleteMashProfile(r.getId());
-		addMashProfileToDatabase(r.getMashProfile(), r.getId());
+		addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
 		
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
 	}
@@ -427,6 +429,7 @@ public class DatabaseInterface {
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.STY_COL_OWNER_ID, ownerId);
+        values.put(DatabaseHelper.STY_COL_DB_ID, Constants.DATABASE_DEFAULT);
 		values.put(DatabaseHelper.STY_COL_NAME, s.getName());
 		values.put(DatabaseHelper.STY_COL_CATEGORY, s.getCategory());
 		values.put(DatabaseHelper.STY_COL_CAT_NUM, s.getCatNum());
@@ -455,11 +458,12 @@ public class DatabaseInterface {
 		return id;
 	}
 	
-	public long addMashProfileToDatabase(MashProfile p, long ownerId)
+	public long addMashProfileToDatabase(MashProfile p, long ownerId, long dbid)
 	{
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.PRO_COL_OWNER_ID, ownerId);
+        values.put(DatabaseHelper.PRO_COL_DB_ID, dbid);
         values.put(DatabaseHelper.PRO_COL_NAME, p.getName());
 	    values.put(DatabaseHelper.PRO_COL_VERSION, p.getVersion());
 		values.put(DatabaseHelper.PRO_COL_GRAIN_TEMP, p.getBeerXmlStandardGrainTemp());
@@ -489,6 +493,7 @@ public class DatabaseInterface {
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.STE_COL_OWNER_ID, ownerId);
+        values.put(DatabaseHelper.STE_COL_DB_ID, Constants.DATABASE_DEFAULT);
 		values.put(DatabaseHelper.STE_COL_NAME, s.getName());
 		values.put(DatabaseHelper.STE_COL_VERSION, s.getVersion());
 		values.put(DatabaseHelper.STE_COL_TYPE, s.getType());
@@ -561,14 +566,12 @@ public class DatabaseInterface {
 	 */
 	public Recipe getRecipeWithId(long id)
 	{
-		Recipe r = new Recipe("Database Problem");
+		Recipe r;
 		String whereString = DatabaseHelper.REC_COL_ID + "=" + id;
 
 		Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, whereString, null, null, null, null);
 		cursor.moveToFirst();
-		r = cursorToRecipe(cursor);
-		
-		return r;
+		return cursorToRecipe(cursor);
 	}
 
 	/**
@@ -580,20 +583,17 @@ public class DatabaseInterface {
 		String whereString = DatabaseHelper.ING_COL_ID + "=" + id;
 		Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
 		cursor.moveToFirst();
-		Ingredient i = cursorToIngredient(cursor);
-		
-		i = cursorToIngredient(cursor);
-			
-		return i;
+
+		return cursorToIngredient(cursor);
 	}
 
     /**
      * Returns ingredients from the given database with the given ingredient type
      */
-    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long databaseid, String type)
+    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid, String type)
     {
         ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + databaseid + " AND " +
+        String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid + " AND " +
                              DatabaseHelper.ING_COL_TYPE + "=?";
         String[] args = {type};
         Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, args, null, null, null);
@@ -612,10 +612,30 @@ public class DatabaseInterface {
     /**
      * Returns ingredients from the given database with the given ingredient type
      */
-    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long databaseid)
+    public ArrayList<MashProfile> getMashProfilesFromVirtualDatabase(long dbid)
+    {
+        ArrayList<MashProfile> list = new ArrayList<MashProfile>();
+        String whereString = DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
+        Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString, null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast())
+        {
+            list.add(cursorToMashProfile(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return list;
+    }
+
+    /**
+     * Returns ingredients from the given database with the given ingredient type
+     */
+    public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid)
     {
         ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + databaseid;
+        String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
         Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
 
         cursor.moveToFirst();
@@ -662,10 +682,10 @@ public class DatabaseInterface {
 		int cid = 0;
 		
 		long id = cursor.getLong(cid);                cid++;
+        long dbid = cursor.getLong(cid);              cid++;
 		String recipeName = cursor.getString(cid);    cid++;
 		int version = cursor.getInt(cid);             cid++;
 		String type = cursor.getString(cid);          cid++;
-		String styleString = cursor.getString(cid);   cid++;
 		String brewer = cursor.getString(cid);        cid++;
 		float batchSize = cursor.getFloat(cid);       cid++;
 		float boilSize = cursor.getFloat(cid);        cid++;
@@ -786,6 +806,7 @@ public class DatabaseInterface {
 		// Get all the values from the cursor
 		long id = cursor.getLong(cid);                          cid++;
 		long ownerId = cursor.getLong(cid);						cid++;
+        long dbid = cursor.getLong(cid);                        cid++;
 		String name = cursor.getString(cid);					cid++;
 		String category = cursor.getString(cid);				cid++;
 		String catNumber = cursor.getString(cid);				cid++;
@@ -855,6 +876,7 @@ public class DatabaseInterface {
 
 		long id = cursor.getLong(cid);                          cid++;
 		long ownerId = cursor.getLong(cid);						cid++;
+        long dbid = cursor.getLong(cid);                        cid++;
 		String name = cursor.getString(cid);					cid++;
 		Integer version = cursor.getInt(cid);				    cid++;
 		double grainTemp = cursor.getDouble(cid);				cid++;
@@ -907,6 +929,7 @@ public class DatabaseInterface {
 
 		long id = cursor.getLong(cid);                          cid++;
 		long ownerId = cursor.getLong(cid);						cid++;
+        long dbid = cursor.getLong(cid);                        cid++;
 		String name = cursor.getString(cid);					cid++;
 		Integer version = cursor.getInt(cid);				    cid++;
 		String type = cursor.getString(cid);				    cid++;

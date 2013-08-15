@@ -16,13 +16,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.biermacht.brews.DragDropList.DragSortController;
 import com.biermacht.brews.DragDropList.DragSortListView;
 import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;

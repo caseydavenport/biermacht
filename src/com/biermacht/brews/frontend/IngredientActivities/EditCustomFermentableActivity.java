@@ -72,7 +72,7 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
     @Override
     public void onDeletePressed()
     {
-        Database.deleteIngredientWithId(ingredientId, Constants.INGREDIENT_DB_CUSTOM);
+        Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_CUSTOM);
         finish();
     }
 
@@ -80,7 +80,7 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
     public void onFinished()
     {
         Database.deleteIngredientWithId(ingredientId, Constants.MASTER_RECIPE_ID);
-        Database.addIngredientToVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
+        Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
         finish();
     }
 }

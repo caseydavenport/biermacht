@@ -153,7 +153,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
     @Override
     public void onFinished()
     {
-            Database.addIngredientToVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
+            Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
             finish();
     }
 }

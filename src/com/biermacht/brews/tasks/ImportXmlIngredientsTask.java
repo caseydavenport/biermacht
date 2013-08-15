@@ -22,7 +22,7 @@ public class ImportXmlIngredientsTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params)
     {
         // Grab ingredients from xml, put them into SQLite
-        MainActivity.ingredientHandler.ImportIngredientAssets();
+        MainActivity.ingredientHandler.ImportAssets();
         return "Executed";
     }
 
@@ -39,7 +39,7 @@ public class ImportXmlIngredientsTask extends AsyncTask<String, Void, String> {
     {
         super.onPreExecute();
         progress = new ProgressDialog(context);
-        progress.setMessage("Performing first use database setup");
+        progress.setMessage("Performing first use setup");
         progress.setIndeterminate(false);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(true);

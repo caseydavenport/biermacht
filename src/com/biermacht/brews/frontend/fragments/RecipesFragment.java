@@ -362,7 +362,7 @@ public class RecipesFragment extends Fragment {
         protected void onPostExecute(String result)
         {
             super.onPostExecute(result);
-            progress.dismiss();
+            //progress.dismiss();
             updateRecipeList(recipeList);
             Log.d("readRecipesFromDatabase", "Finished reading recipes");
         }
@@ -376,7 +376,7 @@ public class RecipesFragment extends Fragment {
             progress.setIndeterminate(false);
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setCancelable(true);
-            progress.show();
+            //progress.show();
         }
 
         @Override

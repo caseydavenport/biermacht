@@ -340,7 +340,7 @@ public class EditMiscActivity extends Activity {
         // If "DELETE" button pressed
         if (v.getId() == R.id.delete_button)
         {
-            Database.deleteIngredientWithId(misc.getId(), Constants.INGREDIENT_DB_DEFAULT);
+            Database.deleteIngredientWithId(misc.getId(), Constants.DATABASE_DEFAULT);
             finish();
         }
 

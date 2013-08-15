@@ -32,10 +32,10 @@ import com.biermacht.brews.utils.comparators.IngredientComparator;
 
 public class EditIngredientsFragment extends Fragment {
 
-    private static int resource = R.layout.fragment_ingredient_view;;
+    private static int resource = R.layout.fragment_view;;
     private OnItemClickListener mClickListener;
-    private ListView ingredientListView;
-    private ArrayList<Ingredient> ingredientList;
+    private ListView listView;
+    private ArrayList<Ingredient> list;
     View pageView;
     Context c;
 
@@ -49,18 +49,18 @@ public class EditIngredientsFragment extends Fragment {
         c = getActivity();
 
         // Get ingredient list
-        ingredientList = Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM);
-        Collections.sort(ingredientList, new IngredientComparator());
+        list = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+        Collections.sort(list, new IngredientComparator());
 
         // Initialize important junk
-        ingredientListView = (ListView) pageView.findViewById(R.id.ingredient_list);
+        listView = (ListView) pageView.findViewById(R.id.ingredient_list);
 
         // Set up the onClickListener
         mClickListener = new OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id)
             {
-                Ingredient ing = ingredientList.get(pos);
+                Ingredient ing = list.get(pos);
 
                 // Grain pressed
                 if (ing.getType().equals(Ingredient.FERMENTABLE))
@@ -103,18 +103,19 @@ public class EditIngredientsFragment extends Fragment {
         };
 
         // Set whether or not we show the list view
-        if (ingredientList.size() > 0)
+        if (list.size() > 0)
         {
-            CustomIngredientArrayAdapter ingredientArrayAdapter = new CustomIngredientArrayAdapter(c, ingredientList);
-            ingredientListView.setVisibility(View.VISIBLE);
-            ingredientListView.setAdapter(ingredientArrayAdapter);
-            registerForContextMenu(ingredientListView);
-            ingredientListView.setOnItemClickListener(mClickListener);
+            CustomIngredientArrayAdapter ingredientArrayAdapter = new CustomIngredientArrayAdapter(c, list);
+            listView.setVisibility(View.VISIBLE);
+            listView.setAdapter(ingredientArrayAdapter);
+            registerForContextMenu(listView);
+            listView.setOnItemClickListener(mClickListener);
         }
         else
         {
-            TextView noIngredientsView = (TextView) pageView.findViewById(R.id.no_ingredients_view);
-            noIngredientsView.setVisibility(View.VISIBLE);
+            TextView noListView = (TextView) pageView.findViewById(R.id.nothing_to_show_view);
+            noListView.setText("No ingredients to display");
+            noListView.setVisibility(View.VISIBLE);
         }
 
         return pageView;

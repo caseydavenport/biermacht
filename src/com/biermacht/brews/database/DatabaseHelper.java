@@ -19,10 +19,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	// Column name defines for RECIPES
 	public static final String REC_COL_ID = "_id";
+    public static final String REC_COL_DB_ID = "databaseId";
 	public static final String REC_COL_NAME = "name";
 	public static final String REC_COL_VER = "xmlversion";
 	public static final String REC_COL_TYPE = "type";
-	public static final String REC_COL_STYLE = "style";
 	public static final String REC_COL_BREWER = "brewer";
 	public static final String REC_COL_BATCH_SIZE = "batchSize";
 	public static final String REC_COL_BOIL_SIZE = "boilSize";
@@ -99,6 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Column define names for styles
 	public static final String STY_COL_ID = "_id";
 	public static final String STY_COL_OWNER_ID = "styleOwnerId";
+    public static final String STY_COL_DB_ID = "databaseId";
 	public static final String STY_COL_NAME = "styleName";
 	public static final String STY_COL_CATEGORY = "styleCategory";
 	public static final String STY_COL_CAT_NUM = "styleCategoryNumber";
@@ -125,6 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Column define names for Mash Profiles
 	public static final String PRO_COL_ID = "_id";
 	public static final String PRO_COL_OWNER_ID = "profileOwnerId";
+    public static final String PRO_COL_DB_ID = "databaseId";
 	public static final String PRO_COL_NAME = "profileName";
 	public static final String PRO_COL_VERSION = "profileVersion";
 	public static final String PRO_COL_GRAIN_TEMP = "profileGrainTemp";
@@ -139,6 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Column define names for Mash Steps
 	public static final String STE_COL_ID = "_id";
 	public static final String STE_COL_OWNER_ID = "stepOwnerId";
+    public static final String STE_COL_DB_ID = "databaseId";
 	public static final String STE_COL_NAME = "stepName";
 	public static final String STE_COL_VERSION = "stepVersion";
 	public static final String STE_COL_TYPE = "stepType";
@@ -156,10 +159,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		TABLE_RECIPES 
 		+ "("
 			+ REC_COL_ID + " integer primary key autoincrement, "
+            + REC_COL_DB_ID + " long not null, "
 			+ REC_COL_NAME + " text not null, " 
 			+ REC_COL_VER + " int not null, "
-			+ REC_COL_TYPE + " text not null, " 
-			+ REC_COL_STYLE + " text not null, "
+			+ REC_COL_TYPE + " text not null, "
 			+ REC_COL_BREWER + " text not null, "
 			+ REC_COL_BATCH_SIZE + " float not null, "
 			+ REC_COL_BOIL_SIZE + " float not null, "
@@ -200,7 +203,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ "("
 				+ ING_COL_ID + " integer primary key autoincrement, "
 				+ ING_COL_OWNER_ID + " long not null, "
-                + ING_COL_DB_ID + " int not null, "
+                + ING_COL_DB_ID + " long not null, "
 				+ ING_COL_TYPE + " text not null, "
 				+ ING_COL_NAME + " text not null, "
 				+ ING_COL_DESC + " text not null, "
@@ -242,6 +245,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		+ "("
 			+ STY_COL_ID + " integer primary key autoincrement, "
 			+ STY_COL_OWNER_ID + " long not null, "
+            + STY_COL_DB_ID + " long not null, "
 			+ STY_COL_NAME + " text not null, "
 			+ STY_COL_CATEGORY + " text not null, "
 			+ STY_COL_CAT_NUM + " text not null, "
@@ -271,6 +275,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    + "("
 			+ PRO_COL_ID + " integer primary key autoincrement, "
 	        + PRO_COL_OWNER_ID + " long not null, "
+            + PRO_COL_DB_ID + " long not null, "
 			+ PRO_COL_NAME + " text not null, "
 			+ PRO_COL_VERSION + " integer not null, "
 			+ PRO_COL_GRAIN_TEMP + " float, "
@@ -287,6 +292,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    TABLE_STEPS
 		+ "("
 		    + STE_COL_ID + " integer primary key autoincrement, "
+            + STE_COL_DB_ID + " long not null, "
 			+ STE_COL_OWNER_ID + " long not null, "
 			+ STE_COL_NAME + " text not null, "
 			+ STE_COL_VERSION + " integer not null, "

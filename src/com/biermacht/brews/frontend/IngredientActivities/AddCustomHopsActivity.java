@@ -86,7 +86,7 @@ public class AddCustomHopsActivity extends AddHopsActivity {
 			
 			if (readyToGo)
 			{
-                Database.addIngredientToVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, hop, Constants.MASTER_RECIPE_ID);
+                Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, hop, Constants.MASTER_RECIPE_ID);
 				finish();
 			}
 		}

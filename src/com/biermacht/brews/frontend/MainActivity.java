@@ -30,6 +30,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddCustomHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomYeastActivity;
 import com.biermacht.brews.frontend.fragments.EditIngredientsFragment;
+import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
@@ -295,6 +296,7 @@ public class MainActivity extends Activity{
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(new RecipesFragment());
         fragmentList.add(new EditIngredientsFragment());
+        fragmentList.add(new EditMashProfilesFragment());
         selectItem(selectedItem);
     }
 

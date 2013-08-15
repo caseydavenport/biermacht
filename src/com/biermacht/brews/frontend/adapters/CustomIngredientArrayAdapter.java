@@ -46,7 +46,7 @@ public class CustomIngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView amountView = (TextView) row.findViewById(R.id.amount);
-		ImageView imageView = (ImageView) row.findViewById(R.id.ingredient_row_icon);
+		ImageView imageView = (ImageView) row.findViewById(R.id.row_icon);
 		TextView unitView = (TextView) row.findViewById(R.id.unit_text);
 		TextView detailView = (TextView) row.findViewById(R.id.ing_detail_text);
 		

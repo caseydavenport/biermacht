@@ -12,7 +12,7 @@
         android:background="@color/transparent"
         android:layout_marginRight="0dp">
         
-        <ImageView android:id="@+id/ingredient_row_icon"
+        <ImageView android:id="@+id/row_icon"
 	        android:layout_width="32dp"
 	        android:layout_height="32dp"
 	        android:layout_margin="14dip"

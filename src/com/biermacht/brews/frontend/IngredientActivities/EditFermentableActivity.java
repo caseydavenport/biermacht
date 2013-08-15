@@ -109,7 +109,7 @@ public class EditFermentableActivity extends AddFermentableActivity {
     @Override
     public void onDeletePressed()
     {
-        Database.deleteIngredientWithId(ingredientId, Constants.INGREDIENT_DB_DEFAULT);
+        Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
         finish();
     }
 

@@ -58,7 +58,7 @@ public class AddCustomYeastActivity extends AddYeastActivity {
 
             if (readyToGo)
             {
-                Database.addIngredientToVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, yeast, Constants.MASTER_RECIPE_ID);
+                Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, yeast, Constants.MASTER_RECIPE_ID);
                 finish();
             }
         }

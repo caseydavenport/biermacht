@@ -6,6 +6,7 @@ import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.comparators.RecipeComparator;
 
@@ -75,7 +76,7 @@ public class Database {
 		{
                 for (Ingredient i : r.getIngredientList())
                 {
-                        deleteIngredientWithId(i.getId(), Constants.INGREDIENT_DB_DEFAULT);
+                        deleteIngredientWithId(i.getId(), Constants.DATABASE_DEFAULT);
                 }
                 bool = deleteRecipe(r);
 		}
@@ -136,5 +137,20 @@ public class Database {
     public static ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid)
     {
         return MainActivity.databaseInterface.getIngredientsFromVirtualDatabase(dbid);
+    }
+
+    // Adds a list of ingredients to the specified virtual ingredient database
+    public static void addMashProfileListToVirtualDatabase(long dbid, ArrayList<MashProfile> list, long ownerId)
+    {
+        for (MashProfile p : list)
+        {
+            MainActivity.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
+        }
+    }
+
+    // Returns all mash profiles in the given database
+    public static ArrayList<MashProfile> getMashProfilesFromVirtualDatabase(long dbid)
+    {
+        return MainActivity.databaseInterface.getMashProfilesFromVirtualDatabase(dbid);
     }
 }

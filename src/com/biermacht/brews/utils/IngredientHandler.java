@@ -35,23 +35,19 @@ public class IngredientHandler {
 	}
 
     // First time use - put ingredients into SQLite
-    public void ImportIngredientAssets()
+    public void ImportAssets()
     {
         try
         {
-            this.fermentablesList = getFermentablesFromXml();
-            this.yeastsList = getYeastsFromXml();
-            this.hopsList = getHopsFromXml();
-            this.miscsList = getMiscsFromXml();
-        } catch (IOException e) {
+            Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getFermentablesFromXml(), Constants.OWNER_NONE);
+            Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getYeastsFromXml(), Constants.OWNER_NONE);
+            Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getHopsFromXml(), Constants.OWNER_NONE);
+            Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getMiscsFromXml(), Constants.OWNER_NONE);
+            Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_PERMANENT, getProfilesFromXml(), Constants.OWNER_NONE);
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
-
-        // Add them all to the database
-        Database.addIngredientListToVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, fermentablesList, Constants.OWNER_NONE);
-        Database.addIngredientListToVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, yeastsList, Constants.OWNER_NONE);
-        Database.addIngredientListToVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, hopsList, Constants.OWNER_NONE);
-        Database.addIngredientListToVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, miscsList, Constants.OWNER_NONE);
     }
 
 	/**
@@ -67,8 +63,8 @@ public class IngredientHandler {
         }
 
         fermentablesList.removeAll(fermentablesList);
-        fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.FERMENTABLE));
-        fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.FERMENTABLE));
+        fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM, Ingredient.FERMENTABLE));
+        fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT, Ingredient.FERMENTABLE));
 
         Collections.sort(fermentablesList, new IngredientComparator());
         Log.d("getFermentablesList", "Returning " + fermentablesList.size() + " fermentables");
@@ -88,8 +84,8 @@ public class IngredientHandler {
         }
 
         yeastsList.removeAll(yeastsList);
-        yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.YEAST));
-        yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.YEAST));
+        yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM, Ingredient.YEAST));
+        yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT, Ingredient.YEAST));
 
         Collections.sort(yeastsList, new IngredientComparator());
 		return this.yeastsList;
@@ -108,8 +104,8 @@ public class IngredientHandler {
         }
 
         hopsList.removeAll(hopsList);
-        hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.HOP));
-        hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.HOP));
+        hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM, Ingredient.HOP));
+        hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT, Ingredient.HOP));
 
         Collections.sort(hopsList, new IngredientComparator());
 		return this.hopsList;
@@ -128,8 +124,8 @@ public class IngredientHandler {
         }
 
         miscsList.removeAll(miscsList);
-        miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, Ingredient.MISC));
-        miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.INGREDIENT_DB_PERMANENT, Ingredient.MISC));
+        miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM, Ingredient.MISC));
+        miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT, Ingredient.MISC));
 
         Collections.sort(miscsList, new IngredientComparator());
 		return this.miscsList;

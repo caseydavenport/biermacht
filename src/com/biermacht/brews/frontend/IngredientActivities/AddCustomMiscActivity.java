@@ -65,7 +65,7 @@ public class AddCustomMiscActivity extends AddMiscActivity {
 
             if (readyToGo)
             {
-                Database.addIngredientToVirtualDatabase(Constants.INGREDIENT_DB_CUSTOM, misc, Constants.MASTER_RECIPE_ID);
+                Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID);
                 finish();
             }
 		}

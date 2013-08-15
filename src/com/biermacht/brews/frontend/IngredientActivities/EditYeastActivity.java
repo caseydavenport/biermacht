@@ -257,7 +257,7 @@ public class EditYeastActivity extends Activity implements OnClickListener {
 		// If "DELETE" button pressed
 		if (v.getId() == R.id.delete_button)
 		{
-			Database.deleteIngredientWithId(yeast.getId(), Constants.INGREDIENT_DB_DEFAULT);
+			Database.deleteIngredientWithId(yeast.getId(), Constants.DATABASE_DEFAULT);
 			finish();
 		}
 		
