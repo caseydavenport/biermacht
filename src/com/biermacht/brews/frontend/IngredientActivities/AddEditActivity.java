@@ -40,7 +40,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     public OnClickListener onClickListener;
 
     // LayoutInflater
-    LayoutInflater inflater;
+    public LayoutInflater inflater;
 
     // Recipe we are editing
     public Recipe mRecipe;
@@ -51,10 +51,10 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     long mashProfileId;
 
     // IngredientHandler to get ingredient arrays
-    IngredientHandler ingredientHandler;
+    public IngredientHandler ingredientHandler;
 
     // Holds the currently selected ingredient
-    Ingredient ingredient;
+    public Ingredient ingredient;
 
     // Editable rows to display
     public Spinner spinnerView;
@@ -73,15 +73,15 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     public TextView timeViewText;
 
     // Storage for acquired values
-    int time;
-    double amount;
-    String name;
+    public int time;
+    public double amount;
+    public String name;
 
     // Spinner array declarations
     public ArrayList<Ingredient> ingredientList;
 
     // Listeners
-    OnItemSelectedListener spinnerListener;
+    public OnItemSelectedListener spinnerListener;
 
     // Abstract methods
     public abstract void onMissedClick(View v);

@@ -1,49 +1,27 @@
 package com.biermacht.brews.frontend;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.DragDropList.DragSortListView;
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
-import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.AlertBuilder;
-import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
 
-public class EditMashProfileActivity extends Activity implements OnClickListener {
-
-
-    // Main view - holds all the rows
-    private ViewGroup mainView;
-
-    // Alert builder
-    private AlertBuilder alertBuilder;
-
-    // Important things
-    private OnClickListener onClickListener;
+public class EditMashProfileActivity extends AddEditActivity {
 
     // Rows to be displayed
-    private Spinner spinner;
-    private View nameView;
     private View efficiencyView;
 
     // Title divider
@@ -52,23 +30,15 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
 
 
     // Titles
-    private TextView nameViewTitle;
     private TextView efficiencyViewTitle;
 
-
     // Contents
-    private TextView nameViewText;
     private TextView efficiencyViewText;
-
-    // LayoutInflater
-    LayoutInflater inflater;
 
     // Data storage declarations
     private double efficiency;
-    private String name;
 
-    // Recipe + mashProfile we are editing
-    private Recipe mRecipe;
+    // mashProfile we are editing
     private MashProfile mProfile;
 
     // Spinner array declarations
@@ -90,12 +60,6 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
                 MashStep step = dragDropAdapter.getItem(oldPosition);
                 dragDropAdapter.remove(step);
                 dragDropAdapter.insert(step, newPosition);
-
-                // Set new orders for all the steps
-                for (MashStep s : mashStepArray)
-                {
-                    s.setOrder(mashStepArray.indexOf(s));
-                }
             }
         }
     };
@@ -119,73 +83,12 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_edit);
-
-        // Set icon as back button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Get the inflater
-        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        // Create alert builder
-        alertBuilder = new AlertBuilder(this);
 
         // Disable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
-        // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-
-        // Acquire recipe
-        try
-        {
-            mRecipe = Database.getRecipeWithId(id);
-        }
-        catch (RecipeNotFoundException e)
-        {
-            e.printStackTrace();
-            finish();
-        }
-
-        // Acquire profile
-        mProfile = mRecipe.getMashProfile();
-		
-		// Initialize data containers
-		name = mProfile.getName();
-		efficiency = mRecipe.getEfficiency();
-
-        // Get lists
-        profileArray = MainActivity.ingredientHandler.getMashProfileList();
-        mashStepArray = new ArrayList<MashStep>();
-        mashStepArray.addAll(mProfile.getMashStepList());
-
-        // On click listener
-        onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /************************************************************
-                 * Options for clicking on each of the editable views
-                 ************************************************************/
-
-                AlertDialog alert;
-                if (v.equals(nameView))
-                    alert = alertBuilder.editTextStringAlert(nameViewText, nameViewTitle).create();
-                else if (v.equals(efficiencyView))
-                    alert = alertBuilder.editTextIntegerAlert(efficiencyViewText, efficiencyViewTitle).create();
-                else
-                    return; // In case its none of those views...
-
-                // Force keyboard open and show popup
-                alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                alert.show();
-            }
-        };
-
         // Initialize views and stuff
-        mainView = (ViewGroup) findViewById(R.id.main_layout);
-        nameView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         efficiencyView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        spinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
         dragDropListView = (DragSortListView) inflater.inflate(R.layout.view_drag_drop_list, mainView, false);
 
         // mash step list title
@@ -194,50 +97,94 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
         mashStepTitleViewText.setText("Mash Steps");
 
         // Set onClickListeners for edit text views
-        nameView.setOnClickListener(onClickListener);
         efficiencyView.setOnClickListener(onClickListener);
 
-        /************************************************************************
-         ************* Add views to main view  **********************************
-         *************************************************************************/
-        mainView.addView(spinner);
-        mainView.addView(nameView);
+        // Remove views we don't want
+        mainView.removeView(amountView);
+        mainView.removeView(timeView);
+
+        // Add views that we want
         mainView.addView(efficiencyView);
         mainView.addView(mashStepTitleView);
         mainView.addView(dragDropListView);
 
-        /************************************************************************
-         ************* Get titles, set values   **********************************
-         *************************************************************************/
-        nameViewTitle = (TextView) nameView.findViewById(R.id.title);
-        nameViewTitle.setText("Name");
-
+        // Get titles, set values
         efficiencyViewTitle = (TextView) efficiencyView.findViewById(R.id.title);
         efficiencyViewTitle.setText("Efficiency (%)");
 
-        /************************************************************************
-         ************* Get content views, set values   **************************
-         *************************************************************************/
-        nameViewText = (TextView) nameView.findViewById(R.id.text);
-        nameViewText.setText(mProfile.getName());
-
+        // Get content, set values
         efficiencyViewText = (TextView) efficiencyView.findViewById(R.id.text);
         efficiencyViewText.setText(String.format("%2.2f", mRecipe.getEfficiency()));
+
+        updateMashStepList();
+    }
+
+    @Override
+    public void onMissedClick(View v)
+    {
+        AlertDialog alert;
+        if (v.equals(efficiencyView))
+            alert = alertBuilder.editTextIntegerAlert(efficiencyViewText, efficiencyViewTitle).create();
+        else
+                return;
+
+        // Force keyboard open and show popup
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alert.show();
+    }
+
+    @Override
+    public void setInitialValues()
+    {
+        super.setInitialValues();
+        nameViewText.setText(mProfile.getName());
+    }
+
+    @Override
+    public void getValuesFromIntent()
+    {
+        super.getValuesFromIntent();
+
+        // Acquire profile
+        mProfile = mRecipe.getMashProfile();
+
+        // Initialize data containers
+        name = mProfile.getName();
+        efficiency = mRecipe.getEfficiency();
+    }
+
+    @Override
+    public void getList()
+    {
+        profileArray = MainActivity.ingredientHandler.getMashProfileList();
+        mashStepArray = new ArrayList<MashStep>();
+        mashStepArray.addAll(mProfile.getMashStepList());
 
         // If it doesn't contain the current profile
         // then it is custom and we add it to the list.
         // TODO: We should include custom stuff without having to check here
         if(!profileArray.contains(mRecipe.getMashProfile()))
             profileArray.add(mRecipe.getMashProfile());
+    }
 
-        // Set up mash profile spinner
+    @Override
+    public void createSpinner()
+    {
         MashProfileSpinnerAdapter profileAdapter = new MashProfileSpinnerAdapter(this, profileArray);
         profileAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinner.setAdapter(profileAdapter);
-        spinner.setSelection(profileArray.indexOf(mProfile));
+        spinnerView.setAdapter(profileAdapter);
+    }
 
-        // Handle mash profile selector here
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    @Override
+    public void setInitialSpinnerSelection()
+    {
+        spinnerView.setSelection(profileArray.indexOf(mProfile));
+    }
+
+    @Override
+    public void configureSpinnerListener()
+    {
+        spinnerListener = new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
@@ -253,9 +200,7 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
             {
             }
 
-        });
-
-        updateMashStepList();
+        };
     }
 
     private void updateMashStepList()
@@ -285,42 +230,39 @@ public class EditMashProfileActivity extends Activity implements OnClickListener
         return super.onOptionsItemSelected(item);
     }
 
-	public void onClick(View v) {
+    @Override
+    public void onFinished()
+    {
+        mProfile.setMashStepList(mashStepArray);
+        mRecipe.setMashProfile(mProfile);
+        Database.updateRecipe(mRecipe);
+        finish();
+    }
 
-		// Cancel Button Pressed
-		if (v.getId() == R.id.cancel_button)
-		{
-			finish();
-		}
+    @Override
+    public void acquireValues() throws Exception
+    {
+        super.acquireValues();
+        efficiency = Float.parseFloat(efficiencyViewText.getText().toString());
+        mProfile.setName(name);
+        mRecipe.setEfficiency(efficiency);
 
-		// Submit Button pressed
-		if (v.getId() == R.id.submit_button)
-		{
-			boolean readyToGo = true;	
-			try
-            {
-				efficiency = Float.parseFloat(efficiencyViewText.getText().toString());
-			    name = nameViewText.getText().toString();
-			}
-			catch (Exception e)
-			{
-				readyToGo = false;
-			}
+        // Set new orders for all the MashSteps
+        for (MashStep s : mashStepArray)
+        {
+            s.setOrder(mashStepArray.indexOf(s));
+        }
+    }
 
-			if (name.isEmpty())
-				readyToGo = false;
-			if (efficiency > 100)
-				readyToGo = false;
+    @Override
+    public void onCancelPressed()
+    {
+        finish();
+    }
 
-			if (readyToGo)
-			{
-				mProfile.setName(name);
-				mRecipe.setEfficiency(efficiency);
-                mProfile.setMashStepList(mashStepArray);
-				mRecipe.setMashProfile(mProfile);
-                Database.updateRecipe(mRecipe);
-				finish();
-			}
-		}
-	}
+    @Override
+    public void onDeletePressed()
+    {
+
+    }
 }
