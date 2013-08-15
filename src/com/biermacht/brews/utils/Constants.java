@@ -20,6 +20,7 @@ public class Constants {
 	// Intent put values
 	public static String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
 	public static String INTENT_PROFILE_ID = "biermacht.brews.profile.id";
+    public static String INTENT_PROFILE = "biermacht.brews.profile";
 	public static String INTENT_INGREDIENT_ID = "biermacht.brews.ingredient.id";
     public static String INTENT_INGREDIENT = "biermacht.brews.ingredient";
     public static int INVALID_ID = -1; // TODO: Throw exceptions in get methods if this is passed

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.biermacht.brews.DragDropList.DragSortListView;
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
@@ -146,7 +147,7 @@ public class EditMashProfileActivity extends AddEditActivity {
         super.getValuesFromIntent();
 
         // Acquire profile
-        mProfile = mRecipe.getMashProfile();
+        mProfile = getIntent().getParcelableExtra(Constants.INTENT_PROFILE);
 
         // Initialize data containers
         name = mProfile.getName();

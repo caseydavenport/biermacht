@@ -1,5 +1,9 @@
 package com.biermacht.brews.recipe;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,7 +11,7 @@ import java.util.Comparator;
 import com.biermacht.brews.utils.*;
 import com.biermacht.brews.utils.comparators.MashStepComparator;
 
-public class MashProfile
+public class MashProfile implements Parcelable
 {
 	// Beer XML 1.0 Required Fields ===================================
 	// ================================================================
@@ -52,6 +56,75 @@ public class MashProfile
 		this.id = -1;
 		this.ownerId = -1;
 	}
+
+    public MashProfile(Parcel p)
+    {
+        name = p.readString();
+        version = p.readInt();
+        grainTemp = p.readDouble();
+
+        mashSteps = new ArrayList<MashStep>();
+        p.readTypedList(mashSteps, MashStep.CREATOR);
+
+        // Beer XML 1.0 Optional Fields ===================================
+        // ================================================================
+        tunTemp = p.readDouble();
+        spargeTemp = p.readDouble();
+        pH = p.readDouble();
+        tunWeight = p.readDouble();
+        tunSpecificHeat = p.readDouble();
+        notes = p.readString();
+        equipAdj = (p.readInt() > 0 ? true : false);
+
+        // Custom Fields ==================================================
+        // ================================================================
+        id = p.readLong();
+        ownerId = p.readLong();
+    }
+
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+        p.writeString(name);		            // profile name
+        p.writeInt(version);			        // XML Version -- 1
+        p.writeDouble(grainTemp);               // Grain temp in C
+        p.writeTypedList(mashSteps);            // List of steps
+
+        // Beer XML 1.0 Optional Fields ===================================
+        // ================================================================
+        p.writeDouble(tunTemp);		    // TUN Temperature in C
+        p.writeDouble(spargeTemp);      // Sparge Temp in C
+        p.writeDouble(pH);              // pH of water
+        p.writeDouble(tunWeight);       // Weight of TUN in kG
+        p.writeDouble(tunSpecificHeat); // Specific heat of TUN
+        p.writeString(notes);			// Notes
+        p.writeInt(equipAdj ? 1 : 0);   // Adjust for heating of equip?
+
+        // Custom Fields ==================================================
+        // ================================================================
+        p.writeLong(id);                  // id for use in database
+        p.writeLong(ownerId);			  // id for parent recipe
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<MashProfile> CREATOR =
+            new Parcelable.Creator<MashProfile>() {
+                @Override
+                public MashProfile createFromParcel(Parcel p)
+                {
+                    return new MashProfile(p);
+                }
+
+                @Override
+                public MashProfile[] newArray(int size) {
+                    return new MashProfile[size];
+                }
+            };
 	
 	@Override
 	public String toString()

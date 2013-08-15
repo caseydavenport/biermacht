@@ -1,7 +1,10 @@
 package com.biermacht.brews.recipe;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.biermacht.brews.utils.*;
 
-public class MashStep
+public class MashStep implements Parcelable
 {
     // Beer XML 1.0 Required Fields ===================================
 	// ================================================================
@@ -48,6 +51,85 @@ public class MashStep
 		this.ownerId = -1;
         this.order = 1;
 	}
+
+    public MashStep(Parcel p)
+    {
+        // Beer XML 1.0 Required Fields ===================================
+        // ================================================================
+        name = p.readString();
+        version = p.readInt();
+        type = p.readString();
+        infuseAmount = p.readDouble();
+        stepTemp = p.readDouble();
+        stepTime = p.readDouble();
+
+
+        // Beer XML 1.0 Optional Fields ===================================
+        // ================================================================
+        rampTime = p.readDouble();
+        endTemp = p.readDouble();
+        description = p.readString();
+        waterToGrainRatio = p.readDouble();
+
+        // Custom Fields ==================================================
+        // ================================================================
+        ownerId = p.readLong();
+        id = p.readLong();
+        order = p.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+        // Beer XML 1.0 Required Fields ===================================
+        // ================================================================
+        p.writeString(name);		            // profile name
+        p.writeInt(version);			        // XML Version -- 1
+        p.writeString(type);                    // infusion, temp, decoc
+        p.writeDouble(infuseAmount);            // Amount
+        p.writeDouble(stepTemp);				// Temp for this step in C
+        p.writeDouble(stepTime);				// Time for this step
+
+
+        // Beer XML 1.0 Optional Fields ===================================
+        // ================================================================
+        p.writeDouble(rampTime);		    // Time to ramp temp
+        p.writeDouble(endTemp);             // Final temp for long steps
+        p.writeString(description);         // Description of step
+        p.writeDouble(waterToGrainRatio);   // Water to grain ratio (L/kg)
+
+        // Custom Fields ==================================================
+        // ================================================================
+        p.writeLong(ownerId);				// id for parent mash profile
+        p.writeLong(id);                    // id for use in database
+        p.writeInt(order);                  // Order in step list
+    }
+
+    public static final Parcelable.Creator<MashStep> CREATOR =
+            new Parcelable.Creator<MashStep>() {
+                @Override
+                public MashStep createFromParcel(Parcel p)
+                {
+                    return new MashStep(p);
+                }
+
+                @Override
+                public MashStep[] newArray(int size) {
+                    return new MashStep[size];
+                }
+            };
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.name;
+    }
 
 	public void setName(String name)
 	{

@@ -269,6 +269,8 @@ public class RecipesFragment extends Fragment {
         {
             Intent i = new Intent(c, EditMashProfileActivity.class);
             i.putExtra(Constants.INTENT_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.INTENT_PROFILE_ID, selectedRecipe.getMashProfile().getId());
+            i.putExtra(Constants.INTENT_PROFILE, selectedRecipe.getMashProfile());
             startActivity(i);
         }
 
