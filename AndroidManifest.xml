@@ -63,6 +63,11 @@
                 android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
+                android:name=".frontend.AddMashStepActivity"
+                android:label="@string/title_activity_add_mash_step"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
                 android:name=".frontend.AddMashProfileActivity"
                 android:label="@string/title_activity_add_profile"
                 android:windowSoftInputMode="adjustResize" >

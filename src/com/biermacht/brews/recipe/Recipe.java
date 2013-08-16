@@ -130,6 +130,12 @@ public class Recipe {
 		this.measuredOG = 0;
 		this.measuredFG = 0;
 	}
+
+    // Constructor with no arguments!
+    public Recipe()
+    {
+        this("New Recipe");
+    }
 	
 	// Public methods
 	public void update()

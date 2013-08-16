@@ -31,16 +31,16 @@ public class MashStep implements Parcelable
 
 	// Static values =================================================
 	// ===============================================================
-    public static String INFUSION = "infusion";
-	public static String TEMPERATURE = "temperature";
-	public static String DECOCTION = "decoction";
+    public static String INFUSION = "Infusion";
+	public static String TEMPERATURE = "Temperature";
+	public static String DECOCTION = "Decoction";
 	
 	// Basic Constructor
 	public MashStep() {
 		this.setName("Untitled Mash Step");
 		this.setVersion(1);
 		this.setType(MashStep.INFUSION);
-		this.setBeerXmlStandardInfuseAmount(2.0);
+		this.setDisplayInfuseAmount(10.0);
 		this.setBeerXmlStandardStepTemp(0.0);
 		this.setStepTime(60);
 		this.setRampTime(0);
@@ -161,6 +161,16 @@ public class MashStep implements Parcelable
 		return this.type;
 	}
 
+    public void setDisplayInfuseAmount(double amt)
+    {
+        this.infuseAmount = Units.gallonsToLiters(amt);
+    }
+
+    public double getDisplayInfuseAmount()
+    {
+        return Units.litersToGallons(this.infuseAmount);
+    }
+
 	public void setBeerXmlStandardInfuseAmount(double amt)
 	{
 		this.infuseAmount = amt;
@@ -171,6 +181,16 @@ public class MashStep implements Parcelable
 		return this.infuseAmount;
 	}
 
+    public void setDisplayStepTemp(double temp)
+    {
+        this.stepTemp = Units.farenheitToCelsius(temp);
+    }
+
+    public double getDisplayStepTemp()
+    {
+        return Units.celsiusToFarenheit(this.stepTemp);
+    }
+
 	public void setBeerXmlStandardStepTemp(double temp)
 	{
 		this.stepTemp = temp;
@@ -179,11 +199,6 @@ public class MashStep implements Parcelable
 	public double getBeerXmlStandardStepTemp()
 	{
 		return this.stepTemp;
-	}
-	
-	public double getDisplayStepTemp()
-	{
-		return Units.celsiusToFarenheit(this.stepTemp);
 	}
 
     public double getBeerXmlStandardWaterToGrainRatio()

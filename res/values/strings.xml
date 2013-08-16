@@ -15,6 +15,8 @@
 	<string name="title_activity_add_misc">Add Misc</string>
 	<string name="title_activity_edit_misc">Edit Misc</string>
 	<string name="title_activity_edit_fermentation_profile">Edit Fermentation</string>
+    <string name="title_activity_add_mash_step">Add Mash Step</string>
+    <string name="title_activity_edit_mash_step">Edit Mash Step</string>
 
     <!-- Menu stuff -->
     <string name="menu_settings">Settings</string>

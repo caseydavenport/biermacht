@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/view_title"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:background="#fff"
-              android:focusable="false"
-              android:layout_marginTop="30dp"
-              android:orientation="vertical">
+          android:id="@+id/view_title"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:background="#fff"
+          android:focusable="false"
+          android:layout_marginTop="30dp"
+          android:orientation="vertical">
 
-    <TextView android:id="@+id/title"
+    <LinearLayout android:orientation="horizontal"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:gravity="center_vertical"
-              android:textAllCaps="true"
-              android:textStyle="bold"
-              android:textSize="15dp"
-              android:textColor="#111"
-              android:text="Title"
-              android:layout_marginBottom="5dp"
-              android:background="@color/transparent" />
+              android:background="@color/transparent" >
+
+        <TextView android:id="@+id/title"
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:gravity="bottom"
+                  android:layout_gravity="bottom"
+                  android:textAllCaps="true"
+                  android:textStyle="bold"
+                  android:textSize="15dp"
+                  android:textColor="#111"
+                  android:text="Title"
+                  android:layout_marginBottom="2dp"
+                  android:background="@color/transparent" />
+
+        <ImageButton android:id="@+id/add_button"
+                  android:layout_width="30dp"
+                  android:layout_height="30dp"
+                  android:layout_marginRight="5dp"
+                  android:background="@drawable/content_new" />
+
+    </LinearLayout>
 
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="3dip"

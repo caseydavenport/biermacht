@@ -1,11 +1,16 @@
 package com.biermacht.brews.frontend;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.biermacht.brews.DragDropList.DragSortListView;
@@ -22,6 +27,24 @@ import java.util.ArrayList;
 
 public class AddMashProfileActivity extends AddEditActivity {
 
+    // Views
+    public View tunTempView;
+    public View grainTempView;
+    public View spargeTempView;
+    public View spargeVolumeView;
+
+    // Titles
+    public TextView tunTempViewTitle;
+    public TextView grainTempViewTitle;
+    public TextView spargeTempViewTitle;
+    public TextView spargeVolumeViewTitle;
+
+    // Content text
+    public TextView tunTempViewText;
+    public TextView grainTempViewText;
+    public TextView spargeTempViewText;
+    public TextView spargeVolumeViewText;
+
     // Title divider
     public View mashStepTitleView;
     public TextView mashStepTitleViewText;
@@ -36,6 +59,9 @@ public class AddMashProfileActivity extends AddEditActivity {
     // DragDrop ListView stuff
     public DragSortListView dragDropListView;
     public MashStepArrayAdapter dragDropAdapter;
+
+    // add mash step button
+    public ImageButton addMashStepButton;
 
     // Callback for when a view is dropped
     public DragSortListView.DropListener onDrop = new DragSortListView.DropListener()
@@ -77,27 +103,98 @@ public class AddMashProfileActivity extends AddEditActivity {
 
         // Initialize views and stuff
         dragDropListView = (DragSortListView) inflater.inflate(R.layout.view_drag_drop_list, mainView, false);
+        tunTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        grainTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        spargeTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        spargeVolumeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
-        // mash step list title
+        // Set listeners
+        tunTempView.setOnClickListener(onClickListener);
+        grainTempView.setOnClickListener(onClickListener);
+        spargeTempView.setOnClickListener(onClickListener);
+        spargeVolumeView.setOnClickListener(onClickListener);
+
+        // Titles here
+        tunTempViewTitle = (TextView) tunTempView.findViewById(R.id.title);
+        grainTempViewTitle = (TextView) grainTempView.findViewById(R.id.title);
+        spargeTempViewTitle = (TextView) spargeTempView.findViewById(R.id.title);
+        spargeVolumeViewTitle = (TextView) spargeVolumeView.findViewById(R.id.title);
+
+        // Set titles
+        tunTempViewTitle.setText("Tun Temperature (F)");
+        grainTempViewTitle.setText("Grain Temperature (F)");
+        spargeTempViewTitle.setText("Sparge Water Temperature (F)");
+        spargeVolumeViewTitle.setText("Sparge Volume (gal)");
+
+        // Get content views
+        tunTempViewText = (TextView) tunTempView.findViewById(R.id.text);
+        grainTempViewText = (TextView) grainTempView.findViewById(R.id.text);
+        spargeTempViewText = (TextView) spargeTempView.findViewById(R.id.text);
+        spargeVolumeViewText = (TextView) spargeVolumeView.findViewById(R.id.text);
+
+        // Mash Step view Title
         mashStepTitleView = inflater.inflate(R.layout.view_title, mainView, false);
         mashStepTitleViewText = (TextView) mashStepTitleView.findViewById(R.id.title);
         mashStepTitleViewText.setText("Mash Steps");
+
+        // Add mash step button
+        addMashStepButton = (ImageButton) mashStepTitleView.findViewById(R.id.add_button);
+        addMashStepButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.add_button)
+                {
+                    Intent i = new Intent(getApplicationContext(), AddMashStepActivity.class);
+                    startActivityForResult(i, Constants.REQUEST_MASH_STEP);
+                }
+            }
+        });
 
         // Remove views we don't want
         mainView.removeView(amountView);
         mainView.removeView(timeView);
 
         // Add views that we want
+        mainView.addView(tunTempView);
+        mainView.addView(grainTempView);
+        mainView.addView(spargeTempView);
+        //mainView.addView(spargeVolumeViewText);
+
+        // Add views for mash steps
         mainView.addView(mashStepTitleView);
         mainView.addView(dragDropListView);
 
         updateMashStepList();
+        setValues();
     }
 
     @Override
     public void onMissedClick(View v)
     {
-        // Nothing to do here!
+        Log.d("AddMashProfileActivity", "Entering onMissedClick()");
+        AlertDialog alert;
+        if (v.equals(tunTempView))
+            alert = alertBuilder.editTextFloatAlert(tunTempViewText, tunTempViewTitle).create();
+        else if (v.equals(grainTempView))
+            alert = alertBuilder.editTextFloatAlert(grainTempViewText, grainTempViewTitle).create();
+        else if (v.equals(spargeTempView))
+            alert = alertBuilder.editTextFloatAlert(spargeTempViewText, spargeTempViewTitle).create();
+        else if (v.equals(spargeVolumeView))
+            alert = alertBuilder.editTextFloatAlert(spargeVolumeViewText, spargeVolumeViewTitle).create();
+        else
+            return;
+
+        // Force keyboard open and show popup
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alert.show();
+    }
+
+    public void setValues()
+    {
+        tunTempViewText.setText(String.format("%2.2f", mProfile.getDisplayTunTemp()));
+        grainTempViewText.setText(String.format("%2.2f", mProfile.getDisplayGrainTemp()));
+        spargeTempViewText.setText(String.format("%2.2f", mProfile.getDisplaySpargeTemp()));
+        //spargeVolumeViewText.setText(String.format("%2.2f", mProfile.getDisplaySpargeVolume()));
     }
 
     @Override
@@ -156,6 +253,10 @@ public class AddMashProfileActivity extends AddEditActivity {
             {
                 mProfile = profileArray.get(position);
                 nameViewText.setText(mProfile.getName());
+                tunTempViewText.setText(String.format("%2.2f", mProfile.getDisplayTunTemp()));
+                grainTempViewText.setText(String.format("%2.2f", mProfile.getDisplayGrainTemp()));
+                spargeTempViewText.setText(String.format("%2.2f", mProfile.getDisplaySpargeTemp()));
+
                 mashStepArray.removeAll(mashStepArray);
                 mashStepArray.addAll(mProfile.getMashStepList());
 
@@ -177,6 +278,24 @@ public class AddMashProfileActivity extends AddEditActivity {
         dragDropListView.setDropListener(onDrop);
         dragDropListView.setRemoveListener(onRemove);
         dragDropListView.setDragEnabled(true);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        // Make sure we have a good result
+        if (resultCode != Activity.RESULT_OK)
+            return;
+
+        switch (requestCode)
+        {
+            case Constants.REQUEST_MASH_STEP:
+                MashStep s = data.getParcelableExtra(Constants.INTENT_MASH_STEP);
+                mashStepArray.add(s);
+                updateMashStepList();
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -207,7 +326,14 @@ public class AddMashProfileActivity extends AddEditActivity {
     public void acquireValues() throws Exception
     {
         super.acquireValues();
+        double spargeTemp = Double.parseDouble(spargeTempViewText.getText().toString());
+        double grainTemp = Double.parseDouble(grainTempViewText.getText().toString());
+        double tunTemp = Double.parseDouble(tunTempViewText.getText().toString());
+
         mProfile.setName(name);
+        mProfile.setDisplaySpargeTemp(spargeTemp);
+        mProfile.setDisplayGrainTemp(grainTemp);
+        mProfile.setDisplayTunTemp(tunTemp);
 
         // Set new orders for all the MashSteps
         for (MashStep s : mashStepArray)

@@ -3,6 +3,7 @@ package com.biermacht.brews.frontend.IngredientActivities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -135,6 +136,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
                     alert = alertBuilder.editTextIntegerAlert(timeViewText, timeViewTitle).create();
                 else
                 {
+                    Log.d("AddEditActivity", "View not found for click, calling onMissedClick()");
                     onMissedClick(v);
                     return;
                 }
@@ -210,8 +212,14 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         catch (RecipeNotFoundException e)
         {
             e.printStackTrace();
-            finish();
+            Log.d("AddEditActivity", "No recipe provided");
+            onRecipeNotFound();
         }
+    }
+
+    public void onRecipeNotFound()
+    {
+        finish();
     }
 
     public void setInitialSpinnerSelection()
@@ -237,7 +245,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     	switch (item.getItemId())
 		{
             case android.R.id.home:
-        		finish();
+                finish();
         		return true;
         }
         return super.onOptionsItemSelected(item);
