@@ -37,10 +37,8 @@ import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Utils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class RecipesFragment extends Fragment {
@@ -51,7 +49,6 @@ public class RecipesFragment extends Fragment {
     // Recipe List stuff
     private RecipeArrayAdapter mAdapter;
     private AdapterView.OnItemClickListener mClickListener;
-    private AdapterView.OnItemLongClickListener mLongClickListener;
     private ArrayList<Recipe> recipeList;
 
     // Database Interface

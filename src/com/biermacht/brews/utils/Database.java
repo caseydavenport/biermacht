@@ -148,9 +148,21 @@ public class Database {
         }
     }
 
+    // Adds a list of ingredients to the specified virtual ingredient database
+    public static void addMashProfileToVirtualDatabase(long dbid, MashProfile p, long ownerId)
+    {
+            MainActivity.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
+    }
+
     // Returns all mash profiles in the given database
     public static ArrayList<MashProfile> getMashProfilesFromVirtualDatabase(long dbid)
     {
         return MainActivity.databaseInterface.getMashProfilesFromVirtualDatabase(dbid);
+    }
+
+    // Deletes the given recipe
+    public static boolean deleteMashProfileFromDatabase(long id, long dbid)
+    {
+        return MainActivity.databaseInterface.deleteMashProfile(id, dbid);
     }
 }

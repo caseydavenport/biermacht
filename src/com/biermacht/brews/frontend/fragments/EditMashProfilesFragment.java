@@ -17,20 +17,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.IngredientActivities.EditCustomFermentableActivity;
-import com.biermacht.brews.frontend.IngredientActivities.EditHopActivity;
-import com.biermacht.brews.frontend.IngredientActivities.EditMiscActivity;
-import com.biermacht.brews.frontend.IngredientActivities.EditYeastActivity;
-import com.biermacht.brews.frontend.adapters.CustomIngredientArrayAdapter;
+import com.biermacht.brews.frontend.EditCustomMashProfileActivity;
 import com.biermacht.brews.frontend.adapters.MashProfileArrayAdapter;
-import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
 import android.content.*;
 
-import com.biermacht.brews.utils.comparators.IngredientComparator;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 
 public class EditMashProfilesFragment extends Fragment {
@@ -63,7 +57,11 @@ public class EditMashProfilesFragment extends Fragment {
         {
             public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id)
             {
-                MashProfile profile = list.get(pos);
+                Intent i = new Intent(c, EditCustomMashProfileActivity.class);
+                i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+                i.putExtra(Constants.INTENT_PROFILE_ID, list.get(pos).getId());
+                i.putExtra(Constants.INTENT_PROFILE, list.get(pos));
+                startActivity(i);
 
             }
         };

@@ -43,7 +43,7 @@ public class IngredientHandler {
             Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getYeastsFromXml(), Constants.OWNER_NONE);
             Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getHopsFromXml(), Constants.OWNER_NONE);
             Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getMiscsFromXml(), Constants.OWNER_NONE);
-            Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_PERMANENT, getProfilesFromXml(), Constants.OWNER_NONE);
+            Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM, getProfilesFromXml(), Constants.OWNER_NONE);
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -157,18 +157,18 @@ public class IngredientHandler {
 	 */
 	public ArrayList<MashProfile> getMashProfileList()
 	{
-		if (this.profileList == null)
-		{
-			try 
-			{
-				this.profileList = getProfilesFromXml();
-				this.profileList.add(0, new MashProfile());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+        if (this.profileList == null)
+        {
+            Log.d("getMashProfileList", "List is null, creating");
+            profileList = new ArrayList<MashProfile>();
+        }
 
-		return profileList;
+        profileList.removeAll(profileList);
+        profileList.addAll(Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM));
+        profileList.addAll(Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_PERMANENT));
+
+        Collections.sort(profileList, new ToStringComparator());
+        return this.profileList;
 	}
 	
 	

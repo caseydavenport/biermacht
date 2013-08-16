@@ -557,6 +557,19 @@ public class DatabaseInterface {
                              DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
 		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
 	}
+
+    /**
+     * Takes id as input, deletes if it exists
+     * @param id
+     * @return 1 if it was deleted or 0 if not
+     */
+
+    public boolean deleteMashProfile(long id, long dbid) {
+        Log.d("deleteMashprofile", "Looking for mash profile with id / dbid = " + id + "/" + dbid);
+        String whereClause = DatabaseHelper.PRO_COL_ID + "=" + id + " AND " +
+                DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
+        return database.delete(DatabaseHelper.TABLE_PROFILES, whereClause, null) > 0;
+    }
 	
 	/**
 	 * takes recipe ID and returns the recipe with that ID from the database
@@ -621,7 +634,16 @@ public class DatabaseInterface {
         cursor.moveToFirst();
         while(!cursor.isAfterLast())
         {
-            list.add(cursorToMashProfile(cursor));
+            try
+            {
+                list.add(cursorToMashProfile(cursor));
+            }
+            catch (Exception e)
+            {
+                Log.e("getMashProfilesFromVirtualDatabase", "Exception reading cursor!");
+                e.printStackTrace();
+                return list;
+            }
             cursor.moveToNext();
         }
         cursor.close();
@@ -865,13 +887,22 @@ public class DatabaseInterface {
 		Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString, null, null, null, null);
 
 		cursor.moveToFirst();
-		MashProfile profile = cursorToMashProfile(cursor);
-		cursor.close();
-
-		return profile;
+        try
+        {
+            MashProfile profile = cursorToMashProfile(cursor);
+            cursor.close();
+            return profile;
+        }
+        catch (Exception e)
+        {
+            Log.e("readMashProfile", "Exception reading mash profile cursor!");
+            e.printStackTrace();
+            return new MashProfile();
+        }
 	}
 	
-	private MashProfile cursorToMashProfile(Cursor cursor) {
+	private MashProfile cursorToMashProfile(Cursor cursor) throws Exception
+    {
 		int cid = 0;
 
 		long id = cursor.getLong(cid);                          cid++;

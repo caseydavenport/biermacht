@@ -53,9 +53,19 @@
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name=".frontend.EditMashProfileActivity"
+            android:name=".frontend.EditCustomMashProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+                android:name=".frontend.EditMashProfileActivity"
+                android:label="@string/title_activity_edit_profile"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+                android:name=".frontend.AddMashProfileActivity"
+                android:label="@string/title_activity_add_profile"
+                android:windowSoftInputMode="adjustResize" >
         </activity>
 		<activity
             android:name=".frontend.IngredientActivities.AddHopsActivity"

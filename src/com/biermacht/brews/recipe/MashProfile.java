@@ -42,7 +42,7 @@ public class MashProfile implements Parcelable
 
     // Basic Constructor	
 	public MashProfile() {
-		this.setName("Unnamed Mash Profile");
+		this.setName("New Mash Profile");
 		this.setVersion(1);
 		this.setBeerXmlStandardGrainTemp(0);
 		this.mashSteps = new ArrayList<MashStep>();

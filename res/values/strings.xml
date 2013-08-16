@@ -10,6 +10,7 @@
     <string name="title_activity_edit_hop">Edit Hop</string>
     <string name="title_activity_edit_recipe">Edit Recipe</string>
 	<string name="title_activity_edit_profile">Edit Mash Profile</string>
+    <string name="title_activity_add_profile">New Mash Profile</string>
     <string name="title_activity_add_hops">Add Hops</string>
 	<string name="title_activity_add_misc">Add Misc</string>
 	<string name="title_activity_edit_misc">Edit Misc</string>

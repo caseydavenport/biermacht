@@ -18,11 +18,9 @@ import com.biermacht.brews.frontend.IngredientActivities.AddHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
-import com.biermacht.brews.frontend.fragments.BrewTimerStepFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.frontend.adapters.*;
 
 import android.support.v4.view.*;

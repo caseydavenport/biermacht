@@ -46,9 +46,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     public Recipe mRecipe;
 
     // IDs received in intent
-    long recipeId;
-    long ingredientId;
-    long mashProfileId;
+    public long recipeId;
+    public long ingredientId;
+    public long mashProfileId;
 
     // IngredientHandler to get ingredient arrays
     public IngredientHandler ingredientHandler;

@@ -190,6 +190,12 @@ public class MainActivity extends Activity{
             startActivity(i);
             break;
 
+        case R.id.new_mash_profile:
+            i = new Intent(this, AddMashProfileActivity.class);
+            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            startActivity(i);
+            break;
+
         case R.id.add_hop:
             i = new Intent(this, AddCustomHopsActivity.class);
             i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
