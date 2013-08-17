@@ -28,6 +28,7 @@ public class MashStep implements Parcelable
 	private long ownerId;				// id for parent mash profile
 	private long id;                    // id for use in database
     private int order;                  // Order in step list
+    private double infuseTemp;          // Temperature of infuse water
 
 	// Static values =================================================
 	// ===============================================================
@@ -47,6 +48,7 @@ public class MashStep implements Parcelable
 		this.setBeerXmlStandardEndTemp(0.0);
         this.setDescription("");
         this.setDisplayWaterToGrainRatio(1.25);
+        this.infuseTemp = 0.0;
 		this.id = -1;
 		this.ownerId = -1;
         this.order = 1;
@@ -180,6 +182,16 @@ public class MashStep implements Parcelable
 	{
 		return this.infuseAmount;
 	}
+
+    public double getDisplayInfuseTemp()
+    {
+        return Units.celsiusToFarenheit(this.infuseTemp);
+    }
+
+    public void setDisplayInfuseTemp(double d)
+    {
+        this.infuseTemp = Units.farenheitToCelsius(d);
+    }
 
     public void setDisplayStepTemp(double temp)
     {

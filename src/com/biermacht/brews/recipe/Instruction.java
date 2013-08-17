@@ -19,17 +19,20 @@ public class Instruction {
     private boolean lastInType;       // Last of this type
 	private HashMap<String, Integer> typeToOrder;
 	private ArrayList<Ingredient> relevantIngredients;
+    private MashStep mashStep;     // Used for mash step instructions ONLY
 	
 	public static String TYPE_STEEP = "Steep";
 	public static String TYPE_BOIL = "Boil";
-	public static String TYPE_PRIMARY = "Prim";
-	public static String TYPE_SECONDARY = "Sec";
+	public static String TYPE_PRIMARY = "1st";
+	public static String TYPE_SECONDARY = "2nd";
+    public static String TYPE_TERTIARY = "3rd";
 	public static String TYPE_DRY_HOP = "Hop";
 	public static String TYPE_MASH = "Mash";
     public static String TYPE_RAMP = "Ramp";
 	public static String TYPE_YEAST = "Yeast";
 	public static String TYPE_COOL = "Cool";
 	public static String TYPE_BOTTLING = "Bottle";
+    public static String TYPE_CALENDAR = "Calendar";
 	public static String TYPE_OTHER = "";
 
     // Defines for timer types
@@ -51,6 +54,7 @@ public class Instruction {
 		this.relevantIngredients = new ArrayList<Ingredient>();
         this.setLastInType(false);
         this.setNextDuration(0);
+        this.mashStep = new MashStep();
 		
 		typeToOrder = new HashMap<String, Integer>();
 		this.configureHashMap();
@@ -64,6 +68,91 @@ public class Instruction {
 	{
 		instructionText += s;
 	}
+
+    public void setMashStep(MashStep s)
+    {
+        this.mashStep = s;
+    }
+
+    public MashStep getMashStep()
+    {
+        return this.mashStep;
+    }
+
+    public String getBrewTimerTitle()
+    {
+        if (instructionType.equals(Instruction.TYPE_MASH))
+            return mashStep.getName();
+
+        return this.instructionType;
+    }
+
+    // Returns the correct text to show for each
+    // type of step.
+    public String getBrewTimerText()
+    {
+        String s = "";
+        if (this.instructionType.equals(Instruction.TYPE_MASH))
+        {
+            if (!mashStep.getDescription().isEmpty())
+                return mashStep.getDescription();
+
+            if (mashStep.getDisplayInfuseAmount() != 0)
+            {
+                s = "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount()) + " gal " + "of " +
+                        "" + String.format("%2.0f", mashStep.getDisplayInfuseTemp()) + (char) 0x00B0 + "F" + "" +
+                        " water.  ";
+            }
+
+            s += "Hold at " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + (char) 0x00B0 + "F";
+            s += " for " + String.format("%2.0f", mashStep.getStepTime()) + " minutes.\n\n";
+        }
+
+        else if (this.instructionType.equals(Instruction.TYPE_STEEP))
+        {
+            s += "Steep ingredients at TEMP"; // TODO
+        }
+
+        else if (this.instructionType.equals(Instruction.TYPE_BOIL))
+        {
+            s = "Add the ingredients shown below to the boil kettle.";
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_PRIMARY))
+        {
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_SECONDARY))
+        {
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_DRY_HOP))
+        {
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_RAMP))
+        {
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_YEAST))
+        {
+            s = "Add yeast, close your fermenter, and secure airlock. " +
+                    "Place your fermenter in a dark, temperature controlled " +
+                    "environment.";
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_COOL))
+        {
+            s = getInstructionText() + " as quickly as possible.  When cool, transfer wort into your " +
+                    "primary fermenter, and move to the next step.";
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_BOTTLING))
+        {
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_OTHER))
+        {
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_OTHER))
+        {
+            s = "To add this recipe to your calendar, click below!";
+        }
+
+        return s;
+    }
 	
 	/**
 	 * Used for ordering of instruction 
@@ -176,15 +265,17 @@ public class Instruction {
 
     public boolean showInBrewTimer()
     {
-        if (this.getInstructionType().equals(TYPE_BOIL))
+        if (this.instructionType.equals(TYPE_BOIL))
             return true;
-        if (this.getInstructionType().equals(TYPE_STEEP))
+        if (this.instructionType.equals(TYPE_STEEP))
             return true;
-        if (this.getInstructionType().equals(TYPE_MASH))
+        if (this.instructionType.equals(TYPE_MASH))
             return true;
-        if (this.getInstructionType().equals(TYPE_COOL))
+        if (this.instructionType.equals(TYPE_COOL))
             return true;
-        if (this.getInstructionType().equals(TYPE_YEAST))
+        if (this.instructionType.equals(TYPE_YEAST))
+            return true;
+        if (this.instructionType.equals(TYPE_CALENDAR))
             return true;
 
         return false;
@@ -213,7 +304,9 @@ public class Instruction {
 		this.typeToOrder.put(TYPE_YEAST, i);		i+=100;
 		this.typeToOrder.put(TYPE_PRIMARY, i);		i+=100;
 		this.typeToOrder.put(TYPE_SECONDARY, i);	i+=100;
+        this.typeToOrder.put(TYPE_TERTIARY, i);	    i+=100;
 		this.typeToOrder.put(TYPE_DRY_HOP, i);		i+=100;
 		this.typeToOrder.put(TYPE_BOTTLING, i);     i+=100;
+        this.typeToOrder.put(TYPE_CALENDAR, i);     i+=100;
 	}
 }

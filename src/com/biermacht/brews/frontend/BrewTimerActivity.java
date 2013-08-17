@@ -97,6 +97,7 @@ public class BrewTimerActivity extends FragmentActivity {
         @Override
         public void onReceive(Context c, Intent i)
         {
+
             // Set the timer
             seconds = getTimerSeconds() - 1;
             setTimerFromSeconds(seconds);
@@ -324,11 +325,16 @@ public class BrewTimerActivity extends FragmentActivity {
 
     public void play()
     {
-        timerState = RUNNING;
         mViewPager.setCurrentItem(currentItem);
-        am.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 1000, pi );
-        playPauseButton.setImageResource(R.drawable.av_pause);
-        wakeLock.acquire();
+
+        // If the timer is 0, don't start!
+        if (getTimerSeconds() != 0)
+        {
+            timerState = RUNNING;
+            am.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 1000, pi );
+            playPauseButton.setImageResource(R.drawable.av_pause);
+            wakeLock.acquire();
+        }
         stopAlarm();
     }
 
@@ -398,8 +404,8 @@ public class BrewTimerActivity extends FragmentActivity {
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .setContentTitle("Step complete!")
-                .setContentText("Click to return to brew timer")
-                .addAction(R.drawable.icon_timer_light, mRecipe.getRecipeName(), contentIntent);
+                .setContentText("Click to return to brew timer");
+                //.addAction(R.drawable.icon_timer_light, mRecipe.getRecipeName(), contentIntent);
 
         nm.notify(NOTIFICATION_ID, builder.build());
 

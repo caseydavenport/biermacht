@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class BrewTimerStepFragment extends Fragment {
     ViewGroup pageView;
     TextView titleView;
     TextView descriptionView;
+    ImageButton calendarButton;
 
 	public BrewTimerStepFragment(Context c, Recipe r, Instruction i)
 	{
@@ -60,9 +62,15 @@ public class BrewTimerStepFragment extends Fragment {
 		pageView = (LinearLayout) inflater.inflate(resource, container, false);
         titleView = (TextView) pageView.findViewById(R.id.title);
         descriptionView = (TextView) pageView.findViewById(R.id.description);
+        calendarButton = (ImageButton) pageView.findViewById(R.id.calendar_button);
 
-        descriptionView.setText("Next step begins at " + i.getNextDuration()
-                                 + " " + i.getDurationUnits() + " remaining");
+        // Only display calendar if this is a calendar instruction...
+        if (i.getInstructionType().equals(Instruction.TYPE_CALENDAR))
+        {
+            calendarButton.setVisibility(View.VISIBLE);
+        }
+
+        descriptionView.setText(i.getBrewTimerText());
 
         View ingredientView;
         TextView ingredientViewTitle;
@@ -81,7 +89,7 @@ public class BrewTimerStepFragment extends Fragment {
         }
 
         // Set view text
-        titleView.setText(i.getInstructionType());
+        titleView.setText(i.getBrewTimerTitle());
 
         // Turn off options menu
 		setHasOptionsMenu(false);

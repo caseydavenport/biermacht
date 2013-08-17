@@ -495,6 +495,11 @@ public class Recipe {
 		this.fermentationStages = fermentationStages;
 	}
 
+    public int getFermentationTime()
+    {
+        return this.primaryAge + this.secondaryAge + this.tertiaryAge;
+    }
+
 	/**
 	 * @return the version
 	 */

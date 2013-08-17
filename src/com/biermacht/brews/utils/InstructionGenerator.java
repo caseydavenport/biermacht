@@ -63,7 +63,7 @@ public class InstructionGenerator {
 		this.boils();
 		this.dryHops();
 		this.yeasts();
-		this.mashes();
+		//this.mashes();  // We do not add instructions for mashes right now, just mash steps
 		this.mashSteps();
 		this.bottling();
 
@@ -353,23 +353,54 @@ public class InstructionGenerator {
 			// Add a cool wort stage
 			inst = new Instruction();
 			inst.setInstructionType(Instruction.TYPE_COOL);
-			inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + "F");
+			inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + (char) 0x00B0 + "F");
 			inst.setDuration(2);
 			inst.setOrder(3);
 			inst.setDurationUnits(Units.HOURS);
 			list.add(inst);
-		}
 
-		if (list.size() > 0)
-		{
-			inst = new Instruction();
-			inst.setInstructionType(Instruction.TYPE_PRIMARY);
-			inst.setInstructionText("Ferment until FG= " + r.getFG());
-			inst.setDuration(5);
-			inst.setDurationUnits(Units.DAYS);
-			inst.setOrder(5);
-			list.add(inst);
-		}	
+            if (r.getFermentationAge(Recipe.STAGE_PRIMARY) > 0)
+            {
+                inst = new Instruction();
+                inst.setInstructionType(Instruction.TYPE_PRIMARY);
+                inst.setInstructionText("Primary fermentation");
+                inst.setDuration(r.getFermentationAge(Recipe.STAGE_PRIMARY));
+                inst.setDurationUnits(Units.DAYS);
+                inst.setOrder(5);
+                list.add(inst);
+            }
+
+            if (r.getFermentationAge(Recipe.STAGE_SECONDARY) > 0)
+            {
+                inst = new Instruction();
+                inst.setInstructionType(Instruction.TYPE_SECONDARY);
+                inst.setInstructionText("Secondary fermentation");
+                        inst.setDuration(r.getFermentationAge(Recipe.STAGE_SECONDARY));
+                inst.setDurationUnits(Units.DAYS);
+                inst.setOrder(6);
+                list.add(inst);
+            }
+
+            if (r.getFermentationAge(Recipe.STAGE_TERTIARY) > 0)
+            {
+                inst = new Instruction();
+                inst.setInstructionType(Instruction.TYPE_TERTIARY);
+                inst.setInstructionText("Tertiary fermentation");
+                        inst.setDuration(r.getFermentationAge(Recipe.STAGE_TERTIARY));
+                inst.setDurationUnits(Units.DAYS);
+                inst.setOrder(7);
+                list.add(inst);
+            }
+
+            // Add a cool wort stage
+            inst = new Instruction();
+            inst.setInstructionType(Instruction.TYPE_CALENDAR);
+            inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + (char) 0x00B0 + "F");
+            inst.setDuration(0);
+            inst.setOrder(0);
+            inst.setDurationUnits(Units.HOURS);
+            list.add(inst);
+        }
 	}
 	
 	/**
@@ -386,23 +417,12 @@ public class InstructionGenerator {
 				// for each time=steep_duration
 				for (MashStep s : mashSteps)
 				{
-					if (s.getRampTime() != 0)
-					{
-						inst = new Instruction();
-						String temp = String.format("%2.0f", s.getDisplayStepTemp());
-						String text = "Ramp temperature to " + temp + "F";
-						inst.setInstructionText(text);
-						inst.setInstructionType(Instruction.TYPE_MASH);
-						inst.setDuration(s.getRampTime());
-						inst.setOrder(0);
-						list.add(inst);
-					}
-					
 					inst = new Instruction();
 					inst.setInstructionText(s.getName());
 					inst.setInstructionType(Instruction.TYPE_MASH);
 					inst.setDuration(s.getStepTime());
-					inst.setOrder(0);
+					inst.setOrder(s.getOrder());
+                    inst.setMashStep(s);
                     mashStepsList.add(inst);
 				}
 			}

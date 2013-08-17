@@ -18,8 +18,15 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="15dip"
               android:layout_marginBottom="15dip"
-              android:gravity="center"
+              android:gravity="center_vertical"
               android:text="This is just some dummy content for now, this should say stuff about the step later"
               android:textSize="20sp"/>
+
+    <ImageButton android:id="@+id/calendar_button"
+                 android:layout_gravity="center"
+                 android:layout_height="100dip"
+                 android:layout_width="100dip"
+                 android:background="@drawable/content_event"
+                 android:visibility="gone" />
 
 </LinearLayout>
