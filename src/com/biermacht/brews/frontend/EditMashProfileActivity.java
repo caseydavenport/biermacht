@@ -30,10 +30,16 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
     }
 
     @Override
-    public void onFinished()
+    public void acquireValues() throws Exception
     {
+        super.acquireValues();
         mProfile.setMashStepList(mashStepArray);
         mRecipe.setMashProfile(mProfile);
+    }
+
+    @Override
+    public void onFinished()
+    {
         Database.updateRecipe(mRecipe);
         finish();
     }

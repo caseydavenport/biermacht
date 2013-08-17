@@ -490,6 +490,7 @@ public class DatabaseInterface {
 	
 	public long addMashStepToDatabase(MashStep s, long ownerId)
 	{
+        Log.d("addMashStepToDatabase", "Adding " + s.getName() + " step to database");
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.STE_COL_OWNER_ID, ownerId);
@@ -987,6 +988,8 @@ public class DatabaseInterface {
         s.setBeerXmlStandardWaterToGrainRatio(waterGrainRatio);
         s.setDescription(description);
         s.setOrder(order);
+
+        Log.d("cursorToMashStep", "Retrieved mash step from database: " + s.getName());
 		return s;
 	}
 	

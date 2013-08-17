@@ -145,7 +145,7 @@ public class AddMashProfileActivity extends AddEditActivity {
                 if (v.getId() == R.id.add_button)
                 {
                     Intent i = new Intent(getApplicationContext(), AddMashStepActivity.class);
-                    startActivityForResult(i, Constants.REQUEST_MASH_STEP);
+                    startActivityForResult(i, Constants.REQUEST_NEW_MASH_STEP);
                 }
             }
         });
@@ -163,6 +163,18 @@ public class AddMashProfileActivity extends AddEditActivity {
         // Add views for mash steps
         mainView.addView(mashStepTitleView);
         mainView.addView(dragDropListView);
+
+        // Listener for mash step list
+        dragDropListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id)
+            {
+                Intent i = new Intent(getApplicationContext(), EditMashStepActivity.class);
+                i.putExtra(Constants.INTENT_MASH_STEP_ID, mashStepArray.get(pos).getId());
+                i.putExtra(Constants.INTENT_MASH_STEP, mashStepArray.get(pos));
+                startActivityForResult(i, Constants.REQUEST_EDIT_MASH_STEP);
+            }
+        });
 
         updateMashStepList();
         setValues();
@@ -283,17 +295,54 @@ public class AddMashProfileActivity extends AddEditActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        // Make sure we have a good result
-        if (resultCode != Activity.RESULT_OK)
+        MashStep s;
+        long id;
+
+        if (resultCode == Constants.RESULT_CANCELED)
             return;
 
         switch (requestCode)
         {
-            case Constants.REQUEST_MASH_STEP:
-                MashStep s = data.getParcelableExtra(Constants.INTENT_MASH_STEP);
+            case Constants.REQUEST_NEW_MASH_STEP:
+            {
+                try
+                {
+                    s = data.getParcelableExtra(Constants.INTENT_MASH_STEP);
+                } catch (Exception e)
+                {
+                    Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
+                    return;
+                }
+
                 mashStepArray.add(s);
                 updateMashStepList();
                 break;
+            }
+
+            case Constants.REQUEST_EDIT_MASH_STEP:
+            {
+                try
+                {
+                    s = data.getParcelableExtra(Constants.INTENT_MASH_STEP);
+                    id = data.getLongExtra(Constants.INTENT_MASH_STEP_ID, Constants.INVALID_ID);
+                } catch (Exception e)
+                {
+                    Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
+                    return;
+                }
+
+                // Remove step
+                for (MashStep step : mashStepArray)
+                    if (s.getId() == id)
+                        mashStepArray.remove(step);
+
+                // If we deleted the step, do nothing, else re-add it
+                if (resultCode == Constants.RESULT_OK)
+                    mashStepArray.add(s);
+
+                updateMashStepList();
+                break;
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -340,6 +389,8 @@ public class AddMashProfileActivity extends AddEditActivity {
         {
             s.setOrder(mashStepArray.indexOf(s));
         }
+
+        mProfile.setMashStepList(mashStepArray);
     }
 
     @Override

@@ -25,6 +25,7 @@ public class Constants {
 	public static final String INTENT_INGREDIENT_ID = "biermacht.brews.ingredient.id";
     public static final String INTENT_INGREDIENT = "biermacht.brews.ingredient";
     public static final String INTENT_MASH_STEP = "biermacht.brews.mash.step";
+    public static final String INTENT_MASH_STEP_ID = "biermacht.brews.mash.step.id";
     public static final int INVALID_ID = -1; // TODO: Throw exceptions in get methods if this is passed
 
     // Different virtual databases
@@ -43,8 +44,14 @@ public class Constants {
     public static final String PREF_USED_BEFORE = "com.biermacht.brews.usedBefore";
     public static final String PREF_LAST_OPENED = "com.biermacht.brews.lastOpened";
 
+    // Activity for result return codes
+    public static final int RESULT_DELETED = 0;
+    public static final int RESULT_OK = 1;
+    public static final int RESULT_CANCELED = 2;
+
     // Request codes for activities
-    public static final int REQUEST_MASH_STEP = 1;
+    public static final int REQUEST_NEW_MASH_STEP = 1;
+    public static final int REQUEST_EDIT_MASH_STEP = 2;
 
     // Other Constants
     private static final String[] hop_uses = {Hop.USE_BOIL, Hop.USE_AROMA, Hop.USE_DRY_HOP};

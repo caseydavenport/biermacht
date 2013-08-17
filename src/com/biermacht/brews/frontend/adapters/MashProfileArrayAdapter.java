@@ -51,7 +51,7 @@ public class MashProfileArrayAdapter extends ArrayAdapter<MashProfile> {
 		// Set imageView
         imageView.setImageResource(R.drawable.icon_mash_tun);
 
-        String detailText = "Details go here!";
+        String detailText = list.get(position).getMashStepList().size() + " steps";
 		detailView.setText(detailText);
 
 		return row;

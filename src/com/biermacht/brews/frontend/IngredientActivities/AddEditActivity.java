@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -77,6 +78,11 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     public int time;
     public double amount;
     public String name;
+
+    // Bottom buttons
+    public Button submitButton;
+    public Button cancelButton;
+    public Button deleteButton;
 
     // Spinner array declarations
     public ArrayList<Ingredient> ingredientList;
@@ -146,6 +152,11 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
                 alert.show();
             }
         };
+
+        // Get buttons
+        submitButton = (Button) findViewById(R.id.submit_button);
+        cancelButton = (Button) findViewById(R.id.cancel_button);
+        deleteButton = (Button) findViewById(R.id.delete_button);
 
         // Initialize views and such here
         mainView = (ViewGroup) findViewById(R.id.main_layout);

@@ -40,6 +40,7 @@ public class AddMashStepActivity extends AddEditActivity {
 
     // mashProfile we are editing
     public MashStep step;
+    public long stepId;
 
     // step type array
     ArrayList<String> stepTypeArray;
@@ -87,6 +88,9 @@ public class AddMashStepActivity extends AddEditActivity {
         mainView.addView(waterToGrainRatioView);
         mainView.addView(stepTempView);
 
+        // Change button text to say "Add" instead of "Submit"
+        submitButton.setText("Add");
+
         // Set values
         setValues();
     }
@@ -123,7 +127,7 @@ public class AddMashStepActivity extends AddEditActivity {
         amountViewText.setText(String.format("%2.2f", step.getDisplayInfuseAmount()));
         stepTempViewText.setText(String.format("%2.2f", step.getDisplayStepTemp()));
         waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
-        //infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemperature()));
+        infuseTemperatureViewText.setText(String.format("%2.2f", 0.0)); // TODO
     }
 
     @Override
@@ -190,7 +194,7 @@ public class AddMashStepActivity extends AddEditActivity {
         switch (item.getItemId())
         {
             case android.R.id.home:
-                setResult(Activity.RESULT_CANCELED, new Intent());
+                setResult(Constants.RESULT_CANCELED, new Intent());
                 finish();
                 return true;
         }
@@ -202,7 +206,7 @@ public class AddMashStepActivity extends AddEditActivity {
     {
         Intent result = new Intent();
         result.putExtra(Constants.INTENT_MASH_STEP, step);
-        setResult(Activity.RESULT_OK, result);
+        setResult(Constants.RESULT_OK, result);
         finish();
     }
 
@@ -212,18 +216,21 @@ public class AddMashStepActivity extends AddEditActivity {
         super.acquireValues();
         double stepTemp = Double.parseDouble(stepTempViewText.getText().toString());
         double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString());
+        double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString());
 
         step.setName(name);
-        step.setBeerXmlStandardInfuseAmount(amount);
+        step.setDisplayInfuseAmount(amount);
         step.setStepTime(time);
+        step.setType(type);
         step.setDisplayStepTemp(stepTemp);
-        //step.setDisplayInfuseTemperature(infuseTemp);
+        step.setDisplayWaterToGrainRatio(waterToGrainRatio);
+        //step.setDisplayInfuseTemperature(infuseTemp); // TODO
     }
 
     @Override
     public void onCancelPressed()
     {
-        setResult(Activity.RESULT_CANCELED, new Intent());
+        setResult(Constants.RESULT_CANCELED, new Intent());
         finish();
     }
 
