@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
 import android.util.Log;
@@ -100,11 +101,11 @@ public class Instruction {
             if (mashStep.getDisplayInfuseAmount() != 0)
             {
                 s = "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount()) + " gal " + "of " +
-                        "" + String.format("%2.0f", mashStep.getDisplayInfuseTemp()) + (char) 0x00B0 + "F" + "" +
+                        "" + String.format("%2.0f", mashStep.getDisplayInfuseTemp()) + Constants.DEG_FAHRENHEIT + "" +
                         " water.  ";
             }
 
-            s += "Hold at " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + (char) 0x00B0 + "F";
+            s += "Hold at " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + Constants.DEG_FAHRENHEIT;
             s += " for " + String.format("%2.0f", mashStep.getStepTime()) + " minutes.\n\n";
         }
 
@@ -279,6 +280,14 @@ public class Instruction {
             return true;
 
         return false;
+    }
+
+    public boolean showInInstructionList()
+    {
+        if (this.instructionType.equals(TYPE_CALENDAR))
+            return false;
+
+        return true;
     }
 	
 	public double getDuration() {

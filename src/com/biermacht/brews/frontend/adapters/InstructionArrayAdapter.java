@@ -1,5 +1,6 @@
 package com.biermacht.brews.frontend.adapters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.biermacht.brews.R;
@@ -21,7 +22,7 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 	{
 		super(c, android.R.layout.simple_list_item_1, list);
 		this.context = c;
-		this.list = list;
+        this.list = list;
 	}
 
 	@Override

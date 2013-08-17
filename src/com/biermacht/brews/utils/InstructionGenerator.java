@@ -353,7 +353,7 @@ public class InstructionGenerator {
 			// Add a cool wort stage
 			inst = new Instruction();
 			inst.setInstructionType(Instruction.TYPE_COOL);
-			inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + (char) 0x00B0 + "F");
+			inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + Constants.DEG_FAHRENHEIT);
 			inst.setDuration(2);
 			inst.setOrder(3);
 			inst.setDurationUnits(Units.HOURS);
@@ -395,7 +395,7 @@ public class InstructionGenerator {
             // Add a cool wort stage
             inst = new Instruction();
             inst.setInstructionType(Instruction.TYPE_CALENDAR);
-            inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + (char) 0x00B0 + "F");
+            inst.setInstructionText("");
             inst.setDuration(0);
             inst.setOrder(0);
             inst.setDurationUnits(Units.HOURS);

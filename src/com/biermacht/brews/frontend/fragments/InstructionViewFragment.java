@@ -42,7 +42,12 @@ public class InstructionViewFragment extends Fragment {
 		
 		// Initialize important junk
 		instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
-		instructionList = r.getInstructionList();
+		instructionList = new ArrayList<Instruction>();
+
+        // Only show instructions tagged for instruction list
+        for (Instruction i : r.getInstructionList())
+            if (i.showInInstructionList())
+                instructionList.add(i);
   
 		if (instructionList.size() > 0)
 		{

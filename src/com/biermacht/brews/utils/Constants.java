@@ -53,6 +53,10 @@ public class Constants {
     public static final int REQUEST_NEW_MASH_STEP = 1;
     public static final int REQUEST_EDIT_MASH_STEP = 2;
 
+    // Commonly used text
+    public static final String DEG_FAHRENHEIT = "\u2109";
+    public static final String DEG_CELSIUS = "\u2103";
+
     // Other Constants
     private static final String[] hop_uses = {Hop.USE_BOIL, Hop.USE_AROMA, Hop.USE_DRY_HOP};
     private static final String [] hop_forms = {Hop.FORM_PELLET, Hop.FORM_WHOLE, Hop.FORM_PLUG};

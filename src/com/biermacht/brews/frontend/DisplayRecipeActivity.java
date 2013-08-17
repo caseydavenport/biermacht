@@ -77,12 +77,19 @@ public class DisplayRecipeActivity extends FragmentActivity {
             // Set title based on recipe name
             setTitle(mRecipe.getRecipeName());
 
+            // TODO: Temporary hack to fix dumb bug
+            if (currentItem == 1)
+                currentItem = 0;
+
             // Set Adapter
+            mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setAdapter(cpAdapter);
 
             // Set to the current item
             mViewPager.setCurrentItem(currentItem);
             mViewPager.setOnPageChangeListener(pageListener);
+
+            updateOptionsMenu();
         }
 
         @Override
@@ -241,28 +248,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
         super.onResume();
         Log.d("DisplayRecipeActivity", "onResume");
 
-        try
-        {
-            mRecipe = Database.getRecipeWithId(id);
-        }
-        catch (RecipeNotFoundException e)
-        {
-            e.printStackTrace();
-            finish();
-        }
-
-        // TODO: Temporary hack to fix dumb bug
-        if (currentItem == 1)
-            currentItem = 0;
-
-        // pagerAdapter for Slidy tabs!
-        cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(cpAdapter);
-        mViewPager.setOnPageChangeListener(pageListener);
-        getActionBar().setTitle(mRecipe.getRecipeName());
-        mViewPager.setCurrentItem(currentItem);
-        updateOptionsMenu();
+        new UpdateTask(this).execute("");
     }
 
     public void updateOptionsMenu()
