@@ -147,7 +147,7 @@ public class Recipe implements Parcelable {
         yeasts = new ArrayList<Yeast>();
         miscs = new ArrayList<Misc>();
         waters = new ArrayList<Water>();
-        
+
         name = p.readString();		        // Recipe name
         version = p.readInt();			    // XML Version -- 1
         type = p.readString();                // Extract, Grain, Mash
@@ -316,22 +316,37 @@ public class Recipe implements Parcelable {
 		
 		update();
 	}
+
+    public void removeIngredientWithId(long id)
+    {
+        for (Ingredient i : getIngredientList())
+            if (i.getId() == id)
+            {
+                Log.d("Recipe", "Removing ingredient " + i.getName());
+                removeIngredient(i);
+            }
+    }
 	
-	private void removeIngredient(Ingredient i)
-	{
-		if (i.getType().equals(Ingredient.HOP))
-			hops.remove((Hop) i);
-		else if (i.getType().equals(Ingredient.FERMENTABLE))
-			fermentables.remove((Fermentable) i);
-		else if (i.getType().equals(Ingredient.MISC))
-			miscs.remove((Misc) i);
-		else if (i.getType().equals(Ingredient.YEAST))
-			yeasts.remove((Yeast) i);
-		else if (i.getType().equals(Ingredient.WATER))
-			waters.remove((Water) i);
-		
-		update();
-	}
+	public void removeIngredient(Ingredient i)
+    {
+        if (i.getType().equals(Ingredient.HOP))
+            hops.remove(i);
+        else if (i.getType().equals(Ingredient.FERMENTABLE))
+            fermentables.remove(i);
+        else if (i.getType().equals(Ingredient.MISC))
+            miscs.remove(i);
+        else if (i.getType().equals(Ingredient.YEAST))
+            yeasts.remove(i);
+        else if (i.getType().equals(Ingredient.WATER))
+            waters.remove(i);
+
+        if (getIngredientList().contains(i))
+            Log.d("Recipe", "Failed to remove ingredient");
+        else
+            Log.d("Recipe", "Successfully removed ingredient");
+
+        update();
+    }
 	
 	public MashProfile getMashProfile()
 	{

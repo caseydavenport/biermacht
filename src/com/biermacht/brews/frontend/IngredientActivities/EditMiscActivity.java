@@ -8,7 +8,7 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import com.biermacht.brews.*;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.ingredient.*;
@@ -103,7 +103,7 @@ public class EditMiscActivity extends Activity {
         {
             mRecipe = Database.getRecipeWithId(id);
         }
-        catch (RecipeNotFoundException e)
+        catch (ItemNotFoundException e)
         {
             e.printStackTrace();
             finish();
@@ -332,7 +332,7 @@ public class EditMiscActivity extends Activity {
 
             if (readyToGo)
             {
-                Database.updateIngredient(misc);
+                Database.updateIngredient(misc, Constants.DATABASE_DEFAULT);
                 finish();
             }
         }

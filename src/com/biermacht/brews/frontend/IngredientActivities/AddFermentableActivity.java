@@ -87,13 +87,6 @@ public class AddFermentableActivity extends AddEditActivity {
     }
 
     @Override
-    public void getValuesFromIntent()
-    {
-        // Get the recipe from calling activity
-        super.getValuesFromIntent();
-    }
-
-    @Override
     public void getList()
     {
         ingredientList = new ArrayList<Ingredient>();

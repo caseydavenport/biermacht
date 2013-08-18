@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
@@ -106,17 +106,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
-
-        // Acquire recipe
-        try
-        {
-            mRecipe = Database.getRecipeWithId(id);
-        }
-        catch (RecipeNotFoundException e)
-        {
-            e.printStackTrace();
-            finish();
-        }
+        mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
         // Get values from recipe
         style = mRecipe.getStyle();
@@ -343,6 +333,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 		// Cancel Button Pressed
 		if (v.getId() == R.id.cancel_button)
 		{
+            setResult(Constants.RESULT_CANCELED, new Intent());
 			finish();
 		}
 		
@@ -393,8 +384,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
 				mRecipe.setBatchTime(1);
                 mRecipe.setMeasuredFG(measuredFg);
                 mRecipe.setMeasuredOG(measuredOg);
-				
-				mRecipe.update();
+
 				Database.updateRecipe(mRecipe);
 				finish();
 			}

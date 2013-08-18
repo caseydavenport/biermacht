@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -271,8 +272,13 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR, r.getKegPrimingFactor());
         values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
 
-		deleteIngredientList(r.getId());
-		addIngredientListToDatabase(r.getIngredientList(), r.getId(), Constants.DATABASE_DEFAULT);
+        for (Ingredient i : r.getIngredientList())
+        {
+            Boolean exists = updateExistingIngredientInDatabase(i, Constants.DATABASE_DEFAULT);
+            if (!exists)
+                addIngredientToDatabase(i, r.getId(), Constants.DATABASE_DEFAULT);
+        }
+
 		deleteStyle(r.getId());
 		addStyleToDatabase(r.getStyle(), r.getId());
 		deleteMashProfile(r.getId());
@@ -289,13 +295,13 @@ public class DatabaseInterface {
 		}
 	}
 
-    public void addIngredientToDatabase(Ingredient ing, long id, long dbid)
+    public void addIngredientToDatabase(Ingredient ing, long ownerid, long dbid)
     {
         // values stored here
         ContentValues values = new ContentValues();
 
         // Load up values to store
-        values.put(DatabaseHelper.ING_COL_OWNER_ID, id);
+        values.put(DatabaseHelper.ING_COL_OWNER_ID, ownerid);
         values.put(DatabaseHelper.ING_COL_DB_ID, dbid);
         values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
         values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
@@ -353,19 +359,18 @@ public class DatabaseInterface {
         }
 
         long ingid = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
-        Log.d("addIngredientToDatabase", "Adding ingredient with id / dbid = " + ingid + "/" + dbid);
         values.clear();
     }
 	
-	public boolean updateExistingIngredient(Ingredient ing)
+	public boolean updateExistingIngredientInDatabase(Ingredient ing, long dbid)
 	{
-        Log.d("UpdateExistingIngredient", "Updating Existing Ingredient in database: " + ing.getDatabaseId());
-		String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId();
+        String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId() + " AND " +
+                DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
 		
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.ING_COL_OWNER_ID, ing.getOwnerId());
-        values.put(DatabaseHelper.ING_COL_DB_ID, ing.getDatabaseId());
+        values.put(DatabaseHelper.ING_COL_DB_ID, dbid);
 		values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
 		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
 		values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
@@ -490,7 +495,6 @@ public class DatabaseInterface {
 	
 	public long addMashStepToDatabase(MashStep s, long ownerId)
 	{
-        Log.d("addMashStepToDatabase", "Adding " + s.getName() + " step to database");
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.STE_COL_OWNER_ID, ownerId);
@@ -552,8 +556,8 @@ public class DatabaseInterface {
 	 * @return 1 if it was deleted or 0 if not
 	 */
 	
-	public boolean deleteIngredientIfExists(long id, long dbid) {
-        Log.d("deleteIngredientIfExists", "Looking for ingredient with id / dbid = " + id + "/" + dbid);
+	public boolean deleteIngredientIfExists(long id, long dbid)
+    {
 		String whereClause = DatabaseHelper.ING_COL_ID + "=" + id + " AND " +
                              DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
 		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
@@ -565,8 +569,8 @@ public class DatabaseInterface {
      * @return 1 if it was deleted or 0 if not
      */
 
-    public boolean deleteMashProfile(long id, long dbid) {
-        Log.d("deleteMashprofile", "Looking for mash profile with id / dbid = " + id + "/" + dbid);
+    public boolean deleteMashProfile(long id, long dbid)
+    {
         String whereClause = DatabaseHelper.PRO_COL_ID + "=" + id + " AND " +
                 DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
         return database.delete(DatabaseHelper.TABLE_PROFILES, whereClause, null) > 0;
@@ -598,7 +602,14 @@ public class DatabaseInterface {
 		Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
 		cursor.moveToFirst();
 
-		return cursorToIngredient(cursor);
+        try
+        {
+		    return cursorToIngredient(cursor);
+        } catch (Exception e)
+        {
+            return null;
+        }
+
 	}
 
     /**
@@ -615,7 +626,16 @@ public class DatabaseInterface {
         cursor.moveToFirst();
         while(!cursor.isAfterLast())
         {
-            list.add(cursorToIngredient(cursor));
+            try
+            {
+                list.add(cursorToIngredient(cursor));
+            }
+            catch (Exception e)
+            {
+                Log.e("DatabaseInterface", "Exception reading cursor!");
+                e.printStackTrace();
+                return list;
+            }
             cursor.moveToNext();
         }
         cursor.close();
@@ -641,7 +661,7 @@ public class DatabaseInterface {
             }
             catch (Exception e)
             {
-                Log.e("getMashProfilesFromVirtualDatabase", "Exception reading cursor!");
+                Log.e("DatabaseInterface", "Exception reading cursor!");
                 e.printStackTrace();
                 return list;
             }
@@ -664,7 +684,16 @@ public class DatabaseInterface {
         cursor.moveToFirst();
         while(!cursor.isAfterLast())
         {
-            list.add(cursorToIngredient(cursor));
+            try
+            {
+                list.add(cursorToIngredient(cursor));
+            }
+            catch (Exception e)
+            {
+                Log.e("DatabaseInterface", "Exception reading cursor!");
+                e.printStackTrace();
+                return list;
+            }
             cursor.moveToNext();
         }
         cursor.close();
@@ -802,7 +831,16 @@ public class DatabaseInterface {
 		
 		while(!cursor.isAfterLast())
 		{
-			Ingredient ing = cursorToIngredient(cursor);
+            Ingredient ing;
+            try
+            {
+			    ing = cursorToIngredient(cursor);
+            } catch (Exception e)
+            {
+                Log.e("DatabaseInterface", "Exception reading cursor!");
+                e.printStackTrace();
+                return list;
+            }
 			list.add(ing);
 			cursor.moveToNext();
 		}
@@ -896,7 +934,7 @@ public class DatabaseInterface {
         }
         catch (Exception e)
         {
-            Log.e("readMashProfile", "Exception reading mash profile cursor!");
+            Log.e("DatabaseInterface", "Exception reading cursor!");
             e.printStackTrace();
             return new MashProfile();
         }
@@ -992,7 +1030,7 @@ public class DatabaseInterface {
 		return s;
 	}
 	
-	private Ingredient cursorToIngredient(Cursor cursor) {
+	private Ingredient cursorToIngredient(Cursor cursor) throws Exception {
 		int cid = 0;
 		
 		// Ingredient type agnostic stuff

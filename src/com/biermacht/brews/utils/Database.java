@@ -3,7 +3,7 @@ package com.biermacht.brews.utils;
 import android.util.Log;
 
 import com.biermacht.brews.database.DatabaseInterface;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.MashProfile;
@@ -56,9 +56,9 @@ public class Database {
 	}
 	
     // Updates existing ingredient
-	public static boolean updateIngredient(Ingredient i)
+	public static boolean updateIngredient(Ingredient i, long dbid)
 	{
-        return MainActivity.databaseInterface.updateExistingIngredient(i);
+        return MainActivity.databaseInterface.updateExistingIngredientInDatabase(i, dbid);
     }
 	
     // Deletes the given recipe
@@ -86,21 +86,21 @@ public class Database {
     // Deletes the given ingredient, in the given database
     public static boolean deleteIngredientWithId(long id, long dbid)
     {
-        Log.d("deleteIngredient", "Trying to delete ingredient from database: " + dbid);
+        Log.d("Database", "Trying to delete ingredient from database: " + dbid);
         boolean b = MainActivity.databaseInterface.deleteIngredientIfExists(id, dbid);
         if (b)
-            Log.d("deleteIngredient", "Successfully deleted ingredient");
+            Log.d("Database", "Successfully deleted ingredient");
         else
-            Log.d("deleteIngredient", "Failed to delete ingredient");
+            Log.d("Database", "Failed to delete ingredient");
         return b;
     }
 	
     // Gets the recipe with the given ID
-	public static Recipe getRecipeWithId(long id) throws RecipeNotFoundException
+	public static Recipe getRecipeWithId(long id) throws ItemNotFoundException
 	{
         // If we receive a special ID, handle that here
         if (id == Constants.INVALID_ID)
-            throw new RecipeNotFoundException("Passed id with value Utils.INVALID_ID");
+            throw new ItemNotFoundException("Passed id with value Utils.INVALID_ID");
 
         // Actually perform the lookup
 		return MainActivity.databaseInterface.getRecipeWithId(id);

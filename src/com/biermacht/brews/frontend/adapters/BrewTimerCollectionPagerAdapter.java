@@ -34,9 +34,8 @@ public class BrewTimerCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
         for (Instruction i : r.getInstructionList())
             if (i.showInBrewTimer())
-            {
                 instructionFragmentList.add(BrewTimerStepFragment.newInstance(r, i));
-            }
+
     }
 
     @Override

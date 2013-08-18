@@ -125,7 +125,7 @@ public class EditHopActivity extends AddHopsActivity {
 
     public void onFinished()
     {
-        Database.updateIngredient(hop);
+        Database.updateIngredient(hop, Constants.DATABASE_DEFAULT);
         finish();
     }
 

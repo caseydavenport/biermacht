@@ -3,6 +3,7 @@ package com.biermacht.brews.frontend.IngredientActivities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
@@ -119,9 +120,11 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Get recipe and other ids from calling activity
+        Log.d("AddEditActivity", "Calling getValuesFromIntent()");
         getValuesFromIntent();
 
         // Get the list to show
+        Log.d("AddEditActivity", "Calling getList()");
         getList();
 
         // On click listener
@@ -197,13 +200,17 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         amountViewText = (TextView) amountView.findViewById(R.id.text);
 
         // Set any initial values here.
+        Log.d("AddEditActivity", "Calling setInitialValues()");
         setInitialValues();
 
         // Set up type spinner
+        Log.d("AddEditActivity", "Calling createSpinner()");
         createSpinner();
+        Log.d("AddEditActivity", "Calling setInitialSpinnerSelection()");
         setInitialSpinnerSelection();
 
         // Handle type spinner selections here
+        Log.d("AddEditActivity", "Calling configureSpinnerListener()");
         configureSpinnerListener();
         spinnerView.setOnItemSelectedListener(spinnerListener);
     }
@@ -215,20 +222,38 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         mashProfileId = getIntent().getLongExtra(Constants.KEY_PROFILE_ID, Constants.INVALID_ID);
 
         // Acquire recipe
-        try
+        mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
+
+        if (mRecipe == null)
         {
-            mRecipe = Database.getRecipeWithId(recipeId);
+            Log.d("AddEditActivity", "NULL Recipe passed via Intent");
+            if (recipeId != Constants.INVALID_ID)
+            {
+                Log.d("AddEditActivity", "Found recipe ID, Trying database");
+                try
+                {
+                    mRecipe = Database.getRecipeWithId(recipeId);
+                    Log.d("AddEditActivity", "Found recipe in database");
+                }
+                catch (ItemNotFoundException e)
+                {
+                    e.printStackTrace();
+                    Log.d("AddEditActivity", "Database lookup failed, calling onRecipeNotFound()");
+                    onRecipeNotFound();
+                    return;
+                }
+            } else {
+                Log.d("AddEditActivity", "No recipe ID passed via Intent, Calling onRecipeNotFound()");
+                onRecipeNotFound();
+                return;
+            }
         }
-        catch (RecipeNotFoundException e)
-        {
-            e.printStackTrace();
-            Log.d("AddEditActivity", "No recipe provided");
-            onRecipeNotFound();
-        }
+        Log.d("AddEditActivity", "Successfully retrieved basic values from intent!");
     }
 
     public void onRecipeNotFound()
     {
+        Log.d("AddEditActivity", "Recipe not found, finishing");
         finish();
     }
 
@@ -263,6 +288,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 
     public void acquireValues() throws Exception
     {
+        Log.d("AddEditActivity", "Acquiring values from edit texts");
         name = nameViewText.getText().toString();
         amount = Double.parseDouble(amountViewText.getText().toString());
         time = Integer.parseInt(timeViewText.getText().toString());
@@ -277,13 +303,15 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         }
         catch (Exception e)
         {
-            Log.d("onSubmitPressed", "Could not acquire values: " + e.toString());
+            Log.d("AddEditActivity", "Could not acquire values: " + e.toString());
             e.printStackTrace();
             readyToGo = false;
         }
 
         if (readyToGo)
         {
+            Log.d("AddEditActivity", "Finishing");
+            Database.updateRecipe(mRecipe);
             onFinished();
         }
     }
@@ -292,18 +320,21 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 		// if "SUBMIT" button pressed
 		if (v.getId() == R.id.submit_button)
 		{
+            Log.d("AddEditActivity", "Submit Pressed");
             onSubmitPressed();
 		}
 
         // If "DELETE" button pressed
         if (v.getId() == R.id.delete_button)
         {
+            Log.d("AddEditActivity", "Delete Pressed");
             onDeletePressed();
         }
 		
 		// if "CANCEL" button pressed
 		if (v.getId() == R.id.cancel_button)
 		{
+            Log.d("AddEditActivity", "Cancel Pressed");
             onCancelPressed();
 		}
 	}

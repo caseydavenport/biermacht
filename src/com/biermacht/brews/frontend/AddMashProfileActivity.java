@@ -292,61 +292,6 @@ public class AddMashProfileActivity extends AddEditActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        MashStep s;
-        long id;
-
-        if (resultCode == Constants.RESULT_CANCELED)
-            return;
-
-        switch (requestCode)
-        {
-            case Constants.REQUEST_NEW_MASH_STEP:
-            {
-                try
-                {
-                    s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
-                } catch (Exception e)
-                {
-                    Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
-                    return;
-                }
-
-                mashStepArray.add(s);
-                updateMashStepList();
-                break;
-            }
-
-            case Constants.REQUEST_EDIT_MASH_STEP:
-            {
-                try
-                {
-                    s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
-                    id = data.getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
-                } catch (Exception e)
-                {
-                    Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
-                    return;
-                }
-
-                // Remove step
-                for (MashStep step : mashStepArray)
-                    if (s.getId() == id)
-                        mashStepArray.remove(step);
-
-                // If we deleted the step, do nothing, else re-add it
-                if (resultCode == Constants.RESULT_OK)
-                    mashStepArray.add(s);
-
-                updateMashStepList();
-                break;
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //getMenuInflater().inflate(R.menu.activity_add_new_recipe, menu);
         return true;
@@ -402,5 +347,60 @@ public class AddMashProfileActivity extends AddEditActivity {
     public void onDeletePressed()
     {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        MashStep s;
+        long id;
+
+        if (resultCode == Constants.RESULT_CANCELED)
+            return;
+
+        switch (requestCode)
+        {
+            case Constants.REQUEST_NEW_MASH_STEP:
+            {
+                try
+                {
+                    s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
+                } catch (Exception e)
+                {
+                    Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
+                    return;
+                }
+
+                mashStepArray.add(s);
+                updateMashStepList();
+                break;
+            }
+
+            case Constants.REQUEST_EDIT_MASH_STEP:
+            {
+                try
+                {
+                    s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
+                    id = data.getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
+                } catch (Exception e)
+                {
+                    Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
+                    return;
+                }
+
+                // Remove step
+                for (MashStep step : mashStepArray)
+                    if (s.getId() == id)
+                        mashStepArray.remove(step);
+
+                // If we deleted the step, do nothing, else re-add it
+                if (resultCode == Constants.RESULT_OK)
+                    mashStepArray.add(s);
+
+                updateMashStepList();
+                break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

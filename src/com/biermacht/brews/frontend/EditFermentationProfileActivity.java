@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
@@ -50,20 +49,11 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 
         // Get recipe from calling activity
         long id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
+        mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
         // Set icon as back button
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Acquire recipe
-        try
-        {
-            mRecipe = Database.getRecipeWithId(id);
-        }
-        catch (RecipeNotFoundException e)
-        {
-            e.printStackTrace();
-            finish();
-        }
 
         // Disable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.GONE);
@@ -211,8 +201,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 			}
 
 			if (readyToGo)
-			{	
-				mRecipe.update();
+			{
                 Database.updateRecipe(mRecipe);
 				finish();
 			}

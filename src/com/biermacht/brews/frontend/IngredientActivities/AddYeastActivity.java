@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -104,7 +104,7 @@ public class AddYeastActivity extends Activity implements OnClickListener {
         {
             mRecipe = Database.getRecipeWithId(id);
         }
-        catch (RecipeNotFoundException e)
+        catch (ItemNotFoundException e)
         {
             e.printStackTrace();
             finish();

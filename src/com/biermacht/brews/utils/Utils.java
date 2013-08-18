@@ -69,7 +69,7 @@ public class Utils {
 		for (Ingredient i : r.getIngredientList())
 		{
 			i.setDisplayAmount(i.getDisplayAmount() * ratio);
-			Database.updateIngredient(i);
+			Database.updateIngredient(i, Constants.DATABASE_DEFAULT);
 		}
 
         Database.updateRecipe(r);

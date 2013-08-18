@@ -47,13 +47,14 @@ public class Constants {
     public static final String PREF_LAST_OPENED = "com.biermacht.brews.lastOpened";
 
     // Activity for result return codes
-    public static final int RESULT_DELETED = 0;
-    public static final int RESULT_OK = 1;
-    public static final int RESULT_CANCELED = 2;
+    public static final int RESULT_DELETED = 1;
+    public static final int RESULT_OK = 2;
+    public static final int RESULT_CANCELED = 3;
 
     // Request codes for activities
     public static final int REQUEST_NEW_MASH_STEP = 1;
     public static final int REQUEST_EDIT_MASH_STEP = 2;
+    public static final int REQUEST_EDIT_RECIPE = 3;
 
     // Commonly used text
     public static final String DEG_FAHRENHEIT = "\u2109";

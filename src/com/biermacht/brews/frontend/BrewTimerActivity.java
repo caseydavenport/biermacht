@@ -31,7 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.adapters.BrewTimerCollectionPagerAdapter;
 import com.biermacht.brews.frontend.fragments.BrewTimerStepFragment;
 import com.biermacht.brews.recipe.Instruction;
@@ -177,7 +177,7 @@ public class BrewTimerActivity extends FragmentActivity {
         {
             mRecipe = Database.getRecipeWithId(id);
         }
-        catch (RecipeNotFoundException e)
+        catch (ItemNotFoundException e)
         {
             e.printStackTrace();
             finish();
@@ -287,7 +287,7 @@ public class BrewTimerActivity extends FragmentActivity {
         {
             mRecipe = Database.getRecipeWithId(id);
         }
-        catch (RecipeNotFoundException e)
+        catch (ItemNotFoundException e)
         {
             e.printStackTrace();
             finish();

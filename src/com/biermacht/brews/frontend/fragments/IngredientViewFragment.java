@@ -62,39 +62,40 @@ public class IngredientViewFragment extends Fragment {
 				// Grain pressed
 				if (ing.getType().equals(Ingredient.FERMENTABLE))
 				{
-			  		Intent editGrainIntent = new Intent(c, EditFermentableActivity.class);
-			  		editGrainIntent.putExtra(Constants.KEY_RECIPE_ID, r.getId());
-				    editGrainIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
-			  		startActivity(editGrainIntent);
+			  		Intent i = new Intent(c, EditFermentableActivity.class);
+			  		i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+                    i.putExtra(Constants.KEY_RECIPE, r);
+				    i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+			  		startActivity(i);
 				}
 
 				// Hop Pressed
 				if (ing.getType().equals(Ingredient.HOP))
 				{
-			  		Intent editHopIntent = new Intent(c, EditHopActivity.class);
-			  		editHopIntent.putExtra(Constants.KEY_RECIPE_ID, r.getId());
-                    editHopIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
-                    editHopIntent.putExtra(Constants.KEY_INGREDIENT, ing);
-			  		startActivity(editHopIntent);
+			  		Intent i = new Intent(c, EditHopActivity.class);
+			  		i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT, ing);
+                    startActivity(i);
 				}
 
 				// Yeast Pressed
 				if (ing.getType().equals(Ingredient.YEAST))
 				{
-			  		Intent editYeastIntent = new Intent(c, EditYeastActivity.class);
-			  		editYeastIntent.putExtra(Constants.KEY_RECIPE_ID, r.getId());
-			  		editYeastIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
-			  		startActivity(editYeastIntent);
+			  		Intent i = new Intent(c, EditYeastActivity.class);
+			  		i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+			  		i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    startActivity(i);
 				}
 
 				// Misc Pressed
 				if (ing.getType().equals(Ingredient.MISC))
 				{
-			  		Intent editMiscIntent = new Intent(c, EditMiscActivity.class);
-			  		editMiscIntent.putExtra(Constants.KEY_RECIPE_ID, r.getId());
-                    editMiscIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
-                    editMiscIntent.putExtra(Constants.KEY_INGREDIENT, ing);
-			  		startActivity(editMiscIntent);
+			  		Intent i = new Intent(c, EditMiscActivity.class);
+			  		i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT, ing);
+                    startActivity(i);
 				}
 			}
 		};

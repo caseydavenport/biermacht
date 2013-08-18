@@ -1,12 +1,13 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
+import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
@@ -88,7 +89,7 @@ public class EditFermentableActivity extends AddFermentableActivity {
                     timeView.setVisibility(View.GONE);
                 }
 
-                nameViewText.setText(fermentable.getName());
+                nameViewText.setText(selectedFermentable.getName());
                 colorViewText.setText(String.format("%2.2f", selectedFermentable.getLovibondColor()));
                 gravityViewText.setText(String.format("%2.3f", selectedFermentable.getGravity()));
                 amountViewText.setText(String.format("%2.2f", fermentable.getDisplayAmount()));
@@ -117,12 +118,12 @@ public class EditFermentableActivity extends AddFermentableActivity {
     public void onFinished()
     {
         // Update the ingredient, and finish the activity
-        Database.updateIngredient(fermentable);
+        Database.updateIngredient(fermentable, Constants.DATABASE_DEFAULT);
         try
         {
             mRecipe = Database.getRecipeWithId(mRecipe.getId());
         }
-        catch (RecipeNotFoundException e)
+        catch (ItemNotFoundException e)
         {
             e.printStackTrace();
         }

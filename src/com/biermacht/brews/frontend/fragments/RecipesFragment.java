@@ -223,6 +223,7 @@ public class RecipesFragment extends Fragment {
         {
             Intent i = new Intent(c, EditRecipeActivity.class);
             i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
             startActivity(i);
         }
 
@@ -250,6 +251,7 @@ public class RecipesFragment extends Fragment {
         {
             Intent i = new Intent(c, EditFermentationProfileActivity.class);
             i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
             startActivity(i);
         }
 
@@ -258,6 +260,7 @@ public class RecipesFragment extends Fragment {
         {
             Intent i = new Intent(c, BrewTimerActivity.class);
             i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
             startActivity(i);
         }
 
@@ -266,6 +269,7 @@ public class RecipesFragment extends Fragment {
         {
             Intent i = new Intent(c, EditMashProfileActivity.class);
             i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
             i.putExtra(Constants.KEY_PROFILE_ID, selectedRecipe.getMashProfile().getId());
             i.putExtra(Constants.KEY_PROFILE, selectedRecipe.getMashProfile());
             startActivity(i);

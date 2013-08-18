@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.IngredientActivities.AddFermentableActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
@@ -20,8 +19,8 @@ import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.utils.Database;
 
 import android.support.v4.view.*;
 
@@ -35,78 +34,6 @@ public class DisplayRecipeActivity extends FragmentActivity {
     ViewPager.OnPageChangeListener pageListener;
     Menu menu;
 
-    private class UpdateTask extends AsyncTask<String, Void, String> {
-
-        private Context context;
-        private ProgressDialog progress;
-
-        public UpdateTask(Context c)
-        {
-            this.context = c;
-        }
-
-        @Override
-        protected String doInBackground(String... params)
-        {
-            mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
-            // ViewPager and pagerAdapter for Slidy tabs!
-            cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, context);
-
-            return "Executed";
-        }
-
-        @Override
-        protected void onPostExecute(String result)
-        {
-            super.onPostExecute(result);
-            progress.dismiss();
-
-            // Set icon as back button
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-
-            // Set title based on recipe name
-            setTitle(mRecipe.getRecipeName());
-
-            // TODO: Temporary hack to fix dumb bug
-            if (currentItem == 1)
-                currentItem = 0;
-
-            // Set Adapter
-            mViewPager = (ViewPager) findViewById(R.id.pager);
-            mViewPager.setAdapter(cpAdapter);
-
-            // Set to the current item
-            mViewPager.setCurrentItem(currentItem);
-            mViewPager.setOnPageChangeListener(pageListener);
-
-            updateOptionsMenu();
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-            progress = new ProgressDialog(context);
-            progress.setMessage("Loading Recipe");
-            progress.setIndeterminate(false);
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setCancelable(true);
-            progress.show();
-
-            // Get appContext
-            appContext = context;
-
-            // Get recipe id from calling activity
-            id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
-    }
-
-	private Context appContext;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +41,9 @@ public class DisplayRecipeActivity extends FragmentActivity {
 
         // Set current item to be the first
         currentItem = 0;
+
+        // Get recipe from intent
+        mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
         // Set on page change listener
         pageListener = new ViewPager.OnPageChangeListener() {
@@ -134,8 +64,8 @@ public class DisplayRecipeActivity extends FragmentActivity {
             }
         };
 
-        // Update Asynchronously
-        new UpdateTask(this).execute("");
+        //Update user interface
+        updateUI();
     }
 
     @Override
@@ -165,6 +95,34 @@ public class DisplayRecipeActivity extends FragmentActivity {
         return true;
     }
 
+    private void updateUI()
+    {
+        // Set icon as back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get recipe id from calling activity
+        id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
+
+        // ViewPager and pagerAdapter for Slidy tabs!
+        cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, getApplicationContext());
+
+        // Set title based on recipe name
+        setTitle(mRecipe.getRecipeName());
+
+        // TODO: Temporary hack to fix dumb bug
+        if (currentItem == 1)
+            currentItem = 0;
+
+        // Set Adapter
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(cpAdapter);
+
+        // Set to the current item
+        mViewPager.setCurrentItem(currentItem);
+        mViewPager.setOnPageChangeListener(pageListener);
+
+        updateOptionsMenu();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -175,54 +133,54 @@ public class DisplayRecipeActivity extends FragmentActivity {
         		return true;
 
             case R.id.add_fermentable:
-    	    	i = new Intent(this.appContext, AddFermentableActivity.class);
-    	    	i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
+    	    	i = new Intent(this.getApplicationContext(), AddFermentableActivity.class);
+    	    	i.putExtra(Constants.KEY_RECIPE, mRecipe);
     		    startActivity(i);
     		    return true;
 
             case R.id.add_hop:
-    	    	i = new Intent(this.appContext, AddHopsActivity.class);
-    	    	i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
-    		    startActivity(i);
+    	    	i = new Intent(getApplicationContext(), AddHopsActivity.class);
+    	    	i.putExtra(Constants.KEY_RECIPE, mRecipe);
+                startActivity(i);
     		    return true;
 
             case R.id.add_yeast:
-    	    	i = new Intent(this.appContext, AddYeastActivity.class);
-    	    	i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
-    		    startActivity(i);
+    	    	i = new Intent(getApplicationContext(), AddYeastActivity.class);
+    	    	i.putExtra(Constants.KEY_RECIPE, mRecipe);
+                startActivity(i);
     		    return true;
 
 			case R.id.add_misc:
-    	    	i = new Intent(this.appContext, AddMiscActivity.class);
-    	    	i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
-    		    startActivity(i);
+    	    	i = new Intent(getApplicationContext(), AddMiscActivity.class);
+    	    	i.putExtra(Constants.KEY_RECIPE, mRecipe);
+                startActivity(i);
     		    return true;
 
             case R.id.menu_timer:
-            	i = new Intent(this.appContext, BrewTimerActivity.class);
-                i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
+            	i = new Intent(getApplicationContext(), BrewTimerActivity.class);
+                i.putExtra(Constants.KEY_RECIPE, mRecipe);
                 startActivity(i);
             	return true;
 
             case R.id.menu_edit_recipe:
-          		i = new Intent(this.appContext, EditRecipeActivity.class);
-          		i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
-          		startActivity(i);
+          		i = new Intent(getApplicationContext(), EditRecipeActivity.class);
+          		i.putExtra(Constants.KEY_RECIPE, mRecipe);
+                startActivity(i);
 				return true;
 
 			case R.id.menu_edit_mash_profile:
-				i = new Intent(this.appContext, EditMashProfileActivity.class);
+				i = new Intent(getApplicationContext(), EditMashProfileActivity.class);
                 Log.d("DisplayRecipeActivity", "NAME: " + mRecipe.getMashProfile().getName());
-				i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
+				i.putExtra(Constants.KEY_RECIPE, mRecipe);
                 i.putExtra(Constants.KEY_PROFILE_ID, mRecipe.getMashProfile().getId());
                 i.putExtra(Constants.KEY_PROFILE, mRecipe.getMashProfile());
-				startActivity(i);
+                startActivity(i);
 				return true;
 
 			case R.id.menu_edit_fermentation_profile:
-				i = new Intent(this.appContext, EditFermentationProfileActivity.class);
-				i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
-				startActivity(i);
+				i = new Intent(getApplicationContext(), EditFermentationProfileActivity.class);
+				i.putExtra(Constants.KEY_RECIPE, mRecipe);
+                startActivity(i);
 				return true;
         }
         return super.onOptionsItemSelected(item);
@@ -236,9 +194,16 @@ public class DisplayRecipeActivity extends FragmentActivity {
     public void onResume()
     {
         super.onResume();
-        Log.d("DisplayRecipeActivity", "onResume");
+        Log.d("DisplayRecipeActivity", "onResume: Getting recipe from database");
+        try
+        {
+            mRecipe = Database.getRecipeWithId(mRecipe.getId());
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
-        new UpdateTask(this).execute("");
+        updateUI();
     }
 
     public void updateOptionsMenu()
