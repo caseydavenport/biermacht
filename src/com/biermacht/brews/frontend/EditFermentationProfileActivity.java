@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,8 +22,6 @@ import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.utils.Utils;
-import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.frontend.adapters.*;
 
 public class EditFermentationProfileActivity extends Activity implements OnClickListener {
@@ -52,7 +49,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+        long id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
 
         // Set icon as back button
         getActionBar().setDisplayHomeAsUpEnabled(true);

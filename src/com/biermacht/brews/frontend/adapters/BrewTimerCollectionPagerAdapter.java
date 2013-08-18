@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -13,6 +14,7 @@ import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -33,8 +35,7 @@ public class BrewTimerCollectionPagerAdapter extends FragmentStatePagerAdapter {
         for (Instruction i : r.getInstructionList())
             if (i.showInBrewTimer())
             {
-                BrewTimerStepFragment f = new BrewTimerStepFragment(c, r, i);
-                instructionFragmentList.add(f);
+                instructionFragmentList.add(BrewTimerStepFragment.newInstance(r, i));
             }
     }
 

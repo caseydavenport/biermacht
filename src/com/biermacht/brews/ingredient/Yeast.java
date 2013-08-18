@@ -1,5 +1,6 @@
 package com.biermacht.brews.ingredient;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.biermacht.brews.utils.Units;
 
@@ -55,6 +56,34 @@ public class Yeast extends Ingredient {
         this.lab = "";
 	}
 
+    public Yeast(Parcel p)
+    {
+        super(p);
+        type = p.readString();
+        form = p.readString();
+        minTemp = p.readDouble();
+        maxTemp = p.readDouble();
+        attenuation = p.readDouble();
+        notes = p.readString();
+        bestFor = p.readString();
+        productid = p.readString();
+        lab = p.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+        super.writeToParcel(p, flags);
+        p.writeString(type);								// Ale, Lager, etc
+        p.writeString(form);								// Liquid, Dry, etc
+        p.writeDouble(minTemp);
+        p.writeDouble(maxTemp);
+        p.writeDouble(attenuation);							// Percentage: x / 100
+        p.writeString(notes);
+        p.writeString(bestFor);
+        p.writeString(productid);
+        p.writeString(lab);
+    }
 
     @Override
     public int describeContents()
@@ -62,17 +91,19 @@ public class Yeast extends Ingredient {
         return 0;
     }
 
-    /**
-     * THIS IS HOW WE SERIALIZE THIS OBJECT INTO
-     * A PARCEL
-     * @param p
-     * @param flags
-     */
-    @Override
-    public void writeToParcel(Parcel p, int flags)
-    {
-        super.writeToParcel(p, flags);
-    }
+    public static final Parcelable.Creator<Yeast> CREATOR =
+            new Parcelable.Creator<Yeast>() {
+                @Override
+                public Yeast createFromParcel(Parcel p)
+                {
+                    return new Yeast(p);
+                }
+
+                @Override
+                public Yeast[] newArray(int size) {
+                    return null;
+                }
+            };
 
     @Override
     public String toString()

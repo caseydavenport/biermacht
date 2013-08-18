@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
@@ -40,7 +39,7 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
         super.getValuesFromIntent();
 
         // Get the ingredient as well
-        long grainId = getIntent().getLongExtra(Constants.INTENT_INGREDIENT_ID, Constants.INVALID_ID);
+        long grainId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
         fermentable = (Fermentable) Database.getIngredientWithId(grainId);
     }
 

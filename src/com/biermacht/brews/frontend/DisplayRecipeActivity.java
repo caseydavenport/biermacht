@@ -107,7 +107,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
             appContext = context;
 
             // Get recipe id from calling activity
-            id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+            id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
         }
 
         @Override
@@ -186,52 +186,52 @@ public class DisplayRecipeActivity extends FragmentActivity {
 
             case R.id.add_fermentable:
     	    	i = new Intent(this.appContext, AddFermentableActivity.class);
-    	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
+    	    	i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
 
             case R.id.add_hop:
     	    	i = new Intent(this.appContext, AddHopsActivity.class);
-    	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
+    	    	i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
 
             case R.id.add_yeast:
     	    	i = new Intent(this.appContext, AddYeastActivity.class);
-    	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
+    	    	i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
 
 			case R.id.add_misc:
     	    	i = new Intent(this.appContext, AddMiscActivity.class);
-    	    	i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
+    	    	i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
     		    startActivity(i);
     		    return true;
 
             case R.id.menu_timer:
             	i = new Intent(this.appContext, BrewTimerActivity.class);
-                i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
+                i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
                 startActivity(i);
             	return true;
 
             case R.id.menu_edit_recipe:
           		i = new Intent(this.appContext, EditRecipeActivity.class);
-          		i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
+          		i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
           		startActivity(i);
 				return true;
 
 			case R.id.menu_edit_mash_profile:
 				i = new Intent(this.appContext, EditMashProfileActivity.class);
                 Log.d("DisplayRecipeActivity", "NAME: " + mRecipe.getMashProfile().getName());
-				i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
-                i.putExtra(Constants.INTENT_PROFILE_ID, mRecipe.getMashProfile().getId());
-                i.putExtra(Constants.INTENT_PROFILE, mRecipe.getMashProfile());
+				i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
+                i.putExtra(Constants.KEY_PROFILE_ID, mRecipe.getMashProfile().getId());
+                i.putExtra(Constants.KEY_PROFILE, mRecipe.getMashProfile());
 				startActivity(i);
 				return true;
 
 			case R.id.menu_edit_fermentation_profile:
 				i = new Intent(this.appContext, EditFermentationProfileActivity.class);
-				i.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
+				i.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
 				startActivity(i);
 				return true;
         }

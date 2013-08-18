@@ -989,7 +989,6 @@ public class DatabaseInterface {
         s.setDescription(description);
         s.setOrder(order);
 
-        Log.d("cursorToMashStep", "Retrieved mash step from database: " + s.getName());
 		return s;
 	}
 	

@@ -23,7 +23,7 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
         super.getValuesFromIntent();
 
         // Acquire profile
-        mProfile = getIntent().getParcelableExtra(Constants.INTENT_PROFILE);
+        mProfile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
 
         // Initialize data containers
         name = mProfile.getName();

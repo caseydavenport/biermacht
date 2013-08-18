@@ -1,6 +1,5 @@
 package com.biermacht.brews.frontend;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -205,7 +204,7 @@ public class AddMashStepActivity extends AddEditActivity {
     public void onFinished()
     {
         Intent result = new Intent();
-        result.putExtra(Constants.INTENT_MASH_STEP, step);
+        result.putExtra(Constants.KEY_MASH_STEP, step);
         setResult(Constants.RESULT_OK, result);
         finish();
     }

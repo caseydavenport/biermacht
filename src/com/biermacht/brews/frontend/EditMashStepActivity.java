@@ -1,6 +1,5 @@
 package com.biermacht.brews.frontend;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,10 +34,10 @@ public class EditMashStepActivity extends AddMashStepActivity {
     public void getValuesFromIntent()
     {
         super.getValuesFromIntent();
-        stepId = getIntent().getLongExtra(Constants.INTENT_MASH_STEP_ID, Constants.INVALID_ID);
+        stepId = getIntent().getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
 
         // Create mash step
-        step = getIntent().getParcelableExtra(Constants.INTENT_MASH_STEP);
+        step = getIntent().getParcelableExtra(Constants.KEY_MASH_STEP);
     }
 
     @Override
@@ -51,8 +50,8 @@ public class EditMashStepActivity extends AddMashStepActivity {
     public void onFinished()
     {
         Intent result = new Intent();
-        result.putExtra(Constants.INTENT_MASH_STEP, step);
-        result.putExtra(Constants.INTENT_MASH_STEP_ID, stepId);
+        result.putExtra(Constants.KEY_MASH_STEP, step);
+        result.putExtra(Constants.KEY_MASH_STEP_ID, stepId);
         setResult(Constants.RESULT_OK, result);
         finish();
     }
@@ -68,8 +67,8 @@ public class EditMashStepActivity extends AddMashStepActivity {
     public void onDeletePressed()
     {
         Intent result = new Intent();
-        result.putExtra(Constants.INTENT_MASH_STEP, step);
-        result.putExtra(Constants.INTENT_MASH_STEP_ID, stepId);
+        result.putExtra(Constants.KEY_MASH_STEP, step);
+        result.putExtra(Constants.KEY_MASH_STEP_ID, stepId);
         setResult(Constants.RESULT_DELETED, result);
         finish();
     }

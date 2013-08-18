@@ -18,14 +18,16 @@ public class Constants {
     // Master recipe - used as parent for custom ingredients
     public static final long MASTER_RECIPE_ID = 1;
 
-	// Intent put values
-	public static final String INTENT_RECIPE_ID = "biermacht.brews.recipe.id";
-	public static final String INTENT_PROFILE_ID = "biermacht.brews.mash.profile.id";
-    public static final String INTENT_PROFILE = "biermacht.brews.mash.profile";
-	public static final String INTENT_INGREDIENT_ID = "biermacht.brews.ingredient.id";
-    public static final String INTENT_INGREDIENT = "biermacht.brews.ingredient";
-    public static final String INTENT_MASH_STEP = "biermacht.brews.mash.step";
-    public static final String INTENT_MASH_STEP_ID = "biermacht.brews.mash.step.id";
+	// Keys for passing objects
+	public static final String KEY_RECIPE_ID = "biermacht.brews.recipe.id";
+    public static final String KEY_RECIPE = "biermacht.brews.recipe";
+	public static final String KEY_PROFILE_ID = "biermacht.brews.mash.profile.id";
+    public static final String KEY_PROFILE = "biermacht.brews.mash.profile";
+	public static final String KEY_INGREDIENT_ID = "biermacht.brews.ingredient.id";
+    public static final String KEY_INGREDIENT = "biermacht.brews.ingredient";
+    public static final String KEY_MASH_STEP = "biermacht.brews.mash.step";
+    public static final String KEY_MASH_STEP_ID = "biermacht.brews.mash.step.id";
+    public static final String KEY_INSTRUCTION = "biermacht.brews.instruction";
     public static final int INVALID_ID = -1; // TODO: Throw exceptions in get methods if this is passed
 
     // Different virtual databases

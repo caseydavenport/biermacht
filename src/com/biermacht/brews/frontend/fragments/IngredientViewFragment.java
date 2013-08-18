@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -66,8 +63,8 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.FERMENTABLE))
 				{
 			  		Intent editGrainIntent = new Intent(c, EditFermentableActivity.class);
-			  		editGrainIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
-				    editGrainIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
+			  		editGrainIntent.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+				    editGrainIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
 			  		startActivity(editGrainIntent);
 				}
 
@@ -75,9 +72,9 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.HOP))
 				{
 			  		Intent editHopIntent = new Intent(c, EditHopActivity.class);
-			  		editHopIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
-                    editHopIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
-                    editHopIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
+			  		editHopIntent.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+                    editHopIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    editHopIntent.putExtra(Constants.KEY_INGREDIENT, ing);
 			  		startActivity(editHopIntent);
 				}
 
@@ -85,8 +82,8 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.YEAST))
 				{
 			  		Intent editYeastIntent = new Intent(c, EditYeastActivity.class);
-			  		editYeastIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
-			  		editYeastIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
+			  		editYeastIntent.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+			  		editYeastIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
 			  		startActivity(editYeastIntent);
 				}
 
@@ -94,9 +91,9 @@ public class IngredientViewFragment extends Fragment {
 				if (ing.getType().equals(Ingredient.MISC))
 				{
 			  		Intent editMiscIntent = new Intent(c, EditMiscActivity.class);
-			  		editMiscIntent.putExtra(Constants.INTENT_RECIPE_ID, r.getId());
-                    editMiscIntent.putExtra(Constants.INTENT_INGREDIENT_ID, ing.getId());
-                    editMiscIntent.putExtra(Constants.INTENT_INGREDIENT, ing);
+			  		editMiscIntent.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+                    editMiscIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    editMiscIntent.putExtra(Constants.KEY_INGREDIENT, ing);
 			  		startActivity(editMiscIntent);
 				}
 			}

@@ -93,10 +93,10 @@ public class EditMiscActivity extends Activity {
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
 
         // Get recipe id
-        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+        long id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
 
         // Acquire misc
-        misc = (Misc) getIntent().getParcelableExtra(Constants.INTENT_INGREDIENT);
+        misc = (Misc) getIntent().getParcelableExtra(Constants.KEY_INGREDIENT);
 
         // Acquire recipe
         try

@@ -58,9 +58,9 @@ public class EditMashProfilesFragment extends Fragment {
             public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id)
             {
                 Intent i = new Intent(c, EditCustomMashProfileActivity.class);
-                i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
-                i.putExtra(Constants.INTENT_PROFILE_ID, list.get(pos).getId());
-                i.putExtra(Constants.INTENT_PROFILE, list.get(pos));
+                i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+                i.putExtra(Constants.KEY_PROFILE_ID, list.get(pos).getId());
+                i.putExtra(Constants.KEY_PROFILE, list.get(pos));
                 startActivity(i);
 
             }

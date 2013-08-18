@@ -105,7 +105,7 @@ public class RecipesFragment extends Fragment {
                                     long id)
             {
                 Intent intent = new Intent(c, DisplayRecipeActivity.class);
-                intent.putExtra(Constants.INTENT_RECIPE_ID, recipeList.get(pos).getId());
+                intent.putExtra(Constants.KEY_RECIPE_ID, recipeList.get(pos).getId());
                 startActivity(intent);
             }
         };
@@ -222,7 +222,7 @@ public class RecipesFragment extends Fragment {
         if (selected.equals(EDIT_RECIPE))
         {
             Intent i = new Intent(c, EditRecipeActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
             startActivity(i);
         }
 
@@ -249,7 +249,7 @@ public class RecipesFragment extends Fragment {
         else if (selected.equals(EDIT_FERM))
         {
             Intent i = new Intent(c, EditFermentationProfileActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
             startActivity(i);
         }
 
@@ -257,7 +257,7 @@ public class RecipesFragment extends Fragment {
         else if (selected.equals(BREW_TIMER))
         {
             Intent i = new Intent(c, BrewTimerActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
             startActivity(i);
         }
 
@@ -265,9 +265,9 @@ public class RecipesFragment extends Fragment {
         else if (selected.equals(EDIT_MASH))
         {
             Intent i = new Intent(c, EditMashProfileActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, selectedRecipe.getId());
-            i.putExtra(Constants.INTENT_PROFILE_ID, selectedRecipe.getMashProfile().getId());
-            i.putExtra(Constants.INTENT_PROFILE, selectedRecipe.getMashProfile());
+            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+            i.putExtra(Constants.KEY_PROFILE_ID, selectedRecipe.getMashProfile().getId());
+            i.putExtra(Constants.KEY_PROFILE, selectedRecipe.getMashProfile());
             startActivity(i);
         }
 

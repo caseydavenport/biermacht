@@ -1,10 +1,11 @@
 package com.biermacht.brews.ingredient;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.biermacht.brews.utils.Units;
 
 // Grain subclass of Ingredient
-public class Fermentable extends Ingredient {
+public class Fermentable extends Ingredient implements Parcelable {
 	
 	// Beer XML 1.0 Required Fields ===================================
 	// ================================================================
@@ -22,8 +23,6 @@ public class Fermentable extends Ingredient {
 	// Custom Fields ==================================================
 	// ================================================================
 	private String description;					   // Description of fermentable
-	private int startTime;						   // Boil start time
-	private int endTime;						   // Boil end time
 	
 	// Static values =================================================
 	// ===============================================================
@@ -43,6 +42,17 @@ public class Fermentable extends Ingredient {
 		this.setMaxInBatch(0);
 	}
 
+    public Fermentable(Parcel p)
+    {
+        super(p);
+        type = p.readString();
+        yield = p.readDouble();
+        color = p.readDouble();
+        addAfterBoil = p.readInt() > 0;
+        maxInBatch = p.readDouble();
+        description = p.readString();
+    }
+
 
     @Override
     public int describeContents()
@@ -50,17 +60,31 @@ public class Fermentable extends Ingredient {
         return 0;
     }
 
-    /**
-     * THIS IS HOW WE SERIALIZE THIS OBJECT INTO
-     * A PARCEL
-     * @param p
-     * @param flags
-     */
     @Override
     public void writeToParcel(Parcel p, int flags)
     {
         super.writeToParcel(p, flags);
+        p.writeString(type);                           // Grain, Extract, Adjunct
+        p.writeDouble(yield);                          // Dry yeild / raw yield
+        p.writeDouble(color);                          // Color in Lovibond (SRM)
+        p.writeInt(addAfterBoil ? 1 : 0);              // True if added after boil
+        p.writeDouble(maxInBatch);					   // Max reccomended in this batch
+        p.writeString(description);					   // Description of fermentable
     }
+
+    public static final Parcelable.Creator<Fermentable> CREATOR =
+            new Parcelable.Creator<Fermentable>() {
+                @Override
+                public Fermentable createFromParcel(Parcel p)
+                {
+                    return new Fermentable(p);
+                }
+
+                @Override
+                public Fermentable[] newArray(int size) {
+                    return null;
+                }
+            };
 
 	@Override
 	public String getType() {

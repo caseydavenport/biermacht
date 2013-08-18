@@ -2,16 +2,13 @@ package com.biermacht.brews.frontend.fragments;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.recipe.RecipeReccomendedValues;
+
 import android.content.*;
 import android.widget.*;
 import java.util.*;
@@ -23,7 +20,6 @@ public class DetailsViewFragment extends Fragment {
 	private int resource;
 	private Recipe r;
 	private OnItemClickListener mClickListener;
-	private RecipeReccomendedValues reccomendedValues;
 	View pageView;
 	Context c;
 	
@@ -46,7 +42,6 @@ public class DetailsViewFragment extends Fragment {
 		this.resource = R.layout.fragment_details_view;
 		this.r = r;
 		this.c = c;
-		this.reccomendedValues = r.getStyle().getReccomendedValues();
 
         setRetainInstance(true);
 	}
@@ -71,8 +66,8 @@ public class DetailsViewFragment extends Fragment {
 		originalGravity.setTitle("Original Gravity: ");
 		originalGravity.setValue(r.getOG());
 		originalGravity.setFormat("%2.3f");
-		originalGravity.setMin(reccomendedValues.getMinOG());
-		originalGravity.setMax(reccomendedValues.getMaxOG());
+		originalGravity.setMin(r.getStyle().getMinOg());
+		originalGravity.setMax(r.getStyle().getMaxOg());
 		originalGravity.setVariance(.002);
 		detailList.add(originalGravity);
 
@@ -80,8 +75,8 @@ public class DetailsViewFragment extends Fragment {
         originalGravity.setTitle("Measured OG: ");
         originalGravity.setValue(r.getMeasuredOG());
         originalGravity.setFormat("%2.3f");
-        originalGravity.setMin(reccomendedValues.getMinOG());
-        originalGravity.setMax(reccomendedValues.getMaxOG());
+        originalGravity.setMin(r.getStyle().getMinOg());
+        originalGravity.setMax(r.getStyle().getMaxOg());
         originalGravity.setVariance(.002);
         if (r.getMeasuredOG() > 0)
             detailList.add(originalGravity);
@@ -91,8 +86,8 @@ public class DetailsViewFragment extends Fragment {
 		finalGravity.setValue(r.getFG());
 		finalGravity.setFormat("%2.3f");
 		finalGravity.setVariance(.002);
-		finalGravity.setMin(reccomendedValues.getMinFG());
-		finalGravity.setMax(reccomendedValues.getMaxFG());
+		finalGravity.setMin(r.getStyle().getMinFg());
+		finalGravity.setMax(r.getStyle().getMaxFg());
 		detailList.add(finalGravity);
 
         finalGravity = new Detail();
@@ -100,8 +95,8 @@ public class DetailsViewFragment extends Fragment {
         finalGravity.setValue(r.getMeasuredFG());
         finalGravity.setFormat("%2.3f");
         finalGravity.setVariance(.002);
-        finalGravity.setMin(reccomendedValues.getMinFG());
-        finalGravity.setMax(reccomendedValues.getMaxFG());
+        finalGravity.setMin(r.getStyle().getMinFg());
+        finalGravity.setMax(r.getStyle().getMaxFg());
         if (r.getMeasuredFG() > 0)
             detailList.add(finalGravity);
 
@@ -110,8 +105,8 @@ public class DetailsViewFragment extends Fragment {
 		bitterness.setValue(r.getBitterness());
 		bitterness.setFormat("%2.1f");
 		bitterness.setVariance(.2);
-		bitterness.setMin(reccomendedValues.getMinBitter());
-		bitterness.setMax(reccomendedValues.getMaxBitter());
+		bitterness.setMin(r.getStyle().getMinIbu());
+		bitterness.setMax(r.getStyle().getMaxIbu());
 		detailList.add(bitterness);
 		  
 		color = new Detail();
@@ -119,8 +114,8 @@ public class DetailsViewFragment extends Fragment {
 		color.setValue(r.getColor());
 		color.setFormat("%2.1f");
 		color.setVariance(.1);
-		color.setMin(reccomendedValues.getMinColor());
-		color.setMax(reccomendedValues.getMaxColor());
+		color.setMin(r.getStyle().getMinColor());
+		color.setMax(r.getStyle().getMaxColor());
 		detailList.add(color);
 			
 		abv = new Detail();
@@ -128,8 +123,8 @@ public class DetailsViewFragment extends Fragment {
 		abv.setValue(r.getABV());
 		abv.setFormat("%2.1f");
 		abv.setVariance(.06);
-		abv.setMin(reccomendedValues.getMinAbv());
-		abv.setMax(reccomendedValues.getMaxAbv());
+		abv.setMin(r.getStyle().getMinAbv());
+		abv.setMax(r.getStyle().getMaxAbv());
 		detailList.add(abv);
 
         abv = new Detail();
@@ -137,8 +132,8 @@ public class DetailsViewFragment extends Fragment {
         abv.setValue(r.getMeasuredABV());
         abv.setFormat("%2.1f");
         abv.setVariance(.06);
-        abv.setMin(reccomendedValues.getMinAbv());
-        abv.setMax(reccomendedValues.getMaxAbv());
+        abv.setMin(r.getStyle().getMinAbv());
+        abv.setMax(r.getStyle().getMaxAbv());
         if (r.getMeasuredABV() > 0)
             detailList.add(abv);
 

@@ -1,6 +1,5 @@
 package com.biermacht.brews.frontend;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -170,8 +169,8 @@ public class AddMashProfileActivity extends AddEditActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id)
             {
                 Intent i = new Intent(getApplicationContext(), EditMashStepActivity.class);
-                i.putExtra(Constants.INTENT_MASH_STEP_ID, mashStepArray.get(pos).getId());
-                i.putExtra(Constants.INTENT_MASH_STEP, mashStepArray.get(pos));
+                i.putExtra(Constants.KEY_MASH_STEP_ID, mashStepArray.get(pos).getId());
+                i.putExtra(Constants.KEY_MASH_STEP, mashStepArray.get(pos));
                 startActivityForResult(i, Constants.REQUEST_EDIT_MASH_STEP);
             }
         });
@@ -307,7 +306,7 @@ public class AddMashProfileActivity extends AddEditActivity {
             {
                 try
                 {
-                    s = data.getParcelableExtra(Constants.INTENT_MASH_STEP);
+                    s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
                 } catch (Exception e)
                 {
                     Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
@@ -323,8 +322,8 @@ public class AddMashProfileActivity extends AddEditActivity {
             {
                 try
                 {
-                    s = data.getParcelableExtra(Constants.INTENT_MASH_STEP);
-                    id = data.getLongExtra(Constants.INTENT_MASH_STEP_ID, Constants.INVALID_ID);
+                    s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
+                    id = data.getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
                 } catch (Exception e)
                 {
                     Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");

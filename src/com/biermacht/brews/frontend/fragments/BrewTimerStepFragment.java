@@ -3,32 +3,26 @@ package com.biermacht.brews.frontend.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.adapters.InstructionArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
-
-import java.util.ArrayList;
+import com.biermacht.brews.utils.Constants;
 
 public class BrewTimerStepFragment extends Fragment {
 
-	private int resource;
+	private int resource =  R.layout.fragment_brew_timer_step;
 	private Recipe r;
     private Instruction i;
-	Context c;
+	Context c = getActivity();
 
     // Views
     ViewGroup pageView;
@@ -36,28 +30,49 @@ public class BrewTimerStepFragment extends Fragment {
     TextView descriptionView;
     ImageButton calendarButton;
 
-	public BrewTimerStepFragment(Context c, Recipe r, Instruction i)
-	{
-		this.resource = R.layout.fragment_brew_timer_step;
-		this.r = r;
-		this.c = c;
-        this.i = i;
-	}
+    public static BrewTimerStepFragment newInstance(Recipe r, Instruction i)
+    {
+        Bundle bundle;
+        BrewTimerStepFragment f = new BrewTimerStepFragment();
+
+        bundle = new Bundle();
+        bundle.putParcelable(Constants.KEY_RECIPE, r);
+        bundle.putParcelable(Constants.KEY_INSTRUCTION, i);
+        f.setArguments(bundle);
+
+        return f;
+    }
 
     @Override
     public String toString()
     {
+        // For some reason we're calling this before onCreateView?
+        if (this.i == null || this.r == null)
+        {
+            this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
+            this.i = getArguments().getParcelable(Constants.KEY_INSTRUCTION);
+        }
         return i.getInstructionType();
     }
 
     public Instruction getInstruction()
     {
+        // For some reason we're calling this before onCreateView?
+        if (this.i == null || this.r == null)
+        {
+            this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
+            this.i = getArguments().getParcelable(Constants.KEY_INSTRUCTION);
+        }
         return this.i;
     }
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
+        // Get arguments
+        this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
+        this.i = getArguments().getParcelable(Constants.KEY_INSTRUCTION);
+
         // Get views
 		pageView = (LinearLayout) inflater.inflate(resource, container, false);
         titleView = (TextView) pageView.findViewById(R.id.title);

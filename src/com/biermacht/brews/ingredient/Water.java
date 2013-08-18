@@ -1,5 +1,6 @@
 package com.biermacht.brews.ingredient;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.biermacht.brews.utils.Units;
 
@@ -10,6 +11,11 @@ public class Water extends Ingredient
 		super(name);
 	}
 
+    public Water(Parcel p)
+    {
+        // TODO Implement this?
+        this("New Water");
+    }
 
     @Override
     public int describeContents()
@@ -17,17 +23,25 @@ public class Water extends Ingredient
         return 0;
     }
 
-    /**
-     * THIS IS HOW WE SERIALIZE THIS OBJECT INTO
-     * A PARCEL
-     * @param p
-     * @param flags
-     */
     @Override
     public void writeToParcel(Parcel p, int flags)
     {
 
     }
+
+    public static final Parcelable.Creator<Water> CREATOR =
+            new Parcelable.Creator<Water>() {
+                @Override
+                public Water createFromParcel(Parcel p)
+                {
+                    return new Water(p);
+                }
+
+                @Override
+                public Water[] newArray(int size) {
+                    return new Water[] {};
+                }
+            };
 
 	@Override
 	public String getType() {

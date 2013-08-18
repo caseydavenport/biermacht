@@ -38,7 +38,7 @@ import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
-import com.biermacht.brews.utils.Utils;
+
 import java.io.*;
 
 public class MainActivity extends Activity{
@@ -186,31 +186,31 @@ public class MainActivity extends Activity{
 
         case R.id.add_fermentable:
             i = new Intent(this, AddCustomFermentableActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
             startActivity(i);
             break;
 
         case R.id.new_mash_profile:
             i = new Intent(this, AddMashProfileActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
             startActivity(i);
             break;
 
         case R.id.add_hop:
             i = new Intent(this, AddCustomHopsActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
             startActivity(i);
             break;
 
         case R.id.add_yeast:
             i = new Intent(this, AddCustomYeastActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
             startActivity(i);
             break;
 
         case R.id.add_misc:
             i = new Intent(this, AddCustomMiscActivity.class);
-            i.putExtra(Constants.INTENT_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+            i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
             startActivity(i);
             break;
         }

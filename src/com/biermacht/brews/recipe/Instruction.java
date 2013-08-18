@@ -7,9 +7,11 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-public class Instruction {
+public class Instruction implements Parcelable {
 	
 	private String instructionText;
 	private String instructionType;
@@ -35,15 +37,6 @@ public class Instruction {
 	public static String TYPE_BOTTLING = "Bottle";
     public static String TYPE_CALENDAR = "Calendar";
 	public static String TYPE_OTHER = "";
-
-    // Defines for timer types
-    public static String TIMER_TYPE_STEEP = "Steep Timer";
-    public static String TIMER_TYPE_BOIL = "Boil Timer";
-    public static String TIMER_TYPE_MASH = "Mash Timer";
-    public static String TIMER_TYPE_NONE = "No Timer";
-
-    public static int FIRST_INSTRUCTION_IN_SET = 0;
-    public static int LAST_INSTRUCTION_IN_SET = -1;
 	
 	public Instruction()
 	{
@@ -60,6 +53,56 @@ public class Instruction {
 		typeToOrder = new HashMap<String, Integer>();
 		this.configureHashMap();
 	}
+
+    public Instruction(Parcel p)
+    {
+        instructionText = p.readString();
+        instructionType = p.readString();
+        order = p.readInt();
+        duration = p.readDouble();
+        durationUnits = p.readString();
+        nextDuration = p.readDouble();
+        lastInType = p.readInt() > 0;
+        p.readTypedList(relevantIngredients, Ingredient.CREATOR);
+        mashStep = p.readParcelable(MashStep.class.getClassLoader());
+
+        typeToOrder = new HashMap<String, Integer>();
+        this.configureHashMap();
+    }
+
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+        p.writeString(instructionText);
+        p.writeString(instructionType);
+        p.writeInt(order);
+        p.writeDouble(duration);
+        p.writeString(durationUnits);
+        p.writeDouble(nextDuration);
+        p.writeInt(lastInType ? 1 : 0);
+        p.writeTypedList(relevantIngredients);
+        p.writeParcelable(mashStep, flags);
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Instruction> CREATOR =
+            new Parcelable.Creator<Instruction>() {
+                @Override
+                public Instruction createFromParcel(Parcel p)
+                {
+                    return new Instruction(p);
+                }
+
+                @Override
+                public Instruction[] newArray(int size) {
+                    return new Instruction[] {};
+                }
+            };
 
 	public String getInstructionText() {
 		return instructionText;

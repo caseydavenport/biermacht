@@ -105,7 +105,7 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Get recipe from calling activity
-        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+        long id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
 
         // Acquire recipe
         try

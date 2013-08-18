@@ -1,6 +1,9 @@
 package com.biermacht.brews.recipe;
 
-public class BeerStyle {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class BeerStyle implements Parcelable {
 	
 	// Categories based on beerXMl standard
 	private String name;
@@ -14,7 +17,18 @@ public class BeerStyle {
 	private String profile;
 	private String ingredients;
 	private String examples;
-	private RecipeReccomendedValues reccomendedValues;
+
+    // Reccomended values
+    private double MinOg;
+    private double MaxOg;
+    private double MinFg;
+    private double MaxFg;
+    private double MinIbu;
+    private double MaxIbu;
+    private double minColor;
+    private double maxColor;
+    private double minAbv;
+    private double maxAbv;
 	
 	// More
 	private long ownerId;
@@ -30,7 +44,6 @@ public class BeerStyle {
 	public BeerStyle(String name)
 	{
 		setName(name);
-		this.reccomendedValues = new RecipeReccomendedValues();
 		setType("");
 		setCategory("");
 		setStyleLetter("");
@@ -42,24 +55,93 @@ public class BeerStyle {
 		setCategoryNumber("");
 		setVersion(1);
 		setOwnerId(-1);
+
+        this.MinOg = 1;
+        this.MaxOg = 2;
+        this.MinFg = 1;
+        this.MaxFg = 2;
+        this.MinIbu = 0;
+        this.MaxIbu = 200;
+        this.minColor = 0;
+        this.maxColor = 100;
+        this.minAbv = 0;
+        this.maxAbv = 100;
 	}
-	
-	public BeerStyle(String name, RecipeReccomendedValues rrv)
-	{
-		setName(name);
-		this.reccomendedValues = rrv;
-		setType("");
-		setCategory("");
-		setStyleLetter("");
-		setNotes("");
-		setExamples("");
-		setIngredients("");
-		setProfile("");
-		setStyleGuide("");
-		setCategoryNumber("");
-		setVersion(1);
-		setOwnerId(-1);
-	}
+
+    public BeerStyle(Parcel p)
+    {
+        // Categories based on beerXMl standard
+        name= p.readString();
+        category= p.readString();
+        version= p.readInt();
+        categoryNumber= p.readString();
+        styleLetter= p.readString();
+        styleGuide= p.readString();
+        type= p.readString();
+        notes= p.readString();
+        profile= p.readString();
+        ingredients= p.readString();
+        examples= p.readString();
+        MinOg= p.readDouble();
+        MaxOg= p.readDouble();
+        MinFg= p.readDouble();
+        MaxFg= p.readDouble();
+        MinIbu= p.readDouble();
+        MaxIbu= p.readDouble();
+        minColor= p.readDouble();
+        maxColor= p.readDouble();
+        minAbv= p.readDouble();
+        maxAbv= p.readDouble();
+        ownerId= p.readLong();
+    }
+
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+        // Categories based on beerXMl standard
+        p.writeString(name);
+        p.writeString(category);
+        p.writeInt(version);
+        p.writeString(categoryNumber);
+        p.writeString(styleLetter);
+        p.writeString(styleGuide);
+        p.writeString( type);
+        p.writeString(notes);
+        p.writeString(profile);
+        p.writeString(ingredients);
+        p.writeString(examples);
+        p.writeDouble(MinOg);
+        p.writeDouble(MaxOg);
+        p.writeDouble(MinFg);
+        p.writeDouble(MaxFg);
+        p.writeDouble(MinIbu);
+        p.writeDouble(MaxIbu);
+        p.writeDouble(minColor);
+        p.writeDouble(maxColor);
+        p.writeDouble(minAbv);
+        p.writeDouble(maxAbv);
+        p.writeLong(ownerId);
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<BeerStyle> CREATOR =
+            new Parcelable.Creator<BeerStyle>() {
+                @Override
+                public BeerStyle createFromParcel(Parcel p)
+                {
+                    return new BeerStyle(p);
+                }
+
+                @Override
+                public BeerStyle[] newArray(int size) {
+                    return new BeerStyle[] {};
+                }
+            };
 	
 	@Override
 	public boolean equals(Object o)
@@ -160,61 +242,87 @@ public class BeerStyle {
 	{
 		this.version = i;
 	}
-	
-	public RecipeReccomendedValues getReccomendedValues()
-	{
-		return this.reccomendedValues;
-	}
-	
-	public void setMinOg(double d)
-	{
-		this.reccomendedValues.setMinOG(d);
-	}
-	
-	public void setMaxOg(double d)
-	{
-		this.reccomendedValues.setMaxOG(d);
-	}
-	
-	public void setMinFg(double d)
-	{
-		this.reccomendedValues.setMinFG(d);
-	}
-	
-	public void setMaxFg(double d)
-	{
-		this.reccomendedValues.setMaxFG(d);
-	}
-	
-	public void setMinIbu(double d)
-	{
-		this.reccomendedValues.setMinBitter(d);
-	}
-	
-	public void setMaxIbu(double d)
-	{
-		this.reccomendedValues.setMaxBitter(d);
-	}
-	
-	public void setMinColor(double d)
-	{
-		this.reccomendedValues.setMinColor(d);
-	}
-	
-	public void setMaxColor(double d)
-	{
-		this.reccomendedValues.setMaxColor(d);
-	}
-	
-	public void setMinAbv(double d)
-	{
-		this.reccomendedValues.setMinAbv(d);
-	}
 
-	public void setMaxAbv(double d)
-	{
-		this.reccomendedValues.setMaxAbv(d);
-	}
+    // Methods for getting individual mins and maxes
+    public double getMinOg() {
+        return MinOg;
+    }
+
+    public void setMinOg(double minGrav) {
+        this.MinOg = minGrav;
+    }
+
+    public double getMaxOg() {
+        return MaxOg;
+    }
+
+    public void setMaxOg(double maxGrav) {
+        this.MaxOg = maxGrav;
+    }
+
+    public double getMinIbu() {
+        return MinIbu;
+    }
+
+    public void setMinIbu(double MinIbu) {
+        this.MinIbu = MinIbu;
+    }
+
+    public double getMaxIbu() {
+        return MaxIbu;
+    }
+
+    public void setMaxIbu(double MaxIbu) {
+        this.MaxIbu = MaxIbu;
+    }
+
+    public double getMinColor() {
+        return minColor;
+    }
+
+    public void setMinColor(double minColor) {
+        this.minColor = minColor;
+    }
+
+    public double getMaxColor() {
+        return maxColor;
+    }
+
+    public void setMaxColor(double maxColor) {
+        this.maxColor = maxColor;
+    }
+
+    public double getMinAbv() {
+        return minAbv;
+    }
+
+    public void setMinAbv(double minAbv) {
+        this.minAbv = minAbv;
+    }
+
+    public double getMaxAbv() {
+        return maxAbv;
+    }
+
+    public void setMaxAbv(double maxAbv) {
+        this.maxAbv = maxAbv;
+    }
+
+    public double getMaxFg() {
+        return MaxFg;
+    }
+
+    public void setMaxFg(double MaxFg) {
+        this.MaxFg = MaxFg;
+    }
+
+    public double getMinFg() {
+        return MinFg;
+    }
+
+    public void setMinFg(double MinFg) {
+        this.MinFg = MinFg;
+    }
 	
 	public String getCategory()
 	{
@@ -241,46 +349,6 @@ public class BeerStyle {
 		return this.type;
 	}
 	
-	public double getMinOg()
-	{
-		return this.reccomendedValues.getMinOG();
-	}
-	
-	public double getMaxOg()
-	{
-		return this.reccomendedValues.getMaxOG();
-	}
-	
-	public double getMinFg()
-	{
-		return this.reccomendedValues.getMinFG();
-	}
-	
-	public double getMaxFg()
-	{
-		return this.reccomendedValues.getMaxFG();
-	}
-	
-	public double getMinIbu()
-	{
-		return this.reccomendedValues.getMinBitter();
-	}
-	
-	public double getMaxIbu()
-	{
-		return this.reccomendedValues.getMaxBitter();
-	}
-	
-	public double getMinColor()
-	{
-		return this.reccomendedValues.getMinColor();
-	}
-	
-	public double getMaxColor()
-	{
-		return this.reccomendedValues.getMaxColor();
-	}
-	
 	public double getMinCarb()
 	{
 		return 0; // TODO
@@ -289,16 +357,6 @@ public class BeerStyle {
 	public double getMaxCarb()
 	{
 		return 0; // TODO
-	}
-	
-	public double getMinAbv()
-	{
-		return this.reccomendedValues.getMinAbv();
-	}
-	
-	public double getMaxAbv()
-	{
-		return this.reccomendedValues.getMaxAbv();
 	}
 	
 	public String getNotes()

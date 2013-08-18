@@ -46,7 +46,6 @@ public class BrewTimerActivity extends FragmentActivity {
 	private Recipe mRecipe;
 	private long id; // id of recipe we use
 	private int currentItem; // For storing current page being viewed
-    private int pausedItem; // Stores the item we paused on.
 	BrewTimerCollectionPagerAdapter cpAdapter;
 
     // ID used for the notification
@@ -171,7 +170,7 @@ public class BrewTimerActivity extends FragmentActivity {
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
+        id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
 
         // Acquire recipe
         try
@@ -388,7 +387,7 @@ public class BrewTimerActivity extends FragmentActivity {
 
         Intent notificationIntent = new Intent(ctx, BrewTimerActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        notificationIntent.putExtra(Constants.INTENT_RECIPE_ID, mRecipe.getId());
+        notificationIntent.putExtra(Constants.KEY_RECIPE_ID, mRecipe.getId());
 
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 

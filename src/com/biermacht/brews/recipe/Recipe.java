@@ -1,5 +1,7 @@
 package com.biermacht.brews.recipe;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.biermacht.brews.utils.Constants;
@@ -7,6 +9,7 @@ import com.biermacht.brews.utils.Units;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
@@ -19,7 +22,7 @@ import com.biermacht.brews.utils.InstructionGenerator;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
 
-public class Recipe {
+public class Recipe implements Parcelable {
 	
 	// Beer XML 1.0 Required Fields ===================================
 	// ================================================================
@@ -136,6 +139,140 @@ public class Recipe {
     {
         this("New Recipe");
     }
+
+    public Recipe(Parcel p)
+    {
+        name = p.readString();		        // Recipe name
+        version = p.readInt();			    // XML Version -- 1
+        type = p.readString();                // Extract, Grain, Mash
+        style = p.readParcelable(BeerStyle.class.getClassLoader());    // Stout, Pilsner, etc.
+        brewer = p.readString();		        // Brewer's name
+        batchSize = p.readDouble();
+        boilSize = p.readDouble();
+        boilTime = p.readInt();		        // In Minutes
+        efficiency = p.readDouble();	        // 100 for extract
+        p.readTypedList(hops, Hop.CREATOR);              // Hops used
+        p.readTypedList(fermentables, Fermentable.CREATOR);      // Fermentables used
+        p.readTypedList(yeasts, Yeast.CREATOR);            // Yeasts used
+        p.readTypedList(miscs, Misc.CREATOR);           // Misc ingredients used
+        p.readTypedList(waters, Water.CREATOR);           // Waters used
+        mashProfile = p.readParcelable(MashProfile.class.getClassLoader()); // Mash profile for non-extracts
+
+        // Beer XML 1.0 Optional Fields ===================================
+        // ================================================================
+        OG = p.readDouble();			      // Original Gravity
+        FG = p.readDouble();			      // Final Gravity
+        fermentationStages = p.readInt();   // # of Fermentation stages
+        primaryAge = p.readInt();			  // Time in primary in days
+        primaryTemp = p.readDouble();		  // Temp in primary in C
+        secondaryAge = p.readInt();		  // Time in Secondary in days
+        secondaryTemp = p.readDouble();	  // Temp in secondary in C
+        tertiaryAge = p.readInt();		  // Time in tertiary in days
+        tertiaryTemp = p.readDouble();	  // Temp in tertiary in C
+        tasteNotes = p.readString();        // Taste notes
+        tasteRating = p.readInt();          // Taste score out of 50
+        bottleAge = p.readInt();            // Bottle age in days
+        bottleTemp = p.readDouble();        // Bottle temp in C
+        isForceCarbonated = p.readInt() > 0;  // True if force carb is used
+        carbonation = p.readDouble();       // Volumes of carbonation
+        brewDate = p.readString();          // Date brewed
+        primingSugarName = p.readString();  // Name of sugar for priming
+        primingSugarEquiv = p.readDouble(); // Equivalent amount of priming sugar to be used
+        kegPrimingFactor = p.readDouble();  // factor - use less sugar when kegging vs bottles
+        carbonationTemp = p.readDouble();   // Carbonation temperature in C
+        calories = p.readInt();
+
+        // Custom Fields ==================================================
+        // ================================================================
+        id = p.readLong();                  // id for use in database
+        description = p.readString();       // User input description
+        batchTime = p.readInt();            // Total length in weeks
+        ABV = p.readDouble();                // Alcohol by volume
+        bitterness = p.readDouble();         // Bitterness in IBU
+        color = p.readDouble();              // Color - SRM
+        // Instruction generator not included in parcel
+        measuredOG = p.readDouble();         // Brew day stat: measured OG
+        measuredFG = p.readDouble();         // Brew stat: measured FG
+
+        // Create instruction generator
+        instructionGenerator = new InstructionGenerator(this);
+    }
+
+    @Override
+    public void writeToParcel(Parcel p, int flags)
+    {
+        p.writeString(name);		        // Recipe name
+        p.writeInt(version);			    // XML Version -- 1
+        p.writeString(type);                // Extract, Grain, Mash
+        p.writeParcelable(style, flags);    // Stout, Pilsner, etc.
+        p.writeString(brewer);		        // Brewer's name
+        p.writeDouble(batchSize);           // Target size (L)
+        p.writeDouble(boilSize);		    // Pre-boil vol (L)
+        p.writeInt(boilTime);		        // In Minutes
+        p.writeDouble(efficiency);	        // 100 for extract
+        p.writeTypedList(hops);             // Hops used
+        p.writeTypedList(fermentables);     // Fermentables used
+        p.writeTypedList(yeasts);           // Yeasts used
+        p.writeTypedList(miscs);            // Misc ingredients used
+        p.writeTypedList(waters);           // Waters used
+        p.writeParcelable(mashProfile, flags); // Mash profile for non-extracts
+
+        // Beer XML 1.0 Optional Fields ===================================
+        // ================================================================
+        p.writeDouble(OG);			      // Original Gravity
+        p.writeDouble(FG);			      // Final Gravity
+        p.writeInt(fermentationStages);   // # of Fermentation stages
+        p.writeInt(primaryAge);			  // Time in primary in days
+        p.writeDouble(primaryTemp);		  // Temp in primary in C
+        p.writeInt(secondaryAge);		  // Time in Secondary in days
+        p.writeDouble(secondaryTemp);	  // Temp in secondary in C
+        p.writeInt(tertiaryAge);		  // Time in tertiary in days
+        p.writeDouble(tertiaryTemp);	  // Temp in tertiary in C
+        p.writeString(tasteNotes);        // Taste notes
+        p.writeInt(tasteRating);          // Taste score out of 50
+        p.writeInt(bottleAge);            // Bottle age in days
+        p.writeDouble(bottleTemp);        // Bottle temp in C
+        p.writeInt(isForceCarbonated ? 1 : 0);  // True if force carb is used
+        p.writeDouble(carbonation);       // Volumes of carbonation
+        p.writeString(brewDate);          // Date brewed
+        p.writeString(primingSugarName);  // Name of sugar for priming
+        p.writeDouble(primingSugarEquiv); // Equivalent amount of priming sugar to be used
+        p.writeDouble(kegPrimingFactor);  // factor - use less sugar when kegging vs bottles
+        p.writeDouble(carbonationTemp);   // Carbonation temperature in C
+        p.writeInt(calories);             // Calories (KiloCals)
+
+        // Custom Fields ==================================================
+        // ================================================================
+        p.writeLong( id);                  // id for use in database
+        p.writeString(description);       // User input description
+        p.writeInt(batchTime);            // Total length in weeks
+        p.writeDouble(ABV);                // Alcohol by volume
+        p.writeDouble(bitterness);         // Bitterness in IBU
+        p.writeDouble(color);              // Color - SRM
+        // Instruction generator not included in parcel
+        p.writeDouble(measuredOG);         // Brew day stat: measured OG
+        p.writeDouble(measuredFG);         // Brew stat: measured FG
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Recipe> CREATOR =
+            new Parcelable.Creator<Recipe>() {
+                @Override
+                public Recipe createFromParcel(Parcel p)
+                {
+                    return new Recipe(p);
+                }
+
+                @Override
+                public Recipe[] newArray(int size) {
+                    return new Recipe[] {};
+                }
+            };
 	
 	// Public methods
 	public void update()

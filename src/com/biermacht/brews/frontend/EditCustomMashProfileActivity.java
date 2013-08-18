@@ -1,25 +1,11 @@
 package com.biermacht.brews.frontend;
 
-import java.util.ArrayList;
-
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.TextView;
 
-import com.biermacht.brews.DragDropList.DragSortListView;
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.recipe.*;
-import com.biermacht.brews.frontend.adapters.*;
-import com.biermacht.brews.utils.Utils;
 
 public class EditCustomMashProfileActivity extends AddMashProfileActivity {
 
@@ -37,7 +23,7 @@ public class EditCustomMashProfileActivity extends AddMashProfileActivity {
         super.getValuesFromIntent();
 
         // Acquire profile
-        mProfile = getIntent().getParcelableExtra(Constants.INTENT_PROFILE);
+        mProfile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
 
         // Initialize data containers
         name = mProfile.getName();

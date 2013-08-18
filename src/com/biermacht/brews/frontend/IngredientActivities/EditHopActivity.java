@@ -59,7 +59,7 @@ public class EditHopActivity extends AddHopsActivity {
         super.getValuesFromIntent();
 
         // Acquire Hop
-        hop = getIntent().getParcelableExtra(Constants.INTENT_INGREDIENT);
+        hop = getIntent().getParcelableExtra(Constants.KEY_INGREDIENT);
 
         // Get the use and form
         use = hop.getUse();

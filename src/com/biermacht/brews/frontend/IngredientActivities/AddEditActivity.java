@@ -3,7 +3,6 @@ package com.biermacht.brews.frontend.IngredientActivities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -211,9 +210,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 
     public void getValuesFromIntent()
     {
-        recipeId = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-        ingredientId = getIntent().getLongExtra(Constants.INTENT_INGREDIENT_ID, Constants.INVALID_ID);
-        mashProfileId = getIntent().getLongExtra(Constants.INTENT_PROFILE_ID, Constants.INVALID_ID);
+        recipeId = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
+        ingredientId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
+        mashProfileId = getIntent().getLongExtra(Constants.KEY_PROFILE_ID, Constants.INVALID_ID);
 
         // Acquire recipe
         try

@@ -2,8 +2,10 @@ package com.biermacht.brews.ingredient;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Utils;
 
 public abstract class Ingredient implements Parcelable {
 	
@@ -44,8 +46,8 @@ public abstract class Ingredient implements Parcelable {
 	public Ingredient(String name)
 	{
 		this.name = name;
-		this.id = -1;
-		this.ownerId = -1;
+		this.id = Constants.INVALID_ID;
+		this.ownerId = Constants.INVALID_ID;
         this.databaseId = Constants.DATABASE_DEFAULT;
     }
 
@@ -74,6 +76,38 @@ public abstract class Ingredient implements Parcelable {
         p.writeLong(databaseId);
         p.writeInt(time);
     }
+
+    public static final Parcelable.Creator<Ingredient> CREATOR =
+            new Parcelable.Creator<Ingredient>() {
+                @Override
+                public Ingredient createFromParcel(Parcel p)
+                {
+                    Ingredient i = null;
+                    try
+                    {
+                        i = new Hop(p);
+                    } catch (Exception e){Log.d("Ingredient", "Not a hop");}
+                    try
+                    {
+                        i = new Misc(p);
+                    } catch (Exception e){Log.d("Ingredient", "Not a Misc");}
+                    try
+                    {
+                        i = new Fermentable(p);
+                    } catch (Exception e){Log.d("Ingredient", "Not a Fermentable");}
+                    try
+                    {
+                        i = new Yeast(p);
+                    } catch (Exception e){Log.d("Ingredient", "Not a Yeast");}
+
+                    return i;
+                }
+
+                @Override
+                public Ingredient[] newArray(int size) {
+                    return new Ingredient[] {};
+                }
+            };
 
 	// Abstract methods of Ingredient
 	public abstract String getType();

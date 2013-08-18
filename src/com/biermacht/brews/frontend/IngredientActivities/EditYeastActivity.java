@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,7 +20,6 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.exceptions.RecipeNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
-import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Recipe;
@@ -29,7 +27,6 @@ import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
-import com.biermacht.brews.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -100,8 +97,8 @@ public class EditYeastActivity extends Activity implements OnClickListener {
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
 
         // Get recipe and yeast from calling activity
-        long id = getIntent().getLongExtra(Constants.INTENT_RECIPE_ID, Constants.INVALID_ID);
-        long yeastId = getIntent().getLongExtra(Constants.INTENT_INGREDIENT_ID, Constants.INVALID_ID);
+        long id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
+        long yeastId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
 
         // Acquire ingredient
         yeast = (Yeast) Database.getIngredientWithId(yeastId);
