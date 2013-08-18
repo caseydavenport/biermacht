@@ -105,24 +105,6 @@ public class EditHopActivity extends AddHopsActivity {
         spinnerView.setSelection(ingredientList.indexOf(hop));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_add_hops, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void onFinished()
     {
         Database.updateIngredient(hop, Constants.DATABASE_DEFAULT);

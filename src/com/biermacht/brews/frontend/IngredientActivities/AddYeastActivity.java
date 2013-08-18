@@ -1,31 +1,18 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.ItemNotFoundException;
-import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
-import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.AlertBuilder;
-import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
@@ -35,16 +22,16 @@ public class AddYeastActivity extends AddEditActivity implements OnClickListener
     // Holds the currently selected yeast, and yeast being edited
     public Yeast yeast;
 
-    private View attenuationView;
+    public View attenuationView;
 
     // Titles from rows
-    private TextView attenuationViewTitle;
+    public TextView attenuationViewTitle;
 
     // Content from rows
     public TextView attenuationViewText;
 
     // Spinner array declarations
-    private ArrayList<Ingredient> yeastsArray;
+    public ArrayList<Ingredient> yeastsArray;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
