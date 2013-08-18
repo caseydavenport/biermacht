@@ -66,6 +66,7 @@ public class IngredientViewFragment extends Fragment {
 			  		i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
                     i.putExtra(Constants.KEY_RECIPE, r);
 				    i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT, ing);
 			  		startActivity(i);
 				}
 
@@ -74,6 +75,7 @@ public class IngredientViewFragment extends Fragment {
 				{
 			  		Intent i = new Intent(c, EditHopActivity.class);
 			  		i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+                    i.putExtra(Constants.KEY_RECIPE, r);
                     i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
                     i.putExtra(Constants.KEY_INGREDIENT, ing);
                     startActivity(i);
@@ -84,7 +86,9 @@ public class IngredientViewFragment extends Fragment {
 				{
 			  		Intent i = new Intent(c, EditYeastActivity.class);
 			  		i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+                    i.putExtra(Constants.KEY_RECIPE, r);
 			  		i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT, ing);
                     startActivity(i);
 				}
 
@@ -93,6 +97,7 @@ public class IngredientViewFragment extends Fragment {
 				{
 			  		Intent i = new Intent(c, EditMiscActivity.class);
 			  		i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+                    i.putExtra(Constants.KEY_RECIPE, r);
                     i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
                     i.putExtra(Constants.KEY_INGREDIENT, ing);
                     startActivity(i);

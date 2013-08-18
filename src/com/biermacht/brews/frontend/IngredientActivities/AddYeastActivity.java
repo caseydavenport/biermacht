@@ -30,43 +30,17 @@ import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
 
-public class AddYeastActivity extends Activity implements OnClickListener {
-
-    // Main view - holds all the rows
-    private ViewGroup mainView;
-
-    // Alert builder
-    private AlertBuilder alertBuilder;
-
-    // Important things
-    private OnClickListener onClickListener;
-
-    // LayoutInflater
-    LayoutInflater inflater;
-
-    // Recipe we are editing
-    public Recipe mRecipe;
-
-    // IngredientHandler to get ingredient arrays
-    public IngredientHandler ingredientHandler;
+public class AddYeastActivity extends AddEditActivity implements OnClickListener {
 
     // Holds the currently selected yeast, and yeast being edited
     public Yeast yeast;
 
-    // Editable rows to display
-    private Spinner yeastSpinner;
-    private View nameView;
-    private View amountView;
     private View attenuationView;
 
     // Titles from rows
-    private TextView nameViewTitle;
-    private TextView amountViewTitle;
     private TextView attenuationViewTitle;
 
     // Content from rows
-    public TextView nameViewText;
-    public TextView amountViewText;
     public TextView attenuationViewText;
 
     // Spinner array declarations
@@ -75,112 +49,63 @@ public class AddYeastActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_edit);
-
-        // Set icon as back button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Get the Ingredient Handler
-        ingredientHandler = MainActivity.ingredientHandler;
-
-        // Get the list of ingredients to show
-        yeastsArray = new ArrayList<Ingredient>();
-        yeastsArray.addAll(ingredientHandler.getYeastsList());
-
-        // Get the inflater
-        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        // Create alert builder
-        alertBuilder = new AlertBuilder(this);
 
         // Disable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
-        // Get recipe and yeast from calling activity
-        long id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
-
-        // Acquire recipe
-        try
-        {
-            mRecipe = Database.getRecipeWithId(id);
-        }
-        catch (ItemNotFoundException e)
-        {
-            e.printStackTrace();
-            finish();
-        }
-
-        // On click listener
-        onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /************************************************************
-                 * Options for clicking on each of the editable views
-                 ************************************************************/
-
-                AlertDialog alert;
-                if (v.equals(nameView))
-                    alert = alertBuilder.editTextStringAlert(nameViewText, nameViewTitle).create();
-                else if (v.equals(amountView))
-                    alert = alertBuilder.editTextFloatAlert(amountViewText, amountViewTitle).create();
-                else if (v.equals(attenuationView))
-                    alert = alertBuilder.editTextFloatAlert(attenuationViewText, attenuationViewTitle).create();
-                else
-                    return; // In case its none of those views...
-
-                // Force keyboard open and show popup
-                alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                alert.show();
-            }
-        };
-
         // Initialize views and such here
-        mainView = (ViewGroup) findViewById(R.id.main_layout);
-        nameView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        amountView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         attenuationView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        yeastSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
 
         // Set the onClickListener for each row
-        nameView.setOnClickListener(onClickListener);
-        amountView.setOnClickListener(onClickListener);
         attenuationView.setOnClickListener(onClickListener);
 
-        /************************************************************************
-         ************* Add views to main view  **********************************
-         *************************************************************************/
-        mainView.addView(yeastSpinner);
-        mainView.addView(nameView);
-        mainView.addView(amountView);
+        // Add views we want
         mainView.addView(attenuationView);
 
-        /************************************************************************
-         ************* Get titles, set values   **********************************
-         *************************************************************************/
-        nameViewTitle = (TextView) nameView.findViewById(R.id.title);
-        nameViewTitle.setText("Name");
-
-        amountViewTitle = (TextView) amountView.findViewById(R.id.title);
-        amountViewTitle.setText("Amount (L)");
-
+        // Set titles
         attenuationViewTitle = (TextView) attenuationView.findViewById(R.id.title);
         attenuationViewTitle.setText("Attenuation (%)");
+        amountViewTitle.setText("Amount (L)");
 
-        /************************************************************************
-         ************* Get content views, set values   **************************
-         *************************************************************************/
-        nameViewText = (TextView) nameView.findViewById(R.id.text);
-        amountViewText = (TextView) amountView.findViewById(R.id.text);
+        // Get text views
         attenuationViewText = (TextView) attenuationView.findViewById(R.id.text);
+    }
 
+    @Override
+    public void onMissedClick(View v)
+    {
+        AlertDialog alert;
+        if (v.equals(attenuationView))
+            alert = alertBuilder.editTextFloatAlert(attenuationViewText, attenuationViewTitle).create();
+        else
+            return;
+
+        // Force keyboard open and show popup
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alert.show();
+    }
+
+    @Override
+    public void getList()
+    {
+        // Get the list of ingredients to show
+        yeastsArray = new ArrayList<Ingredient>();
+        yeastsArray.addAll(ingredientHandler.getYeastsList());
+    }
+
+    @Override
+    public void createSpinner()
+    {
         // Set up type spinner
         IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, yeastsArray, "Yeast");
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        yeastSpinner.setAdapter(adapter);
-        yeastSpinner.setSelection(0);
+        spinnerView.setAdapter(adapter);
+    }
 
-        // Handle type spinner selections here
-        yeastSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    @Override
+    public void configureSpinnerListener()
+    {
+        spinnerListener = new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 yeast = (Yeast) yeastsArray.get(position);
@@ -194,61 +119,36 @@ public class AddYeastActivity extends Activity implements OnClickListener {
             {
             }
 
-        });
+        };
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_add_ingredient, menu);
-        return true;
+    public void acquireValues() throws Exception
+    {
+        super.acquireValues();
+        double attenuation = Double.parseDouble(attenuationViewText.getText().toString());
+
+        yeast.setName(name);
+        yeast.setAttenuation(attenuation);
+        yeast.setBeerXmlStandardAmount(amount);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onFinished()
+    {
+        mRecipe.addIngredient(yeast);
+        Database.updateRecipe(mRecipe);
+        finish();
     }
 
-    public void onClick(View v) {
-        // if "SUBMIT" button pressed
-        if (v.getId() == R.id.submit_button)
-        {
-            boolean readyToGo = true;
-            try
-            {
-                String name = nameViewText.getText().toString();
-                double attenuation = Double.parseDouble(attenuationViewText.getText().toString());
-                double amount = Double.parseDouble(amountViewText.getText().toString());
+    public void onDeletePressed()
+    {
+        // Nothing
+    }
 
-                yeast.setName(name);
-                yeast.setAttenuation(attenuation);
-                yeast.setBeerXmlStandardAmount(amount);
-            } catch (Exception e)
-            {
-                Log.d("EditYeastActivity", "Exception on submit: " + e.toString());
-                readyToGo = false;
-            }
-
-            if (readyToGo)
-            {
-                mRecipe.addIngredient(yeast);
-                mRecipe.update();
-                Database.updateRecipe(mRecipe);
-
-                finish();
-            }
-        }
-
-        // if "CANCEL" button pressed
-        if (v.getId() == R.id.cancel_button)
-        {
-            finish();
-        }
+    @Override
+    public void onCancelPressed()
+    {
+        finish();
     }
 }
