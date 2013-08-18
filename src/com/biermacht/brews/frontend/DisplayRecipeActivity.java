@@ -48,17 +48,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
         @Override
         protected String doInBackground(String... params)
         {
-            // Acquire recipe
-            try
-            {
-                mRecipe = Database.getRecipeWithId(id);
-            }
-            catch (RecipeNotFoundException e)
-            {
-                e.printStackTrace();
-                finish();
-            }
-
+            mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
             // ViewPager and pagerAdapter for Slidy tabs!
             cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, context);
 

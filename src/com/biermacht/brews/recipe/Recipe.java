@@ -142,6 +142,12 @@ public class Recipe implements Parcelable {
 
     public Recipe(Parcel p)
     {
+        hops = new ArrayList<Hop>();
+        fermentables = new ArrayList<Fermentable>();
+        yeasts = new ArrayList<Yeast>();
+        miscs = new ArrayList<Misc>();
+        waters = new ArrayList<Water>();
+        
         name = p.readString();		        // Recipe name
         version = p.readInt();			    // XML Version -- 1
         type = p.readString();                // Extract, Grain, Mash

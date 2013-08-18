@@ -105,7 +105,7 @@ public class RecipesFragment extends Fragment {
                                     long id)
             {
                 Intent intent = new Intent(c, DisplayRecipeActivity.class);
-                intent.putExtra(Constants.KEY_RECIPE_ID, recipeList.get(pos).getId());
+                intent.putExtra(Constants.KEY_RECIPE, recipeList.get(pos));
                 startActivity(intent);
             }
         };
