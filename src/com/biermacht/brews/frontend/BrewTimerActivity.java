@@ -95,10 +95,13 @@ public class BrewTimerActivity extends FragmentActivity {
     private class BCReceiver extends BroadcastReceiver
     {
         int seconds, nextStepSeconds;
+        double nextTime;
 
         @Override
         public void onReceive(Context c, Intent i)
         {
+            if (timerState == STOPPED)
+                return;
 
             // Set the timer
             seconds = getTimerSeconds() - 1;
@@ -108,7 +111,10 @@ public class BrewTimerActivity extends FragmentActivity {
 
             // Fragment and instruction for the step we are currently counting down
             BrewTimerStepFragment frag = (BrewTimerStepFragment) cpAdapter.getItem(currentItem);
+            BrewTimerStepFragment nextFrag = (BrewTimerStepFragment) cpAdapter.getItem(currentItem + 1);
             Instruction ci = frag.getInstruction();
+            Instruction ni = nextFrag.getInstruction();
+            nextTime = ni.getDuration() - ni.getNextDuration();
 
             // When we get to the next step, raise alarm, pause timer,
             // and switch views
@@ -116,6 +122,10 @@ public class BrewTimerActivity extends FragmentActivity {
             {
                 pause();
                 startAlarm();
+
+                nextStepHoursView.setText(nft.format(Utils.getHours(nextTime, ci.getDurationUnits())) + "");
+                nextStepMinutesView.setText(nft.format(Utils.getMinutes(nextTime, ci.getDurationUnits())) + "");
+                nextStepSecondsView.setText(nft.format(0) + "");
                 currentItem = currentItem + 1;
                 mViewPager.setCurrentItem(currentItem);
             }
@@ -343,9 +353,13 @@ public class BrewTimerActivity extends FragmentActivity {
     public void stop()
     {
         timerState = STOPPED;
+        double nextTime = i.getDuration() - i.getNextDuration();
         hoursView.setText(nft.format(Utils.getHours(i.getDuration(), i.getDurationUnits())) + "");
         minutesView.setText(nft.format(Utils.getMinutes(i.getDuration(), i.getDurationUnits())) + "");
         secondsView.setText(nft.format(0) + "");
+        nextStepHoursView.setText(nft.format(Utils.getHours(nextTime, i.getDurationUnits())) + "");
+        nextStepMinutesView.setText(nft.format(Utils.getMinutes(nextTime, i.getDurationUnits())) + "");
+        nextStepSecondsView.setText(nft.format(0) + "");
         playPauseButton.setImageResource(R.drawable.av_play);
     }
 
