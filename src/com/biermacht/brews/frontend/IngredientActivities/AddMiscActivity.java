@@ -1,18 +1,12 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import android.app.*;
-import android.content.Context;
 import android.os.*;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import com.biermacht.brews.*;
-import com.biermacht.brews.exceptions.ItemNotFoundException;
-import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.ingredient.*;
-import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.utils.*;
 import java.util.*;
 
@@ -24,12 +18,12 @@ public class AddMiscActivity extends AddEditActivity {
     public Misc misc;
 
     // Editable rows to display
-    private Spinner typeSpinner;
-    private Spinner useSpinner;
+    public Spinner typeSpinner;
+    public Spinner useSpinner;
 
     // Spinner array declarations
-    private ArrayList<String> typeArray;
-    private ArrayList<String> useArray;
+    public ArrayList<String> typeArray;
+    public ArrayList<String> useArray;
 
     // Data storage for spinners
 	public String type;
