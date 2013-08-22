@@ -132,6 +132,8 @@ public class Recipe implements Parcelable {
 		this.instructionGenerator = new InstructionGenerator(this);
 		this.measuredOG = 0;
 		this.measuredFG = 0;
+
+        update();
 	}
 
     // Constructor with no arguments!
@@ -202,6 +204,7 @@ public class Recipe implements Parcelable {
 
         // Create instruction generator
         instructionGenerator = new InstructionGenerator(this);
+        update();
     }
 
     @Override

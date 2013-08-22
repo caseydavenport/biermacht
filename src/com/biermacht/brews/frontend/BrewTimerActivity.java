@@ -171,20 +171,10 @@ public class BrewTimerActivity extends FragmentActivity {
         
         // Get recipe from calling activity
         id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
-
-        // Acquire recipe
-        try
-        {
-            mRecipe = Database.getRecipeWithId(id);
-        }
-        catch (ItemNotFoundException e)
-        {
-            e.printStackTrace();
-            finish();
-        }
+        mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
         // Set title based on recipe name
-        setTitle("Brew Timer");
+        setTitle("Timer");
 
         // Inflate timer controls
         timerControls = inflater.inflate(R.layout.view_timer_controls, mainLayout, false);
@@ -280,18 +270,9 @@ public class BrewTimerActivity extends FragmentActivity {
     public void onResume()
     {
     	super.onResume();
-        stopAlarm();
+        clearNotification();
 
-        // Acquire recipe
-        try
-        {
-            mRecipe = Database.getRecipeWithId(id);
-        }
-        catch (ItemNotFoundException e)
-        {
-            e.printStackTrace();
-            finish();
-        }
+        mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
         // Set title based on recipe name
         setTitle("Brew Timer");
