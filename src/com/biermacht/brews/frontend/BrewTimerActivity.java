@@ -68,6 +68,9 @@ public class BrewTimerActivity extends FragmentActivity {
     TextView hoursView;
     TextView minutesView;
     TextView secondsView;
+    TextView nextStepHoursView;
+    TextView nextStepMinutesView;
+    TextView nextStepSecondsView;
     View timerControls;
 
     // Buttons
@@ -91,7 +94,7 @@ public class BrewTimerActivity extends FragmentActivity {
     // Broadcast receiver
     private class BCReceiver extends BroadcastReceiver
     {
-        int seconds;
+        int seconds, nextStepSeconds;
 
         @Override
         public void onReceive(Context c, Intent i)
@@ -99,7 +102,9 @@ public class BrewTimerActivity extends FragmentActivity {
 
             // Set the timer
             seconds = getTimerSeconds() - 1;
+            nextStepSeconds = getNextStepTimerSeconds() - 1;
             setTimerFromSeconds(seconds);
+            setNextStepTimerFromSeconds(nextStepSeconds);
 
             // Fragment and instruction for the step we are currently counting down
             BrewTimerStepFragment frag = (BrewTimerStepFragment) cpAdapter.getItem(currentItem);
@@ -183,6 +188,9 @@ public class BrewTimerActivity extends FragmentActivity {
         hoursView = (TextView) timerControls.findViewById(R.id.hours);
         minutesView = (TextView) timerControls.findViewById(R.id.minutes);
         secondsView = (TextView) timerControls.findViewById(R.id.seconds);
+        nextStepHoursView = (TextView) timerControls.findViewById(R.id.next_step_hours);
+        nextStepMinutesView = (TextView) timerControls.findViewById(R.id.next_step_minutes);
+        nextStepSecondsView = (TextView) timerControls.findViewById(R.id.next_step_seconds);
 
         // Get buttons
         stopButton = (ImageButton) timerControls.findViewById(R.id.stop_button);
@@ -216,6 +224,12 @@ public class BrewTimerActivity extends FragmentActivity {
                     hoursView.setText(nft.format(Utils.getHours(i.getDuration(), i.getDurationUnits())) + "");
                     minutesView.setText(nft.format(Utils.getMinutes(i.getDuration(), i.getDurationUnits())) + "");
                     secondsView.setText(nft.format(0) + "");
+
+                    double nextTime = i.getDuration() - i.getNextDuration();
+
+                    nextStepHoursView.setText(nft.format(Utils.getHours(nextTime, i.getDurationUnits())) + "");
+                    nextStepMinutesView.setText(nft.format(Utils.getMinutes(nextTime, i.getDurationUnits())) + "");
+                    nextStepSecondsView.setText(nft.format(0) + "");
 
                     goToCurrentButton.setImageResource(R.drawable.navigation_accept);
                 }
@@ -360,6 +374,33 @@ public class BrewTimerActivity extends FragmentActivity {
         hoursView.setText(nft.format(hours) + "");
         minutesView.setText(nft.format(minutes) + "");
         secondsView.setText(nft.format(seconds) + "");
+    }
+
+    public int getNextStepTimerSeconds()
+    {
+        int seconds = 0;
+
+        seconds += Integer.parseInt(nextStepHoursView.getText().toString()) * 3600;
+        seconds += Integer.parseInt(nextStepMinutesView.getText().toString()) * 60;
+        seconds += Integer.parseInt(nextStepSecondsView.getText().toString());
+
+        return seconds;
+    }
+
+    public void setNextStepTimerFromSeconds(int time)
+    {
+        int hours = 0, minutes = 0, seconds = 0;
+
+        hours = (int) (time / 3600);
+        minutes = (int) ((time - 3600 * hours) / 60);
+        seconds = time - (hours * 3600) - (minutes * 60);
+
+        java.text.DecimalFormat nft = new java.text.DecimalFormat("#00.###");
+        nft.setDecimalSeparatorAlwaysShown(false);
+
+        nextStepHoursView.setText(nft.format(hours) + "");
+        nextStepMinutesView.setText(nft.format(minutes) + "");
+        nextStepSecondsView.setText(nft.format(seconds) + "");
     }
 
     public void startAlarm()
