@@ -202,6 +202,8 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
 		values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
+        values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
+        values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
 		values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
 		values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
 		values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
@@ -220,6 +222,8 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV, r.getPrimingSugarEquiv());
         values.put(DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR, r.getKegPrimingFactor());
         values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
+
+        Log.d("DatabaseInterface", "Adding recipe " + r.getRecipeName() + " to database");
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_DEFAULT);
@@ -739,42 +743,44 @@ public class DatabaseInterface {
 		int version = cursor.getInt(cid);             cid++;
 		String type = cursor.getString(cid);          cid++;
 		String brewer = cursor.getString(cid);        cid++;
-		float batchSize = cursor.getFloat(cid);       cid++;
-		float boilSize = cursor.getFloat(cid);        cid++;
+		double batchSize = cursor.getDouble(cid);       cid++;
+		double boilSize = cursor.getDouble(cid);        cid++;
 		int boilTime = cursor.getInt(cid);            cid++;
-		float boilEff = cursor.getFloat(cid);         cid++;
-		float OG = cursor.getFloat(cid);              cid++;
-		float FG = cursor.getFloat(cid);              cid++;
+		double boilEff = cursor.getDouble(cid);         cid++;
+		double OG = cursor.getDouble(cid);              cid++;
+		double FG = cursor.getDouble(cid);              cid++;
 		int fermentationStages = cursor.getInt(cid);  cid++;
 		String description = cursor.getString(cid);   cid++;
 		int batchTime = cursor.getInt(cid);           cid++;
-		float ABV = cursor.getFloat(cid);             cid++;
-		float bitterness = cursor.getFloat(cid);      cid++;
-		float color = cursor.getFloat(cid);           cid++;
-		float measOG = cursor.getFloat(cid);          cid++;
-		float measFG = cursor.getFloat(cid);          cid++;
-		float primaryTemp = cursor.getFloat(cid);     cid++;
+		double ABV = cursor.getDouble(cid);             cid++;
+		double bitterness = cursor.getDouble(cid);      cid++;
+		double color = cursor.getDouble(cid);           cid++;
+		double measOG = cursor.getDouble(cid);        cid++;
+		double measFG = cursor.getDouble(cid);        cid++;
+		double primaryTemp = cursor.getDouble(cid);     cid++;
 		int primaryAge = cursor.getInt(cid);          cid++;
-		float secondaryTemp = cursor.getFloat(cid);   cid++;
+		double secondaryTemp = cursor.getDouble(cid);   cid++;
 		int secondaryAge = cursor.getInt(cid);        cid++;
-		float tertiaryTemp = cursor.getFloat(cid);    cid++;
+		double tertiaryTemp = cursor.getDouble(cid);    cid++;
 		int tertiaryAge = cursor.getInt(cid);         cid++;
         String tasteNotes = cursor.getString(cid);    cid++;
         int tasteRating = cursor.getInt(cid);         cid++;
         int bottleAge = cursor.getInt(cid);           cid++;
-        double bottleTemp = cursor.getFloat(cid);     cid++;
+        double bottleTemp = cursor.getDouble(cid);     cid++;
         String brewDate = cursor.getString(cid);      cid++;
-        double carbonation = cursor.getFloat(cid);    cid++;
+        double carbonation = cursor.getDouble(cid);    cid++;
         int isForceCarbed = cursor.getInt(cid);       cid++;
         String primingSugar = cursor.getString(cid);  cid++;
-        double carbTemp = cursor.getFloat(cid);       cid++;
-        double sugarEquivalent = cursor.getFloat(cid);   cid++;
+        double carbTemp = cursor.getDouble(cid);       cid++;
+        double sugarEquivalent = cursor.getDouble(cid);   cid++;
         double kegPrimingFactor = cursor.getDouble(cid); cid++;
         int calories = cursor.getInt(cid);               cid++;
 		
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
 		BeerStyle style = readStyle(id);
 		MashProfile profile = readMashProfile(id);
+
+        Log.d("DatabaseInterface", "Creating recipe " + recipeName + " from cursor");
 		
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
@@ -874,18 +880,18 @@ public class DatabaseInterface {
 		String styleLetter = cursor.getString(cid);				cid++;
 		String styleGuide = cursor.getString(cid);				cid++;
 		String type = cursor.getString(cid);					cid++;
-		float minOg = cursor.getFloat(cid);						cid++;
-		float maxOg = cursor.getFloat(cid);						cid++;	
-		float minFg = cursor.getFloat(cid);						cid++;
-		float maxFg = cursor.getFloat(cid);						cid++;	
-		float minIbu = cursor.getFloat(cid);					cid++;
-		float maxIbu = cursor.getFloat(cid);					cid++;	
-		float minSrm = cursor.getFloat(cid);					cid++;
-		float maxSrm = cursor.getFloat(cid);					cid++;	
-		float minCarb = cursor.getFloat(cid);					cid++;
-		float maxCarb = cursor.getFloat(cid);					cid++;	
-		float minAbv = cursor.getFloat(cid);					cid++;
-		float maxAbv = cursor.getFloat(cid);					cid++;
+		double minOg = cursor.getDouble(cid);						cid++;
+		double maxOg = cursor.getDouble(cid);						cid++;	
+		double minFg = cursor.getDouble(cid);						cid++;
+		double maxFg = cursor.getDouble(cid);						cid++;	
+		double minIbu = cursor.getDouble(cid);					cid++;
+		double maxIbu = cursor.getDouble(cid);					cid++;	
+		double minSrm = cursor.getDouble(cid);					cid++;
+		double maxSrm = cursor.getDouble(cid);					cid++;	
+		double minCarb = cursor.getDouble(cid);					cid++;
+		double maxCarb = cursor.getDouble(cid);					cid++;	
+		double minAbv = cursor.getDouble(cid);					cid++;
+		double maxAbv = cursor.getDouble(cid);					cid++;
 		String notes = cursor.getString(cid);					cid++;
 		String profile = cursor.getString(cid);					cid++;
 		String ingredients = cursor.getString(cid);				cid++;
@@ -1041,19 +1047,19 @@ public class DatabaseInterface {
 		String name = cursor.getString(cid);					cid++;
 		String description = cursor.getString(cid);				cid++;
 		String units = cursor.getString(cid);					cid++;
-		float amount = cursor.getFloat(cid);					cid++;
+		double amount = cursor.getDouble(cid);					cid++;
 		int time = cursor.getInt(cid);						    cid++;
-        float inventory = cursor.getFloat(cid);                 cid++;
+        double inventory = cursor.getDouble(cid);                 cid++;
 		
 		// Fermentable specific stuff
 		if (ingType.equals(Ingredient.FERMENTABLE))
 		{
 			String type = cursor.getString(cid);				cid++;
-			float yield = cursor.getFloat(cid);					cid++;
-			float color = cursor.getFloat(cid);					cid++;
+			double yield = cursor.getDouble(cid);					cid++;
+			double color = cursor.getDouble(cid);					cid++;
 			int afterBoil = cursor.getInt(cid);					cid++;
-			float maxInBatch = cursor.getFloat(cid);			cid++;
-			float gravity = cursor.getFloat(cid);				cid++;			
+			double maxInBatch = cursor.getDouble(cid);			cid++;
+			double gravity = cursor.getDouble(cid);				cid++;			
 			
 			boolean addAfterBoil = (afterBoil == 0) ? false : true;
 			
@@ -1082,7 +1088,7 @@ public class DatabaseInterface {
 			cid += 6;
 			
 			String type = cursor.getString(cid);				cid++;
-			float alpha = cursor.getFloat(cid);					cid++;
+			double alpha = cursor.getDouble(cid);					cid++;
 			String use = cursor.getString(cid);					cid++;
 			String form = cursor.getString(cid);				cid++;
 			String origin = cursor.getString(cid);				cid++;
@@ -1112,9 +1118,9 @@ public class DatabaseInterface {
 			
 			String type = cursor.getString(cid);				cid++;
 			String form = cursor.getString(cid);				cid++;
-			Float minTemp = cursor.getFloat(cid);				cid++;
-			Float maxTemp = cursor.getFloat(cid);				cid++;
-			Float attn = cursor.getFloat(cid);					cid++;
+			Double minTemp = cursor.getDouble(cid);				cid++;
+			Double maxTemp = cursor.getDouble(cid);				cid++;
+			Double attn = cursor.getDouble(cid);			    cid++;
 			String notes = cursor.getString(cid);				cid++;
 			String bestFor = cursor.getString(cid);				cid++;
 			

@@ -31,7 +31,7 @@ public class ImportXmlIngredientsTask extends AsyncTask<String, Void, String> {
     {
         super.onPostExecute(result);
         progress.dismiss();
-        Log.d("ImportXmlIngredients", "Finished importing assets");
+        Log.d("ImportXmlIngredients", "Finished importing assets for first time use");
     }
 
     @Override

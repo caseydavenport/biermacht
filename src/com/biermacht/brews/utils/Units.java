@@ -1,4 +1,6 @@
 package com.biermacht.brews.utils;
+import android.util.Log;
+
 import java.util.*;
 
 public class Units {
@@ -31,10 +33,13 @@ public class Units {
 	public static final String DAYS = "days";
 	public static final String MINUTES = "mins";
 	public static final String HOURS = "hours";
+    public static final String PLATO = "plato";
+    public static final String GRAVITY = "sg";
 	
 	// Helper funcs
 	public static String getUnitsFromDisplayAmount(String s)
 	{
+        Log.d("Units", "Getting units from display amount: " + s);
 		String unit = "";
 		ArrayList<String> temp = new ArrayList<String>(Arrays.asList(s.split(" ")));
 		if (temp.size() == 2)
@@ -53,18 +58,39 @@ public class Units {
 			unit = Units.ITEMS;
 		if (unit.contains("package") || unit.equals("pkg"))
 			unit = Units.PACKAGES;
-			
+        if (unit.equalsIgnoreCase(PLATO))
+            unit = Units.PLATO;
+        if (unit.equalsIgnoreCase(GRAVITY))
+            unit = Units.GRAVITY;
+
+        Log.d("Units", "Got units: " + unit);
 		return unit;
 	}
 	
 	public static double getAmountFromDisplayAmount(String s)
 	{
+        Log.d("Units", "Getting amount from display amount: " + s);
 		ArrayList<String> temp = new ArrayList<String>(Arrays.asList(s.split(" ")));
 		if (getUnitsFromDisplayAmount(s).equals(""))
 			return 0;
 		else
-		    if (temp.size() == 2)
-			    return Double.parseDouble(temp.get(0));
+		    if (temp.size() <= 2 && temp.size() > 0)
+            {
+                try
+                {
+                    Log.d("Units", "Returning amount: " + Double.parseDouble(temp.get(0)));
+			        return Double.parseDouble(temp.get(0));
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                    Log.d("Units", "Error parsing display amount: " + s);
+                }
+            }
+            else
+            {
+                Log.d("Units", "Received bad display amount: " + s);
+            }
+        Log.d("Units", "Failed to get amount. Returning 0");
 		return 0;
 	}
 
@@ -79,6 +105,11 @@ public class Units {
     }
 	
 	// Functions for converting units below
+    public static double platoToGravity(double p)
+    {
+        return p/(258.6-((p/258.2)*227.1))+1;
+    }
+
 	public static double farenheitToCelsius(double f)
 	{
 		return (f - 32)/1.8;

@@ -1,5 +1,7 @@
 package com.biermacht.brews.xml;
 
+import android.util.Log;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -9,27 +11,10 @@ import com.biermacht.brews.recipe.*;
 import java.util.*;
 import com.biermacht.brews.ingredient.*;
 import com.biermacht.brews.utils.*;
+import com.biermacht.brews.utils.Stack;
 
 public class RecipeHandler extends DefaultHandler {
 
-	// Types of things
-	private static int RECIPES = 1;
-	private static int RECIPE = 2;
-	private static int HOPS = 3;
-	private static int FERMENTABLES = 4;
-	private static int HOP = 5;
-	private static int FERMENTABLE = 6;
-	private static int YEAST = 7;
-	private static int YEASTS = 8;
-	private static int MISCS = 9;
-	private static int MISC = 10;
-	private static int STYLE = 11;
-	private static int STYLES = 12;
-	private static int PROFILE = 13;
-	private static int PROFILES = 14;
-	private static int MASH_STEP = 15;
-	private static int MASH_STEPS = 16;
-	
 	// Hold the current elements
     boolean currentElement = false;
     String currentValue = null;
@@ -55,7 +40,7 @@ public class RecipeHandler extends DefaultHandler {
 	MashStep mashStep = new MashStep();
 	
 	// How we know what thing we're looking at
-	int thingType = 0;
+    Stack thingTypeStack = new Stack();
 
 	/**
 	* The return methods that will return lists of all of the elements
@@ -109,104 +94,109 @@ public class RecipeHandler extends DefaultHandler {
 		// We encounter a new recipe
         if (qName.equalsIgnoreCase("RECIPES"))
         {
-			thingType = RECIPES;
+			thingTypeStack.push(qName);
         }
 		
 		// We encounter a new recipe
 		if (qName.equalsIgnoreCase("RECIPE"))
 		{
-			thingType = RECIPE;
+            thingTypeStack.push(qName);
 			r = new Recipe("");
 		}
 		
 		// We encounter a new fermentables list
 		if (qName.equalsIgnoreCase("FERMENTABLES"))
 		{
-			thingType = FERMENTABLES;
+            thingTypeStack.push(qName);
 		}
 		
 		// We encounter a new hops list
 		if (qName.equalsIgnoreCase("HOPS"))
 		{
-			thingType = HOPS;
+            thingTypeStack.push(qName);
 		}
 		
 		// We encounter a new hop
 		if (qName.equalsIgnoreCase("HOP"))
 		{
-			thingType = HOP;
+            thingTypeStack.push(qName);
 			h = new Hop("");
 		}
 		// We encounter a new fermentable
 		if (qName.equalsIgnoreCase("FERMENTABLE"))
 		{
-			thingType = FERMENTABLE;
+            thingTypeStack.push(qName);
 			f = new Fermentable("");
 		}
 		// We encounter a new yeast list
 		if (qName.equalsIgnoreCase("YEASTS"))
 		{
-			thingType = YEASTS;
+            thingTypeStack.push(qName);
 		}
 
 		// We encounter a new yeast
 		if (qName.equalsIgnoreCase("YEAST"))
 		{
-			thingType = YEAST;
+            thingTypeStack.push(qName);
 			y = new Yeast("");
 		}
 		
 		// Encounter new misc
 		if (qName.equalsIgnoreCase("MISC"))
 		{
-			thingType = MISC;
+            thingTypeStack.push(qName);
 			misc = new Misc("");
 		}
 		
 		// Encounter new miscs list
 		if (qName.equalsIgnoreCase("MISCS"))
 		{
-			thingType = MISCS;
+            thingTypeStack.push(qName);
 		}
 		
 		// Encounter new style
 		if (qName.equalsIgnoreCase("STYLE"))
 		{
-			thingType = STYLE;
+            thingTypeStack.push(qName);
 			style = new BeerStyle("");
 		}
 		
 		// Encounter new style list
 		if (qName.equalsIgnoreCase("STYLES"))
 		{
-			thingType = STYLES;
+            thingTypeStack.push(qName);
 		}
 		
 		// Encounter new mash profile list
 		if (qName.equalsIgnoreCase("MASHS"))
 		{
-			thingType = PROFILES;
+            thingTypeStack.push(qName);
 		}
 		
 		// Encounter new mash profile
 		if (qName.equalsIgnoreCase("MASH"))
 		{
-			thingType = PROFILE;
+            thingTypeStack.push(qName);
 			profile = new MashProfile();
 		}
 		
 		// Encounter new mash step
 		if (qName.equalsIgnoreCase("MASH_STEP"))
 		{
-			thingType = MASH_STEP;
+            thingTypeStack.push(qName);
 			mashStep = new MashStep();
 		}
 		
 		// Encounter new mash step list
 		if (qName.equalsIgnoreCase("MASH_STEPS"))
 		{
-			thingType = MASH_STEPS;
+            thingTypeStack.push(qName);
 		}
+
+        if (qName.equalsIgnoreCase("EQUIPMENT"))
+        {
+            thingTypeStack.push(qName);
+        }
 		
     }
 
@@ -219,59 +209,61 @@ public class RecipeHandler extends DefaultHandler {
 
         currentElement = false;
 
+        Log.d("RecipeHandler", "Reading values: " + qName + ": " + currentValue);
+
 		if (qName.equalsIgnoreCase("RECIPE"))
 		// We've finished a new recipe
 		{
 			list.add(r);
-			thingType = 0;
+            thingTypeStack.pop();
 			return;
 		}
 		else if (qName.equalsIgnoreCase("HOPS"))
 		// We have finished a list of hops.
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			return;
 		}
 		else if (qName.equalsIgnoreCase("FERMENTABLES"))
 		// We have finished a list of fermentables
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			return;
 		}
 		else if (qName.equalsIgnoreCase("YEASTS"))
 		// We have finished a list of yeasts
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			return;
 		}
 		else if (qName.equalsIgnoreCase("MISCS"))
 		// We have finished a list of miscs
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			return;
 		}
 		else if (qName.equalsIgnoreCase("STYLES"))
 		// We have finished a list of styles
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			return;
 		}
 		else if (qName.equalsIgnoreCase("MASH_STEPS"))
 		// Finished a list of mash steps
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			return;
 		}
 		else if (qName.equalsIgnoreCase("MASHS"))
 		// Finished a list of MASHES
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			return;
 		}
 		else if (qName.equalsIgnoreCase("FERMENTABLE"))
 		// Finished a fermentable.  Add it to recipe and fermentables list.
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			fermList.add(f);
 			
 			// BeerXML doesn't specify a time field for fermentables...
@@ -294,7 +286,7 @@ public class RecipeHandler extends DefaultHandler {
 		else if (qName.equalsIgnoreCase("HOP"))
 		// Finished a hop.  Add to recipe and list
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			r.addIngredient(h);
 			hopList.add(h);
 			return;
@@ -302,7 +294,7 @@ public class RecipeHandler extends DefaultHandler {
 		else if (qName.equalsIgnoreCase("YEAST"))
 		// Finished a yeast. Add to recipe and list
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			r.addIngredient(y);
 			yeastList.add(y);
 			return;
@@ -310,7 +302,7 @@ public class RecipeHandler extends DefaultHandler {
 		else if (qName.equalsIgnoreCase("MISC"))
 		// Finished a misc.  Add to recipe and list
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			r.addIngredient(misc);
 			miscList.add(misc);
 			return;
@@ -318,30 +310,35 @@ public class RecipeHandler extends DefaultHandler {
 		else if (qName.equalsIgnoreCase("STYLE"))
 		// Finished a style.  Add to recipe and list
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			beerStyleList.add(style);
 			r.setStyle(style);
 		}
 		else if (qName.equalsIgnoreCase("MASH_STEP"))
 		// Finisehd a mash step, add to list and profile
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			mashStepList.add(mashStep);
 			profile.addMashStep(mashStep);
 		}
 		else if (qName.equalsIgnoreCase("MASH"))
 		// Finished a mash profile. Add to recipe and list
 		{
-			thingType = 0;
+            thingTypeStack.pop();
 			r.setMashProfile(profile);
 			mashProfileList.add(profile);
 		}
+
+        else if (qName.equalsIgnoreCase("EQUIPMENT"))
+        {
+            thingTypeStack.pop();
+        }
 		
 		/************************************************************
 		* Handle individual types of ingredients / things below.  We check
 		* the "thingType" and base our actions accordingly
 		************************************************************/
-		if (thingType == RECIPE)
+		if (thingTypeStack.read().equalsIgnoreCase("RECIPE"))
 		{
 			if (qName.equalsIgnoreCase("NAME"))
 			{
@@ -368,6 +365,11 @@ public class RecipeHandler extends DefaultHandler {
 					
 				r.setType(type);
 			}
+
+            else if (qName.equalsIgnoreCase("NOTES"))
+            {
+                r.setDescription(currentValue);
+            }
 			
 			else if (qName.equalsIgnoreCase("BREWER"))
 			{
@@ -408,7 +410,7 @@ public class RecipeHandler extends DefaultHandler {
 			
 			else if (qName.equalsIgnoreCase("PRIMARY_AGE"))
 			{
-				r.setFermentationAge(Recipe.STAGE_PRIMARY, Integer.parseInt(currentValue));
+				r.setFermentationAge(Recipe.STAGE_PRIMARY, (int) Double.parseDouble(currentValue));
 			}
 			
 			else if (qName.equalsIgnoreCase("PRIMARY_TEMP"))
@@ -418,7 +420,7 @@ public class RecipeHandler extends DefaultHandler {
 			
 			else if (qName.equalsIgnoreCase("SECONDARY_AGE"))
 			{
-				r.setFermentationAge(Recipe.STAGE_SECONDARY, Integer.parseInt(currentValue));
+				r.setFermentationAge(Recipe.STAGE_SECONDARY, (int) Double.parseDouble(currentValue));
 			}
 			
 			else if (qName.equalsIgnoreCase("SECONDARY_TEMP"))
@@ -428,16 +430,52 @@ public class RecipeHandler extends DefaultHandler {
 			
 			else if (qName.equalsIgnoreCase("TERTIARY_AGE"))
 			{
-				r.setFermentationAge(Recipe.STAGE_TERTIARY, Integer.parseInt(currentValue));
+				r.setFermentationAge(Recipe.STAGE_TERTIARY, (int) Double.parseDouble(currentValue));
 			}
 			
 			else if (qName.equalsIgnoreCase("TERTIARY_TEMP"))
 			{
 				r.setBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY, Float.parseFloat(currentValue));
 			}
+
+            else if (qName.equalsIgnoreCase("DISPLAY_OG"))
+            {
+                if (Units.getUnitsFromDisplayAmount(currentValue).equals(Units.PLATO))
+                    r.setMeasuredOG(Units.platoToGravity(Units.getAmountFromDisplayAmount(currentValue)));
+                else
+                    r.setMeasuredOG(Units.getAmountFromDisplayAmount(currentValue));
+            }
+
+            else if (qName.equalsIgnoreCase("DISPLAY_FG"))
+            {
+                if (Units.getUnitsFromDisplayAmount(currentValue).equals(Units.PLATO))
+                    r.setMeasuredFG(Units.platoToGravity(Units.getAmountFromDisplayAmount(currentValue)));
+                else
+                    r.setMeasuredFG(Units.getAmountFromDisplayAmount(currentValue));
+            }
+
+            else if (qName.equalsIgnoreCase("CARBONATION"))
+            {
+                r.setCarbonation(Double.parseDouble(currentValue));
+            }
+
+            else if (qName.equalsIgnoreCase("FORCED_CARBONATION"))
+            {
+                r.setIsForceCarbonated(currentValue.equalsIgnoreCase("TRUE"));
+            }
+
+            else if (qName.equalsIgnoreCase("CARBONATION_TEMP"))
+            {
+                r.setBeerXmlStandardCarbonationTemp(Double.parseDouble(currentValue));
+            }
+
+            else if (qName.equalsIgnoreCase("CALORIES"))
+            {
+                // TODO
+            }
 		}
 		
-		if (thingType == FERMENTABLE)
+		if (thingTypeStack.read().equalsIgnoreCase("FERMENTABLE"))
 		// We are looking at a fermentable
 		// Do all of the fermentable things below
 		// woo.
@@ -569,7 +607,7 @@ public class RecipeHandler extends DefaultHandler {
 			}
 		}
 		
-		else if (thingType == HOP)
+		else if (thingTypeStack.read().equalsIgnoreCase("HOP"))
 		// We are looking at a hop
 		// Set all the hop things here
 		// woo.
@@ -657,7 +695,7 @@ public class RecipeHandler extends DefaultHandler {
 			}
 		}
 		
-		else if (thingType == YEAST)
+		else if (thingTypeStack.read().equalsIgnoreCase("YEAST"))
 		// We are looking at a yeast
 		// Set the yeast fiels here
 		// woo.
@@ -800,7 +838,7 @@ public class RecipeHandler extends DefaultHandler {
 			}
 		}
 		
-		else if (thingType == MISC)
+		else if (thingTypeStack.read().equalsIgnoreCase("MISC"))
 		// We are looking at a misc
 		// Do all of the misc things below
 		// woo.
@@ -891,7 +929,7 @@ public class RecipeHandler extends DefaultHandler {
 			}
 		}
 			
-		else if (thingType == STYLE)
+		else if (thingTypeStack.read().equalsIgnoreCase("STYLE"))
 		// We are looking at a style
 		// Do all of the style things below
 		// woo.
@@ -1017,7 +1055,7 @@ public class RecipeHandler extends DefaultHandler {
 			}
 		}
 		
-		else if (thingType == PROFILE)
+		else if (thingTypeStack.read().equalsIgnoreCase("PROFILE"))
 		// We are looking at a mash profile
 		// Do all of the profile things below
 		// woo.
@@ -1073,7 +1111,7 @@ public class RecipeHandler extends DefaultHandler {
 			}
 		}
 
-		else if (thingType == MASH_STEP)
+		else if (thingTypeStack.read().equalsIgnoreCase("MASH_STEP"))
 		// We are looking at a mash step
 		// Do all of the mash step things below
 		// woo.
