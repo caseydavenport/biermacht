@@ -5,11 +5,10 @@ import android.os.Bundle;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
-public class AddCustomMiscActivity extends AddMiscActivity {
+public class EditCustomMiscActivity extends EditMiscActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Remove views we don't want
@@ -28,8 +27,14 @@ public class AddCustomMiscActivity extends AddMiscActivity {
     @Override
     public void onFinished()
     {
-        Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID);
+        Database.updateIngredient(misc, Constants.DATABASE_CUSTOM);
         finish();
     }
 
+    @Override
+    public void onDeletePressed()
+    {
+        Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_CUSTOM);
+        finish();
+    }
 }

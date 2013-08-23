@@ -106,12 +106,6 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
         alert.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_add_ingredient, menu);
-        return true;
-    }
-
     // We need this because we don't use spinners in this activity
     public void setValues()
     {
@@ -125,18 +119,6 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
         timeViewText.setText("60");
         amountViewText.setText("1");
         fermentableTypeSpinner.setSelection(0);
-    }
-	
-	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-		
-    	switch (item.getItemId())
-		{
-            case android.R.id.home:
-        		finish();
-        		return true; 
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

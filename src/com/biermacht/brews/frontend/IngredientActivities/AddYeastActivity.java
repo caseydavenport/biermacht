@@ -46,6 +46,9 @@ public class AddYeastActivity extends AddEditActivity {
         // Set the onClickListener for each row
         attenuationView.setOnClickListener(onClickListener);
 
+        // Remove views we don't want
+        mainView.removeView(timeView);
+
         // Add views we want
         mainView.addView(attenuationView);
 
@@ -118,6 +121,7 @@ public class AddYeastActivity extends AddEditActivity {
         yeast.setName(name);
         yeast.setAttenuation(attenuation);
         yeast.setBeerXmlStandardAmount(amount);
+        yeast.setTime(time);
     }
 
     @Override

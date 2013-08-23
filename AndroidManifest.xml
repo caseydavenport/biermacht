@@ -142,14 +142,32 @@
                 android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
+                android:name=".frontend.IngredientActivities.EditCustomHopActivity"
+                android:label="@string/title_activity_edit_hop"
+                android:configChanges="orientation|screenSize"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
                 android:name=".frontend.IngredientActivities.AddCustomMiscActivity"
                 android:label="@string/title_activity_add_misc"
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
+                android:name=".frontend.IngredientActivities.EditCustomMiscActivity"
+                android:label="@string/title_activity_edit_misc"
+                android:configChanges="orientation|screenSize"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
                 android:name=".frontend.IngredientActivities.AddCustomYeastActivity"
                 android:label="@string/title_activity_add_yeast"
+                android:configChanges="orientation|screenSize"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+                android:name=".frontend.IngredientActivities.EditCustomYeastActivity"
+                android:label="@string/title_activity_edit_yeast"
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >
         </activity>

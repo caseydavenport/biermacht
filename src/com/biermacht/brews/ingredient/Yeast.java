@@ -176,7 +176,7 @@ public class Yeast extends Ingredient {
 	@Override
 	public int getTime()
     {
-		return 0;
+		return this.time;
 	}
 
     @Override

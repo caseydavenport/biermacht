@@ -5,7 +5,8 @@ import android.os.Bundle;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
-public class AddCustomMiscActivity extends AddMiscActivity {
+public class EditCustomYeastActivity extends EditYeastActivity {
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -13,7 +14,6 @@ public class AddCustomMiscActivity extends AddMiscActivity {
         super.onCreate(savedInstanceState);
 
         // Remove views we don't want
-        mainView.removeView(timeView);
         mainView.removeView(amountView);
     }
 
@@ -21,15 +21,21 @@ public class AddCustomMiscActivity extends AddMiscActivity {
     public void acquireValues() throws Exception
     {
         super.acquireValues();
-        misc.setShortDescription("Custom misc");
-        misc.setUseFor("Custom");
+
+        yeast.setShortDescription("Custom yeast");
+    }
+
+    @Override
+    public void onDeletePressed()
+    {
+        Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_CUSTOM);
+        finish();
     }
 
     @Override
     public void onFinished()
     {
-        Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID);
+        Database.updateIngredient(yeast, Constants.DATABASE_CUSTOM);
         finish();
     }
-
 }

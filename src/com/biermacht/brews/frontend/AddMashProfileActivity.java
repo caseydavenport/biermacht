@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.biermacht.brews.DragDropList.DragSortListView;
@@ -283,12 +284,19 @@ public class AddMashProfileActivity extends AddEditActivity {
 
     public void updateMashStepList()
     {
+        // Layout parameters for listView
+        // We have trouble settign the size in XML, so we dynamically do it here based on
+        // the number of steps. Each step is 60dip tall.
+        int height = mashStepArray.size() * 140;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+
         // Drag list view
         dragDropAdapter = new MashStepArrayAdapter(this, mashStepArray);
         dragDropListView.setAdapter(dragDropAdapter);
         dragDropListView.setDropListener(onDrop);
         dragDropListView.setRemoveListener(onRemove);
         dragDropListView.setDragEnabled(true);
+        dragDropListView.setLayoutParams(params);
     }
 
     @Override
@@ -378,11 +386,10 @@ public class AddMashProfileActivity extends AddEditActivity {
 
             case Constants.REQUEST_EDIT_MASH_STEP:
             {
-                try
-                {
-                    s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
-                    id = data.getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
-                } catch (Exception e)
+                s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
+                id = data.getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
+
+                if (s == null)
                 {
                     Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
                     return;
@@ -390,7 +397,7 @@ public class AddMashProfileActivity extends AddEditActivity {
 
                 // Remove step
                 for (MashStep step : mashStepArray)
-                    if (s.getId() == id)
+                    if (step.getId() == id)
                         mashStepArray.remove(step);
 
                 // If we deleted the step, do nothing, else re-add it

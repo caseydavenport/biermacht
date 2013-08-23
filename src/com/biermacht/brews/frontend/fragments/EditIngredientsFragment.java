@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.IngredientActivities.EditCustomFermentableActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditCustomHopActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditCustomMiscActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditCustomYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditHopActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditYeastActivity;
@@ -65,39 +68,41 @@ public class EditIngredientsFragment extends Fragment {
                 // Grain pressed
                 if (ing.getType().equals(Ingredient.FERMENTABLE))
                 {
-                    Intent editGrainIntent = new Intent(c, EditCustomFermentableActivity.class);
-                    editGrainIntent.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
-                    editGrainIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
-                    startActivity(editGrainIntent);
+                    Intent i = new Intent(c, EditCustomFermentableActivity.class);
+                    i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+                    i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT, ing);
+                    startActivity(i);
                 }
 
                 // Hop Pressed
                 if (ing.getType().equals(Ingredient.HOP))
                 {
-                    Intent editHopIntent = new Intent(c, EditHopActivity.class);
-                    editHopIntent.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
-                    editHopIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
-                    editHopIntent.putExtra(Constants.KEY_INGREDIENT, ing);
-                    startActivity(editHopIntent);
+                    Intent i = new Intent(c, EditCustomHopActivity.class);
+                    i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+                    i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT, ing);
+                    startActivity(i);
                 }
 
                 // Yeast Pressed
                 if (ing.getType().equals(Ingredient.YEAST))
                 {
-                    Intent editYeastIntent = new Intent(c, EditYeastActivity.class);
-                    editYeastIntent.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
-                    editYeastIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
-                    startActivity(editYeastIntent);
+                    Intent i = new Intent(c, EditCustomYeastActivity.class);
+                    i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+                    i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT, ing);
+                    startActivity(i);
                 }
 
                 // Misc Pressed
                 if (ing.getType().equals(Ingredient.MISC))
                 {
-                    Intent editMiscIntent = new Intent(c, EditMiscActivity.class);
-                    editMiscIntent.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
-                    editMiscIntent.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
-                    editMiscIntent.putExtra(Constants.KEY_INGREDIENT, ing);
-                    startActivity(editMiscIntent);
+                    Intent i = new Intent(c, EditCustomMiscActivity.class);
+                    i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
+                    i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
+                    i.putExtra(Constants.KEY_INGREDIENT, ing);
+                    startActivity(i);
                 }
             }
         };

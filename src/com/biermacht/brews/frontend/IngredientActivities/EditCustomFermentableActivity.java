@@ -35,12 +35,8 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
     @Override
     public void getValuesFromIntent()
     {
-        // Get the recipe from calling activity
         super.getValuesFromIntent();
-
-        // Get the ingredient as well
-        long grainId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
-        fermentable = (Fermentable) Database.getIngredientWithId(grainId);
+        fermentable = getIntent().getParcelableExtra(Constants.KEY_INGREDIENT);
     }
 
     @Override

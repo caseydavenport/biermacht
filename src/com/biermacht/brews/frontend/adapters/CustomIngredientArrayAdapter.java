@@ -66,7 +66,7 @@ public class CustomIngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			imageView.setImageResource(R.drawable.icon_hops);
 			labelView.setText(h.getName() + ", " + String.format("%1.1f", h.getAlphaAcidContent()) + "%");
 
-            detailText = "Hop";
+            detailText = h.getHopType();
 		}
 		else if(ingType == Ingredient.FERMENTABLE) 
 		{
@@ -76,15 +76,16 @@ public class CustomIngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			else
 				imageView.setImageResource(R.drawable.icon_extract);
 			
-            detailText = "Fermentable";
+            detailText = f.getFermentableType();
 		}
 		else if (ingType == Ingredient.YEAST)
 		{
+            Yeast y = (Yeast) list.get(position);
 			// Display type is always a packet really...
 			amountView.setText("1.00");
 			unitView.setText("pkg");
 			imageView.setImageResource(R.drawable.icon_yeast);
-			detailText = "Yeast";
+			detailText = y.getAttenuation() + "%";
 		}
 		else if(ingType == Ingredient.MISC)
 		{
