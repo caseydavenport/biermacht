@@ -30,7 +30,7 @@ import com.biermacht.brews.utils.IngredientHandler;
 
 import java.util.ArrayList;
 
-public class EditYeastActivity extends AddYeastActivity implements OnClickListener {
+public class EditYeastActivity extends AddYeastActivity {
 
     public Yeast selectedYeast;
 

@@ -153,6 +153,16 @@ public class RecipeHandler extends DefaultHandler {
 		{
             thingTypeStack.push(qName);
 		}
+
+        if (qName.equalsIgnoreCase("WATERS"))
+        {
+            thingTypeStack.push(qName);
+        }
+
+        if (qName.equalsIgnoreCase("WATER"))
+        {
+            thingTypeStack.push(qName);
+        }
 		
 		// Encounter new style
 		if (qName.equalsIgnoreCase("STYLE"))
@@ -194,6 +204,11 @@ public class RecipeHandler extends DefaultHandler {
 		}
 
         if (qName.equalsIgnoreCase("EQUIPMENT"))
+        {
+            thingTypeStack.push(qName);
+        }
+
+        if (qName.equalsIgnoreCase("EQUIPMENTS"))
         {
             thingTypeStack.push(qName);
         }
@@ -242,6 +257,21 @@ public class RecipeHandler extends DefaultHandler {
             thingTypeStack.pop();
 			return;
 		}
+
+        if (qName.equalsIgnoreCase("WATERS"))
+        {
+            // TODO
+            thingTypeStack.pop();
+            return;
+        }
+
+        if (qName.equalsIgnoreCase("WATER"))
+        {
+            // TODO
+            thingTypeStack.pop();
+            return;
+        }
+
 		else if (qName.equalsIgnoreCase("STYLES"))
 		// We have finished a list of styles
 		{
@@ -313,6 +343,7 @@ public class RecipeHandler extends DefaultHandler {
             thingTypeStack.pop();
 			beerStyleList.add(style);
 			r.setStyle(style);
+            return;
 		}
 		else if (qName.equalsIgnoreCase("MASH_STEP"))
 		// Finisehd a mash step, add to list and profile
@@ -320,6 +351,7 @@ public class RecipeHandler extends DefaultHandler {
             thingTypeStack.pop();
 			mashStepList.add(mashStep);
 			profile.addMashStep(mashStep);
+            return;
 		}
 		else if (qName.equalsIgnoreCase("MASH"))
 		// Finished a mash profile. Add to recipe and list
@@ -327,11 +359,19 @@ public class RecipeHandler extends DefaultHandler {
             thingTypeStack.pop();
 			r.setMashProfile(profile);
 			mashProfileList.add(profile);
+            return;
 		}
 
         else if (qName.equalsIgnoreCase("EQUIPMENT"))
         {
             thingTypeStack.pop();
+            return;
+        }
+
+        else if (qName.equalsIgnoreCase("EQUIPMENTS"))
+        {
+            thingTypeStack.pop();
+            return;
         }
 		
 		/************************************************************

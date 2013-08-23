@@ -17,7 +17,7 @@ import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
 
-public class AddYeastActivity extends AddEditActivity implements OnClickListener {
+public class AddYeastActivity extends AddEditActivity {
 
     // Holds the currently selected yeast, and yeast being edited
     public Yeast yeast;
