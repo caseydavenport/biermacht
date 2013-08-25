@@ -3,12 +3,19 @@ package com.biermacht.brews.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	// Database / Table Data Defines
 	public static final String DATABASE_NAME = "BiermachtBrews";
-	public static final int DATABASE_VERSION = 1;
+
+    // Versioning information for the database
+    public static final int DATABASE_ALPHA = 1; // Database used in development stages
+    public static final int DATABASE_BETA = 2;
+
+    // Current database version
+    public static final int DATABASE_VERSION = DATABASE_BETA;
 	
 	// Tables
 	public static final String TABLE_RECIPES = "RecipeTable";
@@ -153,6 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String STE_COL_WATER_GRAIN_RATIO = "stepWaterGrainRatio";
     public static final String STE_COL_DESCRIPTION = "stepDescription";
     public static final String STE_COL_ORDER = "stepOrder";
+    public static final String STE_COL_INFUSE_TEMP = "stepInfuseTemp";
 	
 	// Create table strings
 	private static final String CREATE_RECIPE_TABLE = "create table " +
@@ -304,7 +312,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ STE_COL_END_TEMP + " float, "
             + STE_COL_WATER_GRAIN_RATIO + " float, "
             + STE_COL_DESCRIPTION + " text, "
-            + STE_COL_ORDER + " integer "
+            + STE_COL_ORDER + " integer, "
+            + STE_COL_INFUSE_TEMP + " float "
 			+");";
 	
 	// Public Constructor
@@ -324,12 +333,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
-	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
-	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_STYLES);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILES);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STEPS);
-	    onCreate(db);
+	public void onUpgrade(SQLiteDatabase db, int currentVersion, int newVersion)
+    {
+        Log.d("DatabaseHelper", "Upgrading database from version " + currentVersion + " to " + newVersion);
+        String sql = "";
+        // Allows for incremental upgrades in case a user has skipped an upgrade.
+        // Add a case block for each upgrade over time.
+        while (currentVersion < newVersion)
+        {
+            // Increment currentVersion so that the value it stores is
+            // actually the next version we're upgrading to.
+            currentVersion++;
+            switch (currentVersion)
+            {
+                case DATABASE_BETA:
+                    // Upgrade from ALPHA to BETA.  Our first ever upgrade!  We are testing
+                    // Database upgrades using the new infusion water temperature for mash steps.
+                    Log.d("DatabaseHelper", "Upgrading database from ALPHA to BETA");
+                    sql = "ALTER TABLE " + TABLE_STEPS + " ADD COLUMN " + DatabaseHelper.STE_COL_INFUSE_TEMP +
+                            " float";
+                    db.execSQL(sql);
+                    break;
+            }
+        }
 	}
 }

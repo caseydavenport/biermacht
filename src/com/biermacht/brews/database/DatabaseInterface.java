@@ -163,7 +163,8 @@ public class DatabaseInterface {
             DatabaseHelper.STE_COL_END_TEMP,
             DatabaseHelper.STE_COL_WATER_GRAIN_RATIO,
             DatabaseHelper.STE_COL_DESCRIPTION,
-            DatabaseHelper.STE_COL_ORDER
+            DatabaseHelper.STE_COL_ORDER,
+            DatabaseHelper.STE_COL_INFUSE_TEMP,
 	};
 
 	// Constructor
@@ -514,7 +515,8 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.STE_COL_WATER_GRAIN_RATIO, s.getBeerXmlStandardWaterToGrainRatio());
         values.put(DatabaseHelper.STE_COL_DESCRIPTION, s.getDescription());
         values.put(DatabaseHelper.STE_COL_ORDER, s.getOrder());
-		
+        values.put(DatabaseHelper.STE_COL_INFUSE_TEMP, s.getBeerXmlStandardInfuseTemp());
+
 		long id = database.insert(DatabaseHelper.TABLE_STEPS, null, values);
 		return id;
 	}
@@ -1017,6 +1019,7 @@ public class DatabaseInterface {
         double waterGrainRatio = cursor.getDouble(cid);         cid++;
         String description = cursor.getString(cid);             cid++;
         int order = cursor.getInt(cid);                         cid++;
+        double infuseTemp = cursor.getDouble(cid);              cid++;
 		
 		MashStep s = new MashStep();
 		s.setId(id);
@@ -1032,6 +1035,7 @@ public class DatabaseInterface {
         s.setBeerXmlStandardWaterToGrainRatio(waterGrainRatio);
         s.setDescription(description);
         s.setOrder(order);
+        s.setBeerXmlStandardInfuseTemp(infuseTemp);
 
 		return s;
 	}

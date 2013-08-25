@@ -366,6 +366,12 @@ public class AddMashProfileActivity extends AddEditActivity {
         if (resultCode == Constants.RESULT_CANCELED)
             return;
 
+        if (data == null)
+        {
+            Log.d("AddMashProfileActivity", "Null intent passed as result, returning");
+            return;
+        }
+
         switch (requestCode)
         {
             case Constants.REQUEST_NEW_MASH_STEP:
@@ -395,7 +401,7 @@ public class AddMashProfileActivity extends AddEditActivity {
                     return;
                 }
 
-                // Remove step
+                // Remove step based on step id
                 for (MashStep step : mashStepArray)
                     if (step.getId() == id)
                         mashStepArray.remove(step);

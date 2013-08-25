@@ -319,6 +319,7 @@ public class RecipeHandler extends DefaultHandler {
             thingTypeStack.pop();
 			r.addIngredient(h);
 			hopList.add(h);
+            Log.d("RecipeHandler", "Added hop: " + h.getName());
 			return;
 		}
 		else if (qName.equalsIgnoreCase("YEAST"))
@@ -1095,7 +1096,7 @@ public class RecipeHandler extends DefaultHandler {
 			}
 		}
 		
-		else if (thingTypeStack.read().equalsIgnoreCase("PROFILE"))
+		else if (thingTypeStack.read().equalsIgnoreCase("MASH"))
 		// We are looking at a mash profile
 		// Do all of the profile things below
 		// woo.

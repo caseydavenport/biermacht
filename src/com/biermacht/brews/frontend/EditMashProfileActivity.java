@@ -33,7 +33,6 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
     public void acquireValues() throws Exception
     {
         super.acquireValues();
-        mProfile.setMashStepList(mashStepArray);
         mRecipe.setMashProfile(mProfile);
     }
 

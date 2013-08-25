@@ -1,6 +1,7 @@
 package com.biermacht.brews.recipe;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.biermacht.brews.utils.*;
 
@@ -65,7 +66,6 @@ public class MashStep implements Parcelable
         stepTemp = p.readDouble();
         stepTime = p.readDouble();
 
-
         // Beer XML 1.0 Optional Fields ===================================
         // ================================================================
         rampTime = p.readDouble();
@@ -78,6 +78,7 @@ public class MashStep implements Parcelable
         ownerId = p.readLong();
         id = p.readLong();
         order = p.readInt();
+        infuseTemp = p.readDouble();
     }
 
     @Override
@@ -105,6 +106,7 @@ public class MashStep implements Parcelable
         p.writeLong(ownerId);				// id for parent mash profile
         p.writeLong(id);                    // id for use in database
         p.writeInt(order);                  // Order in step list
+        p.writeDouble(infuseTemp);
     }
 
     public static final Parcelable.Creator<MashStep> CREATOR =
@@ -125,6 +127,26 @@ public class MashStep implements Parcelable
     public int describeContents()
     {
         return 0;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hc = this.getName().hashCode();
+        hc = hc ^ this.getDescription().hashCode();
+        hc = hc + (int) this.getBeerXmlStandardInfuseTemp();
+        hc = hc + (int) this.endTemp;
+        hc = hc + (int) this.id;
+        return hc;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof MashStep)
+            if (this.hashCode() == o.hashCode())
+                return true;
+        return false;
     }
 
     @Override
@@ -191,6 +213,16 @@ public class MashStep implements Parcelable
     public void setDisplayInfuseTemp(double d)
     {
         this.infuseTemp = Units.farenheitToCelsius(d);
+    }
+
+    public double getBeerXmlStandardInfuseTemp()
+    {
+        return this.infuseTemp;
+    }
+
+    public void setBeerXmlStandardInfuseTemp(double d)
+    {
+        this.infuseTemp = d;
     }
 
     public void setDisplayStepTemp(double temp)

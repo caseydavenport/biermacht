@@ -148,6 +148,10 @@ public class MashProfile implements Parcelable
 	public int hashCode()
 	{
 		int hc = this.getName().hashCode();
+        hc = hc ^ this.getMashStepList().hashCode();
+        hc = hc + (int) this.getDisplayTunTemp();
+        hc = hc + (int) this.getBeerXmlStandardGrainTemp();
+        hc = hc + (int) this.spargeTemp;
 		return hc;
 	}
 

@@ -265,7 +265,8 @@ public class IngredientHandler {
 	        	Log.e("getHopsFromXml", e.toString());
 	        }
         }
-        
+
+        Log.d("IngredientHandler", "Got " + list.size() + " hops from XML");
         return list;
 	}
 	
