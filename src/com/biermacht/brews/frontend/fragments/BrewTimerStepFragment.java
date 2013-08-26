@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
@@ -25,6 +26,7 @@ public class BrewTimerStepFragment extends Fragment {
 	Context c = getActivity();
 
     // Views
+    ScrollView scrollView;
     ViewGroup pageView;
     TextView titleView;
     TextView descriptionView;
@@ -74,7 +76,8 @@ public class BrewTimerStepFragment extends Fragment {
         this.i = getArguments().getParcelable(Constants.KEY_INSTRUCTION);
 
         // Get views
-		pageView = (LinearLayout) inflater.inflate(resource, container, false);
+        scrollView = (ScrollView) inflater.inflate(resource, container, false);
+		pageView = (LinearLayout) scrollView.findViewById(R.id.main_layout);
         titleView = (TextView) pageView.findViewById(R.id.title);
         descriptionView = (TextView) pageView.findViewById(R.id.description);
         calendarButton = (ImageButton) pageView.findViewById(R.id.calendar_button);
@@ -105,10 +108,11 @@ public class BrewTimerStepFragment extends Fragment {
 
         // Set view text
         titleView.setText(i.getBrewTimerTitle());
+        titleView.setVisibility(View.GONE);
 
         // Turn off options menu
 		setHasOptionsMenu(false);
 		
-		return pageView;
+		return scrollView;
 	}
 }

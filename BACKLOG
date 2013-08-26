@@ -10,10 +10,14 @@ feature: Reverse engineering capabilities --> Modify desired traits
 
 feature: Determine the best matching beer type for a given recipe!
 
+// REQUIRED FOR RELEASE
 TODO:	 Add ability to use metric units
-TODO:    Add Style viewing tool
 TODO:    Add ability to store recipe notes
 TODO:    Equipment Editor
-TODO:    Make timer fragments scroll views
-TODO:    Add calculators
+TODO:    Add dates to calendar! Make new Calendar icon!
 TODO:    Fix up all the XML files to be nice.
+
+// Nice to have
+TODO:    Add Style viewing tool
+TODO:    Add sparge steps / info
+TODO:    Add calculators

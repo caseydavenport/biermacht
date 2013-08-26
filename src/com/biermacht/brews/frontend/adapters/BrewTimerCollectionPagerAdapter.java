@@ -24,13 +24,13 @@ import java.util.ArrayList;
 public class BrewTimerCollectionPagerAdapter extends FragmentStatePagerAdapter {
 	private Recipe r;
     private Context c;
-    private ArrayList<Fragment> instructionFragmentList;
+    private ArrayList<BrewTimerStepFragment> instructionFragmentList;
 
     public BrewTimerCollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
         super(fm);
 		this.r = r;
 		this.c = c;
-        instructionFragmentList = new ArrayList<Fragment>();
+        instructionFragmentList = new ArrayList<BrewTimerStepFragment>();
 
         for (Instruction i : r.getInstructionList())
             if (i.showInBrewTimer())
@@ -50,7 +50,7 @@ public class BrewTimerCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-            return instructionFragmentList.get(position).toString();
+            return instructionFragmentList.get(position).getInstruction().getBrewTimerTitle();
     }
 }
 
