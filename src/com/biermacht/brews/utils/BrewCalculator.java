@@ -230,8 +230,8 @@ public class BrewCalculator {
 				if (h.getUse().equals(Hop.USE_BOIL))
 				{
 					utilization = getHopUtilization(r, h);
-					AAU = h.getDisplayAmount() * h.getAlphaAcidContent();
-					ibu = (AAU * utilization * 75)/r.getDisplayBatchSize();
+					AAU = Units.kilosToOunces(h.getBeerXmlStandardAmount()) * h.getAlphaAcidContent();
+					ibu = (AAU * utilization * 75) / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 				}
 			}
 
