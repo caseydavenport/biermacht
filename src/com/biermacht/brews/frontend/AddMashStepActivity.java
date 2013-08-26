@@ -126,7 +126,7 @@ public class AddMashStepActivity extends AddEditActivity {
         amountViewText.setText(String.format("%2.2f", step.getDisplayInfuseAmount()));
         stepTempViewText.setText(String.format("%2.2f", step.getDisplayStepTemp()));
         waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
-        infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemp())); // TODO
+        infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemp()));
     }
 
     @Override

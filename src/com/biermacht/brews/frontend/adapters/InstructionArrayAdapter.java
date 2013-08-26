@@ -52,8 +52,6 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 		// Set instruction text
 		labelView.setText(list.get(position).getInstructionText());
 		
-		// TODO: Set visibility based on instruction type
-		
 		return row;
 	}
 }

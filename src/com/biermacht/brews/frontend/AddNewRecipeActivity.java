@@ -209,7 +209,6 @@ public class AddNewRecipeActivity extends Activity implements OnClickListener {
 
         // If it doesn't contain the current recipes style / profile,
         // then it is custom and we add it to the list.
-        // TODO: We should include custom stuff without having to check here
         if(!styleArray.contains(mRecipe.getStyle()))
             styleArray.add(mRecipe.getStyle());
         if(!profileArray.contains(mRecipe.getMashProfile()))

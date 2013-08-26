@@ -163,7 +163,6 @@ public class Fermentable extends Ingredient implements Parcelable {
 	@Override
 	public void setDisplayUnits(String s)
 	{
-		// TODO
 	}
 	
 	@Override

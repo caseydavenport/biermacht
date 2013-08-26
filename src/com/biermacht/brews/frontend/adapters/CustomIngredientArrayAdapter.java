@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,8 @@ public class CustomIngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		}
 		else
 		{
-			//TODO: Handle this
+            // We don't handle these ingredients!
+            Log.d("CustomIngredientArrayAdapter", "Unknown ingredient type received");
 		}
 
 		detailView.setText(detailText);

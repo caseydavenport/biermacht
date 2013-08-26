@@ -21,7 +21,7 @@ public class Hop extends Ingredient {
 	private String type;                        // Bittering, Armoa, Both
 	private String form;                        // Pellet, plug, whole
 	private String origin;                      // Place of origin
-	private ArrayList<String> substitutes;      // Substitute options TODO THIS!
+	private ArrayList<String> substitutes;      // Substitute options
 	
 	// Custom Fields ==================================================
 	// ================================================================
@@ -178,7 +178,6 @@ public class Hop extends Ingredient {
 	}
 	
 	public void setDisplayUnits(String s) {
-		// TODO
 	}
 	
 	@Override

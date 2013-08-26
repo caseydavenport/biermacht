@@ -3,6 +3,7 @@ package com.biermacht.brews.frontend.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,8 +104,8 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 		}
 		else
 		{
-			//TODO: Handle this
-			//imageView.setImageResource(R.drawable.icon_idk);
+            // We don't handle these instructions!
+            Log.d("CustomIngredientArrayAdapter", "Unknown ingredient type received");
 		}
 
 		detailView.setText(detailText);

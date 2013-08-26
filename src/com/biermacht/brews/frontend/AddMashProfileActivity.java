@@ -237,7 +237,6 @@ public class AddMashProfileActivity extends AddEditActivity {
 
         // If it doesn't contain the current profile
         // then it is custom and we add it to the list.
-        // TODO: We should include custom stuff without having to check here
         if(!profileArray.contains(mRecipe.getMashProfile()))
             profileArray.add(mRecipe.getMashProfile());
     }
