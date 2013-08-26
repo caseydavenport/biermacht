@@ -33,7 +33,7 @@ public class BrewCalculator {
 			if (i.getType().equals(Ingredient.FERMENTABLE))
 			{
 				Fermentable g = (Fermentable) i;
-				MCU += g.getDisplayAmount() * g.getLovibondColor() / r.getDisplayBatchSize();
+				MCU += Units.kilosToPounds(g.getBeerXmlStandardAmount()) * g.getLovibondColor() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 			}
 		}
 		SRM = (float) (1.4922*Math.pow(MCU, .6859));
