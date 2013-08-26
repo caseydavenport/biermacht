@@ -47,8 +47,8 @@ public class AddFermentableActivity extends AddEditActivity {
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Initialize views and such here
-        colorView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        gravityView = (View) inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        colorView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        gravityView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
         // Set the onClickListener for each row
         colorView.setOnClickListener(onClickListener);

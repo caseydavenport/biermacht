@@ -8,7 +8,7 @@ be reported here
 feature: Reverse engineering capabilities --> Modify desired traits
 	 and the app will auto-modify your recipe to match!
 
-feature: Determine the best matching beer type for a given recipe!
+feature: Determine the best matching beer style for a given recipe!
 
 // REQUIRED FOR RELEASE
 TODO:	 Add ability to use metric units

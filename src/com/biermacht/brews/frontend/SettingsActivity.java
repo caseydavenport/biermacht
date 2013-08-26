@@ -1,162 +1,195 @@
 package com.biermacht.brews.frontend;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import com.biermacht.brews.R;
-import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.Units;
-import com.biermacht.brews.frontend.adapters.*;
-import android.widget.*;
 import android.app.*;
 import android.content.*;
-import android.view.*;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import java.util.ArrayList;
+
+import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
+import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Units;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.utils.*;
 
-public class SettingsActivity extends Activity implements OnClickListener {
+public class SettingsActivity extends AddEditActivity {
 	
-	private SettingsItemArrayAdapter mAdapter;
-	private ArrayList<SettingsItem> settingsList;
-	private ListView listView;
-	private EditText nameEditText;
-	private OnItemClickListener mClickListener;
-    private Context context;
-	
-	// Values for possible settings
+	// Shared preferences
 	SharedPreferences preferences;
-	private String brewerName;
-	private String measurementSystem;
-	
-	// Settings
-	public static String TITLE_BREWER = "Brewmaster";
-	public static String TITLE_DELETE_ALL = "Delete All Recipes";
+
+    // Views to display
+    public Spinner preferredUnitsSpinner;
+    public View deleteAllRecipesView;
+
+    // View titles
+    public TextView deleteAllRecipesViewTitle;
+
+    // View contents
+    public TextView preferredUnitsViewText;
+    public TextView deleteAllRecipesViewText;
+
+    // Lists for spinners
+    public ArrayList<String> unitSystemsArray;
+
+    // Data storage
+    public String unitSystem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-		
-		// Set icon as back button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Get context
-        context = this;
-        
-        // Get settings from shared preferences
-        preferences = this.getSharedPreferences("com.biermacht.brews", Context.MODE_PRIVATE);
-        brewerName = preferences.getString("com.biermacht.brews.settings.brewMasterName", "No name found");
-        measurementSystem = preferences.getString("com.biermacht.brews.settings.measurementSystem", Units.IMPERIAL);
+        // Get shared preferences
+        preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
-		updateSettings();
+        // Create our views
+        preferredUnitsSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        deleteAllRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+
+        // Set click listeners for views
+        deleteAllRecipesView.setOnClickListener(onClickListener);
+
+        // Remove views we don't want
+        mainView.removeView(spinnerView);
+        mainView.removeView(amountView);
+        mainView.removeView(timeView);
+
+        // Add views we do want
+        mainView.addView(preferredUnitsSpinner);
+        mainView.addView(deleteAllRecipesView);
+
+        // Get titles and set correct text
+        deleteAllRecipesViewTitle = (TextView) deleteAllRecipesView.findViewById(R.id.title);
+        deleteAllRecipesViewTitle.setText("Delete all recipes");
+        nameViewTitle.setText("Brewmaster");
+
+        // Get content views
+        deleteAllRecipesViewText = (TextView) deleteAllRecipesView.findViewById(R.id.text);
+
+        // Set content view values
+        deleteAllRecipesViewText.setText("Permanently delete local recipes");
+        nameViewText.setText(preferences.getString(Constants.PREF_BREWER_NAME, "No name provided"));
+
+        // Configure spinner for preferred units
+        SpinnerAdapter unitsAdapter = new SpinnerAdapter(this, unitSystemsArray, "Preferred Units");
+        unitsAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        preferredUnitsSpinner.setAdapter(unitsAdapter);
+        preferredUnitsSpinner.setSelection(unitSystemsArray.indexOf(preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL)));
+
+        // Handle type selector here
+        preferredUnitsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                unitSystem = unitSystemsArray.get(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+            }
+
+        });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_settings, menu);
-        return true;
+    public void onRecipeNotFound()
+    {
+        // We don't need a recipe for this, so do nothing.
+        Log.d("SettingsActivity", "Recipe not needed, continuing");
+        mRecipe = new Recipe();
     }
-    
-    public void onClick(View v) {
-		// if "SUBMIT" button pressed
-		if (v.getId() == R.id.submit_button)
-		{	
-			preferences.edit().putString("com.biermacht.brews.settings.measurementSystem", measurementSystem).commit();
-			finish();
-		}
-		
-		// if "CANCEL" button pressed
-		if (v.getId() == R.id.cancel_button)
-		{
-			finish();
-		}
-	}
-	
-	public void updateSettings()
-	{
-		// Create settings list
-		listView = (ListView) findViewById(R.id.settings_list);
-		settingsList = new ArrayList<SettingsItem>();
-		SettingsItem brewer = new SettingsItem(TITLE_BREWER, brewerName, "");
-		SettingsItem deleteAllRecipes = new SettingsItem(TITLE_DELETE_ALL, "Permanently delete all local recipes.", "");
-		settingsList.add(brewer);
-		settingsList.add(deleteAllRecipes);
 
-		// Set up the onClickListener
-        mClickListener = new OnItemClickListener() 
+    @Override
+    public void onMissedClick(View v)
+    {
+        //AlertDialog alert;
+        if (v.equals(deleteAllRecipesView))
         {
-			public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id)
-			{	
-			    if(settingsList.get(pos).getTitle().equals(TITLE_BREWER))
-				{
-					setBrewer().show();
-				}
-				else if (settingsList.get(pos).getTitle().equals(TITLE_DELETE_ALL))
-				{
-					deleteAllRecipes().show();
-				}
-			}
-        };
-
-		// Set adapter and view
-		mAdapter = new SettingsItemArrayAdapter(this, settingsList);
-		listView.setAdapter(mAdapter);
-		listView.setOnItemClickListener(mClickListener);
-	}
-	
-	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	switch (item.getItemId()) {
-            case android.R.id.home:
-        		finish();
-        		return true;
-
+            deleteAllRecipes().show();
+            return;
         }
-        return super.onOptionsItemSelected(item);
+        else
+            return;
+
+        // Force keyboard open and show popup
+        //alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        //alert.show();
     }
-	
-	
-	// BELOW GO ALL THE ALERT CLASSES NEEDED FOR EACH SETTING		
-	private Builder setBrewer()
-	{
-		LayoutInflater factory = LayoutInflater.from(this);
-        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_string, null);
-        final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
-		editText.setHint("Enter your name");
-		editText.setText(brewerName);
 
-		return new AlertDialog.Builder(this)
-			.setTitle(TITLE_BREWER)
-			.setView(alertView)
-			.setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
+    @Override
+    public void getList()
+    {
+        unitSystemsArray = Constants.UNIT_SYSTEMS;
+    }
 
-				public void onClick(DialogInterface dialog, int which) {	
-					brewerName = editText.getText().toString();
-					preferences.edit().putString("com.biermacht.brews.settings.brewMasterName", brewerName).commit();
-					updateSettings();
-				}
+    @Override
+    public void createSpinner()
+    {
+        // Do nothing here, we don't use the default spinner
+    }
 
-		    })
+    @Override
+    public void configureSpinnerListener()
+    {
+        spinnerListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-		    .setNegativeButton(R.string.cancel, null);
-	}
-	
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
+    }
+
+    @Override
+    public void acquireValues() throws Exception
+    {
+        super.acquireValues();
+
+        preferences.edit().putString(Constants.PREF_MEAS_SYSTEM, unitSystem).commit();
+        preferences.edit().putString(Constants.PREF_BREWER_NAME, name).commit();
+    }
+
+    @Override
+    public void onFinished()
+    {
+        finish();
+    }
+
+
+    @Override
+    public void onCancelPressed()
+    {
+        finish();
+    }
+
+    @Override
+    public void onDeletePressed()
+    {
+        // Should never be pressed. We disable delete button for this activity
+    }
+
+    /************************************************************************************
+    /*  Extra stuff goes below, unrelated to AddEditActivity methods.
+    /*      Contains builders and tasks for this activity only.
+    /************************************************************************************/
+
+    // Custom dialogs for this activity only
 	private Builder deleteAllRecipes()
 	{
 		return new AlertDialog.Builder(this)
-			.setTitle(TITLE_DELETE_ALL)
+			.setTitle("Delete all recipes")
 			.setMessage("Delete all local recipes from this device? This action cannot be undone.  Remote recipes will be unaffected.")
 			.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 
@@ -169,6 +202,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		    .setNegativeButton(R.string.cancel, null);
 	}
 
+    // Async task to delete all recipes
     private class DeleteRecipes extends AsyncTask<String, Void, String> {
 
         private ProgressDialog progress;
@@ -192,7 +226,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
         protected void onPreExecute()
         {
             super.onPreExecute();
-            progress = new ProgressDialog(context);
+            progress = new ProgressDialog(getApplicationContext());
             progress.setMessage("Deleting all recipes...");
             progress.setIndeterminate(false);
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);

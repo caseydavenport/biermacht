@@ -5,6 +5,7 @@ import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,8 @@ public class Constants {
     public static final String PREFERENCES = "com.biermacht.brews.preferences";
     public static final String PREF_USED_BEFORE = "com.biermacht.brews.usedBefore";
     public static final String PREF_LAST_OPENED = "com.biermacht.brews.lastOpened";
+    public static final String PREF_BREWER_NAME = "com.biermacht.brews.brewerName";
+    public static final String PREF_MEAS_SYSTEM = "com.biermacht.brews.measurementSystem";
 
     // Activity for result return codes
     public static final int RESULT_DELETED = 1;
@@ -65,8 +68,10 @@ public class Constants {
     private static final String [] hop_forms = {Hop.FORM_PELLET, Hop.FORM_WHOLE, Hop.FORM_PLUG};
     private static final String [] ferm_types = {Fermentable.TYPE_EXTRACT, Fermentable.TYPE_GRAIN, Fermentable.TYPE_SUGAR, Fermentable.TYPE_ADJUNCT};
     private static final String [] step_types = {MashStep.INFUSION, MashStep.DECOCTION, MashStep.TEMPERATURE};
+    private static final String [] unit_systems = {Units.IMPERIAL, Units.METRIC};
     public static final ArrayList<String> HOP_USES = new ArrayList<String>(Arrays.asList(hop_uses));
     public static final ArrayList<String> HOP_FORMS = new ArrayList<String>(Arrays.asList(hop_forms));
     public static final ArrayList<String> FERMENTABLE_TYPES = new ArrayList<String>(Arrays.asList(ferm_types));
     public static final ArrayList<String> MASH_STEP_TYPES = new ArrayList<String>(Arrays.asList(step_types));
+    public static final ArrayList<String> UNIT_SYSTEMS = new ArrayList<String>(Arrays.asList(unit_systems));
 }
