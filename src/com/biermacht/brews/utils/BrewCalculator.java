@@ -92,7 +92,7 @@ public class BrewCalculator {
 	{
 		// Because this is used for hop utilization calculation,
 		// We want to adjust this based on late extract additions
-		
+
 		double mGPs = calculateOriginalGravityFromRecipe(r) - 1; //milliGPs
 		double avgBoilTime = 0;
 		int t=0;
@@ -114,14 +114,13 @@ public class BrewCalculator {
 			
 		return 1 + (mGPs * Units.litersToGallons(r.getBeerXmlStandardBatchSize()) / Units.litersToGallons(r.getBeerXmlStandardBoilSize()))*(avgBoilTime/r.getBoilTime());
 	}
-    
+
 	public static double calculateAllGrainBoilGrav(Recipe r)
 	{
-		// Because this is used for hop utilization calculation,
-		// We want to adjust this based on late extract additions
+		// Because this is used for hop utilization calculation
 
 		double mGPs = calculateOriginalGravityFromRecipe(r) - 1; //milliGPs
-		return 1 + (mGPs * r.getDisplayBatchSize() / r.getDisplayBoilSize());
+		return 1 + (mGPs * Units.litersToGallons(r.getBeerXmlStandardBatchSize()) / Units.litersToGallons(r.getBeerXmlStandardBoilSize()));
 	}
 	
 	public static double calculateGravityPoints(Recipe r, Ingredient i)
@@ -145,15 +144,15 @@ public class BrewCalculator {
 					
 			if(f.getFermentableType().equals(Fermentable.TYPE_EXTRACT))
 			{
-				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+				pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 			}
 			else if (f.getFermentableType().equals(Fermentable.TYPE_SUGAR))
 			{
-				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+				pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 			}
 			else if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
 			{
-				pts = 5 * f.getDisplayAmount() / r.getDisplayBatchSize();
+				pts = 5 * Units.kilosToPounds(f.getBeerXmlStandardAmount()) / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 				
 				if(f.getName().equalsIgnoreCase("Roasted Barley"))
 					pts = 10 * f.getDisplayAmount() / r.getDisplayBatchSize();
@@ -162,12 +161,12 @@ public class BrewCalculator {
 			}
 			else
 			{
-				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+				pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 			}
 		}
-		else if (i.getName().equals("Malto-Dextrin"))
+		else if (i.getName().equals("Malto-Dextrine"))
 		{
-			pts = 10 * i.getDisplayAmount() * 40 / r.getDisplayBatchSize();
+			pts = 10 * Units.kilosToPounds(i.getBeerXmlStandardAmount()) * 40 / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 		}
 		return pts;
 	}
