@@ -98,7 +98,7 @@ public class BrewCalculator {
 		int t=0;
 		
 		// TODO: This is imprecise as it doesn't take into account
-		// how much extract is used as a late addition
+		// how much extract is used as a late addition.. Its is only an approximate
 		for (Fermentable f : r.getFermentablesList())
 		{
 			if (!f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
@@ -112,8 +112,9 @@ public class BrewCalculator {
 		else
 		    avgBoilTime = r.getBoilTime();
 			
-		return 1 + (mGPs * r.getDisplayBatchSize() / r.getDisplayBoilSize())*(avgBoilTime/r.getBoilTime());
+		return 1 + (mGPs * Units.litersToGallons(r.getBeerXmlStandardBatchSize()) / Units.litersToGallons(r.getBeerXmlStandardBoilSize()))*(avgBoilTime/r.getBoilTime());
 	}
+    
 	public static double calculateAllGrainBoilGrav(Recipe r)
 	{
 		// Because this is used for hop utilization calculation,
