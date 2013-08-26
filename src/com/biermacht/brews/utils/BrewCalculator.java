@@ -180,24 +180,24 @@ public class BrewCalculator {
 
 			if(f.getFermentableType().equals(Fermentable.TYPE_EXTRACT))
 			{
-				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+				pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 			}
 			else if (f.getFermentableType().equals(Fermentable.TYPE_SUGAR))
 			{
-				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+				pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 			}
 			else if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
 			{
-				pts = r.getEfficiency() * f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize() / 100;
+				pts = r.getEfficiency() * Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize()) / 100;
 			}
 			else
 			{
-				pts = f.getDisplayAmount() * f.getPpg() / r.getDisplayBatchSize();
+				pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 			}
 		}
 		else if (i.getName().equals("Malto-Dextrin"))
 		{
-			pts = 10 * i.getDisplayAmount() * 40 / r.getDisplayBatchSize();
+			pts = 10 * Units.kilosToPounds(i.getBeerXmlStandardAmount()) * 40 / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
 		}
 		return pts;
 	}
