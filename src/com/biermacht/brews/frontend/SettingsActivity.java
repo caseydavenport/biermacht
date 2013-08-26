@@ -22,9 +22,6 @@ import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.utils.*;
 
 public class SettingsActivity extends AddEditActivity {
-	
-	// Shared preferences
-	SharedPreferences preferences;
 
     // Views to display
     public Spinner preferredUnitsSpinner;
@@ -46,9 +43,6 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Get shared preferences
-        preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
         // Create our views
         preferredUnitsSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
@@ -79,7 +73,7 @@ public class SettingsActivity extends AddEditActivity {
         nameViewText.setText(preferences.getString(Constants.PREF_BREWER_NAME, "No name provided"));
 
         // Configure spinner for preferred units
-        SpinnerAdapter unitsAdapter = new SpinnerAdapter(this, unitSystemsArray, "Preferred Units");
+        SpinnerAdapter unitsAdapter = new SpinnerAdapter(this, unitSystemsArray, "Preferred units");
         unitsAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         preferredUnitsSpinner.setAdapter(unitsAdapter);
         preferredUnitsSpinner.setSelection(unitSystemsArray.indexOf(preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL)));

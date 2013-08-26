@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +44,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 
     // LayoutInflater
     public LayoutInflater inflater;
+
+    // Shared preferences
+    public SharedPreferences preferences;
 
     // Recipe we are editing
     public Recipe mRecipe;
@@ -116,7 +120,10 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         // Create alert builder
         alertBuilder = new AlertBuilder(this);
 
-        // Disable delete button for this view
+        // Get shared preferences
+        preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+
+        // Disable delete button
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Get recipe and other ids from calling activity
