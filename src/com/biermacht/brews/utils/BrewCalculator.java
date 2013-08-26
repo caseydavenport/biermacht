@@ -44,7 +44,7 @@ public class BrewCalculator {
 	{
 		if(i.getType().equals(Ingredient.FERMENTABLE))
 		{
-			double g_amt = i.getDisplayAmount();
+			double g_amt = Units.kilosToPounds(i.getBeerXmlStandardAmount());
 			double tot_amt = getTotalGrainWeight(r);
 			
 			return (g_amt / tot_amt) * 100;
@@ -60,7 +60,7 @@ public class BrewCalculator {
 		{
 			if (i.getType().equals(Ingredient.FERMENTABLE))
 			{
-				amt += i.getDisplayAmount();
+				amt += Units.kilosToPounds(i.getBeerXmlStandardAmount());
 			}
 		}
 		
