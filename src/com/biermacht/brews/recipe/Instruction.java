@@ -56,6 +56,10 @@ public class Instruction implements Parcelable {
 
     public Instruction(Parcel p)
     {
+        // Initialize lists and maps
+        this.typeToOrder = new HashMap<String, Integer>();
+        this.relevantIngredients = new ArrayList<Ingredient>();
+
         instructionText = p.readString();
         instructionType = p.readString();
         order = p.readInt();
@@ -66,7 +70,6 @@ public class Instruction implements Parcelable {
         p.readTypedList(relevantIngredients, Ingredient.CREATOR);
         mashStep = p.readParcelable(MashStep.class.getClassLoader());
 
-        typeToOrder = new HashMap<String, Integer>();
         this.configureHashMap();
     }
 
