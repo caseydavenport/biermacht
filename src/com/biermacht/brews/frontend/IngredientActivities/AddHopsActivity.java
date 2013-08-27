@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.utils.Units;
+
 import android.view.*;
 import android.widget.TextView;
 
@@ -68,7 +70,7 @@ public class AddHopsActivity extends AddEditActivity {
         // Configure titles
         alphaAcidViewTitle = (TextView) alphaAcidView.findViewById(R.id.title);
         alphaAcidViewTitle.setText("Alpha Acids (%)");
-        amountViewTitle.setText("Amount (oz)");
+        amountViewTitle.setText("Amount " + "(" + Units.getHopUnits() + ")");
 
         // Get content views
         alphaAcidViewText = (TextView) alphaAcidView.findViewById(R.id.text);

@@ -50,6 +50,7 @@ public class MainActivity extends Activity{
 	public static DatabaseInterface databaseInterface;
 	public static IngredientHandler ingredientHandler;
 	public static Boolean usedBefore;
+    public static SharedPreferences preferences;
 	
     //Declare views here
     private ListView drawerListView;
@@ -79,6 +80,9 @@ public class MainActivity extends Activity{
 
         // Instantiate my ingredient handler
         ingredientHandler = new IngredientHandler(getApplicationContext());
+
+        // Get shared preferences
+        preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
         // Instantiate my database interface
         databaseInterface = new DatabaseInterface(getApplicationContext());

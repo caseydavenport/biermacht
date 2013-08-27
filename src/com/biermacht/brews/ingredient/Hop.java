@@ -2,6 +2,8 @@ package com.biermacht.brews.ingredient;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.biermacht.brews.frontend.MainActivity;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
@@ -129,8 +131,12 @@ public class Hop extends Ingredient {
 	}
 
 	@Override
-	public double getDisplayAmount() {
-		return Units.kilosToOunces(this.amount);
+	public double getDisplayAmount()
+    {
+        if (getDisplayUnits().equals(Units.OUNCES))
+		    return Units.kilosToOunces(this.amount);
+        else
+            return Units.kilosToGrams(this.amount);
 	}
 	
 	public int getDisplayTime()
@@ -173,8 +179,14 @@ public class Hop extends Ingredient {
 	}
 
 	@Override
-	public String getDisplayUnits() {
-		return Units.OUNCES;
+	public String getDisplayUnits()
+    {
+        String measurementSystem = MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL);
+
+        if (measurementSystem.equals(Units.IMPERIAL))
+		    return Units.OUNCES;
+        else
+            return Units.GRAMS;
 	}
 	
 	public void setDisplayUnits(String s) {

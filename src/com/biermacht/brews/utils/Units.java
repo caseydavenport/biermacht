@@ -1,6 +1,8 @@
 package com.biermacht.brews.utils;
 import android.util.Log;
 
+import com.biermacht.brews.frontend.MainActivity;
+
 import java.util.*;
 
 public class Units {
@@ -218,4 +220,13 @@ public class Units {
 	{
 		return g / 28.3495231;
 	}
+
+    // Methods to return the units for each measurement system
+    public static String getHopUnits()
+    {
+        if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL))
+            return OUNCES;
+        else
+            return GRAMS;
+    }
 }
