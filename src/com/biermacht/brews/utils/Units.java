@@ -229,4 +229,12 @@ public class Units {
         else
             return GRAMS;
     }
+
+    public static String getFermentableUnits()
+    {
+        if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL))
+            return POUNDS;
+        else
+            return KILOGRAMS;
+    }
 }

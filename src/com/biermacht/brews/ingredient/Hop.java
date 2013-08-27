@@ -181,12 +181,7 @@ public class Hop extends Ingredient {
 	@Override
 	public String getDisplayUnits()
     {
-        String measurementSystem = MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL);
-
-        if (measurementSystem.equals(Units.IMPERIAL))
-		    return Units.OUNCES;
-        else
-            return Units.GRAMS;
+        return Units.getHopUnits();
 	}
 	
 	public void setDisplayUnits(String s) {

@@ -16,6 +16,8 @@ import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.utils.Units;
+
 import android.view.*;
 
 public class AddFermentableActivity extends AddEditActivity {
@@ -64,6 +66,8 @@ public class AddFermentableActivity extends AddEditActivity {
 
         gravityViewTitle = (TextView) gravityView.findViewById(R.id.title);
         gravityViewTitle.setText("Gravity Contribution");
+
+        amountViewTitle.setText("Amount " + "(" + Units.getFermentableUnits() + ")");
 
         // Acquire text views
         colorViewText = (TextView) colorView.findViewById(R.id.text);

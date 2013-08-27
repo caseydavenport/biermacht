@@ -136,7 +136,10 @@ public class Fermentable extends Ingredient implements Parcelable {
 	@Override
 	public double getDisplayAmount()
 	{
-		return Units.kilosToPounds(this.amount);
+        if (getDisplayUnits().equals(Units.POUNDS))
+		    return Units.kilosToPounds(this.amount);
+        else
+            return this.amount;
 	}
 	
 	@Override 
@@ -156,8 +159,9 @@ public class Fermentable extends Ingredient implements Parcelable {
 	}
 
 	@Override
-	public String getDisplayUnits() {
-			return Units.POUNDS;
+	public String getDisplayUnits()
+    {
+        return Units.getFermentableUnits();
 	}
 	
 	@Override
