@@ -39,6 +39,7 @@ public class SettingsActivity extends AddEditActivity {
 
     // Data storage
     public String unitSystem;
+    public Context appContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,9 @@ public class SettingsActivity extends AddEditActivity {
 
         // Set click listeners for views
         deleteAllRecipesView.setOnClickListener(onClickListener);
+
+        // Get context for async tasks
+        appContext = this;
 
         // Remove views we don't want
         mainView.removeView(spinnerView);
@@ -220,7 +224,7 @@ public class SettingsActivity extends AddEditActivity {
         protected void onPreExecute()
         {
             super.onPreExecute();
-            progress = new ProgressDialog(getApplicationContext());
+            progress = new ProgressDialog(appContext);
             progress.setMessage("Deleting all recipes...");
             progress.setIndeterminate(false);
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);

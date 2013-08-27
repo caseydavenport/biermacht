@@ -2,6 +2,7 @@ package com.biermacht.brews.utils;
 import android.util.Log;
 
 import com.biermacht.brews.frontend.MainActivity;
+import com.biermacht.brews.ingredient.Misc;
 
 import java.util.*;
 
@@ -146,6 +147,16 @@ public class Units {
 	{
 		return l / .236;
 	}
+
+    public static double litersToMillis(double l)
+    {
+        return l * 1000;
+    }
+
+    public static double millisToLiters(double m)
+    {
+        return m / 1000;
+    }
 	
 	public static double minutesToDays(double m)
 	{
@@ -236,5 +247,24 @@ public class Units {
             return POUNDS;
         else
             return KILOGRAMS;
+    }
+
+    public static String getMetricEquivalent(String imp, boolean isWeight)
+    {
+        if (imp.equals(Units.GALLONS))
+            return LITERS;
+        else if (imp.equals(Units.TEASPOONS))
+            return MILLILITERS;
+        else if (imp.equals(Units.OUNCES))
+            if (isWeight)
+                return GRAMS;
+            else
+                return MILLILITERS;
+        else if (imp.equals(Units.POUNDS))
+            return KILOGRAMS;
+        else if (imp.equals(Units.CUP) || imp.equals(Units.CUPS))
+            return LITERS;
+        else
+            return imp;
     }
 }

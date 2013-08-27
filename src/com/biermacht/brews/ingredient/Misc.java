@@ -2,6 +2,8 @@ package com.biermacht.brews.ingredient;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.biermacht.brews.frontend.MainActivity;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
 public class Misc extends Ingredient {
@@ -163,6 +165,12 @@ public class Misc extends Ingredient {
 			return Units.litersToGallons(this.amount);
 		if (unit.equalsIgnoreCase(Units.GRAMS))
 			return Units.kilosToGrams(this.amount);
+        if (unit.equalsIgnoreCase(Units.KILOGRAMS))
+            return this.amount;
+        if (unit.equalsIgnoreCase(Units.LITERS))
+            return this.amount;
+        if (unit.equalsIgnoreCase(Units.MILLILITERS))
+            return Units.litersToMillis(this.amount);
 		if (unit.equalsIgnoreCase(Units.TEASPOONS))
 			return Units.litersToTeaspoons(this.amount);
 		if (unit.equalsIgnoreCase(Units.OUNCES))
@@ -181,7 +189,8 @@ public class Misc extends Ingredient {
 	}
 	
 	@Override
-	public double getBeerXmlStandardAmount(){
+	public double getBeerXmlStandardAmount()
+    {
 		return this.amount;
 	}
 
@@ -197,6 +206,18 @@ public class Misc extends Ingredient {
 			this.amount = Units.gallonsToLiters(amt);
 		else if (unit.equalsIgnoreCase(Units.GRAMS))
 			this.amount = Units.gramsToKilos(amt);
+        else if (unit.equalsIgnoreCase(Units.KILOGRAMS))
+            this.amount = amt;
+        else if (unit.equalsIgnoreCase(Units.LITERS))
+        {
+            this.amount = amt;
+            this.amountIsWeight = false;
+        }
+        else if (unit.equalsIgnoreCase(Units.MILLILITERS))
+        {
+            this.amount = Units.millisToLiters(amt);
+            this.amountIsWeight = false;
+        }
 		else if (unit.equalsIgnoreCase(Units.TEASPOONS))
 			this.amount = Units.teaspoonsToLiters(amt);
 		else if (unit.equalsIgnoreCase(Units.OUNCES))
@@ -220,21 +241,52 @@ public class Misc extends Ingredient {
 	}
 
 	@Override
-	public String getDisplayUnits() {
-		if (!this.displayUnits.equals(""))
-			return this.displayUnits;
-
-		if (this.amountIsWeight())
-			if (this.amount > .113)// .25lbs
-				return Units.POUNDS;
-			else
-				return Units.OUNCES;
-		else
-		    if (this.amount > .946) // .25gal
-		    	return Units.GALLONS;
-		    else
-			    return Units.OUNCES;
+	public String getDisplayUnits()
+    {
+        // If not, call the appropriate method based on which unit system the user has chosen
+        if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(Units.IMPERIAL))
+            return getDisplayUnitsImperial();
+        else
+            return getDisplayUnitsMetric();
 	}
+
+    // Called when preferred units are metric
+    private String getDisplayUnitsMetric()
+    {
+        // First check if we have units specified
+        if (!this.displayUnits.equals(""))
+            return Units.getMetricEquivalent(this.displayUnits, this.amountIsWeight);
+
+        if (this.amountIsWeight())
+            if (this.amount > 1)
+                return Units.KILOGRAMS;
+            else
+                return Units.GRAMS;
+        else
+            if (this.amount > .5)
+                return Units.LITERS;
+            else
+                return Units.MILLILITERS;
+    }
+
+    // Called when preferred units are imperial
+    private String getDisplayUnitsImperial()
+    {
+        // First check if we have units specified
+        if (!this.displayUnits.equals(""))
+            return this.displayUnits;
+
+        if (this.amountIsWeight())
+            if (this.amount > .113)// .25lbs
+                return Units.POUNDS;
+            else
+                return Units.OUNCES;
+        else
+            if (this.amount > .946) // .25gal
+                return Units.GALLONS;
+            else
+                return Units.OUNCES;
+    }
 
 	@Override
 	public String getBeerXmlStandardUnits()
