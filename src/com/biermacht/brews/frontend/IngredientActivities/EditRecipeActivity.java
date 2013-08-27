@@ -25,6 +25,7 @@ import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.recipe.*;
+import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Utils;
 
 import android.widget.*;
@@ -203,10 +204,10 @@ public class EditRecipeActivity extends Activity implements OnClickListener {
         efficiencyViewTitle.setText("Predicted Efficiency");
 
         batchSizeViewTitle = (TextView) batchSizeView.findViewById(R.id.title);
-        batchSizeViewTitle.setText("Batch Size (gal)");
+        batchSizeViewTitle.setText("Batch Size (" + Units.getVolumeUnits() + ")");
 
         boilSizeViewTitle = (TextView) boilSizeView.findViewById(R.id.title);
-        boilSizeViewTitle.setText("Boil Size (gal)");
+        boilSizeViewTitle.setText("Boil Size (" + Units.getVolumeUnits() + ")");
 
         measuredFGViewTitle = (TextView) measuredFGView.findViewById(R.id.title);
         measuredFGViewTitle.setText("Measured Final Gravity");

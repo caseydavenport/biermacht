@@ -22,6 +22,7 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.utils.Units;
 
 public class EditFermentationProfileActivity extends Activity implements OnClickListener {
 
@@ -64,6 +65,15 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
 		primaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage, mainLayout, false);
 		secondaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage, mainLayout, false);
 		tertiaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage, mainLayout, false);
+
+        // Set units appropriately
+        TextView tempUnitsView;
+        tempUnitsView = (TextView) primaryLayout.findViewById(R.id.temperature_units);
+        tempUnitsView.setText(Units.getTemperatureUnits());
+        tempUnitsView = (TextView) secondaryLayout.findViewById(R.id.temperature_units);
+        tempUnitsView.setText(Units.getTemperatureUnits());
+        tempUnitsView = (TextView) tertiaryLayout.findViewById(R.id.temperature_units);
+        tempUnitsView.setText(Units.getTemperatureUnits());
 		
 		// Set titles
 		TextView title;

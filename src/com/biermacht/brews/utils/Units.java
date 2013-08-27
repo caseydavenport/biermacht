@@ -257,6 +257,14 @@ public class Units {
             return CELSIUS;
     }
 
+    public static String getVolumeUnits()
+    {
+        if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL))
+            return GALLONS;
+        else
+            return LITERS;
+    }
+
     public static String getMetricEquivalent(String imp, boolean isWeight)
     {
         if (imp.equals(Units.GALLONS))

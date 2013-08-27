@@ -56,7 +56,7 @@
             android:hint="Temp"
             android:selectAllOnFocus="true" />
 
-        <TextView android:id="@+id/title"
+        <TextView android:id="@+id/temperature_units"
             android:text="F"
             android:layout_marginLeft="10dip"
             android:layout_gravity="center_vertical"

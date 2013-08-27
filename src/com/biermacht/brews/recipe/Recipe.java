@@ -519,10 +519,18 @@ public class Recipe implements Parcelable {
 	{
 		this.id = id;
 	}
+
+    public String getVolumeUnits()
+    {
+        return Units.getVolumeUnits();
+    }
 	
 	public double getDisplayBatchSize() 
 	{
-		return Units.litersToGallons(this.batchSize);
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+		    return Units.litersToGallons(this.batchSize);
+        else
+            return this.batchSize;
 	}
 	
 	public void setDisplayBatchSize(double size) 
@@ -584,7 +592,10 @@ public class Recipe implements Parcelable {
 	
 	public double getDisplayBoilSize()
 	{
-		return Units.litersToGallons(this.boilSize);
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+		    return Units.litersToGallons(this.boilSize);
+        else
+            return this.boilSize;
 	}
 	
 	public void setDisplayBoilSize(double size) 
@@ -719,6 +730,7 @@ public class Recipe implements Parcelable {
 	
 	public int getDisplayCoolToFermentationTemp()
 	{
+        // Metric - imperial conversion is performed in Yeast
 		for (Yeast y : this.getYeastsList())
 		{
 			return y.getDisplayFermentationTemp();
@@ -805,13 +817,25 @@ public class Recipe implements Parcelable {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
-				return Units.celsiusToFarenheit(this.primaryTemp);
+                if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
+				    return Units.celsiusToFarenheit(this.primaryTemp);
+                else
+                    return this.primaryTemp;
 			case STAGE_SECONDARY:
-				return Units.celsiusToFarenheit(this.secondaryTemp);
+                if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
+				    return Units.celsiusToFarenheit(this.secondaryTemp);
+                else
+                    return this.secondaryTemp;
 			case STAGE_TERTIARY:
-				return Units.celsiusToFarenheit(this.tertiaryTemp);
+                if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
+				    return Units.celsiusToFarenheit(this.tertiaryTemp);
+                else
+                    return this.tertiaryTemp;
 			default:
-				return Units.celsiusToFarenheit(21);
+                if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
+				    return Units.celsiusToFarenheit(21);
+                else
+                    return 21;
 		}
 	}
 
@@ -862,7 +886,10 @@ public class Recipe implements Parcelable {
 
     public double getDisplayBottleTemp()
     {
-        return Units.celsiusToFarenheit(this.bottleTemp);
+        if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
+            return Units.celsiusToFarenheit(this.bottleTemp);
+        else
+            return this.bottleTemp;
     }
 
     public boolean isForceCarbonated()
@@ -933,7 +960,10 @@ public class Recipe implements Parcelable {
 
     public double getDisplayCarbonationTemp()
     {
-        return Units.celsiusToFarenheit(this.carbonationTemp);
+        if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
+            return Units.celsiusToFarenheit(this.carbonationTemp);
+        else
+            return this.carbonationTemp;
     }
 
     public double getKegPrimingFactor()
