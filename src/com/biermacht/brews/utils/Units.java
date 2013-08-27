@@ -17,7 +17,7 @@ public class Units {
 	public static final String GALLONS = "gal";
 	public static final String POUNDS = "lbs";
 	public static final String TEASPOONS = "tsp";
-	public static final String FARENHEIT = "F";
+	public static final String FARENHEIT = "\u2109";
 	public static final String CUP = "Cup";
 	public static final String CUPS = "Cups";
     public static final String QUARTS_PER_POUND = "q/lb";
@@ -27,7 +27,7 @@ public class Units {
 	public static final String GRAMS = "grams";
 	public static final String LITERS = "liters";
 	public static final String MILLILITERS = "ml";
-	public static final String CELSIUS = "C";
+	public static final String CELSIUS = "\u2103";
     public static final String LITERS_PER_KG = "L/kg";
 	
 	// Agnostic Units
@@ -247,6 +247,14 @@ public class Units {
             return POUNDS;
         else
             return KILOGRAMS;
+    }
+
+    public static String getTemperatureUnits()
+    {
+        if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL))
+            return FARENHEIT;
+        else
+            return CELSIUS;
     }
 
     public static String getMetricEquivalent(String imp, boolean isWeight)

@@ -147,11 +147,11 @@ public class Instruction implements Parcelable {
             if (mashStep.getDisplayInfuseAmount() != 0)
             {
                 s = "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount()) + " gal " + "of " +
-                        "" + String.format("%2.0f", mashStep.getDisplayInfuseTemp()) + Constants.DEG_FAHRENHEIT + "" +
+                        "" + String.format("%2.0f", mashStep.getDisplayInfuseTemp()) + Units.getTemperatureUnits() + "" +
                         " water.  ";
             }
 
-            s += "Hold at " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + Constants.DEG_FAHRENHEIT;
+            s += "Hold at " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + Units.getTemperatureUnits();
             s += " for " + String.format("%2.0f", mashStep.getStepTime()) + " minutes.\n\n";
         }
 
