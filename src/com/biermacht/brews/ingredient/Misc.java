@@ -49,15 +49,15 @@ public class Misc extends Ingredient {
         super(p);
 
         // Required
-        setMiscType(p.readString());
-        setUse(p.readString());
-        setBeerXmlStandardAmount(p.readDouble());
-        setAmountIsWeight(p.readInt() > 0 ? true : false);
-        setUseFor(p.readString());
-        setShortDescription(p.readString());
+        this.miscType = p.readString();
+        this.use = p.readString();
+        this.amount = p.readDouble();
+        this .amountIsWeight = p.readInt() > 0 ? true : false;
+        this.useFor = p.readString();
+        this.notes = p.readString();
 
         // Optional
-        setDisplayUnits(p.readString());
+        this.displayUnits = p.readString();
     }
 
     @Override
@@ -72,15 +72,15 @@ public class Misc extends Ingredient {
         super.writeToParcel(p, flags);
 
         // Required
-        p.writeString(getMiscType());
-        p.writeString(getUse());
-        p.writeDouble(getBeerXmlStandardAmount());
+        p.writeString(this.miscType);
+        p.writeString(this.use);
+        p.writeDouble(this.amount);
         p.writeInt(amountIsWeight ? 1 : 0);
-        p.writeString(getUseFor());
-        p.writeString(getShortDescription());
+        p.writeString(this.useFor);
+        p.writeString(this.notes);
 
         // Optional
-        p.writeString(getDisplayUnits());
+        p.writeString(this.displayUnits);
     }
 
     public static final Parcelable.Creator<Misc> CREATOR =
@@ -232,13 +232,20 @@ public class Misc extends Ingredient {
 		else if (unit.equalsIgnoreCase(Units.ITEMS))
 			this.amount = amt;
 		else
-			this.amount = -1.0; // Should show that we couldnt compute
+			this.amount = -1.0; // Should show that we couldn't compute
 	}
 	
 	@Override
 	public void setBeerXmlStandardAmount(double amt){
 		this.amount = amt;
 	}
+
+    // This method is used when we want the value of the stored displayUnits
+    // Not for use to determine the display units.
+    public String getUnits()
+    {
+        return this.displayUnits;
+    }
 
 	@Override
 	public String getDisplayUnits()
@@ -300,8 +307,9 @@ public class Misc extends Ingredient {
 	@Override
 	public int hashCode() {
         int hc = this.getName().hashCode();
-        hc = hc ^ this.getUse().hashCode();
-        hc = hc ^ this.getMiscType().hashCode();
+        hc = hc ^ this.use.hashCode();
+        hc = hc ^ this.miscType.hashCode();
+        hc = hc + this.displayUnits.hashCode();
         return hc;
 	}
 

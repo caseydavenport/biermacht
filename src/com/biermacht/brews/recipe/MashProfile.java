@@ -239,11 +239,6 @@ public class MashProfile implements Parcelable
             this.spargeTemp = temp;
 	}
 	
-	public double getBeerXmlStandardSpargeTemp()
-	{
-		return this.spargeTemp;
-	}
-	
 	public double getDisplaySpargeTemp()
 	{
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
@@ -251,6 +246,11 @@ public class MashProfile implements Parcelable
         else
             return this.spargeTemp;
 	}
+
+    public double getBeerXmlStandardSpargeTemp()
+    {
+        return this.spargeTemp;
+    }
 
 	public void setpH(double pH)
 	{

@@ -361,6 +361,7 @@ public class DatabaseInterface {
             values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
             values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
             values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
+            values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
         }
 
         long ingid = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
@@ -429,6 +430,7 @@ public class DatabaseInterface {
 			values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
 			values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
 			values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
+            values.put(DatabaseHelper.ING_COL_UNITS, misc.getUnits());  // We redo this one because miscs are weird
 		}
 		
 		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;

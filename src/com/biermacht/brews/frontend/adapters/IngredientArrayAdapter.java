@@ -66,7 +66,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			
 			if(h.getUse().equals(Hop.USE_BOIL) || h.getUse().equals(Hop.USE_AROMA))
 			{
-				String s = String.format("%2.2f", BrewCalculator.calculateHopIbu(r, h));
+				String s = String.format("%2.2f", BrewCalculator.Bitterness(r, h));
 				detailText += s; 
 				detailText += " IBU";
 			}
@@ -83,8 +83,8 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			else
 				imageView.setImageResource(R.drawable.icon_extract);
 			
-			String s = String.format("%2.2f", BrewCalculator.calculateGrainPercent(r, list.get(position)));
-		    String t = String.format("%2.2f", BrewCalculator.calculateGravityPoints(r, list.get(position)));
+			String s = String.format("%2.2f", BrewCalculator.GrainPercent(r, list.get(position)));
+		    String t = String.format("%2.2f", BrewCalculator.GrainPercent(r, list.get(position)));
 			detailText += s;
 			detailText += "%, ";
 			detailText += t + " GPts.";

@@ -283,11 +283,11 @@ public class Recipe implements Parcelable {
 	// Public methods
 	public void update()
 	{
-		setColor(BrewCalculator.calculateColorFromRecipe(this));
-		setOG(BrewCalculator.calculateOriginalGravityFromRecipe(this));
-		setBitterness(BrewCalculator.calculateIbuFromRecipe(this));
-		setFG(BrewCalculator.estimateFinalGravityFromRecipe(this));
-		setABV(BrewCalculator.calculateAbvFromRecipe(this));
+		setColor(BrewCalculator.Color(this));
+		setOG(BrewCalculator.OriginalGravity(this));
+		setBitterness(BrewCalculator.Bitterness(this));
+		setFG(BrewCalculator.FinalGravity(this));
+		setABV(BrewCalculator.AlcoholByVolume(this));
 		this.instructionGenerator.generate();
 	}
 	
@@ -1025,7 +1025,7 @@ public class Recipe implements Parcelable {
 
         if (this.getMeasuredFG() > 0 && this.getMeasuredOG() > this.getMeasuredFG())
         {
-            gravP = (BrewCalculator.calculateOriginalGravityFromRecipe(this)-1)/(eff/100);
+            gravP = (BrewCalculator.OriginalGravity(this)-1)/(eff/100);
             measGravP = this.getMeasuredOG() - 1;
             Log.d("Recipe", " calcd: " + gravP + " meas: " + measGravP + " eff: " + eff);
             return 100 * measGravP / gravP;
