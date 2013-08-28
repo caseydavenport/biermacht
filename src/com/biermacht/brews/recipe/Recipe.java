@@ -532,7 +532,10 @@ public class Recipe implements Parcelable {
 	
 	public void setDisplayBatchSize(double size) 
 	{
-		this.batchSize = Units.gallonsToLiters(size);
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+		    this.batchSize = Units.gallonsToLiters(size);
+        else
+            this.batchSize = size;
 	}
 
 	public double getBeerXmlStandardBatchSize() 
@@ -597,7 +600,10 @@ public class Recipe implements Parcelable {
 	
 	public void setDisplayBoilSize(double size) 
 	{
-		this.boilSize = Units.gallonsToLiters(size);
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+		    this.boilSize = Units.gallonsToLiters(size);
+        else
+            this.boilSize = size;
 	}
 
 	/**
@@ -801,11 +807,23 @@ public class Recipe implements Parcelable {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
-				this.primaryTemp = Units.fahrenheitToCelsius(temp);
+                if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+				    this.primaryTemp = Units.fahrenheitToCelsius(temp);
+                else
+                    this.primaryTemp = temp;
+                break;
 			case STAGE_SECONDARY:
-				this.secondaryTemp = Units.fahrenheitToCelsius(temp);
+                if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+				    this.secondaryTemp = Units.fahrenheitToCelsius(temp);
+                else
+                    this.secondaryTemp = temp;
+                break;
 			case STAGE_TERTIARY:
-				this.tertiaryTemp = Units.fahrenheitToCelsius(temp);
+                if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+				    this.tertiaryTemp = Units.fahrenheitToCelsius(temp);
+                else
+                    this.secondaryTemp = temp;
+                break;
 		}
 	}
 	
@@ -878,7 +896,10 @@ public class Recipe implements Parcelable {
 
     public void setDisplayBottleTemp(double d)
     {
-        this.bottleTemp = Units.fahrenheitToCelsius(d);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+            this.bottleTemp = Units.fahrenheitToCelsius(d);
+        else
+            this.bottleTemp = d;
     }
 
     public double getDisplayBottleTemp()
@@ -952,7 +973,10 @@ public class Recipe implements Parcelable {
 
     public void setDisplayCarbonationTemp(double d)
     {
-        this.carbonationTemp = Units.fahrenheitToCelsius(d);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+            this.carbonationTemp = Units.fahrenheitToCelsius(d);
+        else
+            this.carbonationTemp = d;
     }
 
     public double getDisplayCarbonationTemp()
