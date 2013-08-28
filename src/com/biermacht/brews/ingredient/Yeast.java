@@ -258,8 +258,8 @@ public class Yeast extends Ingredient {
 	
 	public int getDisplayFermentationTemp()
 	{
-        if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
-		    return (int) Units.celsiusToFarenheit(((maxTemp + minTemp) / 2));
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    return (int) Units.celsiusToFahrenheit(((maxTemp + minTemp) / 2));
         else
             return (int) ((maxTemp + minTemp) / 2);
 	}

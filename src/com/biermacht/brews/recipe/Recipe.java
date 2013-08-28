@@ -8,8 +8,6 @@ import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
@@ -19,7 +17,6 @@ import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.InstructionGenerator;
-import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
 
 public class Recipe implements Parcelable {
@@ -804,11 +801,11 @@ public class Recipe implements Parcelable {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
-				this.primaryTemp = Units.farenheitToCelsius(temp);
+				this.primaryTemp = Units.fahrenheitToCelsius(temp);
 			case STAGE_SECONDARY:
-				this.secondaryTemp = Units.farenheitToCelsius(temp);
+				this.secondaryTemp = Units.fahrenheitToCelsius(temp);
 			case STAGE_TERTIARY:
-				this.tertiaryTemp = Units.farenheitToCelsius(temp);
+				this.tertiaryTemp = Units.fahrenheitToCelsius(temp);
 		}
 	}
 	
@@ -817,23 +814,23 @@ public class Recipe implements Parcelable {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
-                if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
-				    return Units.celsiusToFarenheit(this.primaryTemp);
+                if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+				    return Units.celsiusToFahrenheit(this.primaryTemp);
                 else
                     return this.primaryTemp;
 			case STAGE_SECONDARY:
-                if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
-				    return Units.celsiusToFarenheit(this.secondaryTemp);
+                if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+				    return Units.celsiusToFahrenheit(this.secondaryTemp);
                 else
                     return this.secondaryTemp;
 			case STAGE_TERTIARY:
-                if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
-				    return Units.celsiusToFarenheit(this.tertiaryTemp);
+                if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+				    return Units.celsiusToFahrenheit(this.tertiaryTemp);
                 else
                     return this.tertiaryTemp;
 			default:
-                if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
-				    return Units.celsiusToFarenheit(21);
+                if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+				    return Units.celsiusToFahrenheit(21);
                 else
                     return 21;
 		}
@@ -881,13 +878,13 @@ public class Recipe implements Parcelable {
 
     public void setDisplayBottleTemp(double d)
     {
-        this.bottleTemp = Units.farenheitToCelsius(d);
+        this.bottleTemp = Units.fahrenheitToCelsius(d);
     }
 
     public double getDisplayBottleTemp()
     {
-        if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
-            return Units.celsiusToFarenheit(this.bottleTemp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+            return Units.celsiusToFahrenheit(this.bottleTemp);
         else
             return this.bottleTemp;
     }
@@ -955,13 +952,13 @@ public class Recipe implements Parcelable {
 
     public void setDisplayCarbonationTemp(double d)
     {
-        this.carbonationTemp = Units.farenheitToCelsius(d);
+        this.carbonationTemp = Units.fahrenheitToCelsius(d);
     }
 
     public double getDisplayCarbonationTemp()
     {
-        if (Units.getTemperatureUnits().equals(Units.FARENHEIT))
-            return Units.celsiusToFarenheit(this.carbonationTemp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+            return Units.celsiusToFahrenheit(this.carbonationTemp);
         else
             return this.carbonationTemp;
     }

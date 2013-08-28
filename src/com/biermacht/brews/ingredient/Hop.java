@@ -161,8 +161,12 @@ public class Hop extends Ingredient {
 	}
 
 	@Override
-	public void setDisplayAmount(double amt) {
-		this.amount = Units.ouncesToKilos(amt);
+	public void setDisplayAmount(double amt)
+    {
+        if (getDisplayUnits().equals(Units.OUNCES))
+		    this.amount = Units.ouncesToKilos(amt);
+        else
+            this.amount = Units.gramsToKilos(amt);
 	}
 	
 	@Override

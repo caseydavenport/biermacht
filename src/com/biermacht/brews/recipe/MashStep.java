@@ -1,7 +1,6 @@
 package com.biermacht.brews.recipe;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.biermacht.brews.utils.*;
 
@@ -187,12 +186,18 @@ public class MashStep implements Parcelable
 
     public void setDisplayInfuseAmount(double amt)
     {
-        this.infuseAmount = Units.gallonsToLiters(amt);
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+            this.infuseAmount = Units.gallonsToLiters(amt);
+        else
+            this.infuseAmount = amt;
     }
 
     public double getDisplayInfuseAmount()
     {
-        return Units.litersToGallons(this.infuseAmount);
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+            return Units.litersToGallons(this.infuseAmount);
+        else
+            return this.infuseAmount;
     }
 
 	public void setBeerXmlStandardInfuseAmount(double amt)
@@ -207,12 +212,18 @@ public class MashStep implements Parcelable
 
     public double getDisplayInfuseTemp()
     {
-        return Units.celsiusToFarenheit(this.infuseTemp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+            return Units.celsiusToFahrenheit(this.infuseTemp);
+        else
+            return this.infuseTemp;
     }
 
     public void setDisplayInfuseTemp(double d)
     {
-        this.infuseTemp = Units.farenheitToCelsius(d);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+            this.infuseTemp = Units.fahrenheitToCelsius(d);
+        else
+            this.infuseTemp = d;
     }
 
     public double getBeerXmlStandardInfuseTemp()
@@ -227,12 +238,18 @@ public class MashStep implements Parcelable
 
     public void setDisplayStepTemp(double temp)
     {
-        this.stepTemp = Units.farenheitToCelsius(temp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+            this.stepTemp = Units.fahrenheitToCelsius(temp);
+        else
+            this.stepTemp = temp;
     }
 
     public double getDisplayStepTemp()
     {
-        return Units.celsiusToFarenheit(this.stepTemp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+            return Units.celsiusToFahrenheit(this.stepTemp);
+        else
+            return this.stepTemp;
     }
 
 	public void setBeerXmlStandardStepTemp(double temp)
@@ -252,7 +269,10 @@ public class MashStep implements Parcelable
 
     public double getDisplayWaterToGrainRatio()
     {
-        return Units.LPKGtoQPLB(this.waterToGrainRatio);
+        if (Units.getUnitSystem().equals(Units.IMPERIAL))
+            return Units.LPKGtoQPLB(this.waterToGrainRatio);
+        else
+            return this.waterToGrainRatio;
     }
 
     public void setBeerXmlStandardWaterToGrainRatio(double d)
@@ -262,7 +282,10 @@ public class MashStep implements Parcelable
 
     public void setDisplayWaterToGrainRatio(double d)
     {
-        this.waterToGrainRatio = Units.QPLBtoLPKG(d);
+        if (Units.getUnitSystem().equals(Units.IMPERIAL))
+            this.waterToGrainRatio = Units.QPLBtoLPKG(d);
+        else
+            this.waterToGrainRatio = d;
     }
 
     public void setOrder(int i)

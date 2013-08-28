@@ -3,10 +3,7 @@ package com.biermacht.brews.frontend.fragments;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
@@ -15,12 +12,11 @@ import android.widget.TextView;
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
 import android.content.*;
-import android.widget.*;
+
 import java.util.*;
 import com.biermacht.brews.frontend.*;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.utils.*;
-import com.biermacht.brews.recipe.*;
 
 public class ProfileViewFragment extends Fragment {
 
@@ -86,7 +82,7 @@ public class ProfileViewFragment extends Fragment {
 		
 		detail = new Detail();
 		String t = String.format("%2.0f", r.getMashProfile().getDisplayGrainTemp());
-		t += " " + Units.FARENHEIT;
+		t += " " + Units.FAHRENHEIT;
 		detail.setTitle("Grain Temp: ");
 		detail.setType(Detail.TYPE_TEXT);
 		detail.setFormat("%s");

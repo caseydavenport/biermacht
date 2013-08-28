@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.MashStep;
+import com.biermacht.brews.utils.Units;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class MashStepArrayAdapter extends ArrayAdapter<MashStep> {
         String temp = String.format("%2.0f", list.get(position).getDisplayStepTemp());
         String time = String.format("%2.0f", list.get(position).getStepTime());
         titleView.setText(list.get(position).getName());
-        textView.setText(time + " mins at " + temp + " F");
+        textView.setText(time + " mins at " + temp + Units.getTemperatureUnits());
 
 		return row;
 	}

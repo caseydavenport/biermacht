@@ -2,11 +2,9 @@ package com.biermacht.brews.recipe;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import com.biermacht.brews.utils.*;
 import com.biermacht.brews.utils.comparators.MashStepComparator;
@@ -182,7 +180,10 @@ public class MashProfile implements Parcelable
 	
 	public void setDisplayGrainTemp(double temp)
 	{
-		this.grainTemp = Units.farenheitToCelsius(temp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    this.grainTemp = Units.fahrenheitToCelsius(temp);
+        else
+            this.grainTemp = temp;
 	}
 	
 	public double getBeerXmlStandardGrainTemp()
@@ -192,7 +193,10 @@ public class MashProfile implements Parcelable
 
 	public double getDisplayGrainTemp()
 	{
-		return Units.celsiusToFarenheit(this.grainTemp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    return Units.celsiusToFahrenheit(this.grainTemp);
+        else
+            return this.grainTemp;
 	}
 	
 	public void setBeerXmlStandardTunTemp(double temp)
@@ -202,7 +206,10 @@ public class MashProfile implements Parcelable
 	
 	public void setDisplayTunTemp(double temp)
 	{
-		this.tunTemp = Units.farenheitToCelsius(temp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    this.tunTemp = Units.fahrenheitToCelsius(temp);
+        else
+            this.tunTemp = temp;
 	}
 	
 	public double getBeerXmlStandardTunTemp()
@@ -212,17 +219,24 @@ public class MashProfile implements Parcelable
 	
 	public double getDisplayTunTemp()
 	{
-		return Units.celsiusToFarenheit(this.tunTemp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    return Units.celsiusToFahrenheit(this.tunTemp);
+        else
+            return this.tunTemp;
 	}
 	
 	public void setBeerXmlStandardSpargeTemp(double temp)
 	{
-		this.spargeTemp = temp;
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    this.spargeTemp = temp;
 	}
 	
 	public void setDisplaySpargeTemp(double temp)
 	{
-		this.spargeTemp = Units.farenheitToCelsius(temp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    this.spargeTemp = Units.fahrenheitToCelsius(temp);
+        else
+            this.spargeTemp = temp;
 	}
 	
 	public double getBeerXmlStandardSpargeTemp()
@@ -232,7 +246,10 @@ public class MashProfile implements Parcelable
 	
 	public double getDisplaySpargeTemp()
 	{
-		return Units.celsiusToFarenheit(this.spargeTemp);
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    return Units.celsiusToFahrenheit(this.spargeTemp);
+        else
+            return this.spargeTemp;
 	}
 
 	public void setpH(double pH)
@@ -252,7 +269,10 @@ public class MashProfile implements Parcelable
 	
 	public void setDisplayTunWeight(double weight)
 	{
-		this.tunWeight = Units.poundsToKilos(weight);
+        if (Units.getWeightUnits().equals(Units.POUNDS))
+		    this.tunWeight = Units.poundsToKilos(weight);
+        else
+            this.tunWeight = weight;
 	}
 	
 	public double getBeerXmlStandardTunWeight()
@@ -262,7 +282,10 @@ public class MashProfile implements Parcelable
 	
 	public double getDisplayTunWeight()
 	{
-		return Units.kilosToPounds(this.tunWeight);
+        if (Units.getWeightUnits().equals(Units.POUNDS))
+		    return Units.kilosToPounds(this.tunWeight);
+        else
+            return this.tunWeight;
 	}
 
 	public void setBeerXmlStandardTunSpecHeat(double heat)

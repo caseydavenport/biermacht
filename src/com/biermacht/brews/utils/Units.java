@@ -2,7 +2,6 @@ package com.biermacht.brews.utils;
 import android.util.Log;
 
 import com.biermacht.brews.frontend.MainActivity;
-import com.biermacht.brews.ingredient.Misc;
 
 import java.util.*;
 
@@ -17,10 +16,10 @@ public class Units {
 	public static final String GALLONS = "gal";
 	public static final String POUNDS = "lbs";
 	public static final String TEASPOONS = "tsp";
-	public static final String FARENHEIT = "\u2109";
+	public static final String FAHRENHEIT = "\u2109";
 	public static final String CUP = "Cup";
 	public static final String CUPS = "Cups";
-    public static final String QUARTS_PER_POUND = "q/lb";
+    public static final String QUARTS_PER_POUND = "qt/lb";
 	
 	// Metric Units
 	public static final String KILOGRAMS = "kg";
@@ -113,12 +112,12 @@ public class Units {
         return p/(258.6-((p/258.2)*227.1))+1;
     }
 
-	public static double farenheitToCelsius(double f)
+	public static double fahrenheitToCelsius(double f)
 	{
 		return (f - 32)/1.8;
 	}
 	
-	public static double celsiusToFarenheit(double c)
+	public static double celsiusToFahrenheit(double c)
 	{
 		return c*1.8 + 32;
 	}
@@ -233,6 +232,13 @@ public class Units {
 	}
 
     // Methods to return the units for each measurement system
+    public static String getUnitSystem()
+    {
+        if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL))
+            return IMPERIAL;
+        else
+            return METRIC;
+    }
     public static String getHopUnits()
     {
         if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL))
@@ -252,7 +258,7 @@ public class Units {
     public static String getTemperatureUnits()
     {
         if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL))
-            return FARENHEIT;
+            return FAHRENHEIT;
         else
             return CELSIUS;
     }
@@ -263,6 +269,14 @@ public class Units {
             return GALLONS;
         else
             return LITERS;
+    }
+
+    public static String getWeightUnits()
+    {
+        if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL))
+            return POUNDS;
+        else
+            return KILOGRAMS;
     }
 
     public static String getMetricEquivalent(String imp, boolean isWeight)

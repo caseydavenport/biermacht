@@ -150,7 +150,10 @@ public class Fermentable extends Ingredient implements Parcelable {
 	@Override 
 	public void setDisplayAmount(double amt)
 	{
-		this.amount = Units.poundsToKilos(amt);
+        if (getDisplayUnits().equals(Units.POUNDS))
+		    this.amount = Units.poundsToKilos(amt);
+        else
+            this.amount = amt;
 	}
 	
 	@Override

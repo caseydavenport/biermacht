@@ -17,6 +17,7 @@ import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
 
@@ -75,10 +76,10 @@ public class AddMashStepActivity extends AddEditActivity {
         infuseTemperatureViewText = (TextView) infuseTemperatureView.findViewById(R.id.text);
 
         // Set titles
-        amountViewTitle.setText("Water to Add (qt)");
-        stepTempViewTitle.setText("Step Temperature (F)");
-        waterToGrainRatioViewTitle.setText("Water to Grain Ratio (qt/lb)");
-        infuseTemperatureViewTitle.setText("Water Temperature (F)");
+        amountViewTitle.setText("Water to Add (" + (Units.getUnitSystem() == Units.IMPERIAL ? "qt" : "L") + ")");
+        stepTempViewTitle.setText("Step Temperature (" + Units.getTemperatureUnits() + ")");
+        waterToGrainRatioViewTitle.setText("Water to Grain Ratio (" + (Units.getUnitSystem() == Units.IMPERIAL ? "qt/lb" : "L/kg") + ")");
+        infuseTemperatureViewTitle.setText("Water Temperature (" + Units.getTemperatureUnits() + ")");
 
         // Remove views we don't want
 

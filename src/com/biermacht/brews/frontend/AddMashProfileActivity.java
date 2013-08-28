@@ -22,6 +22,7 @@ import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
 
@@ -121,10 +122,10 @@ public class AddMashProfileActivity extends AddEditActivity {
         spargeVolumeViewTitle = (TextView) spargeVolumeView.findViewById(R.id.title);
 
         // Set titles
-        tunTempViewTitle.setText("Tun Temperature (F)");
-        grainTempViewTitle.setText("Grain Temperature (F)");
-        spargeTempViewTitle.setText("Sparge Water Temperature (F)");
-        spargeVolumeViewTitle.setText("Sparge Volume (gal)");
+        tunTempViewTitle.setText("Tun Temperature (" + Units.getTemperatureUnits() + ")");
+        grainTempViewTitle.setText("Grain Temperature (" + Units.getTemperatureUnits() + ")");
+        spargeTempViewTitle.setText("Sparge Water Temperature (" + Units.getTemperatureUnits() + ")");
+        spargeVolumeViewTitle.setText("Sparge Volume (" + Units.getVolumeUnits() + ")");
 
         // Get content views
         tunTempViewText = (TextView) tunTempView.findViewById(R.id.text);
