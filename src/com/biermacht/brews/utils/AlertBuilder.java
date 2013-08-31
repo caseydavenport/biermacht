@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -92,6 +94,51 @@ public class AlertBuilder {
         final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_float_2_4, null);
         final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
         editText.setText(text.getText().toString());
+
+        return new AlertDialog.Builder(context)
+                .setTitle(title.getText().toString())
+                .setView(alertView)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        text.setText(editText.getText().toString());
+                    }
+
+                })
+
+                .setNegativeButton(R.string.cancel, null);
+    }
+
+    public AlertDialog.Builder editTextFloatCheckBoxAlert(final TextView text, final TextView title)
+    {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_float_with_check_box, null);
+        final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
+        final CheckBox checkBox = (CheckBox) alertView.findViewById(R.id.check_box);
+
+        // Set text
+        editText.setText(text.getText().toString());
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if (checkBox.isChecked())
+                {
+                    editText.setEnabled(false);
+                    editText.setClickable(false);
+                    editText.setFocusable(false);
+                    editText.setFocusableInTouchMode(false);
+                }
+                else
+                {
+                    editText.setEnabled(true);
+                    editText.setClickable(true);
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                }
+            }
+        });
 
         return new AlertDialog.Builder(context)
                 .setTitle(title.getText().toString())
