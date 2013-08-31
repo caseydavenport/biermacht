@@ -25,6 +25,7 @@ import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
+import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Database;
@@ -94,6 +95,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     // Listeners
     public OnItemSelectedListener spinnerListener;
 
+    // Callback for on alertBuilder return.
+    public Callback callback;
+
     // Abstract methods
     public abstract void onMissedClick(View v);
     public abstract void createSpinner();
@@ -118,7 +122,8 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Create alert builder
-        alertBuilder = new AlertBuilder(this);
+        createCallback();
+        alertBuilder = new AlertBuilder(this, callback);
 
         // Get shared preferences
         preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
@@ -220,6 +225,16 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         Log.d("AddEditActivity", "Calling configureSpinnerListener()");
         configureSpinnerListener();
         spinnerView.setOnItemSelectedListener(spinnerListener);
+    }
+
+    public void createCallback()
+    {
+        callback = new Callback() {
+            @Override
+            public void call() {
+                Log.d("AddEditActivity", "Entering default callback");
+            }
+        };
     }
 
     public void getValuesFromIntent()

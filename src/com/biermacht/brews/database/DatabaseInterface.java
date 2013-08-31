@@ -63,7 +63,7 @@ public class DatabaseInterface {
             DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV,
             DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR,
             DatabaseHelper.REC_COL_CALORIES,
-            DatabaseHelper.REC_COL_CALC_STRIKE_VOL,
+            DatabaseHelper.REC_COL_CALC_BOIL_VOL,
             DatabaseHelper.REC_COL_CALC_STRIKE_TEMP,
             DatabaseHelper.REC_COL_CALC_STRIKE_VOL,
 			};
@@ -226,9 +226,9 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV, r.getPrimingSugarEquiv());
         values.put(DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR, r.getKegPrimingFactor());
         values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
-        values.put(DatabaseHelper.REC_COL_CALC_BOIL_VOL, r.calculateBoilVolume() ? 1 : 0);
-        values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.calculateStrikeTemp() ? 1 : 0);
-        values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.calculateStrikeVolume() ? 1 : 0);
+        values.put(DatabaseHelper.REC_COL_CALC_BOIL_VOL, r.getCalculateBoilVolume() ? 1 : 0);
+        values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.getCalculateStrikeTemp() ? 1 : 0);
+        values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.getCalculateStrikeVolume() ? 1 : 0);
 
         Log.d("DatabaseInterface", "Adding recipe " + r.getRecipeName() + " to database");
 		
@@ -282,9 +282,9 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV, r.getPrimingSugarEquiv());
         values.put(DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR, r.getKegPrimingFactor());
         values.put(DatabaseHelper.REC_COL_CALORIES, r.getCalories());
-        values.put(DatabaseHelper.REC_COL_CALC_BOIL_VOL, r.calculateBoilVolume() ? 1 : 0);
-        values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.calculateStrikeTemp() ? 1 : 0);
-        values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.calculateStrikeVolume() ? 1 : 0);
+        values.put(DatabaseHelper.REC_COL_CALC_BOIL_VOL, r.getCalculateBoilVolume() ? 1 : 0);
+        values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.getCalculateStrikeTemp() ? 1 : 0);
+        values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.getCalculateStrikeVolume() ? 1 : 0);
 
         for (Ingredient i : r.getIngredientList())
         {
@@ -790,13 +790,13 @@ public class DatabaseInterface {
         int calories = cursor.getInt(cid);               cid++;
         int calcBoilVol = cursor.getInt(cid);            cid++;
         int calcStrikeTemp = cursor.getInt(cid);         cid++;
-        int calcStrikeVol = cursor.getInt(cid);         cid++;
+        int calcStrikeVol = cursor.getInt(cid);          cid++;
 		
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
 		BeerStyle style = readStyle(id);
 		MashProfile profile = readMashProfile(id);
 
-        Log.d("DatabaseInterface", "Creating recipe " + recipeName + " from cursor");
+        Log.d("DatabaseInterface", "Creating recipe '" + recipeName + "' from cursor");
 		
 		Recipe r = new Recipe(recipeName);
 		r.setId(id);
@@ -835,10 +835,10 @@ public class DatabaseInterface {
         r.setPrimingSugarEquiv(sugarEquivalent);
         r.setKegPrimingFactor(kegPrimingFactor);
         r.setCalories(calories);
-        r.setCalculateBoilVolume(calcBoilVol > 0 ? true : false);
-        r.setCalculateStrikeTemp(calcStrikeTemp > 0 ? true : false);
-        r.setCalculateStrikeVolume(calcStrikeVol > 0 ? true : false);
-		
+        r.setCalculateBoilVolume(calcBoilVol > 0);
+        r.setCalculateStrikeTemp(calcStrikeTemp > 0);
+        r.setCalculateStrikeVolume(calcStrikeVol > 0);
+
 		r.setStyle(style);
 		r.setMashProfile(profile);
 		r.setIngredientsList(ingredientsList);

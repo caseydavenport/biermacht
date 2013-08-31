@@ -18,6 +18,8 @@ import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.MashProfile;
+import com.biermacht.brews.utils.Callbacks.BooleanCallback;
+import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
@@ -55,6 +57,9 @@ public class AddNewRecipeActivity extends AddEditActivity {
     public ArrayList<BeerStyle> styleArray;
     public ArrayList<String> typeArray;
     public ArrayList<MashProfile> profileArray;
+
+    // Callbacks
+    public BooleanCallback boilVolumeCallback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,7 +132,7 @@ public class AddNewRecipeActivity extends AddEditActivity {
         else if (v.equals(batchSizeView))
             alert = alertBuilder.editTextFloatAlert(batchSizeViewText, batchSizeViewTitle).create();
         else if (v.equals(boilSizeView))
-            alert = alertBuilder.editTextFloatAlert(boilSizeViewText, boilSizeViewTitle).create();
+            alert = alertBuilder.editTextFloatCheckBoxAlert(boilSizeViewText, boilSizeViewTitle, mRecipe.getCalculateBoilVolume(), boilVolumeCallback).create();
         else
             return; // In case its none of those views...
 
@@ -140,19 +145,57 @@ public class AddNewRecipeActivity extends AddEditActivity {
     public void getValuesFromIntent()
     {
         super.getValuesFromIntent();
+    }
 
-        // Set values
-        mRecipe = Constants.NEW_RECIPE;
-        style = mRecipe.getStyle();
-        profile = mRecipe.getMashProfile();
-        type = mRecipe.getType();
-        efficiency = mRecipe.getEfficiency();
+    @Override
+    public void createCallback()
+    {
+        // Default callback, called when alertBuilders are finished.
+        // Allows us to update fields that are dependant on other fields.
+        callback = new Callback()
+        {
+            @Override
+            public void call()
+            {
+                try
+                {
+                    // Get new values
+                    acquireValues();
+                }
+                catch (Exception e)
+                {
+                    Log.d("AddNewRecipeActivity", "Exception in callback from alert dialog");
+                    e.printStackTrace();
+                }
+                // Update fields here
+                boilSizeViewText.setText(String.format("%2.2f", mRecipe.getDisplayBoilSize()));
+            }
+        };
+
+        // Callback for when boilVolume is updated.  We need to
+        // check if the option to auto-calc boil volume has changed via user
+        // selection.
+        boilVolumeCallback = new BooleanCallback()
+        {
+            @Override
+            public void call(boolean b)
+            {
+                mRecipe.setCalculateBoilVolume(b);
+                callback.call();
+            }
+        };
     }
 
     @Override
     public void onRecipeNotFound()
     {
         Log.d("AddNewRecipeActivity", "onRecipeNotFound because we're creating one!");
+        // Set values
+        mRecipe = Constants.NEW_RECIPE;
+        style = mRecipe.getStyle();
+        profile = mRecipe.getMashProfile();
+        type = mRecipe.getType();
+        efficiency = mRecipe.getEfficiency();
     }
 
     @Override
@@ -194,6 +237,7 @@ public class AddNewRecipeActivity extends AddEditActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 style = styleArray.get(position);
+                callback.call();
             }
 
             public void onNothingSelected(AdapterView<?> parentView)
@@ -208,6 +252,7 @@ public class AddNewRecipeActivity extends AddEditActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 profile = profileArray.get(position);
+                callback.call();
             }
 
             public void onNothingSelected(AdapterView<?> parentView)
@@ -221,6 +266,7 @@ public class AddNewRecipeActivity extends AddEditActivity {
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 type = typeArray.get(position);
+                callback.call();
 
                 if(type.equals(Recipe.EXTRACT))
                     profileSpinner.setVisibility(View.GONE);
@@ -271,13 +317,12 @@ public class AddNewRecipeActivity extends AddEditActivity {
     {
         super.acquireValues();
 
-        String recipeName = nameViewText.getText().toString();
-        int boilTime = Integer.parseInt(timeViewText.getText().toString());
         efficiency = Double.parseDouble(efficiencyViewText.getText().toString());
         double batchSize = Double.parseDouble(batchSizeViewText.getText().toString());
         double boilSize = Double.parseDouble(boilSizeViewText.getText().toString());
         String description = "No Description Provided";
 
+        mRecipe.setRecipeName(name);
         mRecipe.setVersion(Utils.getXmlVersion());
         mRecipe.setType(type);
         mRecipe.setStyle(style);
@@ -285,7 +330,7 @@ public class AddNewRecipeActivity extends AddEditActivity {
         mRecipe.setBrewer("Biermacht Brews"); // TODO
         mRecipe.setDisplayBatchSize(batchSize);
         mRecipe.setDisplayBoilSize(boilSize);
-        mRecipe.setBoilTime(boilTime);
+        mRecipe.setBoilTime(time);
         mRecipe.setEfficiency(efficiency);
         mRecipe.setBatchTime(1);
         mRecipe.setDescription(description);

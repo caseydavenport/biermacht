@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.utils.Callbacks.BooleanCallback;
+import com.biermacht.brews.utils.Callbacks.Callback;
 
 /**
  * Created by Casey on 7/30/13.
@@ -18,10 +20,12 @@ import com.biermacht.brews.R;
 public class AlertBuilder {
 
     private Context context;
+    private Callback callback;
 
-    public AlertBuilder(Context c)
+    public AlertBuilder(Context c, Callback cb)
     {
         this.context = c;
+        this.callback = cb;
     }
 
     // Builders for all of the alerts
@@ -39,6 +43,7 @@ public class AlertBuilder {
 
                     public void onClick(DialogInterface dialog, int which) {
                         text.setText(editText.getText().toString());
+                        callback.call();
                     }
 
                 })
@@ -60,6 +65,7 @@ public class AlertBuilder {
 
                     public void onClick(DialogInterface dialog, int which) {
                         text.setText(editText.getText().toString());
+                        callback.call();
                     }
 
                 })
@@ -81,6 +87,7 @@ public class AlertBuilder {
 
                     public void onClick(DialogInterface dialog, int which) {
                         text.setText(editText.getText().toString());
+                        callback.call();
                     }
 
                 })
@@ -102,6 +109,7 @@ public class AlertBuilder {
 
                     public void onClick(DialogInterface dialog, int which) {
                         text.setText(editText.getText().toString());
+                        callback.call();
                     }
 
                 })
@@ -109,7 +117,7 @@ public class AlertBuilder {
                 .setNegativeButton(R.string.cancel, null);
     }
 
-    public AlertDialog.Builder editTextFloatCheckBoxAlert(final TextView text, final TextView title)
+    public AlertDialog.Builder editTextFloatCheckBoxAlert(final TextView text, final TextView title, boolean checked, final BooleanCallback cb)
     {
         LayoutInflater factory = LayoutInflater.from(context);
         final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_float_with_check_box, null);
@@ -129,6 +137,8 @@ public class AlertBuilder {
                     editText.setClickable(false);
                     editText.setFocusable(false);
                     editText.setFocusableInTouchMode(false);
+                    callback.call();
+                    editText.setText(text.getText().toString());
                 }
                 else
                 {
@@ -140,12 +150,27 @@ public class AlertBuilder {
             }
         });
 
+        // Set the box to be checked or not.
+        checkBox.setChecked(checked);
+
+        // If checked initially, grey out edit text
+        if (checked)
+        {
+            editText.setEnabled(false);
+            editText.setClickable(false);
+            editText.setFocusable(false);
+            editText.setFocusableInTouchMode(false);
+        }
+
         return new AlertDialog.Builder(context)
                 .setTitle(title.getText().toString())
                 .setView(alertView)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        cb.call(checkBox.isChecked());
+                        callback.call();
                         text.setText(editText.getText().toString());
                     }
 

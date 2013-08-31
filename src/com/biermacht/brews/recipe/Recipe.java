@@ -214,9 +214,9 @@ public class Recipe implements Parcelable {
 
         // Fields for auto-calculation ====================================
         // ================================================================
-        calculateBoilVolume = p.readInt() == 1 ? true : false;
-        calculateStrikeVolume = p.readInt() == 1 ? true : false;
-        calculateStrikeTemp = p.readInt() == 1 ? true : false;
+        calculateBoilVolume = p.readInt() > 0;
+        calculateStrikeVolume = p.readInt() > 0;
+        calculateStrikeTemp = p.readInt() > 0;
 
         // Create instruction generator
         instructionGenerator = new InstructionGenerator(this);
@@ -618,10 +618,32 @@ public class Recipe implements Parcelable {
 	public double getDisplayBoilSize()
 	{
         if (Units.getVolumeUnits().equals(Units.GALLONS))
-		    return Units.litersToGallons(this.boilSize);
+        {
+            if (this.calculateBoilVolume)
+                return Units.litersToGallons(calculateBoilVolume());
+            else
+		        return Units.litersToGallons(this.boilSize);
+        }
         else
-            return this.boilSize;
+        {
+            if (this.calculateBoilVolume)
+                return calculateBoilVolume();
+            else
+                return this.boilSize;
+        }
 	}
+
+    private double calculateBoilVolume()
+    {
+        double TRUB_LOSS = Units.gallonsToLiters(.3);               // Liters lost
+        double SHRINKAGE = .04;                                     // Percent lost
+        double EVAP_LOSS = Units.gallonsToLiters(1.5);              // Evaporation loss (L/hr) // TODO: Get this from equipment
+
+        if (this.type.equals(Recipe.ALL_GRAIN))
+            return batchSize * (1 + SHRINKAGE ) + TRUB_LOSS + (EVAP_LOSS * Units.minutesToHours(boilTime));
+        else
+            return (batchSize/3) * (1 + SHRINKAGE ) + TRUB_LOSS + (EVAP_LOSS * Units.minutesToHours(boilTime));
+    }
 	
 	public void setDisplayBoilSize(double size) 
 	{
@@ -1032,7 +1054,7 @@ public class Recipe implements Parcelable {
         this.calories = i;
     }
 
-    public boolean calculateBoilVolume()
+    public boolean getCalculateBoilVolume()
     {
         return this.calculateBoilVolume;
     }
@@ -1042,7 +1064,7 @@ public class Recipe implements Parcelable {
         this.calculateBoilVolume = b;
     }
 
-    public boolean calculateStrikeVolume()
+    public boolean getCalculateStrikeVolume()
     {
         return this.calculateStrikeVolume;
     }
@@ -1052,7 +1074,7 @@ public class Recipe implements Parcelable {
         this.calculateStrikeVolume = b;
     }
 
-    public boolean calculateStrikeTemp()
+    public boolean getCalculateStrikeTemp()
     {
         return this.calculateStrikeTemp;
     }

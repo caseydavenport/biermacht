@@ -161,6 +161,11 @@ public class Units {
 	{
 		return m / 1440;
 	}
+
+    public static double minutesToHours(double m)
+    {
+        return m /60;
+    }
 	
 	public static double daysToMinutes(double d)
 	{

@@ -15,7 +15,6 @@
     <CheckBox
         android:id="@+id/check_box"
         android:layout_gravity="center"
-        android:checked="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calculate automatically" />
