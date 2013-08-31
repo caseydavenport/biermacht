@@ -63,6 +63,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String REC_COL_PRIMING_SUGAR_EQUIV = "primingSugarEquiv";
     public static final String REC_COL_KEG_PRIMING_FACTOR = "kegPrimingFactor";
     public static final String REC_COL_CALORIES = "calories";
+    public static final String REC_COL_CALC_BOIL_VOL = "calculateBoilVolume";
+    public static final String REC_COL_CALC_STRIKE_TEMP = "calculateStrikeTemp";
+    public static final String REC_COL_CALC_STRIKE_VOL = "calculateStrikeVolume";
 	
 	// Column name defines for INGREDIENTS
 	public static final String ING_COL_ID = "_id";
@@ -203,7 +206,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + REC_COL_CARB_TEMP + " float, "
             + REC_COL_PRIMING_SUGAR_EQUIV + " float, "
             + REC_COL_KEG_PRIMING_FACTOR + " float, "
-            + REC_COL_CALORIES + " integer "
+            + REC_COL_CALORIES + " integer, "
+            + REC_COL_CALC_BOIL_VOL + " integer, "
+            + REC_COL_CALC_STRIKE_TEMP + " integer, "
+            + REC_COL_CALC_STRIKE_VOL + " integer"
 		+ ");";
 	
 	private static final String CREATE_INGREDIENT_TABLE = "create table " +

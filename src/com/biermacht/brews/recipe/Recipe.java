@@ -74,6 +74,13 @@ public class Recipe implements Parcelable {
 	private InstructionGenerator instructionGenerator; // Generates instructions
 	private double measuredOG;         // Brew day stat: measured OG
 	private double measuredFG;         // Brew stat: measured FG
+
+    // Fields for auto-calculation ====================================
+    // ================================================================
+    private boolean calculateBoilVolume;            // Calculate the boil volume automatically
+    private boolean calculateStrikeVolume;          // Calculate strike vol automatically
+    private boolean calculateStrikeTemp;            // Calculate strike temp automatically
+
 	
 	// Static values =================================================
 	// ===============================================================
@@ -129,6 +136,12 @@ public class Recipe implements Parcelable {
 		this.instructionGenerator = new InstructionGenerator(this);
 		this.measuredOG = 0;
 		this.measuredFG = 0;
+
+        // Fields for auto-calculation ====================================
+        // ================================================================
+        calculateBoilVolume = false;
+        calculateStrikeVolume = false;
+        calculateStrikeTemp = false;
 
         update();
 	}
@@ -195,9 +208,15 @@ public class Recipe implements Parcelable {
         ABV = p.readDouble();                // Alcohol by volume
         bitterness = p.readDouble();         // Bitterness in IBU
         color = p.readDouble();              // Color - SRM
-        // Instruction generator not included in parcel
+                                             // Instruction generator not included in parcel
         measuredOG = p.readDouble();         // Brew day stat: measured OG
         measuredFG = p.readDouble();         // Brew stat: measured FG
+
+        // Fields for auto-calculation ====================================
+        // ================================================================
+        calculateBoilVolume = p.readInt() == 1 ? true : false;
+        calculateStrikeVolume = p.readInt() == 1 ? true : false;
+        calculateStrikeTemp = p.readInt() == 1 ? true : false;
 
         // Create instruction generator
         instructionGenerator = new InstructionGenerator(this);
@@ -255,9 +274,15 @@ public class Recipe implements Parcelable {
         p.writeDouble(ABV);                // Alcohol by volume
         p.writeDouble(bitterness);         // Bitterness in IBU
         p.writeDouble(color);              // Color - SRM
-        // Instruction generator not included in parcel
+                                           // Instruction generator not included in parcel
         p.writeDouble(measuredOG);         // Brew day stat: measured OG
         p.writeDouble(measuredFG);         // Brew stat: measured FG
+
+        // Fields for auto-calculation ====================================
+        // ================================================================
+        p.writeInt(calculateBoilVolume ? 1 : 0);
+        p.writeInt(calculateStrikeVolume ? 1 : 0);
+        p.writeInt(calculateStrikeTemp ? 1 : 0);
     }
 
     @Override
@@ -1005,6 +1030,36 @@ public class Recipe implements Parcelable {
     public void setCalories(int i)
     {
         this.calories = i;
+    }
+
+    public boolean calculateBoilVolume()
+    {
+        return this.calculateBoilVolume;
+    }
+
+    public void setCalculateBoilVolume(boolean b)
+    {
+        this.calculateBoilVolume = b;
+    }
+
+    public boolean calculateStrikeVolume()
+    {
+        return this.calculateStrikeVolume;
+    }
+
+    public void setCalculateStrikeVolume(boolean b)
+    {
+        this.calculateStrikeVolume = b;
+    }
+
+    public boolean calculateStrikeTemp()
+    {
+        return this.calculateStrikeTemp;
+    }
+
+    public void setCalculateStrikeTemp(boolean b)
+    {
+        this.calculateStrikeTemp = b;
     }
 
     public double getMeasuredABV()

@@ -107,7 +107,7 @@ public class AddMashStepActivity extends AddEditActivity {
     {
         AlertDialog alert;
         if (v.equals(infuseTemperatureView))
-        alert = alertBuilder.editTextFloatAlert(infuseTemperatureViewText, infuseTemperatureViewTitle).create();
+            alert = alertBuilder.editTextFloatAlert(infuseTemperatureViewText, infuseTemperatureViewTitle).create();
         else if (v.equals(stepTempView))
             alert = alertBuilder.editTextFloatAlert(stepTempViewText, stepTempViewTitle).create();
         else if (v.equals(waterToGrainRatioView))
