@@ -87,6 +87,8 @@ public class DisplayRecipeActivity extends FragmentActivity {
                 break;
             case 3:
                 getMenuInflater().inflate(R.menu.fragment_profile_menu, menu);
+                if (mRecipe.getType().equals(Recipe.EXTRACT))
+                    menu.findItem(R.id.menu_edit_mash_profile).setVisible(false);
                 break;
         }
         return true;
@@ -206,7 +208,9 @@ public class DisplayRecipeActivity extends FragmentActivity {
     public void updateOptionsMenu()
     {
         if (menu != null)
+        {
             onCreateOptionsMenu(menu);
+        }
         else
         {
             mViewPager.setCurrentItem(0);

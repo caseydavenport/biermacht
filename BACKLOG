@@ -11,8 +11,6 @@ feature: Reverse engineering capabilities --> Modify desired traits
 feature: Determine the best matching beer style for a given recipe!
 
 // REQUIRED FOR RELEASE
-TODO:    Add ability to store recipe notes
-TODO:    Remove option to edit mash profile for extracts
 TODO:    Fix dissapearing mash profiles
 TODO:    Equipment Editor
 TODO:    Add dates to calendar! Make new Calendar icon!
