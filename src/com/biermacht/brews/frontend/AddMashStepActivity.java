@@ -82,11 +82,13 @@ public class AddMashStepActivity extends AddEditActivity {
         infuseTemperatureViewTitle.setText("Water Temperature (" + Units.getTemperatureUnits() + ")");
 
         // Remove views we don't want
+        mainView.removeView(amountView);
 
         // Add views that we want
+        mainView.addView(stepTempView);
+        mainView.addView(amountView);
         mainView.addView(infuseTemperatureView);
         mainView.addView(waterToGrainRatioView);
-        mainView.addView(stepTempView);
 
         // Change button text to say "Add" instead of "Submit"
         submitButton.setText("Add");
@@ -123,7 +125,7 @@ public class AddMashStepActivity extends AddEditActivity {
     public void setValues()
     {
         nameViewText.setText(step.getName());
-        timeViewText.setText(String.format("%2.0f", step.getStepTime()));
+        timeViewText.setText(String.format("%d", (int) step.getStepTime()));
         amountViewText.setText(String.format("%2.2f", step.getDisplayInfuseAmount()));
         stepTempViewText.setText(String.format("%2.2f", step.getDisplayStepTemp()));
         waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));

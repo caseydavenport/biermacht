@@ -297,7 +297,7 @@ public class DatabaseInterface {
 
 		deleteStyle(r.getId());
 		addStyleToDatabase(r.getStyle(), r.getId());
-		deleteMashProfile(r.getId());
+		deleteMashProfile(r.getId(), Constants.DATABASE_CUSTOM);
 		addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
 		
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
@@ -550,14 +550,6 @@ public class DatabaseInterface {
 	private boolean deleteStyle(long id) {
 		String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
 		return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
-	}
-	
-	/**
-	 * Deletes all mash profiles with given owner id
-	 */
-	private boolean deleteMashProfile(long id) {
-		String whereClause = DatabaseHelper.PRO_COL_OWNER_ID + "=" + id;
-		return database.delete(DatabaseHelper.TABLE_PROFILES, whereClause, null) > 0;
 	}
 
 	/**

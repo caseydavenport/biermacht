@@ -25,8 +25,11 @@ import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
+import com.biermacht.brews.utils.comparators.MashStepComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.ListIterator;
 
 public class AddMashProfileActivity extends AddEditActivity {
 
@@ -87,6 +90,12 @@ public class AddMashProfileActivity extends AddEditActivity {
                 MashStep step = dragDropAdapter.getItem(oldPosition);
                 dragDropAdapter.remove(step);
                 dragDropAdapter.insert(step, newPosition);
+
+                // Set new orders for all the steps
+                for (MashStep s : mashStepArray)
+                {
+                    s.setOrder(mashStepArray.indexOf(s));
+                }
             }
         }
     };
@@ -170,10 +179,9 @@ public class AddMashProfileActivity extends AddEditActivity {
         // Add views that we want
         mainView.addView(mashTypeSpinner);
         mainView.addView(spargeTypeSpinner);
+        mainView.addView(spargeTempView);
         mainView.addView(tunTempView);
         mainView.addView(grainTempView);
-        mainView.addView(spargeTempView);
-        //mainView.addView(spargeVolumeViewText);
 
         // Add views for mash steps
         mainView.addView(mashStepTitleView);
@@ -348,6 +356,9 @@ public class AddMashProfileActivity extends AddEditActivity {
         int height = mashStepArray.size() * 140;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
 
+        // Sort mash steps
+        Collections.sort(mashStepArray, new MashStepComparator());
+
         // Drag list view
         dragDropAdapter = new MashStepArrayAdapter(this, mashStepArray);
         dragDropListView.setAdapter(dragDropAdapter);
@@ -459,10 +470,16 @@ public class AddMashProfileActivity extends AddEditActivity {
                     return;
                 }
 
-                // Remove step based on step id
-                for (MashStep step : mashStepArray)
+                // Use list iterator because you can't modify a list while iterating over it
+                // in java... :(
+                ListIterator<MashStep> it = mashStepArray.listIterator();
+
+                while (it.hasNext())
+                {
+                    MashStep step = it.next();
                     if (step.getId() == id)
-                        mashStepArray.remove(step);
+                        it.remove();
+                }
 
                 // If we deleted the step, do nothing, else re-add it
                 if (resultCode == Constants.RESULT_OK)

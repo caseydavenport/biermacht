@@ -7,7 +7,7 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
-public class EditCustomMashProfileActivity extends AddMashProfileActivity {
+public class EditCustomMashProfileActivity extends EditMashProfileActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

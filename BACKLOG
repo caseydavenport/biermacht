@@ -11,7 +11,6 @@ feature: Reverse engineering capabilities --> Modify desired traits
 feature: Determine the best matching beer style for a given recipe!
 
 // REQUIRED FOR RELEASE
-TODO:    Fix disappearing mash profiles
 TODO:    Equipment Editor
 TODO:    Add support for importing MASH_TYPE and SPARGE_TYPE
 TODO:    Add dates to calendar! Make new Calendar icon!
@@ -21,3 +20,4 @@ TODO:    Fix up all the XML files to be nice.
 TODO:    Add Style viewing tool
 TODO:    Add sparge steps / info
 TODO:    Add calculators
+TODO:    Perform mash calculation automatically
