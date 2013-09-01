@@ -106,24 +106,24 @@ public class ProfileViewFragment extends Fragment {
 	
 	private void configureFermentationView(LayoutInflater inflater, ViewGroup container)
 	{
-		for (int i = 1; i <= r.getFermentationStages(); i++)
+		for (int i = 0; i <= r.getFermentationStages(); i++)
 		{
 			String type = "";
 			
-			if (i == 1)
+			if (i == 0)
 				type = "Primary:";
-			if (i == 2)
+			if (i == 1)
 				type = "Secondary:";
-			if (i == 3)
+			if (i == 2)
 				type = "Tertiary:";
-			if (i > 3)
+			if (i > 2)
 				break;
 			
 			detail = new Detail();
-			String content = r.getFermentationAge(i) + " " + Units.DAYS
+			String content = r.getFermentationAge(i+1) + " " + Units.DAYS
 					         + " at "
-					         + String.format("%2.0f", r.getDisplayFermentationTemp(i))
-					         + " F";
+					         + String.format("%2.0f", r.getDisplayFermentationTemp(i+1))
+					         + Units.getTemperatureUnits();
 			
 			detail.setTitle(type);
 			detail.setType(Detail.TYPE_TEXT);
@@ -133,10 +133,8 @@ public class ProfileViewFragment extends Fragment {
 		}
 		
 		detailArrayAdapter = new DetailArrayAdapter(c, fermDetailList);
-		
-		fermentationProfileView.addView(detailArrayAdapter.getView(0, null, container));
-		
-		for (int i=1; i <= r.getFermentationStages(); i++)
+
+		for (int i=0; i < r.getFermentationStages(); i++)
 		{
 			fermentationProfileView.addView(inflater.inflate(R.layout.divider, container, false));
 			fermentationProfileView.addView(detailArrayAdapter.getView(i, null, container));
