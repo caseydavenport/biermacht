@@ -81,17 +81,16 @@ public class ProfileViewFragment extends Fragment {
 		mashDetailList.add(detail);
 
 		detail = new Detail();
-		String t = String.format("%2.0f", r.getMashProfile().getDisplaySpargeTemp());
-		t += " " + Units.getTemperatureUnits();
-		detail.setTitle("Sparge Temp: ");
+		String t = String.format("%s", r.getMashProfile().getMashType());
+		detail.setTitle("Mash Type: ");
 		detail.setType(Detail.TYPE_TEXT);
 		detail.setFormat("%s");
 		detail.setContent(t);
 		mashDetailList.add(detail);
 		
 		detail = new Detail();
-		t = String.format("%d", r.getMashProfile().getNumberOfSteps());
-		detail.setTitle("Mash Steps: ");
+		t = String.format("%s", r.getMashProfile().getSpargeType());
+		detail.setTitle("Sparge type: ");
 		detail.setType(Detail.TYPE_TEXT);
 		detail.setFormat("%s");
 		detail.setContent(t);
@@ -107,14 +106,6 @@ public class ProfileViewFragment extends Fragment {
 	
 	private void configureFermentationView(LayoutInflater inflater, ViewGroup container)
 	{
-		// Configure details
-		detail = new Detail();
-		detail.setTitle("Num. Stages: ");
-		detail.setType(Detail.TYPE_TEXT);
-		detail.setFormat("%s");
-		detail.setContent(r.getFermentationStages()+"");
-		fermDetailList.add(detail);
-		
 		for (int i = 1; i <= r.getFermentationStages(); i++)
 		{
 			String type = "";

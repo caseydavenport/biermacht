@@ -59,6 +59,8 @@ public class MashProfile implements Parcelable
 		this.setNotes("");
 		this.id = -1;
 		this.ownerId = -1;
+        this.mashType = MASH_TYPE_INFUSION;
+        this.spargeType = SPARGE_TYPE_BATCH;
 	}
 
     public MashProfile(Parcel p)
