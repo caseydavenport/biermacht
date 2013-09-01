@@ -149,7 +149,9 @@ public class DatabaseInterface {
             DatabaseHelper.PRO_COL_PH,
             DatabaseHelper.PRO_COL_TUN_WEIGHT,
             DatabaseHelper.PRO_COL_TUN_SPEC_HEAT,
-            DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ
+            DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ,
+            DatabaseHelper.PRO_COL_MASH_TYPE,
+            DatabaseHelper.PRO_COL_SPARGE_TYPE
 	};
 	
 	private String[] stepAllColumns = {
@@ -495,6 +497,8 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.PRO_COL_TUN_WEIGHT, p.getBeerXmlStandardTunWeight());
 		values.put(DatabaseHelper.PRO_COL_TUN_SPEC_HEAT, p.getBeerXmlStandardTunSpecHeat());
 		values.put(DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ, (p.getEquipmentAdjust()) ? 1 : 0);
+        values.put(DatabaseHelper.PRO_COL_MASH_TYPE, p.getMashType());
+        values.put(DatabaseHelper.PRO_COL_SPARGE_TYPE, p.getSpargeType());
 		
 		long id = database.insert(DatabaseHelper.TABLE_PROFILES, null, values);
 		addMashStepListToDatabase(p.getMashStepList(), id);
@@ -982,6 +986,8 @@ public class DatabaseInterface {
 		double tunWeight = cursor.getDouble(cid);               cid++;
 		double tunSpecHeat = cursor.getDouble(cid);             cid++;
 		int equipAdjInt = cursor.getInt(cid);                   cid++;
+        String mashType = cursor.getString(cid);                cid++;
+        String spargeType = cursor.getString(cid);              cid++;
 		
 		ArrayList<MashStep> stepsList = readMashStepsList(id);
 		
@@ -999,6 +1005,8 @@ public class DatabaseInterface {
 		p.setBeerXmlStandardTunSpecHeat(tunSpecHeat);
 		p.setEquipmentAdjust(equipAdjInt > 0 ? true: false);
 		p.setMashStepList(stepsList);
+        p.setMashType(mashType);
+        p.setSpargeType(spargeType);
 		return p;
 	}
 	

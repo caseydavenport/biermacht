@@ -79,11 +79,11 @@ public class ProfileViewFragment extends Fragment {
 		detail.setFormat("%s");
 		detail.setContent(r.getMashProfile().getName());
 		mashDetailList.add(detail);
-		
+
 		detail = new Detail();
-		String t = String.format("%2.0f", r.getMashProfile().getDisplayGrainTemp());
-		t += " " + Units.FAHRENHEIT;
-		detail.setTitle("Grain Temp: ");
+		String t = String.format("%2.0f", r.getMashProfile().getDisplaySpargeTemp());
+		t += " " + Units.getTemperatureUnits();
+		detail.setTitle("Sparge Temp: ");
 		detail.setType(Detail.TYPE_TEXT);
 		detail.setFormat("%s");
 		detail.setContent(t);

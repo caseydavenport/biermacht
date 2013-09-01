@@ -3,6 +3,7 @@ package com.biermacht.brews.utils;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.recipe.BeerStyle;
+import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Units;
@@ -65,9 +66,14 @@ public class Constants {
     private static final String [] ferm_types = {Fermentable.TYPE_EXTRACT, Fermentable.TYPE_GRAIN, Fermentable.TYPE_SUGAR, Fermentable.TYPE_ADJUNCT};
     private static final String [] step_types = {MashStep.INFUSION, MashStep.DECOCTION, MashStep.TEMPERATURE};
     private static final String [] unit_systems = {Units.IMPERIAL, Units.METRIC};
+    private static final String [] mash_types = {MashProfile.MASH_TYPE_DECOCTION, MashProfile.MASH_TYPE_INFUSION, MashProfile.MASH_TYPE_TEMPERATURE};
+    private static final String [] sparge_types = {MashProfile.SPARGE_TYPE_BATCH, MashProfile.SPARGE_TYPE_FLY};
+
     public static final ArrayList<String> HOP_USES = new ArrayList<String>(Arrays.asList(hop_uses));
     public static final ArrayList<String> HOP_FORMS = new ArrayList<String>(Arrays.asList(hop_forms));
     public static final ArrayList<String> FERMENTABLE_TYPES = new ArrayList<String>(Arrays.asList(ferm_types));
     public static final ArrayList<String> MASH_STEP_TYPES = new ArrayList<String>(Arrays.asList(step_types));
     public static final ArrayList<String> UNIT_SYSTEMS = new ArrayList<String>(Arrays.asList(unit_systems));
+    public static final ArrayList<String> MASH_TYPES = new ArrayList<String>(Arrays.asList(mash_types));
+    public static final ArrayList<String> SPARGE_TYPES = new ArrayList<String>(Arrays.asList(sparge_types));
 }

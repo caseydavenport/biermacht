@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.DragDropList.DragSortListView;
@@ -23,12 +24,15 @@ import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 
 import java.util.ArrayList;
 
 public class AddMashProfileActivity extends AddEditActivity {
 
     // Views
+    public Spinner mashTypeSpinner;
+    public Spinner spargeTypeSpinner;
     public View tunTempView;
     public View grainTempView;
     public View spargeTempView;
@@ -53,8 +57,16 @@ public class AddMashProfileActivity extends AddEditActivity {
     // mashProfile we are editing
     public MashProfile mProfile;
 
+    // Spinner listeners
+    AdapterView.OnItemSelectedListener mashTypeSpinnerListener;
+    AdapterView.OnItemSelectedListener spargeTypeSpinnerListener;
+
     // Spinner array declarations
     public ArrayList<MashProfile> profileArray;
+    public ArrayList<String> mashTypeArray;
+    public ArrayList<String> spargeTypeArray;
+
+    // Mash step array
     public ArrayList<MashStep> mashStepArray;
 
     // DragDrop ListView stuff
@@ -156,6 +168,8 @@ public class AddMashProfileActivity extends AddEditActivity {
         mainView.removeView(timeView);
 
         // Add views that we want
+        mainView.addView(mashTypeSpinner);
+        mainView.addView(spargeTypeSpinner);
         mainView.addView(tunTempView);
         mainView.addView(grainTempView);
         mainView.addView(spargeTempView);
@@ -179,6 +193,8 @@ public class AddMashProfileActivity extends AddEditActivity {
 
         updateMashStepList();
         setValues();
+        spargeTypeSpinner.setOnItemSelectedListener(spargeTypeSpinnerListener);
+        mashTypeSpinner.setOnItemSelectedListener(mashTypeSpinnerListener);
     }
 
     @Override
@@ -240,6 +256,10 @@ public class AddMashProfileActivity extends AddEditActivity {
         // then it is custom and we add it to the list.
         if(!profileArray.contains(mRecipe.getMashProfile()))
             profileArray.add(mRecipe.getMashProfile());
+
+        // Get mash and sparge type lists for spinners.
+        mashTypeArray = Constants.MASH_TYPES;
+        spargeTypeArray = Constants.SPARGE_TYPES;
     }
 
     @Override
@@ -248,12 +268,24 @@ public class AddMashProfileActivity extends AddEditActivity {
         MashProfileSpinnerAdapter profileAdapter = new MashProfileSpinnerAdapter(this, profileArray);
         profileAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerView.setAdapter(profileAdapter);
+
+        mashTypeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        SpinnerAdapter mashTypeAdapter = new SpinnerAdapter(this, mashTypeArray, "Mash Type");
+        mashTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        mashTypeSpinner.setAdapter(mashTypeAdapter);
+
+        spargeTypeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        SpinnerAdapter spargeTypeAdapter = new SpinnerAdapter(this, spargeTypeArray, "Sparge Type");
+        spargeTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spargeTypeSpinner.setAdapter(spargeTypeAdapter);
     }
 
     @Override
     public void setInitialSpinnerSelection()
     {
         spinnerView.setSelection(profileArray.indexOf(mProfile));
+        mashTypeSpinner.setSelection(mashTypeArray.indexOf(mProfile.getMashType()));
+        spargeTypeSpinner.setSelection(spargeTypeArray.indexOf(mProfile.getSpargeType()));
     }
 
     @Override
@@ -273,6 +305,32 @@ public class AddMashProfileActivity extends AddEditActivity {
                 mashStepArray.addAll(mProfile.getMashStepList());
 
                 updateMashStepList();
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+            }
+
+        };
+
+        mashTypeSpinnerListener = new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                mProfile.setMashType(mashTypeArray.get(position));
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+            }
+
+        };
+
+        spargeTypeSpinnerListener = new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                mProfile.setSpargeType(spargeTypeArray.get(position));
             }
 
             public void onNothingSelected(AdapterView<?> parentView)

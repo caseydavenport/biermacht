@@ -33,10 +33,16 @@ public class MashProfile implements Parcelable
 	// ================================================================
 	private long id;                  // id for use in database
 	private long ownerId;			  // id for parent recipe
+    private String mashType;          // one of infusion, decoction, temperature
+    private String spargeType;        // one of batch, fly
 
 	// Static values =================================================
 	// ===============================================================
-	
+	public static String MASH_TYPE_INFUSION = "Infusion";
+    public static String MASH_TYPE_DECOCTION = "Decoction";
+    public static String MASH_TYPE_TEMPERATURE = "Temperature";
+    public static String SPARGE_TYPE_BATCH = "Batch";
+    public static String SPARGE_TYPE_FLY = "Fly";
 
     // Basic Constructor	
 	public MashProfile() {
@@ -78,6 +84,8 @@ public class MashProfile implements Parcelable
         // ================================================================
         id = p.readLong();
         ownerId = p.readLong();
+        mashType = p.readString();
+        spargeType = p.readString();
     }
 
     @Override
@@ -102,6 +110,8 @@ public class MashProfile implements Parcelable
         // ================================================================
         p.writeLong(id);                  // id for use in database
         p.writeLong(ownerId);			  // id for parent recipe
+        p.writeString(mashType);
+        p.writeString(spargeType);
     }
 
     @Override
@@ -198,6 +208,26 @@ public class MashProfile implements Parcelable
         else
             return this.grainTemp;
 	}
+
+    public String getMashType()
+    {
+        return this.mashType;
+    }
+
+    public String getSpargeType()
+    {
+        return this.spargeType;
+    }
+
+    public void setMashType(String s)
+    {
+        this.mashType = s;
+    }
+
+    public void setSpargeType(String s)
+    {
+        this.spargeType = s;
+    }
 	
 	public void setBeerXmlStandardTunTemp(double temp)
 	{

@@ -147,6 +147,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String PRO_COL_TUN_WEIGHT = "profileTunWeight";
 	public static final String PRO_COL_TUN_SPEC_HEAT = "profileTunSpecificHeat";
 	public static final String PRO_COL_TUN_EQUIP_ADJ = "profileEquipmentAdjust";
+    public static final String PRO_COL_MASH_TYPE = "profileMashType";
+    public static final String PRO_COL_SPARGE_TYPE = "profileSpargeType";
 	
 	// Column define names for Mash Steps
 	public static final String STE_COL_ID = "_id";
@@ -299,7 +301,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ PRO_COL_PH + " float, "
 			+ PRO_COL_TUN_WEIGHT + " float, "
 			+ PRO_COL_TUN_SPEC_HEAT + " float, "
-			+ PRO_COL_TUN_EQUIP_ADJ + " integer"
+			+ PRO_COL_TUN_EQUIP_ADJ + " integer, "
+            + PRO_COL_MASH_TYPE + " text, "
+            + PRO_COL_SPARGE_TYPE + " text"
 	        + ");";
 	
 	public static final String CREATE_STEP_TABLE = "create table " +
