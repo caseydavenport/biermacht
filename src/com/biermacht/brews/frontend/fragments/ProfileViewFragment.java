@@ -30,7 +30,6 @@ public class ProfileViewFragment extends Fragment {
 	private DetailArrayAdapter detailArrayAdapter;
 	private ArrayList<Detail> mashDetailList;
 	private ArrayList<Detail> fermDetailList;
-	private ViewGroup profileView;
 	private ViewGroup mashProfileView;
 	private ViewGroup fermentationProfileView;
     private ViewGroup bjcpProfileView;
@@ -51,7 +50,6 @@ public class ProfileViewFragment extends Fragment {
 	{
         setHasOptionsMenu(false);
 		pageView = inflater.inflate(resource, container, false);
-		profileView = (ViewGroup) pageView.findViewById(R.id.profile_view);
 		mashProfileView = (ViewGroup) pageView.findViewById(R.id.mash_profile_view);
 		fermentationProfileView = (ViewGroup) pageView.findViewById(R.id.fermentation_profile_view);
         bjcpProfileView = (ViewGroup) pageView.findViewById(R.id.bjcp_profile_view);
@@ -139,7 +137,6 @@ public class ProfileViewFragment extends Fragment {
 			fermentationProfileView.addView(inflater.inflate(R.layout.divider, container, false));
 			fermentationProfileView.addView(detailArrayAdapter.getView(i, null, container));
 		}
-		
 	}
 
     private void configureBjcpView(LayoutInflater inflater, ViewGroup container)
