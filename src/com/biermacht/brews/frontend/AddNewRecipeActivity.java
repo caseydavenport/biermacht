@@ -333,7 +333,7 @@ public class AddNewRecipeActivity extends AddEditActivity {
         mRecipe.setBoilTime(time);
         mRecipe.setEfficiency(efficiency);
         mRecipe.setBatchTime(1);
-        mRecipe.setDescription(description);
+        mRecipe.setNotes(description);
     }
 
     @Override

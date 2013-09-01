@@ -201,7 +201,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_OG, r.getOG());
 		values.put(DatabaseHelper.REC_COL_FG, r.getFG());
 		values.put(DatabaseHelper.REC_COL_STAGES, r.getFermentationStages());
-		values.put(DatabaseHelper.REC_COL_DESC, r.getDescription());
+		values.put(DatabaseHelper.REC_COL_DESC, r.getNotes());
 		values.put(DatabaseHelper.REC_COL_BATCH_TIME, r.getBatchTime());
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
@@ -257,7 +257,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.REC_COL_OG, r.getOG());
 		values.put(DatabaseHelper.REC_COL_FG, r.getFG());
 		values.put(DatabaseHelper.REC_COL_STAGES, r.getFermentationStages());
-		values.put(DatabaseHelper.REC_COL_DESC, r.getDescription());
+		values.put(DatabaseHelper.REC_COL_DESC, r.getNotes());
 		values.put(DatabaseHelper.REC_COL_BATCH_TIME, r.getBatchTime());
 		values.put(DatabaseHelper.REC_COL_ABV, r.getABV());
 		values.put(DatabaseHelper.REC_COL_BITTER, r.getBitterness());
@@ -810,7 +810,7 @@ public class DatabaseInterface {
 		r.setOG(OG);
 		r.setFG(FG);
 		r.setFermentationStages(fermentationStages);
-		r.setDescription(description);
+		r.setNotes(description);
 		r.setBatchTime(batchTime);
 		r.setABV(ABV);
 		r.setBitterness(bitterness);

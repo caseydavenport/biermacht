@@ -18,7 +18,7 @@
                   android:textSize="25sp"
                   android:orientation="horizontal" >
 
-        <TextView android:id="@+id/description"
+        <TextView android:id="@+id/notes"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:gravity="center"

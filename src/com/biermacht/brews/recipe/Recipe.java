@@ -66,7 +66,7 @@ public class Recipe implements Parcelable {
 	// Custom Fields ==================================================
 	// ================================================================
 	private long id;                  // id for use in database
-	private String description;       // User input description
+	private String notes;       // User input notes
 	private int batchTime;            // Total length in weeks
 	private double ABV;                // Alcohol by volume
 	private double bitterness;         // Bitterness in IBU
@@ -128,7 +128,7 @@ public class Recipe implements Parcelable {
 		// Custom Fields ==================================================
 		// ================================================================
 		this.id = -1;
-		this.description = "No description provided";
+		this.notes = "No notes provided";
 		this.batchTime = 60;
 		this.ABV = 0;
 		this.bitterness = 0;
@@ -203,7 +203,7 @@ public class Recipe implements Parcelable {
         // Custom Fields ==================================================
         // ================================================================
         id = p.readLong();                  // id for use in database
-        description = p.readString();       // User input description
+        notes = p.readString();       // User input notes
         batchTime = p.readInt();            // Total length in weeks
         ABV = p.readDouble();                // Alcohol by volume
         bitterness = p.readDouble();         // Bitterness in IBU
@@ -269,7 +269,7 @@ public class Recipe implements Parcelable {
         // Custom Fields ==================================================
         // ================================================================
         p.writeLong( id);                  // id for use in database
-        p.writeString(description);       // User input description
+        p.writeString(notes);       // User input notes
         p.writeInt(batchTime);            // Total length in weeks
         p.writeDouble(ABV);                // Alcohol by volume
         p.writeDouble(bitterness);         // Bitterness in IBU
@@ -384,17 +384,17 @@ public class Recipe implements Parcelable {
 		update();
 	}
 	
-	public String getDescription() 
+	public String getNotes()
 	{
-		return description;
+		return notes;
 	}
 
-	public void setDescription(String description) 
+	public void setNotes(String notes)
 	{
-		if (description.isEmpty())
-			this.description = "No description provided.";
+		if (notes.isEmpty())
+			this.notes = "No notes provided.";
 		else
-			this.description = description;
+			this.notes = notes;
 	}
 
 	public BeerStyle getStyle() 

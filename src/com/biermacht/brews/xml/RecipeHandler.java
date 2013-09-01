@@ -409,7 +409,7 @@ public class RecipeHandler extends DefaultHandler {
 
             else if (qName.equalsIgnoreCase("NOTES"))
             {
-                r.setDescription(currentValue);
+                r.setNotes(currentValue);
             }
 			
 			else if (qName.equalsIgnoreCase("BREWER"))

@@ -171,5 +171,11 @@
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >
         </activity>
+        <activity
+                android:name=".frontend.EditRecipeNotesActivity"
+                android:label="@string/title_activity_notes"
+                android:configChanges="orientation|screenSize"
+                android:windowSoftInputMode="adjustResize" >
+        </activity>
     </application>
 </manifest>

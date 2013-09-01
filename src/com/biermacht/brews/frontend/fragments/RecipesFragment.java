@@ -31,6 +31,7 @@ import com.biermacht.brews.frontend.BrewTimerActivity;
 import com.biermacht.brews.frontend.DisplayRecipeActivity;
 import com.biermacht.brews.frontend.EditFermentationProfileActivity;
 import com.biermacht.brews.frontend.EditMashProfileActivity;
+import com.biermacht.brews.frontend.EditRecipeNotesActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
@@ -82,6 +83,7 @@ public class RecipesFragment extends Fragment {
     private static String EDIT_MASH = "Edit Mash Profile";
     private static String EXPORT_RECIPE = "Export as BeerXML";
     private static String BREW_TIMER = "Brew Timer";
+    private static String RECIPE_NOTES = "Recipe Notes";
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -203,6 +205,7 @@ public class RecipesFragment extends Fragment {
                 menuItems.add(EDIT_MASH);
             menuItems.add(EDIT_FERM);
             menuItems.add(BREW_TIMER);
+            menuItems.add(RECIPE_NOTES);
             menuItems.add(SCALE_RECIPE);
             menuItems.add(COPY_RECIPE);
             menuItems.add(DELETE_RECIPE);
@@ -232,6 +235,7 @@ public class RecipesFragment extends Fragment {
         {
             scaleAlert(selectedRecipe).show();
         }
+
         // Copy recipe selected
         else if (selected.equals(COPY_RECIPE))
         {
@@ -240,6 +244,7 @@ public class RecipesFragment extends Fragment {
             updateRecipeList(getFilteredList(searchView.getText().toString()));
 
         }
+
         // Delete recipe selected
         else if (selected.equals(DELETE_RECIPE))
         {
@@ -255,7 +260,7 @@ public class RecipesFragment extends Fragment {
             startActivity(i);
         }
 
-        // Edit fermentation selected
+        //  Brew timer
         else if (selected.equals(BREW_TIMER))
         {
             Intent i = new Intent(c, BrewTimerActivity.class);
@@ -264,7 +269,7 @@ public class RecipesFragment extends Fragment {
             startActivity(i);
         }
 
-        // Edit fermentation selected
+        // Edit Mash profile
         else if (selected.equals(EDIT_MASH))
         {
             Intent i = new Intent(c, EditMashProfileActivity.class);
@@ -272,6 +277,14 @@ public class RecipesFragment extends Fragment {
             i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
             i.putExtra(Constants.KEY_PROFILE_ID, selectedRecipe.getMashProfile().getId());
             i.putExtra(Constants.KEY_PROFILE, selectedRecipe.getMashProfile());
+            startActivity(i);
+        }
+
+        else if (selected.equals(RECIPE_NOTES))
+        {
+            Intent i = new Intent(c, EditRecipeNotesActivity.class);
+            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
             startActivity(i);
         }
 

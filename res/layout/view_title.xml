@@ -5,7 +5,7 @@
           android:layout_height="wrap_content"
           android:background="#fff"
           android:focusable="false"
-          android:layout_marginTop="30dp"
+          android:layout_marginTop="10dp"
           android:orientation="vertical">
 
     <LinearLayout android:orientation="horizontal"
@@ -27,7 +27,7 @@
                   android:layout_marginBottom="2dp"
                   android:background="@color/transparent" />
 
-        <ImageButton android:id="@+id/add_button"
+        <ImageButton android:id="@+id/button"
                   android:layout_width="30dp"
                   android:layout_height="30dp"
                   android:layout_marginRight="5dp"

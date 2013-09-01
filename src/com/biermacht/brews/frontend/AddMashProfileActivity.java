@@ -139,11 +139,11 @@ public class AddMashProfileActivity extends AddEditActivity {
         mashStepTitleViewText.setText("Mash Steps");
 
         // Add mash step button
-        addMashStepButton = (ImageButton) mashStepTitleView.findViewById(R.id.add_button);
+        addMashStepButton = (ImageButton) mashStepTitleView.findViewById(R.id.button);
         addMashStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.getId() == R.id.add_button)
+                if (v.getId() == R.id.button)
                 {
                     Intent i = new Intent(getApplicationContext(), AddMashStepActivity.class);
                     startActivityForResult(i, Constants.REQUEST_NEW_MASH_STEP);
