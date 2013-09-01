@@ -419,6 +419,11 @@ public class Recipe implements Parcelable {
 		Collections.sort(list, new IngredientComparator());
 		return list;
 	}
+
+    public double totalGrainWeight()
+    {
+        return BrewCalculator.TotalGrainWeight(this);
+    }
 	
 	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) 
 	{
