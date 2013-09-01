@@ -1,8 +1,13 @@
 package com.biermacht.brews.frontend.fragments;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.*;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -17,12 +24,17 @@ import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 public class BrewTimerStepFragment extends Fragment {
 
 	private int resource =  R.layout.fragment_brew_timer_step;
 	private Recipe r;
     private Instruction i;
-	Context c = getActivity();
+    private Context c;
 
     // Views
     ScrollView scrollView;
@@ -73,6 +85,7 @@ public class BrewTimerStepFragment extends Fragment {
         // Get arguments
         this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
         this.i = getArguments().getParcelable(Constants.KEY_INSTRUCTION);
+        c = getActivity();
 
         // Get views
         scrollView = (ScrollView) inflater.inflate(resource, container, false);
@@ -85,6 +98,12 @@ public class BrewTimerStepFragment extends Fragment {
         if (i.getInstructionType().equals(Instruction.TYPE_CALENDAR))
         {
             calendarButton.setVisibility(View.VISIBLE);
+            calendarButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createCalendarItems();
+                }
+            });
         }
 
         descriptionView.setText(i.getBrewTimerText());
@@ -114,4 +133,130 @@ public class BrewTimerStepFragment extends Fragment {
 		
 		return scrollView;
 	}
+
+    public void createCalendarItems()
+    {
+        if (getCalendarId() == -1)
+        {
+            Log.d("BrewTimerActivity", "Calendar does not exist, creating");
+            createCalendar();
+        }
+
+        if (getCalendarId() == -1)
+        {
+            Log.d("BrewTimerActivity", "Failed to create calendar, returning");
+            return;
+        }
+        Log.d("BrewTimerActivity", "Adding events to calendar");
+        createEvents();
+    }
+
+    private long getCalendarId() {
+        String[] projection = new String[]{Calendars._ID};
+        //String selection = Calendars.ACCOUNT_NAME + "=Biermacht AND" + Calendars.ACCOUNT_TYPE + "=" + CalendarContract.ACCOUNT_TYPE_LOCAL;
+
+        String selection = "(" + Calendars.ACCOUNT_NAME + " = ?) AND (" + Calendars.ACCOUNT_TYPE + " = ?)";
+        String[] selectionArgs = new String[] {"Biermacht", CalendarContract.ACCOUNT_TYPE_LOCAL};
+
+        // use the same values as above:
+        //String[] selArgs = new String[]{"Biermacht", CalendarContract.ACCOUNT_TYPE_LOCAL};
+        Cursor cursor = c.getContentResolver(). query(Calendars.CONTENT_URI,
+                                                        projection,
+                                                        selection,
+                                                        selectionArgs,
+                                                        null);
+        if (cursor.moveToFirst())
+        {
+            return cursor.getLong(0);
+        }
+        return -1;
+    }
+
+    private void createCalendar()
+    {
+        ContentValues values = new ContentValues();
+        values.put(Calendars.ACCOUNT_NAME, "Biermacht");
+        values.put(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
+        values.put(Calendars.NAME, "Biermacht Calendar");
+        values.put(Calendars.CALENDAR_DISPLAY_NAME, "Biermacht Calendar");
+        values.put(Calendars.CALENDAR_COLOR, 0xE6A627);
+        values.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_OWNER);
+        values.put(Calendars.OWNER_ACCOUNT, "davenport.cas@gmail.com");
+        values.put(Calendars.CALENDAR_TIME_ZONE, "Europe/Berlin");
+
+        Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
+        builder.appendQueryParameter(Calendars.ACCOUNT_NAME, "com.biermacht.brews");
+        builder.appendQueryParameter(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
+        builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true");
+        Uri uri = c.getContentResolver().insert(builder.build(), values);
+    }
+
+    private void createEvents()
+    {
+        String title = "";
+        String description = "";
+        int daysFromNow = 0;
+
+        // Create all the fermentation stage calendar events
+        for (int i=0; i < r.getFermentationStages(); i++)
+        {
+            if (i == 0)
+            {
+                title = r.getRecipeName() + ": begin primary";
+                description = "Begin primary fermentation.";
+                daysFromNow = 0;
+            }
+
+            if (i == 1)
+            {
+                title = r.getRecipeName() + ": begin secondary";
+                description = "Begin secondary fermentation.";
+                daysFromNow = r.getFermentationAge(Recipe.STAGE_PRIMARY);
+            }
+
+            if (i == 2)
+            {
+                title = r.getRecipeName() + ": begin tertiary";
+                description = "Begin tertiary fermentation.";
+                daysFromNow = r.getFermentationAge(Recipe.STAGE_SECONDARY) + r.getFermentationAge(Recipe.STAGE_PRIMARY);
+            }
+
+            createEvent(title, description, daysFromNow);
+        }
+
+        // Create bottle events
+        // TODO: We don't have bottle information yet!
+    }
+
+    private void createEvent(String title, String description, int daysFromNow)
+    {
+        Calendar start = Calendar.getInstance();
+        start.add(Calendar.DATE, daysFromNow);
+
+        long startTime = start.getTimeInMillis();
+
+        ContentValues values = new ContentValues();
+        values.put(Events.CALENDAR_ID, getCalendarId());
+        values.put(Events.ORGANIZER, "Biermacht");
+        values.put(Events.TITLE, title);
+        values.put(Events.EVENT_LOCATION, "The Brewery");
+        values.put(Events.DESCRIPTION, description);
+        values.put(Events.EVENT_COLOR, 0xE6A627);
+        values.put(Events.DTSTART, startTime);
+        values.put(Events.DTEND, startTime);
+        values.put(Events.EVENT_TIMEZONE, "Europe/Berlin");
+        values.put(Events.EVENT_END_TIMEZONE, "Europe/Berlin");
+        values.put(Events.RRULE,"FREQ=DAILY;COUNT=1;");
+        values.put(Events.ACCESS_LEVEL, Events.ACCESS_PUBLIC);
+        values.put(Events.SELF_ATTENDEE_STATUS, Events.STATUS_CONFIRMED);
+        values.put(Events.ALL_DAY, 1);
+        values.put(Events.ORGANIZER, "biermacht brews");
+        values.put(Events.GUESTS_CAN_INVITE_OTHERS, 1);
+        values.put(Events.GUESTS_CAN_MODIFY, 1);
+        values.put(Events.GUESTS_CAN_SEE_GUESTS, 1);
+        values.put(Events.AVAILABILITY, Events.AVAILABILITY_BUSY);
+
+        Uri uri = c.getContentResolver().insert(Events.CONTENT_URI, values);
+        long eventId = new Long(uri.getLastPathSegment());
+    }
 }

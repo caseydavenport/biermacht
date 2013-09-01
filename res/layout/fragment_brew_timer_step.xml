@@ -31,9 +31,9 @@
 
         <ImageButton android:id="@+id/calendar_button"
                      android:layout_gravity="center"
-                     android:layout_height="100dip"
-                     android:layout_width="100dip"
-                     android:background="@drawable/content_event"
+                     android:layout_height="200dip"
+                     android:layout_width="200dip"
+                     android:background="@drawable/ic_calendar"
                      android:visibility="gone" />
 
     </LinearLayout>
