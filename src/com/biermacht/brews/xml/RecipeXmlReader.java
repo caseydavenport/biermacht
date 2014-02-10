@@ -13,7 +13,7 @@ import com.biermacht.brews.ingredient.*;
 import com.biermacht.brews.utils.*;
 import com.biermacht.brews.utils.Stack;
 
-public class RecipeHandler extends DefaultHandler {
+public class RecipeXmlReader extends DefaultHandler {
 
 	// Hold the current elements
     boolean currentElement = false;

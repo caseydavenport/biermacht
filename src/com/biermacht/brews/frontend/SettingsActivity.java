@@ -20,19 +20,24 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.utils.*;
+import com.biermacht.brews.xml.RecipeXmlWriter;
 
 public class SettingsActivity extends AddEditActivity {
 
     // Views to display
     public Spinner preferredUnitsSpinner;
     public View deleteAllRecipesView;
+    public View exportRecipesView;
 
     // View titles
     public TextView deleteAllRecipesViewTitle;
+    public TextView exportRecipesViewTitle;
+
 
     // View contents
     public TextView preferredUnitsViewText;
     public TextView deleteAllRecipesViewText;
+    public TextView exportRecipesViewText;
 
     // Lists for spinners
     public ArrayList<String> unitSystemsArray;
@@ -48,9 +53,12 @@ public class SettingsActivity extends AddEditActivity {
         // Create our views
         preferredUnitsSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
         deleteAllRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        exportRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+
 
         // Set click listeners for views
         deleteAllRecipesView.setOnClickListener(onClickListener);
+        exportRecipesView.setOnClickListener(onClickListener);
 
         // Get context for async tasks
         appContext = this;
@@ -63,18 +71,24 @@ public class SettingsActivity extends AddEditActivity {
         // Add views we do want
         mainView.addView(preferredUnitsSpinner);
         mainView.addView(deleteAllRecipesView);
+        mainView.addView(exportRecipesView);
 
         // Get titles and set correct text
         deleteAllRecipesViewTitle = (TextView) deleteAllRecipesView.findViewById(R.id.title);
         deleteAllRecipesViewTitle.setText("Delete all recipes");
         nameViewTitle.setText("Brewmaster");
+        
+        exportRecipesViewTitle = (TextView) exportRecipesView.findViewById(R.id.title);
+        exportRecipesViewTitle.setText("Export recipes");
 
         // Get content views
         deleteAllRecipesViewText = (TextView) deleteAllRecipesView.findViewById(R.id.text);
+        exportRecipesViewText = (TextView) exportRecipesView.findViewById(R.id.text);
 
         // Set content view values
         deleteAllRecipesViewText.setText("Permanently delete local recipes");
         nameViewText.setText(preferences.getString(Constants.PREF_BREWER_NAME, "No name provided"));
+        exportRecipesViewText.setText("Export recipes to XML file.");
 
         // Configure spinner for preferred units
         SpinnerAdapter unitsAdapter = new SpinnerAdapter(this, unitSystemsArray, "Preferred units");
@@ -108,18 +122,18 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     public void onMissedClick(View v)
     {
-        //AlertDialog alert;
         if (v.equals(deleteAllRecipesView))
         {
             deleteAllRecipes().show();
             return;
         }
+        else if (v.equals(exportRecipesView))
+        {
+        	exportRecipes().show();
+        	return;
+        }
         else
             return;
-
-        // Force keyboard open and show popup
-        //alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        //alert.show();
     }
 
     @Override
@@ -199,6 +213,69 @@ public class SettingsActivity extends AddEditActivity {
 
 		    .setNegativeButton(R.string.cancel, null);
 	}
+	
+	private Builder exportRecipes()
+	{
+		return new AlertDialog.Builder(this)
+			.setTitle("Export all recipes")
+			.setMessage("Export all recipes to recipes.xml.  Overwrites any existing file.")
+			.setPositiveButton(R.string.export, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+                    new ExportRecipes().execute("");
+				}
+
+		    })
+
+		    .setNegativeButton(R.string.cancel, null);
+	}
+	
+	private Builder finishedExporting()
+	{
+		return new AlertDialog.Builder(this)
+			.setTitle("Complete")
+			.setMessage("Finished exporting recipes.")
+			.setPositiveButton(R.string.done, null);
+	}
+	
+	 // Async task to export recipes
+    private class ExportRecipes extends AsyncTask<String, Void, String> {
+
+        private ProgressDialog progress;
+
+        @Override
+        protected String doInBackground(String... params)
+        {
+            RecipeXmlWriter xmlWriter = new RecipeXmlWriter(SettingsActivity.this);
+            xmlWriter.WriteRecipe(Database.getRecipeList(MainActivity.databaseInterface));
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+            progress.dismiss();
+            finishedExporting().show();
+            Log.d("ExportAllRecipes", "Finished exporting recipes");
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            progress = new ProgressDialog(appContext);
+            progress.setMessage("Exporting all recipes...");
+            progress.setIndeterminate(false);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setCancelable(true);
+            progress.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
 
     // Async task to delete all recipes
     private class DeleteRecipes extends AsyncTask<String, Void, String> {

@@ -32,7 +32,9 @@
     <string name="add">Add</string>
     <string name="edit">Save</string>
     <string name="delete">Delete</string>
+    <string name="export">Export</string>
     <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
     <string name="ok">OK</string>
     <string name="gravity">Gravity</string>
     <string name="color">Color</string>

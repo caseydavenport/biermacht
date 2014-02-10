@@ -1,23 +1,22 @@
-** Brews Backlog **
-
 =======================================
 Features / bugs that need workin' can
 be reported here
 =======================================
 
 feature: Reverse engineering capabilities --> Modify desired traits
-	 and the app will auto-modify your recipe to match!
+	 and the app will auto-modify your recipe to match?
 
-feature: Determine the best matching beer style for a given recipe!
+feature: Determine the best matching beer style for a given recipe?
 
 // REQUIRED FOR RELEASE
-TODO:    Equipment Editor
+
 TODO:    Add support for importing MASH_TYPE and SPARGE_TYPE
-TODO:    Add dates to calendar! Make new Calendar icon!
+TODO:    More popups when adding dates to calendar.
 TODO:    Fix up all the XML files to be nice.
 
-// Nice to have
+// Nice to have ?
 TODO:    Add Style viewing tool
+TODO:    Equipment Editor
 TODO:    Add sparge steps / info
 TODO:    Add calculators
 TODO:    Perform mash calculation automatically

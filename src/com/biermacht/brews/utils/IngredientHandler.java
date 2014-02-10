@@ -13,7 +13,7 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.xml.RecipeHandler;
+import com.biermacht.brews.xml.RecipeXmlReader;
 import com.biermacht.brews.recipe.*;
 import android.content.*;
 import android.net.*;
@@ -181,7 +181,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> getFermentablesFromXml() throws IOException
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        RecipeHandler myXMLHandler = new RecipeHandler();
+        RecipeXmlReader myXMLHandler = new RecipeXmlReader();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 
@@ -213,7 +213,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> getYeastsFromXml() throws IOException
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        RecipeHandler myXMLHandler = new RecipeHandler();
+        RecipeXmlReader myXMLHandler = new RecipeXmlReader();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 
@@ -245,7 +245,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> getHopsFromXml() throws IOException
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        RecipeHandler myXMLHandler = new RecipeHandler();
+        RecipeXmlReader myXMLHandler = new RecipeXmlReader();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 
@@ -278,7 +278,7 @@ public class IngredientHandler {
 	private ArrayList<BeerStyle> getStylesFromXml() throws IOException
 	{
 		ArrayList<BeerStyle> list = new ArrayList<BeerStyle>();
-        RecipeHandler myXMLHandler = new RecipeHandler();
+        RecipeXmlReader myXMLHandler = new RecipeXmlReader();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 		
@@ -310,7 +310,7 @@ public class IngredientHandler {
 	private ArrayList<Ingredient> getMiscsFromXml() throws IOException
 	{
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        RecipeHandler myXMLHandler = new RecipeHandler();
+        RecipeXmlReader myXMLHandler = new RecipeXmlReader();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 
@@ -342,7 +342,7 @@ public class IngredientHandler {
 	public ArrayList<Recipe> getRecipesFromXml(String s) throws IOException
 	{
 		ArrayList<Recipe> retlist = new ArrayList<Recipe>();
-        RecipeHandler myXMLHandler = new RecipeHandler();
+        RecipeXmlReader myXMLHandler = new RecipeXmlReader();
         SAXParserFactory spf = SAXParserFactory.newInstance();
 		
         try 
@@ -371,7 +371,7 @@ public class IngredientHandler {
 	private ArrayList<MashProfile> getProfilesFromXml() throws IOException
 	{
 		ArrayList<MashProfile> list = new ArrayList<MashProfile>();
-        RecipeHandler myXMLHandler = new RecipeHandler();
+        RecipeXmlReader myXMLHandler = new RecipeXmlReader();
         SAXParserFactory spf = SAXParserFactory.newInstance();
         AssetManager am = mContext.getAssets();
 

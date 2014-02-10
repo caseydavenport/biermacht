@@ -763,6 +763,11 @@ public class Recipe implements Parcelable {
 		return yeasts;
 	}
 	
+	public ArrayList<Water> getWatersList()
+	{
+		return waters;
+	}
+	
 	public double getMeasuredOG()
 	{
 		return this.measuredOG;
