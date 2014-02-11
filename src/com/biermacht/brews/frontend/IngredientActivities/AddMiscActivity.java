@@ -116,6 +116,9 @@ public class AddMiscActivity extends AddEditActivity {
 				}
 
 			});
+        
+        // Set button text
+        submitButton.setText(R.string.add);
     }
 
     @Override

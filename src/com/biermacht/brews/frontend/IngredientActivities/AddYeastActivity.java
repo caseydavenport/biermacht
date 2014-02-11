@@ -59,6 +59,9 @@ public class AddYeastActivity extends AddEditActivity {
 
         // Get text views
         attenuationViewText = (TextView) attenuationView.findViewById(R.id.text);
+        
+        // Set button text
+        submitButton.setText(R.string.add);
     }
 
     @Override

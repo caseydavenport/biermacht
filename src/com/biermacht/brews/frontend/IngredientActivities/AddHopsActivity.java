@@ -123,6 +123,9 @@ public class AddHopsActivity extends AddEditActivity {
         // Set selections
         formSpinner.setSelection(0);
         useSpinner.setSelection(0);
+        
+        // Set button text
+        submitButton.setText(R.string.add);
 	}
 
     @Override

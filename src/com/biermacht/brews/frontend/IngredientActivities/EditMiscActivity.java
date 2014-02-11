@@ -22,6 +22,9 @@ public class EditMiscActivity extends AddMiscActivity {
 
         typeSpinner.setSelection(typeArray.indexOf(misc.getMiscType()));
         useSpinner.setSelection(useArray.indexOf(misc.getUse()));
+        
+        // Set button text
+        submitButton.setText(R.string.save);
     }
 
     @Override

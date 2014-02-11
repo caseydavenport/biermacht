@@ -55,7 +55,6 @@ public class SettingsActivity extends AddEditActivity {
         deleteAllRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         exportRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
-
         // Set click listeners for views
         deleteAllRecipesView.setOnClickListener(onClickListener);
         exportRecipesView.setOnClickListener(onClickListener);

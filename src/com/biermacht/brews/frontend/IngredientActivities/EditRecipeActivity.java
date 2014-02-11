@@ -7,11 +7,11 @@ import android.view.WindowManager;
 import android.widget.*;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.AddNewRecipeActivity;
+import com.biermacht.brews.frontend.AddRecipeActivity;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
-public class EditRecipeActivity extends AddNewRecipeActivity {
+public class EditRecipeActivity extends AddRecipeActivity {
 
     // Rows to be displayed
     private View measuredOGView;
@@ -54,6 +54,9 @@ public class EditRecipeActivity extends AddNewRecipeActivity {
 
         measuredOGViewText = (TextView) measuredOGView.findViewById(R.id.text);
         measuredOGViewText.setText(String.format("%2.3f", mRecipe.getMeasuredOG()));
+        
+        // Set button text
+        submitButton.setText(R.string.save);
     }
 
     @Override

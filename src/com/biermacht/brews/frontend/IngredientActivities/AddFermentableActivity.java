@@ -72,6 +72,9 @@ public class AddFermentableActivity extends AddEditActivity {
         // Acquire text views
         colorViewText = (TextView) colorView.findViewById(R.id.text);
         gravityViewText = (TextView) gravityView.findViewById(R.id.text);
+        
+        // Set button text
+        submitButton.setText(R.string.add);
     }
 
     @Override

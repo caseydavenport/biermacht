@@ -40,7 +40,9 @@ public class EditYeastActivity extends AddYeastActivity {
 
         // Enable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
-
+        
+        // Set button text
+        submitButton.setText(R.string.save);
     }
 
     @Override

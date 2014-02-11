@@ -51,6 +51,9 @@ public class EditHopActivity extends AddHopsActivity {
         // Set spinners
         formSpinner.setSelection(formArray.indexOf(form));
         useSpinner.setSelection(useArray.indexOf(use));
+        
+        // Set button text
+        submitButton.setText(R.string.save);
     }
 
     @Override
