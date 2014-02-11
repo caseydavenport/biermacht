@@ -43,6 +43,7 @@ public class AddMiscActivity extends AddEditActivity {
         // Add views to main view
         mainView.addView(useSpinner);
         mainView.addView(typeSpinner);
+        mainView.removeView(nameView);
 
 		// Set up type spinner
         typeArray = new ArrayList<String>();

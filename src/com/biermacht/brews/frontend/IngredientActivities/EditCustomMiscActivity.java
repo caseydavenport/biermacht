@@ -14,6 +14,9 @@ public class EditCustomMiscActivity extends EditMiscActivity {
         // Remove views we don't want
         mainView.removeView(timeView);
         mainView.removeView(amountView);
+        
+        // Add those we do
+        mainView.addView(nameView, 0);
     }
 
     @Override

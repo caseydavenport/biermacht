@@ -48,6 +48,7 @@ public class AddYeastActivity extends AddEditActivity {
 
         // Remove views we don't want
         mainView.removeView(timeView);
+        mainView.removeView(nameView);
 
         // Add views we want
         mainView.addView(attenuationView);

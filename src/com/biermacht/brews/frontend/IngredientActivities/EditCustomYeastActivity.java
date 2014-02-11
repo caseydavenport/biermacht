@@ -15,6 +15,9 @@ public class EditCustomYeastActivity extends EditYeastActivity {
 
         // Remove views we don't want
         mainView.removeView(amountView);
+        
+        // Add those we do
+        mainView.addView(nameView, 0);
     }
 
     @Override

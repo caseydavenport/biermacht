@@ -61,6 +61,9 @@ public class AddHopsActivity extends AddEditActivity {
 
         // Set the onClickListener for each row
         alphaAcidView.setOnClickListener(onClickListener);
+        
+        // Remove view we don't want
+        mainView.removeView(nameView);
 
         // Add Views to main view
         mainView.addView(formSpinner);

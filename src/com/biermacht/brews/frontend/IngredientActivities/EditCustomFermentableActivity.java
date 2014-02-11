@@ -30,6 +30,9 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
+        
+        // Set button text
+        submitButton.setText(R.string.save);
     }
 
     @Override

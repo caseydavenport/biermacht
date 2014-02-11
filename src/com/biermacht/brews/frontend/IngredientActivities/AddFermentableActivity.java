@@ -56,6 +56,9 @@ public class AddFermentableActivity extends AddEditActivity {
         colorView.setOnClickListener(onClickListener);
         gravityView.setOnClickListener(onClickListener);
 
+        // Remove views we don't want
+        mainView.removeView(nameView);
+        
         // Add views to main view
         mainView.addView(colorView);
         mainView.addView(gravityView);
