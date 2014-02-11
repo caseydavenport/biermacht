@@ -5,6 +5,21 @@
     android:background="@color/activity_background"
     android:orientation="vertical" >
     
+    <!-- Colored bar at top -->
+    <TextView android:id="@+id/colored_bar"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="top"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:paddingTop="4dp"
+              android:paddingBottom="4dp"
+              android:textColor="#fff"
+              android:background="@color/theme_main"
+              android:text="">
+        <requestFocus />
+    </TextView>
+    
 	<LinearLayout android:orientation="vertical"
 	    android:layout_height="0dip"
 	    android:layout_width="fill_parent"

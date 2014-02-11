@@ -26,7 +26,7 @@
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
                   android:padding="0dip"
-                  android:background="@color/activity_background"
+                  android:background="@color/transparent"
                   android:orientation="horizontal"
                   android:layout_below="@id/colored_bar" >
 
@@ -34,8 +34,9 @@
                 android:id="@+id/recipe_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_white"
+                android:background="@color/white"
                 android:padding="0dip"
+                android:dividerHeight="0dp"
                 android:drawSelectorOnTop="true"
                 android:listSelector="@drawable/selector" >
         </ListView>
