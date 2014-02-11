@@ -175,7 +175,7 @@ public class MainActivity extends Activity{
     	switch (item.getItemId())
     	{
     	case R.id.menu_new_recipe:
-    		Intent i = new Intent(getApplicationContext(), AddNewRecipeActivity.class);
+    		Intent i = new Intent(getApplicationContext(), AddRecipeActivity.class);
     		startActivity(i);
     		break;
     		

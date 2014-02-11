@@ -17,7 +17,6 @@ TODO:	 Search functionality for:
 		- Ingredient pickers
 		- Anything else
 	 Should be searchable by name, description, etc.  Search characteristics++
-TODO:	 After recipe creation, go to the recipe, not the main menu.
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
 TODO:	 Ingredient and profile editors don't have orange bar at the top.
 TODO:	 Why do I want to give my grains a name? Is this needed?
@@ -38,3 +37,4 @@ TODO:	 Maybe - Make a visual scale rather than numerical for recipe stats. e.g, 
 //////////////////////////////////////////////
 
 TODO:	 Adding ingredient button should say "Add" instead of "Save"
+TODO:	 After recipe creation, go to the recipe, not the main menu.
