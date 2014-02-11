@@ -35,7 +35,7 @@
                 android:value="com.biermacht.brews.MainActivity" />
         </activity>
         <activity
-            android:name=".frontend.AddNewRecipeActivity"
+            android:name=".frontend.AddRecipeActivity"
             android:label="@string/title_activity_add_new_recipe"
             android:windowSoftInputMode="adjustResize" >
         </activity>

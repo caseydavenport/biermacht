@@ -27,7 +27,7 @@ import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.frontend.adapters.*;
 import android.widget.*;
 
-public class AddNewRecipeActivity extends AddEditActivity {
+public class AddRecipeActivity extends AddEditActivity {
 
     // Rows to be displayed
     public View efficiencyView;
@@ -338,8 +338,12 @@ public class AddNewRecipeActivity extends AddEditActivity {
 
     @Override
     public void onFinished()
-    {
-        Database.createRecipeFromExisting(mRecipe);
+    {        
+        // Add recipe to database and open up the recipe activity.
+        Intent intent = new Intent(AddRecipeActivity.this, DisplayRecipeActivity.class);
+        intent.putExtra(Constants.KEY_RECIPE, Database.createRecipeFromExisting(mRecipe));
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 }
