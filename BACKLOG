@@ -3,12 +3,10 @@ Features / bugs that need workin' can
 be reported here
 =======================================
 
-feature: Reverse engineering capabilities --> Modify desired traits
-	 and the app will auto-modify your recipe to match?
+//////////////////////////////////////////////
+// Urgent issues.  Fix these first. //////////
+//////////////////////////////////////////////
 
-feature: Determine the best matching beer style for a given recipe?
-
-// REQUIRED
 TODO:    Add support for importing MASH_TYPE and SPARGE_TYPE
 TODO:    More popups when adding dates to calendar.
 TODO:    Fix up all the XML files to be nice.
@@ -20,7 +18,10 @@ TODO:	 Search functionality for:
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
 TODO:	 Make fewer default Mash Profiles.
 
-// Nice to have, next version
+//////////////////////////////////////////////
+// Not vital, can do later ///////////////////
+//////////////////////////////////////////////
+
 TODO:	 First time use hints / help. 
 TODO:	 Quick add button when nothing in a list.
 TODO:    Add Style guide viewing tool
@@ -29,6 +30,9 @@ TODO:    Add sparge steps / info
 TODO:    Add calculators
 TODO:    Perform mash calculation automatically
 TODO:	 Maybe - Make a visual scale rather than numerical for recipe stats. e.g, FG, OG, Color.
+TODO:	 Determine the best matching beer style for a given recipe?
+TODO:	 Reverse engineering capabilities --> Modify desired traits
+	 and the app will auto-modify your recipe to match?
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////
