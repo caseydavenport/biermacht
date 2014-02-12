@@ -19,6 +19,7 @@ public class IngredientSpinnerAdapter extends ArrayAdapter<Ingredient> {
 	private Context context;
 	private List<Ingredient> list;
     private String title;
+    private boolean isListAdapter;
 
 	// Constructor
 	public IngredientSpinnerAdapter(Context context, List<Ingredient> list, String title)
@@ -28,28 +29,47 @@ public class IngredientSpinnerAdapter extends ArrayAdapter<Ingredient> {
 		this.context = context;
 		this.list = list;
         this.title = title;
+        this.isListAdapter = false;
+	}
+	
+	// Constructor
+	public IngredientSpinnerAdapter(Context context, List<Ingredient> list, String title, boolean listAdapter)
+	{
+		super(context, android.R.layout.simple_spinner_item, list);
+        Log.d("IngredientSpinnerAdapter", "Creating spinner adapter with length: " + list.size());
+		this.context = context;
+		this.list = list;
+        this.title = title;
+        this.isListAdapter = true;
 	}
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        // View to return
-        View row = convertView;
-
-        if (row == null)
-        {
-            // Get inflater
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.row_layout_edit_text, parent, false);
-        }
-
-        TextView titleView = (TextView) row.findViewById(R.id.title);
-        TextView textView = (TextView) row.findViewById(R.id.text);
-
-        textView.setText((CharSequence) list.get(position).getName());
-        titleView.setText(title);
-
-        return row;
+    	if (!isListAdapter)
+    	{
+	        // View to return
+	        View row = convertView;
+	
+	        if (row == null)
+	        {
+	            // Get inflater
+	            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	            row = inflater.inflate(R.layout.row_layout_edit_text, parent, false);
+	        }
+	
+	        TextView titleView = (TextView) row.findViewById(R.id.title);
+	        TextView textView = (TextView) row.findViewById(R.id.text);
+	
+	        textView.setText((CharSequence) list.get(position).getName());
+	        titleView.setText(title);
+	
+	        return row;
+    	}
+    	else
+    	{
+    		return getDropDownView(position, convertView, parent);
+    	}
     }
 	
 	@Override

@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -56,6 +58,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     public long recipeId;
     public long ingredientId;
     public long mashProfileId;
+    
+    // Array adapter for spinner
+    public ArrayAdapter adapter;
 
     // IngredientHandler to get ingredient arrays
     public IngredientHandler ingredientHandler;
@@ -65,16 +70,19 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 
     // Editable rows to display
     public Spinner spinnerView;
+    public View searchableListView;
     public View nameView;
     public View amountView;
     public View timeView;
 
     // Titles from rows
+    public TextView searchableListViewTitle;
     public TextView nameViewTitle;
     public TextView amountViewTitle;
     public TextView timeViewTitle;
 
     // Content from rows
+    public TextView searchableListViewText;
     public TextView nameViewText;
     public TextView amountViewText;
     public TextView timeViewText;
@@ -101,7 +109,6 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     // Abstract methods
     public abstract void onMissedClick(View v);
     public abstract void createSpinner();
-    public abstract void configureSpinnerListener();
     public abstract void getList();
     public abstract void onCancelPressed();
     public abstract void onDeletePressed();
@@ -174,12 +181,14 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 
         // Initialize views and such here
         mainView = (ViewGroup) findViewById(R.id.main_layout);
+        searchableListView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         nameView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         amountView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         timeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         spinnerView = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
 
         // Set the onClickListener for each row
+        searchableListView.setOnClickListener(onClickListener);
         nameView.setOnClickListener(onClickListener);
         amountView.setOnClickListener(onClickListener);
         timeView.setOnClickListener(onClickListener);
@@ -195,6 +204,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         /************************************************************************
          ************* Get titles, set values   **********************************
          *************************************************************************/
+        searchableListViewTitle  = (TextView) searchableListView.findViewById(R.id.title);
+        searchableListViewTitle.setText("Select");
+        
         nameViewTitle = (TextView) nameView.findViewById(R.id.title);
         nameViewTitle.setText("Name");
 
@@ -207,6 +219,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         /************************************************************************
          ************* Get content views, values set below  **********************
          *************************************************************************/
+        searchableListViewText = (TextView) searchableListView.findViewById(R.id.text);
         nameViewText = (TextView) nameView.findViewById(R.id.text);
         timeViewText = (TextView) timeView.findViewById(R.id.text);
         amountViewText = (TextView) amountView.findViewById(R.id.text);
@@ -225,6 +238,22 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         Log.d("AddEditActivity", "Calling configureSpinnerListener()");
         configureSpinnerListener();
         spinnerView.setOnItemSelectedListener(spinnerListener);
+    }
+    
+    public void configureSpinnerListener()
+    {
+    	Log.d("AddEditActivity", "Configuring default spinner listener");
+    	spinnerListener = new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
+				Log.d("AddEditActivity", "Item selected using default listener");
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {}
+    		
+    	};
     }
 
     public void createCallback()

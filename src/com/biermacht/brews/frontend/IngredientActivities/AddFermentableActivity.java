@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
@@ -17,10 +19,11 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
+import com.biermacht.brews.utils.Callbacks.Callback;
 
 import android.view.*;
 
-public class AddFermentableActivity extends AddEditActivity {
+public class AddFermentableActivity extends AddEditIngredientActivity {
 
     // Holds the currently selected fermentable
     Fermentable fermentable;
@@ -57,7 +60,6 @@ public class AddFermentableActivity extends AddEditActivity {
         gravityView.setOnClickListener(onClickListener);
 
         // Remove views we don't want
-        mainView.removeView(nameView);
         
         // Add views to main view
         mainView.addView(colorView);
@@ -69,31 +71,36 @@ public class AddFermentableActivity extends AddEditActivity {
 
         gravityViewTitle = (TextView) gravityView.findViewById(R.id.title);
         gravityViewTitle.setText("Gravity Contribution");
-
+        
+        searchableListViewTitle.setText("Fermentable");
         amountViewTitle.setText("Amount " + "(" + Units.getFermentableUnits() + ")");
 
         // Acquire text views
         colorViewText = (TextView) colorView.findViewById(R.id.text);
-        gravityViewText = (TextView) gravityView.findViewById(R.id.text);
+        gravityViewText = (TextView) gravityView.findViewById( R.id.text);
         
         // Set button text
         submitButton.setText(R.string.add);
+        
+        // Set initial position
+        setInitialSearchableListSelection();
     }
 
     @Override
     public void onMissedClick(View v)
     {
-        AlertDialog alert;
+    	super.onMissedClick(v);
+        
         if (v.equals(colorView))
-            alert = alertBuilder.editTextFloatAlert(colorViewText, colorViewTitle).create();
+            dialog = alertBuilder.editTextFloatAlert(colorViewText, colorViewTitle).create();
         else if (v.equals(gravityView))
-            alert = alertBuilder.editTextFloatAlert(gravityViewText, gravityViewTitle).create();
+        	dialog = alertBuilder.editTextFloatAlert(gravityViewText, gravityViewTitle).create();
         else
             return;
 
         // Force keyboard open and show popup
-        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        alert.show();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        dialog.show();
     }
 
     @Override
@@ -112,17 +119,17 @@ public class AddFermentableActivity extends AddEditActivity {
     @Override
     public void createSpinner()
     {
-        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, ingredientList, "Fermentable");
+        this.adapter = new IngredientSpinnerAdapter(this, ingredientList, "Fermentable", true);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinnerView.setAdapter(adapter);
+        spinnerView.setAdapter(this.adapter);
     }
 
     @Override
-    public void configureSpinnerListener()
+    public void configureSearchableListListener()
     {
-        spinnerListener = new OnItemSelectedListener() {
+        searchableListListener = new AdapterView.OnItemClickListener() {
 
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+            public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 fermentable = (Fermentable) ingredientList.get(position);
 
                 // Set whether we show boil or steep
@@ -150,13 +157,19 @@ public class AddFermentableActivity extends AddEditActivity {
                 }
 
                 nameViewText.setText(fermentable.getName());
+                searchableListViewText.setText(fermentable.getName());
                 colorViewText.setText(String.format("%2.2f", fermentable.getLovibondColor()));
                 gravityViewText.setText(String.format("%2.3f", fermentable.getGravity()));
                 amountViewText.setText(1 +"");
                 timeViewText.setText(String.format("%d", mRecipe.getBoilTime()));
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView) {
+                
+                // Get list and cancel dialog
+                getList();
+                if (dialog != null)
+                {
+                	dialog.cancel();
+                	dialog = null;
+                }
             }
         };
     }

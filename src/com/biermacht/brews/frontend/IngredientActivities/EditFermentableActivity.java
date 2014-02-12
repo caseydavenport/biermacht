@@ -60,11 +60,11 @@ public class EditFermentableActivity extends AddFermentableActivity {
     }
 
     @Override
-    public void configureSpinnerListener()
+    public void configureSearchableListListener()
     {
-        spinnerListener = new AdapterView.OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+        searchableListListener = new AdapterView.OnItemClickListener() {
+        	
+            public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedFermentable = (Fermentable) ingredientList.get(position);
 
                 // Set whether we show boil or steep
@@ -92,15 +92,28 @@ public class EditFermentableActivity extends AddFermentableActivity {
                 }
 
                 nameViewText.setText(selectedFermentable.getName());
+                searchableListViewText.setText(selectedFermentable.getName());
                 colorViewText.setText(String.format("%2.2f", selectedFermentable.getLovibondColor()));
                 gravityViewText.setText(String.format("%2.3f", selectedFermentable.getGravity()));
                 amountViewText.setText(String.format("%2.2f", fermentable.getDisplayAmount()));
                 timeViewText.setText(String.format("%d", fermentable.getTime()));
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView) {
+                
+                // Get list and cancel dialog
+                getList();
+                if (dialog != null)
+                {
+                	dialog.cancel();
+                	dialog = null;
+                }
             }
         };
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	// Get the index of the ingredient and set it.
+    	int index = ingredientList.indexOf(fermentable);
+    	searchableListListener.onItemClick(null, null, index, 1);
     }
 
     @Override

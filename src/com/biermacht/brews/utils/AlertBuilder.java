@@ -1,16 +1,29 @@
 package com.biermacht.brews.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Callbacks.BooleanCallback;
 import com.biermacht.brews.utils.Callbacks.Callback;
 
@@ -29,6 +42,54 @@ public class AlertBuilder {
     }
 
     // Builders for all of the alerts
+    public <T> AlertDialog.Builder searchableListAlert(final TextView text, final TextView title, final ArrayAdapter<T> adapter, 
+    		                                           final ArrayList<T> list, final OnItemClickListener listener)
+    {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_searchable_list, null);
+        final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
+        final ListView listView = (ListView) alertView.findViewById(R.id.list);
+        final ArrayList<T> storedList = new ArrayList<T>();
+        storedList.addAll(list);
+        listView.setOnItemClickListener(listener);
+        listView.setAdapter(adapter);
+        
+        // Stores the currently displayed list.
+    	final ArrayList<T> curList = new ArrayList<T>();
+        
+        // Search text watcher.
+        TextWatcher textWatcher = new TextWatcher() {
+            public void afterTextChanged(Editable s){}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count) 
+            {
+            	curList.removeAll(curList);
+            	for (T item : storedList)
+            	{
+            		if (item.toString().toLowerCase().contains(s.toString().toLowerCase()))
+            		{
+            			curList.add(item);
+            		}
+            	}
+            	
+            	list.clear();
+            	list.addAll(storedList);
+            	adapter.clear();
+            	adapter.addAll(curList);
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        // Add TextWatcher to search bar
+        editText.addTextChangedListener(textWatcher);
+        textWatcher.onTextChanged("", 0, 0, 0);
+
+        return new AlertDialog.Builder(context)
+                .setTitle(title.getText().toString())
+                .setView(alertView)
+                .setNegativeButton(R.string.cancel, null);
+    }
+    
     public AlertDialog.Builder editTextStringAlert(final TextView text, final TextView title)
     {
         LayoutInflater factory = LayoutInflater.from(context);
