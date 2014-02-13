@@ -15,16 +15,26 @@ public class EditCustomHopActivity extends EditHopActivity {
         // Remove views we don't want
         mainView.removeView(timeView);
         mainView.removeView(amountView);
+        mainView.removeView(searchableListView);
         
         // Add those we do
         mainView.addView(nameView, 0);
+        
+        // Set values for the given hop
+        setValues(hop);
     }
 
     @Override
     public void acquireValues() throws Exception
     {
         super.acquireValues();
-        hop.setShortDescription("Custom hop");
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	// Don't set the searchable list selector.
+    	// Initial values are set based on the ingredient we are passed
+    	// through the intent.
     }
 
     public void onFinished()

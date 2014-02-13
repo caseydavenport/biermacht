@@ -70,24 +70,40 @@ public class EditHopActivity extends AddHopsActivity {
     }
 
     @Override
-    public void configureSpinnerListener()
+    public void configureSearchableListListener()
     {
-        spinnerListener = new OnItemSelectedListener() {
+        searchableListListener = new AdapterView.OnItemClickListener() {
 
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selectedHop = (Hop) ingredientList.get(position);
-
-                nameViewText.setText(selectedHop.getName());
-                timeViewText.setText(String.format("%d", hop.getDisplayTime()));
-                alphaAcidViewText.setText(String.format("%2.2f", selectedHop.getAlphaAcidContent()));
-                amountViewText.setText(String.format("%2.2f", hop.getDisplayAmount()));
+            public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedHop = (Hop) filteredList.get(position);
+                
+                // Set values for this hop.
+                setValues(selectedHop);
+                
+                // Cancel dialog.
+                if (dialog != null)
+                {
+                	dialog.cancel();
+                	dialog = null;
+                }
             }
-
-            public void onNothingSelected(AdapterView<?> parentView)
-            {
-            }
-
         };
+    }
+    
+    public void setValues(Hop h)
+    {
+        nameViewText.setText(h.getName());
+        searchableListViewText.setText(h.getName());
+        timeViewText.setText(String.format("%d", hop.getDisplayTime()));
+        alphaAcidViewText.setText(String.format("%2.2f", h.getAlphaAcidContent()));
+        amountViewText.setText(String.format("%2.2f", hop.getDisplayAmount()));
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	// Get the index of the ingredient and set it.
+    	int index = ingredientList.indexOf(hop);
+    	searchableListListener.onItemClick(null, null, index, 1);
     }
 
     @Override

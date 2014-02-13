@@ -98,8 +98,7 @@ public class EditFermentableActivity extends AddFermentableActivity {
                 amountViewText.setText(String.format("%2.2f", fermentable.getDisplayAmount()));
                 timeViewText.setText(String.format("%d", fermentable.getTime()));
                 
-                // Get list and cancel dialog
-                getList();
+                // Cancel dialog.
                 if (dialog != null)
                 {
                 	dialog.cancel();

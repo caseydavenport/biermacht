@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import com.biermacht.brews.frontend.adapters.*;
@@ -22,7 +23,7 @@ import com.biermacht.brews.utils.Units;
 import android.view.*;
 import android.widget.TextView;
 
-public class AddHopsActivity extends AddEditActivity {
+public class AddHopsActivity extends AddEditIngredientActivity {
 
     // Holds the currently selected hop, and hop being edited
     Hop hop;
@@ -63,7 +64,6 @@ public class AddHopsActivity extends AddEditActivity {
         alphaAcidView.setOnClickListener(onClickListener);
         
         // Remove view we don't want
-        mainView.removeView(nameView);
 
         // Add Views to main view
         mainView.addView(formSpinner);
@@ -74,6 +74,7 @@ public class AddHopsActivity extends AddEditActivity {
         alphaAcidViewTitle = (TextView) alphaAcidView.findViewById(R.id.title);
         alphaAcidViewTitle.setText("Alpha Acids (%)");
         amountViewTitle.setText("Amount " + "(" + Units.getHopUnits() + ")");
+        searchableListViewTitle.setText("Hop");
 
         // Get content views
         alphaAcidViewText = (TextView) alphaAcidView.findViewById(R.id.text);
@@ -129,20 +130,24 @@ public class AddHopsActivity extends AddEditActivity {
         
         // Set button text
         submitButton.setText(R.string.add);
+        
+        // Set initial position for searchable list
+        setInitialSearchableListSelection();
 	}
 
     @Override
     public void onMissedClick(View v)
     {
-        AlertDialog alert;
+    	super.onMissedClick(v);
+    	
         if (v.equals(alphaAcidView))
-            alert = alertBuilder.editTextFloatAlert(alphaAcidViewText, alphaAcidViewTitle).create();
+            dialog = alertBuilder.editTextFloatAlert(alphaAcidViewText, alphaAcidViewTitle).create();
         else
             return;
 
         // Force keyboard open and show popup
-        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        alert.show();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        dialog.show();
     }
 
     @Override
@@ -162,7 +167,7 @@ public class AddHopsActivity extends AddEditActivity {
     public void createSpinner()
     {
         // Ingredient Spinner
-        IngredientSpinnerAdapter adapter = new IngredientSpinnerAdapter(this, ingredientList, "Hop");
+        adapter = new IngredientSpinnerAdapter(this, ingredientList, "Hop", true);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerView.setAdapter(adapter);
     }
@@ -170,28 +175,42 @@ public class AddHopsActivity extends AddEditActivity {
     @Override
     public void configureSpinnerListener()
     {
-        spinnerListener = new OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                hop = (Hop) ingredientList.get(position);
-
-                nameViewText.setText(hop.getName());
-                timeViewText.setText(mRecipe.getBoilTime() + "");
-                alphaAcidViewText.setText(String.format("%2.2f", hop.getAlphaAcidContent()));
-                amountViewText.setText(1.0 +"");
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView)
-            {
-            }
-
-        };
+    	// We don't use the spinner for this activity.
     }
+    
+	@Override
+	public void configureSearchableListListener() 
+	{
+        searchableListListener = new OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                hop = (Hop) filteredList.get(position);
+                
+                setValues(hop);
+                
+                // Cancel dialog
+                if (dialog != null)
+                {
+                	dialog.cancel();
+                	dialog = null;
+                }
+            }
+        };
+	}
+	
+	public void setValues(Hop h)
+	{
+        nameViewText.setText(h.getName());
+        searchableListViewText.setText(h.getName());
+        timeViewText.setText(mRecipe.getBoilTime() + "");
+        alphaAcidViewText.setText(String.format("%2.2f", h.getAlphaAcidContent()));
+        amountViewText.setText(1.0 +"");
+	}
 
     @Override
     public void onDeletePressed()
     {
-        // Must be overriden
+        // Must be overriden.  Add activities don't have a delete button.
     }
 
     @Override

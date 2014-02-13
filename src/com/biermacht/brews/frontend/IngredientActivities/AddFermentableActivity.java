@@ -76,7 +76,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
         // Set button text
         submitButton.setText(R.string.add);
         
-        // Set initial position
+        // Set initial position for searchable list
         setInitialSearchableListSelection();
     }
 
@@ -157,8 +157,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
                 amountViewText.setText(1 +"");
                 timeViewText.setText(String.format("%d", mRecipe.getBoilTime()));
                 
-                // Get list and cancel dialog
-                getList();
+                // Cancel dialog
                 if (dialog != null)
                 {
                 	dialog.cancel();

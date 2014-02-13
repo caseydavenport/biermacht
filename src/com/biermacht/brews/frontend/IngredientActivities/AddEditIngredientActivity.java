@@ -75,6 +75,7 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) 
             {
             	filteredList = new ArrayList<Ingredient>();
+            	getList();
             	for (Ingredient i : ingredientList)
             	{
             		if (i.toString().toLowerCase().contains(s.toString().toLowerCase()))
@@ -104,7 +105,7 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
     public void onMissedClick(View v)
     {   	
         if (v.equals(searchableListView))
-            dialog = alertBuilder.searchableListAlert(searchableListViewTitle, searchableListViewText, this.adapter, ingredientList, searchableListListener, textWatcher).create();
+            dialog = alertBuilder.searchableListAlert(searchableListViewTitle, searchableListViewText, adapter, ingredientList, searchableListListener, textWatcher).create();
         else
             return;
         dialog.show();
