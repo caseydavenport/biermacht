@@ -97,6 +97,7 @@ public class EditFermentableActivity extends AddFermentableActivity {
                 gravityViewText.setText(String.format("%2.3f", selectedFermentable.getGravity()));
                 amountViewText.setText(String.format("%2.2f", fermentable.getDisplayAmount()));
                 timeViewText.setText(String.format("%d", fermentable.getTime()));
+                type = selectedFermentable.getFermentableType();
                 
                 // Cancel dialog.
                 if (dialog != null)

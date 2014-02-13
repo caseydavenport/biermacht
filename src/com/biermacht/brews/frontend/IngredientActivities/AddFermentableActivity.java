@@ -37,6 +37,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     // Storage for acquired values
     double gravity;
     double color;
+    String type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -156,6 +157,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
                 gravityViewText.setText(String.format("%2.3f", fermentable.getGravity()));
                 amountViewText.setText(1 +"");
                 timeViewText.setText(String.format("%d", mRecipe.getBoilTime()));
+                type = fermentable.getFermentableType();
                 
                 // Cancel dialog
                 if (dialog != null)
@@ -210,6 +212,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
         fermentable.setDisplayAmount(amount);
         fermentable.setLovibondColor(color);
         fermentable.setGravity(gravity);
+        fermentable.setFermentableType(type);
     }
 
     @Override
