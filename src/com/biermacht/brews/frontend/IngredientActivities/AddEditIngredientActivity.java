@@ -74,8 +74,14 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count) 
             {
+            	// Clear previous list
             	filteredList = new ArrayList<Ingredient>();
             	getList();
+            	
+            	// Fix up the search string
+            	s = s.toString().trim();
+            	
+            	// Filter
             	for (Ingredient i : ingredientList)
             	{
             		if (i.toString().toLowerCase().contains(s.toString().toLowerCase()))
