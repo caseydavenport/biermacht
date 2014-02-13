@@ -65,7 +65,7 @@ public class EditFermentableActivity extends AddFermentableActivity {
         searchableListListener = new AdapterView.OnItemClickListener() {
         	
             public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selectedFermentable = (Fermentable) ingredientList.get(position);
+                selectedFermentable = (Fermentable) filteredList.get(position);
 
                 // Set whether we show boil or steep
                 if (mRecipe.getType().equals(Recipe.EXTRACT))

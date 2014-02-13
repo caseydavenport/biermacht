@@ -13,7 +13,8 @@ import com.biermacht.brews.utils.Database;
 public class EditCustomFermentableActivity extends AddCustomFermentableActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) 
+    {
         super.onCreate(savedInstanceState);
 
         // Enable delete button for this view
@@ -40,6 +41,13 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
     {
         super.getValuesFromIntent();
         fermentable = getIntent().getParcelableExtra(Constants.KEY_INGREDIENT);
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	// Don't set the searchable list selector.
+    	// Initial values are set based on the fermentable we are passed
+    	// through the intent.
     }
 
     @Override

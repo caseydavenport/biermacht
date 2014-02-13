@@ -43,7 +43,7 @@ public class AlertBuilder {
 
     // Builders for all of the alerts
     public <T> AlertDialog.Builder searchableListAlert(final TextView text, final TextView title, final ArrayAdapter<T> adapter, 
-    		                                           final ArrayList<T> list, final OnItemClickListener listener)
+    		                                           final ArrayList<T> list, final OnItemClickListener listener, TextWatcher textWatcher)
     {
         LayoutInflater factory = LayoutInflater.from(context);
         final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_searchable_list, null);
@@ -58,29 +58,6 @@ public class AlertBuilder {
     	final ArrayList<T> curList = new ArrayList<T>();
         
         // Search text watcher.
-        TextWatcher textWatcher = new TextWatcher() {
-            public void afterTextChanged(Editable s){}
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-            public void onTextChanged(CharSequence s, int start, int before, int count) 
-            {
-            	curList.removeAll(curList);
-            	for (T item : storedList)
-            	{
-            		if (item.toString().toLowerCase().contains(s.toString().toLowerCase()))
-            		{
-            			curList.add(item);
-            		}
-            	}
-            	
-            	list.clear();
-            	list.addAll(storedList);
-            	adapter.clear();
-            	adapter.addAll(curList);
-                adapter.notifyDataSetChanged();
-            }
-        };
-
-        // Add TextWatcher to search bar
         editText.addTextChangedListener(textWatcher);
         textWatcher.onTextChanged("", 0, 0, 0);
 

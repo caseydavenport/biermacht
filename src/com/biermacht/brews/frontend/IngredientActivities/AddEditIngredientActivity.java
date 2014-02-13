@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -30,6 +32,12 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
     
     // Store the current dialog
     public AlertDialog dialog;
+    
+    // Textwatcher for searchable list view
+    TextWatcher textWatcher;
+    
+    // Filtered lsit from which the ingredient was chosen.
+    ArrayList<Ingredient> filteredList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,30 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
         
         // Configure the searchable list listener
         configureSearchableListListener();
+        
+        textWatcher = new TextWatcher() {
+            public void afterTextChanged(Editable s){}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count) 
+            {
+            	filteredList = new ArrayList<Ingredient>();
+            	for (Ingredient i : ingredientList)
+            	{
+            		if (i.toString().toLowerCase().contains(s.toString().toLowerCase()))
+            		{
+            			filteredList.add(i);
+            		}
+            	}
+            	
+            	adapter.clear();
+            	adapter.addAll(filteredList);
+                adapter.notifyDataSetChanged();
+            }
+        };
+        
+        // Initialize filtered list
+        filteredList = new ArrayList<Ingredient>();
+        filteredList.addAll(ingredientList);
     }
     
     public void setInitialSearchableListSelection()
@@ -72,7 +104,7 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
     public void onMissedClick(View v)
     {   	
         if (v.equals(searchableListView))
-            dialog = alertBuilder.searchableListAlert(searchableListViewTitle, searchableListViewText, this.adapter, ingredientList, searchableListListener).create();
+            dialog = alertBuilder.searchableListAlert(searchableListViewTitle, searchableListViewText, this.adapter, ingredientList, searchableListListener, textWatcher).create();
         else
             return;
         dialog.show();

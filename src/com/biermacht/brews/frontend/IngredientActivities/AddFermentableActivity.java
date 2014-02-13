@@ -2,14 +2,10 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import java.util.ArrayList;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
@@ -19,8 +15,6 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
-import com.biermacht.brews.utils.Callbacks.Callback;
-
 import android.view.*;
 
 public class AddFermentableActivity extends AddEditIngredientActivity {
@@ -130,7 +124,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
         searchableListListener = new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                fermentable = (Fermentable) ingredientList.get(position);
+                fermentable = (Fermentable) filteredList.get(position);
 
                 // Set whether we show boil or steep
                 if (mRecipe.getType().equals(Recipe.EXTRACT))
