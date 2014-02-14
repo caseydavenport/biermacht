@@ -19,8 +19,6 @@ public class Misc extends Ingredient {
 	// Custom Fields ==================================================
 	// ================================================================
 	private String displayUnits;
-	private int startTime;
-	private int endTime;
 	
 	// Static values =================================================
 	// ===============================================================
@@ -38,10 +36,11 @@ public class Misc extends Ingredient {
 		setAmountIsWeight(false);
 		setBeerXmlStandardAmount(0);
 		setShortDescription("");
-		setDisplayAmount(0);
+		this.amount = 0;
 		setUse("");
 		setVersion(1);
 		setTime(0);
+		setMiscType(TYPE_OTHER);
 	}
 
     public Misc(Parcel p)
@@ -184,8 +183,10 @@ public class Misc extends Ingredient {
 			return Units.litersToCups(this.amount);
 		if (unit.equalsIgnoreCase(Units.ITEMS))
 			return this.amount;
+		if (unit.equalsIgnoreCase(Units.PACKAGES))
+			return this.amount;
 		else
-			return -1; // Should show that we couldnt compute
+			return 0; // Should show that we couldn't compute
 	}
 	
 	@Override
@@ -197,10 +198,15 @@ public class Misc extends Ingredient {
 	@Override
 	public void setDisplayAmount(double amt)
 	{
-		// Not implemented - use other method
+		// Not implemented - must use other method.
+		// Get punished! (Can't throw exceptions here, but to make debugging
+		// easier lets cause a problem!)
+		int x = (Integer) null;
+		x = x / 2;
 	}
 	
-	public void setDisplayAmount(double amt, String unit) {
+	public void setDisplayAmount(double amt, String unit) 
+	{
 
 		if (unit.equalsIgnoreCase(Units.GALLONS))
 			this.amount = Units.gallonsToLiters(amt);
@@ -230,6 +236,8 @@ public class Misc extends Ingredient {
 		else if (unit.equalsIgnoreCase(Units.CUP) || unit.equalsIgnoreCase(Units.CUPS))
 			this.amount = Units.cupsToLiters(amt);
 		else if (unit.equalsIgnoreCase(Units.ITEMS))
+			this.amount = amt;
+		else if (unit.equalsIgnoreCase(Units.PACKAGES))
 			this.amount = amt;
 		else
 			this.amount = -1.0; // Should show that we couldn't compute

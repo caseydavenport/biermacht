@@ -37,8 +37,79 @@ public class Units {
 	public static final String HOURS = "hours";
     public static final String PLATO = "plato";
     public static final String GRAVITY = "sg";
+    public static final String UNITS = "units";
+    
+    // Formal units - Full spellings for displaying in lists, etc.
+    // Make sure to add these to the converter below!
+	public static final String TEASPOONS_FORMAL = "Teaspoons";
+	public static final String CUPS_FORMAL = "Cups";
+	public static final String GRAMS_FORMAL = "Grams";
+	public static final String GALLONS_FORMAL = "Gallons";
+	public static final String LITERS_FORMAL = "Liters";
+	public static final String OUNCES_FORMAL = "Ounces";
+	public static final String ITEMS_FORMAL = "Items";
+	public static final String KILOGRAMS_FORMAL = "Kilograms";
+	public static final String MILLILITERS_FORMAL = "Milliliters";
+	public static final String PACKAGES_FORMAL = "Packages";
+	public static final String POUNDS_FORMAL = "Pounds";
+	public static final String UNITS_FORMAL = "Units";
 	
-	// Helper funcs
+	public static String toAbbreviation(String s)
+	{
+		if (s.toLowerCase().equals(TEASPOONS_FORMAL.toLowerCase()))
+			return TEASPOONS;
+		if (s.toLowerCase().equals(CUPS_FORMAL.toLowerCase()))
+			return CUPS;
+		if (s.toLowerCase().equals(GRAMS_FORMAL.toLowerCase()))
+			return GRAMS;
+		if (s.toLowerCase().equals(GALLONS_FORMAL.toLowerCase()))
+			return GALLONS;
+		if (s.toLowerCase().equals(LITERS_FORMAL.toLowerCase()))
+			return LITERS;
+		if (s.toLowerCase().equals(OUNCES_FORMAL.toLowerCase()))
+			return OUNCES;
+		if (s.toLowerCase().equals(ITEMS_FORMAL.toLowerCase()))
+			return ITEMS;
+		if (s.toLowerCase().equals(KILOGRAMS_FORMAL.toLowerCase()))
+			return KILOGRAMS;
+		if (s.toLowerCase().equals(MILLILITERS_FORMAL.toLowerCase()))
+			return MILLILITERS;
+		if (s.toLowerCase().equals(PACKAGES_FORMAL.toLowerCase()))
+			return PACKAGES;
+		if (s.toLowerCase().equals(POUNDS_FORMAL.toLowerCase()))
+			return POUNDS;
+		else
+			return UNITS;
+	}
+	
+	public static String toFormal(String s)
+	{
+		if (s.toLowerCase().equals(TEASPOONS.toLowerCase()))
+			return TEASPOONS_FORMAL;
+		if (s.toLowerCase().equals(CUPS.toLowerCase()))
+			return CUPS_FORMAL;
+		if (s.toLowerCase().equals(GRAMS.toLowerCase()))
+			return GRAMS_FORMAL;
+		if (s.toLowerCase().equals(GALLONS.toLowerCase()))
+			return GALLONS_FORMAL;
+		if (s.toLowerCase().equals(LITERS.toLowerCase()))
+			return LITERS_FORMAL;
+		if (s.toLowerCase().equals(OUNCES.toLowerCase()))
+			return OUNCES_FORMAL;
+		if (s.toLowerCase().equals(ITEMS.toLowerCase()))
+			return ITEMS_FORMAL;
+		if (s.toLowerCase().equals(KILOGRAMS.toLowerCase()))
+			return KILOGRAMS_FORMAL;
+		if (s.toLowerCase().equals(MILLILITERS.toLowerCase()))
+			return MILLILITERS_FORMAL;
+		if (s.toLowerCase().equals(PACKAGES.toLowerCase()))
+			return PACKAGES_FORMAL;
+		if (s.toLowerCase().equals(POUNDS.toLowerCase()))
+			return POUNDS_FORMAL;
+		else
+			return UNITS_FORMAL;
+	}
+	
 	public static String getUnitsFromDisplayAmount(String s)
 	{
         Log.d("Units", "Getting units from display amount: " + s);

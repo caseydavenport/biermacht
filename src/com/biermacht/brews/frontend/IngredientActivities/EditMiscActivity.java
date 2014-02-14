@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.*;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
@@ -53,29 +54,45 @@ public class EditMiscActivity extends AddMiscActivity {
     }
 
     @Override
-    public void configureSpinnerListener()
+    public void configureSearchableListListener()
     {
-        spinnerListener = new OnItemSelectedListener() {
+        searchableListListener = new AdapterView.OnItemClickListener() {
 
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selectedMisc = (Misc) ingredientList.get(position);
-
-                nameViewText.setText(selectedMisc.getName());
-
-                timeViewText.setText(String.format("%d", misc.getTime()));
-                amountViewText.setText(String.format("%2.2f", misc.getDisplayAmount()));
-
-                typeSpinner.setSelection(typeArray.indexOf(selectedMisc.getMiscType()));
-                useSpinner.setSelection(useArray.indexOf(selectedMisc.getUse()));
-
-                amountViewTitle.setText("Amount (" + selectedMisc.getDisplayUnits() + ")");
-                timeViewTitle.setText(selectedMisc.getUse() + " time");
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView)
-            {
+            public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedMisc = (Misc) filteredList.get(position);
+                
+                // Set values
+                setValues(selectedMisc);
+                
+                // Cancel dialog.
+                if (dialog != null)
+                {
+                	dialog.cancel();
+                	dialog = null;
+                }
             }
         };
+    }
+    
+    public void setValues(Misc selMisc)
+    {
+        nameViewText.setText(selMisc.getName());
+        searchableListViewText.setText(selMisc.getName());
+        timeViewText.setText(String.format("%d", misc.getTime()));
+        amountViewText.setText(String.format("%2.2f", misc.getDisplayAmount()));
+        typeSpinner.setSelection(typeArray.indexOf(selMisc.getMiscType()));
+        unitsSpinner.setSelection(unitsArray.indexOf(Units.toFormal(selMisc.getDisplayUnits())));
+        useSpinner.setSelection(useArray.indexOf(selMisc.getUse()));
+        amountViewTitle.setText("Amount (" + selMisc.getDisplayUnits() + ")");
+        timeViewTitle.setText(selMisc.getUse() + " time");
+        
+        // Set units here
+        units = Units.toFormal(selMisc.getDisplayUnits());
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	setValues(misc);
     }
 
     @Override

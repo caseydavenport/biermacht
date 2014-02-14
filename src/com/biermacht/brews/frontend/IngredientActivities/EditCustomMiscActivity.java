@@ -14,9 +14,21 @@ public class EditCustomMiscActivity extends EditMiscActivity {
         // Remove views we don't want
         mainView.removeView(timeView);
         mainView.removeView(amountView);
+        mainView.removeView(searchableListView);
         
         // Add those we do
         mainView.addView(nameView, 0);
+        mainView.addView(unitsSpinner);
+        
+        // Set values for the given misc.
+        setValues(misc);
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	// Don't set the searchable list selector.
+    	// Initial values are set based on the ingredient passed
+    	// via the Intent.
     }
 
     @Override
