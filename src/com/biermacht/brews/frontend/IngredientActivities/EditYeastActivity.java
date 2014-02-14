@@ -1,34 +1,14 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.ItemNotFoundException;
-import com.biermacht.brews.frontend.MainActivity;
-import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
-import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
-import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.utils.IngredientHandler;
-
-import java.util.ArrayList;
 
 public class EditYeastActivity extends AddYeastActivity {
 
@@ -75,34 +55,48 @@ public class EditYeastActivity extends AddYeastActivity {
     {
         super.getList();
 
-        if (!yeastsArray.contains(yeast))
-            yeastsArray.add(0, yeast);
+        if (!ingredientList.contains(yeast))
+            ingredientList.add(0, yeast);
     }
 
     @Override
-    public void configureSpinnerListener()
+    public void configureSearchableListListener()
     {
-        spinnerListener = new AdapterView.OnItemSelectedListener() {
+        searchableListListener = new AdapterView.OnItemClickListener() {
 
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selectedYeast = (Yeast) yeastsArray.get(position);
+            public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedYeast = (Yeast) filteredList.get(position);
+                
+                setValues(selectedYeast);
+                
+                // Cancel dialog.
+                if (dialog != null)
+                {
+                	dialog.cancel();
+                	dialog = null;
+                }
 
-                nameViewText.setText(selectedYeast.getName());
-                attenuationViewText.setText(String.format("%2.0f", selectedYeast.getAttenuation()));
-                amountViewText.setText(String.format("%2.2f", yeast.getBeerXmlStandardAmount()));
             }
-
-            public void onNothingSelected(AdapterView<?> parentView)
-            {
-            }
-
         };
+    }
+    
+    public void setValues(Yeast y)
+    {
+	    nameViewText.setText(y.getName());
+        searchableListViewText.setText(y.getName());
+	    attenuationViewText.setText(String.format("%2.0f", y.getAttenuation()));
+	    amountViewText.setText(String.format("%2.2f", yeast.getBeerXmlStandardAmount()));
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	setValues(yeast);
     }
 
     @Override
     public void setInitialSpinnerSelection()
     {
-        spinnerView.setSelection(yeastsArray.indexOf(yeast));
+        spinnerView.setSelection(ingredientList.indexOf(yeast));
     }
 
     @Override

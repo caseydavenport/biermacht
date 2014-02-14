@@ -7,7 +7,6 @@ import com.biermacht.brews.utils.Database;
 
 public class EditCustomYeastActivity extends EditYeastActivity {
 
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -15,9 +14,13 @@ public class EditCustomYeastActivity extends EditYeastActivity {
 
         // Remove views we don't want
         mainView.removeView(amountView);
+        mainView.removeView(searchableListView);
         
         // Add those we do
         mainView.addView(nameView, 0);
+        
+        // Set values for the given hop
+        setValues(yeast);
     }
 
     @Override
@@ -26,6 +29,13 @@ public class EditCustomYeastActivity extends EditYeastActivity {
         super.acquireValues();
 
         yeast.setShortDescription("Custom yeast");
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	// Don't set the searchable list selector.
+    	// Initial values are set based on the ingredient we are passed
+    	// through the intent.
     }
 
     @Override

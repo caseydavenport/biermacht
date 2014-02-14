@@ -2,6 +2,7 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 
+import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
@@ -14,6 +15,28 @@ public class AddCustomYeastActivity extends AddYeastActivity {
 
         // Remove views we don't want
         mainView.removeView(amountView);
+        mainView.removeView(searchableListView);
+        
+        // Add those we do.
+        mainView.addView(nameView, 0);
+        
+        // Set initial values
+        yeast = new Yeast("Custom yeast");
+        setValues(yeast);
+    }
+    
+    @Override
+    public void acquireValues() throws Exception
+    {
+        super.acquireValues();
+
+        yeast.setShortDescription("Custom yeast");
+    }
+    
+    public void setInitialSearchableListSelection()
+    {
+    	// Don't set the searchable list selector.
+    	// Initial values are set based on the new ingredient.
     }
 
     @Override
@@ -21,13 +44,5 @@ public class AddCustomYeastActivity extends AddYeastActivity {
     {
         Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, yeast, Constants.MASTER_RECIPE_ID);
         finish();
-    }
-
-    @Override
-    public void acquireValues() throws Exception
-    {
-        super.acquireValues();
-
-        yeast.setShortDescription("Custom yeast");
     }
 }

@@ -9,7 +9,6 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;

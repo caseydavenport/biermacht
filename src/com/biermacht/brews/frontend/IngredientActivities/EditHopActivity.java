@@ -101,9 +101,7 @@ public class EditHopActivity extends AddHopsActivity {
     
     public void setInitialSearchableListSelection()
     {
-    	// Get the index of the ingredient and set it.
-    	int index = ingredientList.indexOf(hop);
-    	searchableListListener.onItemClick(null, null, index, 1);
+    	setValues(hop);
     }
 
     @Override
