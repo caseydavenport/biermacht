@@ -14,8 +14,6 @@ TODO:	 Search functionality for:
 		- Style pickers
 	 Should be searchable by name, description, etc.  Search characteristics++
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
-TODO:	 Make fewer default Mash Profiles.
-TODO:	 Mash profiles can't be edited or saved?
 TODO:	 Mash profiles are confusing!
 
 //////////////////////////////////////////////
@@ -41,3 +39,5 @@ TODO:	 Adding ingredient button should say "Add" instead of "Save"
 TODO:	 After recipe creation, go to the recipe, not the main menu.
 TODO:	 Ingredient and profile editors don't have orange bar at the top.
 TODO:	 Why do I want to give my grains a name? Remove name field.
+TODO:	 Mash profiles can't be edited or saved?
+TODO:	 Make fewer default Mash Profiles.

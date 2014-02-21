@@ -231,8 +231,6 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_CALC_BOIL_VOL, r.getCalculateBoilVolume() ? 1 : 0);
         values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.getCalculateStrikeTemp() ? 1 : 0);
         values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.getCalculateStrikeVolume() ? 1 : 0);
-
-        Log.d("DatabaseInterface", "Adding recipe " + r.getRecipeName() + " to database");
 		
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_DEFAULT);
@@ -297,7 +295,7 @@ public class DatabaseInterface {
 
 		deleteStyle(r.getId());
 		addStyleToDatabase(r.getStyle(), r.getId());
-		deleteMashProfile(r.getId(), Constants.DATABASE_CUSTOM);
+		deleteMashProfile(this.readMashProfile(r.getId()).getId(), Constants.DATABASE_DEFAULT);
 		addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
 		
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
@@ -576,12 +574,6 @@ public class DatabaseInterface {
 		return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
 	}
 
-    /**
-     * Takes id as input, deletes if it exists
-     * @param id
-     * @return 1 if it was deleted or 0 if not
-     */
-
     public boolean deleteMashProfile(long id, long dbid)
     {
         String whereClause = DatabaseHelper.PRO_COL_ID + "=" + id + " AND " +
@@ -589,12 +581,6 @@ public class DatabaseInterface {
         return database.delete(DatabaseHelper.TABLE_PROFILES, whereClause, null) > 0;
     }
 	
-	/**
-	 * takes recipe ID and returns the recipe with that ID from the database
-	 * undefined for nonexistent IDs
-	 * @param id
-	 * @return
-	 */
 	public Recipe getRecipeWithId(long id)
 	{
 		Recipe r;

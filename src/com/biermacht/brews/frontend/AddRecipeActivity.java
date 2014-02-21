@@ -151,7 +151,7 @@ public class AddRecipeActivity extends AddEditActivity {
     public void createCallback()
     {
         // Default callback, called when alertBuilders are finished.
-        // Allows us to update fields that are dependant on other fields.
+        // Allows us to update fields that are dependent on other fields.
         callback = new Callback()
         {
             @Override
@@ -252,6 +252,7 @@ public class AddRecipeActivity extends AddEditActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 profile = profileArray.get(position);
+                Log.d("AddRecipe", "Got profile: " + profile.getName());
                 callback.call();
             }
 
@@ -296,6 +297,7 @@ public class AddRecipeActivity extends AddEditActivity {
         if(!styleArray.contains(mRecipe.getStyle()))
             styleArray.add(mRecipe.getStyle());
         if(!profileArray.contains(mRecipe.getMashProfile()))
+        	mRecipe.getMashProfile().setName(mRecipe.getMashProfile().getName() + " (custom)");
             profileArray.add(mRecipe.getMashProfile());
     }
 
@@ -334,6 +336,8 @@ public class AddRecipeActivity extends AddEditActivity {
         mRecipe.setEfficiency(efficiency);
         mRecipe.setBatchTime(1);
         mRecipe.setNotes(description);
+        
+        Log.d("AddRecipeActivity", "Profile set! : " + mRecipe.getMashProfile().getName());
     }
 
     @Override

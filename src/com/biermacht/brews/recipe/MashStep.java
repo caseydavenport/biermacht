@@ -132,10 +132,6 @@ public class MashStep implements Parcelable
     public int hashCode()
     {
         int hc = this.getName().hashCode();
-        hc = hc ^ this.getDescription().hashCode();
-        hc = hc + (int) this.getBeerXmlStandardInfuseTemp();
-        hc = hc + (int) this.endTemp;
-        hc = hc + (int) this.id;
         return hc;
     }
 

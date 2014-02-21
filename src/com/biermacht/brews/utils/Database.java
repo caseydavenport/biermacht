@@ -160,7 +160,7 @@ public class Database {
         return MainActivity.databaseInterface.getMashProfilesFromVirtualDatabase(dbid);
     }
 
-    // Deletes the given recipe
+    // Deletes the given mash profile
     public static boolean deleteMashProfileFromDatabase(long id, long dbid)
     {
         return MainActivity.databaseInterface.deleteMashProfile(id, dbid);

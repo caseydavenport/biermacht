@@ -157,11 +157,9 @@ public class MashProfile implements Parcelable
 	@Override
 	public int hashCode()
 	{
-		int hc = this.getName().hashCode();
-        hc = hc ^ this.getMashStepList().hashCode();
-        hc = hc + (int) this.getDisplayTunTemp();
-        hc = hc + (int) this.getBeerXmlStandardGrainTemp();
-        hc = hc + (int) this.spargeTemp;
+		int hc = this.name.hashCode();
+		for (MashStep m : this.mashSteps)
+			hc ^= m.hashCode();
 		return hc;
 	}
 

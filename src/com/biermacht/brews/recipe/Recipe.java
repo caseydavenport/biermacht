@@ -1114,7 +1114,6 @@ public class Recipe implements Parcelable {
         {
             gravP = (BrewCalculator.OriginalGravity(this)-1)/(eff/100);
             measGravP = this.getMeasuredOG() - 1;
-            Log.d("Recipe", " calcd: " + gravP + " meas: " + measGravP + " eff: " + eff);
             return 100 * measGravP / gravP;
         }
         else
