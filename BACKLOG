@@ -12,11 +12,11 @@ TODO:    More popups when adding dates to calendar.
 TODO:    Fix up all the XML files to be nice.
 TODO:	 Search functionality for:
 		- Style pickers
-		- Ingredient pickers
-		- Anything else
 	 Should be searchable by name, description, etc.  Search characteristics++
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
 TODO:	 Make fewer default Mash Profiles.
+TODO:	 Mash profiles can't be edited or saved?
+TODO:	 Mash profiles are confusing!
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
@@ -24,15 +24,14 @@ TODO:	 Make fewer default Mash Profiles.
 
 TODO:	 First time use hints / help. 
 TODO:	 Quick add button when nothing in a list.
-TODO:    Add Style guide viewing tool
-TODO:    Equipment Editor
+TODO:    Add Style  guide viewing tool.
+TODO:    Equipment Editor?
 TODO:    Add sparge steps / info
-TODO:    Add calculators
+TODO:    Add calculators for lots of things.
 TODO:    Perform mash calculation automatically
 TODO:	 Maybe - Make a visual scale rather than numerical for recipe stats. e.g, FG, OG, Color.
 TODO:	 Determine the best matching beer style for a given recipe?
-TODO:	 Reverse engineering capabilities --> Modify desired traits
-	 and the app will auto-modify your recipe to match?
+TODO:	 Reverse engineering capabilities --> Modify desired traits and the app will auto-modify your recipe to match?
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////

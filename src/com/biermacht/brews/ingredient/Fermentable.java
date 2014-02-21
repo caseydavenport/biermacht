@@ -40,6 +40,7 @@ public class Fermentable extends Ingredient implements Parcelable {
 		this.color = 0;
 		this.addAfterBoil = false;
 		this.setMaxInBatch(0);
+		this.description = "No description provided.";
 	}
 
     public Fermentable(Parcel p)

@@ -224,7 +224,7 @@ public class RecipeXmlWriter
 			// Assign values
 			nameElement.setTextContent(f.getName());
 			versionElement.setTextContent(f.getVersion() + "");
-			typeElement.setTextContent(f.getType());
+			typeElement.setTextContent(f.getFermentableType());
 			amountElement.setTextContent(f.getBeerXmlStandardAmount() + "");
 			yieldElement.setTextContent(f.getYield() + "");
 			colorElement.setTextContent(f.getLovibondColor() + "");
@@ -253,7 +253,7 @@ public class RecipeXmlWriter
 		
 		for (Misc m : l)
 		{
-			Element hopElement = d.createElement("MISC");
+			Element miscElement = d.createElement("MISC");
 			
 			// Create fields of element
 			Element nameElement = d.createElement("NAME");
@@ -274,16 +274,16 @@ public class RecipeXmlWriter
 			notesElement.setTextContent(m.getShortDescription());
 			
 			// Attach to element.
-			hopElement.appendChild(nameElement);
-			hopElement.appendChild(versionElement);
-			hopElement.appendChild(typeElement);
-			hopElement.appendChild(useElement);
-			hopElement.appendChild(amountElement);
-			hopElement.appendChild(notesElement);
-			hopElement.appendChild(notesElement);
+			miscElement.appendChild(nameElement);
+			miscElement.appendChild(versionElement);
+			miscElement.appendChild(typeElement);
+			miscElement.appendChild(useElement);
+			miscElement.appendChild(amountElement);
+			miscElement.appendChild(amountIsWeight);
+			miscElement.appendChild(notesElement);
 			
 			// Attach to list of elements.
-			miscsElement.appendChild(hopElement);
+			miscsElement.appendChild(miscElement);
 		}
 		
 		return miscsElement;
