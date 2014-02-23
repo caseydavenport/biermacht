@@ -74,6 +74,7 @@ public class Recipe implements Parcelable {
 	private InstructionGenerator instructionGenerator; // Generates instructions
 	private double measuredOG;         // Brew day stat: measured OG
 	private double measuredFG;         // Brew stat: measured FG
+	private double steepTemp;          // Temperature to steep grains.
 
     // Fields for auto-calculation ====================================
     // ================================================================
@@ -136,6 +137,7 @@ public class Recipe implements Parcelable {
 		this.instructionGenerator = new InstructionGenerator(this);
 		this.measuredOG = 0;
 		this.measuredFG = 0;
+		this.steepTemp = Units.fahrenheitToCelsius(155);
 
         // Fields for auto-calculation ====================================
         // ================================================================
@@ -211,6 +213,7 @@ public class Recipe implements Parcelable {
                                              // Instruction generator not included in parcel
         measuredOG = p.readDouble();         // Brew day stat: measured OG
         measuredFG = p.readDouble();         // Brew stat: measured FG
+        steepTemp = p.readDouble();          // Temperature to steep grains for extract recipes.
 
         // Fields for auto-calculation ====================================
         // ================================================================
@@ -277,6 +280,7 @@ public class Recipe implements Parcelable {
                                            // Instruction generator not included in parcel
         p.writeDouble(measuredOG);         // Brew day stat: measured OG
         p.writeDouble(measuredFG);         // Brew stat: measured FG
+        p.writeDouble(steepTemp);          // Steep temperature for extract recipes.
 
         // Fields for auto-calculation ====================================
         // ================================================================
@@ -796,6 +800,22 @@ public class Recipe implements Parcelable {
 			return y.getDisplayFermentationTemp();
 		}
 		return 70;
+	}
+	
+	public double getDisplaySteepTemp()
+	{
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    return Units.celsiusToFahrenheit(steepTemp);
+        else
+            return steepTemp;
+	}
+	
+	public void setDisplaySteepTemp(double t)
+	{
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+		    this.steepTemp = Units.fahrenheitToCelsius(t);
+        else
+            this.steepTemp = t;
 	}
 	
 	public void setNumberFermentationStages(int stages)

@@ -43,7 +43,7 @@ public class InstructionGenerator {
         this.bottlingList = new ArrayList<Instruction>();
 
 		this.r = r;
-		this.inst = new Instruction();
+		this.inst = new Instruction(r);
 	}
 	
 	public void generate()
@@ -125,9 +125,11 @@ public class InstructionGenerator {
         list.addAll(yeastsList);
         list.addAll(mashesList);
         list.addAll(mashStepsList);
+        if (mashStepsList.size() > 0)
+        	list.add(getSpargeInstruction());
         list.addAll(bottlingList);
 
-        // Set next task starting times
+        // Set next task starting times.
         for (int i=0; i < (list.size() - 1); i++)
         {
             if (!list.get(i).isLastInType())
@@ -135,16 +137,17 @@ public class InstructionGenerator {
         }
     }
 
-    private double getDuration(ArrayList<Instruction> i)
+    private Instruction getSpargeInstruction()
     {
-        double max_duration = 0;
-        for (Instruction inst : i)
-        {
-            if (inst.getDuration() > max_duration)
-                max_duration = inst.getDuration();
-        }
-
-        return max_duration;
+    	Instruction i = new Instruction(r);
+		i = new Instruction(r);
+		i.setInstructionType(Instruction.TYPE_SPARGE);
+		i.setOrder(0);
+		i.setDuration(1);
+		i.setDurationUnits(Units.HOURS);
+		i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
+		i.setLastInType(true);
+    	return i;
     }
 	
 	/**
@@ -185,7 +188,7 @@ public class InstructionGenerator {
 				// for each k=steep_duration
 				for (Integer time : ingredients.keySet())
 				{
-					inst = new Instruction();
+					inst = new Instruction(r);
 					inst.setRelevantIngredients(ingredients.get(time));
 					inst.setInstructionType(Instruction.TYPE_STEEP);
 					inst.setDuration(time);
@@ -237,7 +240,7 @@ public class InstructionGenerator {
 			// for each time=boil duration
 			for (Integer time : ingredients.keySet())
 			{
-				inst = new Instruction();
+				inst = new Instruction(r);
 				inst.setRelevantIngredients(ingredients.get(time));
 				inst.setInstructionType(Instruction.TYPE_BOIL);
 				inst.setDuration(time);
@@ -281,7 +284,7 @@ public class InstructionGenerator {
 			// for each time=dry hop duration
 			for (Integer time : ingredients.keySet())
 			{
-				inst = new Instruction();
+				inst = new Instruction(r);
 				inst.setRelevantIngredients(ingredients.get(time));
 				inst.setInstructionType(Instruction.TYPE_DRY_HOP);
 				inst.setDuration(time);
@@ -309,7 +312,7 @@ public class InstructionGenerator {
 		
 		if (ingredients.size() > 0)
 		{
-			inst = new Instruction();
+			inst = new Instruction(r);
 			inst.setRelevantIngredients(ingredients);
 			inst.setInstructionType(Instruction.TYPE_BOTTLING);
 			inst.setDuration(1);
@@ -333,7 +336,7 @@ public class InstructionGenerator {
 		
 		if (ingredients.size() > 0)
 		{
-			inst = new Instruction();
+			inst = new Instruction(r);
 			inst.setRelevantIngredients(ingredients);
 			inst.setInstructionType(Instruction.TYPE_YEAST);
 			inst.setDuration(1);
@@ -351,7 +354,7 @@ public class InstructionGenerator {
 		if (list.size() > 0)
 		{
 			// Add a cool wort stage
-			inst = new Instruction();
+			inst = new Instruction(r);
 			inst.setInstructionType(Instruction.TYPE_COOL);
 			inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + Units.getTemperatureUnits());
 			inst.setDuration(2);
@@ -361,7 +364,7 @@ public class InstructionGenerator {
 
             if (r.getFermentationAge(Recipe.STAGE_PRIMARY) > 0)
             {
-                inst = new Instruction();
+                inst = new Instruction(r);
                 inst.setInstructionType(Instruction.TYPE_PRIMARY);
                 inst.setInstructionText("Primary fermentation");
                 inst.setDuration(r.getFermentationAge(Recipe.STAGE_PRIMARY));
@@ -372,7 +375,7 @@ public class InstructionGenerator {
 
             if (r.getFermentationAge(Recipe.STAGE_SECONDARY) > 0)
             {
-                inst = new Instruction();
+                inst = new Instruction(r);
                 inst.setInstructionType(Instruction.TYPE_SECONDARY);
                 inst.setInstructionText("Secondary fermentation");
                         inst.setDuration(r.getFermentationAge(Recipe.STAGE_SECONDARY));
@@ -383,17 +386,16 @@ public class InstructionGenerator {
 
             if (r.getFermentationAge(Recipe.STAGE_TERTIARY) > 0)
             {
-                inst = new Instruction();
+                inst = new Instruction(r);
                 inst.setInstructionType(Instruction.TYPE_TERTIARY);
                 inst.setInstructionText("Tertiary fermentation");
-                        inst.setDuration(r.getFermentationAge(Recipe.STAGE_TERTIARY));
+                inst.setDuration(r.getFermentationAge(Recipe.STAGE_TERTIARY));
                 inst.setDurationUnits(Units.DAYS);
                 inst.setOrder(7);
                 list.add(inst);
             }
 
-            // Add a cool wort stage
-            inst = new Instruction();
+            inst = new Instruction(r);
             inst.setInstructionType(Instruction.TYPE_CALENDAR);
             inst.setInstructionText("");
             inst.setDuration(0);
@@ -411,18 +413,26 @@ public class InstructionGenerator {
 		// Do nothing if this is an extract recipe
 		if (!r.getType().equals(Recipe.EXTRACT))
 		{
+			// Calculate relevant ingredients.
+			ArrayList<Ingredient> relevantIngredients = new ArrayList<Ingredient>();
+			for (Fermentable f : r.getFermentablesList())
+				if (f.getUse().equals(Ingredient.USE_MASH))
+					relevantIngredients.add(f);
+			
+			// Create the instructions.
 			ArrayList<MashStep> mashSteps = r.getMashProfile().getMashStepList();
 			if (mashSteps.size() > 0)
 			{
-				// for each time=steep_duration
 				for (MashStep s : mashSteps)
 				{
-					inst = new Instruction();
+					inst = new Instruction(r);
 					inst.setInstructionText(s.getName());
 					inst.setInstructionType(Instruction.TYPE_MASH);
 					inst.setDuration(s.getStepTime());
 					inst.setOrder(s.getOrder());
                     inst.setMashStep(s);
+                    inst.setLastInType(true);
+                    inst.setRelevantIngredients(relevantIngredients);
                     mashStepsList.add(inst);
 				}
 			}
@@ -465,7 +475,7 @@ public class InstructionGenerator {
 			{
 				for (Integer time : mashes.keySet())
 				{
-					inst = new Instruction();
+					inst = new Instruction(r);
 					inst.setInstructionText(mashes.get(time));
 					inst.setInstructionType(Instruction.TYPE_MASH);
 					inst.setDuration(0); // TODO

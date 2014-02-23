@@ -20,6 +20,7 @@ public class Units {
 	public static final String CUP = "Cup";
 	public static final String CUPS = "Cups";
     public static final String QUARTS_PER_POUND = "qt/lb";
+    public static final String QUARTS = "qt";
 	
 	// Metric Units
 	public static final String KILOGRAMS = "kg";
@@ -121,6 +122,8 @@ public class Units {
 		// Assign a Units class standard unit here
 		if (unit.equals("tsp") || unit.equals("teaspoons"))
 			unit = Units.TEASPOONS;
+		if (unit.equalsIgnoreCase("qt") || unit.equalsIgnoreCase("quarts") || unit.equalsIgnoreCase("quart") || unit.equalsIgnoreCase("qts"))
+			unit = Units.QUARTS;
 		if (unit.equals("g") || unit.equals("grams"))
 			unit = Units.GRAMS;
 		if (unit.equals("oz") || unit.equals("ounces"))
@@ -135,6 +138,10 @@ public class Units {
             unit = Units.PLATO;
         if (unit.equalsIgnoreCase(GRAVITY))
             unit = Units.GRAVITY;
+        if (unit.equalsIgnoreCase("F"))
+        	unit = Units.FAHRENHEIT;
+        if (unit.equalsIgnoreCase("C"))
+        	unit = Units.CELSIUS;
 
         Log.d("Units", "Got units: " + unit);
 		return unit;
@@ -145,7 +152,10 @@ public class Units {
         Log.d("Units", "Getting amount from display amount: " + s);
 		ArrayList<String> temp = new ArrayList<String>(Arrays.asList(s.split(" ")));
 		if (getUnitsFromDisplayAmount(s).equals(""))
+		{
+			Log.d("Units", "Unable to determine units from: " + s);
 			return 0;
+		}
 		else
 		    if (temp.size() <= 2 && temp.size() > 0)
             {
@@ -267,6 +277,16 @@ public class Units {
 		return t / 202.884;
 	}
 	
+	public static double quartsToLiters(double q)
+	{
+		return q * .946353;
+	}
+	
+	public static double liersToQuarts(double l)
+	{
+		return l / .946353;
+	}
+	
 	public static double kilosToPounds(double k)
 	{
 		return k * 2.204;
@@ -353,6 +373,25 @@ public class Units {
             return POUNDS;
         else
             return KILOGRAMS;
+    }
+    
+    public static double toLiters(double amount, String unit)
+    {
+    	if (unit.equals(GALLONS))
+    		return gallonsToLiters(amount);
+    	if (unit.equals(QUARTS))
+    		return quartsToLiters(amount);
+    	if (unit.equals(MILLILITERS))
+    		return millisToLiters(amount);
+    	if (unit.equals(CUPS) || unit.equals(CUP))
+    		return cupsToLiters(amount);
+    	if (unit.equals(TEASPOONS))
+    		return teaspoonsToLiters(amount);
+    	if (unit.equals(OUNCES))
+    		return ouncesToLiters(amount);
+    	if (unit.equals(LITERS))
+    		return amount;
+    	return -1;
     }
 
     public static String getMetricEquivalent(String imp, boolean isWeight)

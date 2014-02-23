@@ -17,8 +17,8 @@ TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
 TODO:	 Mash profiles are confusing!
 TODO:	 Show measured efficiency for all grain recipes.
 TODO:	 Add bottling dates to calendar.
-TODO:	 Show sparge step in brew timer.
 TODO:	 Show ingredients for mash in brew timer.
+TODO:	 Fix up mash instructions to be nicer.
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
@@ -47,3 +47,4 @@ TODO:	 Mash profiles can't be edited or saved?
 TODO:	 Make fewer default Mash Profiles.
 TODO:	 Stop appending custom to things.
 TODO:	 Boil size doesn't update when checking box.
+TODO:	 Show sparge step in brew timer.

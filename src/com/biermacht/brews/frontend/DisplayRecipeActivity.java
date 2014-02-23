@@ -15,6 +15,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.utils.Database;
@@ -30,7 +31,10 @@ public class DisplayRecipeActivity extends FragmentActivity {
     ViewPager mViewPager;
     ViewPager.OnPageChangeListener pageListener;
     Menu menu;
-
+    
+    // Alert builder
+    public AlertBuilder alertBuilder;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,9 @@ public class DisplayRecipeActivity extends FragmentActivity {
 
         // Get recipe from intent
         mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
+        
+        // Create alert builder with no callback, as we don't use one.
+        alertBuilder = new AlertBuilder(this, null);
 
         // Set on page change listener
         pageListener = new ViewPager.OnPageChangeListener() {
@@ -156,10 +163,20 @@ public class DisplayRecipeActivity extends FragmentActivity {
     		    return true;
 
             case R.id.menu_timer:
+            	// If we have no instructions, don't go to timer.
+            	if (mRecipe.getInstructionList().size() == 0)
+            	{
+            		String msg = "Brew timer requires some instructions.  Add to your recipe to generate instructions!";
+            		alertBuilder.notification("No Instructions", msg).show();
+            		return false;
+            	}
+            	
+            	// We have instructions, can go to timer.
             	i = new Intent(getApplicationContext(), BrewTimerActivity.class);
                 i.putExtra(Constants.KEY_RECIPE, mRecipe);
                 startActivity(i);
-            	return true;
+                return true;
+
 
             case R.id.menu_edit_recipe:
           		i = new Intent(getApplicationContext(), EditRecipeActivity.class);

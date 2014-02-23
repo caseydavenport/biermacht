@@ -42,6 +42,14 @@ public class AlertBuilder {
     }
 
     // Builders for all of the alerts
+    public AlertDialog.Builder notification(final String title, final String message)
+    {
+        return new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(R.string.ok, null);
+    }
+    
     public <T> AlertDialog.Builder searchableListAlert(final TextView text, final TextView title, final ArrayAdapter<T> adapter, 
     		                                           final ArrayList<T> list, final OnItemClickListener listener, TextWatcher textWatcher)
     {

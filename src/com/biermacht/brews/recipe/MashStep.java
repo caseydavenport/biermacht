@@ -22,6 +22,7 @@ public class MashStep implements Parcelable
 	private double endTemp;             // Final temp for long steps
     private String description;         // Description of step
     private double waterToGrainRatio;   // Water to grain ratio (L/kg)
+    private double decoctAmount;        // Amount of mash to decoct. (L)
 	
 	// Custom Fields ==================================================
 	// ================================================================
@@ -41,7 +42,7 @@ public class MashStep implements Parcelable
 		this.setName("Untitled Mash Step");
 		this.setVersion(1);
 		this.setType(MashStep.INFUSION);
-		this.setDisplayInfuseAmount(10.0);
+		this.setDisplayInfuseAmount(0);
 		this.setBeerXmlStandardStepTemp(0.0);
 		this.setStepTime(60);
 		this.setRampTime(0);
@@ -52,6 +53,7 @@ public class MashStep implements Parcelable
 		this.id = -1;
 		this.ownerId = -1;
         this.order = 1;
+        this.decoctAmount = 0;
 	}
 
     public MashStep(Parcel p)
@@ -71,6 +73,7 @@ public class MashStep implements Parcelable
         endTemp = p.readDouble();
         description = p.readString();
         waterToGrainRatio = p.readDouble();
+        decoctAmount = p.readDouble();
 
         // Custom Fields ==================================================
         // ================================================================
@@ -99,6 +102,7 @@ public class MashStep implements Parcelable
         p.writeDouble(endTemp);             // Final temp for long steps
         p.writeString(description);         // Description of step
         p.writeDouble(waterToGrainRatio);   // Water to grain ratio (L/kg)
+        p.writeDouble(decoctAmount);        // Amount of water to decoct.
 
         // Custom Fields ==================================================
         // ================================================================
@@ -179,7 +183,33 @@ public class MashStep implements Parcelable
 	{
 		return this.type;
 	}
-
+    
+    public double getDisplayDecoctAmount()
+    {
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+            return Units.litersToGallons(this.decoctAmount);
+        else
+            return this.decoctAmount;
+    }
+    
+    public void setDisplayDecoctAmount(double amt)
+    {
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+            this.decoctAmount = Units.gallonsToLiters(this.decoctAmount);
+        else
+            this.decoctAmount = amt;
+    }
+    
+    public void setBeerXmlDecoctAmount(double amt)
+    {
+    	this.decoctAmount = amt;
+    }
+    
+    public double getBeerXmlDecoctAmount()
+    {
+    	return this.decoctAmount;
+    }
+    
     public void setDisplayInfuseAmount(double amt)
     {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
@@ -187,7 +217,7 @@ public class MashStep implements Parcelable
         else
             this.infuseAmount = amt;
     }
-
+    
     public double getDisplayInfuseAmount()
     {
         if (Units.getVolumeUnits().equals(Units.GALLONS))

@@ -14,7 +14,7 @@
         android:layout_marginRight="0dp">
         
         <TextView android:id="@+id/tag"
-	        android:layout_width="40dp"
+	        android:layout_width="60dp"
 	        android:layout_height="32dp"
 	        android:gravity="center"
 	        android:layout_margin="14dip"
@@ -52,33 +52,5 @@
 	    android:layout_marginLeft="2dp"
 	    android:background="@color/transparent" 
 	    android:text=""/>
-    
-    <!-- Displays the estimated time for this step -->
-	<TextView android:id="@+id/start_time_view"
-		android:visibility="gone"
-	    android:layout_height="fill_parent"
-	    android:layout_width="50dip"
-	    android:gravity="center"
-	    android:layout_marginLeft="2dp"
-	    android:background="@color/transparent" 
-	    android:text="0 mins"/>
-	
-	
-	
-	<!-- Divider line -->
-    <View android:layout_width="1dip"
-		android:visibility="gone"
-        android:layout_height="fill_parent"
-        android:background="#44000000" /> 
-    
-    <!-- Displays the estimated time for this step -->
-	<TextView android:id="@+id/end_time_view"
-		android:visibility="gone"
-	    android:layout_height="fill_parent"
-	    android:layout_width="50dip"
-	    android:gravity="center"
-	    android:layout_marginLeft="2dp"
-	    android:background="@color/transparent" 
-	    android:text="0 mins"/>
     
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.biermacht.brews.frontend.adapters;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.biermacht.brews.R;
@@ -40,13 +39,11 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 		TextView labelView = (TextView) row.findViewById(R.id.label);
 		TextView tagView = (TextView) row.findViewById(R.id.tag);
 		TextView durationView = (TextView) row.findViewById(R.id.duration_view);
-		TextView startTimeView = (TextView) row.findViewById(R.id.start_time_view);
-		TextView endTimeView = (TextView) row.findViewById(R.id.end_time_view);
 		
 		// Set what type of instruction it is
 		tagView.setText(list.get(position).getInstructionType());
 		
-		// Set start time, end time, and duration
+		// Set duration
 		durationView.setText(list.get(position).getDuration() + " " + list.get(position).getDurationUnits());
 		
 		// Set instruction text

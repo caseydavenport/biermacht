@@ -166,6 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String STE_COL_DESCRIPTION = "stepDescription";
     public static final String STE_COL_ORDER = "stepOrder";
     public static final String STE_COL_INFUSE_TEMP = "stepInfuseTemp";
+    public static final String STE_COL_DECOCT_AMT = "decoctionAmount";
 	
 	// Create table strings
 	private static final String CREATE_RECIPE_TABLE = "create table " +
@@ -323,7 +324,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + STE_COL_WATER_GRAIN_RATIO + " float, "
             + STE_COL_DESCRIPTION + " text, "
             + STE_COL_ORDER + " integer, "
-            + STE_COL_INFUSE_TEMP + " float "
+            + STE_COL_INFUSE_TEMP + " float, "
+            + STE_COL_DECOCT_AMT + " float "
 			+");";
 	
 	// Public Constructor

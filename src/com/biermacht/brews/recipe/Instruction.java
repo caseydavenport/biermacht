@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
 import android.os.Parcel;
@@ -23,6 +22,7 @@ public class Instruction implements Parcelable {
 	private HashMap<String, Integer> typeToOrder;
 	private ArrayList<Ingredient> relevantIngredients;
     private MashStep mashStep;     // Used for mash step instructions ONLY
+    private Recipe r;			   // Recipe to get important values for this instruction.
 	
 	public static String TYPE_STEEP = "Steep";
 	public static String TYPE_BOIL = "Boil";
@@ -31,6 +31,7 @@ public class Instruction implements Parcelable {
     public static String TYPE_TERTIARY = "3rd";
 	public static String TYPE_DRY_HOP = "Hop";
 	public static String TYPE_MASH = "Mash";
+	public static String TYPE_SPARGE = "Sparge";
     public static String TYPE_RAMP = "Ramp";
 	public static String TYPE_YEAST = "Yeast";
 	public static String TYPE_COOL = "Cool";
@@ -38,8 +39,9 @@ public class Instruction implements Parcelable {
     public static String TYPE_CALENDAR = "Calendar";
 	public static String TYPE_OTHER = "";
 	
-	public Instruction()
+	public Instruction(Recipe r)
 	{
+		this.r = r;
 		this.setInstructionText("Blank Instruction");
 		this.duration = 0;
 		this.durationUnits = Units.MINUTES;
@@ -146,18 +148,30 @@ public class Instruction implements Parcelable {
 
             if (mashStep.getDisplayInfuseAmount() != 0)
             {
-                s = "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount()) + " gal " + "of " +
+                s += "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount()) + " " + Units.getVolumeUnits() + " of " +
                         "" + String.format("%2.0f", mashStep.getDisplayInfuseTemp()) + Units.getTemperatureUnits() + "" +
-                        " water.  ";
+                        " water. ";
+            }
+            
+            if (mashStep.getDisplayDecoctAmount() != 0)
+            {
+            	s += "Remove " + String.format("%2.0f", mashStep.getDisplayDecoctAmount()) + " " + Units.getVolumeUnits() + 
+            			" of mash, and boil it for " + mashStep.getStepTime() + " minutes. ";
+            }
+            
+            if (mashStep.getRampTime() != 0)
+            {
+            	s += "Adjust mash temperature to " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + Units.getTemperatureUnits();
+            	s += " over " + mashStep.getRampTime() + " minutes. ";
             }
 
             s += "Hold at " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + Units.getTemperatureUnits();
-            s += " for " + String.format("%2.0f", mashStep.getStepTime()) + " minutes.\n\n";
+            s += " for " + String.format("%2.0f", mashStep.getStepTime()) + " minutes.";
         }
 
         else if (this.instructionType.equals(Instruction.TYPE_STEEP))
         {
-            s += "Steep ingredients at TEMP"; // TODO
+            s += "Steep ingredients at " + r.getDisplaySteepTemp() + " " + Units.getTemperatureUnits();
         }
 
         else if (this.instructionType.equals(Instruction.TYPE_BOIL))
@@ -193,9 +207,15 @@ public class Instruction implements Parcelable {
         else if (this.instructionType.equals(Instruction.TYPE_OTHER))
         {
         }
-        else if (this.instructionType.equals(Instruction.TYPE_OTHER))
+        else if (this.instructionType.equals(Instruction.TYPE_SPARGE))
         {
-            s = "To add this recipe to your calendar, click below!";
+        	s = getInstructionText() + " until you have " + r.getDisplayBoilSize() +
+                     " " + Units.getVolumeUnits() + " of wort.  Then, add wort to the" +
+                     " boil kettle and bring to a steady boil.";
+        }
+        else if (this.instructionType.equals(Instruction.TYPE_CALENDAR))
+        {
+            s = "Keep track of '" + r.getRecipeName() + "' in your calendar - click below!";
         }
 
         return s;
@@ -324,6 +344,8 @@ public class Instruction implements Parcelable {
             return true;
         if (this.instructionType.equals(TYPE_CALENDAR))
             return true;
+        if (this.instructionType.equals(TYPE_SPARGE))
+        	return true;
 
         return false;
     }
@@ -354,6 +376,7 @@ public class Instruction implements Parcelable {
 		this.typeToOrder.put(TYPE_OTHER, i);	    i+=100;
 		this.typeToOrder.put(TYPE_STEEP, i);	    i+=100;
 		this.typeToOrder.put(TYPE_MASH, i);	   		i+=100;
+		this.typeToOrder.put(TYPE_SPARGE, i);		i+=100;
 		this.typeToOrder.put(TYPE_BOIL, i);	    	i+=100;
 		this.typeToOrder.put(TYPE_COOL, i);	    	i+=100;
 		this.typeToOrder.put(TYPE_YEAST, i);		i+=100;

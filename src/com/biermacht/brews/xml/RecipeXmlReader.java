@@ -1181,6 +1181,23 @@ public class RecipeXmlReader extends DefaultHandler {
 			{
 				mashStep.setBeerXmlStandardInfuseAmount(Double.parseDouble(currentValue));
 			}
+			
+			else if (qName.equalsIgnoreCase("INFUSE_TEMP"))
+			{
+				String unit = Units.getUnitsFromDisplayAmount(currentValue);
+				double temp = Units.getAmountFromDisplayAmount(currentValue);
+				if (unit.equals(Units.FAHRENHEIT))
+					mashStep.setBeerXmlStandardInfuseTemp(Units.fahrenheitToCelsius(temp));
+				else
+					mashStep.setBeerXmlStandardInfuseTemp(temp);
+			}
+			
+			else if (qName.equalsIgnoreCase("DECOCTION_AMT"))
+			{
+				String unit = Units.getUnitsFromDisplayAmount(currentValue);
+				double amt = Units.getAmountFromDisplayAmount(currentValue);
+				mashStep.setBeerXmlDecoctAmount(Units.toLiters(amt, unit));
+			}
 
 			else if (qName.equalsIgnoreCase("STEP_TIME"))
 			{
