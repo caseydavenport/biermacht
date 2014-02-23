@@ -152,7 +152,6 @@ public class IngredientHandler {
 	}
 	
 	/**
-	 * Returns a list of valid hops for use in recipes
 	 * @return ArrayList of MashProfiles
 	 */
 	public ArrayList<MashProfile> getMashProfileList()

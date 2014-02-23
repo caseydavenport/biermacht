@@ -175,7 +175,7 @@ public class AlertBuilder {
                     editText.setClickable(false);
                     editText.setFocusable(false);
                     editText.setFocusableInTouchMode(false);
-                    callback.call();
+                    cb.call(checkBox.isChecked());
                     editText.setText(text.getText().toString());
                 }
                 else

@@ -160,11 +160,12 @@ public class AddRecipeActivity extends AddEditActivity {
                 try
                 {
                     // Get new values
+                	Log.d("AddRecipeActivity", "Calling callback.");
                     acquireValues();
                 }
                 catch (Exception e)
                 {
-                    Log.d("AddNewRecipeActivity", "Exception in callback from alert dialog");
+                    Log.d("AddRecipeActivity", "Exception in callback from alert dialog");
                     e.printStackTrace();
                 }
                 // Update fields here
@@ -180,8 +181,9 @@ public class AddRecipeActivity extends AddEditActivity {
             @Override
             public void call(boolean b)
             {
+            	Log.d("AddRecipeActivity", "Boil volume checkbox pressed.");
                 mRecipe.setCalculateBoilVolume(b);
-                callback.call();
+                boilSizeViewText.setText(String.format("%2.2f", mRecipe.getDisplayBoilSize()));
             }
         };
     }
@@ -189,7 +191,7 @@ public class AddRecipeActivity extends AddEditActivity {
     @Override
     public void onRecipeNotFound()
     {
-        Log.d("AddNewRecipeActivity", "onRecipeNotFound because we're creating one!");
+        Log.d("AddRecipeActivity", "onRecipeNotFound because we're creating one!");
         // Set values
         mRecipe = Constants.NEW_RECIPE;
         style = mRecipe.getStyle();
@@ -252,7 +254,7 @@ public class AddRecipeActivity extends AddEditActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 profile = profileArray.get(position);
-                Log.d("AddRecipe", "Got profile: " + profile.getName());
+                Log.d("AddRecipeActivity", "Got profile: " + profile.getName());
                 callback.call();
             }
 
@@ -297,7 +299,6 @@ public class AddRecipeActivity extends AddEditActivity {
         if(!styleArray.contains(mRecipe.getStyle()))
             styleArray.add(mRecipe.getStyle());
         if(!profileArray.contains(mRecipe.getMashProfile()))
-        	mRecipe.getMashProfile().setName(mRecipe.getMashProfile().getName() + " (custom)");
             profileArray.add(mRecipe.getMashProfile());
     }
 
@@ -336,8 +337,6 @@ public class AddRecipeActivity extends AddEditActivity {
         mRecipe.setEfficiency(efficiency);
         mRecipe.setBatchTime(1);
         mRecipe.setNotes(description);
-        
-        Log.d("AddRecipeActivity", "Profile set! : " + mRecipe.getMashProfile().getName());
     }
 
     @Override
