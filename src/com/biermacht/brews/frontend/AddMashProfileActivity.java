@@ -167,6 +167,7 @@ public class AddMashProfileActivity extends AddEditActivity {
                 if (v.getId() == R.id.button)
                 {
                     Intent i = new Intent(getApplicationContext(), AddMashStepActivity.class);
+                    i.putExtra(Constants.KEY_PROFILE, mProfile);
                     startActivityForResult(i, Constants.REQUEST_NEW_MASH_STEP);
                 }
             }
@@ -195,6 +196,7 @@ public class AddMashProfileActivity extends AddEditActivity {
                 Intent i = new Intent(getApplicationContext(), EditMashStepActivity.class);
                 i.putExtra(Constants.KEY_MASH_STEP_ID, mashStepArray.get(pos).getId());
                 i.putExtra(Constants.KEY_MASH_STEP, mashStepArray.get(pos));
+                i.putExtra(Constants.KEY_PROFILE, mProfile);
                 startActivityForResult(i, Constants.REQUEST_EDIT_MASH_STEP);
             }
         });

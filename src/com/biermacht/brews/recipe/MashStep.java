@@ -1,6 +1,7 @@
 package com.biermacht.brews.recipe;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.biermacht.brews.utils.*;
 
@@ -30,6 +31,9 @@ public class MashStep implements Parcelable
 	private long id;                    // id for use in database
     private int order;                  // Order in step list
     private double infuseTemp;          // Temperature of infuse water
+    private boolean calcInfuseTemp;     // Auto calculate the infusion temperature if true.
+    private boolean calcInfuseAmt;      // Auto calculate the infusion amount if true.
+    private Recipe recipe;				// Reference to the recipe that owns this mash.
 
 	// Static values =================================================
 	// ===============================================================
@@ -38,7 +42,7 @@ public class MashStep implements Parcelable
 	public static String DECOCTION = "Decoction";
 	
 	// Basic Constructor
-	public MashStep() {
+	public MashStep(Recipe r) {
 		this.setName("Untitled Mash Step");
 		this.setVersion(1);
 		this.setType(MashStep.INFUSION);
@@ -54,6 +58,16 @@ public class MashStep implements Parcelable
 		this.ownerId = -1;
         this.order = 1;
         this.decoctAmount = 0;
+        this.calcInfuseAmt = true;
+        this.calcInfuseTemp = true;
+        this.recipe = r;
+	}
+	
+	// Only use this when we don't have a mash profile to 
+	// use!
+	public MashStep()
+	{
+		this(new Recipe());
 	}
 
     public MashStep(Parcel p)
@@ -81,6 +95,8 @@ public class MashStep implements Parcelable
         id = p.readLong();
         order = p.readInt();
         infuseTemp = p.readDouble();
+        calcInfuseTemp = p.readInt() == 0 ? false : true;
+        calcInfuseAmt = p.readInt() == 0 ? false : true;
     }
 
     @Override
@@ -110,6 +126,8 @@ public class MashStep implements Parcelable
         p.writeLong(id);                    // id for use in database
         p.writeInt(order);                  // Order in step list
         p.writeDouble(infuseTemp);
+        p.writeInt(calcInfuseTemp ? 1 : 0);
+        p.writeInt(calcInfuseAmt ? 1 : 0);
     }
 
     public static final Parcelable.Creator<MashStep> CREATOR =
@@ -218,12 +236,106 @@ public class MashStep implements Parcelable
             this.infuseAmount = amt;
     }
     
+    public double getDisplayAmount()
+    {
+    	if (this.getType().equals(DECOCTION))
+    		return this.getDisplayDecoctAmount();
+    	else
+    		return this.getDisplayInfuseAmount();
+    }
+    
     public double getDisplayInfuseAmount()
     {
+    	// If we are autocalculating.
+    	if (this.calcInfuseAmt)
+    	{
+    		return this.calculateInfuseAmount();
+    	}
+
+    	// If we're not auto-calculating.
         if (Units.getVolumeUnits().equals(Units.GALLONS))
             return Units.litersToGallons(this.infuseAmount);
         else
             return this.infuseAmount;
+    }
+    
+    // Calculates the infusion amount based on
+    // water to grain ratio, water temp, water to add,
+    // and the step temperature.
+    private double calculateInfuseAmount()
+    {
+    	// We perform different calculations if this is the initial infusion.
+    	double amt = -1;
+    	if (this.firstInList())
+    	{
+    		// Initial infusion. Water is constant * amount of grain.
+    		amt = this.getBeerXmlStandardWaterToGrainRatio() * this.getBeerXmlStandardMashWeight();
+    	}
+    	else
+    	{
+    		// The actual temperature of the water being infused.
+    		double actualInfuseTemp = calcInfuseTemp ? calculateBXSInfuseTemp() : getBeerXmlStandardInfuseTemp(); 
+    		
+    		// Not initial infusion. Calculate water to add to reach appropriate temp.
+    		try {
+				amt = (this.getBeerXmlStandardStepTemp() - getPreviousStep().getBeerXmlStandardStepTemp());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    		amt = amt * (.41 * this.getBeerXmlStandardMashWeight() + this.getBXSTotalWaterInMash());
+    		amt = amt / (actualInfuseTemp - this.getBeerXmlStandardStepTemp());
+    	}
+    	// Use appropriate units.
+    	if (Units.getVolumeUnits().equals(Units.LITERS))
+    		return amt;
+    	else
+    		return Units.litersToGallons(amt);
+    }
+    
+    // Calculates the infusion temperature for both
+    // initial infusion, and water adds.
+    // http://www.howtobrew.com/section3/chapter16-3.html
+    private double calculateInfuseTemp()
+    {
+    	// We perform different calculations if this is the initial infusion.
+    	double temp = 0;
+    	if (this.firstInList())
+    	{
+    		// Initial infusion.
+    		// TODO: For now, we don't have equipment so we average tun / grain temp for calculation.
+    		double tunTemp = (this.recipe.getMashProfile().getBeerXmlStandardGrainTemp() + this.recipe.getMashProfile().getBeerXmlStandardTunTemp()) / 2;
+    		temp = (.41)/(this.getBeerXmlStandardWaterToGrainRatio());
+    		temp = temp * (this.getBeerXmlStandardStepTemp() - tunTemp) + this.getBeerXmlStandardStepTemp();
+    	}
+    	else
+    	{
+    		// Not initial infusion.  Assume boiling water to make 
+    		// calculation easier.
+    		temp = 100;
+    	}
+    	
+    	// Use appropriate units.
+    	if (Units.getTemperatureUnits().equals(Units.CELSIUS))
+    		return temp;
+    	else
+    		return Units.celsiusToFahrenheit(temp);
+    }
+    
+    private double calculateBXSInfuseTemp()
+    {
+    	if (Units.getTemperatureUnits().equals(Units.CELSIUS))
+    		return this.calculateInfuseTemp();
+    	else
+    		return Units.fahrenheitToCelsius(this.calculateInfuseTemp());
+    }
+    
+    // Returns true if this is the first in the list, or there
+    // is no list.
+    public boolean firstInList()
+    {
+    	if (this.recipe.getMashProfile().getMashStepList().size() == 0)
+    		return true;
+    	return (this.recipe.getMashProfile().getMashStepList().get(0).equals(this));
     }
 
 	public void setBeerXmlStandardInfuseAmount(double amt)
@@ -238,6 +350,9 @@ public class MashStep implements Parcelable
 
     public double getDisplayInfuseTemp()
     {
+    	if (this.calcInfuseTemp)
+    		return this.calculateInfuseTemp();
+    	
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
             return Units.celsiusToFahrenheit(this.infuseTemp);
         else
@@ -260,6 +375,26 @@ public class MashStep implements Parcelable
     public void setBeerXmlStandardInfuseTemp(double d)
     {
         this.infuseTemp = d;
+    }
+    
+    public void setAutoCalcInfuseTemp(boolean b)
+    {
+    	this.calcInfuseTemp = b;
+    }
+    
+    public void setAutoCalcInfuseAmt(boolean b)
+    {
+    	this.calcInfuseAmt = b;
+    }
+    
+    public boolean getAutoCalcInfuseTemp()
+    {
+    	return this.calcInfuseTemp;
+    }
+    
+    public boolean getAutoCalcInfuseAmt()
+    {
+    	return this.calcInfuseAmt;
     }
 
     public void setDisplayStepTemp(double temp)
@@ -382,5 +517,48 @@ public class MashStep implements Parcelable
 	public long getOwnerId()
 	{
 		return this.ownerId;
+	}
+	
+	public void setRecipe(Recipe r)
+	{
+		this.recipe = r;
+	}
+	
+	public Recipe getRecipe()
+	{
+		return this.recipe;
+	}
+	
+	public double getBeerXmlStandardMashWeight()
+	{
+		// TODO: We are not calculating this for some reason when
+		// in the edit mash step view.  It is causing 0 to appear to "water to add".
+		return BrewCalculator.TotalBeerXmlMashWeight(this.recipe);
+	}
+	
+	public MashStep getPreviousStep() throws Exception
+	{
+		if (this.firstInList())
+			throw new Exception();
+		
+		return this.recipe.getMashProfile().getMashStepList().get(this.order - 1);
+	}
+	
+	public double getBXSTotalWaterInMash()
+	{
+		if (this.firstInList())
+			// If this is the first in the list, return the water we add.
+			return this.getBeerXmlStandardWaterToGrainRatio() * this.getBeerXmlStandardMashWeight();
+		
+		// If we're not the first in the list, recurse and add up all the previous steps
+		// infuse amount.
+		try 
+		{
+			return this.getBeerXmlStandardInfuseAmount() + getPreviousStep().getBXSTotalWaterInMash();
+		} catch (Exception e) 
+		{
+			Log.e("MashStep", "Hit exception calculating total water");
+			return -1;
+		}
 	}
 }

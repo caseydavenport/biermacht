@@ -186,7 +186,6 @@ public class DisplayRecipeActivity extends FragmentActivity {
 
 			case R.id.menu_edit_mash_profile:
 				i = new Intent(getApplicationContext(), EditMashProfileActivity.class);
-                Log.d("DisplayRecipeActivity", "NAME: " + mRecipe.getMashProfile().getName());
 				i.putExtra(Constants.KEY_RECIPE, mRecipe);
                 i.putExtra(Constants.KEY_PROFILE_ID, mRecipe.getMashProfile().getId());
                 i.putExtra(Constants.KEY_PROFILE, mRecipe.getMashProfile());

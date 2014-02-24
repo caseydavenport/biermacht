@@ -35,6 +35,7 @@ public class MashProfile implements Parcelable
 	private long ownerId;			  // id for parent recipe
     private String mashType;          // one of infusion, decoction, temperature
     private String spargeType;        // one of batch, fly
+    private Recipe recipe;			  // Recipe which owns this mash.
 
 	// Static values =================================================
 	// ===============================================================
@@ -45,7 +46,7 @@ public class MashProfile implements Parcelable
     public static String SPARGE_TYPE_FLY = "Fly";
 
     // Basic Constructor	
-	public MashProfile() {
+	public MashProfile(Recipe r) {
 		this.setName("New Mash Profile");
 		this.setVersion(1);
 		this.setBeerXmlStandardGrainTemp(20);
@@ -61,6 +62,12 @@ public class MashProfile implements Parcelable
 		this.ownerId = -1;
         this.mashType = MASH_TYPE_INFUSION;
         this.spargeType = SPARGE_TYPE_BATCH;
+        this.recipe = r;
+	}
+	
+	public MashProfile()
+	{
+		this(new Recipe());
 	}
 
     public MashProfile(Parcel p)
@@ -88,6 +95,7 @@ public class MashProfile implements Parcelable
         ownerId = p.readLong();
         mashType = p.readString();
         spargeType = p.readString();
+        // Don't read recipe because it recurses.
     }
 
     @Override
@@ -114,6 +122,7 @@ public class MashProfile implements Parcelable
         p.writeLong(ownerId);			  // id for parent recipe
         p.writeString(mashType);
         p.writeString(spargeType);
+        // Don't write recipe because it recurses.
     }
 
     @Override
@@ -374,6 +383,13 @@ public class MashProfile implements Parcelable
 		return this.mashSteps.size();
 	}
 	
+	public void setRecipe(Recipe r)
+	{
+		this.recipe = r;
+		for (MashStep m : this.mashSteps)
+			m.setRecipe(this.recipe);
+	}
+	
 	public ArrayList<MashStep> getMashStepList()
 	{
         Collections.sort(this.mashSteps, new MashStepComparator());
@@ -389,6 +405,8 @@ public class MashProfile implements Parcelable
 	public void setMashStepList(ArrayList<MashStep> list)
 	{
 		this.mashSteps = list;
+		for (MashStep s : this.mashSteps)
+			s.setRecipe(this.recipe);
 	}
 
     /**
@@ -398,6 +416,7 @@ public class MashProfile implements Parcelable
      */
 	public void addMashStep(int order, MashStep step)
 	{
+		step.setRecipe(this.recipe);
 		this.mashSteps.add(order, step);
 
         // Reassign orders of steps.
@@ -425,6 +444,7 @@ public class MashProfile implements Parcelable
         step.setOrder(mashSteps.size() + 1);
 
         // Add to list
+        step.setRecipe(this.recipe);
         this.mashSteps.add(step);
     }
 }

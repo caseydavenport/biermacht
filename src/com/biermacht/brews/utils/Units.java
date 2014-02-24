@@ -142,6 +142,10 @@ public class Units {
         	unit = Units.FAHRENHEIT;
         if (unit.equalsIgnoreCase("C"))
         	unit = Units.CELSIUS;
+        if (unit.equalsIgnoreCase("qt/lb"))
+        	unit = Units.QUARTS_PER_POUND;
+        if (unit.equalsIgnoreCase(LITERS_PER_KG))
+        	unit = Units.LITERS_PER_KG;
 
         Log.d("Units", "Got units: " + unit);
 		return unit;

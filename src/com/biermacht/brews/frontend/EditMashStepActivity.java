@@ -38,6 +38,7 @@ public class EditMashStepActivity extends AddMashStepActivity {
 
         // Create mash step
         step = getIntent().getParcelableExtra(Constants.KEY_MASH_STEP);
+        step.setRecipe(mRecipe);
     }
 
     @Override

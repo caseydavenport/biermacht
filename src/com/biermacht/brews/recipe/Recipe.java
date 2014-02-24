@@ -112,7 +112,7 @@ public class Recipe implements Parcelable {
 		this.yeasts = new ArrayList<Yeast>(); 
 		this.miscs = new ArrayList<Misc>();
 		this.waters = new ArrayList<Water>(); 
-		this.mashProfile = new MashProfile();
+		this.mashProfile = new MashProfile(this);
 		
 		// Beer XML 1.0 Optional Fields ===================================
 		// ================================================================
@@ -177,6 +177,7 @@ public class Recipe implements Parcelable {
         p.readTypedList(miscs, Misc.CREATOR);           // Misc ingredients used
         p.readTypedList(waters, Water.CREATOR);           // Waters used
         mashProfile = p.readParcelable(MashProfile.class.getClassLoader()); // Mash profile for non-extracts
+        mashProfile.setRecipe(this);
 
         // Beer XML 1.0 Optional Fields ===================================
         // ================================================================
@@ -385,6 +386,7 @@ public class Recipe implements Parcelable {
 	public void setMashProfile(MashProfile profile)
 	{
 		this.mashProfile = profile;
+		this.mashProfile.setRecipe(this);
 		update();
 	}
 	
@@ -426,7 +428,7 @@ public class Recipe implements Parcelable {
 
     public double totalGrainWeight()
     {
-        return BrewCalculator.TotalGrainWeight(this);
+        return BrewCalculator.TotalFermentableWeight(this);
     }
 	
 	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) 

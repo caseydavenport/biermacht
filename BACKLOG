@@ -7,8 +7,8 @@ be reported here
 // Urgent issues.  Fix these first. //////////
 //////////////////////////////////////////////
 
-TODO:    Add support for importing MASH_TYPE and SPARGE_TYPE
 TODO:    More popups when adding dates to calendar.
+TODO:	 Fully support exporting recipes. 
 TODO:    Fix up all the XML files to be nice.
 TODO:	 Search functionality for:
 		- Style pickers
@@ -19,6 +19,8 @@ TODO:	 Show measured efficiency for all grain recipes.
 TODO:	 Add bottling dates to calendar.
 TODO:	 Show ingredients for mash in brew timer.
 TODO:	 Fix up mash instructions to be nicer.
+TODO:	 Should update mash profiles used in recipes when a profile is edited?
+TODO:	 Cannot change mash type? Not being saved in db maybe?
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
@@ -48,3 +50,5 @@ TODO:	 Make fewer default Mash Profiles.
 TODO:	 Stop appending custom to things.
 TODO:	 Boil size doesn't update when checking box.
 TODO:	 Show sparge step in brew timer.
+TODO:	 Edit mash step should say edit, not add, in title.
+TODO:	 Mash steps use Qts, but displayed as gallons elsewhere.

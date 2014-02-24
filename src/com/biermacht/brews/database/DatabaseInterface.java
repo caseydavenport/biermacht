@@ -171,6 +171,8 @@ public class DatabaseInterface {
             DatabaseHelper.STE_COL_ORDER,
             DatabaseHelper.STE_COL_INFUSE_TEMP,
             DatabaseHelper.STE_COL_DECOCT_AMT,
+            DatabaseHelper.STE_COL_CALC_INFUSE_TEMP,
+            DatabaseHelper.STE_COL_CALC_INFUSE_AMT,
 	};
 
 	// Constructor
@@ -531,6 +533,8 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.STE_COL_ORDER, s.getOrder());
         values.put(DatabaseHelper.STE_COL_INFUSE_TEMP, s.getBeerXmlStandardInfuseTemp());
         values.put(DatabaseHelper.STE_COL_DECOCT_AMT, s.getBeerXmlDecoctAmount());
+        values.put(DatabaseHelper.STE_COL_CALC_INFUSE_TEMP, s.getAutoCalcInfuseTemp() ? 1 : 0);
+        values.put(DatabaseHelper.STE_COL_CALC_INFUSE_AMT, s.getAutoCalcInfuseAmt() ? 1 : 0);
 
 		long id = database.insert(DatabaseHelper.TABLE_STEPS, null, values);
 		return id;
@@ -1026,6 +1030,8 @@ public class DatabaseInterface {
         int order = cursor.getInt(cid);                         cid++;
         double infuseTemp = cursor.getDouble(cid);              cid++;
         double decoctAmt = cursor.getDouble(cid);               cid++;
+        int calcInfuseTemp = cursor.getInt(cid);                cid++;
+        int calcInfuseAmt = cursor.getInt(cid);                 cid++;
 		
 		MashStep s = new MashStep();
 		s.setId(id);
@@ -1043,6 +1049,8 @@ public class DatabaseInterface {
         s.setOrder(order);
         s.setBeerXmlStandardInfuseTemp(infuseTemp);
         s.setBeerXmlDecoctAmount(decoctAmt);
+        s.setAutoCalcInfuseTemp(calcInfuseTemp == 1 ? true : false);
+        s.setAutoCalcInfuseAmt(calcInfuseAmt == 1 ? true : false);
 
 		return s;
 	}

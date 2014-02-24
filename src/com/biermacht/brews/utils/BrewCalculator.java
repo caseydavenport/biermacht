@@ -46,7 +46,7 @@ public class BrewCalculator {
 		if(i.getType().equals(Ingredient.FERMENTABLE))
 		{
 			double g_amt = Units.kilosToPounds(i.getBeerXmlStandardAmount());
-			double tot_amt = TotalGrainWeight(r);
+			double tot_amt = TotalFermentableWeight(r);
 			
 			return (g_amt / tot_amt) * 100;
 		}
@@ -54,7 +54,7 @@ public class BrewCalculator {
 		return 0;
 	}
 	
-	public static double TotalGrainWeight(Recipe r)
+	public static double TotalFermentableWeight(Recipe r)
 	{
 		double amt = 0;
 		for(Ingredient i : r.getIngredientList())
@@ -62,6 +62,20 @@ public class BrewCalculator {
 			if (i.getType().equals(Ingredient.FERMENTABLE))
 			{
 				amt += Units.kilosToPounds(i.getBeerXmlStandardAmount());
+			}
+		}
+		
+		return amt;
+	}
+	
+	public static double TotalBeerXmlMashWeight(Recipe r)
+	{
+		double amt = 0;
+		for(Ingredient i : r.getIngredientList())
+		{
+			if (i.getUse().equals(Ingredient.USE_MASH))
+			{
+				amt += i.getBeerXmlStandardAmount();
 			}
 		}
 		

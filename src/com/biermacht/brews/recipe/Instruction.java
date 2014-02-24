@@ -50,7 +50,7 @@ public class Instruction implements Parcelable {
 		this.relevantIngredients = new ArrayList<Ingredient>();
         this.setLastInType(false);
         this.setNextDuration(0);
-        this.mashStep = new MashStep();
+        this.mashStep = new MashStep(r);
 		
 		typeToOrder = new HashMap<String, Integer>();
 		this.configureHashMap();
@@ -71,6 +71,7 @@ public class Instruction implements Parcelable {
         lastInType = p.readInt() > 0;
         p.readTypedList(relevantIngredients, Ingredient.CREATOR);
         mashStep = p.readParcelable(MashStep.class.getClassLoader());
+        r = p.readParcelable(Recipe.class.getClassLoader());
 
         this.configureHashMap();
     }
@@ -87,6 +88,7 @@ public class Instruction implements Parcelable {
         p.writeInt(lastInType ? 1 : 0);
         p.writeTypedList(relevantIngredients);
         p.writeParcelable(mashStep, flags);
+        p.writeParcelable(r, flags);
     }
 
     @Override

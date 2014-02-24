@@ -36,8 +36,8 @@ public class RecipeXmlReader extends DefaultHandler {
 	Yeast y = new Yeast("");
 	Misc misc = new Misc("");
 	BeerStyle style = new BeerStyle("");
-	MashProfile profile = new MashProfile();
-	MashStep mashStep = new MashStep();
+	MashProfile profile = new MashProfile(r);
+	MashStep mashStep = new MashStep(r);
 	
 	// How we know what thing we're looking at
     Stack thingTypeStack = new Stack();
@@ -187,14 +187,14 @@ public class RecipeXmlReader extends DefaultHandler {
 		if (qName.equalsIgnoreCase("MASH"))
 		{
             thingTypeStack.push(qName);
-			profile = new MashProfile();
+			profile = new MashProfile(r);
 		}
 		
 		// Encounter new mash step
 		if (qName.equalsIgnoreCase("MASH_STEP"))
 		{
             thingTypeStack.push(qName);
-			mashStep = new MashStep();
+			mashStep = new MashStep(r);
 		}
 		
 		// Encounter new mash step list
@@ -1226,9 +1226,13 @@ public class RecipeXmlReader extends DefaultHandler {
 
             else if (qName.equalsIgnoreCase("WATER_GRAIN_RATIO"))
             {
-                // TODO: check units
-                String[] splits = currentValue.split(" ");
-                mashStep.setBeerXmlStandardWaterToGrainRatio(Double.parseDouble(splits[0]));
+            	String unit = Units.getUnitsFromDisplayAmount(currentValue);
+            	double amt = Units.getAmountFromDisplayAmount(currentValue);
+            	
+            	if (unit.equals(Units.QUARTS_PER_POUND))
+            		amt = Units.QPLBtoLPKG(amt);
+            		
+                mashStep.setBeerXmlStandardWaterToGrainRatio(amt);
             }
 		}
     }

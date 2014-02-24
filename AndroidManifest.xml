@@ -71,7 +71,7 @@
         </activity>
         <activity
                 android:name=".frontend.EditMashStepActivity"
-                android:label="@string/title_activity_add_mash_step"
+                android:label="@string/title_activity_edit_mash_step"
                 android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity

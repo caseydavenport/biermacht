@@ -2,6 +2,7 @@ package com.biermacht.brews.frontend;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
@@ -15,6 +16,10 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
 
         // Disable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.GONE);
+        
+        // Remove views we don't want.
+        mainView.removeView(spinnerView);
+        mainView.removeView(nameView);
     }
 
     @Override
@@ -24,9 +29,28 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
 
         // Acquire profile
         mProfile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
+        mRecipe.setMashProfile(mProfile);
 
         // Initialize data containers
         name = mProfile.getName();
+    }
+    
+    @Override 
+    public void configureSpinnerListener()
+    {
+    	// Override spinner listener because we don't show the spinner
+    	// in edit mash profile.
+    	spinnerListener = new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+            	mProfile = mRecipe.getMashProfile();
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+            }
+    	};
     }
 
     @Override
