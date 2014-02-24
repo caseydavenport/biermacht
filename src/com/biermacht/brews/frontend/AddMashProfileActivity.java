@@ -168,6 +168,7 @@ public class AddMashProfileActivity extends AddEditActivity {
                 {
                     Intent i = new Intent(getApplicationContext(), AddMashStepActivity.class);
                     i.putExtra(Constants.KEY_PROFILE, mProfile);
+                    i.putExtra(Constants.KEY_RECIPE, mRecipe);
                     startActivityForResult(i, Constants.REQUEST_NEW_MASH_STEP);
                 }
             }
@@ -197,6 +198,7 @@ public class AddMashProfileActivity extends AddEditActivity {
                 i.putExtra(Constants.KEY_MASH_STEP_ID, mashStepArray.get(pos).getId());
                 i.putExtra(Constants.KEY_MASH_STEP, mashStepArray.get(pos));
                 i.putExtra(Constants.KEY_PROFILE, mProfile);
+                i.putExtra(Constants.KEY_RECIPE, mRecipe);
                 startActivityForResult(i, Constants.REQUEST_EDIT_MASH_STEP);
             }
         });

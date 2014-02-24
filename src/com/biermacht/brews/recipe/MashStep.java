@@ -531,8 +531,6 @@ public class MashStep implements Parcelable
 	
 	public double getBeerXmlStandardMashWeight()
 	{
-		// TODO: We are not calculating this for some reason when
-		// in the edit mash step view.  It is causing 0 to appear to "water to add".
 		return BrewCalculator.TotalBeerXmlMashWeight(this.recipe);
 	}
 	

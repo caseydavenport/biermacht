@@ -108,7 +108,7 @@ public class AddMashStepActivity extends AddEditActivity {
     @Override
     public void onRecipeNotFound()
     {
-        Log.d("AddMashStepActivity", "Recipe not needed - using blank recipe");
+        Log.d("AddMashStepActivity", "Recipe not found - using blank recipe");
         mRecipe = new Recipe();
     }
 
