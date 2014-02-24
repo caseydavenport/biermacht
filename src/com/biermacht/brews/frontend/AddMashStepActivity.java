@@ -94,8 +94,8 @@ public class AddMashStepActivity extends AddEditActivity {
 
         // Add views that we want
         mainView.addView(stepTempView);
-        mainView.addView(amountView);
         mainView.addView(infuseTemperatureView);
+        mainView.addView(amountView);
         mainView.addView(waterToGrainRatioView);
 
         // Change button text to say "Add" instead of "Submit"
