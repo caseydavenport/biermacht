@@ -30,16 +30,19 @@ public class AddMashStepActivity extends AddEditActivity {
     public View stepTempView;
     public View waterToGrainRatioView;
     public View infuseTemperatureView;
+    public View stepAmountView; 		// Create custom amount view for autocalc.
 
     // Titles
     public TextView stepTempViewTitle;
     public TextView waterToGrainRatioViewTitle;
     public TextView infuseTemperatureViewTitle;
+    public TextView stepAmountViewTitle;
 
     // Content text
     public TextView stepTempViewText;
     public TextView waterToGrainRatioViewText;
     public TextView infuseTemperatureViewText;
+    public TextView stepAmountViewText;
 
     // mashProfile we are editing
     public MashStep step;
@@ -67,24 +70,29 @@ public class AddMashStepActivity extends AddEditActivity {
         stepTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         waterToGrainRatioView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         infuseTemperatureView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+        stepAmountView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
         // Set listeners
         stepTempView.setOnClickListener(onClickListener);
         waterToGrainRatioView.setOnClickListener(onClickListener);
         infuseTemperatureView.setOnClickListener(onClickListener);
+        stepAmountView.setOnClickListener(onClickListener);
 
         // Get titles, set values
         stepTempViewTitle = (TextView) stepTempView.findViewById(R.id.title);
         waterToGrainRatioViewTitle = (TextView) waterToGrainRatioView.findViewById(R.id.title);
         infuseTemperatureViewTitle = (TextView) infuseTemperatureView.findViewById(R.id.title);
+        stepAmountViewTitle = (TextView) stepAmountView.findViewById(R.id.title);
 
         // Get content views
         stepTempViewText = (TextView) stepTempView.findViewById(R.id.text);
         waterToGrainRatioViewText = (TextView) waterToGrainRatioView.findViewById(R.id.text);
         infuseTemperatureViewText = (TextView) infuseTemperatureView.findViewById(R.id.text);
+        stepAmountViewText = (TextView) stepAmountView.findViewById(R.id.text);
+
 
         // Set titles
-        amountViewTitle.setText("Water to Add (" + (Units.getUnitSystem() == Units.IMPERIAL ? "qt" : "L") + ")");
+        stepAmountViewTitle.setText("Water to Add (" + (Units.getUnitSystem() == Units.IMPERIAL ? "qt" : "L") + ")");
         stepTempViewTitle.setText("Step Temperature (" + Units.getTemperatureUnits() + ")");
         waterToGrainRatioViewTitle.setText("Water to Grain Ratio (" + (Units.getUnitSystem() == Units.IMPERIAL ? "qt/lb" : "L/kg") + ")");
         infuseTemperatureViewTitle.setText("Water Temperature (" + Units.getTemperatureUnits() + ")");
@@ -94,10 +102,10 @@ public class AddMashStepActivity extends AddEditActivity {
 
         // Add views that we want
         mainView.addView(stepTempView);
-        mainView.addView(infuseTemperatureView);
-        mainView.addView(amountView);
         mainView.addView(waterToGrainRatioView);
-
+        mainView.addView(infuseTemperatureView);
+        mainView.addView(stepAmountView);
+        
         // Change button text to say "Add" instead of "Submit"
         submitButton.setText("Add");
 
@@ -123,6 +131,14 @@ public class AddMashStepActivity extends AddEditActivity {
             alert = alertBuilder.editTextFloatAlert(stepTempViewText, stepTempViewTitle).create();
         else if (v.equals(waterToGrainRatioView))
             alert = alertBuilder.editTextFloatAlert(waterToGrainRatioViewText, waterToGrainRatioViewTitle).create();
+        else if (v.equals(stepAmountView))
+        {
+        	if (step.getType().equals(MashStep.DECOCTION))
+                alert = alertBuilder.editTextFloatAlert(stepAmountViewText, stepAmountViewTitle).create();
+        	else
+            	alert = alertBuilder.editTextFloatCheckBoxAlert(stepAmountViewText, stepAmountViewTitle, 
+                        step.getAutoCalcInfuseAmt(), infuseAmountCallback).create();
+        }
         else
             return;
 
@@ -163,9 +179,11 @@ public class AddMashStepActivity extends AddEditActivity {
             @Override
             public void call(boolean b)
             {
-            	Log.d("AddMashStepActivity", "Infuse temp autocalc checkbox pressed.");
+            	Log.d("AddMashStepActivity", "Infuse temp autocalc checkbox pressed, set to: " + b);
             	step.setAutoCalcInfuseTemp(b);
                 infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemp()));
+                stepAmountViewText.setText(String.format("%2.2f", step.getDisplayAmount()));
+                waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
             }
         };
         
@@ -175,9 +193,11 @@ public class AddMashStepActivity extends AddEditActivity {
             @Override
             public void call(boolean b)
             {
-            	Log.d("AddMashStepActivity", "Infuse amount autocalc checkbox pressed.");
+            	Log.d("AddMashStepActivity", "Infuse amount autocalc checkbox pressed, set to: " + b);
             	step.setAutoCalcInfuseAmt(b);
-                amountViewText.setText(String.format("%2.2f", step.getDisplayAmount()));
+                stepAmountViewText.setText(String.format("%2.2f", step.getDisplayAmount()));
+                infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemp()));
+                waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
             }
         };
     }
@@ -186,7 +206,7 @@ public class AddMashStepActivity extends AddEditActivity {
     {
         nameViewText.setText(step.getName());
         timeViewText.setText(String.format("%d", (int) step.getStepTime()));
-        amountViewText.setText(String.format("%2.2f", step.getDisplayAmount()));
+        stepAmountViewText.setText(String.format("%2.2f", step.getDisplayAmount()));
         stepTempViewText.setText(String.format("%2.2f", step.getDisplayStepTemp()));
         waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
         infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemp()));
@@ -237,14 +257,14 @@ public class AddMashStepActivity extends AddEditActivity {
                 // a decoction amount.
                 if (type.equals(MashStep.DECOCTION))
                 {
-                    amountViewTitle.setText("Amount to decoct (" + Units.getVolumeUnits() + ")");
+                    stepAmountViewTitle.setText("Amount to decoct (" + Units.getVolumeUnits() + ")");
                 	infuseTemperatureView.setVisibility(View.GONE);
                 	waterToGrainRatioView.setVisibility(View.GONE);
                 	
                 }
                 else
                 {
-                    amountViewTitle.setText("Water to add (" + Units.getVolumeUnits() + ")");
+                    stepAmountViewTitle.setText("Water to add (" + Units.getVolumeUnits() + ")");
                 	infuseTemperatureView.setVisibility(View.VISIBLE);
                 	waterToGrainRatioView.setVisibility(View.VISIBLE);
                 }

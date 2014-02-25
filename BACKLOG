@@ -7,8 +7,8 @@ be reported here
 // Urgent issues.  Fix these first. //////////
 //////////////////////////////////////////////
 
-TODO:    More popups when adding dates to calendar.
-TODO:	 Fully support exporting recipes. 
+TODO:    Confirmation popup when adding dates to calendar.
+TODO:	 Fully support exporting recipes to XML.
 TODO:    Fix up all the XML files to be nice.
 TODO:	 Search functionality for:
 		- Style pickers
@@ -21,6 +21,7 @@ TODO:	 Show ingredients for mash in brew timer.
 TODO:	 Fix up mash instructions to be nicer.
 TODO:	 Should update mash profiles used in recipes when a profile is edited?
 TODO:	 Cannot change mash type? Not being saved in db maybe?
+TODO:	 Efficiency for all grain should default to something reasonable (70)
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
