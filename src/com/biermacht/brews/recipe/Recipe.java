@@ -141,7 +141,7 @@ public class Recipe implements Parcelable {
 
         // Fields for auto-calculation ====================================
         // ================================================================
-        calculateBoilVolume = false;
+        calculateBoilVolume = true ;
         calculateStrikeVolume = false;
         calculateStrikeTemp = false;
 

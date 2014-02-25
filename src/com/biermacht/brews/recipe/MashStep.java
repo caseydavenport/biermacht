@@ -246,11 +246,13 @@ public class MashStep implements Parcelable
     
     public double getDisplayInfuseAmount()
     {
+    	// No infuse amount for decoction steps. Ever.
+    	if (this.getType().equals(MashStep.DECOCTION))
+    		return 0;
+    	
     	// If we are autocalculating.
     	if (this.calcInfuseAmt)
-    	{
     		return this.calculateInfuseAmount();
-    	}
 
     	// If we're not auto-calculating.
         if (Units.getVolumeUnits().equals(Units.GALLONS))
@@ -335,7 +337,9 @@ public class MashStep implements Parcelable
     {
     	if (this.recipe.getMashProfile().getMashStepList().size() == 0)
     		return true;
-    	return (this.recipe.getMashProfile().getMashStepList().get(0).equals(this));
+    	
+		int idx = this.recipe.getMashProfile().getMashStepList().indexOf(this);
+    	return idx == 0;
     }
 
 	public void setBeerXmlStandardInfuseAmount(double amt)
@@ -539,7 +543,8 @@ public class MashStep implements Parcelable
 		if (this.firstInList())
 			throw new Exception();
 		
-		return this.recipe.getMashProfile().getMashStepList().get(this.order - 1);
+		int idx = this.recipe.getMashProfile().getMashStepList().indexOf(this);
+		return this.recipe.getMashProfile().getMashStepList().get(idx - 1);
 	}
 	
 	public double getBXSTotalWaterInMash()
