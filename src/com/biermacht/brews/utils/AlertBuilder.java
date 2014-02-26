@@ -1,29 +1,21 @@
 package com.biermacht.brews.utils;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Callbacks.BooleanCallback;
 import com.biermacht.brews.utils.Callbacks.Callback;
 

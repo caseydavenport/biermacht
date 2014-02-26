@@ -125,6 +125,7 @@ public class Recipe implements Parcelable {
 		this.primaryTemp = 21;
 		this.secondaryTemp = 0;
 		this.tertiaryTemp = 0;
+		this.bottleAge = 14;
 		
 		// Custom Fields ==================================================
 		// ================================================================
@@ -728,7 +729,7 @@ public class Recipe implements Parcelable {
 		this.fermentationStages = fermentationStages;
 	}
 
-    public int getFermentationTime()
+    public int getTotalFermentationDays()
     {
         return this.primaryAge + this.secondaryAge + this.tertiaryAge;
     }

@@ -7,29 +7,27 @@ be reported here
 // Urgent issues.  Fix these first. //////////
 //////////////////////////////////////////////
 
-TODO:    Confirmation popup when adding dates to calendar.
 TODO:	 Fully support exporting recipes to XML.
 TODO:    Fix up all the XML files to be nice.
 TODO:	 Search functionality for:
 		- Style pickers
 	 Should be searchable by name, description, etc.  Search characteristics++
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
-TODO:	 Mash profiles are confusing!
 TODO:	 Show measured efficiency for all grain recipes.
-TODO:	 Add bottling dates to calendar.
-TODO:	 Show ingredients for mash in brew timer.
-TODO:	 Fix up mash instructions to be nicer.
 TODO:	 Should update mash profiles used in recipes when a profile is edited?
 TODO:	 Cannot change mash type? Not being saved in db maybe?
 TODO:	 Efficiency for all grain should default to something reasonable (70)
+TODO: 	 Adding new mash step doesn't see previous steps in list.
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
 //////////////////////////////////////////////
 
 TODO:	 First time use hints / help. 
+TODO:	 Support different times for mash ingredients?
 TODO:	 Quick add button when nothing in a list.
 TODO:    Add Style  guide viewing tool.
+TODO: 	 Can configure bottle / keg age.
 TODO:    Equipment Editor?
 TODO:    Add sparge steps / info
 TODO:    Add calculators for lots of things.
@@ -53,3 +51,7 @@ TODO:	 Boil size doesn't update when checking box.
 TODO:	 Show sparge step in brew timer.
 TODO:	 Edit mash step should say edit, not add, in title.
 TODO:	 Mash steps use Qts, but displayed as gallons elsewhere.
+TODO:	 Mash profiles are confusing!
+TODO:	 Show ingredients for mash in brew timer.
+TODO:	 Add bottling dates to calendar.
+TODO:    Confirmation popup when adding dates to calendar.

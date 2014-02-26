@@ -1,7 +1,9 @@
 package com.biermacht.brews.frontend.fragments;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -24,6 +26,7 @@ import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -100,8 +103,9 @@ public class BrewTimerStepFragment extends Fragment {
             calendarButton.setVisibility(View.VISIBLE);
             calendarButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    createCalendarItems();
+                public void onClick(View view) 
+                {
+                	addToCalendarAlert().show();
                 }
             });
         }
@@ -224,8 +228,18 @@ public class BrewTimerStepFragment extends Fragment {
             createEvent(title, description, daysFromNow);
         }
 
-        // Create bottle events
-        // TODO: We don't have bottle information yet!
+        // Bottle event
+        title = r.getRecipeName() + ": bottle / keg";
+        description = "Transfer to keg or bottles.";
+        daysFromNow = r.getTotalFermentationDays();
+        createEvent(title, description, daysFromNow);
+        
+        // Drink event
+        title = r.getRecipeName() + ": ready to drink";
+        description = "Ready to drink!";
+        daysFromNow = r.getTotalFermentationDays() + r.getBottleAge();
+        createEvent(title, description, daysFromNow);
+
     }
 
     private void createEvent(String title, String description, int daysFromNow)
@@ -258,5 +272,51 @@ public class BrewTimerStepFragment extends Fragment {
 
         Uri uri = c.getContentResolver().insert(Events.CONTENT_URI, values);
         long eventId = new Long(uri.getLastPathSegment());
+    }
+    
+    private AlertDialog.Builder addToCalendarAlert()
+    {
+    	String message = "Add the following events to your calendar?\n\n";
+    	for (String s : getCalendarMessages())
+    		message += " - " + s + "\n";
+
+	    return new AlertDialog.Builder(this.c)
+	    .setTitle("Add to calendar")
+	    .setMessage(message)
+	    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	
+	        public void onClick(DialogInterface dialog, int which) 
+	        {
+	        	// Add events to calendar.
+	        	createCalendarItems();
+	        }
+	
+	    })
+	
+	    .setNegativeButton(R.string.cancel, null);
+    }
+    
+    private ArrayList<String> getCalendarMessages()
+    {
+    	ArrayList<String> messages = new ArrayList<String>();
+        String line = "";
+
+        // Create all the fermentation stage calendar events
+        for (int i=0; i < r.getFermentationStages(); i++)
+        {
+            if (i == 0)
+            	messages.add("Begin primary fermentation.");
+
+            if (i == 1)
+                messages.add("Begin secondary fermentation.");
+
+            if (i == 2)
+            	messages.add("Begin tertiary fermentation.");
+        }
+
+        // Bottle event
+        messages.add("Transer to keg or bottles.");
+        messages.add("Ready to drink.");
+        return messages;
     }
 }
