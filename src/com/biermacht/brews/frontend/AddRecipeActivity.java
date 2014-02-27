@@ -272,9 +272,15 @@ public class AddRecipeActivity extends AddEditActivity {
                 callback.call();
 
                 if(type.equals(Recipe.EXTRACT))
+                {
                     profileSpinner.setVisibility(View.GONE);
+                    efficiencyView.setVisibility(View.GONE);
+                }
                 else
+                {
                     profileSpinner.setVisibility(View.VISIBLE);
+                    efficiencyView.setVisibility(View.VISIBLE);
+                }
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {

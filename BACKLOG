@@ -13,10 +13,7 @@ TODO:	 Search functionality for:
 		- Style pickers
 	 Should be searchable by name, description, etc.  Search characteristics++
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
-TODO:	 Show measured efficiency for all grain recipes.
-TODO:	 Should update mash profiles used in recipes when a profile is edited?
 TODO:	 Cannot change mash type? Not being saved in db maybe?
-TODO:	 Efficiency for all grain should default to something reasonable (70)
 TODO: 	 Adding new mash step doesn't see previous steps in list.
 
 //////////////////////////////////////////////
@@ -24,6 +21,7 @@ TODO: 	 Adding new mash step doesn't see previous steps in list.
 //////////////////////////////////////////////
 
 TODO:	 First time use hints / help. 
+TODO:	 Should update mash profiles used in recipes when a profile is edited?
 TODO:	 Support different times for mash ingredients?
 TODO:	 Quick add button when nothing in a list.
 TODO:    Add Style  guide viewing tool.
@@ -34,7 +32,7 @@ TODO:    Add calculators for lots of things.
 TODO:    Perform mash calculation automatically
 TODO:	 Maybe - Make a visual scale rather than numerical for recipe stats. e.g, FG, OG, Color.
 TODO:	 Determine the best matching beer style for a given recipe?
-TODO:	 Reverse engineering capabilities --> Modify desired traits and the app will auto-modify your recipe to match?
+TODO:	 Modify desired traits and the app will auto-modify your recipe to match?
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////
@@ -55,3 +53,5 @@ TODO:	 Mash profiles are confusing!
 TODO:	 Show ingredients for mash in brew timer.
 TODO:	 Add bottling dates to calendar.
 TODO:    Confirmation popup when adding dates to calendar.
+TODO:	 Show measured efficiency for all grain recipes. (Condition to show was too strict)
+TODO:	 Efficiency for all grain should default to something reasonable (70)

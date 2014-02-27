@@ -130,7 +130,12 @@ public class AddMashStepActivity extends AddEditActivity {
         else if (v.equals(stepTempView))
             alert = alertBuilder.editTextFloatAlert(stepTempViewText, stepTempViewTitle).create();
         else if (v.equals(waterToGrainRatioView))
-            alert = alertBuilder.editTextFloatAlert(waterToGrainRatioViewText, waterToGrainRatioViewTitle).create();
+        {
+        	if (step.firstInList())
+        		alert = alertBuilder.editTextFloatAlert(waterToGrainRatioViewText, waterToGrainRatioViewTitle).create();
+        	else
+        		alert = alertBuilder.editTextDisabled(waterToGrainRatioViewText, waterToGrainRatioViewTitle, Constants.MESSAGE_AUTO_CALC_W2GR).create();
+        }
         else if (v.equals(stepAmountView))
         {
         	if (step.getType().equals(MashStep.DECOCTION))
@@ -222,6 +227,8 @@ public class AddMashStepActivity extends AddEditActivity {
         profile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
         mRecipe.setMashProfile(profile);
         step = new MashStep(mRecipe);
+        step.setOrder(profile.getNumberOfSteps());
+        profile.addMashStep(step);
     }
 
     @Override
@@ -328,6 +335,7 @@ public class AddMashStepActivity extends AddEditActivity {
     public void onCancelPressed()
     {
         setResult(Constants.RESULT_CANCELED, new Intent());
+        profile.removeMashStep(step);
         finish();
     }
 

@@ -59,6 +59,9 @@ public class Constants {
     public static final int REQUEST_NEW_MASH_STEP = 1;
     public static final int REQUEST_EDIT_MASH_STEP = 2;
     public static final int REQUEST_EDIT_RECIPE = 3;
+    
+    // Constant messages
+    public static String MESSAGE_AUTO_CALC_W2GR = "Water-to-grain ratio is calculated automatically for this step.";
 
     // Other Constants
     private static final String[] hop_uses = {Hop.USE_BOIL, Hop.USE_AROMA, Hop.USE_DRY_HOP};

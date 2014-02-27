@@ -106,7 +106,7 @@ public class Recipe implements Parcelable {
 		this.setDisplayBatchSize(5);
 		this.setDisplayBoilSize(2.5);
         this.setBoilTime(60);
-		this.setEfficiency(100);
+		this.setEfficiency(70);
 		this.hops = new ArrayList<Hop>();   
 		this.fermentables = new ArrayList<Fermentable>();  
 		this.yeasts = new ArrayList<Yeast>(); 
@@ -123,8 +123,8 @@ public class Recipe implements Parcelable {
 		this.secondaryAge = 0;
 		this.tertiaryAge = 0;
 		this.primaryTemp = 21;
-		this.secondaryTemp = 0;
-		this.tertiaryTemp = 0;
+		this.secondaryTemp = 21;
+		this.tertiaryTemp = 21;
 		this.bottleAge = 14;
 		
 		// Custom Fields ==================================================
@@ -597,6 +597,8 @@ public class Recipe implements Parcelable {
 	
 	public double getEfficiency() 
 	{
+		if (this.getType().equals(EXTRACT))
+			return 100;
 		return efficiency;
 	}
 
@@ -1133,13 +1135,15 @@ public class Recipe implements Parcelable {
         if (!this.getType().equals(Recipe.EXTRACT))
             eff = getEfficiency();
 
-        if (this.getMeasuredFG() > 0 && this.getMeasuredOG() > this.getMeasuredFG())
+        if (this.getMeasuredOG() > 0)
         {
             gravP = (BrewCalculator.OriginalGravity(this)-1)/(eff/100);
             measGravP = this.getMeasuredOG() - 1;
             return 100 * measGravP / gravP;
         }
         else
+        {
             return 0;
+        }
     }
 }

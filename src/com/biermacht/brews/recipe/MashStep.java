@@ -47,7 +47,7 @@ public class MashStep implements Parcelable
 		this.setVersion(1);
 		this.setType(MashStep.INFUSION);
 		this.setDisplayInfuseAmount(0);
-		this.setBeerXmlStandardStepTemp(0.0);
+		this.setBeerXmlStandardStepTemp(65.5);
 		this.setStepTime(60);
 		this.setRampTime(0);
 		this.setBeerXmlStandardEndTemp(0.0);
@@ -264,6 +264,7 @@ public class MashStep implements Parcelable
     // Calculates the infusion amount based on
     // water to grain ratio, water temp, water to add,
     // and the step temperature.
+    // Also sets this.infuseAmount to the correct avlue.
     private double calculateInfuseAmount()
     {
     	// We perform different calculations if this is the initial infusion.
@@ -287,6 +288,10 @@ public class MashStep implements Parcelable
     		amt = amt * (.41 * this.getBeerXmlStandardMashWeight() + this.getBXSTotalWaterInMash());
     		amt = amt / (actualInfuseTemp - this.getBeerXmlStandardStepTemp());
     	}
+    	
+    	// Set BXL amount so that database is consistent.
+    	this.infuseAmount = amt;
+    	
     	// Use appropriate units.
     	if (Units.getVolumeUnits().equals(Units.LITERS))
     		return amt;
@@ -429,15 +434,27 @@ public class MashStep implements Parcelable
 
     public double getBeerXmlStandardWaterToGrainRatio()
     {
-        return this.waterToGrainRatio;
+    	// If this is the first in the list, use the configured value.
+    	// Otherwise, we need to calculate it based on the water added.
+    	if (this.firstInList())
+    		return this.waterToGrainRatio;
+    	return this.getBXSTotalWaterInMash() / this.getBeerXmlStandardMashWeight();
     }
 
     public double getDisplayWaterToGrainRatio()
     {
-        if (Units.getUnitSystem().equals(Units.IMPERIAL))
-            return Units.LPKGtoQPLB(this.waterToGrainRatio);
-        else
-            return this.waterToGrainRatio;
+    	if (this.firstInList())
+    	{
+	        if (Units.getUnitSystem().equals(Units.IMPERIAL))
+	            return Units.LPKGtoQPLB(this.waterToGrainRatio);
+	        else
+	            return this.waterToGrainRatio;
+    	}
+    	if (Units.getUnitSystem().equals(Units.IMPERIAL))
+        	return Units.LPKGtoQPLB(this.getBXSTotalWaterInMash() / this.getBeerXmlStandardMashWeight());
+    	else
+        	return this.getBXSTotalWaterInMash() / this.getBeerXmlStandardMashWeight();
+    		
     }
 
     public void setBeerXmlStandardWaterToGrainRatio(double d)
@@ -550,8 +567,10 @@ public class MashStep implements Parcelable
 	public double getBXSTotalWaterInMash()
 	{
 		if (this.firstInList())
+		{
 			// If this is the first in the list, return the water we add.
 			return this.getBeerXmlStandardWaterToGrainRatio() * this.getBeerXmlStandardMashWeight();
+		}
 		
 		// If we're not the first in the list, recurse and add up all the previous steps
 		// infuse amount.

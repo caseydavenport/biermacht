@@ -177,6 +177,7 @@ public class AddMashProfileActivity extends AddEditActivity {
         // Remove views we don't want
         mainView.removeView(amountView);
         mainView.removeView(timeView);
+        mainView.removeView(spinnerView);
 
         // Add views that we want
         mainView.addView(mashTypeSpinner);
@@ -355,7 +356,7 @@ public class AddMashProfileActivity extends AddEditActivity {
     public void updateMashStepList()
     {
         // Layout parameters for listView
-        // We have trouble settign the size in XML, so we dynamically do it here based on
+        // We have trouble setting the size in XML, so we dynamically do it here based on
         // the number of steps. Each step is 60dip tall.
         int height = mashStepArray.size() * 140;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
@@ -370,6 +371,9 @@ public class AddMashProfileActivity extends AddEditActivity {
         dragDropListView.setRemoveListener(onRemove);
         dragDropListView.setDragEnabled(true);
         dragDropListView.setLayoutParams(params);
+        
+        // Reset the profiles mash step list.
+        mProfile.setMashStepList(mashStepArray);
     }
 
     @Override
@@ -475,7 +479,6 @@ public class AddMashProfileActivity extends AddEditActivity {
                 }
 
                 // Use list iterator because you can't modify a list while iterating over it
-                // in java... :(
                 ListIterator<MashStep> it = mashStepArray.listIterator();
 
                 while (it.hasNext())

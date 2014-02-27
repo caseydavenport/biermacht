@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
@@ -215,5 +216,30 @@ public class AlertBuilder {
                 })
 
                 .setNegativeButton(R.string.cancel, null);
+    }
+    
+    public AlertDialog.Builder editTextDisabled(final TextView text, final TextView title, String message)
+    {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_edit_text_float_2_4, null);
+        final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
+        final TextView messageView = new TextView(this.context);
+        messageView.setText(message);
+        messageView.setGravity(Gravity.CENTER);
+        alertView.addView(messageView);
+
+        // Set text
+        editText.setText(text.getText().toString());
+
+        // Set disabled.
+        editText.setEnabled(false);
+        editText.setClickable(false);
+        editText.setFocusable(false);
+        editText.setFocusableInTouchMode(false);
+
+        return new AlertDialog.Builder(context)
+                .setTitle(title.getText().toString())
+                .setView(alertView)
+                .setPositiveButton(R.string.ok, null);
     }
 }

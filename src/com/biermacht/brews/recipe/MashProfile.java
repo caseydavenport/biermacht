@@ -52,7 +52,7 @@ public class MashProfile implements Parcelable
 		this.setBeerXmlStandardGrainTemp(20);
 		this.mashSteps = new ArrayList<MashStep>();
 	    this.setBeerXmlStandardTunTemp(20);
-		this.setBeerXmlStandardSpargeTemp(78);
+		this.setBeerXmlStandardSpargeTemp(75.5555);
 		this.setpH(7);
 		this.setBeerXmlStandardTunWeight(0);
 		this.setBeerXmlStandardTunSpecHeat(0);
@@ -63,6 +63,9 @@ public class MashProfile implements Parcelable
         this.mashType = MASH_TYPE_INFUSION;
         this.spargeType = SPARGE_TYPE_BATCH;
         this.recipe = r;
+        
+        // Add a default mash step.
+        this.mashSteps.add(new MashStep(this.recipe));
 	}
 	
 	public MashProfile()
