@@ -362,7 +362,8 @@ public class InstructionGenerator {
 			inst.setDurationUnits(Units.HOURS);
 			list.add(inst);
 
-            if (r.getFermentationAge(Recipe.STAGE_PRIMARY) > 0)
+			int numStages = r.getFermentationStages();
+            if (r.getFermentationAge(Recipe.STAGE_PRIMARY) > 0 && (numStages > 0))
             {
                 inst = new Instruction(r);
                 inst.setInstructionType(Instruction.TYPE_PRIMARY);
@@ -373,7 +374,7 @@ public class InstructionGenerator {
                 list.add(inst);
             }
 
-            if (r.getFermentationAge(Recipe.STAGE_SECONDARY) > 0)
+            if (r.getFermentationAge(Recipe.STAGE_SECONDARY) > 0 && (numStages > 1))
             {
                 inst = new Instruction(r);
                 inst.setInstructionType(Instruction.TYPE_SECONDARY);
@@ -384,7 +385,7 @@ public class InstructionGenerator {
                 list.add(inst);
             }
 
-            if (r.getFermentationAge(Recipe.STAGE_TERTIARY) > 0)
+            if (r.getFermentationAge(Recipe.STAGE_TERTIARY) > 0 && (numStages > 2))
             {
                 inst = new Instruction(r);
                 inst.setInstructionType(Instruction.TYPE_TERTIARY);

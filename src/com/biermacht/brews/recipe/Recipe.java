@@ -426,6 +426,15 @@ public class Recipe implements Parcelable {
 		Collections.sort(list, new IngredientComparator());
 		return list;
 	}
+	
+	public void deleteAllIngredients()
+	{
+		this.fermentables = new ArrayList<Fermentable>();
+		this.hops = new ArrayList<Hop>();
+		this.miscs = new ArrayList<Misc>();
+		this.yeasts = new ArrayList<Yeast>();
+		this.waters = new ArrayList<Water>();
+	}
 
     public double totalGrainWeight()
     {
@@ -649,7 +658,7 @@ public class Recipe implements Parcelable {
 
     private double calculateBoilVolume()
     {
-        double TRUB_LOSS = Units.gallonsToLiters(.3);               // Liters lost
+        double TRUB_LOSS = Units.gallonsToLiters(.3);               // Liters lost // TODO: Get this from equipment
         double SHRINKAGE = .04;                                     // Percent lost
         double EVAP_LOSS = Units.gallonsToLiters(1.5);              // Evaporation loss (L/hr) // TODO: Get this from equipment
 
@@ -804,7 +813,10 @@ public class Recipe implements Parcelable {
 		{
 			return y.getDisplayFermentationTemp();
 		}
-		return 70;
+		if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+			return 65;
+		else
+			return (int) Units.fahrenheitToCelsius(65);
 	}
 	
 	public double getDisplaySteepTemp()

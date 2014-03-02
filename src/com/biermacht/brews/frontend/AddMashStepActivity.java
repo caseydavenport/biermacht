@@ -114,13 +114,6 @@ public class AddMashStepActivity extends AddEditActivity {
     }
 
     @Override
-    public void onRecipeNotFound()
-    {
-        Log.d("AddMashStepActivity", "Recipe not found - using blank recipe");
-        mRecipe = new Recipe();
-    }
-
-    @Override
     public void onMissedClick(View v)
     {
         AlertDialog alert;
@@ -215,7 +208,6 @@ public class AddMashStepActivity extends AddEditActivity {
         stepTempViewText.setText(String.format("%2.2f", step.getDisplayStepTemp()));
         waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
         infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemp()));
-        Log.d("SetValsAddMashStep", "Got amount: " + step.getDisplayAmount());
     }
 
     @Override
@@ -223,12 +215,24 @@ public class AddMashStepActivity extends AddEditActivity {
     {
         super.getValuesFromIntent();
 
-        // Create mash step
+        // Create mash step.
         profile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
         mRecipe.setMashProfile(profile);
         step = new MashStep(mRecipe);
         step.setOrder(profile.getNumberOfSteps());
         profile.addMashStep(step);
+
+        // See if there is a previous step.  Will throw an excpetion if this is the first 
+        // step in the list, and we will just use this step's stuff.
+		try 
+    	{
+			Log.d("AddMashStepActivity", "Step is not first in list, using previous step temp");
+			step.setBeerXmlStandardStepTemp(step.getPreviousStep().getBeerXmlStandardStepTemp() + 2.77777);
+		} catch (Exception e) 
+		{
+			Log.d("AddMashStepActivity", "Step is first in list, using own step temp.");
+			e.printStackTrace();
+		}
     }
 
     @Override
@@ -268,6 +272,11 @@ public class AddMashStepActivity extends AddEditActivity {
                 	infuseTemperatureView.setVisibility(View.GONE);
                 	waterToGrainRatioView.setVisibility(View.GONE);
                 	
+                }
+                else if (type.equals(MashStep.TEMPERATURE))
+                {
+                	infuseTemperatureView.setVisibility(View.GONE);
+                	stepAmountView.setVisibility(View.GONE);
                 }
                 else
                 {
@@ -321,14 +330,15 @@ public class AddMashStepActivity extends AddEditActivity {
         double stepTemp = Double.parseDouble(stepTempViewText.getText().toString());
         double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString());
         double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString());
-
-        step.setName(name);
+                
+        profile.setMashStep(step.getOrder(), step);
         step.setDisplayInfuseAmount(amount);
         step.setStepTime(time);
         step.setType(type);
         step.setDisplayStepTemp(stepTemp);
         step.setDisplayWaterToGrainRatio(waterToGrainRatio);
         step.setDisplayInfuseTemp(infuseTemp);
+        step.setName(name);
     }
 
     @Override

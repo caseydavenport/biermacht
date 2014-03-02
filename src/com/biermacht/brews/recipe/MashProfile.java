@@ -63,9 +63,6 @@ public class MashProfile implements Parcelable
         this.mashType = MASH_TYPE_INFUSION;
         this.spargeType = SPARGE_TYPE_BATCH;
         this.recipe = r;
-        
-        // Add a default mash step.
-        this.mashSteps.add(new MashStep(this.recipe));
 	}
 	
 	public MashProfile()
@@ -435,6 +432,14 @@ public class MashProfile implements Parcelable
     public boolean removeMashStep(MashStep step)
     {
         return this.mashSteps.remove(step);
+    }
+    
+    public void setMashStep(int order, MashStep step)
+    {
+    	if (order >= this.mashSteps.size())
+    		order = this.mashSteps.size() - 1;
+    	step.setRecipe(this.recipe);
+    	this.mashSteps.set(order, step);
     }
 
     /**

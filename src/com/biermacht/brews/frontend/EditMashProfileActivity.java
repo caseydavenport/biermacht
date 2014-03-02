@@ -29,10 +29,18 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
 
         // Acquire profile
         mProfile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
+        
+        // Set the profile.
         mRecipe.setMashProfile(mProfile);
 
         // Initialize data containers
         name = mProfile.getName();
+    }
+    
+    @Override
+    public void setTempVals()
+    {
+    	// Do nothing for editing a mash profile.
     }
     
     @Override 

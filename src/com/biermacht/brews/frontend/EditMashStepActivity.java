@@ -24,13 +24,6 @@ public class EditMashStepActivity extends AddMashStepActivity {
     }
 
     @Override
-    public void onRecipeNotFound()
-    {
-        Log.d("EditMashStepActivity", "Recipe not needed - using blank recipe");
-        mRecipe = new Recipe();
-    }
-
-    @Override
     public void getValuesFromIntent()
     {
         super.getValuesFromIntent();

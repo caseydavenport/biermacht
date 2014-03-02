@@ -145,9 +145,6 @@ public class Instruction implements Parcelable {
         String s = "";
         if (this.instructionType.equals(Instruction.TYPE_MASH))
         {
-            if (!mashStep.getDescription().isEmpty())
-                return mashStep.getDescription();
-
             if (mashStep.getDisplayInfuseAmount() != 0)
             {
                 s += "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount()) + " " + Units.getVolumeUnits() + " of " +
@@ -211,7 +208,7 @@ public class Instruction implements Parcelable {
         }
         else if (this.instructionType.equals(Instruction.TYPE_SPARGE))
         {
-        	s = getInstructionText() + " until you have " + r.getDisplayBoilSize() +
+        	s = getInstructionText() + " until you have " + String.format("%2.2f", r.getDisplayBoilSize()) +
                      " " + Units.getVolumeUnits() + " of wort.  Then, add wort to the" +
                      " boil kettle and bring to a steady boil.";
         }

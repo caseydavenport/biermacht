@@ -14,7 +14,10 @@ TODO:	 Search functionality for:
 	 Should be searchable by name, description, etc.  Search characteristics++
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
 TODO:	 Cannot change mash type? Not being saved in db maybe?
-TODO: 	 Adding new mash step doesn't see previous steps in list.
+TODO:	 Hop summary should show boil time!
+TODO: 	 Hitting stop, then play, doesn't start you at the beginning.
+TODO:	 Should consider mash temp in ABV calc.
+TODO:	 Confirmation when leaving brew timer.
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
@@ -27,12 +30,14 @@ TODO:	 Quick add button when nothing in a list.
 TODO:    Add Style  guide viewing tool.
 TODO: 	 Can configure bottle / keg age.
 TODO:    Equipment Editor?
+TODO:	 Temperature calculator.
 TODO:    Add sparge steps / info
 TODO:    Add calculators for lots of things.
 TODO:    Perform mash calculation automatically
 TODO:	 Maybe - Make a visual scale rather than numerical for recipe stats. e.g, FG, OG, Color.
 TODO:	 Determine the best matching beer style for a given recipe?
 TODO:	 Modify desired traits and the app will auto-modify your recipe to match?
+TODO:	 Ability to run mash timer in background.
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////
@@ -55,3 +60,12 @@ TODO:	 Add bottling dates to calendar.
 TODO:    Confirmation popup when adding dates to calendar.
 TODO:	 Show measured efficiency for all grain recipes. (Condition to show was too strict)
 TODO:	 Efficiency for all grain should default to something reasonable (70)
+TODO: 	 Adding new mash step doesn't see previous steps in list.
+TODO:	 Shows invalid fermentation stages in instructions.
+TODO:	 Mash step goes to -inf when changing name?
+TODO:	 When adding mash step, temp should start at previous step's end temp.
+TODO:	 Recipe should include deafult amount of grain (10lbs?) when adding custom mash profile.
+TODO:	 Sparge amt needs to be formatted in instruction.
+TODO:	 Cool wort does not adjust to metric.
+TODO:	 Temp mash shouldn't have "water to add" field.
+TODO:	 Track down that bug where it adds two mash steps? Sometimes deletes one?

@@ -47,12 +47,12 @@ public class MashStep implements Parcelable
 		this.setVersion(1);
 		this.setType(MashStep.INFUSION);
 		this.setDisplayInfuseAmount(0);
-		this.setBeerXmlStandardStepTemp(65.5);
+		this.setBeerXmlStandardStepTemp(65.555556);
 		this.setStepTime(60);
 		this.setRampTime(0);
 		this.setBeerXmlStandardEndTemp(0.0);
         this.setDescription("");
-        this.setDisplayWaterToGrainRatio(1.25);
+        this.setBeerXmlStandardWaterToGrainRatio(2.60793889);
         this.infuseTemp = 0.0;
 		this.id = -1;
 		this.ownerId = -1;
@@ -154,6 +154,7 @@ public class MashStep implements Parcelable
     public int hashCode()
     {
         int hc = this.getName().hashCode();
+        hc += this.getOrder();
         return hc;
     }
 
@@ -552,7 +553,10 @@ public class MashStep implements Parcelable
 	
 	public double getBeerXmlStandardMashWeight()
 	{
-		return BrewCalculator.TotalBeerXmlMashWeight(this.recipe);
+		// If there are no ingredients for this recipe yet, we need to use something!
+		// Fake it, assume 10 pounds of grain by default.
+		double weight = BrewCalculator.TotalBeerXmlMashWeight(this.recipe);
+		return weight == 0 ? Units.poundsToKilos(12) : weight;
 	}
 	
 	public MashStep getPreviousStep() throws Exception

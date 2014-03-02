@@ -21,10 +21,12 @@ import com.biermacht.brews.frontend.adapters.MashProfileSpinnerAdapter;
 import com.biermacht.brews.frontend.adapters.MashStepArrayAdapter;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
+import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
+import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.utils.comparators.MashStepComparator;
 
 import java.util.ArrayList;
@@ -253,9 +255,19 @@ public class AddMashProfileActivity extends AddEditActivity {
 
         // Acquire profile
         mProfile = new MashProfile();
+        
+        setTempVals();
 
         // Initialize data containers
         name = mProfile.getName();
+    }
+    
+    public void setTempVals()
+    {
+        // Add some temporary fields to the objects so that
+        // the mash profile has stuff to work with for calculating
+        // temps, volumes, etc.
+        mProfile.addMashStep(new MashStep(mRecipe));
     }
 
     @Override
