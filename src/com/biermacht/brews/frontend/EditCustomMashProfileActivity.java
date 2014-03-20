@@ -15,6 +15,9 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
 
         // Disable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
+        
+        // Add fields we want
+        mainView.addView(nameView, 0);
     }
 
     @Override

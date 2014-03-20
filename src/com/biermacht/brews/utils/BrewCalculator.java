@@ -8,6 +8,7 @@ import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
+import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 
 public class BrewCalculator {
@@ -280,10 +281,7 @@ public class BrewCalculator {
 	
 	public static double AlcoholByVolume(Recipe r)
 	{
-		double FG = r.getFG();
-		double OG = r.getOG();
-		
-		return (OG-FG) * 131;
+		return (r.getOG() - r.getFG()) * 131;
 	}
 	
 	public static double HopUtilization(Recipe r, Hop i)

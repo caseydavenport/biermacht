@@ -45,7 +45,7 @@
     <string name="units">Units:</string>
     <string name="brewer_name">Brewmaster</string>
 	<string name="amount">Amount (L)</string>
-	<string name="no_recipes">Hmm... I can\'t seem to find any recipes!</string>
+	<string name="no_recipes">You have no recipes.  Press the plus to add one!</string>
 		
 	<!-- Titles for editTexts / fields -->
     <string name="enter_name">Enter a name</string>

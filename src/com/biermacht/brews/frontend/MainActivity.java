@@ -114,8 +114,8 @@ public class MainActivity extends Activity{
         drawerItems.add(DRAWER_RECIPES);
         drawerItems.add(DRAWER_INGRED_EDIT);
         drawerItems.add(DRAWER_MASH_EDIT);
-        drawerItems.add(DRAWER_EQUIP_EDIT);
-        drawerItems.add(DRAWER_GRAVITY);
+        //drawerItems.add(DRAWER_EQUIP_EDIT); TODO:
+        //drawerItems.add(DRAWER_GRAVITY); TODO:
 
         // Set the adapter and click listener for the list view
         drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.row_layout_drawer_item, drawerItems));

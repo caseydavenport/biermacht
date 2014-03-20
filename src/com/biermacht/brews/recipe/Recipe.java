@@ -593,6 +593,11 @@ public class Recipe implements Parcelable {
 	{
 		this.batchSize = v;
 	}
+	
+	public double getBeerXmlMeasuredBatchSize()
+	{
+		return this.batchSize; //TODO: Store this off for real.
+	}
 
 	public int getBoilTime() 
 	{
@@ -1141,7 +1146,7 @@ public class Recipe implements Parcelable {
 
     public double getMeasuredEfficiency()
     {
-        double gravP, measGravP;
+        double potGravP, measGravP;
         double eff = 100;
 
         if (!this.getType().equals(Recipe.EXTRACT))
@@ -1149,9 +1154,17 @@ public class Recipe implements Parcelable {
 
         if (this.getMeasuredOG() > 0)
         {
-            gravP = (BrewCalculator.OriginalGravity(this)-1)/(eff/100);
+        	// Calculate potential milli-gravity points.
+            potGravP = (BrewCalculator.OriginalGravity(this)-1)/(eff/100);
+            
+            // Adjust for measured batch size.
+            potGravP = potGravP * getBeerXmlStandardBatchSize() / this.getBeerXmlMeasuredBatchSize();
+            
+            // Calculate the measured milli-gravity points.
             measGravP = this.getMeasuredOG() - 1;
-            return 100 * measGravP / gravP;
+            
+            // Return the effeciency.
+            return 100 * measGravP / potGravP;
         }
         else
         {

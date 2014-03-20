@@ -18,11 +18,20 @@ TODO:	 Hop summary should show boil time!
 TODO: 	 Hitting stop, then play, doesn't start you at the beginning.
 TODO:	 Should consider mash temp in ABV calc.
 TODO:	 Confirmation when leaving brew timer.
+TODO:	 Verify we read recipe notes from XML
+TODO:	 Scale recipe causes crash
+TODO:	 Handle decreased step temperature.
+TODO:	 Changing water temperature does not change water to add.
+TODO:	 Need to update steps when mash profile is changed in add mash activity.
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
 //////////////////////////////////////////////
 
+TODO:	 Calculate water to grain ratio when not auto calculating water to add.
+TODO:	 Recipe revisions
+TODO:	 Search recipes
+TODO:	 Sort measured fields better.
 TODO:	 First time use hints / help. 
 TODO:	 Should update mash profiles used in recipes when a profile is edited?
 TODO:	 Support different times for mash ingredients?
@@ -38,6 +47,9 @@ TODO:	 Maybe - Make a visual scale rather than numerical for recipe stats. e.g, 
 TODO:	 Determine the best matching beer style for a given recipe?
 TODO:	 Modify desired traits and the app will auto-modify your recipe to match?
 TODO:	 Ability to run mash timer in background.
+TODO:	 Better auto naming of mash steps.
+TODO:	 Allow configuration of measured batch size.
+TODO:	 Move setting "measured" attributes into own activity.
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////
@@ -69,3 +81,4 @@ TODO:	 Sparge amt needs to be formatted in instruction.
 TODO:	 Cool wort does not adjust to metric.
 TODO:	 Temp mash shouldn't have "water to add" field.
 TODO:	 Track down that bug where it adds two mash steps? Sometimes deletes one?
+TODO:	 Edit custom mash needs name field.
