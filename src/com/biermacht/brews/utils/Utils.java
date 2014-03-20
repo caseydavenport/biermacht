@@ -1,6 +1,9 @@
 package com.biermacht.brews.utils;
 
+import android.util.Log;
+
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.recipe.Recipe;
 
 public class Utils {
@@ -68,7 +71,14 @@ public class Utils {
 		
 		for (Ingredient i : r.getIngredientList())
 		{
-			i.setDisplayAmount(i.getDisplayAmount() * ratio);
+			if (i instanceof Misc)
+			{
+				((Misc) i).setDisplayAmount(i.getDisplayAmount() * ratio, i.getDisplayUnits());
+			}
+			else
+			{
+				i.setDisplayAmount(i.getDisplayAmount() * ratio);
+			}
 			Database.updateIngredient(i, Constants.DATABASE_DEFAULT);
 		}
 
