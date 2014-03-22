@@ -295,11 +295,13 @@ public class DatabaseInterface {
             if (!exists)
                 addIngredientToDatabase(i, r.getId(), Constants.DATABASE_DEFAULT);
         }
+        
+        // Update mash profile
+        updateMashProfile(this.readMashProfile(r.getId()), r.getId(), Constants.DATABASE_DEFAULT);
 
+        // TODO: Implement style update methods.
 		deleteStyle(r.getId());
 		addStyleToDatabase(r.getStyle(), r.getId());
-		deleteMashProfile(this.readMashProfile(r.getId()).getId(), Constants.DATABASE_DEFAULT);
-		addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
 		
 		return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
 	}
@@ -484,6 +486,23 @@ public class DatabaseInterface {
 	
 	public long addMashProfileToDatabase(MashProfile p, long ownerId, long dbid)
 	{
+		ContentValues values = getMashProfileValues(p, ownerId, dbid);
+		long id = database.insert(DatabaseHelper.TABLE_PROFILES, null, values);
+		addMashStepListToDatabase(p.getMashStepList(), id);
+		return id;
+	}
+	
+	public void updateMashProfile(MashProfile p, long ownerId, long dbid)
+	{
+		String whereClause = DatabaseHelper.PRO_COL_ID + "=" + p.getId() + " AND " + 
+	                         DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
+		ContentValues values = getMashProfileValues(p, ownerId, dbid);
+		updateMashStepList(p.getMashStepList(), p.getId());
+		database.update(DatabaseHelper.TABLE_PROFILES, values, whereClause, null);
+	}
+	
+	public ContentValues getMashProfileValues(MashProfile p, long ownerId, long dbid)
+	{
 		// Load up values to store
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.PRO_COL_OWNER_ID, ownerId);
@@ -500,10 +519,7 @@ public class DatabaseInterface {
 		values.put(DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ, (p.getEquipmentAdjust()) ? 1 : 0);
         values.put(DatabaseHelper.PRO_COL_MASH_TYPE, p.getMashType());
         values.put(DatabaseHelper.PRO_COL_SPARGE_TYPE, p.getSpargeType());
-		
-		long id = database.insert(DatabaseHelper.TABLE_PROFILES, null, values);
-		addMashStepListToDatabase(p.getMashStepList(), id);
-		return id;
+        return values;
 	}
 	
 	public void addMashStepListToDatabase(ArrayList<MashStep> l, long ownerId)
@@ -514,7 +530,49 @@ public class DatabaseInterface {
 		}
 	}
 	
+	public void updateMashStepList(ArrayList<MashStep> l, long ownerId)
+	{
+		ArrayList<MashStep> existingSteps = readMashStepsList(ownerId);
+		for (MashStep step : l)
+		{
+			Log.d("DatabaseInterface", "Updating MashStep " + step.getName());
+			boolean exists = updateMashStep(step, ownerId);
+            if (!exists)
+            	this.addMashStepToDatabase(step, ownerId);
+		}
+		
+		// We need to delete any steps that used to exist, but
+		// no longer do.  Check those here.
+		for (MashStep step : existingSteps)
+		{
+			boolean keep = false;
+			for (MashStep s : l)
+			{
+				if (step.getId() == s.getId())
+					keep = true;
+			}
+			if (!keep)
+			{
+				deleteMashStep(step.getId());
+			}
+		}
+	}
+	
 	public long addMashStepToDatabase(MashStep s, long ownerId)
+	{
+		ContentValues values = getMashStepValues(s, ownerId);
+		long id = database.insert(DatabaseHelper.TABLE_STEPS, null, values);
+		return id;
+	}
+	
+	public boolean updateMashStep(MashStep s, long ownerId)
+	{
+		String whereClause = DatabaseHelper.STE_COL_ID + "=" + s.getId();
+		ContentValues values = getMashStepValues(s, ownerId);
+		return database.update(DatabaseHelper.TABLE_STEPS, values, whereClause, null) > 0;
+	}
+	
+	public ContentValues getMashStepValues(MashStep s, long ownerId)
 	{
 		// Load up values to store
 		ContentValues values = new ContentValues();
@@ -535,9 +593,7 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.STE_COL_DECOCT_AMT, s.getBeerXmlDecoctAmount());
         values.put(DatabaseHelper.STE_COL_CALC_INFUSE_TEMP, s.getAutoCalcInfuseTemp() ? 1 : 0);
         values.put(DatabaseHelper.STE_COL_CALC_INFUSE_AMT, s.getAutoCalcInfuseAmt() ? 1 : 0);
-
-		long id = database.insert(DatabaseHelper.TABLE_STEPS, null, values);
-		return id;
+        return values;
 	}
 	
 	/**
@@ -585,6 +641,12 @@ public class DatabaseInterface {
         String whereClause = DatabaseHelper.PRO_COL_ID + "=" + id + " AND " +
                 DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
         return database.delete(DatabaseHelper.TABLE_PROFILES, whereClause, null) > 0;
+    }
+    
+    public boolean deleteMashStep(long id)
+    {
+        String whereClause = DatabaseHelper.STE_COL_ID + "=" + id;
+        return database.delete(DatabaseHelper.TABLE_STEPS, whereClause, null) > 0;
     }
 	
 	public Recipe getRecipeWithId(long id)

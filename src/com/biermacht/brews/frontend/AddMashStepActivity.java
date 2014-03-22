@@ -58,6 +58,9 @@ public class AddMashStepActivity extends AddEditActivity {
     // Data storage
     String type;
     MashProfile profile;
+    
+    // Database to use when saving.
+    public long database;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -158,7 +161,6 @@ public class AddMashStepActivity extends AddEditActivity {
                 try
                 {
                     // Get new values
-                	Log.d("AddMashStepActivity", "Calling callback.");
                     acquireValues();
                 }
                 catch (Exception e)
@@ -215,12 +217,34 @@ public class AddMashStepActivity extends AddEditActivity {
     {
         super.getValuesFromIntent();
 
-        // Create mash step.
+        // Get the profile from the intent
         profile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
+        
+        // Set the recipes profile
         mRecipe.setMashProfile(profile);
+        
+        // Get step, if not found, create new one.
+        // Create a new step, add to profile.
+        try
+        {
+        	step = getIntent().getParcelableExtra(Constants.KEY_MASH_STEP);
+        	step.setRecipe(mRecipe);
+        } catch (Exception e)
+        {
+        	onStepNotFound();
+        }
+    }
+    
+    public void onStepNotFound()
+    {
         step = new MashStep(mRecipe);
-        step.setOrder(profile.getNumberOfSteps());
         profile.addMashStep(step);
+        
+        // Get step id.
+        stepId = getIntent().getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
+        
+        // Get the database to save to.
+        database = getIntent().getLongExtra(Constants.KEY_DATABASE_ID, Constants.DATABASE_DEFAULT);
 
         // See if there is a previous step.  Will throw an excpetion if this is the first 
         // step in the list, and we will just use this step's stuff.
@@ -319,6 +343,8 @@ public class AddMashStepActivity extends AddEditActivity {
     {
         Intent result = new Intent();
         result.putExtra(Constants.KEY_MASH_STEP, step);
+        result.putExtra(Constants.KEY_MASH_STEP_ID, stepId);
+        result.putExtra(Constants.KEY_MASH_PROFILE, profile);
         setResult(Constants.RESULT_OK, result);
         finish();
     }
@@ -331,7 +357,6 @@ public class AddMashStepActivity extends AddEditActivity {
         double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString());
         double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString());
                 
-        profile.setMashStep(step.getOrder(), step);
         step.setDisplayInfuseAmount(amount);
         step.setStepTime(time);
         step.setType(type);
@@ -345,13 +370,17 @@ public class AddMashStepActivity extends AddEditActivity {
     public void onCancelPressed()
     {
         setResult(Constants.RESULT_CANCELED, new Intent());
-        profile.removeMashStep(step);
         finish();
     }
 
     @Override
     public void onDeletePressed()
     {
-
+        Intent result = new Intent();
+        result.putExtra(Constants.KEY_MASH_STEP, step);
+        result.putExtra(Constants.KEY_MASH_PROFILE, profile);
+        result.putExtra(Constants.KEY_MASH_STEP_ID, stepId);
+        setResult(Constants.RESULT_DELETED, result);
+        finish();
     }
 }

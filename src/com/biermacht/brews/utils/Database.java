@@ -139,7 +139,6 @@ public class Database {
         return MainActivity.databaseInterface.getIngredientsFromVirtualDatabase(dbid);
     }
 
-    // Adds a list of ingredients to the specified virtual ingredient database
     public static void addMashProfileListToVirtualDatabase(long dbid, ArrayList<MashProfile> list, long ownerId)
     {
         for (MashProfile p : list)
@@ -148,10 +147,14 @@ public class Database {
         }
     }
 
-    // Adds a list of ingredients to the specified virtual ingredient database
-    public static void addMashProfileToVirtualDatabase(long dbid, MashProfile p, long ownerId)
+    public static long addMashProfileToVirtualDatabase(long dbid, MashProfile p, long ownerId)
     {
-            MainActivity.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
+            return MainActivity.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
+    }
+    
+    public static void updateMashProfile(MashProfile p, long ownerId, long dbid)
+    {
+    	MainActivity.databaseInterface.updateMashProfile(p, ownerId, dbid);
     }
 
     // Returns all mash profiles in the given database

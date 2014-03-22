@@ -2,12 +2,13 @@ package com.biermacht.brews.recipe;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import com.biermacht.brews.utils.*;
-import com.biermacht.brews.utils.comparators.MashStepComparator;
+import com.biermacht.brews.utils.comparators.FromDatabaseMashStepComparator;
 
 public class MashProfile implements Parcelable
 {
@@ -392,8 +393,12 @@ public class MashProfile implements Parcelable
 	
 	public ArrayList<MashStep> getMashStepList()
 	{
-        Collections.sort(this.mashSteps, new MashStepComparator());
 		return  this.mashSteps;
+	}
+
+	public void clearMashSteps()
+	{
+		this.mashSteps = new ArrayList<MashStep>();
 	}
 
     /**
@@ -407,21 +412,7 @@ public class MashProfile implements Parcelable
 		this.mashSteps = list;
 		for (MashStep s : this.mashSteps)
 			s.setRecipe(this.recipe);
-	}
-
-    /**
-     * places mashStep at the given spot in the list
-     * @param order
-     * @param step
-     */
-	public void addMashStep(int order, MashStep step)
-	{
-		step.setRecipe(this.recipe);
-		this.mashSteps.add(order, step);
-
-        // Reassign orders of steps.
-        for(MashStep m : getMashStepList())
-            m.setOrder(getMashStepList().indexOf(m));
+        Collections.sort(this.mashSteps, new FromDatabaseMashStepComparator());	
 	}
 
     /**
@@ -434,25 +425,51 @@ public class MashProfile implements Parcelable
         return this.mashSteps.remove(step);
     }
     
+    public MashStep removeMashStep(int order)
+    {
+    	return this.mashSteps.remove(order);
+    }
+    
     public void setMashStep(int order, MashStep step)
     {
+    	// If we try to set one larger than our array, add it
+    	// to the end instead.
     	if (order >= this.mashSteps.size())
     		order = this.mashSteps.size() - 1;
+
     	step.setRecipe(this.recipe);
     	this.mashSteps.set(order, step);
     }
 
-    /**
-     * Appends mash step to end of mashStep list
-     * @param step
-     */
     public void addMashStep(MashStep step)
     {
-        // Set order of new step
-        step.setOrder(mashSteps.size() + 1);
-
-        // Add to list
         step.setRecipe(this.recipe);
         this.mashSteps.add(step);
+    }
+    
+	public void addMashStep(int order, MashStep step)
+	{
+		step.setRecipe(this.recipe);
+		this.mashSteps.add(order, step);
+	}
+    
+    public void save(long database)
+    {
+		Log.d("MashProfile", "Saving " + name + " to database " + database);
+    	if (this.id < 0)
+    	{
+    		// We haven't yet saved this.  Add it to the database.
+        	Database.addMashProfileToVirtualDatabase(database, this, this.getOwnerId());
+    	}
+    	else
+    	{
+    		// Already exists.  Update it.
+    		Database.updateMashProfile(this, this.getOwnerId(), database);
+    	}
+    }
+    
+    public void delete(long database)
+    {
+    	Database.deleteMashProfileFromDatabase(this.getId(), database);
     }
 }

@@ -29,7 +29,7 @@ public class MashStep implements Parcelable
 	// ================================================================
 	private long ownerId;				// id for parent mash profile
 	private long id;                    // id for use in database
-    private int order;                  // Order in step list
+    public int order;                  // Order in step list
     private double infuseTemp;          // Temperature of infuse water
     private boolean calcInfuseTemp;     // Auto calculate the infusion temperature if true.
     private boolean calcInfuseAmt;      // Auto calculate the infusion amount if true.
@@ -154,7 +154,8 @@ public class MashStep implements Parcelable
     public int hashCode()
     {
         int hc = this.getName().hashCode();
-        hc += this.getOrder();
+        hc += this.order;
+        hc ^= (int) this.getBeerXmlStandardStepTemp();
         return hc;
     }
 
@@ -473,12 +474,16 @@ public class MashStep implements Parcelable
 
     public void setOrder(int i)
     {
+    	// Order is privately used for ordering mash steps
+    	// when they are received from the database.  Once they 
+    	// are out of the db, we use the order in the list as the order.
+    	// When saved, the orders will be updated in the database.
         this.order = i;
     }
 
     public int getOrder()
     {
-        return this.order;
+    	return this.recipe.getMashProfile().getMashStepList().indexOf(this);
     }
 
     public void setDescription(String s)

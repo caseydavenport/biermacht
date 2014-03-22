@@ -11,6 +11,9 @@ import com.biermacht.brews.utils.Constants;
 
 public class EditMashStepActivity extends AddMashStepActivity {
 
+	// Store the original order this step should belong in.
+	private int order;
+	
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -27,11 +30,17 @@ public class EditMashStepActivity extends AddMashStepActivity {
     public void getValuesFromIntent()
     {
         super.getValuesFromIntent();
-        stepId = getIntent().getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
 
-        // Create mash step
-        step = getIntent().getParcelableExtra(Constants.KEY_MASH_STEP);
-        step.setRecipe(mRecipe);
+        // Store off step order.
+        order = step.getOrder();
+    }
+    
+    @Override
+    public void acquireValues() throws Exception
+    {
+        super.acquireValues();
+        profile.removeMashStep(order);
+        profile.addMashStep(order, step);
     }
 
     @Override
@@ -41,29 +50,9 @@ public class EditMashStepActivity extends AddMashStepActivity {
     }
 
     @Override
-    public void onFinished()
-    {
-        Intent result = new Intent();
-        result.putExtra(Constants.KEY_MASH_STEP, step);
-        result.putExtra(Constants.KEY_MASH_STEP_ID, stepId);
-        setResult(Constants.RESULT_OK, result);
-        finish();
-    }
-
-    @Override
     public void onCancelPressed()
     {
         setResult(Constants.RESULT_CANCELED, new Intent());
-        finish();
-    }
-
-    @Override
-    public void onDeletePressed()
-    {
-        Intent result = new Intent();
-        result.putExtra(Constants.KEY_MASH_STEP, step);
-        result.putExtra(Constants.KEY_MASH_STEP_ID, stepId);
-        setResult(Constants.RESULT_DELETED, result);
         finish();
     }
 }

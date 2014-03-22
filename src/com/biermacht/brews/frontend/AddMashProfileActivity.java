@@ -21,17 +21,13 @@ import com.biermacht.brews.frontend.adapters.MashProfileSpinnerAdapter;
 import com.biermacht.brews.frontend.adapters.MashStepArrayAdapter;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
-import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
-import com.biermacht.brews.ingredient.Fermentable;
-import com.biermacht.brews.utils.comparators.MashStepComparator;
+import com.biermacht.brews.utils.Callbacks.Callback;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ListIterator;
 
 public class AddMashProfileActivity extends AddEditActivity {
 
@@ -71,9 +67,6 @@ public class AddMashProfileActivity extends AddEditActivity {
     public ArrayList<String> mashTypeArray;
     public ArrayList<String> spargeTypeArray;
 
-    // Mash step array
-    public ArrayList<MashStep> mashStepArray;
-
     // DragDrop ListView stuff
     public DragSortListView dragDropListView;
     public MashStepArrayAdapter dragDropAdapter;
@@ -89,14 +82,16 @@ public class AddMashProfileActivity extends AddEditActivity {
         {
             if (oldPosition != newPosition)
             {
+            	// Move the step
                 MashStep step = dragDropAdapter.getItem(oldPosition);
                 dragDropAdapter.remove(step);
                 dragDropAdapter.insert(step, newPosition);
 
-                // Set new orders for all the steps
-                for (MashStep s : mashStepArray)
+                // Set the new list in the profile
+                mProfile.clearMashSteps();
+                for (int i = 0; i < dragDropAdapter.getCount(); i++)
                 {
-                    s.setOrder(mashStepArray.indexOf(s));
+                	mProfile.addMashStep(dragDropAdapter.getItem(i));
                 }
             }
         }
@@ -108,13 +103,7 @@ public class AddMashProfileActivity extends AddEditActivity {
         @Override
         public void remove(int pos)
         {
-            dragDropAdapter.remove(dragDropAdapter.getItem(pos));
-
-            // Set new orders for all the steps
-            for (MashStep s : mashStepArray)
-            {
-                s.setOrder(mashStepArray.indexOf(s));
-            }
+        	dragDropAdapter.remove(mProfile.getMashStepList().get(pos));
         }
     };
 
@@ -198,8 +187,8 @@ public class AddMashProfileActivity extends AddEditActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id)
             {
                 Intent i = new Intent(getApplicationContext(), EditMashStepActivity.class);
-                i.putExtra(Constants.KEY_MASH_STEP_ID, mashStepArray.get(pos).getId());
-                i.putExtra(Constants.KEY_MASH_STEP, mashStepArray.get(pos));
+                i.putExtra(Constants.KEY_MASH_STEP_ID, mProfile.getMashStepList().get(pos).getId());
+                i.putExtra(Constants.KEY_MASH_STEP, mProfile.getMashStepList().get(pos));
                 i.putExtra(Constants.KEY_PROFILE, mProfile);
                 i.putExtra(Constants.KEY_RECIPE, mRecipe);
                 startActivityForResult(i, Constants.REQUEST_EDIT_MASH_STEP);
@@ -231,6 +220,18 @@ public class AddMashProfileActivity extends AddEditActivity {
         // Force keyboard open and show popup
         alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         alert.show();
+    }
+    
+    public void createCallback()
+    {
+        callback = new Callback() {
+            @Override
+            public void call() 
+            {
+                Log.d("AddMashProfileActivity", "Callback hit - updating steps for profile.");
+                updateMashStepList();
+            }
+        };
     }
 
     public void setValues()
@@ -274,8 +275,6 @@ public class AddMashProfileActivity extends AddEditActivity {
     public void getList()
     {
         profileArray = MainActivity.ingredientHandler.getMashProfileList();
-        mashStepArray = new ArrayList<MashStep>();
-        mashStepArray.addAll(mProfile.getMashStepList());
 
         // If it doesn't contain the current profile
         // then it is custom and we add it to the list.
@@ -326,9 +325,6 @@ public class AddMashProfileActivity extends AddEditActivity {
                 grainTempViewText.setText(String.format("%2.2f", mProfile.getDisplayGrainTemp()));
                 spargeTempViewText.setText(String.format("%2.2f", mProfile.getDisplaySpargeTemp()));
 
-                mashStepArray.removeAll(mashStepArray);
-                mashStepArray.addAll(mProfile.getMashStepList());
-
                 updateMashStepList();
             }
 
@@ -343,6 +339,7 @@ public class AddMashProfileActivity extends AddEditActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 mProfile.setMashType(mashTypeArray.get(position));
+                callback.call();
             }
 
             public void onNothingSelected(AdapterView<?> parentView)
@@ -356,6 +353,7 @@ public class AddMashProfileActivity extends AddEditActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 mProfile.setSpargeType(spargeTypeArray.get(position));
+                callback.call();
             }
 
             public void onNothingSelected(AdapterView<?> parentView)
@@ -366,26 +364,20 @@ public class AddMashProfileActivity extends AddEditActivity {
     }
 
     public void updateMashStepList()
-    {
+    {    	
         // Layout parameters for listView
         // We have trouble setting the size in XML, so we dynamically do it here based on
         // the number of steps. Each step is 60dip tall.
-        int height = mashStepArray.size() * 140;
+        int height = mProfile.getMashStepList().size() * 140;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
 
-        // Sort mash steps
-        Collections.sort(mashStepArray, new MashStepComparator());
-
         // Drag list view
-        dragDropAdapter = new MashStepArrayAdapter(this, mashStepArray);
+        dragDropAdapter = new MashStepArrayAdapter(this, mProfile.getMashStepList());
         dragDropListView.setAdapter(dragDropAdapter);
         dragDropListView.setDropListener(onDrop);
         dragDropListView.setRemoveListener(onRemove);
         dragDropListView.setDragEnabled(true);
         dragDropListView.setLayoutParams(params);
-        
-        // Reset the profiles mash step list.
-        mProfile.setMashStepList(mashStepArray);
     }
 
     @Override
@@ -396,7 +388,6 @@ public class AddMashProfileActivity extends AddEditActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i;
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -408,7 +399,7 @@ public class AddMashProfileActivity extends AddEditActivity {
     @Override
     public void onFinished()
     {
-        Database.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, Constants.MASTER_RECIPE_ID);
+    	mProfile.save(Constants.DATABASE_CUSTOM);
         finish();
     }
 
@@ -424,14 +415,6 @@ public class AddMashProfileActivity extends AddEditActivity {
         mProfile.setDisplaySpargeTemp(spargeTemp);
         mProfile.setDisplayGrainTemp(grainTemp);
         mProfile.setDisplayTunTemp(tunTemp);
-
-        // Set new orders for all the MashSteps
-        for (MashStep s : mashStepArray)
-        {
-            s.setOrder(mashStepArray.indexOf(s));
-        }
-
-        mProfile.setMashStepList(mashStepArray);
     }
 
     @Override
@@ -449,8 +432,7 @@ public class AddMashProfileActivity extends AddEditActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        MashStep s;
-        long id;
+        MashProfile p;
 
         if (resultCode == Constants.RESULT_CANCELED)
             return;
@@ -460,54 +442,23 @@ public class AddMashProfileActivity extends AddEditActivity {
             Log.d("AddMashProfileActivity", "Null intent passed as result, returning");
             return;
         }
-
-        switch (requestCode)
-        {
-            case Constants.REQUEST_NEW_MASH_STEP:
-            {
-                try
-                {
-                    s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
-                } catch (Exception e)
-                {
-                    Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
-                    return;
-                }
-
-                mashStepArray.add(s);
-                updateMashStepList();
-                break;
-            }
-
-            case Constants.REQUEST_EDIT_MASH_STEP:
-            {
-                s = data.getParcelableExtra(Constants.KEY_MASH_STEP);
-                id = data.getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
-
-                if (s == null)
-                {
-                    Log.d("AddMashProfileActivity", "No step returned, probably hit back button.");
-                    return;
-                }
-
-                // Use list iterator because you can't modify a list while iterating over it
-                ListIterator<MashStep> it = mashStepArray.listIterator();
-
-                while (it.hasNext())
-                {
-                    MashStep step = it.next();
-                    if (step.getId() == id)
-                        it.remove();
-                }
-
-                // If we deleted the step, do nothing, else re-add it
-                if (resultCode == Constants.RESULT_OK)
-                    mashStepArray.add(s);
-
-                updateMashStepList();
-                break;
-            }
+        
+        // Acquire the returned profile.
+        try { p = data.getParcelableExtra(Constants.KEY_MASH_PROFILE); } 
+        catch (Exception e){
+            Log.d("AddMashProfileActivity", "No profile returned, probably hit back button.");
+            return;
         }
+        
+        if (p == null)
+        {
+            Log.d("AddMashProfileActivity", "No profile returned, probably hit back button.");
+            return;
+        }
+        
+        // Set the new profile.
+        mProfile = p;
+        updateMashStepList();
         super.onActivityResult(requestCode, resultCode, data);
     }
 }

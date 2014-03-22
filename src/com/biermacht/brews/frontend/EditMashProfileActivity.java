@@ -84,7 +84,7 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
     @Override
     public void onDeletePressed()
     {
-        Database.deleteMashProfileFromDatabase(mashProfileId, Constants.DATABASE_DEFAULT);
+    	mProfile.delete(Constants.DATABASE_CUSTOM);
         finish();
     }
 }

@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 public class EditCustomMashProfileActivity extends EditMashProfileActivity {
 
@@ -35,8 +34,7 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
     @Override
     public void onFinished()
     {
-        Database.deleteMashProfileFromDatabase(mashProfileId, Constants.DATABASE_CUSTOM);
-        Database.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, Constants.MASTER_RECIPE_ID);
+        mProfile.save(Constants.DATABASE_CUSTOM);
         finish();
     }
 
@@ -49,7 +47,7 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
     @Override
     public void onDeletePressed()
     {
-        Database.deleteMashProfileFromDatabase(mashProfileId, Constants.DATABASE_CUSTOM);
+    	mProfile.delete(Constants.DATABASE_CUSTOM);
         finish();
     }
 }

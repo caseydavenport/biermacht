@@ -29,13 +29,16 @@ public class Constants {
     public static final String KEY_INGREDIENT = "biermacht.brews.ingredient";
     public static final String KEY_MASH_STEP = "biermacht.brews.mash.step";
     public static final String KEY_MASH_STEP_ID = "biermacht.brews.mash.step.id";
+    public static final String KEY_MASH_STEP_LIST = "biermacht.brews.mash.profile.steps";
+    public static final String KEY_MASH_PROFILE = "biermacht.brews.mash.profile";
     public static final String KEY_INSTRUCTION = "biermacht.brews.instruction";
-    public static final int INVALID_ID = -1; // TODO: Throw exceptions in get methods if this is passed
+    public static final String KEY_DATABASE_ID = "biermacht.brews.database.id";
+    public static final int INVALID_ID = -1;
 
     // Different virtual databases
     public static final long DATABASE_PERMANENT = 2;  // Imported from assets.  Save these.
     public static final long DATABASE_CUSTOM = 1;     // Custom made. Save these
-    public static final long DATABASE_DEFAULT = 0;    // Used by default
+    public static final long DATABASE_DEFAULT = 0;    // Used by default.
 
     // No owner ID for use in database
     public static final long OWNER_NONE = -1;
