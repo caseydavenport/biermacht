@@ -158,7 +158,7 @@ public class Instruction implements Parcelable {
             			" of mash, and boil it for " + mashStep.getStepTime() + " minutes.\n\n";
             }
             
-            if (mashStep.getRampTime() != 0)
+            if (mashStep.getRampTime() != 0 && mashStep.getType().equals(MashStep.TEMPERATURE))
             {
             	s += "Adjust mash temperature to " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + Units.getTemperatureUnits();
             	s += " over " + mashStep.getRampTime() + " minutes.\n\n";

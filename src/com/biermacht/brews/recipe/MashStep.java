@@ -43,7 +43,7 @@ public class MashStep implements Parcelable
 	
 	// Basic Constructor
 	public MashStep(Recipe r) {
-		this.setName("Untitled Mash Step");
+		this.setName("");
 		this.setVersion(1);
 		this.setType(MashStep.INFUSION);
 		this.setDisplayInfuseAmount(0);
@@ -153,9 +153,10 @@ public class MashStep implements Parcelable
     @Override
     public int hashCode()
     {
-        int hc = this.getName().hashCode();
+        int hc = this.name.hashCode();
         hc += this.order;
-        hc ^= (int) this.getBeerXmlStandardStepTemp();
+        hc ^= (int) (this.stepTemp * 12345678 * this.stepTime);
+        hc ^= this.type.hashCode();
         return hc;
     }
 
@@ -181,6 +182,10 @@ public class MashStep implements Parcelable
 	
 	public String getName()
 	{
+		if (this.name == "")
+		{
+			return "Mash step (" + this.getOrder()+ ")";
+		}
 		return this.name;
 	}
 
@@ -337,16 +342,10 @@ public class MashStep implements Parcelable
     	else
     		return Units.fahrenheitToCelsius(this.calculateInfuseTemp());
     }
-    
-    // Returns true if this is the first in the list, or there
-    // is no list.
+
     public boolean firstInList()
     {
-    	if (this.recipe.getMashProfile().getMashStepList().size() == 0)
-    		return true;
-    	
-		int idx = this.recipe.getMashProfile().getMashStepList().indexOf(this);
-    	return idx == 0;
+    	return this.getOrder() == 0;
     }
 
 	public void setBeerXmlStandardInfuseAmount(double amt)
@@ -461,11 +460,16 @@ public class MashStep implements Parcelable
 
     public void setBeerXmlStandardWaterToGrainRatio(double d)
     {
+    	// Don't update if less than 0. Impossible value.
+    	if (d <= 0)
+    		return;
         this.waterToGrainRatio = d;
     }
 
     public void setDisplayWaterToGrainRatio(double d)
     {
+    	if (d <= 0)
+    		return;
         if (Units.getUnitSystem().equals(Units.IMPERIAL))
             this.waterToGrainRatio = Units.QPLBtoLPKG(d);
         else

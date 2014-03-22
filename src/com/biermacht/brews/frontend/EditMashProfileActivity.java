@@ -6,7 +6,6 @@ import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 public class EditMashProfileActivity extends AddMashProfileActivity {
 
@@ -71,7 +70,7 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
     @Override
     public void onFinished()
     {
-        Database.updateRecipe(mRecipe);
+    	mProfile.save(Constants.DATABASE_DEFAULT);
         finish();
     }
 
@@ -84,7 +83,6 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
     @Override
     public void onDeletePressed()
     {
-    	mProfile.delete(Constants.DATABASE_CUSTOM);
-        finish();
+    	// Can't delete these!
     }
 }

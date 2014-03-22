@@ -39,12 +39,6 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
     }
 
     @Override
-    public void onCancelPressed()
-    {
-        finish();
-    }
-
-    @Override
     public void onDeletePressed()
     {
     	mProfile.delete(Constants.DATABASE_CUSTOM);

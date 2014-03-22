@@ -16,7 +16,6 @@ import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
-import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Callbacks.BooleanCallback;

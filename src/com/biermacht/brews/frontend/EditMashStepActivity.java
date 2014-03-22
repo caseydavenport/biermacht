@@ -2,11 +2,9 @@ package com.biermacht.brews.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 
 public class EditMashStepActivity extends AddMashStepActivity {

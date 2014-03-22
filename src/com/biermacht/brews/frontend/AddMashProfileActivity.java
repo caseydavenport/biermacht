@@ -27,7 +27,6 @@ import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.utils.Callbacks.Callback;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class AddMashProfileActivity extends AddEditActivity {
 
@@ -171,7 +170,7 @@ public class AddMashProfileActivity extends AddEditActivity {
         mainView.removeView(spinnerView);
 
         // Add views that we want
-        mainView.addView(mashTypeSpinner);
+        //mainView.addView(mashTypeSpinner);
         mainView.addView(spargeTypeSpinner);
         mainView.addView(spargeTempView);
         mainView.addView(tunTempView);
