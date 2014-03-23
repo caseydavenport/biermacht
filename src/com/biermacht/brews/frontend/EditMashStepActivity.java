@@ -8,9 +8,6 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
 
 public class EditMashStepActivity extends AddMashStepActivity {
-
-	// Store the original order this step should belong in.
-	private int order;
 	
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -28,9 +25,6 @@ public class EditMashStepActivity extends AddMashStepActivity {
     public void getValuesFromIntent()
     {
         super.getValuesFromIntent();
-
-        // Store off step order.
-        order = step.getOrder();
     }
     
     @Override

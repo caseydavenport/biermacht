@@ -271,8 +271,8 @@ public class MashStep implements Parcelable
     // Calculates the infusion amount based on
     // water to grain ratio, water temp, water to add,
     // and the step temperature.
-    // Also sets this.infuseAmount to the correct avlue.
-    private double calculateInfuseAmount()
+    // Also sets this.infuseAmount to the correct value.
+    public double calculateInfuseAmount()
     {
     	// We perform different calculations if this is the initial infusion.
     	double amt = -1;
@@ -309,24 +309,41 @@ public class MashStep implements Parcelable
     // Calculates the infusion temperature for both
     // initial infusion, and water adds.
     // http://www.howtobrew.com/section3/chapter16-3.html
-    private double calculateInfuseTemp()
+    public double calculateInfuseTemp()
     {
     	// We perform different calculations if this is the initial infusion.
     	double temp = 0;
     	if (this.firstInList())
     	{
     		// Initial infusion.
-    		// TODO: For now, we don't have equipment so we average tun / grain temp for calculation.
-    		double tunTemp = (this.recipe.getMashProfile().getBeerXmlStandardGrainTemp() + this.recipe.getMashProfile().getBeerXmlStandardTunTemp()) / 2;
+    		// TODO: For now, we don't have equipment so we combine tun / grain temp for calculation.
+    		double tunTemp = .7 * this.recipe.getMashProfile().getBeerXmlStandardGrainTemp() + .3 * this.recipe.getMashProfile().getBeerXmlStandardTunTemp();
     		temp = (.41)/(this.getBeerXmlStandardWaterToGrainRatio());
     		temp = temp * (this.getBeerXmlStandardStepTemp() - tunTemp) + this.getBeerXmlStandardStepTemp();
     	}
     	else
     	{
     		// Not initial infusion.  Assume boiling water to make 
-    		// calculation easier.
-    		temp = 100;
+    		// calculation easier.  If the next step has a LOWER temperature,
+    		// use room temperature water (72F).
+    		try 
+    		{
+				if (getPreviousStep().getBeerXmlStandardStepTemp() < this.getBeerXmlStandardStepTemp())
+				{
+					temp = 100;
+				}
+				else
+				{
+					temp = 22.2222;
+				}
+			} catch (Exception e) 
+			{
+				temp = -1;
+			}
     	}
+    	
+    	// Set the infuse temperature.
+    	this.infuseTemp = temp;
     	
     	// Use appropriate units.
     	if (Units.getTemperatureUnits().equals(Units.CELSIUS))
@@ -355,6 +372,8 @@ public class MashStep implements Parcelable
 	
 	public double getBeerXmlStandardInfuseAmount()
 	{
+		if (this.calcInfuseAmt)
+			calculateInfuseAmount();
 		return this.infuseAmount;
 	}
 
@@ -439,23 +458,15 @@ public class MashStep implements Parcelable
     	// Otherwise, we need to calculate it based on the water added.
     	if (this.firstInList())
     		return this.waterToGrainRatio;
-    	return this.getBXSTotalWaterInMash() / this.getBeerXmlStandardMashWeight();
+    	return (this.getBeerXmlStandardInfuseAmount() + this.getBXSTotalWaterInMash() ) / this.getBeerXmlStandardMashWeight();
     }
 
     public double getDisplayWaterToGrainRatio()
-    {
-    	if (this.firstInList())
-    	{
-	        if (Units.getUnitSystem().equals(Units.IMPERIAL))
-	            return Units.LPKGtoQPLB(this.waterToGrainRatio);
-	        else
-	            return this.waterToGrainRatio;
-    	}
+    {   	
     	if (Units.getUnitSystem().equals(Units.IMPERIAL))
-        	return Units.LPKGtoQPLB(this.getBXSTotalWaterInMash() / this.getBeerXmlStandardMashWeight());
+        	return Units.LPKGtoQPLB(getBeerXmlStandardWaterToGrainRatio());
     	else
-        	return this.getBXSTotalWaterInMash() / this.getBeerXmlStandardMashWeight();
-    		
+        	return getBeerXmlStandardWaterToGrainRatio();
     }
 
     public void setBeerXmlStandardWaterToGrainRatio(double d)
@@ -563,7 +574,7 @@ public class MashStep implements Parcelable
 	public double getBeerXmlStandardMashWeight()
 	{
 		// If there are no ingredients for this recipe yet, we need to use something!
-		// Fake it, assume 10 pounds of grain by default.
+		// Fake it, assume 12 pounds of grain by default.
 		double weight = BrewCalculator.TotalBeerXmlMashWeight(this.recipe);
 		return weight == 0 ? Units.poundsToKilos(12) : weight;
 	}
@@ -579,21 +590,15 @@ public class MashStep implements Parcelable
 	
 	public double getBXSTotalWaterInMash()
 	{
-		if (this.firstInList())
-		{
-			// If this is the first in the list, return the water we add.
-			return this.getBeerXmlStandardWaterToGrainRatio() * this.getBeerXmlStandardMashWeight();
-		}
+		double amt = 0;
 		
-		// If we're not the first in the list, recurse and add up all the previous steps
-		// infuse amount.
-		try 
+		for (MashStep step : this.recipe.getMashProfile().getMashStepList())
 		{
-			return this.getBeerXmlStandardInfuseAmount() + getPreviousStep().getBXSTotalWaterInMash();
-		} catch (Exception e) 
-		{
-			Log.e("MashStep", "Hit exception calculating total water");
-			return -1;
+			if (step.equals(this))
+				break;
+			amt += step.getBeerXmlStandardInfuseAmount();
 		}
+		Log.d("MashStep", "Step " + this.getName() + " has " + Units.litersToGallons(amt) + " gal in mash.");
+		return amt;
 	}
 }

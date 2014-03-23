@@ -227,8 +227,10 @@ public class AddMashProfileActivity extends AddEditActivity {
             @Override
             public void call() 
             {
+            	// Update the dragDrop list, and update the profile with new values.
                 Log.d("AddMashProfileActivity", "Callback hit - updating steps for profile.");
                 updateMashStepList();
+                try { acquireValues(); } catch (Exception e) {}
             }
         };
     }

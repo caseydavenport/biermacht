@@ -58,6 +58,9 @@ public class AddMashStepActivity extends AddEditActivity {
     String type;
     MashProfile profile;
     
+	// Store the original order this step should belong in.
+	public int order;
+    
     // Database to use when saving.
     public long database;
 
@@ -232,6 +235,9 @@ public class AddMashStepActivity extends AddEditActivity {
         {
         	onStepNotFound();
         }
+        
+        // Store off step order.
+        order = step.getOrder();
     }
     
     public void onStepNotFound()
@@ -294,18 +300,20 @@ public class AddMashStepActivity extends AddEditActivity {
                     stepAmountViewTitle.setText("Amount to decoct (" + Units.getVolumeUnits() + ")");
                 	infuseTemperatureView.setVisibility(View.GONE);
                 	waterToGrainRatioView.setVisibility(View.GONE);
-                	
+                	stepAmountView.setVisibility(View.VISIBLE);
                 }
                 else if (type.equals(MashStep.TEMPERATURE))
                 {
                 	infuseTemperatureView.setVisibility(View.GONE);
                 	stepAmountView.setVisibility(View.GONE);
+                	waterToGrainRatioView.setVisibility(View.GONE);
                 }
                 else
                 {
                     stepAmountViewTitle.setText("Water to add (" + Units.getVolumeUnits() + ")");
                 	infuseTemperatureView.setVisibility(View.VISIBLE);
                 	waterToGrainRatioView.setVisibility(View.VISIBLE);
+                	stepAmountView.setVisibility(View.VISIBLE);
                 }
                 
                 // Update selected values.
@@ -375,6 +383,7 @@ public class AddMashStepActivity extends AddEditActivity {
     @Override
     public void onDeletePressed()
     {
+    	profile.removeMashStep(order);
         Intent result = new Intent();
         result.putExtra(Constants.KEY_MASH_STEP, step);
         result.putExtra(Constants.KEY_MASH_PROFILE, profile);
