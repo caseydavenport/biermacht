@@ -84,6 +84,8 @@ public class EditYeastActivity extends AddYeastActivity {
     {
 	    nameViewText.setText(y.getName());
         searchableListViewText.setText(y.getName());
+	    labViewText.setText(y.getLaboratory());
+	    productIdViewText.setText(y.getProductId());
 	    attenuationViewText.setText(String.format("%2.0f", y.getAttenuation()));
 	    amountViewText.setText(String.format("%2.2f", yeast.getBeerXmlStandardAmount()));
     }

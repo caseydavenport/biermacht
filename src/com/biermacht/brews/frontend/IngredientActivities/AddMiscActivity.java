@@ -247,8 +247,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
     public void onFinished()
     {
         mRecipe.addIngredient(misc);
-        mRecipe.update();
-        Database.updateRecipe(mRecipe);
+        mRecipe.save();
         finish();
     }
 

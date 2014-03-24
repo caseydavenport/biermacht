@@ -10,10 +10,7 @@ be reported here
 TODO:	 Fully support exporting recipes to XML.
 TODO:    Fix up all the XML files to be nice.
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
-TODO:	 Hop summary should show boil time!
 TODO:	 Verify we read recipe notes from XML.
-TODO:	 Changing water temperature does not change water to add.
-TODO:	 Round off decimal temperatures in mash. (131.82 -> 132)
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
@@ -80,3 +77,6 @@ TODO:	 Edit custom mash needs name field.
 TODO:	 Scale recipe causes crash
 TODO:	 Need to update steps when mash profile is changed in add mash activity.
 TODO:	 Handle decreased step temperature.
+TODO:	 Changing water temperature does not change water to add.
+TODO:	 Round off decimal temperatures in mash. (131.82 -> 132)
+TODO:	 Hop summary should show boil time!

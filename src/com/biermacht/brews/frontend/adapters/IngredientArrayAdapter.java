@@ -66,13 +66,13 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			
 			if(h.getUse().equals(Hop.USE_BOIL) || h.getUse().equals(Hop.USE_AROMA))
 			{
-				String s = String.format("%2.2f", BrewCalculator.Bitterness(r, h));
-				detailText += s; 
+				detailText += String.format("%d", h.getDisplayTime()) + " mins, ";
+				detailText += String.format("%2.2f", BrewCalculator.Bitterness(r, h));
 				detailText += " IBU";
 			}
 			else if (h.getUse().equals(Hop.USE_DRY_HOP))
 			{
-				detailText = "Dry Hop";
+				detailText = "Dry Hop, " + String.format("%d", h.getDisplayTime()) + " days";
 			}
 		}
 		else if(ingType == Ingredient.FERMENTABLE) 
@@ -95,7 +95,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			amountView.setText("1.00");
 			unitView.setText("pkg");
 			imageView.setImageResource(R.drawable.icon_yeast);
-			detailText = ((Yeast) list.get(position)).getAttenuation() + "%";
+			detailText = ((Yeast) list.get(position)).getArrayAdapterDescription();
 		}
 		else if(ingType == Ingredient.MISC)
 		{

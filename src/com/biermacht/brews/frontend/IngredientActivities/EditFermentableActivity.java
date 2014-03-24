@@ -142,8 +142,8 @@ public class EditFermentableActivity extends AddFermentableActivity {
         {
             e.printStackTrace();
         }
-        mRecipe.update();
-        Database.updateRecipe(mRecipe);
+        
+        mRecipe.save();
         finish();
     }
 }

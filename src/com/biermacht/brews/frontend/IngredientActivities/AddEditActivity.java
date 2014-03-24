@@ -361,7 +361,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         if (readyToGo)
         {
             Log.d("AddEditActivity", "Finishing");
-            Database.updateRecipe(mRecipe);
+            mRecipe.save();
             onFinished();
         }
     }

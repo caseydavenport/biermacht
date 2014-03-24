@@ -91,7 +91,7 @@ public class EditRecipeActivity extends AddRecipeActivity {
     @Override
     public void onFinished()
     {
-        Database.updateRecipe(mRecipe);
+    	mRecipe.save();
         finish();
     }
 

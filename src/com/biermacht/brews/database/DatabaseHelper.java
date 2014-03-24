@@ -99,6 +99,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String ING_YS_COL_ATTENUATION = "attenuation";
 	public static final String ING_YS_COL_NOTES = "notes";
 	public static final String ING_YS_COL_BEST_FOR = "bestFor";
+	public static final String ING_YS_COL_LAB = "laboratory";
+	public static final String ING_YS_COL_PROD_ID = "productId";
 	
 	public static final String ING_MC_COL_TYPE = "miscType";
 	public static final String ING_MC_COL_VERSION = "miscVersion";
@@ -251,6 +253,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ ING_YS_COL_ATTENUATION + " float, "
 				+ ING_YS_COL_NOTES + " text, "
 				+ ING_YS_COL_BEST_FOR + " text, "
+				+ ING_YS_COL_LAB + " text, "
+				+ ING_YS_COL_PROD_ID + " text, "
 				
 				+ ING_MC_COL_TYPE + " text, "
 				+ ING_MC_COL_VERSION + " int, "

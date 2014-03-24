@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1170,5 +1171,11 @@ public class Recipe implements Parcelable {
         {
             return 0;
         }
+    }
+    
+    public void save()
+    {
+    	Log.d("Recipe", "Saving recipe '" + name + "' with id" + this.getId());
+        Database.updateRecipe(this);
     }
 }

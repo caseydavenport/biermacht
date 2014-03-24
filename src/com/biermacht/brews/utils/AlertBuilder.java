@@ -170,13 +170,13 @@ public class AlertBuilder {
             @Override
             public void onClick(View view)
             {
+                cb.call(checkBox.isChecked());
                 if (checkBox.isChecked())
                 {
                     editText.setEnabled(false);
                     editText.setClickable(false);
                     editText.setFocusable(false);
                     editText.setFocusableInTouchMode(false);
-                    cb.call(checkBox.isChecked());
                     editText.setText(text.getText().toString());
                 }
                 else
@@ -208,9 +208,9 @@ public class AlertBuilder {
 
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        cb.call(checkBox.isChecked());
-                        callback.call();
                         text.setText(editText.getText().toString());
+                        callback.call();
+                        cb.call(checkBox.isChecked());
                     }
 
                 })

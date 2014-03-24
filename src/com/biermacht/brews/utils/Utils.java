@@ -82,7 +82,7 @@ public class Utils {
 			Database.updateIngredient(i, Constants.DATABASE_DEFAULT);
 		}
 
-        Database.updateRecipe(r);
+		r.save();
 		return r;
 	}
 }

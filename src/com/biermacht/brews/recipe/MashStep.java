@@ -247,8 +247,10 @@ public class MashStep implements Parcelable
     {
     	if (this.getType().equals(DECOCTION))
     		return this.getDisplayDecoctAmount();
-    	else
+    	else if (this.getType().equals(INFUSION))
     		return this.getDisplayInfuseAmount();
+    	else 
+    		return 0;
     }
     
     public double getDisplayInfuseAmount()
@@ -380,12 +382,12 @@ public class MashStep implements Parcelable
     public double getDisplayInfuseTemp()
     {
     	if (this.calcInfuseTemp)
-    		return this.calculateInfuseTemp();
+    		return Math.round(this.calculateInfuseTemp());
     	
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
-            return Units.celsiusToFahrenheit(this.infuseTemp);
+            return Math.round(Units.celsiusToFahrenheit(this.infuseTemp));
         else
-            return this.infuseTemp;
+            return Math.round(this.infuseTemp);
     }
 
     public void setDisplayInfuseTemp(double d)

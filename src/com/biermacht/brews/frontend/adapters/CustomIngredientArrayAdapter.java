@@ -86,7 +86,7 @@ public class CustomIngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 			amountView.setText("1.00");
 			unitView.setText("pkg");
 			imageView.setImageResource(R.drawable.icon_yeast);
-			detailText = y.getAttenuation() + "%";
+			detailText = y.getArrayAdapterDescription();
 		}
 		else if(ingType == Ingredient.MISC)
 		{

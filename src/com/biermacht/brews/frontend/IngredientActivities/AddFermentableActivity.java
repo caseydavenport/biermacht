@@ -219,7 +219,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     public void onFinished()
     {
         mRecipe.addIngredient(fermentable);
-        Database.updateRecipe(mRecipe);
+        mRecipe.save();
         finish();
     }
 }

@@ -52,8 +52,8 @@ public class Yeast extends Ingredient {
 		this.attenuation = 75;
 		this.notes = "";
 		this.bestFor = "";
-        this.productid = "";
-        this.lab = "";
+        this.productid = "Unknown ID";
+        this.lab = "Unknown lab";
 	}
 
     public Yeast(Parcel p)
@@ -124,6 +124,16 @@ public class Yeast extends Ingredient {
         if (s.length() > 3)
             s += ": ";
          s += this.notes;
+		return s;
+	}
+	
+	public String getArrayAdapterDescription()
+	{
+		String s = getLaboratory() + ", " + getProductId();
+		
+		if (s.length() < 3)
+			s = String.format("%2.2f", this.getAttenuation()) + "% attenuation";
+		
 		return s;
 	}
 
@@ -292,7 +302,7 @@ public class Yeast extends Ingredient {
 		this.notes = notes;
 	}
 
-	/**
+	/**f
 	 * @return the bestFor
 	 */
 	public String getBestFor() {

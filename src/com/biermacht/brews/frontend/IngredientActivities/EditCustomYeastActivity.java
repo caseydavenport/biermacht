@@ -18,8 +18,10 @@ public class EditCustomYeastActivity extends EditYeastActivity {
         
         // Add those we do
         mainView.addView(nameView, 0);
+        mainView.addView(labView);
+        mainView.addView(productIdView);
         
-        // Set values for the given hop
+        // Set initial values
         setValues(yeast);
     }
 

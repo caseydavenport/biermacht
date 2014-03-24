@@ -1,13 +1,16 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
+import com.biermacht.brews.R;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
 public class AddCustomYeastActivity extends AddYeastActivity {
-
+	
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -19,6 +22,8 @@ public class AddCustomYeastActivity extends AddYeastActivity {
         
         // Add those we do.
         mainView.addView(nameView, 0);
+        mainView.addView(labView);
+        mainView.addView(productIdView);
         
         // Set initial values
         yeast = new Yeast("Custom yeast");

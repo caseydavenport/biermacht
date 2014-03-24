@@ -236,8 +236,7 @@ public class AddHopsActivity extends AddEditIngredientActivity {
     public void onFinished()
     {
         mRecipe.addIngredient(hop);
-        mRecipe.update();
-        Database.updateRecipe(mRecipe);
+        mRecipe.save();
         finish();
     }
 

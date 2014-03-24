@@ -100,6 +100,8 @@ public class DatabaseInterface {
 			DatabaseHelper.ING_YS_COL_ATTENUATION,
 			DatabaseHelper.ING_YS_COL_NOTES,
 			DatabaseHelper.ING_YS_COL_BEST_FOR,
+			DatabaseHelper.ING_YS_COL_LAB,
+			DatabaseHelper.ING_YS_COL_PROD_ID,
 			
 			DatabaseHelper.ING_MC_COL_TYPE,
 			DatabaseHelper.ING_MC_COL_VERSION,
@@ -316,6 +318,21 @@ public class DatabaseInterface {
 
     public void addIngredientToDatabase(Ingredient ing, long ownerid, long dbid)
     {
+    	ContentValues values = getIngredientValues(ing, dbid, ownerid);
+        long ingid = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
+        values.clear();
+    }
+	
+	public boolean updateExistingIngredientInDatabase(Ingredient ing, long dbid)
+	{
+        String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId() + " AND " +
+                DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
+        ContentValues values = getIngredientValues(ing, dbid, ing.getOwnerId());
+		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
+	}
+	
+	public ContentValues getIngredientValues(Ingredient ing, long dbid, long ownerid)
+	{
         // values stored here
         ContentValues values = new ContentValues();
 
@@ -362,6 +379,8 @@ public class DatabaseInterface {
             values.put(DatabaseHelper.ING_YS_COL_MIN_TEMP, yeast.getMinTemp() );
             values.put(DatabaseHelper.ING_YS_COL_MAX_TEMP, yeast.getMaxTemp());
             values.put(DatabaseHelper.ING_YS_COL_ATTENUATION, yeast.getAttenuation());
+            values.put(DatabaseHelper.ING_YS_COL_LAB, yeast.getLaboratory());
+            values.put(DatabaseHelper.ING_YS_COL_PROD_ID, yeast.getProductId());
             values.put(DatabaseHelper.ING_YS_COL_NOTES, yeast.getNotes());
             values.put(DatabaseHelper.ING_YS_COL_BEST_FOR, yeast.getBestFor());
         }
@@ -377,77 +396,7 @@ public class DatabaseInterface {
             values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
             values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
         }
-
-        long ingid = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
-        values.clear();
-    }
-	
-	public boolean updateExistingIngredientInDatabase(Ingredient ing, long dbid)
-	{
-        String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId() + " AND " +
-                DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
-		
-		// Load up values to store
-		ContentValues values = new ContentValues();
-		values.put(DatabaseHelper.ING_COL_OWNER_ID, ing.getOwnerId());
-        values.put(DatabaseHelper.ING_COL_DB_ID, dbid);
-		values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
-		values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
-		values.put(DatabaseHelper.ING_COL_DESC, ing.getShortDescription());
-		values.put(DatabaseHelper.ING_COL_UNITS, ing.getDisplayUnits());
-		values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
-		values.put(DatabaseHelper.ING_COL_TIME, ing.getTime());
-        values.put(DatabaseHelper.ING_COL_INVENTORY, ing.getBeerXmlStandardInventory());
-		
-		// Grain specific values
-		if (ing.getType().equals(Ingredient.FERMENTABLE))
-		{
-			Fermentable fer = (Fermentable) ing;
-			values.put(DatabaseHelper.ING_FR_COL_TYPE, fer.getFermentableType());
-			values.put(DatabaseHelper.ING_FR_COL_YIELD, fer.getYield());
-			values.put(DatabaseHelper.ING_FR_COL_COLOR, fer.getLovibondColor());
-			values.put(DatabaseHelper.ING_FR_COL_ADD_AFTER_BOIL, fer.isAddAfterBoil());
-			values.put(DatabaseHelper.ING_FR_COL_MAX_IN_BATCH, fer.getMaxInBatch());
-			values.put(DatabaseHelper.ING_FR_COL_GRAV, fer.getGravity());
-		}
-		
-		// Hop specific values
-		if (ing.getType().equals(Ingredient.HOP))
-		{
-			Hop hop = (Hop) ing;
-			values.put(DatabaseHelper.ING_HP_COL_TYPE, hop.getHopType());
-			values.put(DatabaseHelper.ING_HP_COL_ALPHA, hop.getAlphaAcidContent());
-			values.put(DatabaseHelper.ING_HP_COL_USE, hop.getUse());
-			values.put(DatabaseHelper.ING_HP_COL_FORM, hop.getForm());
-			values.put(DatabaseHelper.ING_HP_COL_ORIGIN, hop.getOrigin());
-		}
-		
-		// Yeast specific values
-		if (ing.getType().equals(Ingredient.YEAST))
-		{
-			Yeast yeast = (Yeast) ing;
-			values.put(DatabaseHelper.ING_YS_COL_TYPE, yeast.getYeastType());
-			values.put(DatabaseHelper.ING_YS_COL_FORM, yeast.getForm());
-			values.put(DatabaseHelper.ING_YS_COL_MIN_TEMP, yeast.getMinTemp() );
-			values.put(DatabaseHelper.ING_YS_COL_MAX_TEMP, yeast.getMaxTemp());
-			values.put(DatabaseHelper.ING_YS_COL_ATTENUATION, yeast.getAttenuation());
-			values.put(DatabaseHelper.ING_YS_COL_NOTES, yeast.getNotes());
-			values.put(DatabaseHelper.ING_YS_COL_BEST_FOR, yeast.getBestFor());
-		}
-		
-		// Misc values
-		if (ing.getType().equals(Ingredient.MISC))
-		{
-			Misc misc = (Misc) ing;
-			values.put(DatabaseHelper.ING_MC_COL_TYPE, misc.getMiscType());
-			values.put(DatabaseHelper.ING_MC_COL_VERSION, misc.getVersion());
-			values.put(DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT, misc.amountIsWeight() ? 1 : 0);
-			values.put(DatabaseHelper.ING_MC_COL_USE_FOR, misc.getUseFor());
-			values.put(DatabaseHelper.ING_MC_COL_USE, misc.getUse());
-            values.put(DatabaseHelper.ING_COL_UNITS, misc.getUnits());  // We redo this one because miscs are weird
-		}
-		
-		return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
+        return values;
 	}
 	
 	public long addStyleToDatabase(BeerStyle s, long ownerId)
@@ -1204,6 +1153,8 @@ public class DatabaseInterface {
 			Double attn = cursor.getDouble(cid);			    cid++;
 			String notes = cursor.getString(cid);				cid++;
 			String bestFor = cursor.getString(cid);				cid++;
+			String lab = cursor.getString(cid);			        cid++;
+			String productId = cursor.getString(cid);			cid++;
 			
 			Yeast yeast = new Yeast(name);
             yeast.setDatabaseId(databaseId);
@@ -1221,13 +1172,15 @@ public class DatabaseInterface {
 			yeast.setAttenuation(attn);
 			yeast.setNotes(notes);
 			yeast.setBestFor(bestFor);
+			yeast.setLaboratory(lab);
+			yeast.setProductId(productId);
 			
 			return yeast;
 		}
 		
 		if (ingType.equals(Ingredient.MISC))
 		{
-			cid += 18;
+			cid += 20;
 			
 			Misc misc = new Misc(name);
 			String miscType = cursor.getString(cid);       cid++;
@@ -1253,6 +1206,6 @@ public class DatabaseInterface {
 			return misc;
 		}
 		
-		return new Misc("No Ingredient Found");
+		throw new Exception("No ingredient found");
 	}
 }
