@@ -59,7 +59,7 @@
     <string name="use">Use</string>
 	<string name="mash_profile">Mash Profile</string>
 	<string name="fermentation_profile">Fermentation Profile</string>
-    <string name="bjcp_profile">BJCP Style Profile</string>
+    <string name="style_profile">Style Profile</string>
 	<string name="mash_steps">Mash Steps</string>
 	<string name="form">Form</string>
     <string name="measured_og">Measured OG</string>
