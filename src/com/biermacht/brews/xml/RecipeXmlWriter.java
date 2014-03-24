@@ -49,73 +49,49 @@ public class RecipeXmlWriter
 		
 			for  (Recipe r : list)
 			{
-	 
-				// Create element objects for a recipe.
+				// Element for this recipe.
 				Element recipeElement = doc.createElement("RECIPE");
-				Element recipeNameElement = doc.createElement("NAME");
-				Element recipeVersionElement = doc.createElement("VERSION");
-				Element recipeTypeElement = doc.createElement("TYPE");
-				Element recipeStyleElement = doc.createElement("STYLE");
-				Element recipeEquipmentElement = doc.createElement("EQUIPMENT");
-				Element recipeBrewerElement = doc.createElement("BREWER");
-				Element recipeBatchSizeElement = doc.createElement("BATCH_SIZE");
-				Element recipeBoilSizeElement = doc.createElement("BOIL_SIZE");
-				Element recipeBoilTimeElement = doc.createElement("BOIL_TIME");
-				Element recipeEfficiencyElement = doc.createElement("EFFICIENCY");
-				Element recipeNotesElement = doc.createElement("NOTES");
-				Element recipeOGElement = doc.createElement("OG");
-				Element recipeFGElement = doc.createElement("FG");
-				Element recipeStagesElement = doc.createElement("FERMENTATION_STAGES");
-				Element recipePrimaryAgeElement = doc.createElement("PRIMARY_AGE");
-				Element recipeSecondaryAgeElement = doc.createElement("SECONDARY_AGE");
-				Element recipeTertiaryAgeElement = doc.createElement("TERTIARY_AGE");
-				Element recipeAgeElement = doc.createElement("AGE"); 
 				
-				// Set values of elements per recipe.
-				recipeNameElement.setTextContent(r.getRecipeName());
-				recipeVersionElement.setTextContent(r.getVersion() + "");
-				recipeTypeElement.setTextContent(r.getType());
-				recipeStyleElement.appendChild(this.getStyleChild(doc, r.getStyle()));
-				recipeEquipmentElement.setTextContent("");
-				recipeBrewerElement.setTextContent("");
-				recipeBatchSizeElement.setTextContent(r.getBeerXmlStandardBatchSize() + "");
-				recipeBoilSizeElement.setTextContent(r.getBeerXmlStandardBoilSize() + "");
-				recipeBoilTimeElement.setTextContent(r.getBoilTime() + "");
-				recipeEfficiencyElement.setTextContent(r.getEfficiency() + "");
-				recipeNotesElement.setTextContent(r.getNotes());
-				recipeOGElement.setTextContent(r.getOG() + "");
-				recipeFGElement.setTextContent(r.getFG() + "");
-				recipeStagesElement.setTextContent(r.getFermentationStages() + "");
-				recipePrimaryAgeElement.setTextContent(r.getFermentationAge(Recipe.STAGE_PRIMARY) + "");
-				recipeSecondaryAgeElement.setTextContent(r.getFermentationAge(Recipe.STAGE_SECONDARY) + "");
-				recipeTertiaryAgeElement.setTextContent(r.getFermentationAge(Recipe.STAGE_TERTIARY) + "");
-				recipeAgeElement.setTextContent(r.getBottleAge() + "");
+				// Create a mapping of name -> value
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("NAME", r.getRecipeName());
+				map.put("VERSION", r.getVersion() + "");
+				map.put("TYPE", r.getType());
+				map.put("EQUIPMENT", "");
+				map.put("BREWER", "");
+				map.put("BATCH_SIZE", r.getBeerXmlStandardBatchSize() + "");
+				map.put("BOIL_SIZE", r.getBeerXmlStandardBoilSize() + "");
+				map.put("BOIL_TIME", r.getBoilTime() + "");
+				map.put("EFFICIENCY", r.getEfficiency() + "");
+				map.put("NOTES", r.getNotes());
+				map.put("OG", r.getOG() + "");
+				map.put("FG", r.getFG() + "");
+				map.put("FERMENTATION_STAGES", r.getFermentationStages() + "");
+				map.put("PRIMARY_AGE", r.getFermentationAge(Recipe.STAGE_PRIMARY) + "");
+				map.put("SECONDARY_AGE", r.getFermentationAge(Recipe.STAGE_SECONDARY) + "");
+				map.put("TERTIARY_AGE", r.getFermentationAge(Recipe.STAGE_TERTIARY) + "");
+				map.put("PRIMARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY) + "");
+				map.put("SECONDARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY) + "");
+				map.put("TERTIARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY) + "");
+				map.put("AGE", r.getBottleAge() + ""); 
 				
+				for (Map.Entry<String, String> e : map.entrySet())
+				{
+					String fieldName = e.getKey();
+					String fieldValue = e.getValue();
+					Element element = doc.createElement(fieldName);
+					element.setTextContent(fieldValue);
+					recipeElement.appendChild(element);
+				}
+
 				// Add elements to recipe.
-				recipeElement.appendChild(recipeNameElement);
-				recipeElement.appendChild(recipeVersionElement);
-				recipeElement.appendChild(recipeTypeElement);
-				recipeElement.appendChild(recipeStyleElement);
-				recipeElement.appendChild(recipeEquipmentElement);
-				recipeElement.appendChild(recipeBrewerElement);
-				recipeElement.appendChild(recipeBatchSizeElement);
-				recipeElement.appendChild(recipeBoilSizeElement);
-				recipeElement.appendChild(recipeBoilTimeElement);
-				recipeElement.appendChild(recipeEfficiencyElement);
 				recipeElement.appendChild(this.getHopsChild(doc, r.getHopsList()));
 				recipeElement.appendChild(this.getFermentablesChild(doc, r.getFermentablesList()));
 				recipeElement.appendChild(this.getMiscsChild(doc, r.getMiscList()));
 				recipeElement.appendChild(this.getYeastsChild(doc, r.getYeastsList()));
 				recipeElement.appendChild(this.getWatersChild(doc, r.getWatersList()));
 				recipeElement.appendChild(this.getMashChild(doc, r.getMashProfile()));
-				recipeElement.appendChild(recipeNotesElement);
-				recipeElement.appendChild(recipeOGElement);
-				recipeElement.appendChild(recipeFGElement);
-				recipeElement.appendChild(recipeStagesElement);
-				recipeElement.appendChild(recipePrimaryAgeElement);
-				recipeElement.appendChild(recipeSecondaryAgeElement);
-				recipeElement.appendChild(recipeTertiaryAgeElement);
-				recipeElement.appendChild(recipeAgeElement);
+				recipeElement.appendChild(this.getStyleChild(doc, r.getStyle()));
 				
 				// Add recipe to root <RECIPES> element.
 				rootElement.appendChild(recipeElement);
@@ -151,7 +127,45 @@ public class RecipeXmlWriter
 	 */
 	public Element getStyleChild(Document d, BeerStyle s)
 	{
-		return d.createElement("STYLE");
+		// Create the element.
+		Element rootElement = d.createElement("STYLE");
+		
+		// Create a mapping of name -> value
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("NAME", s.getName());
+		map.put("CATEGORY", s.getCategory());
+		map.put("VERSION", "1"); // FIXME: Actually set version.
+		map.put("CATEGORY_NUMBER", s.getCatNum() + "");
+		map.put("STYLE_LETTER", s.getStyleLetter());
+		map.put("STYLE_GUIDE", s.getStyleGuide());
+		map.put("TYPE", s.getType());
+		map.put("OG_MIN", String.format("%2.8f", s.getMinOg()));
+		map.put("OG_MAX", String.format("%2.8f", s.getMaxOg()));
+		map.put("FG_MIN", String.format("%2.8f", s.getMinFg()));
+		map.put("FG_MAX", String.format("%2.8f", s.getMaxFg()));
+		map.put("IBU_MIN", String.format("%2.8f", s.getMinIbu()));
+		map.put("IBU_MAX", String.format("%2.8f", s.getMaxIbu()));
+		map.put("COLOR_MIN", String.format("%2.8f", s.getMinColor()));
+		map.put("COLOR_MAX", String.format("%2.8f", s.getMaxColor()));
+		map.put("CARB_MIN", String.format("%2.8f", s.getMinCarb()));
+		map.put("CARB_MAX", String.format("%2.8f", s.getMaxCarb()));
+		map.put("ABV_MIN", String.format("%2.8f", s.getMinAbv()));
+		map.put("ABV_MAX", String.format("%2.8f", s.getMaxAbv()));
+		map.put("NOTES", s.getNotes());
+		map.put("PROFILE", s.getProfile());
+		map.put("INGREDIENTS", s.getIngredients());
+		map.put("EXAMPLES", s.getExamples());
+		
+		for (Map.Entry<String, String> e : map.entrySet())
+		{
+			String fieldName = e.getKey();
+			String fieldValue = e.getValue();
+			Element element = d.createElement(fieldName);
+			element.setTextContent(fieldValue);
+			rootElement.appendChild(element);
+		}
+
+		return rootElement;
 	}
 	
 	public Element getHopsChild(Document d, ArrayList<Hop> l)
@@ -261,8 +275,11 @@ public class RecipeXmlWriter
 			Element typeElement = d.createElement("TYPE");
 			Element useElement = d.createElement("USE");
 			Element amountElement = d.createElement("AMOUNT");
+			Element displayAmountElement = d.createElement("DISPLAY_AMOUNT");
+			Element displayTimeElement = d.createElement("DISPLAY_TIME");
 			Element amountIsWeight = d.createElement("AMOUNT_IS_WEIGHT");
 			Element notesElement = d.createElement("NOTES");
+			Element useForElement = d.createElement("USE_FOR");
 			
 			// Assign values
 			nameElement.setTextContent(m.getName());
@@ -272,6 +289,9 @@ public class RecipeXmlWriter
 			amountElement.setTextContent(m.getBeerXmlStandardAmount() + "");
 			amountIsWeight.setTextContent(m.amountIsWeight() + "");
 			notesElement.setTextContent(m.getShortDescription());
+			displayAmountElement.setTextContent(m.getDisplayAmount() + " " + m.getDisplayUnits());
+			displayTimeElement.setTextContent(m.getTime() + " mins");
+			useForElement.setTextContent(m.getUseFor());
 			
 			// Attach to element.
 			miscElement.appendChild(nameElement);
@@ -281,6 +301,9 @@ public class RecipeXmlWriter
 			miscElement.appendChild(amountElement);
 			miscElement.appendChild(amountIsWeight);
 			miscElement.appendChild(notesElement);
+			miscElement.appendChild(displayAmountElement);
+			miscElement.appendChild(displayTimeElement);
+			miscElement.appendChild(useForElement);
 			
 			// Attach to list of elements.
 			miscsElement.appendChild(miscElement);
@@ -347,7 +370,76 @@ public class RecipeXmlWriter
 	
 	public Element getMashChild(Document d, MashProfile m)
 	{
-		return d.createElement("MASH");
+		// Create the element.
+		Element rootElement = d.createElement("MASH");
+		
+		// Create a mapping of name -> value
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("NAME", m.getName());
+		map.put("VERSION", m.getVersion() + "");
+		map.put("GRAIN_TEMP", String.format("%2.8f", m.getBeerXmlStandardGrainTemp()));
+		map.put("TUN_TEMP", String.format("%2.8f", m.getBeerXmlStandardTunTemp()));
+		map.put("SPARGE_TEMP", String.format("%2.8f", m.getBeerXmlStandardSpargeTemp()));
+		map.put("NOTES", m.getNotes());
+		map.put("PH", String.format("%2.8f", m.getpH()));
+		map.put("TUN_WEIGHT", String.format("%2.8f", m.getBeerXmlStandardTunWeight()));
+		map.put("TUN_SPECIFIC_HEAT", String.format("%2.8f", m.getBeerXmlStandardTunSpecHeat()));
+		map.put("EQUIP_ADJUST", "FALSE"); // FIXME: Actually set this.
+		
+		for (Map.Entry<String, String> e : map.entrySet())
+		{
+			String fieldName = e.getKey();
+			String fieldValue = e.getValue();
+			Element element = d.createElement(fieldName);
+			element.setTextContent(fieldValue);
+			rootElement.appendChild(element);
+		}
+		
+		// Add mash steps
+		rootElement.appendChild(getMashStepsChild(d, m));
+
+		return rootElement;
+	}
+	
+	public Element getMashStepsChild(Document d, MashProfile m)
+	{
+		// Create the element.
+		Element rootElement = d.createElement("MASH_STEPS");
+		
+		for (MashStep s : m.getMashStepList())
+		{
+			rootElement.appendChild(getMashStepChild(d, s));
+		}
+
+		return rootElement;
+	}
+	
+	public Element getMashStepChild(Document d, MashStep s)
+	{
+		// Create the element.
+		Element rootElement = d.createElement("MASH_STEP");
+		
+		// Create a mapping of name -> value
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("NAME", s.getName());
+		map.put("VERSION", s.getVersion() + "");
+		map.put("TYPE", s.getType());
+		map.put("INFUSE_AMOUNT", String.format("%2.8f", s.getBeerXmlStandardInfuseAmount()));
+		map.put("STEP_TEMP", String.format("%2.8f", s.getBeerXmlStandardStepTemp()));
+		map.put("STEP_TIME", String.format("%2.8f", s.getStepTime()));
+		map.put("RAMP_TIME", String.format("%2.8f", s.getRampTime()));
+		map.put("END_TIME", String.format("%2.8f", s.getBeerXmlStandardEndTemp()));
+		
+		for (Map.Entry<String, String> e : map.entrySet())
+		{
+			String fieldName = e.getKey();
+			String fieldValue = e.getValue();
+			Element element = d.createElement(fieldName);
+			element.setTextContent(fieldValue);
+			rootElement.appendChild(element);
+		}
+
+		return rootElement;
 	}
 	
 	public File getStoragePath(String fileName) throws IOException {

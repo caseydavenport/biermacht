@@ -925,6 +925,8 @@ public class RecipeXmlReader extends DefaultHandler {
 				String dunit = Units.getUnitsFromDisplayAmount(currentValue);
 				//double amt = Units.getAmountFromDisplayAmount(currentValue);
 				misc.setDisplayUnits(dunit);
+				Log.d("IMPORT RECIPE", "Misc " + misc.getName() + " has display units " + dunit);
+				Log.d("IMPORT RECIPE", "Misc " + misc.getName() + " has display units " + misc.getDisplayUnits());
 				//misc.setDisplayAmount(amt);
 			}
 			

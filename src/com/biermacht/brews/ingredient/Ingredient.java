@@ -192,16 +192,10 @@ public abstract class Ingredient implements Parcelable {
 		this.id = id;
 	}
 
-	/**
-	 * @return the version
-	 */
 	public int getVersion() {
 		return version;
 	}
 
-	/**
-	 * @param version the version to set
-	 */
 	public void setVersion(int version) {
 		this.version = version;
 	}

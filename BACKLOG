@@ -7,10 +7,8 @@ be reported here
 // Urgent issues.  Fix these first. //////////
 //////////////////////////////////////////////
 
-TODO:	 Fully support exporting recipes to XML.
 TODO:    Fix up all the XML files to be nice.
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
-TODO:	 Verify we read recipe notes from XML.
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
@@ -42,6 +40,7 @@ TODO:	 Handle actually setting the amount of yeast
 TODO: 	 Hitting stop, then play, doesn't start you at the beginning.
 TODO:	 Should consider mash temp in ABV calc.
 TODO:	 Confirmation when leaving brew timer.
+TODO:	 Add support for more custom fields to XML import / export.
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////
@@ -80,3 +79,4 @@ TODO:	 Handle decreased step temperature.
 TODO:	 Changing water temperature does not change water to add.
 TODO:	 Round off decimal temperatures in mash. (131.82 -> 132)
 TODO:	 Hop summary should show boil time!
+TODO:	 Fully support exporting recipes to XML.

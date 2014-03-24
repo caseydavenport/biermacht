@@ -259,7 +259,7 @@ public class Misc extends Ingredient {
 	public String getDisplayUnits()
     {
         // If not, call the appropriate method based on which unit system the user has chosen
-        if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(Units.IMPERIAL))
+        if (Units.getUnitSystem().equals(Units.IMPERIAL))
             return getDisplayUnitsImperial();
         else
             return getDisplayUnitsMetric();
