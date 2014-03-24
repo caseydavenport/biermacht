@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
+import android.annotation.SuppressLint;
 import android.content.*;
 
 import java.util.*;
@@ -32,8 +33,8 @@ public class ProfileViewFragment extends Fragment {
 	private ArrayList<Detail> fermDetailList;
 	private ViewGroup mashProfileView;
 	private ViewGroup fermentationProfileView;
-    private ViewGroup bjcpProfileView;
-	private View view;
+    private ViewGroup styleProfileView;
+    private TextView styleNameView;
 
 	// Details to show
 	Detail detail;
@@ -52,7 +53,8 @@ public class ProfileViewFragment extends Fragment {
 		pageView = inflater.inflate(resource, container, false);
 		mashProfileView = (ViewGroup) pageView.findViewById(R.id.mash_profile_view);
 		fermentationProfileView = (ViewGroup) pageView.findViewById(R.id.fermentation_profile_view);
-        bjcpProfileView = (ViewGroup) pageView.findViewById(R.id.bjcp_profile_view);
+		styleProfileView = (ViewGroup) pageView.findViewById(R.id.style_profile_view);
+		styleNameView = (TextView) styleProfileView.findViewById(R.id.style_profile_name);
 		
 		this.mashDetailList = new ArrayList<Detail>();
 		this.fermDetailList = new ArrayList<Detail>();
@@ -94,12 +96,22 @@ public class ProfileViewFragment extends Fragment {
 		detail.setContent(t);
 		mashDetailList.add(detail);
 		
+		detail = new Detail();
+		t = String.format("%s", r.getMashProfile().getNumberOfSteps());
+		detail.setTitle("Step count: ");
+		detail.setType(Detail.TYPE_TEXT);
+		detail.setFormat("%s");
+		detail.setContent(t);
+		mashDetailList.add(detail);
+		
 		detailArrayAdapter = new DetailArrayAdapter(c, mashDetailList);
 		mashProfileView.addView(detailArrayAdapter.getView(0, null, container));
 		mashProfileView.addView(inflater.inflate(R.layout.divider, container, false));
 		mashProfileView.addView(detailArrayAdapter.getView(1, null, container));
 		mashProfileView.addView(inflater.inflate(R.layout.divider, container, false));
 		mashProfileView.addView(detailArrayAdapter.getView(2, null, container));
+		mashProfileView.addView(inflater.inflate(R.layout.divider, container, false));
+		mashProfileView.addView(detailArrayAdapter.getView(3, null, container));
 	}
 	
 	private void configureFermentationView(LayoutInflater inflater, ViewGroup container)
@@ -145,6 +157,8 @@ public class ProfileViewFragment extends Fragment {
         tv.setPadding(20,20,20,20);
         tv.setTextColor(Color.DKGRAY);
         tv.setText(r.getStyle().getNotes());
-        bjcpProfileView.addView(tv);
+        styleNameView.setText(r.getStyle().getName());
+        
+        //styleProfileView.addView(tv);
     }
 }

@@ -139,6 +139,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
 				public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
                 {
 					use = useArray.get(position);
+					misc.setUse(use);
 
                     if (use.equals(Misc.USE_BOTTLING))
                     {
@@ -147,14 +148,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
                     else
                     {
                         timeView.setVisibility(View.VISIBLE);
-                        String units = "";
-                        if (use.equals(Misc.USE_PRIMARY)||use.equals(Misc.USE_SECONDARY))
-                            units = Units.DAYS;
-                        else if (use.equals(Misc.USE_BOIL)||use.equals(Misc.USE_MASH))
-                            units = Units.MINUTES;
-                        else
-                            units = Units.MINUTES;
-
+                        String units = misc.getTimeUnits();
                         timeViewTitle.setText(use + " Time" + " (" + units + ")");
                     }
 				}

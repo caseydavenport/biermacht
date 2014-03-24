@@ -115,6 +115,15 @@ public class Misc extends Ingredient {
 			return Misc.TYPE_OTHER;
 	}
 	
+	public String getArrayAdapterDescription()
+	{
+		String s = "";
+		if (getTime() > 0)
+			s += getTime() + " " + getTimeUnits() + ", ";
+		s += getUseFor();
+		return s;
+	}
+	
 	public void setUse(String u)
 	{
 		this.use = u;
@@ -339,6 +348,16 @@ public class Misc extends Ingredient {
 	public void setTime(int i) {
         this.time = i;
 	}
+    
+    public String getTimeUnits()
+    {
+        if (use.equals(Misc.USE_PRIMARY)||use.equals(Misc.USE_SECONDARY))
+            return Units.DAYS;
+        else if (use.equals(Misc.USE_BOIL)||use.equals(Misc.USE_MASH))
+            return Units.MINUTES;
+        else
+            return Units.MINUTES;
+    }
 
 	@Override
 	public void setShortDescription(String description) {
