@@ -10,8 +10,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Acid malt can and has been historically used to adjust mash pH 
-	       without the use of additives</NOTES>
+		<NOTES>Tangy, sour flavor.  Adjusts mash pH.</NOTES>
 		<STYLES></STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -36,7 +35,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Amber colored dry malt extract. Use as a base in medium colored beers.</NOTES>
+		<NOTES>Amber colored dry malt extract.</NOTES>
 		<STYLES>Brown ales</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -61,7 +60,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Amber colored liquid malt extract. Use as a base in medium colored beers.</NOTES>
+		<NOTES>Amber colored liquid malt extract.</NOTES>
 		<STYLES>Brown ales</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -86,7 +85,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>United Kingdom</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Warm biscuit flavor with coffee undertones. Must be mashed.</NOTES>
+		<NOTES>Biscuit flavor, with coffee undertones. Must be mashed.</NOTES>
 		<STYLES>Brown ales</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>2.80</MOISTURE>
@@ -111,7 +110,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Belgium</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Strong malt aroma</NOTES>
+		<NOTES>Strong malt aroma.</NOTES>
 		<STYLES>Brown ales</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -136,9 +135,8 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Improve the speed of lautering.
-		       Hulls are neutral in flavor, body and color and do not ferment </NOTES>
-		<STYLES>Wheat beers, Wits</STYLES>
+		<NOTES>Improve the speed of lautering.  Neutral flavor and aroma.</NOTES>
+		<STYLES></STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -162,7 +160,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds significant body and haze producing protein.</NOTES>
+		<NOTES>Increases body and produces haze.</NOTES>
 		<STYLES>Porters, Stouts</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>9.00</MOISTURE>
@@ -187,7 +185,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds body.  Requires fine milling and multistage mash.</NOTES>
+		<NOTES>Increases body.</NOTES>
 		<STYLES></STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -212,7 +210,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Raw barley. Produces protein haze.</NOTES>
+		<NOTES>Produces haze.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -236,7 +234,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Belgian</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Biscuity flavor and aroma, similar to toasted malt.</NOTES>
+		<NOTES>Biscuit flavor and aroma.</NOTES>
 		<STYLES>English ales, brown ales and porters</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -261,7 +259,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Dry roasted flavor and dark color.</NOTES>
+		<NOTES>Roasted flavor. Imparts dry mouthfeel.</NOTES>
 		<STYLES>Stouts, Porters</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>6.00</MOISTURE>
@@ -286,7 +284,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Dry coffee flavor.</NOTES>
+		<NOTES>Coffee flavor. Imparts dry mouthfeel.</NOTES>
 		<STYLES>Stouts, Porters</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>5.00</MOISTURE>
@@ -336,7 +334,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Rich and sweet.</NOTES>
+		<NOTES>Rich, sweet flavor.</NOTES>
 		<STYLES>Scottish ales, Holiday ales, Old ales.</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -361,7 +359,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Rich and sweet.</NOTES>
+		<NOTES>Rich, sweet flavor.</NOTES>
 		<STYLES>Scottish ales, Holiday ales, Old ales.</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -386,7 +384,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Belgium</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Increases head retention and creates a sweet aroma.</NOTES>
+		<NOTES>Increases head retention. Sweet aroma.</NOTES>
 		<STYLES>Tripels, Dubbels, Holiday ales, Old ales.</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -411,7 +409,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Belgium</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Increases head retention and creates a sweet aroma.</NOTES>
+		<NOTES>Increases head retention. Sweet aroma.</NOTES>
 		<STYLES>Tripels, Dubbels, Holiday ales, Old ales.</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -436,7 +434,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Belgium</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Increases head retention and creates a sweet aroma. Adds some color.</NOTES>
+		<NOTES>Increases head retention. Sweet aroma. Adds some color.</NOTES>
 		<STYLES>Tripels, Dubbels, Holiday ales, Old ales.</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -485,7 +483,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Significantly increases foam/head retention and body of the beer.</NOTES>
+		<NOTES>Improves head retention and body.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -509,7 +507,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Significantly increases foam/head retention and body of the beer.</NOTES>
+		<NOTES>Improves head retention and body.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -533,7 +531,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER>Wyermann</SUPPLIER>
-		<NOTES>Adds a strong caramel flavor, red color, and malty aroma.</NOTES>
+		<NOTES>Rich caramel flavor, red color, and malty aroma.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -557,8 +555,8 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER>Weyermann</SUPPLIER>
-		<NOTES>Used to intensify aroma and color</NOTES>
-		<STYLES>Stouts</STYLES>
+		<NOTES>Used to intensify aroma and color.</NOTES>
+		<STYLES>Munich beers, Stouts</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -583,7 +581,7 @@
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER>Weyermann</SUPPLIER>
 		<NOTES>Used to intensify aroma and color.</NOTES>
-		<STYLES>Stouts</STYLES>
+		<STYLES>Munich beers, Stouts</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -608,7 +606,7 @@
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER>Weyermann</SUPPLIER>
 		<NOTES>Used to intensify aroma and color.</NOTES>
-		<STYLES>Stouts</STYLES>
+		<STYLES>Munich beers, Stouts</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -623,31 +621,6 @@
 		<EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 	</FERMENTABLE>
 	<FERMENTABLE>
-		<NAME>Caramel Wheat Malt</NAME>
-		<VERSION>1</VERSION>
-		<TYPE>Grain</TYPE>
-		<AMOUNT>0.00</AMOUNT>
-		<YIELD>75.00</YIELD>
-		<COLOR>46.00</COLOR>
-		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
-		<ORIGIN>Germany</ORIGIN>
-		<SUPPLIER>Wyermann</SUPPLIER>
-		<NOTES>Adds wheat malt aroma.</NOTES>
-		<STYLES>Dunkelweizens</STYLES>
-		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
-		<MOISTURE>4.00</MOISTURE>
-		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
-		<PROTEIN>10.00</PROTEIN>
-		<MAX_IN_BATCH>15.00</MAX_IN_BATCH>
-		<RECOMMEND_MASH>FALSE</RECOMMEND_MASH>
-		<IBU_GAL_PER_LB>0.00</IBU_GAL_PER_LB>
-		<DISPLAY_AMOUNT>0.0 oz</DISPLAY_AMOUNT>
-		<INVENTORY>0.0 oz</INVENTORY>
-		<POTENTIAL>1.0345</POTENTIAL>
-		<DISPLAY_COLOR>46.0 SRM</DISPLAY_COLOR>
-		<EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
-	</FERMENTABLE>
-	<FERMENTABLE>
 		<NAME>Caramel/Crystal Malt - 10L</NAME>
 		<VERSION>1</VERSION>
 		<TYPE>Grain</TYPE>
@@ -657,7 +630,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Contributes caramel or toffee flavor.</NOTES>
+		<NOTES>Honey-like sweetness.  Light in color.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -681,7 +654,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Contributes caramel or toffee flavor.</NOTES>
+		<NOTES>Caramel, honey flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -705,7 +678,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Contributes caramel or toffee flavor.</NOTES>
+		<NOTES>Caramel, toffee flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -729,7 +702,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Contributes caramel and toasted bread flavor.</NOTES>
+		<NOTES>Caramel, toasted bread flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -753,7 +726,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Contributes caramel and toasted bread flavor.</NOTES>
+		<NOTES>Full caramel flavor, toasted bread.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -777,7 +750,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Contributes caramel or raisin flavor.</NOTES>
+		<NOTES>Bittersweet caramel, raisin flavor.  Good in red colored beers.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -801,7 +774,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Contributes caramel, burnt sugar, or raisin flavor.</NOTES>
+		<NOTES>Bittersweet caramel, burnt sugar, and raisin flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -825,7 +798,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Belgium</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds toasty flavor and aroma.</NOTES>
+		<NOTES>Toasty flavor and aroma.</NOTES>
 		<STYLES>Belgian Ales, Bocks</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -850,7 +823,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Belgium</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Light Belgian crystal malt.</NOTES>
+		<NOTES>Light and sweet. Belgian crystal malt.</NOTES>
 		<STYLES>Abbey Ales</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -875,7 +848,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Dark red or brown color and nutty or chocolate flavor.</NOTES>
+		<NOTES>Nutty or chocolate flavor. Dark brown color.</NOTES>
 		<STYLES>Brown Ales, Stouts</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -900,7 +873,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>United Kingdom</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Dark red or brown color and nutty or chocolate flavor.</NOTES>
+		<NOTES>Nutty or chocolate flavor. Dark brown color.</NOTES>
 		<STYLES>Brown Ales, Stouts</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -925,7 +898,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER>Weyermann</SUPPLIER>
-		<NOTES>Adds color and subtle roasty character.</NOTES>
+		<NOTES>Subtle roasted, toasty flavor.</NOTES>
 		<STYLES>Dunkelweizen, Roggenbier, Specialty beer</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -950,7 +923,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER>Weyermann</SUPPLIER>
-		<NOTES>Chocolate malt made from malted wheat</NOTES>
+		<NOTES>Smooth roasted flavor without astringency.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -998,7 +971,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Increases gravity without much flavor. Can add cider flavor if overused.</NOTES>
+		<NOTES>Increases gravity without much flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1022,7 +995,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Reduces maltiness of beer.</NOTES>
+		<NOTES>Dilutes overall malt flavor of beer.</NOTES>
 		<STYLES>Light Bohemian lagers, Pilsners</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>9.00</MOISTURE>
@@ -1047,7 +1020,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Increase gravity of any dark ale or lager.</NOTES>
+		<NOTES>Base malt for a dark extract recipe.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1071,7 +1044,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Increase gravity of any dark ale or lager.</NOTES>
+		<NOTES>Base malt for a dark extract recipe.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1095,7 +1068,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Use as base or to increase gravity of any ale or lager.</NOTES>
+		<NOTES>Use as a base malt for any ale or lager.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1119,7 +1092,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Use as base or to increase gravity of any ale or lager.</NOTES>
+		<NOTES>Use as a base malt for any ale or lager.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1143,7 +1116,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Imparts a corn or grain taste.</NOTES>
+		<NOTES>Corn or grainy taste.</NOTES>
 		<STYLES>American Lagers</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
@@ -1168,7 +1141,7 @@
 		<ADD_AFTER_BOIL>TRUE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds light flavor and body.</NOTES>
+		<NOTES>Light sweet flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1192,7 +1165,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Canada</ORIGIN>
 		<SUPPLIER>Gambrinus</SUPPLIER>
-		<NOTES>Very sweet</NOTES>
+		<NOTES>Very sweet, sometimes nutty flavor.</NOTES>
 		<COARSE_FINE_DIFF>2.00</COARSE_FINE_DIFF>
 		<MOISTURE>3.80</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -1205,30 +1178,6 @@
 		<POTENTIAL>1.0368</POTENTIAL>
 		<DISPLAY_COLOR>25.0 SRM</DISPLAY_COLOR>
 		<EXTRACT_SUBSTITUTE>Caramel/Crystal Malt - 20L</EXTRACT_SUBSTITUTE>
-	</FERMENTABLE>
-	<FERMENTABLE>
-		<NAME>Invert Sugar</NAME>
-		<VERSION>1</VERSION>
-		<TYPE>Sugar</TYPE>
-		<AMOUNT>0.00</AMOUNT>
-		<YIELD>100.00</YIELD>
-		<COLOR>0.00</COLOR>
-		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
-		<ORIGIN>United Kingdom</ORIGIN>
-		<SUPPLIER></SUPPLIER>
-		<NOTES>Increases starting gravity.</NOTES>
-		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
-		<MOISTURE>4.00</MOISTURE>
-		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
-		<PROTEIN>11.70</PROTEIN>
-		<MAX_IN_BATCH>10.00</MAX_IN_BATCH>
-		<RECOMMEND_MASH>FALSE</RECOMMEND_MASH>
-		<IBU_GAL_PER_LB>0.00</IBU_GAL_PER_LB>
-		<DISPLAY_AMOUNT>0.0 oz</DISPLAY_AMOUNT>
-		<INVENTORY>0.0 oz</INVENTORY>
-		<POTENTIAL>1.0460</POTENTIAL>
-		<DISPLAY_COLOR>0.0 SRM</DISPLAY_COLOR>
-		<EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 	</FERMENTABLE>
 	<FERMENTABLE>
 		<NAME>Lager Malt</NAME>
@@ -1312,7 +1261,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds a dry, woody flavor.</NOTES>
+		<NOTES>Dry, woody flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1336,7 +1285,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds malty flavor and aroma.</NOTES>
+		<NOTES>Prominent malt character with subtle caramel flavor, similar to a decoction mash.</NOTES>
 		<COARSE_FINE_DIFF>1.30</COARSE_FINE_DIFF>
 		<MOISTURE>3.50</MOISTURE>
 		<DIASTATIC_POWER>10.00</DIASTATIC_POWER>
@@ -1360,7 +1309,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>United Kingdom</ORIGIN>
 		<SUPPLIER>Briess</SUPPLIER>
-		<NOTES>Adds sweet malty flavor and aroma, and a rich golden color.</NOTES>
+		<NOTES>Sweet malty flavor and aroma. Rich golden color.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>53.00</DIASTATIC_POWER>
@@ -1433,7 +1382,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds malt sweetness and a reddish color</NOTES>
+		<NOTES>Bready malt flavor. Reddish in color.</NOTES>
 		<STYLES>Bock, Porter, Marzen, Oktoberfest</STYLES>
 		<COARSE_FINE_DIFF>1.30</COARSE_FINE_DIFF>
 		<MOISTURE>5.00</MOISTURE>
@@ -1458,7 +1407,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds malt sweetness and a slight orange color.</NOTES>
+		<NOTES>Bready malt flavor. Light orange in color.</NOTES>
 		<STYLES>Bock, Porter, Marzen, Oktoberfest</STYLES>
 		<COARSE_FINE_DIFF>2.80</COARSE_FINE_DIFF>
 		<MOISTURE>5.00</MOISTURE>
@@ -1483,7 +1432,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds malt sweetness and an orange color.</NOTES>
+		<NOTES>Bready malt flavor. Orange in color.</NOTES>
 		<STYLES>Bock, Porter, Marzen, Oktoberfest</STYLES>
 		<COARSE_FINE_DIFF>2.80</COARSE_FINE_DIFF>
 		<MOISTURE>5.00</MOISTURE>
@@ -1508,7 +1457,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds body, mouthfeel, haze, and head retention.</NOTES>
+		<NOTES>Contributes body, mouthfeel, haze, and head retention.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>9.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -1532,7 +1481,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds body, mouthfeel and head retention.</NOTES>
+		<NOTES>Contributes body, mouthfeel and head retention.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>9.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -1604,7 +1553,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>United Kingdom</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Base malt for all English beer styles</NOTES>
+		<NOTES>Base malt for all beer styles</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>45.00</DIASTATIC_POWER>
@@ -1676,7 +1625,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>United Kingdom</ORIGIN>
 		<SUPPLIER>Maris Otter</SUPPLIER>
-		<NOTES>Base malt for all styles from the UK. Slightly nutty.</NOTES>
+		<NOTES>Slightly nutty flavor. Base malt for all styles.</NOTES>
 		<STYLES>Ales, Pale ales, Bitters.</STYLES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>3.00</MOISTURE>
@@ -1701,7 +1650,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>United Kingdom</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds a smoky flavor.</NOTES>
+		<NOTES>Contributes a smoky flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -1845,7 +1794,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds gravity without affecting body or flavor.</NOTES>
+		<NOTES>Contributes gravity without affecting body or flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1869,7 +1818,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Neutral in flavor and aroma, and do not add fermentable sugars.</NOTES>
+		<NOTES>Improve the speed of lautering.  Neutral flavor and aroma.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -1893,7 +1842,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds gravity without affecting body or flavor.</NOTES>
+		<NOTES>Contributes gravity without affecting body or flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>9.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -1917,7 +1866,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds astringent roasted, bitter, and coffee flavors.</NOTES>
+		<NOTES>Roasted, bitter, and coffee flavors. Contributes astringent mouthfeel.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>5.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -1941,7 +1890,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds a dry, crisp rye flavor.</NOTES>
+		<NOTES>Dry, crisp character.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>75.00</DIASTATIC_POWER>
@@ -1965,7 +1914,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds a dry, crisp rye flavor.</NOTES>
+		<NOTES>Adds a dry, crisp character.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -1989,7 +1938,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Germany</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds a smoked flavor and aroma.</NOTES>
+		<NOTES>Smoky flavor and aroma.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -2013,7 +1962,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>Belgium</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds intense caramel and raisin flavors. </NOTES>
+		<NOTES>Intense caramel and raisin flavor. </NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -2037,7 +1986,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds a toasted, biscuit like flavor and aroma</NOTES>
+		<NOTES>Toasted, biscuit like flavor and aroma</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>2.50</MOISTURE>
 		<DIASTATIC_POWER>6.00</DIASTATIC_POWER>
@@ -2085,7 +2034,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>United Kingdom</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds red/orange color, toasted flavor, and improved body without sweetness.</NOTES>
+		<NOTES>Toasted flavor. Use for improved body without sweetness.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>0.00</DIASTATIC_POWER>
@@ -2109,7 +2058,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>United Kingdom</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds an intense sweet flavor and dark color.</NOTES>
+		<NOTES>Intense sweet flavor and dark color.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
@@ -2124,30 +2073,6 @@
 		<EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 	</FERMENTABLE>
 	<FERMENTABLE>
-		<NAME>Turbinado</NAME>
-		<VERSION>1</VERSION>
-		<TYPE>Sugar</TYPE>
-		<AMOUNT>0.00</AMOUNT>
-		<YIELD>95.70</YIELD>
-		<COLOR>10.00</COLOR>
-		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
-		<ORIGIN>United Kingdom</ORIGIN>
-		<SUPPLIER></SUPPLIER>
-		<NOTES></NOTES>
-		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
-		<MOISTURE>4.00</MOISTURE>
-		<DIASTATIC_POWER>120.00</DIASTATIC_POWER>
-		<PROTEIN>11.70</PROTEIN>
-		<MAX_IN_BATCH>10.00</MAX_IN_BATCH>
-		<RECOMMEND_MASH>FALSE</RECOMMEND_MASH>
-		<IBU_GAL_PER_LB>0.00</IBU_GAL_PER_LB>
-		<DISPLAY_AMOUNT>0.0 oz</DISPLAY_AMOUNT>
-		<INVENTORY>0.0 oz</INVENTORY>
-		<POTENTIAL>1.0440220</POTENTIAL>
-		<DISPLAY_COLOR>10.0 SRM</DISPLAY_COLOR>
-		<EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
-	</FERMENTABLE>
-	<FERMENTABLE>
 		<NAME>Victory Malt</NAME>
 		<VERSION>1</VERSION>
 		<TYPE>Grain</TYPE>
@@ -2157,7 +2082,7 @@
 		<ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
 		<ORIGIN>US</ORIGIN>
 		<SUPPLIER></SUPPLIER>
-		<NOTES>Adds a Biscuit or toasted flavor.</NOTES>
+		<NOTES>Biscuit or toasted flavor.</NOTES>
 		<COARSE_FINE_DIFF>1.50</COARSE_FINE_DIFF>
 		<MOISTURE>4.00</MOISTURE>
 		<DIASTATIC_POWER>50.00</DIASTATIC_POWER>
