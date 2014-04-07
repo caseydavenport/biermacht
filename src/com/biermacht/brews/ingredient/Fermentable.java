@@ -301,5 +301,22 @@ public class Fermentable extends Ingredient implements Parcelable {
 		
 		return gravity;
 	}
+	
+	@Override
+	public int compareTo(Ingredient other)
+	{
+		/**
+		 * Returns:
+		 * 		0 if argument is equal to this
+		 * 		< 0 if argument is greater than this
+		 * 		> 0 if argument is less than this
+		 */
+		// If not the same type, sort based on type.
+		if (!this.getType().equals(other.getType()))
+			return this.getType().compareTo(other.getType());
+		
+		// If they are the same, sort based on amount
+		return this.getBeerXmlStandardAmount() > other.getBeerXmlStandardAmount() ? -1 : 1;
+	}
 }
 

@@ -12,7 +12,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>78.0000000</ATTENUATION>
- <NOTES>An authentic Trappist style ale yeast.  Use for Belgian ales including abbey ales (dubbels, tripels).  Fruit character is medium - between WLP500 (high) and WLP530 (low)</NOTES>
+ <NOTES>Medium fruit flavors for Belgian styles.</NOTES>
  <BEST_FOR>Trappist Belgian Ales, Dubbels, Tripels and Specialty ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -36,8 +36,8 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Soft, smooth, clean finish.  Very well balanced.  Very versitile -- works well with many ale styles.</NOTES>
- <BEST_FOR>American Pale Ale, Scottish Ale, Porters, Sweet Stout, Barley Wine, Alt</BEST_FOR>
+ <NOTES>Dry, clean, and versitile.</NOTES>
+ <BEST_FOR>American Pale Ale, Scottish Ale, Porters, Sweet Stout, Barleywine</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -60,8 +60,8 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Clean, tart, nutty flavor.  More fruity than Wyeast American Ale yeast.</NOTES>
- <BEST_FOR>All American Ales, Brown Ales, Barley Wine</BEST_FOR>
+ <NOTES>Clean, slightly nutty, tart finish.</NOTES>
+ <BEST_FOR>All American Ales, Brown Ales, Barleywine</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -84,7 +84,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>A blend that celebrates WLP001 (California Ale Yeast&#39;s) clean, neutral fermentation.  This strain is versatile and adds two other yeast strains that are also clean/neutral in flavor to add a bit of complexity - almost a lager like finish.  Slight sulfur m</NOTES>
+ <NOTES>Clean, with a lager-like finish.  Sulfur notes.</NOTES>
  <BEST_FOR>American ales with clean finish</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -108,7 +108,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>78.5000000</ATTENUATION>
- <NOTES>Inspired by local American brewers crafting semi-  traditional Belgian-style ales. This blend creates a complex flavor profile with a moderate level of sourness. It consists of a traditional farmhouse yeast strain and Brettanomyces. Great yeast for farmho</NOTES>
+ <NOTES>Complex, moderate sourness from brettanomyces.</NOTES>
  <BEST_FOR>Saisons, Farmhouse Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -132,7 +132,7 @@
  <MAX_TEMPERATURE>20.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>72.5000000</ATTENUATION>
- <NOTES>Produces a much smaller amount of clove and banana flavor than the German Hefeweizen White Labs yeast.  Some sulfur, and creates desired cloudy look.</NOTES>
+ <NOTES>Slight clove, banana flavor with some sulfur. Contributes haze.</NOTES>
  <BEST_FOR>Oregon style American Hefeweizen</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -156,7 +156,7 @@
  <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Bold, with a complex aroma.  Good flavor depth characteristics for a wide variety of lager beers.</NOTES>
+ <NOTES>Complex and aromatic.</NOTES>
  <BEST_FOR>American Lagers and Pilsners</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -180,8 +180,8 @@
  <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>77.5000000</ATTENUATION>
- <NOTES>Dry and clean with very slight apple fruitiness.  Minimal sulfer and diacetyl.</NOTES>
- <BEST_FOR>All American Style Lagers -- both light and dark.</BEST_FOR>
+ <NOTES>Dry and clean with very slight apple fruitiness.</NOTES>
+ <BEST_FOR>American style Lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -190,102 +190,6 @@
  <DISP_MAX_TEMP>55.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>American Megabrewery</NAME>
- <VERSION>1</VERSION>
- <TYPE>Lager</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0620</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Smooth yeast with a slight fruity flavor.  Lagers into a smooth, clean tasting beer.  Use for light, clean lager styles with unobtrusive yeast character.</NOTES>
- <BEST_FOR>Light, Clean American style lagers.</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>48.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>58.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>American Microbrewery Ale #1</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0010</PRODUCT_ID>
- <MIN_TEMPERATURE>13.3333333</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>74.5000000</ATTENUATION>
- <NOTES>Smooth, clean, strong fermenting ale yeast that works well at cold temperature.  Clean malt flavor is ideal for cream ales.</NOTES>
- <BEST_FOR>American Ales, Cream Ales</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>56.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>American Microbrewery Ale #2</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0020</PRODUCT_ID>
- <MIN_TEMPERATURE>13.3333333</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Accentuated, rich, creamy malt profile.  Generous amounts of diacytl.  Use for low gravity beers where malt character is needed or stronger beers for a robust character.</NOTES>
- <BEST_FOR>American ales</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>56.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>American Microbrewery Lager</NAME>
- <VERSION>1</VERSION>
- <TYPE>Lager</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0630</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Strong fermenter. Leaves a clean, full flavored, malty finish.  Slightly attenuative.  Versatile for most lager styles with a clean full flavor.</NOTES>
- <BEST_FOR>All lager styles</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>48.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>58.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>American Wheat Ale</NAME>
@@ -300,8 +204,8 @@
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Dry, Crisp, tart beer in the American Hefeweizen style.  Low flocculation aids in producing desired chill haze.</NOTES>
- <BEST_FOR>American Wheat, Berlin Weiss, Hefeweizen</BEST_FOR>
+ <NOTES>Dry, crisp, and slightly tart.  Low esters.</NOTES>
+ <BEST_FOR>American Wheat, Berliner Weiss, Hefeweizen</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -310,30 +214,6 @@
  <DISP_MAX_TEMP>74.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>American White Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Wheat</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0980</PRODUCT_ID>
- <MIN_TEMPERATURE>12.7777778</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
- <FLOCCULATION>Low</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Smooth wheat yeast with a round, clean, malt flavor.  Low flocculation leaves cloudy Hefe-Weizen finish.  Smooth flavor makes a great unfiltered wheat beer.</NOTES>
- <BEST_FOR>Hefe-Weizen, American Wheat</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>55.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>68.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Antwerp Ale Yeast</NAME>
@@ -348,7 +228,7 @@
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.5000000</ATTENUATION>
- <NOTES>Clean, almost lager like Belgian ale yeast.  Good for Belgian pale and amber ales or with other Belgian yeasts in a blend.  Biscuity, ale like aroma present.  Hop flavors are accentuated.  Slight sulfur during fermentation, and a lager like flavor profile</NOTES>
+ <NOTES>Biscuity, ale-like aroma with lager-like flavor. Accentuates hop flavors and bitterness.</NOTES>
  <BEST_FOR>Belgian pale and amber ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -356,54 +236,6 @@
  <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
  <DISP_MIN_TEMP>67.0 F</DISP_MIN_TEMP>
  <DISP_MAX_TEMP>70.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>3/6/2011</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Assmanshausen Wine Yeast</NAME>
- <VERSION>1</VERSION>
- <TYPE>Wine</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0502753</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>White Labs</LABORATORY>
- <PRODUCT_ID>WLP749</PRODUCT_ID>
- <MIN_TEMPERATURE>10.0000000</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Low</FLOCCULATION>
- <ATTENUATION>83.0000000</ATTENUATION>
- <NOTES>German red wine yeast, which results in spicy, fruit aromas. Perfect for Pinot Noir and Zinfandel. Slow to moderate fermenter which is cold tolerant.  Alcohol Tolerance: 16%</NOTES>
- <BEST_FOR>Pinot Noir and Zinfandel</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>50.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>90.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>3/6/2011</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Australian Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0502753</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0270</PRODUCT_ID>
- <MIN_TEMPERATURE>18.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>24.4444444</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Produces a malty, bready, nutty character with a pleasant honey like finish. This yeast emphasizes malt nuances and is very forgiving in warmer fermentations for those who cannot ferment under controlled conditions. </NOTES>
- <BEST_FOR>Australian styles</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>66.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>76.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>3/6/2011</CULTURE_DATE>
 </YEAST>
@@ -420,7 +252,7 @@
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>72.5000000</ATTENUATION>
- <NOTES>White Labs entry for Australian Ales.  Produces a clean, malty finish with pleasant ester character.  Bready character.  Can ferment clean at high temperatures.</NOTES>
+ <NOTES>Clean and bready.  Can ferment clean at high temperatures.</NOTES>
  <BEST_FOR>Australian Ales, English Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -430,30 +262,6 @@
  <DISP_MAX_TEMP>70.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Avize Wine Yeast</NAME>
- <VERSION>1</VERSION>
- <TYPE>Wine</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0502753</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>White Labs</LABORATORY>
- <PRODUCT_ID>WLP718</PRODUCT_ID>
- <MIN_TEMPERATURE>15.5555556</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>83.0000000</ATTENUATION>
- <NOTES>Champagne isolate used for complexity in whites. Contributes elegance, especially in barrel fermented Chardonnays.  Alcohol tolerance to 15%.</NOTES>
- <BEST_FOR>Chardonnay</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>60.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>90.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>3/6/2011</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Bastogne Belgian Ale</NAME>
@@ -468,7 +276,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>77.0000000</ATTENUATION>
- <NOTES>High gravity Trappist ale yeast.  Creates a dry beer with a slightly acidic finish.  Cleaner finish and slightly less spicy than WLP500 or WLP530.  </NOTES>
+ <NOTES>High gravity Trappist ale yeast.  Dry, slightly acidic finish.  Cleaner and less spicy than WLP500 or WLP530.</NOTES>
  <BEST_FOR>High gravity beers, Belgian ales, Dubbels, Trippels.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -492,7 +300,7 @@
  <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Use by many German breweries.  Produces a full-bodied, rich, malty beer.</NOTES>
+ <NOTES>Full-bodied, rich, malty.</NOTES>
  <BEST_FOR>German Bocks, Vienna, Oktoberfest, Hells, Marzens, Dunkel</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -516,7 +324,7 @@
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Former yeast lab W51 strain.  Produces a classic German style wheat beer with moderately high, spicy, phenolic overtones reminiscent of cloves.</NOTES>
+ <NOTES>Moderate spicy, phenolic overtones reminiscent of cloves.</NOTES>
  <BEST_FOR>Bavarian Weizen and wheat beers.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -540,7 +348,7 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>Hefeweizen yeast with complex flavor and aroma.  Bubble gum, banana flavors with apple/plub ester profile.  Malty flavor.</NOTES>
+ <NOTES>Bubblegum and banana flavors, with apple/plum ester profile.</NOTES>
  <BEST_FOR>Bavarian Weizen, Hefeweizen</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -564,7 +372,7 @@
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Blend of top-fermenting ale and wheat yeasts providing a mild ester and phenolic profile.</NOTES>
+ <NOTES>Mild ester and phenolic profile.</NOTES>
  <BEST_FOR>Bavarian style wheat beers.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -588,7 +396,7 @@
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>High attenuation. Ferments dry with high flocculation. Distinctive ester profile.  Good for most English ale styles.</NOTES>
+ <NOTES>Ferments dry. Distinctive ester profile.</NOTES>
  <BEST_FOR>English style ales - bitter, pale, porter and brown ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -612,7 +420,7 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Dry flavor with slight fruitiness. High alcohol tolerance.</NOTES>
+ <NOTES>Dry, with slight fruitiness. High alcohol tolerance.</NOTES>
  <BEST_FOR>Belgian Ales, Trappist Ales, Abbey Ales, Grand Cru</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -636,7 +444,7 @@
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>81.5000000</ATTENUATION>
- <NOTES>Phenolic and spicy flavors.  Complex profile, with less fruitiness than White&#39;s Trappist Ale strain.</NOTES>
+ <NOTES>Complex phenolic, spicy profile.</NOTES>
  <BEST_FOR>Belgian Ales, Saisons, Belgian Reds, Belgian Browns, White beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -646,78 +454,6 @@
  <DISP_MAX_TEMP>78.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Belgian Ale #1</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0300</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Produces classic Belgian ale flavor.  Robust, estery with notes of clove and fruit. Ferments well in high gravity worts.</NOTES>
- <BEST_FOR>Belgian Ales, High gravity ales.</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Belgian Ale #2</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0320</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Low</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Flanders style yeast.  Strong fermenting yeast attenuates well and produces fruity, malty, estery malt profile.  Slow to flocculate.</NOTES>
- <BEST_FOR>Flanders style Belgian Ales, Belgian Brown, Fruit beers</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Belgian Ale #3</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0340</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Slightly more refined than CL-300.  Produces the classic Trappist ale character with esters of spice and fruit. Mildly phenolic.  Strong fermenting yeast.</NOTES>
- <BEST_FOR>Belgian ales, Trappist Ales</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Belgian Ale Yeast</NAME>
@@ -732,7 +468,7 @@
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Trappist style ale yeast.  Complex estery flavor.</NOTES>
+ <NOTES>Alcohol tolerant. Slightly spicy, well attenuated.</NOTES>
  <BEST_FOR>Belgian Ales, Abbey Ales, Trappist Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -756,7 +492,7 @@
  <MAX_TEMPERATURE>29.4444444</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Phenolics develop at increased temperature.  Mild fruitiness and complex spicy flavor.</NOTES>
+ <NOTES>Mild fruitiness and complex spicy flavor, phenolic at high temperatures.</NOTES>
  <BEST_FOR>Belgian Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -780,8 +516,8 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>75.5000000</ATTENUATION>
- <NOTES>Combination of fruitiness and phenolic characters dominate the profile.  Some sulfur which will dissapate following fermentation.</NOTES>
- <BEST_FOR>Belgian Ales, Dubbel, Grand Cru, Belgian Holiday Ale</BEST_FOR>
+ <NOTES>Fruity and phenolic.</NOTES>
+ <BEST_FOR>Belgian Ales, Dubbels</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -804,7 +540,7 @@
  <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Clean, crisp European lager yeast with low sulfur  production. The strain originates from a very old brewery in West Belgium.  Great for European style pilsners, dark  lagers, Vienna lager, and American style lagers.  </NOTES>
+ <NOTES>Clean, crisp, European lager yeast.  </NOTES>
  <BEST_FOR>European style pilsners, dark  lagers, Vienna lager, and American style lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -828,7 +564,7 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Lambic culture of Saccharomyces Cerevisiar and a mixture of yeasts and bacterias.  Blend of organisms helps create lactic flavor of Belgian Lambics.</NOTES>
+ <NOTES>Lambic mixture of yeasts and bacterias creates lactic flavor.</NOTES>
  <BEST_FOR>Belgian Lambic</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -852,7 +588,7 @@
  <MAX_TEMPERATURE>35.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>78.0000000</ATTENUATION>
- <NOTES>Classic farmhouse ale yeast.  Spicy, complex aromatics including bubble gum.  Tart and dry on the palate with mild fruitiness.  Finishes crisp and mildly acidic.  Ferment at warm temperature.  May have vigorous fermentation start.</NOTES>
+ <NOTES>Bubblegum, with spicy aromatics.  Tart, dry, and crisp.</NOTES>
  <BEST_FOR>Belgian Saison beer</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -876,7 +612,7 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Saison yeast from Wallonia.  Earthy, spicy and peppery notes.  Slightly sweet.</NOTES>
+ <NOTES>Earthy, spicy, peppery and slightly sweet.</NOTES>
  <BEST_FOR>Saison Ale, Belgian Ale, Dubbel, Trippel</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -900,7 +636,7 @@
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>81.5000000</ATTENUATION>
- <NOTES>Saison strain with a more fruity ester profile than WLP565 (Belgian Saison I Yeast).  Moderately phenolic with a clove-like characteristic in finished beer flavor and aroma.  Ferments quickly.</NOTES>
+ <NOTES>Fruity ester profile.  Moderately phenolic with a clove-like flavor and aroma.</NOTES>
  <BEST_FOR>Belgian or French Saison</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -924,8 +660,8 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Note: Bacteria to use in secondary only.  A unique blend perfect for Belgian style beers. Includes Brettanomyces, Saccharomyces, and the bacterial strains Lactobacillus and Pediococcus.</NOTES>
- <BEST_FOR>Belgian sour beers (in secondary)</BEST_FOR>
+ <NOTES>Blend of Brettanomyces, Saccharomyces, Lactobacillus and Pediococcus. Use in secondary.</NOTES>
+ <BEST_FOR>Belgian sour beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>TRUE</ADD_TO_SECONDARY>
@@ -972,7 +708,7 @@
  <MAX_TEMPERATURE>22.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>81.5000000</ATTENUATION>
- <NOTES>From the Ardennes region of Belgium, this classic strain produces moderate esters and spicy phenolic character.  Results in a dry but balanced finish.  Use for dark or strong abbey ales.</NOTES>
+ <NOTES>Moderate esters, spicy phenolic character. Balanced finish.</NOTES>
  <BEST_FOR>Belgian dark strongs, Abbey ales and Christmas beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -996,7 +732,7 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>77.0000000</ATTENUATION>
- <NOTES>Blend of two trappist ale yeasts and one Belgian ale yeast.  Creates a versatile blend to be used for Trappist and other Belgian style ales.</NOTES>
+ <NOTES>Versatile blend to be used for Trappist and other Belgian style ales.</NOTES>
  <BEST_FOR>Trappist and other Belgian ales.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1020,7 +756,7 @@
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>This blend melds Belgian style ale and Saison strains. The strains work in harmony to create complex, fruity aromas and flavors. The blend of yeast strains encourages complete fermentation in a timely manner. Phenolic, spicy, earthy, and clove like flavor</NOTES>
+ <NOTES>Complex, fruity aromas and flavors. Phenolic, spicy, earthy, and clove like flavor</NOTES>
  <BEST_FOR>Belgian and French Saison</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1030,30 +766,6 @@
  <DISP_MAX_TEMP>80.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>3/6/2011</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Belgian Wheat</NAME>
- <VERSION>1</VERSION>
- <TYPE>Wheat</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0900</PRODUCT_ID>
- <MIN_TEMPERATURE>12.7777778</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>Top fermenting yeast with a soft bread-like character.  Leaves a sweet, mildly estery finish.  Delicious Belgian character to any beer.  Great in Wit style with coriander and bitter orange peel.</NOTES>
- <BEST_FOR>Belgian Pils, Belgian Wit</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>55.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>68.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Belgian Wheat Yeast</NAME>
@@ -1068,7 +780,7 @@
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Estery lor phenol yeast.  Plum and apple aroma with a dry finish.</NOTES>
+ <NOTES>Plum and apple aroma with a dry finish.</NOTES>
  <BEST_FOR>Belgian Wheat, Bavarian Weizen</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1092,7 +804,7 @@
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Phenolic and tart.  The original yeast used to produce Wit in Belgium.</NOTES>
+ <NOTES>Phenolic and tart.</NOTES>
  <BEST_FOR>Belgian Wit</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1116,7 +828,7 @@
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>72.5000000</ATTENUATION>
- <NOTES>Less phenolic than WLP400 (Belgian Wit Ale) but more spicy.  Leaves a little more sweetness and flocculation is higher than WLP400.</NOTES>
+ <NOTES>Mildly phenolic, quite spicy.</NOTES>
  <BEST_FOR>Belgian Wit, Spiced Ale, Wheat Ales and Specialty Beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1140,7 +852,7 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Tart, slightly phenolic character.  For Wits and Grand Cru.  Tolerates high gravity beers well.</NOTES>
+ <NOTES>Tart, slightly phenolic character. High alcohol tolerance.</NOTES>
  <BEST_FOR>Belgian Wit, Grand Cru</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1164,7 +876,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.5000000</ATTENUATION>
- <NOTES>A blend of a traditional German Weizen yeast and  Lactobacillus to create a subtle, tart, drinkable beer. Can  take several months to develop tart character.  Perfect for traditional Berliner Weisse.</NOTES>
+ <NOTES>Subtle tartness. Can take several months to develop character.</NOTES>
  <BEST_FOR>Berliner Weisse</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1188,7 +900,7 @@
  <MAX_TEMPERATURE>23.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>Top fermenting strain for Belgian witbier and wheats.  Spicy and lightly phenolic.</NOTES>
+ <NOTES>Spicy and lightly phenolic.</NOTES>
  <BEST_FOR>Wheat beer, Wit</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1212,7 +924,7 @@
  <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>71.0000000</ATTENUATION>
- <NOTES>Ferments clean and malty, with rich malty flavor for full gravity pilsners.</NOTES>
+ <NOTES>Ferments clean. Rich malty flavor comes through.</NOTES>
  <BEST_FOR>Bohemian Pilsners, Pilsners, German Helles, Bocks</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1236,7 +948,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Medium intensity Brett character. Classic strain used in secondary fermentation for Belgian style beers and lambics. One Trappist brewery uses this strain in secondary fermentation.</NOTES>
+ <NOTES>Medium intensity Brett character. Takes months to develop fully.</NOTES>
  <BEST_FOR>Belgian sour ales and labics (in secondary)</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1260,7 +972,7 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>67.0000000</ATTENUATION>
- <NOTES>Wild yeast strain isolated from Brussels region of Belgium.  Adds classic sweaty horse hair flavor as well as sourness and cherry-pie like flavor.  Generally used in conjunction with S. Cerevisiae after the primary fermentation has begun.  Requires 3-6 mo</NOTES>
+ <NOTES>Horse hair and sour cherry-pie flavor. Takes months to develop fully.</NOTES>
  <BEST_FOR>Belgian Lambic, Gueze Lambic, and Sour Browns</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1271,30 +983,7 @@
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
-<YEAST>
- <NAME>Brettanomyces Bruxellensis</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0502753</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Wyeast Labs</LABORATORY>
- <PRODUCT_ID>5112</PRODUCT_ID>
- <MIN_TEMPERATURE>15.5555556</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>82.0000000</ATTENUATION>
- <NOTES>This strain of wild yeast was isolated from brewery cultures in the Brussels region of Belgium. It produces the classic sweaty horse blanket character and may form a pellicle in bottles or casks. The strain is generally used in conjunction with S. cerevis</NOTES>
- <BEST_FOR>Gueuze, Lambics and Sour Browns </BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>TRUE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>60.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>75.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>3/6/2011</CULTURE_DATE>
-</YEAST>
+
 <YEAST>
  <NAME>Brettanomyces Claussenii</NAME>
  <VERSION>1</VERSION>
@@ -1308,7 +997,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Low intensity Brett character. Originally isolated from strong English stock beer, in the early 20th century. The Brett flavors produced are more subtle than WLP650 and WLP653. More aroma than flavor contribution. Fruity, pineapple like aroma.</NOTES>
+ <NOTES>Low intensity Brett character. Pineapple like aroma. Mild flavor contribution.</NOTES>
  <BEST_FOR>Sour ales (in secondary)</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1324,30 +1013,6 @@
  <VERSION>1</VERSION>
  <TYPE>Ale</TYPE>
  <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-5200</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>Wild yeast strain associated with Belgian breweries.  Contributes horsey, old leather flavor complex to Belgian lambics.  Slow growing yeast that takes weeks to ferment and months to develop fully.</NOTES>
- <BEST_FOR>Belgian Lambic beers</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>TRUE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>48.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>68.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Brettanomyces Lambicus</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
  <AMOUNT>0.0502753</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <LABORATORY>White Labs</LABORATORY>
@@ -1356,7 +1021,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Use in secondary.  High intensity Brett character. Defines the &#34;Brett character&#34;: Horsey, smoky and spicy flavors. As the name suggests, this strain is found most often in Lambic style beers, which are spontaneously fermented beers.</NOTES>
+ <NOTES>High intensity Brett character. Horsey, smoky and spicy flavors.</NOTES>
  <BEST_FOR>Lambics and Flanders/Sour Brown ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1368,7 +1033,7 @@
  <CULTURE_DATE>3/6/2011</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Brettanomyces Lambucus</NAME>
+ <NAME>Brettanomyces Lambicus</NAME>
  <VERSION>1</VERSION>
  <TYPE>Ale</TYPE>
  <FORM>Liquid</FORM>
@@ -1380,7 +1045,7 @@
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Very High</FLOCCULATION>
  <ATTENUATION>80.0000000</ATTENUATION>
- <NOTES>This is a wild yeast strain isolated from Belgian lambic beers. It produces a pie cherry-like flavor and sourness with a distinct Brett character. A pellicle may form in bottles or casks. This strain works best in conjunction with other yeast and lactic b</NOTES>
+ <NOTES>Cherry-pie like flavor and sourness. Works best in conjunction with other yeast.</NOTES>
  <BEST_FOR>Lambic</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1404,7 +1069,7 @@
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>70.5000000</ATTENUATION>
- <NOTES>This yeast has higher attenuation than the White Labs English Ale yeast strains.  Produces a malty flavored beer.</NOTES>
+ <NOTES>High attenuation, allows malt character to come through.</NOTES>
  <BEST_FOR>Excellent for all English style ales including bitters, pale ale, porters and brown ale.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1452,7 +1117,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Fruity, tart, dry crisp finish.  Very well balanced.</NOTES>
+ <NOTES>Fruity, and tart. Dry, crisp finish.</NOTES>
  <BEST_FOR>All British Ales, Pales, Bitters, English Strong Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1476,8 +1141,7 @@
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.5000000</ATTENUATION>
- <NOTES>A great choice for any cask conditioned British Ale.  
-Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart. </NOTES>
+ <NOTES>Nice malt profile with a hint of fruit. Finishes dry and slightly tart. </NOTES>
  <BEST_FOR>British Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1487,126 +1151,6 @@ Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart.
  <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>12/9/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>British Draft Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0160</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Full bodied, well rounded ale yeast with a touch of diacytl.  Emphasizes malt character.  Great for porters and bitters.</NOTES>
- <BEST_FOR>Porters and Bitters.</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>British Microbrewery Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0110</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Complex oakey, and fruity ester profile.  Slightly under-attenuated finish leaves some residual malt flavor.  Suitable for low to medium gravity bitters and ales.</NOTES>
- <BEST_FOR>English Bitters and Milds</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>British Pale Ale #1</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0120</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Bold, citrusy character which accentuates mineral and hop flavors.  Distinct character of a classic Pale Ale.</NOTES>
- <BEST_FOR>British Pale Ales and Bitters.</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>British Pale Ale #2</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0130</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Smooth, full bodied, well roundd ale yeast. Mild esters.  Strong ferementer suitable for strong or spiced ales.  Accentuates caramel and malt flavors.</NOTES>
- <BEST_FOR>British Pale Ale, other British Ales</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>British Real Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0150</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>68.0000000</ATTENUATION>
- <NOTES>Great for real pub bitters.  Has a complex, woody flavor and musty ester profile that characterizes real ale.  Underattenuating to leave mild sweetness to the finish.</NOTES>
- <BEST_FOR>Bitters and other English Ales</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Budvar Lager</NAME>
@@ -1621,7 +1165,7 @@ Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart.
  <MAX_TEMPERATURE>13.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>Classic pilsner lager yeast.  Malty nose and subtle fruit.  Rich malt profile, but dry crisp finish.  Hop character accentuated by dry finish.</NOTES>
+ <NOTES>Malty and subtle fruit aroma.  Dry crisp finish.</NOTES>
  <BEST_FOR>Bohemian Pilsner, Classic Pilsners, Dortmunder and Light Lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1645,7 +1189,7 @@ Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart.
  <MAX_TEMPERATURE>22.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>72.0000000</ATTENUATION>
- <NOTES>Burton-on-trent yeast produces a complex character.  Flavors include apple, pear, and clover honey.</NOTES>
+ <NOTES>Complex flavor blend of apple, pear, and clover honey.</NOTES>
  <BEST_FOR>All English styles including Pale Ale, IPA, Porter, Stout and Bitters.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1669,8 +1213,7 @@ Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart.
  <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>83.0000000</ATTENUATION>
- <NOTES>High temperature tolerance. Moderate fermentation speed. Excellent for full-bodied red wines, ester production complements flavor. WLP760 is also suitable for Merlot, Chardonnay, Chianti, Chenin Blanc, and Sauvignon Blanc.
-Alcohol Tolerance: 16%</NOTES>
+ <NOTES>Excellent for full-bodied red wines, ester production complements flavor. Alcohol Tolerance: 16%</NOTES>
  <BEST_FOR>Merlot, Chardonnay, Chianti, Chenin Blanc, and Sauvignon Blanc</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1694,8 +1237,7 @@ Alcohol Tolerance: 16%</NOTES>
  <MAX_TEMPERATURE>22.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>76.5000000</ATTENUATION>
- <NOTES>Very clean flavor, balance and stability.  Accentuates hop flavor
-Versitile - can be used to make any style ale.</NOTES>
+ <NOTES>Accentuates hop flavor. Clean flavor and finish. Versatile.</NOTES>
  <BEST_FOR>American Style Ales, Ambers, Pale Ales, Brown Ale, Strong Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1719,7 +1261,7 @@ Versitile - can be used to make any style ale.</NOTES>
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>72.5000000</ATTENUATION>
- <NOTES>Similar to White Labs California Ale Yeast, but slightly lower attenuation leaves a fuller bodied beer.</NOTES>
+ <NOTES>Clean flavor and finish. Versatile.  Produces a full bodied beer.</NOTES>
  <BEST_FOR>American style Pales, Ambers, Browns, IPAs, American Strong Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1730,7 +1272,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
 </YEAST>
-<YEAST>
  <NAME>California Esteem (Gold)</NAME>
  <VERSION>1</VERSION>
  <TYPE>Lager</TYPE>
@@ -1743,7 +1284,7 @@ Versitile - can be used to make any style ale.</NOTES>
  <MAX_TEMPERATURE>18.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Use for California Common Beers (aka Steam Beer).  Leaves a slightly estery, well attenuated finish.  Quite distinct in flavor.  Can also be used for complex porters.</NOTES>
+ <NOTES>Slightly estery, well attenuated finish.</NOTES>
  <BEST_FOR>California Common Beer, American or Robust porters</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1767,8 +1308,8 @@ Versitile - can be used to make any style ale.</NOTES>
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>69.0000000</ATTENUATION>
- <NOTES>Suited for 19th century California style beers.  Lagers at high temperature and produces malty, clear beers.</NOTES>
- <BEST_FOR>California common beers, Steam Beer</BEST_FOR>
+ <NOTES>Lagers at high temperature and produces malty, clear beers.</NOTES>
+ <BEST_FOR>California Common</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -1777,54 +1318,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISP_MAX_TEMP>68.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>California Pub Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0502753</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0050</PRODUCT_ID>
- <MIN_TEMPERATURE>15.5555556</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>For that classic U.S. small brewery flavor. CL-50 produces terrific American red &#38; pale ale styles. While attenuation is normal, this yeast produces a big, soft, well rounded malt flavor that really lets caramel malt flavors shine.</NOTES>
- <BEST_FOR>California and other American ales</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>60.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>70.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>3/6/2011</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Canadian Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0260</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Clean, strong fermenting, well attenuated ale yeast that leaves a pleasant, fruity, complex finish.</NOTES>
- <BEST_FOR>Light Canadian Ales, Bitish Bitter, Pale Ale, Porters</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Champagne Yeast</NAME>
@@ -1873,30 +1366,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISP_MAX_TEMP>90.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>3/6/2011</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Classic British Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0170</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Complex ale with British tones and fruit like esters.  Works well in high gravity ales such as scottish heavy as well.</NOTES>
- <BEST_FOR>Bitters, Porters, Scottish Heavy Ales.</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Cooper Ale</NAME>
@@ -2161,30 +1630,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISP_MAX_TEMP>73.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>East European Lager</NAME>
- <VERSION>1</VERSION>
- <TYPE>Lager</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0680</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>76.5000000</ATTENUATION>
- <NOTES>Smooth, rich, creamy character.  Emphasizes big malt flavor and clean finish.  Full but smooth malt character.</NOTES>
- <BEST_FOR>Marzens, Oktoberfest</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>48.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>58.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Edinburgh Ale</NAME>
@@ -2607,7 +2052,7 @@ Versitile - can be used to make any style ale.</NOTES>
  <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>Produces beer that has balanced malt and hop character.  From Southern Bavaria.</NOTES>
+ <NOTES>Produces beer that has balanced malt and hop character.</NOTES>
  <BEST_FOR>Bocks, Doppelbocks, Oktoberfest, Vienna, Helles, some American Pilsners</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2631,7 +2076,7 @@ Versitile - can be used to make any style ale.</NOTES>
  <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.5000000</ATTENUATION>
- <NOTES>Very malty and clean.  One of the world&#39;s most popular lager yeasts.</NOTES>
+ <NOTES>Very malty and clean.</NOTES>
  <BEST_FOR>German Marzen, Pilsner, Lagers, Oktoberfest beers.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2641,30 +2086,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISP_MAX_TEMP>55.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>German Weiss</NAME>
- <VERSION>1</VERSION>
- <TYPE>Wheat</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0930</PRODUCT_ID>
- <MIN_TEMPERATURE>12.7777778</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Milder than German Wheat #1, this strain still produces the desired clove and phenol character, but to a lesser degree.  Full, earthy character.</NOTES>
- <BEST_FOR>Weiss, Weizen, other Southern German Wheat styles</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>55.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>68.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>German Wheat</NAME>
@@ -2690,7 +2111,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
 </YEAST>
-<YEAST>
  <NAME>German Wheat BT</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wheat</TYPE>
@@ -2727,7 +2147,7 @@ Versitile - can be used to make any style ale.</NOTES>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Produces the banana and clove nose traditionally associated with German Wheat beers.  Also produces desired cloudy look.</NOTES>
+ <NOTES>Banana and clove aroma.  Produces cloudy appearance.</NOTES>
  <BEST_FOR>German style wheat beers.  Weiss, Weizen, Hefeweizen</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2811,30 +2231,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Irish Dry Stout</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0240</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>77.0000000</ATTENUATION>
- <NOTES>Top fermenting yeast which leaves a recognizable slightly woody character to Dry Stouts.  Vinous almost lactic character that blends well with roast malts.  High attenuation.</NOTES>
- <BEST_FOR>Dry Stouts</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
  <NAME>Klassic Ale Yeast</NAME>
  <VERSION>1</VERSION>
  <TYPE>Ale</TYPE>
@@ -2857,30 +2253,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISP_MAX_TEMP>70.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/11/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Kolsch</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0450</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>76.5000000</ATTENUATION>
- <NOTES>Produces mild sulfer flavor which smooths with time to a clean attenuated flavor.  Mineral and malt characters come through well.  Clean, lightly yeasty flavor and aroma in the finish.</NOTES>
- <BEST_FOR>German Kolsch</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Kolsch Yeast</NAME>
@@ -3458,7 +2830,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
 </YEAST>
-<YEAST>
  <NAME>Northern German Lager</NAME>
  <VERSION>1</VERSION>
  <TYPE>Lager</TYPE>
@@ -3505,30 +2876,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISP_MAX_TEMP>75.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Noth-Eastern Micro Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0060</PRODUCT_ID>
- <MIN_TEMPERATURE>13.3333333</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Malty, bready, yet clean malt character.  Leaves hops flavor and aroma intact.  Versitile yeast for many American styles.</NOTES>
- <BEST_FOR>American Ales, Reds, Ambers</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>56.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Nottingham</NAME>
@@ -3655,30 +3002,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <VERSION>1</VERSION>
  <TYPE>Lager</TYPE>
  <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0650</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Well rounded, malty with a subtle ester complex and citrus flavors.  Distinct, flavorful yeast is great for Southern German lager styles.</NOTES>
- <BEST_FOR>German lagers, Bock, Dunkel, Helles</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>48.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>58.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Old Bavarian Lager</NAME>
- <VERSION>1</VERSION>
- <TYPE>Lager</TYPE>
- <FORM>Liquid</FORM>
  <AMOUNT>0.0354884</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <LABORATORY>White Labs</LABORATORY>
@@ -3695,54 +3018,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISPLAY_AMOUNT>35.49 ml</DISPLAY_AMOUNT>
  <DISP_MIN_TEMP>50.0 F</DISP_MIN_TEMP>
  <DISP_MAX_TEMP>55.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Old German Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0400</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Traditional Alt Bier flavor.  Strong fermenter with a smooth, attenuated, mild flavor.  Slightly dry, clean, quenching finish.</NOTES>
- <BEST_FOR>Altbier, German ales, some Wheat beers.</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Original Pilsner</NAME>
- <VERSION>1</VERSION>
- <TYPE>Lager</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0600</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.5000000</ATTENUATION>
- <NOTES>Full bodied lager yeast with sweet, underattenuated finish.  Subdued diacetyl character.  Big malty palatte.  Classic Pilsner finish and style.</NOTES>
- <BEST_FOR>Classic Czech Pilsners</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>48.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>58.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
@@ -3839,30 +3114,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISPLAY_AMOUNT>124.21 ml</DISPLAY_AMOUNT>
  <DISP_MIN_TEMP>60.0 F</DISP_MIN_TEMP>
  <DISP_MAX_TEMP>95.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Pediococcus Damnosus</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-5600</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>Slow growing bacteria used in secondary to create lactic acid flavor in Belgian lambics.  Produces large amounts of lactic acid and diacytl.  Prefers anaerobic conditions.</NOTES>
- <BEST_FOR>Belgian Lambic beers</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>TRUE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>48.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>68.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/12/2003</CULTURE_DATE>
 </YEAST>
@@ -4227,30 +3478,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <CULTURE_DATE>3/6/2011</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Saison</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0088721</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0380</PRODUCT_ID>
- <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Pleasant yeast blend.  Leaves a smooth full character to the malt with mild, but pleasant esters and some apple pie spices.</NOTES>
- <BEST_FOR>French or Belgian Ales and Grand Cru styles.</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>8.87 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>62.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>72.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>6/12/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
  <NAME>Sake Yeast</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
@@ -4297,30 +3524,6 @@ Versitile - can be used to make any style ale.</NOTES>
  <DISP_MAX_TEMP>65.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/14/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Scottish Ale</NAME>
- <VERSION>1</VERSION>
- <TYPE>Ale</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0502753</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0200</PRODUCT_ID>
- <MIN_TEMPERATURE>15.5555556</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
- <FLOCCULATION>High</FLOCCULATION>
- <ATTENUATION>78.5000000</ATTENUATION>
- <NOTES>Use for classic Scottish heavys, 90&#39;s- or strong ales. This yeast produces a soft, fruity malt profile with a subtle woody, oakey ester profile. A mild, mineral like dryness in the finish makes this a very complex strain.</NOTES>
- <BEST_FOR>Scottish ales</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>60.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>68.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>3/6/2011</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Scottish Ale</NAME>
@@ -4514,30 +3717,6 @@ Alcohol Tolerance: 16%</NOTES>
  <DISP_MAX_TEMP>75.0 F</DISP_MAX_TEMP>
  <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>6/11/2003</CULTURE_DATE>
-</YEAST>
-<YEAST>
- <NAME>Swiss Lager</NAME>
- <VERSION>1</VERSION>
- <TYPE>Lager</TYPE>
- <FORM>Liquid</FORM>
- <AMOUNT>0.0502753</AMOUNT>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Brewtek</LABORATORY>
- <PRODUCT_ID>CL-0670</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>12.2222222</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>A unique strain that has both a clean, crisp lager flavor and a soft, smooth maltiness. Perfect for European Pilsners. Like our CL-660 strain, this is an excellent all purpose Lager yeast for those wanting a fuller, rounder palate. </NOTES>
- <BEST_FOR>European pilsners and lagers</BEST_FOR>
- <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>0</TIMES_CULTURED>
- <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>48.0 F</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>54.0 F</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>3/6/2011</CULTURE_DATE>
 </YEAST>
 <YEAST>
  <NAME>Thames Valley Ale</NAME>

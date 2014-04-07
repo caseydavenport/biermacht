@@ -140,7 +140,6 @@ public abstract class Ingredient implements Parcelable {
     public abstract void setTime(int time);
 	public abstract int getTime();
 	
-	// Public Methods
 	@Override 
 	public String toString() {
 		return name;
@@ -161,7 +160,6 @@ public abstract class Ingredient implements Parcelable {
         this.databaseId = i;
     }
 
-    // Universal Setters and getters
     public double getBeerXmlStandardInventory()
     {
         return this.inventory;
@@ -198,5 +196,21 @@ public abstract class Ingredient implements Parcelable {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	/**
+	 * Returns:
+	 * 		0 if argument is equal to this
+	 * 		< 0 if argument is greater than this
+	 * 		> 0 if argument is less than this
+	 */
+	public int compareTo(Ingredient other) 
+	{
+		// If they are not the same time, sort based on type.
+		if (this.getType() != other.getType())
+			return this.getType().compareTo(other.getType());
+		
+		// Otherwise, sort based on name.
+		return this.name.compareTo(other.getName());
 	}
 }

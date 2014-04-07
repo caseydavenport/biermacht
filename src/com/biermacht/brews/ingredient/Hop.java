@@ -1,6 +1,7 @@
 package com.biermacht.brews.ingredient;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.utils.Constants;
@@ -297,5 +298,26 @@ public class Hop extends Ingredient {
 	@Override
 	public void setShortDescription(String description) {
 		this.description = description;
+	}
+	
+	@Override
+	public int compareTo(Ingredient other)
+	{
+		/**
+		 * Returns:
+		 * 		0 if argument is equal to this
+		 * 		< 0 if argument is greater than this
+		 * 		> 0 if argument is less than this
+		 */
+		// If not the same type, sort based on type.
+		if (!this.getType().equals(other.getType()))
+			return this.getType().compareTo(other.getType());
+		
+		// If they are not the same use, sort based on use.
+		if (!this.getUse().equals(other.getUse()))
+			return this.getUse().compareTo(other.getUse()); 
+		
+		// If they are the same, sort based on time.
+		return this.getTime() > other.getTime() ? -1 : 1;
 	}
 }
