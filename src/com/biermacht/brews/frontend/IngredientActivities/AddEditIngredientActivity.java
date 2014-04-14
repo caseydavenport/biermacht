@@ -81,10 +81,14 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
             	// Fix up the search string
             	s = s.toString().trim();
             	
-            	// Filter
+            	// If the name or description matches, add it to the list.
             	for (Ingredient i : ingredientList)
             	{
-            		if (i.toString().toLowerCase().contains(s.toString().toLowerCase()))
+            		if (i.getName().toLowerCase().contains(s.toString().toLowerCase()))
+            		{
+            			filteredList.add(i);
+            		}
+            		else if (i.getShortDescription().toLowerCase().contains(s.toString().toLowerCase()))
             		{
             			filteredList.add(i);
             		}
