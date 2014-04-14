@@ -267,49 +267,40 @@ public class RecipeXmlWriter
 		
 		for (Misc m : l)
 		{
-			Element miscElement = d.createElement("MISC");
-			
-			// Create fields of element
-			Element nameElement = d.createElement("NAME");
-			Element versionElement = d.createElement("VERSION");
-			Element typeElement = d.createElement("TYPE");
-			Element useElement = d.createElement("USE");
-			Element amountElement = d.createElement("AMOUNT");
-			Element displayAmountElement = d.createElement("DISPLAY_AMOUNT");
-			Element displayTimeElement = d.createElement("DISPLAY_TIME");
-			Element amountIsWeight = d.createElement("AMOUNT_IS_WEIGHT");
-			Element notesElement = d.createElement("NOTES");
-			Element useForElement = d.createElement("USE_FOR");
-			
-			// Assign values
-			nameElement.setTextContent(m.getName());
-			versionElement.setTextContent(m.getVersion() + "");
-			typeElement.setTextContent(m.getType());
-			useElement.setTextContent(m.getUse());
-			amountElement.setTextContent(m.getBeerXmlStandardAmount() + "");
-			amountIsWeight.setTextContent(m.amountIsWeight() + "");
-			notesElement.setTextContent(m.getShortDescription());
-			displayAmountElement.setTextContent(m.getDisplayAmount() + " " + m.getDisplayUnits());
-			displayTimeElement.setTextContent(m.getTime() + " mins");
-			useForElement.setTextContent(m.getUseFor());
-			
-			// Attach to element.
-			miscElement.appendChild(nameElement);
-			miscElement.appendChild(versionElement);
-			miscElement.appendChild(typeElement);
-			miscElement.appendChild(useElement);
-			miscElement.appendChild(amountElement);
-			miscElement.appendChild(amountIsWeight);
-			miscElement.appendChild(notesElement);
-			miscElement.appendChild(displayAmountElement);
-			miscElement.appendChild(displayTimeElement);
-			miscElement.appendChild(useForElement);
-			
-			// Attach to list of elements.
-			miscsElement.appendChild(miscElement);
+			miscsElement.appendChild(this.getMiscChild(d, m));
 		}
 		
 		return miscsElement;
+	}
+	
+	public Element getMiscChild(Document d, Misc m)
+	{
+		// Create the element.
+		Element rootElement = d.createElement("MISC");
+		
+		// Create a mapping of name -> value
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("NAME", m.getName());
+		map.put("VERSION", m.getVersion() + "");
+		map.put("TYPE", m.getType());
+		map.put("USE", m.getUse());
+		map.put("AMOUNT", String.format("%2.8f", m.getBeerXmlStandardAmount()));
+		map.put("DISPLAY_AMOUNT", m.getDisplayAmount() + " " + m.getDisplayUnits());
+		map.put("DISPLAY_TIME", m.getTime() + " " + m.getTimeUnits());
+		map.put("AMOUNT_IS_WEIGHT", m.amountIsWeight() ? "true" : "false");
+		map.put("NOTES", m.getShortDescription());
+		map.put("USE_FOR", m.getUseFor());
+		
+		for (Map.Entry<String, String> e : map.entrySet())
+		{
+			String fieldName = e.getKey();
+			String fieldValue = e.getValue();
+			Element element = d.createElement(fieldName);
+			element.setTextContent(fieldValue);
+			rootElement.appendChild(element);
+		}
+
+		return rootElement;
 	}
 	
 	public Element getYeastsChild(Document d, ArrayList<Yeast> l)

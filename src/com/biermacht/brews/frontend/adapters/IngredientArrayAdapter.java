@@ -84,7 +84,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 				imageView.setImageResource(R.drawable.icon_extract);
 			
 			String s = String.format("%2.2f", BrewCalculator.GrainPercent(r, list.get(position)));
-		    String t = String.format("%2.2f", BrewCalculator.GrainPercent(r, list.get(position)));
+		    String t = String.format("%2.2f", BrewCalculator.FermentableGravityPoints(r, list.get(position)));
 			detailText += s;
 			detailText += "%, ";
 			detailText += t + " GPts.";

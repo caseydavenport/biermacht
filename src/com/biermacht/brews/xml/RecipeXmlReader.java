@@ -925,14 +925,13 @@ public class RecipeXmlReader extends DefaultHandler {
 				String dunit = Units.getUnitsFromDisplayAmount(currentValue);
 				//double amt = Units.getAmountFromDisplayAmount(currentValue);
 				misc.setDisplayUnits(dunit);
-				Log.d("IMPORT RECIPE", "Misc " + misc.getName() + " has display units " + dunit);
-				Log.d("IMPORT RECIPE", "Misc " + misc.getName() + " has display units " + misc.getDisplayUnits());
 				//misc.setDisplayAmount(amt);
 			}
 			
-			else if (qName.equalsIgnoreCase("TIME"))
+			else if (qName.equalsIgnoreCase("DISPLAY_TIME"))
 			{
-				misc.setTime((int)Float.parseFloat(currentValue));
+				double time = Units.getAmountFromDisplayAmount(currentValue);
+				misc.setTime((int)time);
 			}
 
 			else if (qName.equalsIgnoreCase("USE"))
