@@ -7,9 +7,6 @@ be reported here
 // Urgent issues.  Fix these first. //////////
 //////////////////////////////////////////////
 
-TODO:    Fix up all the XML files to be nice.
-TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
-
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
 //////////////////////////////////////////////
@@ -80,3 +77,5 @@ TODO:	 Changing water temperature does not change water to add.
 TODO:	 Round off decimal temperatures in mash. (131.82 -> 132)
 TODO:	 Hop summary should show boil time!
 TODO:	 Fully support exporting recipes to XML.
+TODO:    Fix up all the XML files to be nice.
+TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
