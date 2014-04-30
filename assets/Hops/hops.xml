@@ -7,7 +7,7 @@
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>  Primarily for bittering. Used for: Ales </NOTES>
+ <NOTES>Primarily for bittering. Used for: Ales </NOTES>
 <SUBSTITUTES> Target, Northdown, Challenger </SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
@@ -25,7 +25,7 @@
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES> Floral and citrus, with moderate bittering. Used for: American ales and lagers </NOTES>
+ <NOTES>Floral and citrus, with moderate bittering. Used for: American ales and lagers </NOTES>
  <SUBSTITUTES> Amarillo, Cascade </SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
@@ -350,7 +350,7 @@
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
  <NOTES>Primarily for bittering. Floral, slightly spicy.</NOTES>
- <SUBSTITUTES>Eroica, Galena<SUBSTITUTES>
+ <SUBSTITUTES>Eroica, Galena</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.8000000</BETA>
@@ -458,7 +458,7 @@
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
  <NOTES>Spicy. Used for: Ales, ESB</NOTES>
- <SUBSTITUTES>East Kent Goldings, Crystal<SUBSTITUTES>
+ <SUBSTITUTES>East Kent Goldings, Crystal</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -529,7 +529,7 @@
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES> Excellent, hoppy</NOTES>
+ <NOTES>Excellent, hoppy</NOTES>
  <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
@@ -1071,7 +1071,7 @@
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Slightly spicy, minty. Used for:US and German Ales and Lagers.</NOTES>
+ <NOTES>Slightly spicy, minty. Used for: US and German Ales and Lagers.</NOTES>
 <SUBSTITUTES>Chinook, Galena, Northern Brewer</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
@@ -1161,7 +1161,7 @@
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES> Used for: Moderate ales, lagers</NOTES>
+ <NOTES>Used for: Moderate ales, lagers</NOTES>
 <SUBSTITUTES> Saaz </SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
@@ -1323,7 +1323,7 @@
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Hybrid variety of Saaz origin with noble hoppy taste and aroma. Used for: Lagers.</NOTES>
+ <NOTES>Hybrid variety of Saaz origin with noble hop taste and aroma. Used for: Lagers.</NOTES>
  <SUBSTITUTES>Saaz</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
@@ -1666,7 +1666,7 @@
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
  <NOTES>Similar to Saaz. Used for: Lagers, Pilsners, Wheats, finishing hops in Ales.</NOTES>
-<SUBSTITUTES>Liberty, Hallertauer, Tradition, Saaz</SUBSTITUTES>
+ <SUBSTITUTES>Liberty, Hallertauer, Tradition, Saaz</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.7500000</BETA>
@@ -1701,8 +1701,7 @@
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Hi alpha hops grown in Victoria, Australia.  It was created in 1976 and entered commercial production in the 1990s.
-Used for: Primarily for bittering due to high alpha content.</NOTES>
+ <NOTES>Primarily for bittering.</NOTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.2500000</BETA>
@@ -1719,10 +1718,8 @@ Used for: Primarily for bittering due to high alpha content.</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha hops from Yakima Chief Ranches. Also called YCR-5.  Mild aroma and low cohumulone content - primarily for bittering.
-Used for: Ales, stouts
-Aroma: Neutral, clean, mild
-Substitutes: Nugget, Columbus, Magnum</NOTES>
+ <NOTES>Primarily for bittering.  Neutral, clean, mild.  Used for: Ales, stouts.</NOTES>
+ <SUBSTITUTES>Nugget, Columbus, Magnum</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.7500000</BETA>
@@ -1739,10 +1736,8 @@ Substitutes: Nugget, Columbus, Magnum</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Derived in England in 1911 from Bates Brewer. Some Golding characteristics, but lacking the full Goldings aroma.
-Used for: Ales
-Aroma: Pleasant, hoppy, slightly intense
-Substitutes: East Kent Goldings, Progress</NOTES>
+ <NOTES>Pleasant, hoppy, slightly intense. Used for: Ales</NOTES>
+ <SUBSTITUTES>East Kent Goldings, Progress</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.5000000</BETA>
@@ -1759,10 +1754,8 @@ Substitutes: East Kent Goldings, Progress</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: Finishing American and British Ales
-Aroma: Mild, grassy, floral, slightly spicy
-Substitutes: Fuggles, East Kent Goldings
-Examples: Sierra Nevada Porter, Ballard Bitter</NOTES>
+ <NOTES>Mild, grassy, floral, slightly spicy. Used for: Finishing ales.</NOTES>
+ <SUBSTITUTES>Fuggles, East Kent Goldings</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -1779,10 +1772,8 @@ Examples: Sierra Nevada Porter, Ballard Bitter</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Super high alpha bittering hops developed in the Yakima Valley, WA
-Used for: Bittering, intense aroma
-Aroma: Aromatic, pleasant
-Substitutes: Other high alpha hops</NOTES>
+ <NOTES>Primarily for bittering. Intense, pleasant aroma.</NOTES>
+ <SUBSTITUTES>Any high alpha acid variety.</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
