@@ -6,6 +6,8 @@ be reported here
 //////////////////////////////////////////////
 // Urgent issues.  Fix these first. //////////
 //////////////////////////////////////////////
+Should export measured gravity - check 
+Problem setting mash profile
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
@@ -19,7 +21,7 @@ TODO:	 First time use hints / help.
 TODO:	 Should update mash profiles used in recipes when a profile is edited?
 TODO:	 Support different times for mash ingredients?
 TODO:	 Quick add button when nothing in a list.
-TODO:    Add Style  guide viewing tool.
+TODO:    Add Style guide viewing tool.
 TODO: 	 Can configure bottle / keg age.
 TODO:    Equipment Editor?
 TODO:	 Temperature calculator.
@@ -38,6 +40,7 @@ TODO: 	 Hitting stop, then play, doesn't start you at the beginning.
 TODO:	 Should consider mash temp in ABV calc.
 TODO:	 Confirmation when leaving brew timer.
 TODO:	 Add support for more custom fields to XML import / export.
+TODO:	 Brewer profiles, social features.  This is a big task.
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////
