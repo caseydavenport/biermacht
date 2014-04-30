@@ -7,11 +7,8 @@
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Bittering hops derived from Wye Challenger.  Good high-alpha bittering hops.
-Used for: Ales
-Aroma: Primarily for bittering
-Substitutes: Target, Northdown, Challenger
-</NOTES>
+ <NOTES>  Primarily for bittering. Used for: Ales </NOTES>
+<SUBSTITUTES> Target, Northdown, Challenger </SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.6000000</BETA>
@@ -28,10 +25,8 @@ Substitutes: Target, Northdown, Challenger
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Distinctive aromatic hops with moderate bittering power from Washington.
-Used for: American ales and lagers
-Aroma: Distinctive floral and citrus aromas
-Substitutes: Amarillo, Cascade</NOTES>
+ <NOTES> Floral and citrus, with moderate bittering. Used for: American ales and lagers </NOTES>
+ <SUBSTITUTES> Amarillo, Cascade </SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.2500000</BETA>
@@ -48,10 +43,8 @@ Substitutes: Amarillo, Cascade</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Unknown origin, but character similar to Cascade.  Used for both bitterness and aroma.
-Used for: IPAs, Ales
-Aroma: Citrus, flowery
-Substitutes: Cascade, Centennial</NOTES>
+ <NOTES>Citrus and floral, good bittering. Used for: IPAs, Ales </NOTES> 
+ <SUBSTITUTES>Cascade, Centennial </SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.0000000</BETA>
@@ -68,33 +61,12 @@ Substitutes: Cascade, Centennial</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Super high alpha variety from the Hopsteiner breeding program released in 2006.  High alpha and low cohumulone makes it a great bittering hop.  
-Adds a strong grapefruit/hop note if added late in boil.  
-Substitutes: Nugget, Columbus, Tomahawk, Zeus</NOTES>
+ <NOTES>Strong bittering hop. Grapefruit notes.</NOTES>
+ <SUBSTITUTES>Nugget, Columbus, Tomahawk, Zeus</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.7500000</BETA>
  <HSI>15.0000000</HSI>
- <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
-</HOP>
-<HOP>
- <NAME>Aquila</NAME>
- <VERSION>1</VERSION>
- <ORIGIN>U.S.</ORIGIN>
- <ALPHA>6.5000000</ALPHA>
- <AMOUNT>0.0000000</AMOUNT>
- <USE>Boil</USE>
- <TIME>0.0000000</TIME>
- <NOTES>Aroma hops developed in 1988.  Limited use due to high cohumolone.
-Used for: Aroma hops
-Substitutes: Cluster
-No longer commercially grown.</NOTES>
- <TYPE>Aroma</TYPE>
- <FORM>Pellet</FORM>
- <BETA>3.0000000</BETA>
- <HSI>35.0000000</HSI>
  <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
  <INVENTORY>0.00 oz</INVENTORY>
  <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
@@ -107,9 +79,8 @@ No longer commercially grown.</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A cross between Brewers Gold and Slovenian wild hops.  Primarily a bittering hop with pleasant bitterness and aroma.  
-Used for: Bittering ales, lagers  
-Substitutes: Brewers Gold</NOTES>
+ <NOTES>Primarily for bittering. Used for: Bittering ales, lagers</NOTES> 
+ <SUBSTITUTES>Brewers Gold</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.7000000</BETA>
@@ -126,9 +97,8 @@ Substitutes: Brewers Gold</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Also called Super Styrian.  This is a hybrid between Northern Brewer and TG.  It has a pleasant hoppy aroma similar to Styrian Goldings but lighter.  
-Used for: Often mixed with other hops in lagers.  
-Substitutes: Styrian Goldings</NOTES>
+ <NOTES>similar to Styrian Goldings but lighter. Used for: Lagers.</NOTES>  
+ <SUBSTITUTES>Styrian Goldings</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -145,9 +115,8 @@ Substitutes: Styrian Goldings</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Bittering hops developed in 1988.  Use largely discontinued due to poor storage.
-Used for: U.S. style ales
-Substitutes: Cluster</NOTES>
+ <NOTES>Primarily for bittering. Used for: U.S. style ales</NOTES>
+ <SUBSTITUTES>Cluster</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -164,9 +133,8 @@ Substitutes: Cluster</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Also called Styrian Golding B - a cross between Northern Brewer and a TG seedling.  Pleasant hop aroma and flavor.  
-Used for: Moderate English ales and lagers/Pilsners 
-Substitutes: Northern Brewer</NOTES>
+ <NOTES>Pleasant hop aroma and flavor. Used for: Moderate English ales and lagers/Pilsners</NOTES>
+ <SUBSTITUTES>Northern Brewer</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
@@ -183,10 +151,8 @@ Substitutes: Northern Brewer</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Developed in 1927 from commercial Goldings and wild hop variety.
-Used for: ESB, Bitters, Pale Ale
-Aroma: Mild, fruity, currant aroma.
-Substitutes: East Kent Goldings, Progress, Whitbred</NOTES>
+ <NOTES>Fruity, currant, mild. Used for: ESB, Bitters, Pale Ale</NOTES>
+ <SUBSTITUTES>East Kent Goldings, Progress, Whitbred</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.0000000</BETA>
@@ -203,9 +169,8 @@ Substitutes: East Kent Goldings, Progress, Whitbred</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A second generation super high alpha hops from the Hopsteiner breeding program released in 2006.  Good bittering hop.
-Aroma: Fruity and floral aroma.
-Substitutes: Columbus, Zeus, Tomahawk</NOTES>
+ <NOTES>Fruity and floral. Good bittering hop.</NOTES>
+ <SUBSTITUTES>Columbus, Zeus, Tomahawk</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -222,10 +187,8 @@ Substitutes: Columbus, Zeus, Tomahawk</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Traditional bittering hops for English ales and heavy German lagers.
-Aroma: Sharp bittering hop
-Substitutes: Northern Brewer, Galena, Chinook, Eroica
-Example: Pete&#39;s Wicked Ale</NOTES>
+ <NOTES>Strong bittering hop. Used for: English Ales, heavy German Lagers</NOTES>
+ <SUBSTITUTES>Northern Brewer, Galena, Chinook, Eroica</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.7000000</BETA>
@@ -242,9 +205,8 @@ Example: Pete&#39;s Wicked Ale</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used in strong dark English ales, some heavy German lagers.
-Aroma: Strong, pungent and bitter in flavor.  Blackcurrant flavor.
-Substitutes: Chinook, Eroica, Brewer&#39;s Gold</NOTES>
+ <NOTES>Sharp bittering hop. Currant flavor. Used for: dark English Ales, heavy German Lagers</NOTES>
+ <SUBSTITUTES>Chinook, Eroica, Brewer&#39;s Gold</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -261,11 +223,8 @@ Substitutes: Chinook, Eroica, Brewer&#39;s Gold</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A hops with Northern Brewers Heritage
-Used for: American ales and lagers
-Aroma: Strong spicy, floral, grapefruit character
-Substitutes: Centennial
-Examples: Sierra Nevada Pale Ale, Anchor Liberty Ale</NOTES>
+ <NOTES>Spicy, floral, grapefruit. Used for: American ales and lagers</NOTES>
+ <SUBSTITUTES>Centennial</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.0000000</BETA>
@@ -282,9 +241,8 @@ Examples: Sierra Nevada Pale Ale, Anchor Liberty Ale</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A dual purpose hops that is a hybrid between Savinjski Golding, Aurora and Slovenian wild hops.  Similar in aroma to Saaz.  
-Used for: Light lagers, Pilsners, Belgian ales.
-Substitutes: Saaz, Styrian Goldings</NOTES>
+ <NOTES>Similar in aroma to Saaz. Good for bittering. Used for: Light lagers, Pilsners, Belgian ales.</NOTES>
+ <SUBSTITUTES>Saaz, Styrian Goldings</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.6000000</BETA>
@@ -301,11 +259,9 @@ Substitutes: Saaz, Styrian Goldings</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: General purpose bittering, aroma in American ales and Wheats
-Aroma: Floral, citrus aroma, spicy, clean bittering flavor
-Substitutes: Galena, Eroica, Nugget, Bullion
-Examples: Sierra Nevada Celebration Ale, Sierra Nevada Bigfoot</NOTES>
- <TYPE>Bittering</TYPE>
+ <NOTES>Floral, citrus, spicy. Clean bittering flavor. Used for: American ales and Wheats</NOTES>
+ <SUBSTITUTES>Galena, Eroica, Nugget, Bullion</SUBSTITUTES>
+ <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
  <HSI>40.0000000</HSI>
@@ -321,10 +277,8 @@ Examples: Sierra Nevada Celebration Ale, Sierra Nevada Bigfoot</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Variant of Northern Brewers heritage
-Used for: Both aroma and bittering for ales and lagers
-Aroma: Fruity in flavor, spicy aroma, blends well
-Substitutes: N/A</NOTES>
+ <NOTES>Fruity, spicy. Good bittering hop. Used for: Ales, Lagers</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -341,9 +295,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha variety from the Haas breeding program released in 2004.  It is a variant of Galena and very similar in profile to Galena.
-Aroma: Pleasant citrus notes  
-Substitutes: Galena</NOTES>
+ <NOTES>Primarily for bittering. Citrus notes.</NOTES>
+ <SUBSTITUTES>Galena</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>9.2500000</BETA>
@@ -360,11 +313,8 @@ Substitutes: Galena</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Strong versatile bittering hop
-Used for: Ales, porters, stouts
-Aroma: Heavy and spicy aroma
-Substitutes: Galena, Eroica, Nugget, Bullion
-Examples: Sierra Nevada Stout, Sierra Nevada Celebration Ale</NOTES>
+ <NOTES>Strong bittering hop. Heavy and spicy. Used for: Ales, porters, stouts</NOTES>
+ <SUBSTITUTES>Galena, Eroica, Nugget, Bullion</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.6000000</BETA>
@@ -381,9 +331,8 @@ Examples: Sierra Nevada Stout, Sierra Nevada Celebration Ale</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Special aroma hops released in 2007.  Imparts high alpha/oil content but low cohumulone.
-Aroma: Adds interesting citrus and tropical fruit character to the beer.  
-Substitutes: Unknown</NOTES>
+ <NOTES>Citrus, tropical fruit.</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -400,9 +349,8 @@ Substitutes: Unknown</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: General purpose bittering hop
-Aroma: Floral, slightly spicy. Sharp aroma and sharp flavor
-Substitutes: Eroica, Galena</NOTES>
+ <NOTES>Primarily for bittering. Floral, slightly spicy.</NOTES>
+ <SUBSTITUTES>Eroica, Galena<SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.8000000</BETA>
@@ -419,10 +367,8 @@ Substitutes: Eroica, Galena</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Sibling of Williamette hops.
-Used for: All English Ales
-Aroma: Close to Fuggles
-Substitutes: Fuggles, Williamette</NOTES>
+ <NOTES>Sibling of Williamette hops. Used for: All English Ales</NOTES>
+ <SUBSTITUTES>Fuggles, Williamette</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.0000000</BETA>
@@ -439,10 +385,8 @@ Substitutes: Fuggles, Williamette</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Engineered Centennial Substitute - High alpha bittering hops.
-Used for: Bittering, flavor, aroma - IPA, American Pale Ale, Stout, Lager
-Aroma: Pungent, spicy. Strongly aromatic, but clean tasting bitterness
-Substitutes: Centennial</NOTES>
+ <NOTES>Strong bittering hops. Spicy. Used for: IPA, American Pale Ale, Stout, Lager</NOTES>
+ <SUBSTITUTES>Centennial</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
@@ -459,9 +403,8 @@ Substitutes: Centennial</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Very bitter hops - use sparingly with other hops
-Used for: Bittering only
-Substitutes: N/A</NOTES>
+ <NOTES>Very strong bittering hops.</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -478,9 +421,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: Aroma and finishing hops for Lagers
-Aroma: Clean, mild, pleasant and slightly spicy
-Substitutes: Hallertauer, Mount Liberty</NOTES>
+ <NOTES>Mild, slightly spicy. Used for: Lagers</NOTES>
+ <SUBSTITUTES>Hallertauer, Mount Liberty</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.2000000</BETA>
@@ -497,31 +439,12 @@ Substitutes: Hallertauer, Mount Liberty</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: General purpose bittering for ales, porters, stouts
-Aroma: Clean bittering hop, very bitter
-Substitutes: Galena, Northern Brewer, Chinook
-Examples: Blackhook Porter, Ballard Bitter</NOTES>
+ <NOTES>Primarily for bittering. Used for: Ales, Porters, Stouts</NOTES>
+ <SUBSTITUTES>Galena, Northern Brewer, Chinook</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.8000000</BETA>
  <HSI>35.0000000</HSI>
- <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
-</HOP>
-<HOP>
- <NAME>Feux Coeur Francais</NAME>
- <VERSION>1</VERSION>
- <ORIGIN>Australia</ORIGIN>
- <ALPHA>14.0000000</ALPHA>
- <AMOUNT>0.0000000</AMOUNT>
- <USE>Boil</USE>
- <TIME>0.0000000</TIME>
- <NOTES>Rare, high alpha hops from Australia with genetic roots in the Burgundy region of France.  It was adopted to the Victoria region of Australia and introduced in 2010.</NOTES>
- <TYPE>Bittering</TYPE>
- <FORM>Pellet</FORM>
- <BETA>6.0000000</BETA>
- <HSI>25.0000000</HSI>
  <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
  <INVENTORY>0.00 oz</INVENTORY>
  <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
@@ -534,10 +457,8 @@ Examples: Blackhook Porter, Ballard Bitter</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Dwarf hop with English Golding character
-Used for: Ales, ESB
-Aroma: Similar to other Golding varieties, spicy
-Substitutes: East Kent Goldings, Crystal</NOTES>
+ <NOTES>Spicy. Used for: Ales, ESB</NOTES>
+ <SUBSTITUTES>East Kent Goldings, Crystal<SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -554,10 +475,8 @@ Substitutes: East Kent Goldings, Crystal</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: General purpose bittering/aroma for English Ales, Dark Lagers
-Aroma: Mild, soft, grassy, floral aroma
-Substitute: East Kent Goldings, Williamette
-Examples: Samuel Smith&#39;s Pale Ale, Old Peculiar, Thomas Hardy&#39;s Ale</NOTES>
+ <NOTES>Mild, grassy, floral. Used for: English Ales, Dark Lagers</NOTES>
+ <SUBSTITUTES>East Kent Goldings, Williamette</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.0000000</BETA>
@@ -574,8 +493,8 @@ Examples: Samuel Smith&#39;s Pale Ale, Old Peculiar, Thomas Hardy&#39;s Ale</NOT
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A high alpha, dual purpose seedless hops with a unique hop aroma.  It can be used either for bittering or as a late hop addition to provide a flavor of citrus and passionfruit to the finished beer.
-Aroma: Intense, pleasant, unique.</NOTES>
+ <NOTES>Strong bittering hop. Citrus, passionfruit (late addition)</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.9000000</BETA>
@@ -592,10 +511,8 @@ Aroma: Intense, pleasant, unique.</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: General bittering hops for all beers
-Aroma: Strong, clean, balanced bittering
-Substitutes: Eroica, Northern Brewer, Cluster, Chinook
-Examples: Catamount Porter</NOTES>
+ <NOTES>Strong bittering hops. Used for: all beers</NOTES>
+ <SUBSTITUTES>Eroica, Northern Brewer, Cluster, Chinook</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>8.0000000</BETA>
@@ -612,10 +529,8 @@ Examples: Catamount Porter</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Genetic mix of at least 8 hops including Elsasser, Brewers Gold, N Brewer, Bullion, Early Green, and others...released in 2000.
-Used for: Aroma
-Aroma: Excellent, hoppy
-Substitutes: N/A</NOTES>
+ <NOTES> Excellent, hoppy</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.6000000</BETA>
@@ -632,9 +547,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: Bittering and finishing British ales, bitters, porters and stouts.
-Aroma: Spicy, floral, rounded mild aroma.
-Substitutes: East Kent Goldings, Fuggles</NOTES>
+ <NOTES>Spicy, floral, mild. Used for: British ales, Bitters, Porters and Stouts.</NOTES>
+ <SUBSTITUTES>East Kent Goldings, Fuggles</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.2000000</BETA>
@@ -651,11 +565,8 @@ Substitutes: East Kent Goldings, Fuggles</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: General purpose hops for bittering/finishing all British Ales
-Aroma: Floral, aromatic, earthy, slightly sweet spicy flavor
-Substitutes: Fuggles, BC Goldings
-Examples: Bass Pale Ale, Fullers ESB, Samual Smith&#39;s Pale Ale
-</NOTES>
+ <NOTES>Floral, earthy, slightly sweet, spicy. Used for: British Ales</NOTES>
+ <SUBSTITUTES>Fuggles, BC Goldings</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -672,10 +583,8 @@ Examples: Bass Pale Ale, Fullers ESB, Samual Smith&#39;s Pale Ale
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Bittering hops from New Zealand developed in 1972
-Used for: Australian-style ales and lagers.
-Aroma: Floral, raisin aroma.
-Substitutes: Styrian Goldings</NOTES>
+ <NOTES>Primarily for bittering. Floral, raisin. Used for: Australian-style ales and lagers.</NOTES>
+ <SUBSTITUTES>Styrian Goldings</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.0000000</BETA>
@@ -692,7 +601,8 @@ Substitutes: Styrian Goldings</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>American hop variety from southern Idaho.  Fruity flavor with a touch of wood flavor.  Popular with microbreweries.</NOTES>
+ <NOTES>Fruity, woody.</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.2000000</BETA>
@@ -709,9 +619,8 @@ Substitutes: Styrian Goldings</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: German Ales, German/US/Canadian Lagers, Wheat Beers
-Aroma: Pleasant, mild spicy flavor, clean, neutral flavor
-Substitutes: Crystal, Liberty, Hallertauer Mittelfrueh</NOTES>
+ <NOTES>Mild, spicy, neutral. Used for: German Ales, German/US/Canadian Lagers, Wheat Beers</NOTES>
+ <SUBSTITUTES>Crystal, Liberty, Hallertauer Mittelfrueh</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -728,10 +637,9 @@ Substitutes: Crystal, Liberty, Hallertauer Mittelfrueh</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: German style lagers and wheat beers
-Aroma: Noble, pleasant, clean flavor
-Substitutes: Mt. Hood, Liberty, Hallertauer, Mittelfrueh
-Examples: Wheathook Wheaten Ale</NOTES>
+ <NOTES>Mild, herbal. Used for: German style Lagers and Wheat beers</NOTES>
+ <SUBSTITUTES>Mt. Hood, Liberty, Hallertauer, Mittelfrueh</SUBSTITUTES>
+
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.0000000</BETA>
@@ -748,10 +656,8 @@ Examples: Wheathook Wheaten Ale</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: Continental Lagers, German Ales/Lagers, US Lagers
-Aroma: Pleasant, assertive, mild herbal aroma
-Substitutes: Hallertauer, Mt. Hood, Liberty, Crystal
-Examples: Sam Adams Boston Lager, Sam Adams Boston Lightship</NOTES>
+ <NOTES>Mild, herbal. Used for: Continental Lagers, German Ales/Lagers, US Lagers</NOTES>
+ <SUBSTITUTES>Hallertauer, Mt. Hood, Liberty, Crystal</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.6000000</BETA>
@@ -768,9 +674,8 @@ Examples: Sam Adams Boston Lager, Sam Adams Boston Lightship</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Hallertauer variant with classic aroma and ability to retain clean taste. Bred from German Hallertauer Mittelfrueh
-Used for: Australian Ales
-Substitutes: Hallertauer Mittelfrueh</NOTES>
+ <NOTES>Mild, herbal. Used for: Australian Ales</NOTES>
+ <SUBSTITUTES>Hallertauer Mittelfrueh</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.0000000</BETA>
@@ -787,11 +692,8 @@ Substitutes: Hallertauer Mittelfrueh</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Dwarf variety bred at Wye College (mid 1990s)
-Used for: Bittering of ales
-Aroma: Strong, acceptable
-Substitutes: High alpha English bittering hops
-</NOTES>
+ <NOTES>Primarily for bittering.</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.2000000</BETA>
@@ -808,10 +710,8 @@ Substitutes: High alpha English bittering hops
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Good dual purpose hops derived from Nugget hops in Oregon (1970)
-Used for: All purpose Ales, Lagers
-Aroma: Pleasant, hoppy
-Substitutes: Magnum or other high alpha hops</NOTES>
+ <NOTES>Primarily for bittering. Pleasant, hoppy. Used for: All purpose Ales, Lagers</NOTES>
+ <SUBSTITUTES>Magnum</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.5000000</BETA>
@@ -828,10 +728,8 @@ Substitutes: Magnum or other high alpha hops</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: German style lagers
-Aroma: Fine, mild, slightly spicy flavor
-Substitutes: Hallertau, Mt Hood, Crystal
-Examples: Pete&#39;s Wicked Lager</NOTES>
+ <NOTES>Mild, slightly spicy. Used for: German style Lagers</NOTES>
+ <SUBSTITUTES>Hallertau, Mt Hood, Crystal</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -848,10 +746,8 @@ Examples: Pete&#39;s Wicked Lager</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Version of Saaz grown in Poland - also called &#34;Lubelski&#34;
-Used for: Bohemian lagers and Pilsners
-Aroma: Noble, mild flavor similar to Saaz
-Substitutes: Saaz, Tettnanger</NOTES>
+ <NOTES>Similar to Saaz. Used for: Bohemian Lagers and Pilsners</NOTES>
+ <SUBSTITUTES>Saaz, Tettnanger</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.0000000</BETA>
@@ -868,10 +764,8 @@ Substitutes: Saaz, Tettnanger</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>German Hallertauer hybrid, widely used in Germany
-Used for: German ales and lagers
-Aroma: Good aroma and stable spicy flavor
-Substitutes: N/A</NOTES>
+ <NOTES>Spicy. Used for: German Ales and Lagers</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.5000000</BETA>
@@ -888,9 +782,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Bittering hops with high aroma.  Primarily for use in Pilsner, lagers, ales or wheats.  Comparable to English Goldings or Chinook.  
-Used for: Lager, ales
-Substitutes: Chinook, English Golding</NOTES>
+ <NOTES>Primarily for bittering. Used for: Pilsners, Lagers, Ales or Wheats.</NOTES>
+ <SUBSTITUTES>Chinook, English Golding</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>11.4000000</BETA>
@@ -907,9 +800,8 @@ Substitutes: Chinook, English Golding</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Originally developed as part of the Haas breeding program in the US, Millenium entered production in 2000.  It is a very high alpha hops used for bittering.
-Aroma: Mild, herbal
-Substitutes: Columbus, Tomahawk, Zeus and Nugget</NOTES>
+ <NOTES>Primarily for bittering. Mild, herbal.</NOTES>
+ <SUBSTITUTES>Columbus, Tomahawk, Zeus and Nugget</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.7000000</BETA>
@@ -926,9 +818,8 @@ Substitutes: Columbus, Tomahawk, Zeus and Nugget</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Flexible hop developed from Saaz.  Has notable character and aroma, balanced bitterness, and unique flavor.  
-Used for: Lagers, Belgian Ales and Bohemian Pilsner.  
-Substitutes: Saaz</NOTES>
+ <NOTES>Flexible hop developed from Saaz. Used for: Lagers, Belgian Ales and Bohemian Pilsner.</NOTES>
+ <SUBSTITUTES>Saaz</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.2500000</BETA>
@@ -945,9 +836,8 @@ Substitutes: Saaz</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: European Lagers, finishing
-Aroma: Mild with a clean aroma, neutral flavor. Somewhat pungent.
-Substitutes: Hallertauer, Liberty, Crystal</NOTES>
+ <NOTES>Mild, neutral. Used for: European Lagers</NOTES>
+ <SUBSTITUTES>Hallertauer, Liberty, Crystal</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.3000000</BETA>
@@ -964,9 +854,8 @@ Substitutes: Hallertauer, Liberty, Crystal</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Triploid variety bred from &#34;Smoothcone&#34; released in 2000.  Oil profile said to taste like &#34;fresh crushed gooseberries&#34; similar to Sauvignon Blanc, giving it its name.  Very fruity, citrusy - use in moderation.  
-Used for: Pale ale, Super Premiums.  
-Substitutes: None</NOTES>
+ <NOTES>Fruity, citrus, Sauvignon Blanc, gooseberries. Used for: Pale ales</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.0000000</BETA>
@@ -983,9 +872,9 @@ Substitutes: None</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha hops released in 2002 as a potential replacement for Galena.  Note that these hops have a large alpha range of 9.8%-17% so check the package!  Fairly pungent.
-Used for: Primarily used for bittering in ales, stouts, barley wine.  
-Substitutes: Galena</NOTES>
+ <NOTES>Primarily for bittering. Pungent. These hops have a large alpha range of 9.8%-17% so check the package!
+ Used for: Ales, Stouts, Barley Wine.</NOTES>
+ <SUBSTITUTES>Galena</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.0000000</BETA>
@@ -1002,10 +891,8 @@ Substitutes: Galena</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Variation of Northern Brewers hops grown in England.
-Used for: Bittering in English ales
-Aroma: Good bittering, flavor and aroma
-Substitutes: Northern Brewer</NOTES>
+ <NOTES>Primarily for bittering. Used for English Ales.</NOTES>
+ <SUBSTITUTES>Northern Brewer</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.5000000</BETA>
@@ -1022,11 +909,8 @@ Substitutes: Northern Brewer</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Also called Hallertauer Northern Brewers
-Used for: Bittering and finishing both ales and lagers of all kinds
-Aroma: Fine, dry, clean bittering hop.  Unique flavor.
-Substitutes: Hallertauer Mittelfrueh, Hallertauer
-Examples: Anchor Steam, Old Peculiar, </NOTES>
+ <NOTES>Primarily for bittering. Unique flavor. Also called Hallertauer Northern Brewers. Used for: All beers.</NOTES>
+ <SUBSTITUTES>Hallertauer Mittelfrueh, Hallertauer</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -1043,10 +927,8 @@ Examples: Anchor Steam, Old Peculiar, </NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: Bittering hops for ales
-Aroma: Strong bittering, heavy, herbal aroma, spicy
-Substitutes: Chinook
-Examples: Sierra Nevada Porter</NOTES>
+ <NOTES>Primarily for bittering. Herbal and spicy. Used for: Ales.</NOTES>
+ <SUBSTITUTES>Chinook</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
@@ -1063,9 +945,8 @@ Examples: Sierra Nevada Porter</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Olympic is a high alpha hops released by Washington Agricultural Expt Station in 1983.  Heritage is from Brewers Gold and Fuggles.
-Aroma: Spicy, citrus aroma
-Substitutes: Brewers Gold</NOTES>
+ <NOTES>Primarily for bittering. Spicy and citrus.</NOTES>
+ <SUBSTITUTES>Brewers Gold</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.5000000</BETA>
@@ -1082,10 +963,8 @@ Substitutes: Brewers Gold</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>New variety from the hop research center in Hull.
-Used for: Aroma hops in continental styles
-Aroma: High aroma hops with hints of spice and subtle citrus.
-Substitutes: Unknown</NOTES>
+ <NOTES>Spicy and subtle citrus. Used for: Continental styles.</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -1102,10 +981,8 @@ Substitutes: Unknown</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Cross between Perle and an experimental variety
-Used for: Bittering and aroma
-Aroma: Pleasant, hoppy
-Substitutes: Perle</NOTES>
+ <NOTES>Pleasant and hoppy.</NOTES>
+<SUBSTITUTES>Perle</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.7000000</BETA>
@@ -1122,10 +999,8 @@ Substitutes: Perle</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha smoothcone cross developed at DSIR in 1987.
-Used for: Bittering - produces a cask-oak woody flavor.
-Aroma: Pleasant - some blackberry aroma.
-Substitutes: Bullion</NOTES>
+ <NOTES>Some blackberry. Cask-Oak flavor from bittering.</NOTES>
+ <SUBSTITUTES>Bullion</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>8.2000000</BETA>
@@ -1142,10 +1017,9 @@ Substitutes: Bullion</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha bittering hops that delivers a bold herbal infusion of fresh citrus with some black pepper flavor.  Citrus aroma and flavor tempers ales and may be used as a finishing hops. 
-Used for: Ales, lagers 
-Substitutes: N/A</NOTES>
- <TYPE>Bittering</TYPE>
+ <NOTES>Herbal, citrus, spicy. Used for: All beers.</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
+ <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.5000000</BETA>
  <HSI>15.0000000</HSI>
@@ -1161,8 +1035,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Aroma hop developed from Hallertauer Mittelfrueh in New Zealand (1994).  Blend of old and new world taste including Orange marmalade and citrus aroma notes when used in late addition.  Soft finish if used in bittering.  
-Substitutes: Chinook, Hallertauer Mittelfrueh</NOTES>
+ <NOTES>Orange marmalade and citrus. Soft finish if used in bittering.</NOTES>
+ <SUBSTITUTES>Chinook, Hallertauer Mittelfrueh</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.0000000</BETA>
@@ -1179,8 +1053,8 @@ Substitutes: Chinook, Hallertauer Mittelfrueh</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Also called YCR-4, Palisade is an aroma variety bread by Yakima Chief Ranches.  It has both aromatic and moderate bittering properties.  
-Substitutes: Willamette</NOTES>
+ <NOTES>Also called YCR-4.</NOTES>
+ <SUBSTITUTES>Willamette</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.0000000</BETA>
@@ -1197,10 +1071,8 @@ Substitutes: Willamette</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: General purpose bittering for US and German ales, lagers
-Aroma: Slightly spicy, pleasant aroma, minty
-Substitutes: Chinook, Galena, Northern Brewer
-Examples: Sierra Nevada Pale Ale, Pale Bock</NOTES>
+ <NOTES>Slightly spicy, minty. Used for:US and German Ales and Lagers.</NOTES>
+<SUBSTITUTES>Chinook, Galena, Northern Brewer</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.7500000</BETA>
@@ -1217,10 +1089,8 @@ Examples: Sierra Nevada Pale Ale, Pale Bock</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Seedling derived from Wye Yoeman.
-Used for: Ales
-Aroma: Similar to Wye Challenger hops
-Substitutes: Challenger, East Kent Golding, Northdown</NOTES>
+ <NOTES>Similar to Wye Challenger. Used for: Ales.</NOTES>
+<SUBSTITUTES>Challenger, East Kent Golding, Northdown</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.6000000</BETA>
@@ -1237,9 +1107,8 @@ Substitutes: Challenger, East Kent Golding, Northdown</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>New variety from Wye College in 2001.  High Selinene content.
-Used for: Bittering
-Substitutes: N/A</NOTES>
+ <NOTES>Primarily for bittering. High Selinene content.</NOTES>
+<SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.7000000</BETA>
@@ -1256,9 +1125,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A very new hops introduced in 2002 by Charles Faram &#38; Co Ltd.  Mild herbal flavor with lemon hints and fresh mowed grass flavor.  
-Used for: Primarily for bittering in APAs.  
-Rare.</NOTES>
+ <NOTES>Primarily for bittering. Mild herbal, citrus (lemon) hints, and grass. Used for: APAs</NOTES>
+ <SUBSTITUTES>N/A</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.0000000</BETA>
@@ -1275,10 +1143,8 @@ Rare.</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Bred from Wye Omega at Wye College in the UK
-Used for: ESB, English Ales
-Aroma: Mild English hop aroma
-Substitutes: East Kent Goldings</NOTES>
+ <NOTES>Mild English hop aroma. Used for: ESB, English Ales</NOTES>
+<SUBSTITUTES>East Kent Goldings</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.7500000</BETA>
@@ -1295,9 +1161,8 @@ Substitutes: East Kent Goldings</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A cross between Czech aroma and bittering varieties.  Dual purpose though its aroma is not as strong as some other Czech hops.  Use in beers where a moderate hoppy aroma is needed.  
-Used for: Moderate ales, lagers 
-Substitutes: Saaz</NOTES>
+ <NOTES> Used for: Moderate ales, lagers</NOTES>
+<SUBSTITUTES> Saaz </SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -1314,9 +1179,8 @@ Substitutes: Saaz</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: General purpose bittering hops for Australian beers
-Aroma: Moderate citric aroma, clean bittering flavor
-Substitutes: Cluster, Galena</NOTES>
+ <NOTES>Primarily for bittering. Moderate citrus aroma, clean bittering flavor.</NOTES>
+ <SUBSTITUTES> Cluster, Galena </SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.7500000</BETA>
@@ -1333,9 +1197,8 @@ Substitutes: Cluster, Galena</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: Bittering and aroma in English Ales
-Aroma: Similar to Fuggles, aromatic, slightly sweet
-Substitutes: Fuggles</NOTES>
+ <NOTES>Similar to Fuggles. Used for: English Ales</NOTES>
+ <SUBSTITUTES> Fuggles </SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.1000000</BETA>
@@ -1352,9 +1215,8 @@ Substitutes: Fuggles</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Formerly called B-Saaz, this was developed from old line Saazer hops in New Zealand.  
-Used for: New world pale ale, regional pilsners
-Aroma: Strong, hoppy. Some grapefruit and citrus character.</NOTES>
+ <NOTES>Some grapefruit and citrus. Used for: New World Pale Ale, Regional Pilsners</NOTES>
+ <SUBSTITUTES> n/a </SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -1371,10 +1233,8 @@ Aroma: Strong, hoppy. Some grapefruit and citrus character.</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: Pilsners and Bohemian style lagers
-Aroma: Delicate, mild, clean, somewhat floral -- Noble hops
-Substitutes: Tettnanger, Lublin
-Examples: Pulsner Urquell</NOTES>
+ <NOTES>Somewhat floral. Used for: Pilsners and Bohemian style lagers</NOTES>
+ <SUBSTITUTES>Tettnanger, Lublin</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -1391,9 +1251,8 @@ Examples: Pulsner Urquell</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Triploid aroma selection derived from Tettnang and Hallertauer (1997)
-Used for: Lager, U.S. Pale Ale, Pilsner
-Substitutes: German Tettnang, Spalt, Spalt Select</NOTES>
+ <NOTES>Triploid aroma selection derived from Tettnang and Hallertauer. Used for: Lager, U.S. Pale Ale, Pilsner</NOTES>
+<SUBSTITUTES>German Tettnang, Spalt, Spalt Select</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.0000000</BETA>
@@ -1410,9 +1269,8 @@ Substitutes: German Tettnang, Spalt, Spalt Select</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A new noble breed as an alternative to Hallertau Mittelfrueh in an attempt to make it more disease resistant and commercially viable.  Similar in character to Hallertau varieties.  
-Used for: Pilsners, lagers, Belgian whites.  
-Substitutes: Hallertau Mittelfrueh</NOTES>
+ <NOTES>Similar in character to Hallertau varieties. Used for: Pilsners, lagers, Belgian whites.</NOTES>
+<SUBSTITUTES> Hallertau Mittelfrueh</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.6000000</BETA>
@@ -1429,32 +1287,12 @@ Substitutes: Hallertau Mittelfrueh</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha bittering hops from Yakima that is similar to Galena.  Of recent origin.  
-Substitutes: Galena</NOTES>
+ <NOTES>Primarily for bittering.</NOTES>
+<SUBSTITUTES>Galena</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>8.7500000</BETA>
  <HSI>33.0000000</HSI>
- <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
-</HOP>
-<HOP>
- <NAME>Select Spalt</NAME>
- <VERSION>1</VERSION>
- <ORIGIN>Germany</ORIGIN>
- <ALPHA>4.7500000</ALPHA>
- <AMOUNT>0.0000000</AMOUNT>
- <USE>Boil</USE>
- <TIME>0.0000000</TIME>
- <NOTES>Bred from Hallertauer Mittelfrueh and Spalt in Germany.  Spalt character.
-Used for: Lager, Pilsner, Noble aroma hop substitute
-Aroma: Very fine, spalt aroma
-Substitutes: Spalter, Saaz, Tettnang</NOTES>
- <TYPE>Aroma</TYPE>
- <FORM>Pellet</FORM>
- <BETA>3.5000000</BETA>
- <HSI>17.0000000</HSI>
  <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
  <INVENTORY>0.00 oz</INVENTORY>
  <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
@@ -1467,10 +1305,8 @@ Substitutes: Spalter, Saaz, Tettnang</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha bittering hops with good aroma characteristics.
-Used for: IPAs
-Aroma: Citrus and pine-like aroma
-Substitutes: N/A</NOTES>
+ <NOTES>Citrus and pine. Used for: IPAs.</NOTES>
+ <SUBSTITUTES>n/a</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -1487,9 +1323,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Hybrid variety of Saaz origin with noble hoppy taste and aroma.  Generally recommended for middle-hopping about 20 min before end of boil.  Not a replacement for Saaz, but complimentary in Lagers.  
-Used for: Lager 
-Substitutes: Saaz</NOTES>
+ <NOTES>Hybrid variety of Saaz origin with noble hoppy taste and aroma. Used for: Lagers.</NOTES>
+ <SUBSTITUTES>Saaz</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>7.5000000</BETA>
@@ -1506,9 +1341,8 @@ Substitutes: Saaz</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Developed by Sapporo Breweries and used in their beers - has a Brewer&#39;s gold and Saaz heritage.  Reported to be lemony in flavor and aroma.  
-Used for: Saison, IPA or other beer where lemon/citrus is desirable.  
-Substitutes: Admiral, Cascade</NOTES>
+ <NOTES>Citrus (lemon). Developed by Sapporo Breweries. Used for: Saison, IPA, Japanese Lager.</NOTES>
+ <SUBSTITUTES>Admiral, Cascade</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.0000000</BETA>
@@ -1525,10 +1359,8 @@ Substitutes: Admiral, Cascade</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Dual purpose with &#34;European&#34; flavor - from DSIR in 1994
-Used for: European flavor bittering/aroma
-Aroma: Spicy, lemony, slight pine and wood flavors
-Substitutes: N/A</NOTES>
+ <NOTES>Spicy, citrus (lemon), slight pine and wood.</NOTES>
+ <SUBSTITUTES>n/a</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.2000000</BETA>
@@ -1545,10 +1377,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: Traditional German bittering and aroma hops, Altbiers, Lagers
-Aroma: Mild, pleasant, slight spice
-Substitutes: Saaz, Tettnang
-Examples: Dusseldorf Altbiers</NOTES>
+ <NOTES>Mild, slightly spicy. Used for: Traditional German bittering and aroma hops, Altbiers, Lagers.</NOTES>
+ <SUBSTITUTES>Saaz, Tettnang</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -1565,10 +1395,8 @@ Examples: Dusseldorf Altbiers</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Flavor is a cross between Saaz and Mt Hood
-Used for: Lagers, Ales, Pilsners
-Aroma: Herbal, spicy, some floral and citrus hints
-Substitutes: Saaz, Polish Lublin</NOTES>
+ <NOTES>Herbal, spicy, some floral and citrus. Used for: Lagers, Ales, Pilsners.</NOTES>
+ <SUBSTITUTES>Saaz, Polish Lublin</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
@@ -1585,10 +1413,8 @@ Substitutes: Saaz, Polish Lublin</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha hops from DSIR research first released in 1972.  Some of the same qualities as Northern Brewer
-Used for: Dual purpose
-Aroma: Pine-like with a hint of citrus
-Substitutes: Northern Brewer</NOTES>
+ <NOTES>Pine, with a hint of citrus.</NOTES>
+ <SUBSTITUTES>Northern Brewer</SUBSTITUTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>8.0000000</BETA>
@@ -1605,10 +1431,8 @@ Substitutes: Northern Brewer</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Aroma hops used widely in the Alsace area of France.
-Used for: Pilsner, lager, wheat
-Aroma: Medium intensity, pleasant, hoppy
-Substitutes: Mt Hood, Crystal, Hallertauer Hersbruck</NOTES>
+ <NOTES>Used for: Pilsners, Lagers, Wheats</NOTES>
+<SUBSTITUTES>Mt Hood, Crystal, Hallertauer Hersbruck</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.8000000</BETA>
@@ -1625,10 +1449,8 @@ Substitutes: Mt Hood, Crystal, Hallertauer Hersbruck</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A seedless version of Fuggles grown in Slovenia
-Used for: Bittering, finishing for a wide variety of European Beers. Popular in Europe and the United Kingdom
-Aroma: Mild, soft, grassy, floral aroma. Similar to Fuggles.
-Substitutes: Fuggles, Williamette</NOTES>
+ <NOTES>Mild grassy and floral. Used for: European Beers.</NOTES>
+ <SUBSTITUTES>Fuggles, Williamette</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.9000000</BETA>
@@ -1645,9 +1467,8 @@ Substitutes: Fuggles, Williamette</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha variety bred by American Dwarf Hop Assoc.  Can be grown commercially on a low trellis.  
-Aroma: Strong citrus, grapefruit notes.
-Substitutes: Warrior, Millenium, Columbus, Tomahawk, Zeus</NOTES>
+ <NOTES>Strong citrus and grapefruit.</NOTES>
+<SUBSTITUTES>Warrior, Millenium, Columbus, Tomahawk, Zeus</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
@@ -1664,10 +1485,8 @@ Substitutes: Warrior, Millenium, Columbus, Tomahawk, Zeus</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A very high alpha bittering hops from Yakima Valley, Washington
-Used for: Bittering (intense)
-Aroma: Pleasant, hoppy
-Substitutes: Other very high alpha US hops</NOTES>
+ <NOTES>Primarily for bittering. Intense.</NOTES>
+ <SUBSTITUTES>Other high alpha hops</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.5000000</BETA>
@@ -1684,10 +1503,8 @@ Substitutes: Other very high alpha US hops</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha hops released in 1976 by DSIR. European in character - clean crisp flavor and resin aroma.
-Used for: European Styles, General purpose bittering
-Aroma: Pleasant, resin like aroma
-Substitutes: N/A</NOTES>
+ <NOTES>Resin, clean bittering. Used for: European Styles, General purpose bittering</NOTES>
+ <SUBSTITUTES>n/a</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>8.0000000</BETA>
@@ -1704,9 +1521,8 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Super high alpha hops from Hopsteiner breeding program released in 2006.  High alpha and beta content - comparable to Galena in bitterness and aroma profile.  
-Used for: Primarily for bitterness.  
-Substitutes: Galena</NOTES>
+ <NOTES>Primarily for bittering.</NOTES>
+ <SUBSTITUTES>n/a</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>9.0000000</BETA>
@@ -1723,9 +1539,8 @@ Substitutes: Galena</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A high alpha variation of the Pride of Ringwood hop variety.  Features mild aromas, higher alpha content and low cohumulone levels.  
-Used for: Primarily for bittering.  
-Substitutes: Pride of Ringwood</NOTES>
+ <NOTES>Primarily for bittering.</NOTES>
+ <SUBSTITUTES>Pride of Ringwood</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.7000000</BETA>
@@ -1742,9 +1557,8 @@ Substitutes: Pride of Ringwood</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: English ales and lagers
-Aroma: Robust aroma and flavor
-Substitutes: East Kent Goldings</NOTES>
+ <NOTES>Primarily for bittering. Robust.Used for: English ales and lagers.</NOTES>
+<SUBSTITUTES>East Kent Goldings</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
@@ -1761,10 +1575,8 @@ Substitutes: East Kent Goldings</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Used for: German ales, lagers and wheat beer
-Aroma: Noble, mild, fine, slightly spicy
-Substitutes: Saaz, Spalt
-Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
+ <NOTES>Mild, slightly spicy. Used for: German Ales, Lagers (Octoberfest) and Wheat Beer</NOTES>
+<SUBSTITUTES>Saaz, Spalt</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -1781,8 +1593,8 @@ Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>High alpha and high beta hops developed though Haas breeding program and released in 1995.  Daughter variety of Galena and related to Chelan - so similar to both. 
-Substitutes: Galena, Chelan</NOTES>
+ <NOTES>Similar to Galena.</NOTES>
+<SUBSTITUTES>Galena,Chelan</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>9.9000000</BETA>
@@ -1799,9 +1611,8 @@ Substitutes: Galena, Chelan</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Part of the Columbus/Tomahak/Zeus (CTZ) group of super high alpha hops.  Together these make up 1/4 of US hop acreage.  
-Used for: High alpha hops used primarily for commercial bittering.  
-Substitutes: Tomahawk, Zeus, Nugget, Galena, Chinook</NOTES>
+ <NOTES>Primarily for bittering.</NOTES>
+<SUBSTITUTES>Tomahawk, Zeus, Nugget, Galena, Chinook</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -1818,7 +1629,8 @@ Substitutes: Tomahawk, Zeus, Nugget, Galena, Chinook</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Very high alpha hop variety from Australia.  Used for commercial production primarily for its high alpha acid content and high bitterness.</NOTES>
+ <NOTES>Primarily for bittering.</NOTES>
+ <SUBSTITUTES>n/a</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.5000000</BETA>
@@ -1835,10 +1647,8 @@ Substitutes: Tomahawk, Zeus, Nugget, Galena, Chinook</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Close descendant of Hallertauer Mittelfrueh bred for high yield.
-Used for: Lager, Pilsner, Bock, some Weizens
-Aroma: Fine - similar to Hallertauer Mittelfrueh
-Substitutes: Hallertauer Mittelfrueh, Liberty, Ultra</NOTES>
+ <NOTES>Similar to Hallertauer Mittelfrueh. Used for: Lagers, Pilsners, Bocks, some Weizens.</NOTES>
+ <SUBSTITUTES>Hallertauer Mittelfrueh, Liberty, Ultra</SUBSTITUTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -1855,10 +1665,8 @@ Substitutes: Hallertauer Mittelfrueh, Liberty, Ultra</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Triploid seedling of the German Hallertauer Variety
-Used for: Lager, Pilsner, wheat, finishing hops in ales
-Aroma: Good to outstanding - some Saaz like qualities
-Substitutes: Liberty, Hallertauer, Tradition, Saaz</NOTES>
+ <NOTES>Similar to Saaz. Used for: Lagers, Pilsners, Wheats, finishing hops in Ales.</NOTES>
+<SUBSTITUTES>Liberty, Hallertauer, Tradition, Saaz</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.7500000</BETA>
@@ -1875,10 +1683,8 @@ Substitutes: Liberty, Hallertauer, Tradition, Saaz</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Diploid seedling made in 1982, released in 1997. Hallertau Mitterfrueh parentage.
-Used for: European lagers, ales
-Aroma: Strong aromatic notes
-Substitutes: Hallertauer Mittelfrueh</NOTES>
+ <NOTES>Used for: European Lagers, Ales</NOTES>
+<SUBSTITUTES>Hallertauer Mittelfrueh</SUBSTITUTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.0000000</BETA>
