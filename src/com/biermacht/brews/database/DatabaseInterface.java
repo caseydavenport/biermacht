@@ -299,7 +299,17 @@ public class DatabaseInterface {
         }
         
         // Update mash profile
-        updateMashProfile(this.readMashProfile(r.getId()), r.getId(), Constants.DATABASE_DEFAULT);
+        Boolean exists = updateMashProfile(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
+        if (!exists)
+        {
+        	// Delete any mash profiles owned by this recipe so we don't build up
+        	// a bunch over time.
+        	MashProfile oldProfile = readMashProfile(r.getId());
+        	deleteMashProfile(oldProfile.getId(), Constants.DATABASE_DEFAULT);
+        	
+        	// Add the new one to the database.
+        	addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
+        }
 
         // TODO: Implement style update methods.
 		deleteStyle(r.getId());
@@ -441,13 +451,13 @@ public class DatabaseInterface {
 		return id;
 	}
 	
-	public void updateMashProfile(MashProfile p, long ownerId, long dbid)
+	public boolean updateMashProfile(MashProfile p, long ownerId, long dbid)
 	{
 		String whereClause = DatabaseHelper.PRO_COL_ID + "=" + p.getId() + " AND " + 
 	                         DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
 		ContentValues values = getMashProfileValues(p, ownerId, dbid);
 		updateMashStepList(p.getMashStepList(), p.getId());
-		database.update(DatabaseHelper.TABLE_PROFILES, values, whereClause, null);
+		return database.update(DatabaseHelper.TABLE_PROFILES, values, whereClause, null) > 0;
 	}
 	
 	public ContentValues getMashProfileValues(MashProfile p, long ownerId, long dbid)

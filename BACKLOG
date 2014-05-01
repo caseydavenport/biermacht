@@ -6,8 +6,7 @@ be reported here
 //////////////////////////////////////////////
 // Urgent issues.  Fix these first. //////////
 //////////////////////////////////////////////
-Should export measured gravity - check 
-Problem setting mash profile
+
 
 //////////////////////////////////////////////
 // Not vital, can do later ///////////////////
@@ -82,3 +81,4 @@ TODO:	 Hop summary should show boil time!
 TODO:	 Fully support exporting recipes to XML.
 TODO:    Fix up all the XML files to be nice.
 TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
+TODO:	 Problem setting mash profile

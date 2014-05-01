@@ -66,6 +66,8 @@ public class RecipeXmlWriter
 				map.put("NOTES", r.getNotes());
 				map.put("OG", r.getOG() + "");
 				map.put("FG", r.getFG() + "");
+				map.put("DISPLAY_OG", r.getMeasuredOG() + "");
+				map.put("DISPLAY_FG", r.getMeasuredFG() + "");
 				map.put("FERMENTATION_STAGES", r.getFermentationStages() + "");
 				map.put("PRIMARY_AGE", r.getFermentationAge(Recipe.STAGE_PRIMARY) + "");
 				map.put("SECONDARY_AGE", r.getFermentationAge(Recipe.STAGE_SECONDARY) + "");
