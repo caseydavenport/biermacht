@@ -17,10 +17,13 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.biermacht.brews.R;
@@ -29,6 +32,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddCustomFermentableAct
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomYeastActivity;
+import com.biermacht.brews.frontend.adapters.RecipeCheckboxArrayAdapter;
 import com.biermacht.brews.frontend.fragments.EditIngredientsFragment;
 import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
@@ -64,6 +68,12 @@ public class MainActivity extends Activity{
 
     // Selected item
     private int selectedItem;
+    
+    // Context
+    private Context context;
+    
+    // Stores recipes found the the selected file
+    private ArrayList<Recipe> foundImportedRecipes;
 
     // Static drawer list items
     private static String DRAWER_RECIPES = "Recipes";
@@ -77,6 +87,9 @@ public class MainActivity extends Activity{
         
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // Store context
+        context = this;
 
         // Instantiate my ingredient handler
         ingredientHandler = new IngredientHandler(getApplicationContext());
@@ -105,7 +118,10 @@ public class MainActivity extends Activity{
             // Async Initialize Assets on startup
             new InitializeTask(ingredientHandler).execute("");
         }
-                
+        
+        // Initialize storage for imported recipes
+        foundImportedRecipes = new ArrayList<Recipe>();
+        
         // Initialize views
         drawerListView = (ListView) findViewById(R.id.drawer_list);
 
@@ -225,14 +241,48 @@ public class MainActivity extends Activity{
     {
         return new AlertDialog.Builder(this)
                 .setTitle("Import BeerXML Recipe")
-                .setMessage("Press OPEN to search your device for a BeerXML recipe file to import.")
-                        //.setView(alertView)
-                .setPositiveButton("OPEN", new DialogInterface.OnClickListener() {
+                .setMessage("Select a BeerXML file on your device to import recipes.")
+                .setPositiveButton("Select", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
                         i3.setType("file/*");
                         startActivityForResult(i3, 1);
+                    }
+
+                })
+
+                .setNegativeButton(R.string.cancel, null);
+    }
+    
+    private AlertDialog.Builder recipeSelectorAlert()
+    {
+    	// Build view which contains the recipes to select
+        final ListView v = new ListView(getApplicationContext());
+        final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter(getApplicationContext(), foundImportedRecipes);
+        v.setAdapter(adapter);
+        final ArrayList<Recipe> recipesToImport = new ArrayList<Recipe>();
+        
+        return new AlertDialog.Builder(this)
+                .setTitle("Found Recipes")
+                .setMessage("Select which recipes to import.")
+                .setView(v)
+                .setPositiveButton("Import", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) 
+                    {
+                    	// Iterate recipes, import those which are selected.  If selected and a recipe exists
+                    	// with that name, ask if we should overwrite.
+                    	for (int i = 0; i < adapter.getCount(); i++)
+                    	{
+                    		if(adapter.isChecked(adapter.getItem(i).getRecipeName()))
+                    		{
+                    			recipesToImport.add(adapter.getItem(i));
+                    		}
+                    	}
+                    	
+                    	// Store the recipes
+                    	new StoreRecipes(context, ingredientHandler, recipesToImport).execute("");
                     }
 
                 })
@@ -249,7 +299,7 @@ public class MainActivity extends Activity{
          	String path = data.getData().getPath().toString();
 			
 			if (path != null)
-                new ImportRecipes(this, path, ingredientHandler).execute("");
+                new LoadRecipes(this, path, ingredientHandler).execute("");
      	}
      	if (resultCode == RESULT_CANCELED) {    
          	//Write your code on no result return 
@@ -309,19 +359,26 @@ public class MainActivity extends Activity{
         fragmentList.add(new EditMashProfilesFragment());
         selectItem(selectedItem);
     }
+    
+    public void setImportedRecipes(ArrayList<Recipe> recipeList)
+    {
+    	this.foundImportedRecipes = recipeList;
+    }
 
-    private class ImportRecipes extends AsyncTask<String, Void, String> {
+    private class LoadRecipes extends AsyncTask<String, Void, String> {
 
         private String path;
         private IngredientHandler ingredientHandler;
         private Context context;
         private ProgressDialog progress;
+        private ArrayList<Recipe> importedRecipes;
 
-        public ImportRecipes(Context c, String path, IngredientHandler i)
+        public LoadRecipes(Context c, String path, IngredientHandler i)
         {
             this.path = path;
             this.ingredientHandler = i;
             this.context = c;
+            this.importedRecipes = new ArrayList<Recipe>();
         }
 
         @Override
@@ -329,16 +386,13 @@ public class MainActivity extends Activity{
         {
             try
             {
-                for (Recipe r : ingredientHandler.getRecipesFromXml(path))
-                {
-                    r.update();
-                    Database.createRecipeFromExisting(r);
-                }
+            	importedRecipes = ingredientHandler.getRecipesFromXml(path);
             }
             catch (IOException e)
             {
-                Log.e("ImportRecipes", e.toString());
+                Log.e("LoadRecipes", e.toString());
             }
+
 
             return "Executed";
         }
@@ -348,8 +402,61 @@ public class MainActivity extends Activity{
         {
             super.onPostExecute(result);
             progress.dismiss();
+            setImportedRecipes(importedRecipes);
+            recipeSelectorAlert().show();
             updateFragments();
-            Log.d("ImportRecipes", "Finished importing recipes");
+            Log.d("LoadRecipes", "Finished loading recipes");
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            progress = new ProgressDialog(context);
+            progress.setMessage("Loading...");
+            progress.setIndeterminate(false);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setCancelable(true);
+            progress.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    
+    private class StoreRecipes extends AsyncTask<String, Void, String> {
+
+        private IngredientHandler ingredientHandler;
+        private Context context;
+        private ProgressDialog progress;
+        private ArrayList<Recipe> list;
+
+        public StoreRecipes(Context c, IngredientHandler i, ArrayList<Recipe> list)
+        {
+            this.ingredientHandler = i;
+            this.context = c;
+            this.list = list;
+        }
+
+        @Override
+        protected String doInBackground(String... params)
+        {
+	    	for (Recipe r : list)
+	    	{
+	    		r.update();
+	    		Database.createRecipeFromExisting(r);
+	    	}
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+            progress.dismiss();
+            updateFragments();
+            Log.d("StoreRecipes", "Finished importing recipes");
         }
 
         @Override

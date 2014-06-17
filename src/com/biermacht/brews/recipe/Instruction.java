@@ -155,7 +155,7 @@ public class Instruction implements Parcelable {
             if (mashStep.getDisplayDecoctAmount() != 0)
             {
             	s += "Remove " + String.format("%2.0f", mashStep.getDisplayDecoctAmount()) + " " + Units.getVolumeUnits() + 
-            			" of mash, and boil it for " + mashStep.getStepTime() + " minutes.\n\n";
+            			" of mash, and boil it.  Then, add it back to the mash.\n\n";
             }
             
             if (mashStep.getRampTime() != 0 && mashStep.getType().equals(MashStep.TEMPERATURE))
