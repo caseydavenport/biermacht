@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.PlaceholderIngredient;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import android.view.*;
@@ -25,6 +29,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     // Editable rows to display
     public View colorView;
     public View gravityView;
+    public Spinner fermentableTypeSpinner;
 
     // Titles from rows
     public TextView colorViewTitle;
@@ -53,10 +58,9 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
         // Set the onClickListener for each row
         colorView.setOnClickListener(onClickListener);
         gravityView.setOnClickListener(onClickListener);
-
-        // Remove views we don't want
         
         // Add views to main view
+        mainView.addView(fermentableTypeSpinner);
         mainView.addView(colorView);
         mainView.addView(gravityView);
 
@@ -103,6 +107,12 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     {
         ingredientList = new ArrayList<Ingredient>();
         ingredientList.addAll(ingredientHandler.getFermentablesList());
+        
+        // Add a placeholder ingredient.  When selected, allows user to create 
+        // a new custom ingredient.
+        PlaceholderIngredient i = new PlaceholderIngredient("Create new");
+        i.setShortDescription("Create a custom Fermentable");
+        ingredientList.add(0, i);
     }
 
     @Override
@@ -117,6 +127,39 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
         this.adapter = new IngredientSpinnerAdapter(this, ingredientList, "Fermentable", true);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerView.setAdapter(this.adapter);
+        
+        fermentableTypeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+        SpinnerAdapter adapter = new SpinnerAdapter(this, Constants.FERMENTABLE_TYPES, "Type");
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        fermentableTypeSpinner.setAdapter(adapter);
+        
+        // Handle fermentable type selections
+        fermentableTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                type = Constants.FERMENTABLE_TYPES.get(position);
+                if (type.equals(Fermentable.TYPE_EXTRACT) || type.equals(Fermentable.TYPE_SUGAR))
+                {
+                    gravityViewText.setText("1.044");
+	                timeViewTitle.setText(R.string.boil_time);
+	                timeViewText.setText(mRecipe.getBoilTime() + "");
+                }
+                else if (type.equals(Fermentable.TYPE_GRAIN))
+                {
+                    gravityViewText.setText("1.037");
+                    timeViewTitle.setText(R.string.steep_time);
+                    timeViewText.setText(15 + "");
+                }
+                else
+                {
+                    timeViewTitle.setText("Time");
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
     }
 
     @Override
@@ -125,7 +168,20 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
         searchableListListener = new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                fermentable = (Fermentable) filteredList.get(position);
+                // Handle the placeholder case
+            	if (filteredList.get(position).getType().equals(Ingredient.PLACEHOLDER))
+            	{
+            		// Enable custom views
+            		nameView.setVisibility(View.VISIBLE);
+            		fermentableTypeSpinner.setVisibility(View.VISIBLE);
+            		fermentable = new Fermentable("New Fermentable");
+            	}
+            	else
+            	{
+            		nameView.setVisibility(View.GONE);
+            		fermentableTypeSpinner.setVisibility(View.GONE);
+                	fermentable = (Fermentable) filteredList.get(position);
+            	}
 
                 // Set whether we show boil or steep
                 if (mRecipe.getType().equals(Recipe.EXTRACT))
@@ -160,11 +216,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
                 type = fermentable.getFermentableType();
                 
                 // Cancel dialog
-                if (dialog != null)
-                {
-                	dialog.cancel();
-                	dialog = null;
-                }
+                cancelDialog();
             }
         };
     }
@@ -218,6 +270,11 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     @Override
     public void onFinished()
     {
+    	// If this is a new fermentable, save it to the custom db
+    	if (!ingredientList.contains(fermentable))
+    	{
+    		Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
+    	}
         mRecipe.addIngredient(fermentable);
         mRecipe.save();
         finish();

@@ -68,7 +68,7 @@ public class Constants {
     // Other Constants
     private static final String[] hop_uses = {Hop.USE_BOIL, Hop.USE_AROMA, Hop.USE_DRY_HOP};
     private static final String [] hop_forms = {Hop.FORM_PELLET, Hop.FORM_WHOLE, Hop.FORM_PLUG};
-    private static final String [] ferm_types = {Fermentable.TYPE_EXTRACT, Fermentable.TYPE_GRAIN, Fermentable.TYPE_SUGAR, Fermentable.TYPE_ADJUNCT};
+    private static final String [] ferm_types = {Fermentable.TYPE_GRAIN, Fermentable.TYPE_EXTRACT, Fermentable.TYPE_SUGAR, Fermentable.TYPE_ADJUNCT};
     private static final String [] step_types = {MashStep.INFUSION, MashStep.DECOCTION, MashStep.TEMPERATURE};
     private static final String [] unit_systems = {Units.IMPERIAL, Units.METRIC};
     private static final String [] mash_types = {MashProfile.MASH_TYPE_DECOCTION, MashProfile.MASH_TYPE_INFUSION, MashProfile.MASH_TYPE_TEMPERATURE};

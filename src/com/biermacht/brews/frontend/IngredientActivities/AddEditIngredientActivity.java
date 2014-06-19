@@ -60,7 +60,6 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
         searchableListViewText = (TextView) searchableListView.findViewById(R.id.text);
         
         // Remove views we don't want
-        mainView.removeView(nameView);
         mainView.removeView(spinnerView);
         
         // Add views to main view
@@ -84,7 +83,11 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
             	// If the name or description matches, add it to the list.
             	for (Ingredient i : ingredientList)
             	{
-            		if (i.getName().toLowerCase().contains(s.toString().toLowerCase()))
+            		if (i.getType().equals(Ingredient.PLACEHOLDER))
+            		{
+            			filteredList.add(0,i);
+            		}
+            		else if (i.getName().toLowerCase().contains(s.toString().toLowerCase()))
             		{
             			filteredList.add(i);
             		}
@@ -107,8 +110,8 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
     
     public void setInitialSearchableListSelection()
     {
-    	// By default, set it to the first item in the list.
-    	searchableListListener.onItemClick(null, null, 0, 1);
+    	// Set to second item (first is the "create new" placeholder)
+    	searchableListListener.onItemClick(null, null, 1, 1);
     }
     
     @Override
@@ -119,5 +122,14 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
         else
             return;
         dialog.show();
+    }
+    
+    public void cancelDialog()
+    {
+	    if (dialog != null)
+	    {
+	    	dialog.cancel();
+	    	dialog = null;
+	    }
     }
 }

@@ -2,37 +2,25 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
-import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-
-import java.util.ArrayList;
 
 public class AddCustomFermentableActivity extends AddFermentableActivity {
 
     // Views for rows
     public View descriptionView;
-    public Spinner fermentableTypeSpinner;
 
     // Titles from rows
     public TextView descriptionViewTitle;
 
     // Content from rows
     public TextView descriptionViewText;
-
-    // Arrays
-    public ArrayList<String> typeList;
 
     // Storage for acquired values
     String description;
@@ -50,40 +38,15 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
         descriptionViewText.setText("No Description Provided");
         descriptionViewTitle.setText("Description");
 
-        // Get possible fermentable type list
-        typeList = Constants.FERMENTABLE_TYPES;
-
-        // Create spinner for fermentable type
-        fermentableTypeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
-        SpinnerAdapter adapter = new SpinnerAdapter(this, typeList, "Type");
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        fermentableTypeSpinner.setAdapter(adapter);
-
-        // Handle fermentable type selections
-        fermentableTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
-            {
-                type = typeList.get(position);
-                if (type.equals(Fermentable.TYPE_EXTRACT) || type.equals(Fermentable.TYPE_SUGAR))
-                    gravityViewText.setText("1.044");
-                else
-                    gravityViewText.setText("1.037");
-            }
-
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
-        });
-
         // Remove views we don't like
         mainView.removeView(amountView);
         mainView.removeView(timeView);
         mainView.removeView(spinnerView);
         mainView.removeView(searchableListView);
+        mainView.removeView(nameView);
 
         // Add views we do!
         mainView.addView(nameView, 0);
-        mainView.addView(fermentableTypeSpinner);
         mainView.addView(descriptionView);
 
         // Set initial values

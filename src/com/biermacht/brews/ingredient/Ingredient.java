@@ -30,6 +30,7 @@ public abstract class Ingredient implements Parcelable {
 	public static final String YEAST = "Yeast";
 	public static final String MISC = "Misc";
 	public static final String WATER = "Water";
+	public static final String PLACEHOLDER = "Placeholder";
 	
 	// Ingredient uses
 	public static final String USE_BOIL = "Boil";
@@ -49,6 +50,9 @@ public abstract class Ingredient implements Parcelable {
 		this.id = Constants.INVALID_ID;
 		this.ownerId = Constants.INVALID_ID;
         this.databaseId = Constants.DATABASE_DEFAULT;
+        this.amount = 0;
+        this.time = 0;
+        this.inventory = 0;
     }
 
     public Ingredient(Parcel p)
@@ -209,6 +213,7 @@ public abstract class Ingredient implements Parcelable {
 		// If they are not the same time, sort based on type.
 		if (this.getType() != other.getType())
 			return this.getType().compareTo(other.getType());
+		
 		
 		// Otherwise, sort based on name.
 		return this.name.compareTo(other.getName());

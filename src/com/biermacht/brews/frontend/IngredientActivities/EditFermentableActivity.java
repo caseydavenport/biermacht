@@ -26,6 +26,10 @@ public class EditFermentableActivity extends AddFermentableActivity {
         // Enable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
         
+        // Remove views we don't want
+        mainView.removeView(nameView);
+        mainView.removeView(fermentableTypeSpinner);
+        
         // Set button text
         submitButton.setText(R.string.save);
     }
@@ -45,6 +49,9 @@ public class EditFermentableActivity extends AddFermentableActivity {
     public void getList()
     {
         super.getList();
+        
+        // Remove the placeholder ingredient
+        ingredientList.remove(0);
 
         if (!ingredientList.contains(fermentable))
         {

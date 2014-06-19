@@ -25,7 +25,7 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
 
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
-                type = typeList.get(position);
+                type = Constants.FERMENTABLE_TYPES.get(position);
             }
 
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -66,7 +66,7 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
         descriptionViewText.setText(fermentable.getShortDescription());
         timeViewText.setText("60");
         amountViewText.setText("1");
-        fermentableTypeSpinner.setSelection(typeList.indexOf(fermentable.getFermentableType()));
+        fermentableTypeSpinner.setSelection(Constants.FERMENTABLE_TYPES.indexOf(fermentable.getFermentableType()));
     }
 
     @Override

@@ -66,7 +66,7 @@ public class IngredientHandler {
         fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM, Ingredient.FERMENTABLE));
         fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT, Ingredient.FERMENTABLE));
 
-        Collections.sort(fermentablesList, new IngredientComparator());
+        Collections.sort(fermentablesList, new ToStringComparator());
         Log.d("getFermentablesList", "Returning " + fermentablesList.size() + " fermentables");
 		return this.fermentablesList;
 	}
