@@ -58,6 +58,8 @@ public class RecipeCheckboxArrayAdapter extends ArrayAdapter<Recipe> {
 		TextView textView = (TextView) row.findViewById(R.id.label);
 		textView.setText(list.get(position).getRecipeName());
 		final CheckBox checkBox = (CheckBox) row.findViewById(R.id.checkbox);
+		
+		// Set on click listener for checkbox
 		checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -65,6 +67,16 @@ public class RecipeCheckboxArrayAdapter extends ArrayAdapter<Recipe> {
             	checkedByName.put(list.get(position).getRecipeName(), checkBox.isChecked());
             }
         });
+		
+		// We also want one for the text view
+		textView.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				checkBox.setChecked(!checkBox.isChecked());
+            	checkedByName.put(list.get(position).getRecipeName(), checkBox.isChecked());
+			}
+		});
 		
 		// Set the checkbox accordingly
 		checkBox.setChecked(checkedByName.get(list.get(position).getRecipeName()));

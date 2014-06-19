@@ -15,7 +15,6 @@ public class Constants {
 		
 	// New Objects
 	public static final BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
-    public static final Recipe NEW_RECIPE = new Recipe("New Recipe");
 
     // Master recipe - used as parent for custom ingredients
     public static final long MASTER_RECIPE_ID = 1;

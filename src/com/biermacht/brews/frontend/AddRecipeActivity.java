@@ -193,7 +193,7 @@ public class AddRecipeActivity extends AddEditActivity {
     {
         Log.d("AddRecipeActivity", "onRecipeNotFound because we're creating one!");
         // Set values
-        mRecipe = Constants.NEW_RECIPE;
+        mRecipe = new Recipe("New Recipe");
         style = mRecipe.getStyle();
         profile = mRecipe.getMashProfile();
         type = mRecipe.getType();

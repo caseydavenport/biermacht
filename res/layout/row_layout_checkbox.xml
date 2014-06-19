@@ -3,7 +3,7 @@
               android:id="@+id/row_layout_edit_text"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:minHeight="30dp"
+              android:minHeight="45dp"
               android:background="#fff"
               android:focusable="false"
               android:orientation="horizontal">
