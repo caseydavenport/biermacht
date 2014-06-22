@@ -1,6 +1,9 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
+import java.util.Arrays;
+
 import android.os.Bundle;
+import android.view.View;
 
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
@@ -11,14 +14,8 @@ public class EditCustomMiscActivity extends EditMiscActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Remove views we don't want
-        mainView.removeView(timeView);
-        mainView.removeView(amountView);
-        mainView.removeView(searchableListView);
-        
-        // Add those we do
-        mainView.addView(nameView, 0);
-        mainView.addView(unitsSpinner);
+        // Set views
+        this.setViews(Arrays.asList(nameView, amountView, unitsSpinner, timeView, useSpinner, typeSpinner));
         
         // Set values for the given misc.
         setValues(misc);

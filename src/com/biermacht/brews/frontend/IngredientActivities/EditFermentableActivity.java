@@ -63,8 +63,7 @@ public class EditFermentableActivity extends AddFermentableActivity {
         if (!ingredientList.contains(fermentable))
         {
         	Log.d("EditFermentableActivity::getList", "Adding custom fermentable to list: " + fermentable.getName());
-            ingredientList.add(fermentable);
-            Collections.sort(ingredientList, new IngredientComparator());
+            ingredientList.add(0, fermentable);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.biermacht.brews.ingredient;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.utils.Constants;
@@ -216,7 +217,7 @@ public class Misc extends Ingredient {
 	
 	public void setDisplayAmount(double amt, String unit) 
 	{
-
+		Log.d(getName() + "::setDisplayAmount", "Setting amt to: " + amt + " " + unit);
 		if (unit.equalsIgnoreCase(Units.GALLONS))
 			this.amount = Units.gallonsToLiters(amt);
 		else if (unit.equalsIgnoreCase(Units.GRAMS))

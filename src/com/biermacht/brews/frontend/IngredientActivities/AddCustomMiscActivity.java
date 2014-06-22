@@ -1,21 +1,12 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
+import java.util.Arrays;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
-
-import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
-import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.utils.Units;
 
 public class AddCustomMiscActivity extends AddMiscActivity {
 	
@@ -23,15 +14,9 @@ public class AddCustomMiscActivity extends AddMiscActivity {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        
-        // Remove views we don't want
-        mainView.removeView(timeView);
-        mainView.removeView(amountView);
-        mainView.removeView(searchableListView);
-        
-        // Add those we do
-        mainView.addView(nameView, 0);
-        mainView.addView(unitsSpinner);
+
+        // Set views
+        this.setViews(Arrays.asList(nameView, amountView, unitsSpinner, timeView, useSpinner, typeSpinner));
         
         // Set initial values
         misc = new Misc("Custom misc");
@@ -43,8 +28,7 @@ public class AddCustomMiscActivity extends AddMiscActivity {
     {
         super.acquireValues();
         misc.setShortDescription("Custom misc");
-        misc.setUseFor("Custom");
-        misc.setDisplayUnits(units);
+        misc.setUseFor(use);
     }
     
     public void setInitialSearchableListSelection()
@@ -56,7 +40,17 @@ public class AddCustomMiscActivity extends AddMiscActivity {
     @Override
     public void onFinished()
     {
+        Log.d("AddCustomMisc::onFinished", "Adding misc to db_custom: " + misc.getName());
         Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID);
+        if (haveRecipe())
+        {
+        	// If not master ID, update the recipe.
+            Log.d("AddCustomMisc::onFinished", "Adding misc '" + 
+            		misc.getName() + "' to recipe '" + mRecipe.getRecipeName() + "'");
+            mRecipe.addIngredient(misc);
+            mRecipe.save();
+        }
+        Log.d("AddCustomMisc::onFinished", "Closing activity");
         finish();
     }
 

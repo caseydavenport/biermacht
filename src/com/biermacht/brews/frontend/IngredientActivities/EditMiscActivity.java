@@ -1,5 +1,7 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
+import java.util.Arrays;
+
 import android.os.*;
 import android.util.Log;
 import android.view.*;
@@ -41,10 +43,18 @@ public class EditMiscActivity extends AddMiscActivity {
     public void getList()
     {
         super.getList();
+    	Log.d("EditMiscActivity::getList", "Getting miscs list");
+        
+        // Remove the placeholder ingredient
+    	Log.d("EditMiscActivity::getList", "Removing placeholder ingredient");
+        ingredientList.remove(0);
 
         // If this misc is not in the array, add it
         if (!ingredientList.contains(misc))
+        {
+        	Log.d("EditMiscActivity::getList", "Adding custom misc to list: " + misc.getName());
             ingredientList.add(0, misc);
+        }
     }
 
     @Override

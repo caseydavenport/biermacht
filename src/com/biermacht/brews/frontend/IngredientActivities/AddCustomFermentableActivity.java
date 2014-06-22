@@ -122,11 +122,4 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
         Log.d("AddCustomFermentableActivity::onFinished", "Closing activity");
         finish();
     }
-    
-    // Helper which returns True if we're adding this ingredient to a recipe,
-    // False if we're adding it to the custom DB.
-    public boolean haveRecipe()
-    {
-    	return mRecipe.getId() != Constants.MASTER_RECIPE_ID;
-    }
 }

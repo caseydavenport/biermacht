@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.utils.Constants;
 
 public abstract class AddEditIngredientActivity extends AddEditActivity {
 
@@ -131,5 +132,12 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
 	    	dialog.cancel();
 	    	dialog = null;
 	    }
+    }
+    
+    // Helper which returns True if we're adding this ingredient to a recipe,
+    // False if we're adding it to the custom DB.
+    public boolean haveRecipe()
+    {
+    	return mRecipe.getId() != Constants.MASTER_RECIPE_ID;
     }
 }
