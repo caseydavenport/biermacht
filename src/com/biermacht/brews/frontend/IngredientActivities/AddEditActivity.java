@@ -415,13 +415,17 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 			if (views.contains(v))
 			{
 				v.setVisibility(View.VISIBLE);
-				mainView.removeView(v);
-				mainView.addView(v, views.indexOf(v));
 			}
 			else
 			{
 				v.setVisibility(View.GONE);
 			}
+		}
+		
+		for (View v : views)
+		{
+			mainView.removeView(v);
+			mainView.addView(v);
 		}
 	}
 }
