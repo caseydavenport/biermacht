@@ -1,7 +1,9 @@
 package com.biermacht.brews.ingredient;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
 // Grain subclass of Ingredient
@@ -127,10 +129,16 @@ public class Fermentable extends Ingredient implements Parcelable {
 	}
 
 	public String getFermentableType() {
+		Log.d(getName() + "::getFermentableType", "Returning fermentable type: " + type);
 		return type;
 	}	
 	
 	public void setFermentableType(String type){
+		Log.d(getName() + "::setFermentableType", "Setting fermentable type to: " + type);
+		if (!Constants.FERMENTABLE_TYPES.contains(type))
+		{
+			Log.e(getName() + "::setFermentableType", "Invalid fermentable type: " + type);
+		}
 		this.type = type;
 	}
 

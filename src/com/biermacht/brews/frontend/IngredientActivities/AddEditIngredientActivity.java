@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -48,22 +49,21 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
         
         // Initialize dialog to null
         dialog = null;
+        
+        /************************************************************************
+         ************* Add views *************************************************
+         *************************************************************************/
+        this.registerViews(Arrays.asList(searchableListView));
+        this.setViews(Arrays.asList(searchableListView, nameView, timeView, amountView));
 
-        // Set the onClickListener for each row
-        searchableListView.setOnClickListener(onClickListener);
-
-        // Titles
+        /************************************************************************
+         ************* Get titles, set values   **********************************
+         *************************************************************************/
         searchableListViewTitle  = (TextView) searchableListView.findViewById(R.id.title);
         searchableListViewTitle.setText("Select");
 
         // Text views
         searchableListViewText = (TextView) searchableListView.findViewById(R.id.text);
-        
-        // Remove views we don't want
-        mainView.removeView(spinnerView);
-        
-        // Add views to main view
-        mainView.addView(searchableListView, 0);
         
         // Configure the searchable list listener
         configureSearchableListListener();

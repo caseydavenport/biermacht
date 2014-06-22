@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 public class EditFermentableActivity extends AddFermentableActivity {
@@ -26,12 +28,15 @@ public class EditFermentableActivity extends AddFermentableActivity {
         // Enable delete button for this view
         findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
         
-        // Remove views we don't want
-        mainView.removeView(nameView);
-        mainView.removeView(fermentableTypeSpinner);
+        // Set views
+        this.setViews(Arrays.asList(searchableListView, timeView, amountView,
+                					colorView, gravityView));
         
         // Set button text
         submitButton.setText(R.string.save);
+        
+        // Set initial selection
+        this.setInitialSearchableListSelection();
     }
 
     @Override
@@ -49,12 +54,15 @@ public class EditFermentableActivity extends AddFermentableActivity {
     public void getList()
     {
         super.getList();
+    	Log.d("EditFermentableActivity::getList", "Getting fermentables list");
         
         // Remove the placeholder ingredient
+    	Log.d("EditFermentableActivity::getList", "Removing placeholder ingredient");
         ingredientList.remove(0);
 
         if (!ingredientList.contains(fermentable))
         {
+        	Log.d("EditFermentableActivity::getList", "Adding custom fermentable to list: " + fermentable.getName());
             ingredientList.add(fermentable);
             Collections.sort(ingredientList, new IngredientComparator());
         }

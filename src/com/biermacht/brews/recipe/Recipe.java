@@ -335,6 +335,7 @@ public class Recipe implements Parcelable {
 	
 	public void addIngredient(Ingredient i)
 	{
+		Log.d(getRecipeName() + "::addIngredient", "Adding ingredient: " + i.getName());
 		if (i.getType().equals(Ingredient.HOP))
 			addHop(i);
 		else if (i.getType().equals(Ingredient.FERMENTABLE))
@@ -482,6 +483,7 @@ public class Recipe implements Parcelable {
 
 	private void addFermentable(Ingredient i) 
 	{
+		Log.d(getRecipeName() + "::addFermentable", "Adding fermentable: " + i.getName());
 		Fermentable f = (Fermentable) i;
 		fermentables.add(f);
 	}
@@ -1175,7 +1177,7 @@ public class Recipe implements Parcelable {
     
     public void save()
     {
-    	Log.d("Recipe", "Saving recipe '" + name + "' with id" + this.getId());
+    	Log.d(getRecipeName() + "::save", "Saving with id: " + this.getId());
         Database.updateRecipe(this);
     }
 }

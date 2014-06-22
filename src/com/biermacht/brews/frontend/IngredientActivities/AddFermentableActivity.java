@@ -1,8 +1,11 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.AddRecipeActivity;
+import com.biermacht.brews.frontend.DisplayRecipeActivity;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
@@ -55,16 +60,15 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
         colorView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         gravityView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
-        // Set the onClickListener for each row
-        colorView.setOnClickListener(onClickListener);
-        gravityView.setOnClickListener(onClickListener);
-        
-        // Add views to main view
-        mainView.addView(fermentableTypeSpinner);
-        mainView.addView(colorView);
-        mainView.addView(gravityView);
+        /************************************************************************
+         ************* Add views *************************************************
+         *************************************************************************/
+        this.registerViews(Arrays.asList(fermentableTypeSpinner, colorView, gravityView));
+        this.setViews(Arrays.asList(searchableListView, timeView, amountView, colorView, gravityView));
 
-        // Set titles for views
+        /************************************************************************
+         ************* Get titles, set values   **********************************
+         *************************************************************************/
         colorViewTitle = (TextView) colorView.findViewById(R.id.title);
         colorViewTitle.setText("SRM Color");
 
@@ -89,13 +93,17 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     public void onMissedClick(View v)
     {
     	super.onMissedClick(v);
+        Log.d("AddFermentableActivity::onMissedClick", "Checking views for: " + v);
         
         if (v.equals(colorView))
             dialog = alertBuilder.editTextFloatAlert(colorViewText, colorViewTitle).create();
         else if (v.equals(gravityView))
         	dialog = alertBuilder.editTextFloatAlert(gravityViewText, gravityViewTitle).create();
         else
+        {
+            Log.d("AddFermentableActivity::onMissedClick", "View not found: " + v);
             return;
+        }
 
         // Force keyboard open and show popup
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -105,11 +113,13 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     @Override
     public void getList()
     {
+    	Log.d("AddFermentableActivity::getList", "Getting fermentables list");
         ingredientList = new ArrayList<Ingredient>();
         ingredientList.addAll(ingredientHandler.getFermentablesList());
         
         // Add a placeholder ingredient.  When selected, allows user to create 
         // a new custom ingredient.
+    	Log.d("AddFermentableActivity::getList", "Adding placeholder ingredient");
         PlaceholderIngredient i = new PlaceholderIngredient("Create new");
         i.setShortDescription("Create a custom Fermentable");
         ingredientList.add(0, i);
@@ -139,21 +149,31 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 type = Constants.FERMENTABLE_TYPES.get(position);
-                if (type.equals(Fermentable.TYPE_EXTRACT) || type.equals(Fermentable.TYPE_SUGAR))
+            	Log.d("AddFermentableActivity::onItemSelected", "Fermentable type selcted: " + type);
+                if (mRecipe.getType().equals(Recipe.EXTRACT))
                 {
-                    gravityViewText.setText("1.044");
-	                timeViewTitle.setText(R.string.boil_time);
-	                timeViewText.setText(mRecipe.getBoilTime() + "");
-                }
-                else if (type.equals(Fermentable.TYPE_GRAIN))
-                {
-                    gravityViewText.setText("1.037");
-                    timeViewTitle.setText(R.string.steep_time);
-                    timeViewText.setText(15 + "");
-                }
+                	timeView.setVisibility(View.VISIBLE);
+	                if (type.equals(Fermentable.TYPE_EXTRACT) || type.equals(Fermentable.TYPE_SUGAR))
+	                {
+	                    gravityViewText.setText("1.044");
+		                timeViewTitle.setText(R.string.boil_time);
+		                timeViewText.setText(mRecipe.getBoilTime() + "");
+	                }
+	                else if (type.equals(Fermentable.TYPE_GRAIN))
+	                {
+	                    gravityViewText.setText("1.037");
+	                    timeViewTitle.setText(R.string.steep_time);
+	                    timeViewText.setText(15 + "");
+	                }
+	                else
+	                {
+	                    timeViewTitle.setText("Time");
+	                }
+                } 
                 else
                 {
-                    timeViewTitle.setText("Time");
+                    // TODO: Do we ever want to enter a time for mashes?
+                    timeView.setVisibility(View.GONE);
                 }
             }
 
@@ -171,17 +191,20 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
                 // Handle the placeholder case
             	if (filteredList.get(position).getType().equals(Ingredient.PLACEHOLDER))
             	{
-            		// Enable custom views
-            		nameView.setVisibility(View.VISIBLE);
-            		fermentableTypeSpinner.setVisibility(View.VISIBLE);
-            		fermentable = new Fermentable("New Fermentable");
+            		// Cancel the dialog 
+                    cancelDialog();
+                    
+            		// Switch into AddCustomFermentableActivity
+                    Intent intent = new Intent(AddFermentableActivity.this, AddCustomFermentableActivity.class);
+                    intent.putExtra(Constants.KEY_RECIPE, mRecipe);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    return;
             	}
-            	else
-            	{
-            		nameView.setVisibility(View.GONE);
-            		fermentableTypeSpinner.setVisibility(View.GONE);
-                	fermentable = (Fermentable) filteredList.get(position);
-            	}
+                
+            	// Not a placeholder
+            	fermentable = (Fermentable) filteredList.get(position);
 
                 // Set whether we show boil or steep
                 if (mRecipe.getType().equals(Recipe.EXTRACT))
@@ -255,6 +278,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     public void acquireValues() throws Exception
     {
         super.acquireValues();
+        Log.d("AddFermentableActivity::acquireValues", "Acquiring values for: " + fermentable.getName());
 
         color = Double.parseDouble(colorViewText.getText().toString());
         gravity = Double.parseDouble(gravityViewText.getText().toString());
@@ -270,11 +294,6 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     @Override
     public void onFinished()
     {
-    	// If this is a new fermentable, save it to the custom db
-    	if (!ingredientList.contains(fermentable))
-    	{
-    		Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
-    	}
         mRecipe.addIngredient(fermentable);
         mRecipe.save();
         finish();

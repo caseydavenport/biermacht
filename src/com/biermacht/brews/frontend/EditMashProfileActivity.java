@@ -1,10 +1,21 @@
 package com.biermacht.brews.frontend;
 
+import java.util.ArrayList;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.IngredientActivities.AddFermentableActivity;
+import com.biermacht.brews.frontend.adapters.RecipeCheckboxArrayAdapter;
+import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 
 public class EditMashProfileActivity extends AddMashProfileActivity {
@@ -66,6 +77,27 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
         super.acquireValues();
         mRecipe.setMashProfile(mProfile);
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_edit_mash_profile, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+        	case android.R.id.home:
+        		finish();
+        		return true;
+        		
+            case R.id.menu_save:
+            	saveMashProfileAlert().show();
+    		    return true;
+    	}
+    	return true;
+    }
 
     @Override
     public void onFinished()
@@ -84,5 +116,22 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
     public void onDeletePressed()
     {
     	// Can't delete these!
+    }
+    
+    private AlertDialog.Builder saveMashProfileAlert()
+    {
+        return new AlertDialog.Builder(this)
+                .setTitle("Save Mash Profile?")
+                .setMessage("Save this profile for use in other recipes?")
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) 
+                    {
+                    	
+                    }
+
+                })
+
+                .setNegativeButton(R.string.cancel, null);
     }
 }

@@ -1,7 +1,10 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
+import java.util.Arrays;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -38,16 +41,15 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
         descriptionViewText.setText("No Description Provided");
         descriptionViewTitle.setText("Description");
 
-        // Remove views we don't like
-        mainView.removeView(amountView);
-        mainView.removeView(timeView);
-        mainView.removeView(spinnerView);
-        mainView.removeView(searchableListView);
-        mainView.removeView(nameView);
-
-        // Add views we do!
-        mainView.addView(nameView, 0);
-        mainView.addView(descriptionView);
+        // Set views
+        Log.d("AddCustomFermentableActivity::onCreate", "Initializing views");
+        this.registerViews(Arrays.asList(descriptionView));
+        this.setViews(Arrays.asList(nameView, fermentableTypeSpinner, timeView, amountView, colorView, gravityView, descriptionView));
+        if (!haveRecipe())
+        {
+        	timeView.setVisibility(View.GONE);
+        	amountView.setVisibility(View.GONE);
+        }
 
         // Set initial values
         setValues();
@@ -57,12 +59,17 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
     public void onMissedClick(View v)
     {
         super.onMissedClick(v);
+        Log.d("AddCustomFermentableActivity::onMissedClick", "Checking views for: " + v);
 
         AlertDialog alert;
         if (v.equals(descriptionView))
+        {
+            Log.d("AddCustomFermentableActivity::onMissedClick", "Displaying descriptionView edit alert");
             alert = alertBuilder.editTextMultilineStringAlert(descriptionViewText, descriptionViewTitle).create();
+        }
         else
         {
+            Log.d("AddCustomFermentableActivity::onMissedClick", "View not found: " + v);
             return;
         }
 
@@ -74,6 +81,8 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
     // We need this because we don't use spinners in this activity
     public void setValues()
     {
+        Log.d("AddCustomFermentableActivity::setValues", "Setting textEdit values");
+        
         // Create new fermentable
         fermentable = new Fermentable("New Fermentable");
 
@@ -90,17 +99,34 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
     public void acquireValues() throws Exception
     {
         super.acquireValues();
+        Log.d("AddCustomFermentableActivity::acquireValues", "Acquiring values for: " + fermentable.getName());
         description = descriptionViewText.getText().toString();
 
         // Set to user provided values
         fermentable.setShortDescription(description);
-        fermentable.setFermentableType(type);
     }
 
     @Override
     public void onFinished()
     {
-            Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
-            finish();
+        Log.d("AddCustomFermentableActivity::onFinished", "Adding fermentable to db_custom: " + fermentable.getName());
+        Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
+        if (haveRecipe())
+        {
+        	// If not master ID, update the recipe.
+            Log.d("AddCustomFermentableActivity::onFinished", "Adding fermentable '" + 
+        	      fermentable.getName() + "' to recipe '" + mRecipe.getRecipeName() + "'");
+            mRecipe.addIngredient(fermentable);
+            mRecipe.save();
+        }
+        Log.d("AddCustomFermentableActivity::onFinished", "Closing activity");
+        finish();
+    }
+    
+    // Helper which returns True if we're adding this ingredient to a recipe,
+    // False if we're adding it to the custom DB.
+    public boolean haveRecipe()
+    {
+    	return mRecipe.getId() != Constants.MASTER_RECIPE_ID;
     }
 }

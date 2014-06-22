@@ -32,6 +32,8 @@ import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class AddEditActivity extends Activity implements OnClickListener {
 
@@ -60,6 +62,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     
     // Array adapter for spinner
     public ArrayAdapter adapter;
+    
+    // Keeps track of all registered views
+    public ArrayList<View> registeredViews;
 
     // IngredientHandler to get ingredient arrays
     public IngredientHandler ingredientHandler;
@@ -138,11 +143,11 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         findViewById(R.id.delete_button).setVisibility(View.GONE);
 
         // Get recipe and other ids from calling activity
-        Log.d("AddEditActivity", "Calling getValuesFromIntent()");
+        Log.d("AddEditActivity::onCreate", "Calling getValuesFromIntent()");
         getValuesFromIntent();
 
         // Get the list to show
-        Log.d("AddEditActivity", "Calling getList()");
+        Log.d("AddEditActivity::onCreate", "Calling getList()");
         getList();
 
         // On click listener
@@ -186,19 +191,11 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         timeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         spinnerView = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
 
-        // Set the onClickListener for each row
-        searchableListView.setOnClickListener(onClickListener);
-        nameView.setOnClickListener(onClickListener);
-        amountView.setOnClickListener(onClickListener);
-        timeView.setOnClickListener(onClickListener);
-
         /************************************************************************
-         ************* Add views to main view  **********************************
+         ************* Add views *************************************************
          *************************************************************************/
-        mainView.addView(spinnerView);
-        mainView.addView(nameView);
-        mainView.addView(timeView);
-        mainView.addView(amountView);
+        this.registerViews(Arrays.asList(spinnerView, nameView, timeView, amountView));
+        this.setViews(Arrays.asList(spinnerView, nameView, timeView, amountView));
 
         /************************************************************************
          ************* Get titles, set values   **********************************
@@ -338,7 +335,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 
     public void acquireValues() throws Exception
     {
-        Log.d("AddEditActivity", "Acquiring values from edit texts");
+        Log.d("AddEditActivity::acquireValues", "Acquiring values");
         name = nameViewText.getText().toString();
         amount = Double.parseDouble(amountViewText.getText().toString());
         time = Integer.parseInt(timeViewText.getText().toString());
@@ -353,14 +350,14 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         }
         catch (Exception e)
         {
-            Log.d("AddEditActivity", "Could not acquire values: " + e.toString());
+            Log.d("AddEditActivity::onSubmitPressed", "Could not acquire values: " + e.toString());
             e.printStackTrace();
             readyToGo = false;
         }
 
         if (readyToGo)
         {
-            Log.d("AddEditActivity", "Finishing");
+            Log.d("AddEditActivity::onSubmitPressed", "Successfully acquired values");
             mRecipe.save();
             onFinished();
         }
@@ -370,22 +367,61 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 		// if "SUBMIT" button pressed
 		if (v.getId() == R.id.submit_button)
 		{
-            Log.d("AddEditActivity", "Submit Pressed");
+            Log.d("AddEditActivity::onClick", "Submit Pressed");
             onSubmitPressed();
 		}
 
         // If "DELETE" button pressed
         if (v.getId() == R.id.delete_button)
         {
-            Log.d("AddEditActivity", "Delete Pressed");
+            Log.d("AddEditActivity::onClick", "Delete Pressed");
             onDeletePressed();
         }
 		
 		// if "CANCEL" button pressed
 		if (v.getId() == R.id.cancel_button)
 		{
-            Log.d("AddEditActivity", "Cancel Pressed");
+            Log.d("AddEditActivity::onClick", "Cancel Pressed");
             onCancelPressed();
+		}
+	}
+	
+	public void registerViews(List<View> views)
+	{
+		if (this.registeredViews == null)
+		{
+			Log.d("AddEditActivity::registerViews", "Initializing registeredViews");
+			this.registeredViews = new ArrayList<View>();
+		}
+		
+		this.registeredViews.addAll(views);
+		for (View v : views)
+		{
+			Log.d("AddEditActivity::registerViews", "Registering view");
+			mainView.addView(v);
+			if (!(v instanceof Spinner))
+			{
+				// Don't perform this for spinners.
+				v.setOnClickListener(onClickListener);
+			}
+		}
+	}
+	
+	public void setViews(List<View> views)
+	{
+		Log.d("AddEditActivity::setViews", "Setting visible views");
+		for (View v : this.registeredViews)
+		{
+			if (views.contains(v))
+			{
+				v.setVisibility(View.VISIBLE);
+				mainView.removeView(v);
+				mainView.addView(v, views.indexOf(v));
+			}
+			else
+			{
+				v.setVisibility(View.GONE);
+			}
 		}
 	}
 }
