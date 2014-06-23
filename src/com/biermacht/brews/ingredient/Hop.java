@@ -39,7 +39,7 @@ public class Hop extends Ingredient {
 	// Hop types
 	public static final String TYPE_BITTERING = "Bittering";
 	public static final String TYPE_AROMA = "Aromatic";
-	public static final String TYPE_BOTH = "Bittering and Aromatic";
+	public static final String TYPE_BOTH = "Bittering / Aromatic";
 
 	public Hop(String name)
 	{
@@ -47,7 +47,7 @@ public class Hop extends Ingredient {
 		this.amount = 0;
 		this.alpha = 0;
 		this.use = USE_BOIL;
-		this.type = TYPE_BITTERING;
+		this.type = TYPE_BOTH;
 		this.form = FORM_PELLET;
 		this.origin = "";
 		this.substitutes = new ArrayList<String>(); // TODO Get this from somewhere

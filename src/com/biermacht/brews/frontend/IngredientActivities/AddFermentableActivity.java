@@ -121,7 +121,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
         // a new custom ingredient.
     	Log.d("AddFermentableActivity::getList", "Adding placeholder ingredient");
         PlaceholderIngredient i = new PlaceholderIngredient("Create new");
-        i.setShortDescription("Create a custom Fermentable");
+        i.setShortDescription("Create a custom fermentable");
         ingredientList.add(0, i);
     }
 

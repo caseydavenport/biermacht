@@ -192,7 +192,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
         // a new custom ingredient.
     	Log.d("AddMiscActivity::getList", "Adding placeholder ingredient");
         PlaceholderIngredient i = new PlaceholderIngredient("Create new");
-        i.setShortDescription("Create a custom Misc");
+        i.setShortDescription("Create a custom misc");
         ingredientList.add(0, i);
     }
 
@@ -225,7 +225,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
             		// Cancel the dialog 
                     cancelDialog();
                     
-            		// Switch into AddCustomFermentableActivity
+            		// Switch into AddCustom
                     Intent intent = new Intent(AddMiscActivity.this, AddCustomMiscActivity.class);
                     intent.putExtra(Constants.KEY_RECIPE, mRecipe);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

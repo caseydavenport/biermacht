@@ -17,6 +17,11 @@ public class AddCustomMiscActivity extends AddMiscActivity {
 
         // Set views
         this.setViews(Arrays.asList(nameView, amountView, unitsSpinner, timeView, useSpinner, typeSpinner));
+        if (!haveRecipe())
+        {
+        	timeView.setVisibility(View.GONE);
+        	amountView.setVisibility(View.GONE);
+        }
         
         // Set initial values
         misc = new Misc("Custom misc");

@@ -87,7 +87,7 @@ public class IngredientHandler {
         yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM, Ingredient.YEAST));
         yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT, Ingredient.YEAST));
 
-        Collections.sort(yeastsList, new IngredientComparator());
+        Collections.sort(yeastsList, new ToStringComparator());
 		return this.yeastsList;
 	}
 	
@@ -107,7 +107,7 @@ public class IngredientHandler {
         hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM, Ingredient.HOP));
         hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT, Ingredient.HOP));
 
-        Collections.sort(hopsList, new IngredientComparator());
+        Collections.sort(hopsList, new ToStringComparator());
 		return this.hopsList;
 	}
 	
@@ -127,7 +127,7 @@ public class IngredientHandler {
         miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM, Ingredient.MISC));
         miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT, Ingredient.MISC));
 
-        Collections.sort(miscsList, new IngredientComparator());
+        Collections.sort(miscsList, new ToStringComparator());
 		return this.miscsList;
 	}
 
@@ -157,7 +157,7 @@ public class IngredientHandler {
 	public ArrayList<MashProfile> getMashProfileList()
 	{
         if (this.profileList == null)
-        {
+        { 
             Log.d("getMashProfileList", "List is null, creating");
             profileList = new ArrayList<MashProfile>();
         }

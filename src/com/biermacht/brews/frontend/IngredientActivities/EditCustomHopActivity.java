@@ -1,5 +1,7 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
+import java.util.Arrays;
+
 import android.os.Bundle;
 
 import com.biermacht.brews.utils.Constants;
@@ -12,13 +14,8 @@ public class EditCustomHopActivity extends EditHopActivity {
     {
         super.onCreate(savedInstanceState);
 
-        // Remove views we don't want
-        mainView.removeView(timeView);
-        mainView.removeView(amountView);
-        mainView.removeView(searchableListView);
-        
-        // Add those we do
-        mainView.addView(nameView, 0);
+        // Set views
+        this.setViews(Arrays.asList(nameView, amountView, timeView, formSpinner, useSpinner, alphaAcidView));
         
         // Set values for the given hop
         setValues(hop);

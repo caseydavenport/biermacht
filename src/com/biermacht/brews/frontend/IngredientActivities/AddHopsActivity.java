@@ -1,15 +1,19 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.PlaceholderIngredient;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,16 +62,12 @@ public class AddHopsActivity extends AddEditIngredientActivity {
         alphaAcidView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
         useSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
         formSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
-
-        // Set the onClickListener for each row
-        alphaAcidView.setOnClickListener(onClickListener);
         
-        // Remove view we don't want
-
-        // Add Views to main view
-        mainView.addView(formSpinner);
-        mainView.addView(useSpinner);
-        mainView.addView(alphaAcidView);
+        /************************************************************************
+         ************* Add views *************************************************
+         *************************************************************************/
+        this.registerViews(Arrays.asList(alphaAcidView, useSpinner, formSpinner));
+        this.setViews(Arrays.asList(searchableListView, amountView, timeView, formSpinner, useSpinner, alphaAcidView));
 
         // Configure titles
         alphaAcidViewTitle = (TextView) alphaAcidView.findViewById(R.id.title);
@@ -154,6 +154,13 @@ public class AddHopsActivity extends AddEditIngredientActivity {
     {
         ingredientList = new ArrayList<Ingredient>();
         ingredientList.addAll(ingredientHandler.getHopsList());
+        
+        // Add a placeholder ingredient.  When selected, allows user to create 
+        // a new custom ingredient.
+    	Log.d("AddMiscActivity::getList", "Adding placeholder ingredient");
+        PlaceholderIngredient i = new PlaceholderIngredient("Create new");
+        i.setShortDescription("Create a custom hop");
+        ingredientList.add(0, i);
     }
 
     @Override
@@ -183,6 +190,22 @@ public class AddHopsActivity extends AddEditIngredientActivity {
         searchableListListener = new OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // Handle the placeholder case
+            	if (filteredList.get(position).getType().equals(Ingredient.PLACEHOLDER))
+            	{
+            		// Cancel the dialog 
+                    cancelDialog();
+                    
+            		// Switch into AddCustom
+                    Intent intent = new Intent(AddHopsActivity.this, AddCustomHopsActivity.class);
+                    intent.putExtra(Constants.KEY_RECIPE, mRecipe);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    return;
+            	}
+            	
+            	// Not a placeholder
                 hop = (Hop) filteredList.get(position);
                 
                 setValues(hop);

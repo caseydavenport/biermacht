@@ -8,6 +8,7 @@ import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -108,11 +109,16 @@ public class EditHopActivity extends AddHopsActivity {
     public void getList()
     {
         super.getList();
+    	Log.d("EditHopActivity::getList", "Getting hops list");
+        
+        // Remove the placeholder ingredient
+    	Log.d("EditHopActivity::getList", "Removing placeholder ingredient");
+        ingredientList.remove(0);
 
         if (!ingredientList.contains(hop))
         {
-            ingredientList.add(hop);
-            Collections.sort(ingredientList, new IngredientComparator());
+        	Log.d("EditHopActivity::getList", "Adding custom hop to list: " + hop.getName());
+            ingredientList.add(0, hop);
         }
     }
 

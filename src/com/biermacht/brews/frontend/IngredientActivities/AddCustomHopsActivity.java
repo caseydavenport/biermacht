@@ -1,6 +1,10 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
+import java.util.Arrays;
+
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.utils.Constants;
@@ -13,14 +17,13 @@ public class AddCustomHopsActivity extends AddHopsActivity {
     {
         super.onCreate(savedInstanceState);
 
-        // Remove views we don't want
-        mainView.removeView(timeView);
-        mainView.removeView(amountView);
-        mainView.removeView(searchableListView);
-        
-        // Add those we do
-        mainView.addView(nameView, 0);
-        
+        // Set views
+        this.setViews(Arrays.asList(nameView, amountView, timeView, formSpinner, useSpinner, alphaAcidView));
+        if (!haveRecipe())
+        {
+        	timeView.setVisibility(View.GONE);
+        	amountView.setVisibility(View.GONE);
+        }
         // Set initial values
         hop = new Hop("Custom hop");
         setValues(hop);
@@ -42,7 +45,17 @@ public class AddCustomHopsActivity extends AddHopsActivity {
     @Override
     public void onFinished()
     {
+        Log.d("AddCustomHop::onFinished", "Adding hop to db_custom: " + hop.getName());
         Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, hop, Constants.MASTER_RECIPE_ID);
+        if (haveRecipe())
+        {
+        	// If not master ID, update the recipe.
+            Log.d("AddCustomHop::onFinished", "Adding hop '" + 
+            	   hop.getName() + "' to recipe '" + mRecipe.getRecipeName() + "'");
+            mRecipe.addIngredient(hop);
+            mRecipe.save();
+        }
+        Log.d("AddCustomHop::onFinished", "Closing activity");
         finish();
     }
 
