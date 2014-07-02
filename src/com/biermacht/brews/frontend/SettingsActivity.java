@@ -217,7 +217,7 @@ public class SettingsActivity extends AddEditActivity {
 	{
 		return new AlertDialog.Builder(this)
 			.setTitle("Export all recipes")
-			.setMessage("Export all recipes to recipes.xml.  Overwrites any existing file.")
+			.setMessage("Export all recipes to BeerXML.")
 			.setPositiveButton(R.string.export, new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
@@ -229,11 +229,11 @@ public class SettingsActivity extends AddEditActivity {
 		    .setNegativeButton(R.string.cancel, null);
 	}
 	
-	private Builder finishedExporting()
+	private Builder finishedExporting(String pathToFile)
 	{
 		return new AlertDialog.Builder(this)
 			.setTitle("Complete")
-			.setMessage("Finished exporting recipes.")
+			.setMessage("Finished exporting recipes to: \n" + pathToFile)
 			.setPositiveButton(R.string.done, null);
 	}
 	
@@ -241,11 +241,12 @@ public class SettingsActivity extends AddEditActivity {
     private class ExportRecipes extends AsyncTask<String, Void, String> {
 
         private ProgressDialog progress;
+        private RecipeXmlWriter xmlWriter;
 
         @Override
         protected String doInBackground(String... params)
         {
-            RecipeXmlWriter xmlWriter = new RecipeXmlWriter(SettingsActivity.this);
+            xmlWriter = new RecipeXmlWriter(SettingsActivity.this);
             xmlWriter.WriteRecipe(Database.getRecipeList(MainActivity.databaseInterface));
             return "Executed";
         }
@@ -255,7 +256,7 @@ public class SettingsActivity extends AddEditActivity {
         {
             super.onPostExecute(result);
             progress.dismiss();
-            finishedExporting().show();
+            finishedExporting(xmlWriter.getSavedFileLocation()).show();
             Log.d("ExportAllRecipes", "Finished exporting recipes");
         }
 

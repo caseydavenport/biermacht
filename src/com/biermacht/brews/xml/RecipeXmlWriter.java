@@ -26,10 +26,12 @@ import com.biermacht.brews.ingredient.*;
 public class RecipeXmlWriter 
 {
 	private Context c;
+	private String lastFileLocation;
 	
 	public RecipeXmlWriter(Context c)
 	{
 		this.c = c;
+		this.lastFileLocation = "";
 	}
 	
 	public void WriteRecipe(List<Recipe> list) 
@@ -103,11 +105,15 @@ public class RecipeXmlWriter
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			File file = getStoragePath("recipes.xml");
+			Date date = new Date();
+			String dateString = date.getDate() + "-" + date.getMonth() + "-" + date.getYear() + "_" + date.getHours() + ":"
+					          + date.getMinutes() + ":" + date.getSeconds();
+			File file = getStoragePath("recipes-" + dateString + ".xml");
 			StreamResult result = new StreamResult(file);
 			Log.d("WriteXmlFile", "Outputing file to:" + file);
  
 			transformer.transform(source, result);
+			this.lastFileLocation = file.getAbsolutePath();
 		
 		} catch (ParserConfigurationException e) 
 		{
@@ -456,5 +462,10 @@ public class RecipeXmlWriter
 			Log.d("XmlWriter", "File already exists.");
 		}
 	    return file;
+	}
+	
+	public String getSavedFileLocation()
+	{
+		return this.lastFileLocation;
 	}
 }
