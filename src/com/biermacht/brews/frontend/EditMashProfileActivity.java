@@ -17,6 +17,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddFermentableActivity;
 import com.biermacht.brews.frontend.adapters.RecipeCheckboxArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 
 public class EditMashProfileActivity extends AddMashProfileActivity {
 
@@ -127,11 +128,26 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
 
                     public void onClick(DialogInterface dialog, int which) 
                     {
-                    	
+                    	mProfile.setName("Profile from " + mRecipe.getRecipeName());
+                    	Database.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, mProfile.getOwnerId());
+                    	onMashProfileSavedAlert().create().show();
                     }
 
                 })
 
                 .setNegativeButton(R.string.cancel, null);
+    }
+    
+    private AlertDialog.Builder onMashProfileSavedAlert()
+    {
+        return new AlertDialog.Builder(this)
+                .setTitle("Profile Saved")
+                .setMessage("Your mash profile has been saved! Make changes in the Mash Profile Editor.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) 
+                    {}
+
+                });
     }
 }
