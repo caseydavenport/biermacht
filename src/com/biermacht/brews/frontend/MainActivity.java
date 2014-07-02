@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -259,6 +260,7 @@ public class MainActivity extends Activity{
     {
     	// Build view which contains the recipes to select
         final ListView v = new ListView(getApplicationContext());
+        v.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter(getApplicationContext(), foundImportedRecipes);
         v.setAdapter(adapter);
         final ArrayList<Recipe> recipesToImport = new ArrayList<Recipe>();
