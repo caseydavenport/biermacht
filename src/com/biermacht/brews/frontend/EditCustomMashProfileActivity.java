@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
+import android.view.*;
 
 public class EditCustomMashProfileActivity extends EditMashProfileActivity {
 
@@ -29,6 +30,12 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
 
         // Initialize data containers
         name = mProfile.getName();
+    }
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        return true;
     }
 
     @Override
