@@ -38,7 +38,8 @@
                 android:padding="0dip"
                 android:dividerHeight="0dp"
                 android:drawSelectorOnTop="true"
-                android:listSelector="@drawable/selector" >
+                android:listSelector="@drawable/selector"
+				android:animateLayoutChanges="true">
         </ListView>
 
         <TextView android:id="@+id/no_recipes_view"
