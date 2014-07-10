@@ -296,9 +296,9 @@ public class AddRecipeActivity extends AddEditActivity {
         styleArray = MainActivity.ingredientHandler.getStylesList();
         profileArray = MainActivity.ingredientHandler.getMashProfileList();
         typeArray = new ArrayList<String>();
-        typeArray.add(Recipe.EXTRACT);
-        typeArray.add(Recipe.PARTIAL_MASH);
         typeArray.add(Recipe.ALL_GRAIN);
+        typeArray.add(Recipe.PARTIAL_MASH);
+        typeArray.add(Recipe.EXTRACT);
 
         // If it doesn't contain the current recipes style / profile,
         // then it is custom and we add it to the list.

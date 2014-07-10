@@ -101,7 +101,7 @@ public class Recipe implements Parcelable {
 		// ================================================================
 		this.name = s;	     
 		this.setVersion(1);			
-		this.setType(EXTRACT);            
+		this.setType(ALL_GRAIN);            
 		this.style = Constants.BEERSTYLE_OTHER;
 		this.setBrewer("Unknown Brewer");		     
 		this.setDisplayBatchSize(5);
