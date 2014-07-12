@@ -27,7 +27,7 @@
                   android:layout_height="fill_parent"
                   android:padding="0dip"
                   android:background="@color/transparent"
-                  android:orientation="horizontal"
+                  android:orientation="vertical"
                   android:layout_below="@id/colored_bar" >
 
         <ListView
@@ -49,8 +49,19 @@
                   android:visibility="gone"
                   android:onClick="onClick"
                   android:textColor="@color/title_color"
-                  android:textSize="15dp"
+                  android:textSize="15sp"
                   android:text="@string/no_recipes" />
+        
+        <!-- Bottom border for listView -->
+	    <TextView android:id="@+id/list_view_border"
+	              android:layout_width="fill_parent"
+	              android:layout_height="1dp"
+	              android:layout_gravity="top"
+	              android:textColor="#fff"
+	              android:background="@color/divider"
+	              android:text="">
+	        <requestFocus />
+	    </TextView>
 
     </LinearLayout>
 
