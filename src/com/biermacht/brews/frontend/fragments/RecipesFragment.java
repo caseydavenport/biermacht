@@ -262,8 +262,8 @@ public class RecipesFragment extends Fragment {
                     	Log.d("RecipesFragment::deleteAlert", "Deleting recipe: " + r);
                         recipeList.remove(r);
                         mAdapter.notifyDataSetChanged();
-                        setCorrectView();
                         Database.deleteRecipe(r);
+                        setCorrectView();
                     	Log.d("RecipesFragment::deleteAlert", "Recipe deleted");
                     }
 
