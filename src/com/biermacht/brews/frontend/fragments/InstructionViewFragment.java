@@ -15,8 +15,10 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.InstructionArrayAdapter;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
+import android.annotation.SuppressLint;
 import android.content.*;
 
+@SuppressLint("ValidFragment")
 public class InstructionViewFragment extends Fragment {
 
 	private int resource;

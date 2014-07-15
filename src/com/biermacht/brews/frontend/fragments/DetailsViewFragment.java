@@ -9,12 +9,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.biermacht.brews.R;
 import com.biermacht.brews.recipe.Recipe;
 
+import android.annotation.SuppressLint;
 import android.content.*;
 import android.widget.*;
 import java.util.*;
 import com.biermacht.brews.frontend.*;
 import com.biermacht.brews.frontend.adapters.*;
 
+@SuppressLint("ValidFragment")
 public class DetailsViewFragment extends Fragment {
 
 	private int resource;

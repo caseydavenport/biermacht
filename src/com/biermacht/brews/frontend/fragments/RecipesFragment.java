@@ -92,7 +92,14 @@ public class RecipesFragment extends Fragment {
 
         // Get Context
         c = getActivity();
-
+        
+        // Create adapter
+        recipeList = new ArrayList<Recipe>();
+        mAdapter = new RecipeArrayAdapter(c, recipeList);
+        
+        // Set adapter for listView
+        listView.setAdapter(mAdapter);
+        
         // Set up the onClickListener
         mClickListener = new AdapterView.OnItemClickListener()
         {
@@ -228,20 +235,6 @@ public class RecipesFragment extends Fragment {
 
         return true;
     }
-
-    /**
-     * Takes given list of recipes and displays them.  Also
-     * sets recipelist field to the new list
-     * @param l
-     */
-    public void updateRecipeList(ArrayList<Recipe> l)
-    {
-        // Set up my listView with title and ArrayAdapter
-        mAdapter = new RecipeArrayAdapter(c, l);
-        listView.setAdapter(mAdapter);
-        recipeList = l;
-        setCorrectView();
-    }
     
     public void setCorrectView()
     {
@@ -315,7 +308,8 @@ public class RecipesFragment extends Fragment {
         protected String doInBackground(String... params)
         {
             // Get recipes to display
-            recipeList = Database.getRecipeList(databaseInterface);
+        	recipeList.removeAll(recipeList);
+        	recipeList.addAll(Database.getRecipeList(databaseInterface));
 
             return "Executed";
         }
@@ -325,7 +319,8 @@ public class RecipesFragment extends Fragment {
         {
             super.onPostExecute(result);
             //progress.dismiss();
-            updateRecipeList(recipeList);
+            mAdapter.notifyDataSetChanged();
+            setCorrectView();
             Log.d("readRecipesFromDatabase", "Finished reading recipes");
         }
 

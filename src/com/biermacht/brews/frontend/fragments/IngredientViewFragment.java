@@ -3,6 +3,7 @@ package com.biermacht.brews.frontend.fragments;
 import java.util.ArrayList;
 
 import android.support.v4.app.Fragment;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.biermacht.brews.utils.Constants;
 
 import android.content.*;
 
+@SuppressLint("ValidFragment")
 public class IngredientViewFragment extends Fragment {
 
 	private int resource;
