@@ -630,6 +630,21 @@ public class Recipe implements Parcelable {
 		return this.getRecipeName();
 	}
 	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (o == null || !(o instanceof Recipe))
+		{
+			return false;
+		}
+		return o.hashCode() == this.hashCode();
+	}
+	
+	public int hashCode()
+	{
+		return (int) this.getId() | 16234567;
+	}
+	
 	/**
 	 * @return the brewer
 	 */

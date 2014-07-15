@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -61,16 +60,11 @@ public class RecipesFragment extends Fragment {
     // Holds the selected recipe
     private Recipe selectedRecipe;
 
-    // Search view stuff
-    private TextWatcher mTextWatcher;
-    private int searchOptions;
-
     // Context
     private Context c;
 
     //Declare views here
     private ListView listView;
-    private EditText searchView;
     private TextView noRecipesView;
     ViewGroup pageView;
 
@@ -91,7 +85,6 @@ public class RecipesFragment extends Fragment {
         // Get views
 		pageView = (RelativeLayout) inflater.inflate(resource, container, false);
         listView = (ListView) pageView.findViewById(R.id.recipe_list);
-        searchView = (EditText) pageView.findViewById(R.id.search_bar);
         noRecipesView = (TextView) pageView.findViewById(R.id.no_recipes_view);
 
         // Get database Interface
@@ -112,27 +105,6 @@ public class RecipesFragment extends Fragment {
             }
         };
 
-        // Set up the textWatcher for search bar
-        mTextWatcher = new TextWatcher() {
-            public void afterTextChanged(Editable s)
-            {
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ArrayList<Recipe> fList = getFilteredList(s.toString());
-                updateRecipeList(fList);
-            }
-        };
-
-        // Set default search options to search by all criteria
-        searchOptions = 1;
-
-        // Add TextWatcher to search bar
-        searchView.addTextChangedListener(mTextWatcher);
-
         // Set up my listView with title and ArrayAdapter
         new GetRecipeListFromDatabaseTask(getActivity()).execute("");
         listView.setOnItemClickListener(mClickListener);
@@ -149,41 +121,6 @@ public class RecipesFragment extends Fragment {
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.activity_main, menu);
-    }
-
-    /**
-     * Filters the list of all Recipes by the given string
-     * @param s String to filter by
-     * @return ArrayList of matching recipes
-     */
-    private ArrayList<Recipe> getFilteredList(String s)
-    {
-        recipeList = Database.getRecipeList(databaseInterface);
-        ArrayList<Recipe> filteredList = new ArrayList<Recipe>();
-
-        for (Recipe r : recipeList)
-        {
-            // Search options decoder
-            // 1 --> Filter by all the following
-            // 2 --> Filter by name only
-            // 3 --> Filter by type only
-
-            boolean searchByName = (searchOptions == 1 || searchOptions == 2);
-            boolean searchByType = (searchOptions == 1 || searchOptions == 3);
-
-            // If the recipe name matches
-            if(r.getRecipeName().toLowerCase().contains(s.toLowerCase()) && searchByName)
-            {
-                filteredList.add(r);
-            }
-
-            // If the recipe type matches
-            else if(r.getStyle().toString().toLowerCase().contains(s.toLowerCase()) && searchByType )
-            {
-                filteredList.add(r);
-            }
-        }
-        return filteredList;
     }
 
     @Override
@@ -239,10 +176,11 @@ public class RecipesFragment extends Fragment {
         // Copy recipe selected
         else if (selected.equals(COPY_RECIPE))
         {
-            selectedRecipe.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
-            Database.createRecipeFromExisting(selectedRecipe);
-            updateRecipeList(getFilteredList(searchView.getText().toString()));
-
+            Recipe copy = Database.createRecipeFromExisting(selectedRecipe);
+            copy.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
+            copy.save();
+            recipeList.add(mAdapter.getPosition(selectedRecipe) + 1, copy);
+            mAdapter.notifyDataSetChanged();
         }
 
         // Delete recipe selected
@@ -302,8 +240,12 @@ public class RecipesFragment extends Fragment {
         mAdapter = new RecipeArrayAdapter(c, l);
         listView.setAdapter(mAdapter);
         recipeList = l;
-
-        if (l.size() == 0)
+        setCorrectView();
+    }
+    
+    public void setCorrectView()
+    {
+        if (recipeList.size() == 0)
         {
             noRecipesView.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
@@ -324,8 +266,12 @@ public class RecipesFragment extends Fragment {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
+                    	Log.d("RecipesFragment::deleteAlert", "Deleting recipe: " + r);
+                        recipeList.remove(r);
+                        mAdapter.notifyDataSetChanged();
+                        setCorrectView();
                         Database.deleteRecipe(r);
-                        updateRecipeList(getFilteredList(searchView.getText().toString()));
+                    	Log.d("RecipesFragment::deleteAlert", "Recipe deleted");
                     }
 
                 })
@@ -347,7 +293,7 @@ public class RecipesFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         double newVolume = Double.parseDouble(editText.getText().toString());
                         Utils.scaleRecipe(r, newVolume);
-                        updateRecipeList(getFilteredList(searchView.getText().toString()));
+                        mAdapter.notifyDataSetChanged();
                     }
 
                 })
