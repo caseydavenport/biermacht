@@ -224,7 +224,7 @@ public class RecipeXmlReader extends DefaultHandler {
 
         currentElement = false;
 
-        Log.d("RecipeHandler", "Reading values: " + qName + ": " + currentValue);
+        Log.d("RecipeXMLReader", "Reading values: " + qName + ": " + currentValue);
 
 		if (qName.equalsIgnoreCase("RECIPE"))
 		// We've finished a new recipe
