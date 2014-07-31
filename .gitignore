@@ -48,3 +48,7 @@ gen/*
 .idea/*
 *.iml
 out/*
+build
+gradlew*
+gradle
+.gradle
