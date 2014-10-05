@@ -19,6 +19,9 @@
     <string name="title_activity_edit_mash_step">Edit Mash Step</string>
     <string name="title_activity_notes">Recipe Notes</string>
 
+    <!-- Service names -->
+    <string name="brew_timer_service_name">Brew Timer</string>
+
     <!-- Menu stuff -->
     <string name="menu_settings">Settings</string>
     <string name="menu_add_ingredient">Add Ingredient</string>

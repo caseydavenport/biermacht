@@ -179,5 +179,10 @@
                 android:configChanges="orientation|screenSize"
                 android:windowSoftInputMode="adjustResize" >
         </activity>
+
+        <service
+            android:name="com.biermacht.brews.services.BrewTimerService"
+            android:label="@string/brew_timer_service_name">
+        </service>
     </application>
 </manifest>

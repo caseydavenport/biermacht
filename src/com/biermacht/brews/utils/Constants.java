@@ -32,7 +32,18 @@ public class Constants {
     public static final String KEY_MASH_PROFILE = "biermacht.brews.mash.profile";
     public static final String KEY_INSTRUCTION = "biermacht.brews.instruction";
     public static final String KEY_DATABASE_ID = "biermacht.brews.database.id";
+    public static final String KEY_SECONDS = "biermacht.brews.remaining.seconds";
+    public static final String KEY_TITLE = "biermacht.brews.title";
+    public static final String KEY_COMMAND = "biermacht.brews.command";
+    public static final String KEY_STEP_NUMBER = "biermacht.brews.stepnumber";
+    public static final String KEY_TIMER_STATE = "biermacht.brews.timer.state";
     public static final int INVALID_ID = -1;
+
+    // Valid commands
+    public static final String COMMAND_START = "biermacht.brews.commands.start";
+    public static final String COMMAND_STOP = "biermacht.brews.commands.stop";
+    public static final String COMMAND_PAUSE = "biermacht.brews.commands.pause";
+    public static final String COMMAND_QUERY = "biermacht.brews.commands.query";
 
     // Different virtual databases
     public static final long DATABASE_PERMANENT = 2;  // Imported from assets.  Save these.
@@ -44,6 +55,9 @@ public class Constants {
 
     // Broadcast types
     public static final String BROADCAST_TIMER = "com.biermacht.brews.broadcast.timer";
+    public static final String BROADCAST_REMAINING_TIME = "com.biermacht.brews.broadcast.timer.remaining";
+    public static final String BROADCAST_TIMER_CONTROLS = "com.biermacht.brews.broadcast.timer.controls";
+    public static final String BROADCAST_QUERY_RESP = "com.biermacht.brews.broadcast.query.resp";
 
     // Shared preferences Constants
     public static final String PREFERENCES = "com.biermacht.brews.preferences";
@@ -61,6 +75,11 @@ public class Constants {
     public static final int REQUEST_NEW_MASH_STEP = 1;
     public static final int REQUEST_EDIT_MASH_STEP = 2;
     public static final int REQUEST_EDIT_RECIPE = 3;
+
+    // Possible timer states
+    public static int PAUSED = 0;
+    public static int RUNNING = 1;
+    public static int STOPPED = 2;
     
     // Constant messages
     public static String MESSAGE_AUTO_CALC_W2GR = "Water-to-grain ratio is calculated automatically for this step.";

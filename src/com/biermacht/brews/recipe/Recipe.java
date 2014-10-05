@@ -95,8 +95,7 @@ public class Recipe implements Parcelable {
 	public static final int STAGE_TERTIARY = 3;
 	
 	// Public constructors
-	public Recipe(String s)
-	{
+	public Recipe(String s) {
 		// Beer XML 1.0 Required Fields ===================================
 		// ================================================================
 		this.name = s;	     
@@ -156,8 +155,7 @@ public class Recipe implements Parcelable {
         this("New Recipe");
     }
 
-    public Recipe(Parcel p)
-    {
+    public Recipe(Parcel p) {
         hops = new ArrayList<Hop>();
         fermentables = new ArrayList<Fermentable>();
         yeasts = new ArrayList<Yeast>();
@@ -230,8 +228,7 @@ public class Recipe implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel p, int flags)
-    {
+    public void writeToParcel(Parcel p, int flags) {
         p.writeString(name);		        // Recipe name
         p.writeInt(version);			    // XML Version -- 1
         p.writeString(type);                // Extract, Grain, Mash
@@ -311,10 +308,25 @@ public class Recipe implements Parcelable {
                     return new Recipe[] {};
                 }
             };
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Recipe)){
+            return false;
+        }
+
+        Recipe other = (Recipe) o;
+        return other.getRecipeName().equals(getRecipeName());
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.getRecipeName();
+    }
 	
 	// Public methods
-	public void update()
-	{
+	public void update() {
 		setColor(BrewCalculator.Color(this));
 		setOG(BrewCalculator.OriginalGravity(this));
 		setBitterness(BrewCalculator.Bitterness(this));
@@ -333,8 +345,7 @@ public class Recipe implements Parcelable {
 		return this.name;
 	}
 	
-	public void addIngredient(Ingredient i)
-	{
+	public void addIngredient(Ingredient i) {
 		Log.d(getRecipeName() + "::addIngredient", "Adding ingredient: " + i.getName());
 		if (i.getType().equals(Ingredient.HOP))
 			addHop(i);
@@ -350,8 +361,7 @@ public class Recipe implements Parcelable {
 		update();
 	}
 
-    public void removeIngredientWithId(long id)
-    {
+    public void removeIngredientWithId(long id) {
         for (Ingredient i : getIngredientList())
             if (i.getId() == id)
             {
@@ -360,8 +370,7 @@ public class Recipe implements Parcelable {
             }
     }
 	
-	public void removeIngredient(Ingredient i)
-    {
+	public void removeIngredient(Ingredient i) {
         if (i.getType().equals(Ingredient.HOP))
             hops.remove(i);
         else if (i.getType().equals(Ingredient.FERMENTABLE))
@@ -386,8 +395,7 @@ public class Recipe implements Parcelable {
 		return this.mashProfile;
 	}
 	
-	public void setMashProfile(MashProfile profile)
-	{
+	public void setMashProfile(MashProfile profile) {
 		this.mashProfile = profile;
 		this.mashProfile.setRecipe(this);
 		update();
@@ -398,8 +406,7 @@ public class Recipe implements Parcelable {
 		return notes;
 	}
 
-	public void setNotes(String notes)
-	{
+	public void setNotes(String notes) {
 		if (notes.isEmpty())
 			this.notes = "No notes provided.";
 		else
@@ -416,8 +423,7 @@ public class Recipe implements Parcelable {
 		this.style = beerStyle;
 	}
 	
-	public ArrayList<Ingredient> getIngredientList()
-	{
+	public ArrayList<Ingredient> getIngredientList() {
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
 		list.addAll(hops);
 		list.addAll(fermentables);
@@ -429,8 +435,7 @@ public class Recipe implements Parcelable {
 		return list;
 	}
 	
-	public void deleteAllIngredients()
-	{
+	public void deleteAllIngredients() {
 		this.fermentables = new ArrayList<Fermentable>();
 		this.hops = new ArrayList<Hop>();
 		this.miscs = new ArrayList<Misc>();
@@ -443,8 +448,7 @@ public class Recipe implements Parcelable {
         return BrewCalculator.TotalFermentableWeight(this);
     }
 	
-	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) 
-	{
+	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) {
 		
 		for (Ingredient i : ingredientsList)
 		{
@@ -463,39 +467,33 @@ public class Recipe implements Parcelable {
 		update();
 	}
 	
-	private void addWater(Ingredient i) 
-	{
+	private void addWater(Ingredient i) {
 		Water w = (Water) i;
 		waters.add(w);
 	}
 
-	private void addYeast(Ingredient i) 
-	{
+	private void addYeast(Ingredient i) {
 		Yeast y = (Yeast) i;
 		yeasts.add(y);
 	}
 
-	private void addMisc(Ingredient i) 
-	{
+	private void addMisc(Ingredient i) {
 		Misc m = (Misc) i;
 		miscs.add(m);
 	}
 
-	private void addFermentable(Ingredient i) 
-	{
+	private void addFermentable(Ingredient i) {
 		Log.d(getRecipeName() + "::addFermentable", "Adding fermentable: " + i.getName());
 		Fermentable f = (Fermentable) i;
 		fermentables.add(f);
 	}
 
-	private void addHop(Ingredient i) 
-	{
+	private void addHop(Ingredient i) {
 		Hop h = (Hop) i;
 		hops.add(h);
 	}
 
-	public ArrayList<Instruction> getInstructionList()
-	{
+	public ArrayList<Instruction> getInstructionList() {
 		return this.instructionGenerator.getInstructions();
 	}
 
@@ -504,44 +502,37 @@ public class Recipe implements Parcelable {
 		return OG;
 	}
 
-	public void setOG(double gravity) 
-	{
+	public void setOG(double gravity) {
 		gravity = (double) Math.round(gravity * 1000) / 1000;
 		this.OG = gravity;
 	}
 
-	public double getBitterness() 
-	{
+	public double getBitterness() {
 		bitterness = (double) Math.round(bitterness * 10) / 10;
 		return bitterness;
 	}
 
-	public void setBitterness(double bitterness) 
-	{
+	public void setBitterness(double bitterness) {
 		bitterness = (double) Math.round(bitterness * 10) / 10;
 		this.bitterness = bitterness;
 	}
 
-	public double getColor() 
-	{
+	public double getColor() {
 		color = (double) Math.round(color * 10) / 10;
 		return color;
 	}
 
-	public void setColor(double color) 
-	{
+	public void setColor(double color) {
 		color = (double) Math.round(color * 10) / 10;
 		this.color = color;
 	}
 
-	public double getABV() 
-	{
+	public double getABV() {
 		ABV = (double) Math.round(ABV * 10) / 10;
 		return ABV;
 	}
 
-	public void setABV(double aBV) 
-	{
+	public void setABV(double aBV) {
 		ABV = (double) Math.round(ABV * 10) / 10;
 		ABV = aBV;
 	}
@@ -571,16 +562,14 @@ public class Recipe implements Parcelable {
         return Units.getVolumeUnits();
     }
 	
-	public double getDisplayBatchSize() 
-	{
+	public double getDisplayBatchSize() {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
 		    return Units.litersToGallons(this.batchSize);
         else
             return this.batchSize;
 	}
 	
-	public void setDisplayBatchSize(double size) 
-	{
+	public void setDisplayBatchSize(double size) {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
 		    this.batchSize = Units.gallonsToLiters(size);
         else
@@ -597,8 +586,7 @@ public class Recipe implements Parcelable {
 		this.batchSize = v;
 	}
 	
-	public double getBeerXmlMeasuredBatchSize()
-	{
+	public double getBeerXmlMeasuredBatchSize() {
 		return this.batchSize; //TODO: Store this off for real.
 	}
 
@@ -612,8 +600,7 @@ public class Recipe implements Parcelable {
 		this.boilTime = boilTime;
 	}
 	
-	public double getEfficiency() 
-	{
+	public double getEfficiency() {
 		if (this.getType().equals(EXTRACT))
 			return 100;
 		return efficiency;
@@ -623,31 +610,18 @@ public class Recipe implements Parcelable {
 	{
 		this.efficiency = efficiency;
 	}
-	
-	@Override
-	public String toString()
-	{
-		return this.getRecipeName();
-	}
-	
-	/**
-	 * @return the brewer
-	 */
+
 	public String getBrewer() 
 	{
 		return brewer;
 	}
 
-	/**
-	 * @param brewer the brewer to set
-	 */
 	public void setBrewer(String brewer) 
 	{
 		this.brewer = brewer;
 	}
 	
-	public double getDisplayBoilSize()
-	{
+	public double getDisplayBoilSize() {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
         {
             if (this.calculateBoilVolume)
@@ -664,8 +638,7 @@ public class Recipe implements Parcelable {
         }
 	}
 
-    private double calculateBoilVolume()
-    {
+    private double calculateBoilVolume() {
         double TRUB_LOSS = Units.gallonsToLiters(.3);               // Liters lost // TODO: Get this from equipment
         double SHRINKAGE = .04;                                     // Percent lost
         double EVAP_LOSS = Units.gallonsToLiters(1.5);              // Evaporation loss (L/hr) // TODO: Get this from equipment
@@ -676,94 +649,61 @@ public class Recipe implements Parcelable {
             return (batchSize/3) * (1 + SHRINKAGE ) + TRUB_LOSS + (EVAP_LOSS * Units.minutesToHours(boilTime));
     }
 	
-	public void setDisplayBoilSize(double size) 
-	{
+	public void setDisplayBoilSize(double size) {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
 		    this.boilSize = Units.gallonsToLiters(size);
         else
             this.boilSize = size;
 	}
 
-	/**
-	 * @return the boilSize
-	 */
 	public double getBeerXmlStandardBoilSize() 
 	{
 		return boilSize;
 	}
 
-	/**
-	 * @param boilSize the boilSize to set
-	 */
 	public void setBeerXmlStandardBoilSize(double boilSize) 
 	{
 		this.boilSize = boilSize;
 	}
 
-	/**
-	 * @return the type
-	 */
 	public String getType() 
 	{
 		return type;
 	}
 
-	/**
-	 * @param type the type to set
-	 */
 	public void setType(String type) 
 	{
 		this.type = type;
 	}
 
-	/**
-	 * @return the fG
-	 */
 	public double getFG() {
 		this.FG = (double) Math.round(FG * 1000) / 1000;
 		return this.FG;
 	}
 
-	/**
-	 * @param fG the fG to set
-	 */
 	public void setFG(double fG) {
 		fG = (double) Math.round(fG * 1000) / 1000;
 		this.FG = fG;
 	}
 
-	/**
-	 * @return the fermentationStages
-	 */
 	public int getFermentationStages() 
 	{
 		return fermentationStages;
 	}
 
-	/**
-	 * @param fermentationStages the fermentationStages to set
-	 */
-	public void setFermentationStages(int fermentationStages) 
-	{
+	public void setFermentationStages(int fermentationStages) {
 		this.fermentationStages = fermentationStages;
 	}
 
-    public int getTotalFermentationDays()
-    {
+    public int getTotalFermentationDays() {
         return this.primaryAge + this.secondaryAge + this.tertiaryAge;
     }
 
-	/**
-	 * @return the version
-	 */
 	public int getVersion() 
 	{
 		return version;
 	}
 
-	/**
-	 * @param version the version to set
-	 */
 	public void setVersion(int version) 
 	{
 		this.version = version;
@@ -814,8 +754,7 @@ public class Recipe implements Parcelable {
 		this.measuredFG = d;
 	}
 	
-	public int getDisplayCoolToFermentationTemp()
-	{
+	public int getDisplayCoolToFermentationTemp() {
         // Metric - imperial conversion is performed in Yeast
 		for (Yeast y : this.getYeastsList())
 		{
@@ -827,16 +766,14 @@ public class Recipe implements Parcelable {
 			return (int) Units.fahrenheitToCelsius(65);
 	}
 	
-	public double getDisplaySteepTemp()
-	{
+	public double getDisplaySteepTemp() {
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
 		    return Units.celsiusToFahrenheit(steepTemp);
         else
             return steepTemp;
 	}
 	
-	public void setDisplaySteepTemp(double t)
-	{
+	public void setDisplaySteepTemp(double t) {
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
 		    this.steepTemp = Units.fahrenheitToCelsius(t);
         else
@@ -848,8 +785,7 @@ public class Recipe implements Parcelable {
 		this.fermentationStages = stages;
 	}
 	
-	public void setFermentationAge(int stage, int age)
-	{
+	public void setFermentationAge(int stage, int age) {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
@@ -861,8 +797,7 @@ public class Recipe implements Parcelable {
 		}
 	}
 	
-	public int getFermentationAge(int stage)
-	{
+	public int getFermentationAge(int stage) {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
@@ -876,8 +811,7 @@ public class Recipe implements Parcelable {
 		}
 	}
 	
-	public void setBeerXmlStandardFermentationTemp(int stage, double temp)
-	{
+	public void setBeerXmlStandardFermentationTemp(int stage, double temp) {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
@@ -889,8 +823,7 @@ public class Recipe implements Parcelable {
 		}
 	}
 	
-	public double getBeerXmlStandardFermentationTemp(int stage)
-	{
+	public double getBeerXmlStandardFermentationTemp(int stage) {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
@@ -904,8 +837,7 @@ public class Recipe implements Parcelable {
 		}
 	}
 	
-	public void setDisplayFermentationTemp(int stage, double temp)
-	{
+	public void setDisplayFermentationTemp(int stage, double temp) {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
@@ -929,8 +861,7 @@ public class Recipe implements Parcelable {
 		}
 	}
 	
-	public double getDisplayFermentationTemp(int stage)
-	{
+	public double getDisplayFermentationTemp(int stage) {
 		switch (stage)
 		{
 			case STAGE_PRIMARY:
@@ -996,16 +927,14 @@ public class Recipe implements Parcelable {
         this.bottleTemp = d;
     }
 
-    public void setDisplayBottleTemp(double d)
-    {
+    public void setDisplayBottleTemp(double d) {
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
             this.bottleTemp = Units.fahrenheitToCelsius(d);
         else
             this.bottleTemp = d;
     }
 
-    public double getDisplayBottleTemp()
-    {
+    public double getDisplayBottleTemp() {
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
             return Units.celsiusToFahrenheit(this.bottleTemp);
         else
@@ -1052,8 +981,7 @@ public class Recipe implements Parcelable {
         this.primingSugarName = s;
     }
 
-    public double getPrimingSugarEquiv()
-    {
+    public double getPrimingSugarEquiv() {
         // TODO
         return 0.0;
     }
@@ -1073,16 +1001,14 @@ public class Recipe implements Parcelable {
         this.carbonationTemp = d;
     }
 
-    public void setDisplayCarbonationTemp(double d)
-    {
+    public void setDisplayCarbonationTemp(double d) {
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
             this.carbonationTemp = Units.fahrenheitToCelsius(d);
         else
             this.carbonationTemp = d;
     }
 
-    public double getDisplayCarbonationTemp()
-    {
+    public double getDisplayCarbonationTemp() {
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
             return Units.celsiusToFahrenheit(this.carbonationTemp);
         else
@@ -1139,16 +1065,14 @@ public class Recipe implements Parcelable {
         this.calculateStrikeTemp = b;
     }
 
-    public double getMeasuredABV()
-    {
+    public double getMeasuredABV(){
         if (this.getMeasuredFG() > 0 && this.getMeasuredOG() > this.getMeasuredFG())
             return (this.getMeasuredOG() - this.getMeasuredFG()) * 131;
         else
             return 0;
     }
 
-    public double getMeasuredEfficiency()
-    {
+    public double getMeasuredEfficiency(){
         double potGravP, measGravP;
         double eff = 100;
 
@@ -1175,8 +1099,7 @@ public class Recipe implements Parcelable {
         }
     }
     
-    public void save()
-    {
+    public void save(){
     	Log.d(getRecipeName() + "::save", "Saving with id: " + this.getId());
         Database.updateRecipe(this);
     }
