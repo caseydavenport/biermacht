@@ -130,18 +130,14 @@ public class Instruction implements Parcelable {
         return this.mashStep;
     }
 
-    public String getBrewTimerTitle()
-    {
+    public String getBrewTimerTitle() {
         if (instructionType.equals(Instruction.TYPE_MASH))
             return mashStep.getName();
 
         return this.instructionType;
     }
 
-    // Returns the correct text to show for each
-    // type of step.
-    public String getBrewTimerText()
-    {
+    public String getBrewTimerText() {
         String s = "";
         if (this.instructionType.equals(Instruction.TYPE_MASH))
         {
@@ -219,12 +215,8 @@ public class Instruction implements Parcelable {
 
         return s;
     }
-	
-	/**
-	 * Used for ordering of instruction 
-	 */
-	public int getOrder()
-	{
+
+	public int getOrder() {
         // If our order is over 100, mod it down so it fits within
         // the designated 100 orders per instruction type
 		if (this.order >= 100 || this.order < 0)
@@ -240,10 +232,7 @@ public class Instruction implements Parcelable {
 			return -1;
 		}
 	}
-	
-	/*
-	 * Sets order within 
-	 */
+
 	public void setOrder(int o)
 	{
 		this.order = o;
@@ -290,21 +279,12 @@ public class Instruction implements Parcelable {
 		return this.getInstructionText();
 	}
 
-	/**
-	 * Sets instruction text to the value given in instructionText
-	 * @param instructionText
-	 */
 	public void setInstructionText(String instructionText) 
 	{
 		this.instructionText = instructionText;
 	}
-	
-	/**
-	 * Sets the instruction text based on the ingredients
-	 * given in relevant ingredients list for this instruction
-	 */
-	public void setInstructionTextFromIngredients()
-	{
+
+	public void setInstructionTextFromIngredients() {
 		String s = "";
 		for (Ingredient i : this.getRelevantIngredients())
 		{
@@ -329,8 +309,7 @@ public class Instruction implements Parcelable {
 		this.duration = d;
 	}
 
-    public boolean showInBrewTimer()
-    {
+    public boolean showInBrewTimer() {
         if (this.instructionType.equals(TYPE_BOIL))
             return true;
         if (this.instructionType.equals(TYPE_STEEP))
@@ -349,12 +328,15 @@ public class Instruction implements Parcelable {
         return false;
     }
 
-    public boolean showInInstructionList()
-    {
+    public boolean showInInstructionList() {
         if (this.instructionType.equals(TYPE_CALENDAR))
             return false;
 
         return true;
+    }
+
+    public boolean showTimer() {
+        return duration > 0;
     }
 	
 	public double getDuration() {

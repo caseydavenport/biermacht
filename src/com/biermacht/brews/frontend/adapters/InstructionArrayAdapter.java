@@ -42,9 +42,14 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 		
 		// Set what type of instruction it is
 		tagView.setText(list.get(position).getInstructionType());
-		
-		// Set duration
-		durationView.setText(list.get(position).getDuration() + " " + list.get(position).getDurationUnits());
+
+        // Set duration
+        if (list.get(position).showTimer()) {
+            durationView.setText(list.get(position).getDuration() + " " + list.get(position).getDurationUnits());
+        }
+        else {
+            durationView.setText("--");
+        }
 		
 		// Set instruction text
 		labelView.setText(list.get(position).getInstructionText());

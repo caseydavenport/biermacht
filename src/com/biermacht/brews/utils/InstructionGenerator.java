@@ -143,11 +143,14 @@ public class InstructionGenerator {
 		i = new Instruction(r);
 		i.setInstructionType(Instruction.TYPE_SPARGE);
 		i.setOrder(0);
-		i.setDuration(1);
 		i.setDurationUnits(Units.HOURS);
 		i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
 		i.setLastInType(true);
-    	return i;
+
+        // Set duration to 0 so that we don't show timer
+        i.setDuration(0);
+
+        return i;
     }
 	
 	/**
@@ -315,10 +318,13 @@ public class InstructionGenerator {
 			inst = new Instruction(r);
 			inst.setRelevantIngredients(ingredients);
 			inst.setInstructionType(Instruction.TYPE_BOTTLING);
-			inst.setDuration(1);
 			inst.setDurationUnits(Units.HOURS);
 			inst.setInstructionTextFromIngredients();
 			inst.setOrder(0);
+
+            // Set duration to 0 so that we don't show a timer
+            inst.setDuration(0);
+
             bottlingList.add(inst);
 		}
 	}
@@ -339,9 +345,12 @@ public class InstructionGenerator {
 			inst = new Instruction(r);
 			inst.setRelevantIngredients(ingredients);
 			inst.setInstructionType(Instruction.TYPE_YEAST);
-			inst.setDuration(1);
 			inst.setInstructionTextFromIngredients();
 			inst.setOrder(0);
+
+            // Set duration to 0 so that we don't show a timer
+            inst.setDuration(0);
+
             yeastsList.add(inst);
 		}
 	}
@@ -357,9 +366,12 @@ public class InstructionGenerator {
 			inst = new Instruction(r);
 			inst.setInstructionType(Instruction.TYPE_COOL);
 			inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + Units.getTemperatureUnits());
-			inst.setDuration(2);
 			inst.setOrder(3);
 			inst.setDurationUnits(Units.HOURS);
+
+            // Set duration to 0 so that we don't show a timer
+            inst.setDuration(0);
+
 			list.add(inst);
 
 			int numStages = r.getFermentationStages();
@@ -399,9 +411,12 @@ public class InstructionGenerator {
             inst = new Instruction(r);
             inst.setInstructionType(Instruction.TYPE_CALENDAR);
             inst.setInstructionText("");
-            inst.setDuration(0);
             inst.setOrder(0);
             inst.setDurationUnits(Units.HOURS);
+
+            // Set duration to 0 so that we don't show a timer
+            inst.setDuration(0);
+
             list.add(inst);
         }
 	}

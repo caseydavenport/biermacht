@@ -18,12 +18,12 @@
                   android:textSize="25sp"
                   android:orientation="horizontal" >
 
-        <TextView android:id="@+id/notes"
+        <TextView android:id="@+id/step_status"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:gravity="center"
                   android:textSize="25sp"
-                  android:text="Next step in:" />
+                  android:text="" />
 
     </LinearLayout>
 
