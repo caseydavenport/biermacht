@@ -1,8 +1,11 @@
 package com.biermacht.brews.frontend;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -28,14 +31,15 @@ import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.services.BrewTimerService;
 import com.biermacht.brews.services.CountdownReceiver;
+import com.biermacht.brews.utils.ColorHandler;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
 
 public class BrewTimerActivity extends FragmentActivity {
 	
 	private Recipe mRecipe;
-	private long id; // id of recipe we use
-	private int currentItem; // For storing current page being viewed
+	private int currentItem; // For storing page for the current step.
+    private int currentPosition; // Stores the current page being viewed
 	BrewTimerCollectionPagerAdapter cpAdapter;
 
     // Formatter for timer values
@@ -51,6 +55,7 @@ public class BrewTimerActivity extends FragmentActivity {
     TextView minutesView;
     TextView secondsView;
     View timerControls;
+    TextView stepStatusView;
 
     // Buttons
     ImageButton stopButton;
@@ -101,10 +106,21 @@ public class BrewTimerActivity extends FragmentActivity {
             // Set timer state
             timerState = qTimerState;
 
+            // If this is not the recipe used by the current timer, alert the use and cancel the
+            // activity.  We can't have two brew timers running at the same time.
             if (!qRecipe.equals(mRecipe))
             {
-                Log.e("BrewTimerActivity", "Current running timer is not for this recipe, aborting");
-                finish();
+                Log.e("BrewTimerActivity", "Currently running timer is not for this recipe, aborting");
+
+                new AlertDialog.Builder(BrewTimerActivity.this)
+                    .setTitle("Cannot open timer")
+                    .setMessage("The brew timer is already running for another recipe.")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).show();
+                return;
             }
 
             if (qCurrentStep != 0)
@@ -151,7 +167,6 @@ public class BrewTimerActivity extends FragmentActivity {
         appContext = getApplicationContext();
         
         // Get recipe from calling activity
-        id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
         mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
         // Set title
@@ -169,6 +184,9 @@ public class BrewTimerActivity extends FragmentActivity {
         stopButton = (ImageButton) timerControls.findViewById(R.id.stop_button);
         playPauseButton = (ImageButton) timerControls.findViewById(R.id.play_pause_button);
         goToCurrentButton = (ImageButton) timerControls.findViewById(R.id.go_to_current_button);
+
+        // Get view to display step status
+        stepStatusView = (TextView) timerControls.findViewById(R.id.step_status);
 
         // Set default button backgrounds
         stopButton.setImageResource(R.drawable.av_stop);
@@ -188,13 +206,12 @@ public class BrewTimerActivity extends FragmentActivity {
             public void onPageSelected(int position) {
                 f = (BrewTimerStepFragment) cpAdapter.getItem(position);
                 inst = f.getInstruction();
+                currentPosition = position;
 
                 if (timerState == Constants.STOPPED)
                 {
                     currentItem = mViewPager.getCurrentItem();
-                    hoursView.setText(nft.format(Utils.getHours(inst.getDuration(), inst.getDurationUnits())) + "");
-                    minutesView.setText(nft.format(Utils.getMinutes(inst.getDuration(), inst.getDurationUnits())) + "");
-                    secondsView.setText(nft.format(0) + "");
+                    setTimerFromCurrentStep();
 
                     double nextTime = inst.getDuration() - inst.getNextDuration();
 
@@ -205,12 +222,19 @@ public class BrewTimerActivity extends FragmentActivity {
                     goToCurrentButton.setImageResource(R.drawable.navigation_accept);
                 }
 
-                if (position == currentItem)
+                // Adjust fields based on the item we're looking at
+                if (position == currentItem) {
                     goToCurrentButton.setImageResource(R.drawable.navigation_accept);
-                else if (position < currentItem)
+                }
+                else if (position < currentItem) {
                     goToCurrentButton.setImageResource(R.drawable.navigation_next_item);
-                else if (position > currentItem)
+                }
+                else if (position > currentItem) {
                     goToCurrentButton.setImageResource(R.drawable.navigation_previous_item);
+                }
+
+                // Set text on the status bar
+                setStatusText();
             }
 
             @Override
@@ -249,7 +273,6 @@ public class BrewTimerActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i;
     	switch (item.getItemId()) {
             case android.R.id.home:
         		finish();
@@ -259,8 +282,7 @@ public class BrewTimerActivity extends FragmentActivity {
     }
     
     @Override
-    public void onResume()
-    {
+    public void onResume() {
     	super.onResume();
         mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
@@ -273,16 +295,14 @@ public class BrewTimerActivity extends FragmentActivity {
         mViewPager.setCurrentItem(this.currentItem);
     }
 
-    public void togglePlayPause()
-    {
+    public void togglePlayPause() {
         if (timerState == Constants.RUNNING)
             pause();
         else
             play();
     }
 
-    public void play()
-    {
+    public void play() {
         mViewPager.setCurrentItem(currentItem);
 
         // If the timer is 0, don't start!
@@ -300,10 +320,10 @@ public class BrewTimerActivity extends FragmentActivity {
             startService(i);
         }
         stopAlarm();
+        setStatusText();
     }
 
-    public void pause()
-    {
+    public void pause() {
         // Tell the timer service that we're paused
         Intent i = new Intent();
         i.setAction(Constants.BROADCAST_TIMER_CONTROLS);
@@ -319,10 +339,12 @@ public class BrewTimerActivity extends FragmentActivity {
         // Set the play/pause button to display the "Play" image
         playPauseButton.setImageResource(R.drawable.av_play);
         stopAlarm();
+
+        // Set appropriate text on status bar
+        setStatusText();
     }
 
-    public void stop()
-    {
+    public void stop() {
         // Tell the timer serviced that we've stopped
         Intent i = new Intent();
         i.setAction(Constants.BROADCAST_TIMER_CONTROLS);
@@ -333,30 +355,59 @@ public class BrewTimerActivity extends FragmentActivity {
         timerState = Constants.STOPPED;
 
         // Set timer to initial duration
-        hoursView.setText(nft.format(Utils.getHours(inst.getDuration(), inst.getDurationUnits())) + "");
-        minutesView.setText(nft.format(Utils.getMinutes(inst.getDuration(), inst.getDurationUnits())) + "");
-        secondsView.setText(nft.format(0) + "");
+        setTimerFromCurrentStep();
 
         // Set play/pause button to display the "Play" image
         playPauseButton.setImageResource(R.drawable.av_play);
 
+        // Stop any alarms
+        stopAlarm();
+
         // Stop the timer service
         stopService(new Intent(this, BrewTimerService.class));
+
+        // Set appropriate text on status bar
+        setStatusText();
     }
 
-    public void onStepComplete()
-    {
-        // When we get to the next step, raise alarm, pause timer,
-        // and switch views
-         pause();
-         startAlarm();
+    public void setStatusText() {
+        if (currentPosition == currentItem) {
+            if (timerState == Constants.RUNNING) {
+                stepStatusView.setText("IN PROGRESS");
+                stepStatusView.setTextColor(Color.parseColor(ColorHandler.GREEN));
+            }
+            else if (timerState == Constants.PAUSED) {
+                stepStatusView.setText("PAUSED");
+                stepStatusView.setTextColor(Color.parseColor(ColorHandler.RED));
+            }
+            else if (timerState == Constants.STOPPED) {
+                stepStatusView.setText("");
+            }
+        }
+        else if (currentPosition < currentItem) {
+            if (timerState == Constants.RUNNING || timerState == Constants.PAUSED) {
+                stepStatusView.setText("COMPLETE");
+                stepStatusView.setTextColor(Color.parseColor(ColorHandler.GREEN));
+            }
+            else if (timerState == Constants.STOPPED) {
+                stepStatusView.setText("");
+            }
+        }
+        else if (currentPosition > currentItem) {
+            stepStatusView.setText("");
+        }
+    }
 
+    public void onStepComplete() {
+        // When we get to the next step, raise alarm, pause timer, switch views, update displayed time.
+        pause();
+        startAlarm();
         currentItem = currentItem + 1;
         mViewPager.setCurrentItem(currentItem);
+        setTimerFromCurrentStep();
     }
 
-    public int getTimerSeconds()
-    {
+    public int getTimerSeconds() {
         int seconds = 0;
 
         seconds += Integer.parseInt(hoursView.getText().toString()) * 3600;
@@ -366,8 +417,7 @@ public class BrewTimerActivity extends FragmentActivity {
         return seconds;
     }
 
-    public void setTimerFromSeconds(int time)
-    {
+    public void setTimerFromSeconds(int time) {
         int hours = 0, minutes = 0, seconds = 0;
 
         hours = (int) (time / 3600);
@@ -379,8 +429,13 @@ public class BrewTimerActivity extends FragmentActivity {
         secondsView.setText(nft.format(seconds) + "");
     }
 
-    public void startAlarm()
-    {
+    public void setTimerFromCurrentStep() {
+        hoursView.setText(nft.format(Utils.getHours(inst.getDuration(), inst.getDurationUnits())) + "");
+        minutesView.setText(nft.format(Utils.getMinutes(inst.getDuration(), inst.getDurationUnits())) + "");
+        secondsView.setText(nft.format(0) + "");
+    }
+
+    public void startAlarm() {
         // Turn screen on
         Window wind;
         wind = this.getWindow();
@@ -392,15 +447,12 @@ public class BrewTimerActivity extends FragmentActivity {
         ringtone.play();
     }
 
-    // Turns off the ringing alarm
-    public void stopAlarm()
-    {
+    public void stopAlarm() {
         ringtone.stop();
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         // Unregister from our receivers
         unregisterReceiver(queryReceiver);
         unregisterReceiver(countdownReceiver);
@@ -426,40 +478,9 @@ public class BrewTimerActivity extends FragmentActivity {
             case R.id.stop_button:
             {
                 mViewPager.setCurrentItem(0);
-                stopAlarm();
                 stop();
                 break;
             }
         }
-
     }
 }
-
-/**
- * // Set the timer
- seconds = getTimerSeconds() - 1;
- nextStepSeconds = getNextStepTimerSeconds() - 1;
- setTimerFromSeconds(seconds);
- setNextStepTimerFromSeconds(nextStepSeconds);
-
- // Fragment and instruction for the step we are currently counting down
- BrewTimerStepFragment frag = (BrewTimerStepFragment) cpAdapter.getItem(currentItem);
- BrewTimerStepFragment nextFrag = (BrewTimerStepFragment) cpAdapter.getItem(currentItem + 1);
- Instruction ci = frag.getInstruction();
- Instruction ni = nextFrag.getInstruction();
- nextTime = ni.getDuration() - ni.getNextDuration();
-
- // When we get to the next step, raise alarm, pause timer,
- // and switch views
- if (seconds == Units.toSeconds(ci.getNextDuration(), ci.getDurationUnits()))
- {
- pause();
- startAlarm();
-
- nextStepHoursView.setText(nft.format(Utils.getHours(nextTime, ci.getDurationUnits())) + "");
- nextStepMinutesView.setText(nft.format(Utils.getMinutes(nextTime, ci.getDurationUnits())) + "");
- nextStepSecondsView.setText(nft.format(0) + "");
- currentItem = currentItem + 1;
- mViewPager.setCurrentItem(currentItem);
- }
- **/
