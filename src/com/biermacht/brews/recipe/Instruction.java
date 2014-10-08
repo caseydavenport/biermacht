@@ -347,6 +347,10 @@ public class Instruction implements Parcelable {
 		return durationUnits;
 	}
 
+    public double getTimeToNextStep() {
+        return this.duration - this.nextDuration;
+    }
+
 	public void setDurationUnits(String d) {
 		this.durationUnits = d;
 	}

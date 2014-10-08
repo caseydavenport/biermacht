@@ -223,8 +223,6 @@ public class BrewTimerActivity extends FragmentActivity {
                     currentItem = mViewPager.getCurrentItem();
                     setTimerFromCurrentStep();
 
-                    double nextTime = inst.getDuration() - inst.getNextDuration();
-
                     // If this instruction doesn't use a timer, hide the timer view.  Instructions might
                     // not use timers if they are not time based. For example, sparge or cool steps.
                     if (!inst.showTimer()) {
@@ -232,8 +230,8 @@ public class BrewTimerActivity extends FragmentActivity {
                         setTimerToNull();
                     }
                     else {
-                        hoursView.setText(nft.format(Utils.getHours(nextTime, inst.getDurationUnits())) + "");
-                        minutesView.setText(nft.format(Utils.getMinutes(nextTime, inst.getDurationUnits())) + "");
+                        hoursView.setText(nft.format(Utils.getHours(inst.getTimeToNextStep(), inst.getDurationUnits())) + "");
+                        minutesView.setText(nft.format(Utils.getMinutes(inst.getTimeToNextStep(), inst.getDurationUnits())) + "");
                         secondsView.setText(nft.format(0) + "");
                     }
                     goToCurrentButton.setImageResource(R.drawable.navigation_accept);
@@ -467,8 +465,8 @@ public class BrewTimerActivity extends FragmentActivity {
             setTimerToNull();
         }
         else {
-            hoursView.setText(nft.format(Utils.getHours(inst.getDuration(), inst.getDurationUnits())) + "");
-            minutesView.setText(nft.format(Utils.getMinutes(inst.getDuration(), inst.getDurationUnits())) + "");
+            hoursView.setText(nft.format(Utils.getHours(inst.getTimeToNextStep(), inst.getDurationUnits())) + "");
+            minutesView.setText(nft.format(Utils.getMinutes(inst.getTimeToNextStep(), inst.getDurationUnits())) + "");
             secondsView.setText(nft.format(0) + "");
         }
     }
