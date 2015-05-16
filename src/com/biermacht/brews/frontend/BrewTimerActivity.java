@@ -290,10 +290,47 @@ public class BrewTimerActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
             case android.R.id.home:
-        		finish();
+                // Behave in the same way as if back was pressed.
+                this.onBackPressed();
         		return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // If the back button is pressed and the brew timer is running, ask
+        // the user if they really want to exit the activity.  Otherwise, just
+        // go back.
+        if (this.timerState == Constants.STOPPED)
+        {
+            // Timer is not running - we can just exit the activity as normal.
+            Log.d("BrewTimerService", "Back button pressed, finish().");
+            finish();
+        }
+        else {
+            // The timer is not in stopped state.  Ask the user if they really
+            // want to leave!  If they pick yes, the timer will be canceled.
+            Log.d("BrewTimerService", "Back button pressed, display alert.");
+            new AlertDialog.Builder(BrewTimerActivity.this)
+                    .setTitle("Cancel Brew Timer?")
+                    .setMessage("Leaving this screen will cancel the current brew timer. Continue?")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).show();
+        }
+    }
+
+    @Override
+    public void finish()
+    {
+        // Override finish to also stop the timer.
+        this.stop();
+        super.finish();
     }
     
     @Override

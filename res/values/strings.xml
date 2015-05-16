@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Activity names -->
-    <string name="app_name">RecipeMaker</string>
+    <string name="app_name">Biermacht</string>
     <string name="title_activity_main">Recipes</string>
     <string name="title_activity_display_recipe">Recipe Details</string>
     <string name="title_activity_add_new_recipe">Add New Recipe</string>
