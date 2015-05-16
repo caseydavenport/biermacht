@@ -129,14 +129,19 @@ public class AddRecipeActivity extends AddEditActivity {
   @Override
   public void onMissedClick(View v) {
     AlertDialog alert;
-    if (v.equals(efficiencyView))
+    if (v.equals(efficiencyView)) {
       alert = alertBuilder.editTextFloatAlert(efficiencyViewText, efficiencyViewTitle).create();
-    else if (v.equals(batchSizeView))
+    }
+    else if (v.equals(batchSizeView)) {
       alert = alertBuilder.editTextFloatAlert(batchSizeViewText, batchSizeViewTitle).create();
-    else if (v.equals(boilSizeView))
-      alert = alertBuilder.editTextFloatCheckBoxAlert(boilSizeViewText, boilSizeViewTitle, mRecipe.getCalculateBoilVolume(), boilVolumeCallback).create();
-    else
+    }
+    else if (v.equals(boilSizeView)) {
+      alert = alertBuilder.editTextFloatCheckBoxAlert(boilSizeViewText, boilSizeViewTitle,
+              mRecipe.getCalculateBoilVolume(), boilVolumeCallback).create();
+    }
+    else {
       return; // In case its none of those views...
+    }
 
     // Force keyboard open and show popup
     alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -225,7 +230,8 @@ public class AddRecipeActivity extends AddEditActivity {
     // Handle beer style selector here
     styleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position,
+                                 long id) {
         style = styleArray.get(position);
         callback.call();
       }
@@ -238,7 +244,8 @@ public class AddRecipeActivity extends AddEditActivity {
     // Handle mash profile selector here
     profileSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position,
+                                 long id) {
         profile = profileArray.get(position);
         Log.d("AddRecipeActivity", "Got profile: " + profile.getName());
         callback.call();
@@ -252,14 +259,16 @@ public class AddRecipeActivity extends AddEditActivity {
     // Handle type selector here
     typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position,
+                                 long id) {
         type = typeArray.get(position);
         callback.call();
 
         if (type.equals(Recipe.EXTRACT)) {
           profileSpinner.setVisibility(View.GONE);
           efficiencyView.setVisibility(View.GONE);
-        } else {
+        }
+        else {
           profileSpinner.setVisibility(View.VISIBLE);
           efficiencyView.setVisibility(View.VISIBLE);
         }
@@ -283,10 +292,12 @@ public class AddRecipeActivity extends AddEditActivity {
 
     // If it doesn't contain the current recipes style / profile,
     // then it is custom and we add it to the list.
-    if (!styleArray.contains(mRecipe.getStyle()))
+    if (! styleArray.contains(mRecipe.getStyle())) {
       styleArray.add(mRecipe.getStyle());
-    if (!profileArray.contains(mRecipe.getMashProfile()))
+    }
+    if (! profileArray.contains(mRecipe.getMashProfile())) {
       profileArray.add(mRecipe.getMashProfile());
+    }
   }
 
   @Override
@@ -324,10 +335,8 @@ public class AddRecipeActivity extends AddEditActivity {
   }
 
   @Override
-  public boolean validateValues()
-  {
-    if (mRecipe.getDisplayBatchSize() <= 0)
-    {
+  public boolean validateValues() {
+    if (mRecipe.getDisplayBatchSize() <= 0) {
       Log.d("AddRecipeActivity", "Recipe batch size <= 0 - invalid input");
       new AlertDialog.Builder(this)
               .setTitle("Invalid Batch Size")

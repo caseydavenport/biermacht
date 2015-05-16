@@ -17,7 +17,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final int DATABASE_BETA = 2;  // Database in first release.
   public static final int DATABASE_GAMMA = 3; // Add measured batch size to the Recipe class.
 
-
   // Current database version
   public static final int DATABASE_VERSION = DATABASE_GAMMA;
 
@@ -360,7 +359,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int currentVersion, int newVersion) {
-    Log.d("DatabaseHelper", "Upgrading database from version " + currentVersion + " to " + newVersion);
+    Log.d("DatabaseHelper", "Upgrading database from version " + currentVersion + " to " +
+            newVersion);
     String sql = "";
     // Allows for incremental upgrades in case a user has skipped an upgrade.
     // Add a case block for each upgrade over time.

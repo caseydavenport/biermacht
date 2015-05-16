@@ -213,11 +213,14 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
     values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
     values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
-    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
+    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
+            .STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
-    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
+    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
+            .STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
-    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
+    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
+            .STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
     values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
@@ -267,11 +270,14 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
     values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
     values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
-    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
+    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
+            .STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
-    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
+    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
+            .STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
-    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
+    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
+            .STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
     values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
@@ -292,13 +298,14 @@ public class DatabaseInterface {
 
     for (Ingredient i : r.getIngredientList()) {
       Boolean exists = updateExistingIngredientInDatabase(i, Constants.DATABASE_DEFAULT);
-      if (!exists)
+      if (! exists) {
         addIngredientToDatabase(i, r.getId(), Constants.DATABASE_DEFAULT);
+      }
     }
 
     // Update mash profile
     Boolean exists = updateMashProfile(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
-    if (!exists) {
+    if (! exists) {
       // Delete any mash profiles owned by this recipe so we don't build up
       // a bunch over time.
       MashProfile oldProfile = readMashProfile(r.getId());
@@ -315,7 +322,8 @@ public class DatabaseInterface {
     return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
   }
 
-  public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id, long dbid) {
+  public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id, long
+          dbid) {
     for (Ingredient ing : ingredientList) {
       addIngredientToDatabase(ing, id, dbid);
     }
@@ -476,8 +484,9 @@ public class DatabaseInterface {
     for (MashStep step : l) {
       Log.d("DatabaseInterface", "Updating MashStep " + step.getName());
       boolean exists = updateMashStep(step, ownerId);
-      if (!exists)
+      if (! exists) {
         this.addMashStepToDatabase(step, ownerId);
+      }
     }
 
     // We need to delete any steps that used to exist, but
@@ -485,10 +494,11 @@ public class DatabaseInterface {
     for (MashStep step : existingSteps) {
       boolean keep = false;
       for (MashStep s : l) {
-        if (step.getId() == s.getId())
+        if (step.getId() == s.getId()) {
           keep = true;
+        }
       }
-      if (!keep) {
+      if (! keep) {
         deleteMashStep(step.getId());
       }
     }
@@ -584,18 +594,20 @@ public class DatabaseInterface {
     Recipe r;
     String whereString = DatabaseHelper.REC_COL_ID + "=" + id;
 
-    Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, whereString, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, whereString,
+            null, null, null, null);
     cursor.moveToFirst();
     return cursorToRecipe(cursor);
   }
 
   /**
-   * Takes ingredient ID and returns the ingredient with that ID from the database
-   * Undefined for nonexistent IDs
+   * Takes ingredient ID and returns the ingredient with that ID from the database Undefined for
+   * nonexistent IDs
    */
   public Ingredient getIngredientWithId(long id) {
     String whereString = DatabaseHelper.ING_COL_ID + "=" + id;
-    Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
+            whereString, null, null, null, null);
     cursor.moveToFirst();
 
     try {
@@ -614,10 +626,11 @@ public class DatabaseInterface {
     String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid + " AND " +
             DatabaseHelper.ING_COL_TYPE + "=?";
     String[] args = {type};
-    Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, args, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
+            whereString, args, null, null, null);
 
     cursor.moveToFirst();
-    while (!cursor.isAfterLast()) {
+    while (! cursor.isAfterLast()) {
       try {
         list.add(cursorToIngredient(cursor));
       } catch (Exception e) {
@@ -638,10 +651,11 @@ public class DatabaseInterface {
   public ArrayList<MashProfile> getMashProfilesFromVirtualDatabase(long dbid) {
     ArrayList<MashProfile> list = new ArrayList<MashProfile>();
     String whereString = DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
-    Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString,
+            null, null, null, null);
 
     cursor.moveToFirst();
-    while (!cursor.isAfterLast()) {
+    while (! cursor.isAfterLast()) {
       try {
         list.add(cursorToMashProfile(cursor));
       } catch (Exception e) {
@@ -662,10 +676,11 @@ public class DatabaseInterface {
   public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid) {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
     String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
-    Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
+            whereString, null, null, null, null);
 
     cursor.moveToFirst();
-    while (!cursor.isAfterLast()) {
+    while (! cursor.isAfterLast()) {
       try {
         list.add(cursorToIngredient(cursor));
       } catch (Exception e) {
@@ -688,13 +703,14 @@ public class DatabaseInterface {
   public ArrayList<Recipe> getRecipeList() {
     ArrayList<Recipe> list = new ArrayList<Recipe>();
 
-    Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, null, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, null, null,
+            null, null, null);
     cursor.moveToFirst();
 
     // Move one forward, so we skip the master recipe
     cursor.moveToNext();
 
-    while (!cursor.isAfterLast()) {
+    while (! cursor.isAfterLast()) {
       list.add(cursorToRecipe(cursor));
       cursor.moveToNext();
     }
@@ -857,10 +873,11 @@ public class DatabaseInterface {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
 
     String whereString = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
-    Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns, whereString, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
+            whereString, null, null, null, null);
     cursor.moveToFirst();
 
-    while (!cursor.isAfterLast()) {
+    while (! cursor.isAfterLast()) {
       Ingredient ing;
       try {
         ing = cursorToIngredient(cursor);
@@ -880,7 +897,8 @@ public class DatabaseInterface {
   private BeerStyle readStyle(long id) {
 
     String whereString = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
-    Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString,
+            null, null, null, null);
 
     cursor.moveToFirst();
     BeerStyle style = cursorToStyle(cursor);
@@ -972,11 +990,11 @@ public class DatabaseInterface {
     return style;
   }
 
-
   private MashProfile readMashProfile(long id) {
 
     String whereString = DatabaseHelper.PRO_COL_OWNER_ID + "=" + id;
-    Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString,
+            null, null, null, null);
 
     cursor.moveToFirst();
     try {
@@ -1048,10 +1066,11 @@ public class DatabaseInterface {
   private ArrayList<MashStep> readMashStepsList(long id) {
     ArrayList<MashStep> list = new ArrayList<MashStep>();
     String whereString = DatabaseHelper.STE_COL_OWNER_ID + "=" + id;
-    Cursor cursor = database.query(DatabaseHelper.TABLE_STEPS, stepAllColumns, whereString, null, null, null, null);
+    Cursor cursor = database.query(DatabaseHelper.TABLE_STEPS, stepAllColumns, whereString, null,
+            null, null, null);
 
     cursor.moveToFirst();
-    while (!cursor.isAfterLast()) {
+    while (! cursor.isAfterLast()) {
       MashStep step = cursorToMashStep(cursor);
       list.add(step);
       cursor.moveToNext();

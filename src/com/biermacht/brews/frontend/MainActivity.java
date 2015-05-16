@@ -103,16 +103,18 @@ public class MainActivity extends Activity {
     databaseInterface.open();
 
     // SHARED PREFERENCES JUNK ALL GOES HERE!
-    SharedPreferences preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+    SharedPreferences preferences = this.getSharedPreferences(Constants.PREFERENCES, Context
+            .MODE_PRIVATE);
     usedBefore = preferences.getBoolean(Constants.PREF_USED_BEFORE, false);
-    if (!usedBefore) {
+    if (! usedBefore) {
       // We've used the app! Woo!
       preferences.edit().putBoolean(Constants.PREF_USED_BEFORE, true).commit();
       new ImportXmlIngredientsTask(this).execute("");
 
       // Create the master recipe - used as placeholder for stuff
       Database.createRecipeWithName("Master Recipe");
-    } else {
+    }
+    else {
       // Async Initialize Assets on startup
       new InitializeTask(ingredientHandler).execute("");
     }
@@ -132,7 +134,8 @@ public class MainActivity extends Activity {
     //drawerItems.add(DRAWER_GRAVITY); TODO:
 
     // Set the adapter and click listener for the list view
-    drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.row_layout_drawer_item, drawerItems));
+    drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.row_layout_drawer_item,
+            drawerItems));
     drawerListView.setOnItemClickListener(new DrawerItemClickListener());
 
     // Drawer layout and ActionBarDrawerToggle
@@ -249,7 +252,8 @@ public class MainActivity extends Activity {
     // Build view which contains the recipes to select
     final ListView v = new ListView(getApplicationContext());
     v.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-    final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter(getApplicationContext(), foundImportedRecipes);
+    final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter
+            (getApplicationContext(), foundImportedRecipes);
     v.setAdapter(adapter);
     final ArrayList<Recipe> recipesToImport = new ArrayList<Recipe>();
 
@@ -260,8 +264,8 @@ public class MainActivity extends Activity {
             .setPositiveButton("Import", new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
-                // Iterate recipes, import those which are selected.  If selected and a recipe exists
-                // with that name, ask if we should overwrite.
+                // Iterate recipes, import those which are selected.  If selected and a recipe
+                // exists with that name, ask if we should overwrite.
                 for (int i = 0; i < adapter.getCount(); i++) {
                   if (adapter.isChecked(adapter.getItem(i).getRecipeName())) {
                     recipesToImport.add(adapter.getItem(i));
@@ -283,8 +287,9 @@ public class MainActivity extends Activity {
       if (resultCode == RESULT_OK) {
         String path = data.getData().getPath().toString();
 
-        if (path != null)
+        if (path != null) {
           new LoadRecipes(this, path, ingredientHandler).execute("");
+        }
       }
       if (resultCode == RESULT_CANCELED) {
         //Write your code on no result return

@@ -163,12 +163,15 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
          * Options for clicking on each of the editable views
          ************************************************************/
         AlertDialog alert;
-        if (v.equals(nameView))
+        if (v.equals(nameView)) {
           alert = alertBuilder.editTextStringAlert(nameViewText, nameViewTitle).create();
-        else if (v.equals(amountView))
+        }
+        else if (v.equals(amountView)) {
           alert = alertBuilder.editTextFloatAlert(amountViewText, amountViewTitle).create();
-        else if (v.equals(timeView))
+        }
+        else if (v.equals(timeView)) {
           alert = alertBuilder.editTextIntegerAlert(timeViewText, timeViewTitle).create();
+        }
         else {
           Log.d("AddEditActivity", "View not found for click, calling onMissedClick()");
           onMissedClick(v);
@@ -176,7 +179,8 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
         }
 
         // Force keyboard open and show popup
-        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams
+                .SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         alert.show();
       }
     };
@@ -284,7 +288,8 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
           onRecipeNotFound();
           return;
         }
-      } else {
+      }
+      else {
         Log.d("AddEditActivity", "No recipe ID passed via Intent, Calling onRecipeNotFound()");
         onRecipeNotFound();
         return;
@@ -386,7 +391,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     for (View v : views) {
       Log.d("AddEditActivity", "Registering view");
       mainView.addView(v);
-      if (!(v instanceof Spinner)) {
+      if (! (v instanceof Spinner)) {
         // Don't perform this for spinners.
         v.setOnClickListener(onClickListener);
       }
@@ -398,7 +403,8 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     for (View v : this.registeredViews) {
       if (views.contains(v)) {
         v.setVisibility(View.VISIBLE);
-      } else {
+      }
+      else {
         v.setVisibility(View.GONE);
       }
     }
