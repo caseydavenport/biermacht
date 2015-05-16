@@ -110,7 +110,7 @@ public class MainActivity extends Activity {
       preferences.edit().putBoolean(Constants.PREF_USED_BEFORE, true).commit();
       new ImportXmlIngredientsTask(this).execute("");
 
-      // Create the master recipe - used a placeholder for stuff
+      // Create the master recipe - used as placeholder for stuff
       Database.createRecipeWithName("Master Recipe");
     } else {
       // Async Initialize Assets on startup
@@ -369,8 +369,6 @@ public class MainActivity extends Activity {
       } catch (IOException e) {
         Log.e("LoadRecipes", e.toString());
       }
-
-
       return "Executed";
     }
 

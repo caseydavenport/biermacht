@@ -6,7 +6,6 @@ be recorded here
 //////////////////////////////////////////////
 // Issues required for next release. /////////
 //////////////////////////////////////////////
-TODO:    User can't cancel first time setup.
 TODO:    Do not allow 0 batch size.
 TODO:	 Better auto naming of mash steps.
 

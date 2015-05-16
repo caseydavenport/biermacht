@@ -221,7 +221,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + REC_COL_CALORIES + " integer, "
           + REC_COL_CALC_BOIL_VOL + " integer, "
           + REC_COL_CALC_STRIKE_TEMP + " integer, "
-          + REC_COL_CALC_STRIKE_VOL + " integer "
+          + REC_COL_CALC_STRIKE_VOL + " integer, "
           + REC_COL_MEAS_BATCH_SIZE + " float"
           + ");";
 
@@ -349,7 +349,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   @Override
   public void onCreate(SQLiteDatabase database) {
-    // Create the table
+    // Create the tables
+    Log.d("DatabaseHelper", "Creating database tables");
     database.execSQL(CREATE_RECIPE_TABLE);
     database.execSQL(CREATE_INGREDIENT_TABLE);
     database.execSQL(CREATE_STYLE_TABLE);
