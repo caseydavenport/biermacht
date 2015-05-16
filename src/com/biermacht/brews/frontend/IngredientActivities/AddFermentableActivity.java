@@ -278,10 +278,10 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     public void acquireValues() throws Exception
     {
         super.acquireValues();
-        Log.d("AddFermentableActivity::acquireValues", "Acquiring values for: " + fermentable.getName());
+        Log.d("AddFermentableActivity", "Acquiring values for: " + fermentable.getName());
 
-        color = Double.parseDouble(colorViewText.getText().toString());
-        gravity = Double.parseDouble(gravityViewText.getText().toString());
+        color = Double.parseDouble(colorViewText.getText().toString().replace(",", "."));
+        gravity = Double.parseDouble(gravityViewText.getText().toString().replace(",", "."));
 
         fermentable.setName(name);
         fermentable.setTime(time);

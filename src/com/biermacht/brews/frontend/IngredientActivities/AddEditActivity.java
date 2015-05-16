@@ -331,7 +331,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
   public void acquireValues() throws Exception {
     Log.d("AddEditActivity", "Acquiring values");
     name = nameViewText.getText().toString();
-    amount = Double.parseDouble(amountViewText.getText().toString());
+    amount = Double.parseDouble(amountViewText.getText().toString().replace(",", "."));
     time = Integer.parseInt(timeViewText.getText().toString());
   }
 

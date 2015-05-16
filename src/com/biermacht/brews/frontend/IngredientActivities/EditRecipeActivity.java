@@ -67,7 +67,8 @@ public class EditRecipeActivity extends AddRecipeActivity {
     measuredOGViewText.setText(String.format("%2.3f", mRecipe.getMeasuredOG()));
 
     measuredBatchSizeViewText = (TextView) measuredBatchSizeView.findViewById(R.id.text);
-    measuredBatchSizeViewText.setText(String.format("%2.3f", mRecipe.getDisplayMeasuredBatchSize()));
+    measuredBatchSizeViewText.setText(String.format("%2.3f", mRecipe.getDisplayMeasuredBatchSize
+            ()));
 
     // Set button text
     submitButton.setText(R.string.save);
@@ -88,12 +89,16 @@ public class EditRecipeActivity extends AddRecipeActivity {
     super.onMissedClick(v);
 
     AlertDialog alert;
-    if (v.equals(measuredFGView))
+    if (v.equals(measuredFGView)) {
       alert = alertBuilder.editTextFloatAlert(measuredFGViewText, measuredFGViewTitle).create();
-    else if (v.equals(measuredOGView))
+    }
+    else if (v.equals(measuredOGView)) {
       alert = alertBuilder.editTextFloatAlert(measuredOGViewText, measuredOGViewTitle).create();
-    else if (v.equals(measuredBatchSizeView))
-      alert = alertBuilder.editTextFloatAlert(measuredBatchSizeViewText, measuredBatchSizeViewTitle).create();
+    }
+    else if (v.equals(measuredBatchSizeView)) {
+      alert = alertBuilder.editTextFloatAlert(measuredBatchSizeViewText,
+              measuredBatchSizeViewTitle).create();
+    }
     else {
       Log.d("EditRecipeActivity", "onMissedClick did not handle the clicked view");
       return; // In case its none of those views...
@@ -113,9 +118,12 @@ public class EditRecipeActivity extends AddRecipeActivity {
   @Override
   public void acquireValues() throws Exception {
     super.acquireValues();
-    double measuredOg = Double.parseDouble(measuredOGViewText.getText().toString());
-    double measuredFg = Double.parseDouble(measuredFGViewText.getText().toString());
-    double measuredBatchSize = Double.parseDouble(measuredBatchSizeViewText.getText().toString());
+    double measuredOg = Double.parseDouble(measuredOGViewText.getText().toString()
+            .replace(",", "."));
+    double measuredFg = Double.parseDouble(measuredFGViewText.getText().toString()
+            .replace(",", "."));
+    double measuredBatchSize = Double.parseDouble(measuredBatchSizeViewText.getText().toString()
+            .replace(",", "."));
 
     mRecipe.setMeasuredFG(measuredFg);
     mRecipe.setMeasuredOG(measuredOg);

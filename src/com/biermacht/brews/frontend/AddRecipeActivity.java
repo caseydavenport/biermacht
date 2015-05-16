@@ -315,9 +315,9 @@ public class AddRecipeActivity extends AddEditActivity {
   public void acquireValues() throws Exception {
     super.acquireValues();
 
-    efficiency = Double.parseDouble(efficiencyViewText.getText().toString());
-    double batchSize = Double.parseDouble(batchSizeViewText.getText().toString());
-    double boilSize = Double.parseDouble(boilSizeViewText.getText().toString());
+    efficiency = Double.parseDouble(efficiencyViewText.getText().toString().replace(",", "."));
+    double batchSize = Double.parseDouble(batchSizeViewText.getText().toString().replace(",", "."));
+    double boilSize = Double.parseDouble(boilSizeViewText.getText().toString().replace(",", "."));
     String description = "No Description Provided";
 
     mRecipe.setRecipeName(name);

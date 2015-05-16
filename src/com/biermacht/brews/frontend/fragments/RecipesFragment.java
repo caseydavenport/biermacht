@@ -43,301 +43,273 @@ import java.util.ArrayList;
 
 public class RecipesFragment extends Fragment {
 
-    // Layout resource
-    private static int resource = R.layout.fragment_recipes;
+  // Layout resource
+  private static int resource = R.layout.fragment_recipes;
+  // Static menu items
+  private static String EDIT_RECIPE = "Edit Recipe";
+  private static String SCALE_RECIPE = "Scale Recipe";
+  private static String COPY_RECIPE = "Copy Recipe";
+  private static String DELETE_RECIPE = "Delete Recipe";
+  private static String EDIT_FERM = "Edit Fermentation Profile";
+  private static String EDIT_MASH = "Edit Mash Profile";
+  private static String EXPORT_RECIPE = "Export as BeerXML";
+  private static String BREW_TIMER = "Brew Timer";
+  private static String RECIPE_NOTES = "Recipe Notes";
+  ViewGroup pageView;
+  // Recipe List stuff
+  private RecipeArrayAdapter mAdapter;
+  private AdapterView.OnItemClickListener mClickListener;
+  private ArrayList<Recipe> recipeList;
+  // Database Interface
+  private DatabaseInterface databaseInterface;
+  // Context menu items
+  private ArrayList<String> menuItems;
+  // Holds the selected recipe
+  private Recipe selectedRecipe;
+  // Context
+  private Context c;
+  //Declare views here
+  private ListView listView;
+  private TextView noRecipesView;
 
-    // Recipe List stuff
-    private RecipeArrayAdapter mAdapter;
-    private AdapterView.OnItemClickListener mClickListener;
-    private ArrayList<Recipe> recipeList;
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+          savedInstanceState) {
+    // Get views
+    pageView = (RelativeLayout) inflater.inflate(resource, container, false);
+    listView = (ListView) pageView.findViewById(R.id.recipe_list);
+    noRecipesView = (TextView) pageView.findViewById(R.id.no_recipes_view);
 
-    // Database Interface
-    private DatabaseInterface databaseInterface;
+    // Get database Interface
+    databaseInterface = MainActivity.databaseInterface;
 
-    // Context menu items
-    private ArrayList<String> menuItems;
+    // Get Context
+    c = getActivity();
 
-    // Holds the selected recipe
-    private Recipe selectedRecipe;
+    // Create adapter
+    recipeList = new ArrayList<Recipe>();
+    mAdapter = new RecipeArrayAdapter(c, recipeList);
 
-    // Context
-    private Context c;
+    // Set adapter for listView
+    listView.setAdapter(mAdapter);
 
-    //Declare views here
-    private ListView listView;
-    private TextView noRecipesView;
-    ViewGroup pageView;
+    // Set up the onClickListener
+    mClickListener = new AdapterView.OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parentView, View childView, int pos,
+                              long id) {
+        Intent intent = new Intent(c, DisplayRecipeActivity.class);
+        intent.putExtra(Constants.KEY_RECIPE, recipeList.get(pos));
+        startActivity(intent);
+      }
+    };
 
-    // Static menu items
-    private static String EDIT_RECIPE = "Edit Recipe";
-    private static String SCALE_RECIPE = "Scale Recipe";
-    private static String COPY_RECIPE = "Copy Recipe";
-    private static String DELETE_RECIPE = "Delete Recipe";
-    private static String EDIT_FERM = "Edit Fermentation Profile";
-    private static String EDIT_MASH = "Edit Mash Profile";
-    private static String EXPORT_RECIPE = "Export as BeerXML";
-    private static String BREW_TIMER = "Brew Timer";
-    private static String RECIPE_NOTES = "Recipe Notes";
+    // Set up my listView with title and ArrayAdapter
+    new GetRecipeListFromDatabaseTask(getActivity()).execute("");
+    listView.setOnItemClickListener(mClickListener);
+    registerForContextMenu(listView);
 
-	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-        // Get views
-		pageView = (RelativeLayout) inflater.inflate(resource, container, false);
-        listView = (ListView) pageView.findViewById(R.id.recipe_list);
-        noRecipesView = (TextView) pageView.findViewById(R.id.no_recipes_view);
+    // Turn on options menu
+    setHasOptionsMenu(true);
 
-        // Get database Interface
-        databaseInterface = MainActivity.databaseInterface;
+    return pageView;
+  }
 
-        // Get Context
-        c = getActivity();
-        
-        // Create adapter
-        recipeList = new ArrayList<Recipe>();
-        mAdapter = new RecipeArrayAdapter(c, recipeList);
-        
-        // Set adapter for listView
-        listView.setAdapter(mAdapter);
-        
-        // Set up the onClickListener
-        mClickListener = new AdapterView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView<?> parentView, View childView, int pos,
-                                    long id)
-            {
-                Intent intent = new Intent(c, DisplayRecipeActivity.class);
-                intent.putExtra(Constants.KEY_RECIPE, recipeList.get(pos));
-                startActivity(intent);
-            }
-        };
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+    inflater.inflate(R.menu.activity_main, menu);
+  }
 
-        // Set up my listView with title and ArrayAdapter
-        new GetRecipeListFromDatabaseTask(getActivity()).execute("");
-        listView.setOnItemClickListener(mClickListener);
-        registerForContextMenu(listView);
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    if (v == listView) {
+      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+      String title = recipeList.get(info.position).getRecipeName();
 
-        // Turn on options menu
-		setHasOptionsMenu(true);
-		
-		return pageView;
-	}
+      selectedRecipe = recipeList.get(info.position);
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.activity_main, menu);
+      menu.setHeaderTitle(title);
+      menuItems = new ArrayList<String>();
+
+      // Build menu items
+      menuItems.add(EDIT_RECIPE);
+      if (! selectedRecipe.getType().equals(Recipe.EXTRACT)) {
+        menuItems.add(EDIT_MASH);
+      }
+      menuItems.add(EDIT_FERM);
+      menuItems.add(BREW_TIMER);
+      menuItems.add(RECIPE_NOTES);
+      menuItems.add(SCALE_RECIPE);
+      menuItems.add(COPY_RECIPE);
+      menuItems.add(DELETE_RECIPE);
+
+      for (int i = 0; i < menuItems.size(); i++) {
+        menu.add(Menu.NONE, i, i, menuItems.get(i));
+      }
+    }
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    String selected = menuItems.get(item.getItemId());
+
+    // Edit recipe selected
+    if (selected.equals(EDIT_RECIPE)) {
+      Intent i = new Intent(c, EditRecipeActivity.class);
+      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+      startActivity(i);
+    }
+
+    // Scale recipe selected
+    else if (selected.equals(SCALE_RECIPE)) {
+      scaleAlert(selectedRecipe).show();
+    }
+
+    // Copy recipe selected
+    else if (selected.equals(COPY_RECIPE)) {
+      Recipe copy = Database.createRecipeFromExisting(selectedRecipe);
+      copy.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
+      copy.save();
+      recipeList.add(mAdapter.getPosition(selectedRecipe) + 1, copy);
+      mAdapter.notifyDataSetChanged();
+    }
+
+    // Delete recipe selected
+    else if (selected.equals(DELETE_RECIPE)) {
+      deleteAlert(selectedRecipe).show();
+    }
+
+    // Edit fermentation selected
+    else if (selected.equals(EDIT_FERM)) {
+      Intent i = new Intent(c, EditFermentationProfileActivity.class);
+      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+      startActivity(i);
+    }
+
+    //  Brew timer
+    else if (selected.equals(BREW_TIMER)) {
+      Intent i = new Intent(c, BrewTimerActivity.class);
+      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+      startActivity(i);
+    }
+
+    // Edit Mash profile
+    else if (selected.equals(EDIT_MASH)) {
+      Intent i = new Intent(c, EditMashProfileActivity.class);
+      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+      i.putExtra(Constants.KEY_PROFILE_ID, selectedRecipe.getMashProfile().getId());
+      i.putExtra(Constants.KEY_PROFILE, selectedRecipe.getMashProfile());
+      startActivity(i);
+    }
+
+    else if (selected.equals(RECIPE_NOTES)) {
+      Intent i = new Intent(c, EditRecipeNotesActivity.class);
+      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+      startActivity(i);
+    }
+
+    return true;
+  }
+
+  public void setCorrectView() {
+    if (recipeList.size() == 0) {
+      noRecipesView.setVisibility(View.VISIBLE);
+      listView.setVisibility(View.GONE);
+    }
+    else {
+      noRecipesView.setVisibility(View.GONE);
+      listView.setVisibility(View.VISIBLE);
+    }
+  }
+
+  private AlertDialog.Builder deleteAlert(final Recipe r) {
+    return new AlertDialog.Builder(c)
+            .setTitle("Confirm Delete")
+            .setMessage("Do you really want to delete '" + r.getRecipeName() + "'")
+            .setIcon(android.R.drawable.ic_delete)
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                Log.d("RecipesFragment::deleteAlert", "Deleting recipe: " + r);
+                recipeList.remove(r);
+                mAdapter.notifyDataSetChanged();
+                Database.deleteRecipe(r);
+                setCorrectView();
+                Log.d("RecipesFragment::deleteAlert", "Recipe deleted");
+              }
+
+            })
+
+            .setNegativeButton(android.R.string.no, null);
+  }
+
+  private AlertDialog.Builder scaleAlert(final Recipe r) {
+    LayoutInflater factory = LayoutInflater.from(c);
+    final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_scale, null);
+    final EditText editText = (EditText) alertView.findViewById(R.id.new_volume_edit_text);
+
+    return new AlertDialog.Builder(c)
+            .setTitle("Scale Recipe")
+            .setView(alertView)
+            .setPositiveButton(R.string.scale, new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                double newVolume = Double.parseDouble(editText.getText().toString()
+                        .replace(",", "."));
+                Utils.scaleRecipe(r, newVolume);
+                mAdapter.notifyDataSetChanged();
+              }
+
+            })
+
+            .setNegativeButton(R.string.cancel, null);
+  }
+
+  private class GetRecipeListFromDatabaseTask extends AsyncTask<String, Void, String> {
+
+    private Context context;
+    private ProgressDialog progress;
+
+    public GetRecipeListFromDatabaseTask(Context c) {
+      this.context = c;
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
-    {
-        if (v == listView)
-        {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-            String title = recipeList.get(info.position).getRecipeName();
+    protected String doInBackground(String... params) {
+      // Get recipes to display
+      recipeList.removeAll(recipeList);
+      recipeList.addAll(Database.getRecipeList(databaseInterface));
 
-            selectedRecipe = recipeList.get(info.position);
-
-            menu.setHeaderTitle(title);
-            menuItems = new ArrayList<String>();
-
-            // Build menu items
-            menuItems.add(EDIT_RECIPE);
-            if (!selectedRecipe.getType().equals(Recipe.EXTRACT))
-                menuItems.add(EDIT_MASH);
-            menuItems.add(EDIT_FERM);
-            menuItems.add(BREW_TIMER);
-            menuItems.add(RECIPE_NOTES);
-            menuItems.add(SCALE_RECIPE);
-            menuItems.add(COPY_RECIPE);
-            menuItems.add(DELETE_RECIPE);
-
-            for (int i = 0; i < menuItems.size(); i++)
-            {
-                menu.add(Menu.NONE, i, i, menuItems.get(i));
-            }
-        }
+      return "Executed";
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        String selected = menuItems.get(item.getItemId());
-
-        // Edit recipe selected
-        if (selected.equals(EDIT_RECIPE))
-        {
-            Intent i = new Intent(c, EditRecipeActivity.class);
-            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
-            startActivity(i);
-        }
-
-        // Scale recipe selected
-        else if (selected.equals(SCALE_RECIPE))
-        {
-            scaleAlert(selectedRecipe).show();
-        }
-
-        // Copy recipe selected
-        else if (selected.equals(COPY_RECIPE))
-        {
-            Recipe copy = Database.createRecipeFromExisting(selectedRecipe);
-            copy.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
-            copy.save();
-            recipeList.add(mAdapter.getPosition(selectedRecipe) + 1, copy);
-            mAdapter.notifyDataSetChanged();
-        }
-
-        // Delete recipe selected
-        else if (selected.equals(DELETE_RECIPE))
-        {
-            deleteAlert(selectedRecipe).show();
-        }
-
-        // Edit fermentation selected
-        else if (selected.equals(EDIT_FERM))
-        {
-            Intent i = new Intent(c, EditFermentationProfileActivity.class);
-            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
-            startActivity(i);
-        }
-
-        //  Brew timer
-        else if (selected.equals(BREW_TIMER))
-        {
-            Intent i = new Intent(c, BrewTimerActivity.class);
-            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
-            startActivity(i);
-        }
-
-        // Edit Mash profile
-        else if (selected.equals(EDIT_MASH))
-        {
-            Intent i = new Intent(c, EditMashProfileActivity.class);
-            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
-            i.putExtra(Constants.KEY_PROFILE_ID, selectedRecipe.getMashProfile().getId());
-            i.putExtra(Constants.KEY_PROFILE, selectedRecipe.getMashProfile());
-            startActivity(i);
-        }
-
-        else if (selected.equals(RECIPE_NOTES))
-        {
-            Intent i = new Intent(c, EditRecipeNotesActivity.class);
-            i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
-            i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-            startActivity(i);
-        }
-
-        return true;
-    }
-    
-    public void setCorrectView()
-    {
-        if (recipeList.size() == 0)
-        {
-            noRecipesView.setVisibility(View.VISIBLE);
-            listView.setVisibility(View.GONE);
-        }
-        else
-        {
-            noRecipesView.setVisibility(View.GONE);
-            listView.setVisibility(View.VISIBLE);
-        }
+    protected void onPostExecute(String result) {
+      super.onPostExecute(result);
+      //progress.dismiss();
+      mAdapter.notifyDataSetChanged();
+      setCorrectView();
+      Log.d("readRecipesFromDatabase", "Finished reading recipes");
     }
 
-    private AlertDialog.Builder deleteAlert(final Recipe r)
-    {
-        return new AlertDialog.Builder(c)
-                .setTitle("Confirm Delete")
-                .setMessage("Do you really want to delete '" + r.getRecipeName() +"'")
-                .setIcon(android.R.drawable.ic_delete)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                    	Log.d("RecipesFragment::deleteAlert", "Deleting recipe: " + r);
-                        recipeList.remove(r);
-                        mAdapter.notifyDataSetChanged();
-                        Database.deleteRecipe(r);
-                        setCorrectView();
-                    	Log.d("RecipesFragment::deleteAlert", "Recipe deleted");
-                    }
-
-                })
-
-                .setNegativeButton(android.R.string.no, null);
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      progress = new ProgressDialog(context);
+      progress.setMessage("Importing...");
+      progress.setIndeterminate(false);
+      progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+      progress.setCancelable(true);
+      //progress.show();
     }
 
-    private AlertDialog.Builder scaleAlert(final Recipe r)
-    {
-        LayoutInflater factory = LayoutInflater.from(c);
-        final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_scale, null);
-        final EditText editText = (EditText) alertView.findViewById(R.id.new_volume_edit_text);
-
-        return new AlertDialog.Builder(c)
-                .setTitle("Scale Recipe")
-                .setView(alertView)
-                .setPositiveButton(R.string.scale, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        double newVolume = Double.parseDouble(editText.getText().toString());
-                        Utils.scaleRecipe(r, newVolume);
-                        mAdapter.notifyDataSetChanged();
-                    }
-
-                })
-
-                .setNegativeButton(R.string.cancel, null);
+    @Override
+    protected void onProgressUpdate(Void... values) {
     }
-
-    private class GetRecipeListFromDatabaseTask extends AsyncTask<String, Void, String> {
-
-        private Context context;
-        private ProgressDialog progress;
-
-        public GetRecipeListFromDatabaseTask(Context c)
-        {
-            this.context = c;
-        }
-
-        @Override
-        protected String doInBackground(String... params)
-        {
-            // Get recipes to display
-        	recipeList.removeAll(recipeList);
-        	recipeList.addAll(Database.getRecipeList(databaseInterface));
-
-            return "Executed";
-        }
-
-        @Override
-        protected void onPostExecute(String result)
-        {
-            super.onPostExecute(result);
-            //progress.dismiss();
-            mAdapter.notifyDataSetChanged();
-            setCorrectView();
-            Log.d("readRecipesFromDatabase", "Finished reading recipes");
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-            progress = new ProgressDialog(context);
-            progress.setMessage("Importing...");
-            progress.setIndeterminate(false);
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setCancelable(true);
-            //progress.show();
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
-    }
+  }
 }

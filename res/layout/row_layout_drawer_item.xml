@@ -1,5 +1,5 @@
 <com.biermacht.brews.widget.CustomFontTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:biermacht="http://schemas.android.com/apk/res/com.biermacht.brews"
+    xmlns:biermacht="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

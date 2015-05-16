@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.biermacht.brews.DragDropList.DragSortListView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:dslv="http://schemas.android.com/apk/res/com.biermacht.brews"
+        xmlns:dslv="http://schemas.android.com/apk/res-auto"
         android:id="@+id/listview"
         android:layout_width="fill_parent"
         android:layout_height="350dip"
