@@ -10,82 +10,83 @@ be recorded here
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
-TODO:    Can export a single recipe.
-TODO:    Fix bug where import recipes dialog is too big.
-TODO:    Import recipes has select / deselect all.  Defaults to all selected.
-TODO:	 Mash temperature calculator.
-TODO:    Specific Gravity temperature adjuster.
-TODO:    Can't start brew timer if all grain, no mash steps.
-TODO:	 Calculate water to grain ratio when not auto calculating water to add.
-TODO:    When entering measured gravity, user can also input temperature.
-TODO:    Mash temperature graph
-TODO:	 Recipe revisions
-TODO:	 Search recipes
-TODO:	 First time use hints / help. 
-TODO:	 Should update mash profiles used in recipes when a profile is edited?
-TODO:	 Support different times for mash ingredients?
-TODO:	 Quick add button when nothing in a list.
-TODO:    Add Style guide viewing tool.
-TODO: 	 Can configure bottle / keg age.
-TODO:    Equipment Editor?
-TODO:    Add sparge steps / info
-TODO:    Add calculators for lots of things.
-TODO:    Perform mash calculation automatically
-TODO:	 Maybe - Make a visual scale rather than numerical for recipe stats. e.g, FG, OG, Color.
-TODO:	 Determine the best matching beer style for a given recipe?
-TODO:	 Modify desired traits and the app will auto-modify your recipe to match?
-TODO:	 Move setting "measured" attributes into own activity.
-TODO:	 Handle actually setting the amount of yeast.
-TODO:	 Should consider mash temp in ABV calc.
-TODO:	 Add support for more custom fields to XML import / export.
-TODO:	 Brewer profiles, social features.  This is a big task.
-TODO:    Support measured gravities < 1
+* Can export a single recipe.
+* Fix bug where import recipes dialog is too big.
+* Import recipes has select / deselect all.  Defaults to all selected.
+* Mash temperature calculator.
+* Specific Gravity temperature adjuster.
+* Can't start brew timer if all grain, no mash steps.
+* Calculate water to grain ratio when not auto calculating water to add.
+* When entering measured gravity, user can also input temperature.
+* Mash temperature graph
+* Recipe revisions
+* Search recipes
+* First time use hints / help.
+* Should update mash profiles used in recipes when a profile is edited?
+* Support different times for mash ingredients?
+* Quick add button when nothing in a list.
+* Add Style guide viewing tool.
+* Can configure bottle / keg age.
+* Equipment Editor?
+* Add sparge steps / info
+* Add calculators for lots of things.
+* Perform mash calculation automatically
+* Maybe - Make a visual scale rather than numerical for recipe stats. e.g, FG, OG, Color.
+* Determine the best matching beer style for a given recipe?
+* Modify desired traits and the app will auto-modify your recipe to match?
+* Move setting "measured" attributes into own activity.
+* Handle actually setting the amount of yeast.
+* Should consider mash temp in ABV calc.
+* Add support for more custom fields to XML import / export.
+* Brewer profiles, social features.  This is a big task.
+* Support measured gravities < 1
 
 //////////////////////////////////////////////
-// Changlog for release XXXXX ////////////////
+// Changlog for release 1.0.0 ////////////////
 //////////////////////////////////////////////
-TODO:	 Confirmation when leaving brew timer.
-TODO:    Brew timer visible from notification bar.
-TODO:	 Allow configuration of measured batch size.
-TODO:    Do not allow 0 batch size.
+* Confirmation when leaving brew timer.
+* Brew timer visible from notification bar.
+* Allow configuration of measured batch size.
+* Do not allow 0 batch size.
+* Changed name in app drawer to Biermacht
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////
 //////////////////////////////////////////////
-TODO:	 Adding ingredient button should say "Add" instead of "Save"
-TODO:	 After recipe creation, go to the recipe, not the main menu.
-TODO:	 Ingredient and profile editors don't have orange bar at the top.
-TODO:	 Why do I want to give my grains a name? Remove name field.
-TODO:	 Mash profiles can't be edited or saved?
-TODO:	 Make fewer default Mash Profiles.
-TODO:	 Stop appending custom to things.
-TODO:	 Boil size doesn't update when checking box.
-TODO:	 Show sparge step in brew timer.
-TODO:	 Edit mash step should say edit, not add, in title.
-TODO:	 Mash steps use Qts, but displayed as gallons elsewhere.
-TODO:	 Mash profiles are confusing!
-TODO:	 Show ingredients for mash in brew timer.
-TODO:	 Add bottling dates to calendar.
-TODO:    Confirmation popup when adding dates to calendar.
-TODO:	 Show measured efficiency for all grain recipes. (Condition to show was too strict)
-TODO:	 Efficiency for all grain should default to something reasonable (70)
-TODO: 	 Adding new mash step doesn't see previous steps in list.
-TODO:	 Shows invalid fermentation stages in instructions.
-TODO:	 Mash step goes to -inf when changing name?
-TODO:	 When adding mash step, temp should start at previous step's end temp.
-TODO:	 Recipe should include deafult amount of grain (10lbs?) when adding custom mash profile.
-TODO:	 Sparge amt needs to be formatted in instruction.
-TODO:	 Cool wort does not adjust to metric.
-TODO:	 Temp mash shouldn't have "water to add" field.
-TODO:	 Track down that bug where it adds two mash steps? Sometimes deletes one?
-TODO:	 Edit custom mash needs name field.
-TODO:	 Scale recipe causes crash
-TODO:	 Need to update steps when mash profile is changed in add mash activity.
-TODO:	 Handle decreased step temperature.
-TODO:	 Changing water temperature does not change water to add.
-TODO:	 Round off decimal temperatures in mash. (131.82 -> 132)
-TODO:	 Hop summary should show boil time!
-TODO:	 Fully support exporting recipes to XML.
-TODO:    Fix up all the XML files to be nice.
-TODO:	 "Roasted ba" -> "Roasted Barley" and similar XML bugs.
-TODO:	 Problem setting mash profile
+* Adding ingredient button should say "Add" instead of "Save"
+* After recipe creation, go to the recipe, not the main menu.
+* Ingredient and profile editors don't have orange bar at the top.
+* Why do I want to give my grains a name? Remove name field.
+* Mash profiles can't be edited or saved?
+* Make fewer default Mash Profiles.
+* Stop appending custom to things.
+* Boil size doesn't update when checking box.
+* Show sparge step in brew timer.
+* Edit mash step should say edit, not add, in title.
+* Mash steps use Qts, but displayed as gallons elsewhere.
+* Mash profiles are confusing!
+* Show ingredients for mash in brew timer.
+* Add bottling dates to calendar.
+* Confirmation popup when adding dates to calendar.
+* Show measured efficiency for all grain recipes. (Condition to show was too strict)
+* Efficiency for all grain should default to something reasonable (70)
+* Adding new mash step doesn't see previous steps in list.
+* Shows invalid fermentation stages in instructions.
+* Mash step goes to -inf when changing name?
+* When adding mash step, temp should start at previous step's end temp.
+* Recipe should include deafult amount of grain (10lbs?) when adding custom mash profile.
+* Sparge amt needs to be formatted in instruction.
+* Cool wort does not adjust to metric.
+* Temp mash shouldn't have "water to add" field.
+* Track down that bug where it adds two mash steps? Sometimes deletes one?
+* Edit custom mash needs name field.
+* Scale recipe causes crash
+* Need to update steps when mash profile is changed in add mash activity.
+* Handle decreased step temperature.
+* Changing water temperature does not change water to add.
+* Round off decimal temperatures in mash. (131.82 -> 132)
+* Hop summary should show boil time!
+* Fully support exporting recipes to XML.
+* Fix up all the XML files to be nice.
+* "Roasted ba" -> "Roasted Barley" and similar XML bugs.
+* Problem setting mash profile
