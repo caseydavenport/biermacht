@@ -1,24 +1,25 @@
 =======================================
 Features / bugs that need workin' can
-be reported here
+be recorded here
 =======================================
 
 //////////////////////////////////////////////
-// Urgent issues.  Fix these first. //////////
+// Issues required for next release. /////////
 //////////////////////////////////////////////
+TODO:    User can't cancel first time setup.
+TODO:    Do not allow 0 batch size.
+TODO:	 Better auto naming of mash steps.
 
 
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
-TODO:    User can't cancel first time setup
-TODO:	 Allow configuration of measured batch size.
+TODO:    Can export a single recipe.
+TODO:    Fix bug where import recipes dialog is too big.
+TODO:    Import recipes has select / deselect all.  Defaults to all selected.
 TODO:	 Mash temperature calculator.
 TODO:    Specific Gravity temperature adjuster.
-TODO:	 User can input measured final volume.
 TODO:    Can't start brew timer if all grain, no mash steps.
-TODO:    Do not allow 0 batch size
-
 TODO:	 Calculate water to grain ratio when not auto calculating water to add.
 TODO:    When entering measured gravity, user can also input temperature.
 TODO:    Mash temperature graph
@@ -37,7 +38,6 @@ TODO:    Perform mash calculation automatically
 TODO:	 Maybe - Make a visual scale rather than numerical for recipe stats. e.g, FG, OG, Color.
 TODO:	 Determine the best matching beer style for a given recipe?
 TODO:	 Modify desired traits and the app will auto-modify your recipe to match?
-TODO:	 Better auto naming of mash steps.
 TODO:	 Move setting "measured" attributes into own activity.
 TODO:	 Handle actually setting the amount of yeast.
 TODO:	 Should consider mash temp in ABV calc.
@@ -50,6 +50,7 @@ TODO:    Support measured gravities < 1
 //////////////////////////////////////////////
 TODO:	 Confirmation when leaving brew timer.
 TODO:    Brew timer visible from notification bar.
+TODO:	 Allow configuration of measured batch size.
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////
