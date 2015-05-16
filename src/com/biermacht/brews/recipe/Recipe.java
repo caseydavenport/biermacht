@@ -21,7 +21,7 @@ import com.biermacht.brews.utils.InstructionGenerator;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
 
 public class Recipe implements Parcelable {
-	
+
 	// Beer XML 1.0 Required Fields ===================================
 	// ================================================================
 	private String name;		     // Recipe name
@@ -29,8 +29,8 @@ public class Recipe implements Parcelable {
 	private String type;             // Extract, Grain, Mash
 	private BeerStyle style;         // Stout, Pilsner, etc.
 	private String brewer;		     // Brewer's name
-	private double batchSize;         // Target size (L)
-	private double boilSize;		     // Pre-boil vol (L)
+	private double batchSize;        // Target size (L)
+	private double boilSize;		 // Pre-boil vol (L)
 	private int boilTime;		     // In Minutes
 	private double efficiency;	     // 100 for extract
 	private ArrayList<Hop> hops;     // Hops used
@@ -38,8 +38,8 @@ public class Recipe implements Parcelable {
 	private ArrayList<Yeast> yeasts; // Yeasts used
 	private ArrayList<Misc> miscs;   // Misc ingredients used
 	private ArrayList<Water> waters; // Waters used
-    private MashProfile mashProfile; // Mash profile for non-extracts	
-	
+    private MashProfile mashProfile; // Mash profile for non-extracts
+
 	// Beer XML 1.0 Optional Fields ===================================
 	// ================================================================
 	private double OG;			      // Original Gravity
@@ -63,18 +63,19 @@ public class Recipe implements Parcelable {
     private double kegPrimingFactor;  // factor - use less sugar when kegging vs bottles
     private double carbonationTemp;   // Carbonation temperature in C
     private int calories;             // Calories (KiloCals)
-	
+
 	// Custom Fields ==================================================
 	// ================================================================
-	private long id;                  // id for use in database
-	private String notes;       // User input notes
-	private int batchTime;            // Total length in weeks
+	private long id;                   // id for use in database
+	private String notes;              // User input notes
+	private int batchTime;             // Total length in weeks
 	private double ABV;                // Alcohol by volume
 	private double bitterness;         // Bitterness in IBU
 	private double color;              // Color - SRM
 	private InstructionGenerator instructionGenerator; // Generates instructions
 	private double measuredOG;         // Brew day stat: measured OG
 	private double measuredFG;         // Brew stat: measured FG
+    private double measuredVol;        // Measured final volume (L) of batch.
 	private double steepTemp;          // Temperature to steep grains.
 
     // Fields for auto-calculation ====================================
@@ -83,37 +84,37 @@ public class Recipe implements Parcelable {
     private boolean calculateStrikeVolume;          // Calculate strike vol automatically
     private boolean calculateStrikeTemp;            // Calculate strike temp automatically
 
-	
+
 	// Static values =================================================
 	// ===============================================================
 	public static final String EXTRACT = "Extract";
 	public static final String ALL_GRAIN = "All Grain";
 	public static final String PARTIAL_MASH = "Partial Mash";
-	
+
 	public static final int STAGE_PRIMARY = 1;
 	public static final int STAGE_SECONDARY = 2;
 	public static final int STAGE_TERTIARY = 3;
-	
+
 	// Public constructors
 	public Recipe(String s) {
 		// Beer XML 1.0 Required Fields ===================================
 		// ================================================================
-		this.name = s;	     
-		this.setVersion(1);			
-		this.setType(ALL_GRAIN);            
+		this.name = s;
+		this.setVersion(1);
+		this.setType(ALL_GRAIN);
 		this.style = Constants.BEERSTYLE_OTHER;
-		this.setBrewer("Unknown Brewer");		     
+		this.setBrewer("Unknown Brewer");
 		this.setDisplayBatchSize(5);
 		this.setDisplayBoilSize(2.5);
         this.setBoilTime(60);
 		this.setEfficiency(70);
-		this.hops = new ArrayList<Hop>();   
-		this.fermentables = new ArrayList<Fermentable>();  
-		this.yeasts = new ArrayList<Yeast>(); 
+		this.hops = new ArrayList<Hop>();
+		this.fermentables = new ArrayList<Fermentable>();
+		this.yeasts = new ArrayList<Yeast>();
 		this.miscs = new ArrayList<Misc>();
-		this.waters = new ArrayList<Water>(); 
+		this.waters = new ArrayList<Water>();
 		this.mashProfile = new MashProfile(this);
-		
+
 		// Beer XML 1.0 Optional Fields ===================================
 		// ================================================================
 		this.OG = 1;
@@ -126,7 +127,7 @@ public class Recipe implements Parcelable {
 		this.secondaryTemp = 21;
 		this.tertiaryTemp = 21;
 		this.bottleAge = 14;
-		
+
 		// Custom Fields ==================================================
 		// ================================================================
 		this.id = -1;
@@ -134,10 +135,11 @@ public class Recipe implements Parcelable {
 		this.batchTime = 60;
 		this.ABV = 0;
 		this.bitterness = 0;
-		this.color = 0; 
+		this.color = 0;
 		this.instructionGenerator = new InstructionGenerator(this);
 		this.measuredOG = 0;
 		this.measuredFG = 0;
+        this.measuredVol = 0;
 		this.steepTemp = Units.fahrenheitToCelsius(155);
 
         // Fields for auto-calculation ====================================
@@ -214,6 +216,7 @@ public class Recipe implements Parcelable {
                                              // Instruction generator not included in parcel
         measuredOG = p.readDouble();         // Brew day stat: measured OG
         measuredFG = p.readDouble();         // Brew stat: measured FG
+        measuredVol = p.readDouble();        // Brew stat: measured volume
         steepTemp = p.readDouble();          // Temperature to steep grains for extract recipes.
 
         // Fields for auto-calculation ====================================
@@ -272,14 +275,15 @@ public class Recipe implements Parcelable {
         // Custom Fields ==================================================
         // ================================================================
         p.writeLong( id);                  // id for use in database
-        p.writeString(notes);       // User input notes
-        p.writeInt(batchTime);            // Total length in weeks
+        p.writeString(notes);              // User input notes
+        p.writeInt(batchTime);             // Total length in weeks
         p.writeDouble(ABV);                // Alcohol by volume
         p.writeDouble(bitterness);         // Bitterness in IBU
         p.writeDouble(color);              // Color - SRM
                                            // Instruction generator not included in parcel
         p.writeDouble(measuredOG);         // Brew day stat: measured OG
         p.writeDouble(measuredFG);         // Brew stat: measured FG
+        p.writeDouble(measuredVol);        // Brew stat: measured volume
         p.writeDouble(steepTemp);          // Steep temperature for extract recipes.
 
         // Fields for auto-calculation ====================================
@@ -324,7 +328,7 @@ public class Recipe implements Parcelable {
     {
         return this.getRecipeName();
     }
-	
+
 	// Public methods
 	public void update() {
 		setColor(BrewCalculator.Color(this));
@@ -334,17 +338,17 @@ public class Recipe implements Parcelable {
 		setABV(BrewCalculator.AlcoholByVolume(this));
 		this.instructionGenerator.generate();
 	}
-	
+
 	public void setRecipeName(String name)
 	{
 		this.name = name;
 	}
-	
+
 	public String getRecipeName()
 	{
 		return this.name;
 	}
-	
+
 	public void addIngredient(Ingredient i) {
 		Log.d(getRecipeName() + "::addIngredient", "Adding ingredient: " + i.getName());
 		if (i.getType().equals(Ingredient.HOP))
@@ -357,7 +361,7 @@ public class Recipe implements Parcelable {
 			addYeast(i);
 		else if (i.getType().equals(Ingredient.WATER))
 			addWater(i);
-		
+
 		update();
 	}
 
@@ -369,7 +373,7 @@ public class Recipe implements Parcelable {
                 removeIngredient(i);
             }
     }
-	
+
 	public void removeIngredient(Ingredient i) {
         if (i.getType().equals(Ingredient.HOP))
             hops.remove(i);
@@ -389,18 +393,18 @@ public class Recipe implements Parcelable {
 
         update();
     }
-	
+
 	public MashProfile getMashProfile()
 	{
 		return this.mashProfile;
 	}
-	
+
 	public void setMashProfile(MashProfile profile) {
 		this.mashProfile = profile;
 		this.mashProfile.setRecipe(this);
 		update();
 	}
-	
+
 	public String getNotes()
 	{
 		return notes;
@@ -413,16 +417,16 @@ public class Recipe implements Parcelable {
 			this.notes = notes;
 	}
 
-	public BeerStyle getStyle() 
+	public BeerStyle getStyle()
 	{
 		return style;
 	}
 
-	public void setStyle(BeerStyle beerStyle) 
+	public void setStyle(BeerStyle beerStyle)
 	{
 		this.style = beerStyle;
 	}
-	
+
 	public ArrayList<Ingredient> getIngredientList() {
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
 		list.addAll(hops);
@@ -430,11 +434,11 @@ public class Recipe implements Parcelable {
 		list.addAll(yeasts);
 		list.addAll(miscs);
 		list.addAll(waters);
-		
+
 		Collections.sort(list, new IngredientComparator());
 		return list;
 	}
-	
+
 	public void deleteAllIngredients() {
 		this.fermentables = new ArrayList<Fermentable>();
 		this.hops = new ArrayList<Hop>();
@@ -447,9 +451,9 @@ public class Recipe implements Parcelable {
     {
         return BrewCalculator.TotalFermentableWeight(this);
     }
-	
+
 	public void setIngredientsList(ArrayList<Ingredient> ingredientsList) {
-		
+
 		for (Ingredient i : ingredientsList)
 		{
 			if (i.getType().equals(Ingredient.HOP))
@@ -463,10 +467,10 @@ public class Recipe implements Parcelable {
 			else if (i.getType().equals(Ingredient.WATER))
 				addWater(i);
 		}
-		
+
 		update();
 	}
-	
+
 	private void addWater(Ingredient i) {
 		Water w = (Water) i;
 		waters.add(w);
@@ -497,7 +501,7 @@ public class Recipe implements Parcelable {
 		return this.instructionGenerator.getInstructions();
 	}
 
-	public double getOG() 
+	public double getOG()
 	{
 		return OG;
 	}
@@ -537,22 +541,22 @@ public class Recipe implements Parcelable {
 		ABV = aBV;
 	}
 
-	public int getBatchTime() 
+	public int getBatchTime()
 	{
 		return batchTime;
 	}
 
-	public void setBatchTime(int batchTime) 
+	public void setBatchTime(int batchTime)
 	{
 		this.batchTime = batchTime;
 	}
 
-	public long getId() 
+	public long getId()
 	{
 		return id;
 	}
 
-	public void setId(long id) 
+	public void setId(long id)
 	{
 		this.id = id;
 	}
@@ -561,14 +565,14 @@ public class Recipe implements Parcelable {
     {
         return Units.getVolumeUnits();
     }
-	
+
 	public double getDisplayBatchSize() {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
 		    return Units.litersToGallons(this.batchSize);
         else
             return this.batchSize;
 	}
-	
+
 	public void setDisplayBatchSize(double size) {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
 		    this.batchSize = Units.gallonsToLiters(size);
@@ -576,51 +580,65 @@ public class Recipe implements Parcelable {
             this.batchSize = size;
 	}
 
-	public double getBeerXmlStandardBatchSize() 
+    public double getDisplayMeasuredBatchSize() {
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+            return Units.litersToGallons(this.measuredVol);
+        else
+            return this.measuredVol;
+    }
+
+    public void setDisplayMeasuredBatchSize(double size) {
+        if (Units.getVolumeUnits().equals(Units.GALLONS))
+            this.measuredVol = Units.gallonsToLiters(size);
+        else
+            this.measuredVol = size;
+    }
+
+	public double getBeerXmlStandardBatchSize()
 	{
 		return this.batchSize;
 	}
-	
+
 	public void setBeerXmlStandardBatchSize(double v)
 	{
 		this.batchSize = v;
 	}
-	
+
 	public double getBeerXmlMeasuredBatchSize() {
-		return this.batchSize; //TODO: Store this off for real.
+		return this.measuredVol;
 	}
 
-	public int getBoilTime() 
+	public int getBoilTime()
 	{
 		return boilTime;
 	}
 
-	public void setBoilTime(int boilTime) 
+	public void setBoilTime(int boilTime)
 	{
 		this.boilTime = boilTime;
 	}
-	
+
 	public double getEfficiency() {
 		if (this.getType().equals(EXTRACT))
 			return 100;
 		return efficiency;
 	}
 
-	public void setEfficiency(double efficiency) 
+	public void setEfficiency(double efficiency)
 	{
 		this.efficiency = efficiency;
 	}
 
-	public String getBrewer() 
+	public String getBrewer()
 	{
 		return brewer;
 	}
 
-	public void setBrewer(String brewer) 
+	public void setBrewer(String brewer)
 	{
 		this.brewer = brewer;
 	}
-	
+
 	public double getDisplayBoilSize() {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
         {
@@ -648,7 +666,7 @@ public class Recipe implements Parcelable {
         else
             return (batchSize/3) * (1 + SHRINKAGE ) + TRUB_LOSS + (EVAP_LOSS * Units.minutesToHours(boilTime));
     }
-	
+
 	public void setDisplayBoilSize(double size) {
         if (Units.getVolumeUnits().equals(Units.GALLONS))
 		    this.boilSize = Units.gallonsToLiters(size);
@@ -656,22 +674,22 @@ public class Recipe implements Parcelable {
             this.boilSize = size;
 	}
 
-	public double getBeerXmlStandardBoilSize() 
+	public double getBeerXmlStandardBoilSize()
 	{
 		return boilSize;
 	}
 
-	public void setBeerXmlStandardBoilSize(double boilSize) 
+	public void setBeerXmlStandardBoilSize(double boilSize)
 	{
 		this.boilSize = boilSize;
 	}
 
-	public String getType() 
+	public String getType()
 	{
 		return type;
 	}
 
-	public void setType(String type) 
+	public void setType(String type)
 	{
 		this.type = type;
 	}
@@ -686,7 +704,7 @@ public class Recipe implements Parcelable {
 		this.FG = fG;
 	}
 
-	public int getFermentationStages() 
+	public int getFermentationStages()
 	{
 		return fermentationStages;
 	}
@@ -699,61 +717,63 @@ public class Recipe implements Parcelable {
         return this.primaryAge + this.secondaryAge + this.tertiaryAge;
     }
 
-	public int getVersion() 
+	public int getVersion()
 	{
 		return version;
 	}
 
-	public void setVersion(int version) 
+	public void setVersion(int version)
 	{
 		this.version = version;
 	}
-	
+
 	public ArrayList<Misc> getMiscList()
 	{
 		return miscs;
 	}
-	
+
 	public ArrayList<Fermentable> getFermentablesList()
 	{
 		return fermentables;
 	}
-	
+
 	public ArrayList<Hop> getHopsList()
 	{
 		return hops;
 	}
-	
+
 	public ArrayList<Yeast> getYeastsList()
 	{
 		return yeasts;
 	}
-	
+
 	public ArrayList<Water> getWatersList()
 	{
 		return waters;
 	}
-	
+
 	public double getMeasuredOG()
 	{
 		return this.measuredOG;
 	}
-	
+
 	public double getMeasuredFG()
 	{
 		return this.measuredFG;
 	}
-	
-	public void setMeasuredOG(double d)
-	{
+
+	public void setMeasuredOG(double d) {
 		this.measuredOG = d;
 	}
-	
-	public void setMeasuredFG(double d)
-	{
+
+	public void setMeasuredFG(double d) {
 		this.measuredFG = d;
 	}
-	
+
+    public void setBeerXmlMeasuredBatchSize(double d) {
+        this.measuredVol = d;
+    }
+
 	public int getDisplayCoolToFermentationTemp() {
         // Metric - imperial conversion is performed in Yeast
 		for (Yeast y : this.getYeastsList())
@@ -765,26 +785,26 @@ public class Recipe implements Parcelable {
 		else
 			return (int) Units.fahrenheitToCelsius(65);
 	}
-	
+
 	public double getDisplaySteepTemp() {
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
 		    return Units.celsiusToFahrenheit(steepTemp);
         else
             return steepTemp;
 	}
-	
+
 	public void setDisplaySteepTemp(double t) {
         if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
 		    this.steepTemp = Units.fahrenheitToCelsius(t);
         else
             this.steepTemp = t;
 	}
-	
+
 	public void setNumberFermentationStages(int stages)
 	{
 		this.fermentationStages = stages;
 	}
-	
+
 	public void setFermentationAge(int stage, int age) {
 		switch (stage)
 		{
@@ -796,7 +816,7 @@ public class Recipe implements Parcelable {
 				this.tertiaryAge = age;
 		}
 	}
-	
+
 	public int getFermentationAge(int stage) {
 		switch (stage)
 		{
@@ -810,7 +830,7 @@ public class Recipe implements Parcelable {
 				return 7;
 		}
 	}
-	
+
 	public void setBeerXmlStandardFermentationTemp(int stage, double temp) {
 		switch (stage)
 		{
@@ -822,7 +842,7 @@ public class Recipe implements Parcelable {
 				this.tertiaryTemp = temp;
 		}
 	}
-	
+
 	public double getBeerXmlStandardFermentationTemp(int stage) {
 		switch (stage)
 		{
@@ -836,7 +856,7 @@ public class Recipe implements Parcelable {
 				return 21;
 		}
 	}
-	
+
 	public void setDisplayFermentationTemp(int stage, double temp) {
 		switch (stage)
 		{
@@ -860,7 +880,7 @@ public class Recipe implements Parcelable {
                 break;
 		}
 	}
-	
+
 	public double getDisplayFermentationTemp(int stage) {
 		switch (stage)
 		{
@@ -1075,22 +1095,36 @@ public class Recipe implements Parcelable {
     public double getMeasuredEfficiency(){
         double potGravP, measGravP;
         double eff = 100;
+        double measBatchSize = this.getBeerXmlMeasuredBatchSize();
 
-        if (!this.getType().equals(Recipe.EXTRACT))
-            eff = getEfficiency();
-
-        if (this.getMeasuredOG() > 0)
+        // If the user hasn't input a measured batch size, assume the recipe went as planned
+        // and that the target final batch size was hit.
+        if (measBatchSize == 0)
         {
-        	// Calculate potential milli-gravity points.
+            Log.d("Recipe", "No measured batch size, try using recipe batch size");
+            measBatchSize = this.getBeerXmlStandardBatchSize();
+        }
+
+        if (!this.getType().equals(Recipe.EXTRACT)) {
+            eff = getEfficiency();
+        }
+
+        // Computation only valid if measured gravity is greater than 1, and batch size is non-zero.
+        // Theoretically, measured gravity could be less than 1, but we don't support that yet.
+        if ((this.getMeasuredOG() > 1)  && (batchSize > 0))
+        {
+        	// Calculate potential milli-gravity points.  Adjust the value returned by the
+            // brew calculator, because it takes the expected efficiency into account (which
+            // we don't want here).
             potGravP = (BrewCalculator.OriginalGravity(this)-1)/(eff/100);
-            
-            // Adjust for measured batch size.
-            potGravP = potGravP * getBeerXmlStandardBatchSize() / this.getBeerXmlMeasuredBatchSize();
-            
+
+            // Adjust potential gravity points to account for measured batch size.
+            potGravP = potGravP * (getBeerXmlStandardBatchSize() / measBatchSize);
+
             // Calculate the measured milli-gravity points.
             measGravP = this.getMeasuredOG() - 1;
-            
-            // Return the effeciency.
+
+            // Return the efficiency.
             return 100 * measGravP / potGravP;
         }
         else
@@ -1098,7 +1132,7 @@ public class Recipe implements Parcelable {
             return 0;
         }
     }
-    
+
     public void save(){
     	Log.d(getRecipeName() + "::save", "Saving with id: " + this.getId());
         Database.updateRecipe(this);

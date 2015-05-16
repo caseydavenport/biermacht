@@ -66,6 +66,7 @@ public class DatabaseInterface {
             DatabaseHelper.REC_COL_CALC_BOIL_VOL,
             DatabaseHelper.REC_COL_CALC_STRIKE_TEMP,
             DatabaseHelper.REC_COL_CALC_STRIKE_VOL,
+			DatabaseHelper.REC_COL_MEAS_BATCH_SIZE,
 			};
 	
 	private String[] ingredientAllColumns = {
@@ -236,7 +237,8 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_CALC_BOIL_VOL, r.getCalculateBoilVolume() ? 1 : 0);
         values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.getCalculateStrikeTemp() ? 1 : 0);
         values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.getCalculateStrikeVolume() ? 1 : 0);
-		
+		values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, r.getBeerXmlMeasuredBatchSize());
+
 		long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
 		addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_DEFAULT);
 		addStyleToDatabase(r.getStyle(), id);
@@ -290,8 +292,9 @@ public class DatabaseInterface {
         values.put(DatabaseHelper.REC_COL_CALC_BOIL_VOL, r.getCalculateBoilVolume() ? 1 : 0);
         values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.getCalculateStrikeTemp() ? 1 : 0);
         values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.getCalculateStrikeVolume() ? 1 : 0);
+		values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, r.getBeerXmlMeasuredBatchSize());
 
-        for (Ingredient i : r.getIngredientList())
+		for (Ingredient i : r.getIngredientList())
         {
             Boolean exists = updateExistingIngredientInDatabase(i, Constants.DATABASE_DEFAULT);
             if (!exists)
@@ -800,6 +803,7 @@ public class DatabaseInterface {
         int calcBoilVol = cursor.getInt(cid);            cid++;
         int calcStrikeTemp = cursor.getInt(cid);         cid++;
         int calcStrikeVol = cursor.getInt(cid);          cid++;
+		double measBatchsize = cursor.getFloat(cid);     cid++;
 		
 		ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
 		BeerStyle style = readStyle(id);
@@ -847,6 +851,7 @@ public class DatabaseInterface {
         r.setCalculateBoilVolume(calcBoilVol > 0);
         r.setCalculateStrikeTemp(calcStrikeTemp > 0);
         r.setCalculateStrikeVolume(calcStrikeVol > 0);
+		r.setBeerXmlMeasuredBatchSize(measBatchsize);
 
 		r.setStyle(style);
 		r.setMashProfile(profile);
