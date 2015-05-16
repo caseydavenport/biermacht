@@ -6,7 +6,6 @@ be recorded here
 //////////////////////////////////////////////
 // Issues required for next release. /////////
 //////////////////////////////////////////////
-TODO:    Do not allow 0 batch size.
 TODO:	 Better auto naming of mash steps.
 
 
@@ -50,6 +49,7 @@ TODO:    Support measured gravities < 1
 TODO:	 Confirmation when leaving brew timer.
 TODO:    Brew timer visible from notification bar.
 TODO:	 Allow configuration of measured batch size.
+TODO:    Do not allow 0 batch size.
 
 //////////////////////////////////////////////
 // Completed in first release ////////////////

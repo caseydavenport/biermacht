@@ -242,7 +242,6 @@ public class MainActivity extends Activity {
               }
 
             })
-
             .setNegativeButton(R.string.cancel, null);
   }
 

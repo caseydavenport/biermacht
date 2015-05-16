@@ -37,395 +37,375 @@ import java.util.List;
 
 public abstract class AddEditActivity extends Activity implements OnClickListener {
 
-    // Main view - holds all the rows
-    public ViewGroup mainView;
+  // Main view - holds all the rows
+  public ViewGroup mainView;
 
-    // Alert builder
-    public AlertBuilder alertBuilder;
+  // Alert builder
+  public AlertBuilder alertBuilder;
 
-    // Important things
-    public OnClickListener onClickListener;
+  // Important things
+  public OnClickListener onClickListener;
 
-    // LayoutInflater
-    public LayoutInflater inflater;
+  // LayoutInflater
+  public LayoutInflater inflater;
 
-    // Shared preferences
-    public SharedPreferences preferences;
+  // Shared preferences
+  public SharedPreferences preferences;
 
-    // Recipe we are editing
-    public Recipe mRecipe;
+  // Recipe we are editing
+  public Recipe mRecipe;
 
-    // IDs received in intent
-    public long recipeId;
-    public long ingredientId;
-    public long mashProfileId;
-    
-    // Array adapter for spinner
-    public ArrayAdapter adapter;
-    
-    // Keeps track of all registered views
-    public ArrayList<View> registeredViews;
+  // IDs received in intent
+  public long recipeId;
+  public long ingredientId;
+  public long mashProfileId;
 
-    // IngredientHandler to get ingredient arrays
-    public IngredientHandler ingredientHandler;
+  // Array adapter for spinner
+  public ArrayAdapter adapter;
 
-    // Holds the currently selected ingredient
-    public Ingredient ingredient;
+  // Keeps track of all registered views
+  public ArrayList<View> registeredViews;
 
-    // Editable rows to display
-    public Spinner spinnerView;
-    public View searchableListView;
-    public View nameView;
-    public View amountView;
-    public View timeView;
+  // IngredientHandler to get ingredient arrays
+  public IngredientHandler ingredientHandler;
 
-    // Titles from rows
-    public TextView searchableListViewTitle;
-    public TextView nameViewTitle;
-    public TextView amountViewTitle;
-    public TextView timeViewTitle;
+  // Holds the currently selected ingredient
+  public Ingredient ingredient;
 
-    // Content from rows
-    public TextView searchableListViewText;
-    public TextView nameViewText;
-    public TextView amountViewText;
-    public TextView timeViewText;
+  // Editable rows to display
+  public Spinner spinnerView;
+  public View searchableListView;
+  public View nameView;
+  public View amountView;
+  public View timeView;
 
-    // Storage for acquired values
-    public int time;
-    public double amount;
-    public String name;
+  // Titles from rows
+  public TextView searchableListViewTitle;
+  public TextView nameViewTitle;
+  public TextView amountViewTitle;
+  public TextView timeViewTitle;
 
-    // Bottom buttons
-    public Button submitButton;
-    public Button cancelButton;
-    public Button deleteButton;
+  // Content from rows
+  public TextView searchableListViewText;
+  public TextView nameViewText;
+  public TextView amountViewText;
+  public TextView timeViewText;
 
-    // Spinner array declarations
-    public ArrayList<Ingredient> ingredientList;
+  // Storage for acquired values
+  public int time;
+  public double amount;
+  public String name;
 
-    // Listeners
-    public OnItemSelectedListener spinnerListener;
+  // Bottom buttons
+  public Button submitButton;
+  public Button cancelButton;
+  public Button deleteButton;
 
-    // Callback for on alertBuilder return.
-    public Callback callback;
+  // Spinner array declarations
+  public ArrayList<Ingredient> ingredientList;
 
-    // Abstract methods
-    public abstract void onMissedClick(View v);
-    public abstract void createSpinner();
-    public abstract void getList();
-    public abstract void onCancelPressed();
-    public abstract void onDeletePressed();
-    public abstract void onFinished();
+  // Listeners
+  public OnItemSelectedListener spinnerListener;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_edit);
+  // Callback for on alertBuilder return.
+  public Callback callback;
 
-		// Set icon as back button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+  // Abstract methods
+  public abstract void onMissedClick(View v);
 
-    	// Get the Ingredient Handler
-    	ingredientHandler = MainActivity.ingredientHandler;
+  public abstract void createSpinner();
 
-        // Get the inflater
-        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  public abstract void getList();
 
-        // Create alert builder
-        createCallback();
-        alertBuilder = new AlertBuilder(this, callback);
+  public abstract void onCancelPressed();
 
-        // Get shared preferences
-        preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+  public abstract void onDeletePressed();
 
-        // Disable delete button
-        findViewById(R.id.delete_button).setVisibility(View.GONE);
+  public abstract void onFinished();
 
-        // Get recipe and other ids from calling activity
-        Log.d("AddEditActivity::onCreate", "Calling getValuesFromIntent()");
-        getValuesFromIntent();
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_add_edit);
 
-        // Get the list to show
-        Log.d("AddEditActivity::onCreate", "Calling getList()");
-        getList();
+    // Set icon as back button
+    getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // On click listener
-        onClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /************************************************************
-                 * Options for clicking on each of the editable views
-                 ************************************************************/
+    // Get the Ingredient Handler
+    ingredientHandler = MainActivity.ingredientHandler;
 
-                AlertDialog alert;
-                if (v.equals(nameView))
-                    alert = alertBuilder.editTextStringAlert(nameViewText, nameViewTitle).create();
-                else if (v.equals(amountView))
-                    alert = alertBuilder.editTextFloatAlert(amountViewText, amountViewTitle).create();
-                else if (v.equals(timeView))
-                    alert = alertBuilder.editTextIntegerAlert(timeViewText, timeViewTitle).create();
-                else
-                {
-                    Log.d("AddEditActivity", "View not found for click, calling onMissedClick()");
-                    onMissedClick(v);
-                    return;
-                }
+    // Get the inflater
+    inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                // Force keyboard open and show popup
-                alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                alert.show();
-            }
-        };
+    // Create alert builder
+    createCallback();
+    alertBuilder = new AlertBuilder(this, callback);
 
-        // Get buttons
-        submitButton = (Button) findViewById(R.id.submit_button);
-        cancelButton = (Button) findViewById(R.id.cancel_button);
-        deleteButton = (Button) findViewById(R.id.delete_button);
+    // Get shared preferences
+    preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
-        // Initialize views and such here
-        mainView = (ViewGroup) findViewById(R.id.main_layout);
-        searchableListView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        nameView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        amountView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        timeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
-        spinnerView = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+    // Disable delete button
+    findViewById(R.id.delete_button).setVisibility(View.GONE);
 
-        /************************************************************************
-         ************* Add views *************************************************
-         *************************************************************************/
-        this.registerViews(Arrays.asList(spinnerView, nameView, timeView, amountView));
-        this.setViews(Arrays.asList(spinnerView, nameView, timeView, amountView));
+    // Get recipe and other ids from calling activity
+    Log.d("AddEditActivity", "Calling getValuesFromIntent()");
+    getValuesFromIntent();
 
-        /************************************************************************
-         ************* Get titles, set values   **********************************
-         *************************************************************************/
-        searchableListViewTitle  = (TextView) searchableListView.findViewById(R.id.title);
-        searchableListViewTitle.setText("Select");
-        
-        nameViewTitle = (TextView) nameView.findViewById(R.id.title);
-        nameViewTitle.setText("Name");
+    // Get the list to show
+    Log.d("AddEditActivity", "Calling getList()");
+    getList();
 
-        timeViewTitle = (TextView) timeView.findViewById(R.id.title);
-        timeViewTitle.setText("Time (mins)");
-
-        amountViewTitle = (TextView) amountView.findViewById(R.id.title);
-        amountViewTitle.setText("Amount (lbs)");
-
-        /************************************************************************
-         ************* Get content views, values set below  **********************
-         *************************************************************************/
-        searchableListViewText = (TextView) searchableListView.findViewById(R.id.text);
-        nameViewText = (TextView) nameView.findViewById(R.id.text);
-        timeViewText = (TextView) timeView.findViewById(R.id.text);
-        amountViewText = (TextView) amountView.findViewById(R.id.text);
-
-        // Set any initial values here.
-        Log.d("AddEditActivity", "Calling setInitialValues()");
-        setInitialValues();
-
-        // Set up type spinner
-        Log.d("AddEditActivity", "Calling createSpinner()");
-        createSpinner();
-        Log.d("AddEditActivity", "Calling setInitialSpinnerSelection()");
-        setInitialSpinnerSelection();
-
-        // Handle type spinner selections here
-        Log.d("AddEditActivity", "Calling configureSpinnerListener()");
-        configureSpinnerListener();
-        spinnerView.setOnItemSelectedListener(spinnerListener);
-    }
-    
-    public void configureSpinnerListener()
-    {
-    	Log.d("AddEditActivity", "Configuring default spinner listener");
-    	spinnerListener = new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
-				Log.d("AddEditActivity", "Item selected using default listener");
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {}
-    		
-    	};
-    }
-
-    public void createCallback()
-    {
-        callback = new Callback() {
-            @Override
-            public void call() {
-                Log.d("AddEditActivity", "Entering default callback");
-            }
-        };
-    }
-
-    public void getValuesFromIntent()
-    {
-        recipeId = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
-        ingredientId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
-        mashProfileId = getIntent().getLongExtra(Constants.KEY_PROFILE_ID, Constants.INVALID_ID);
-
-        // Acquire recipe
-        mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
-
-        if (mRecipe == null)
-        {
-            Log.d("AddEditActivity", "NULL Recipe passed via Intent");
-            if (recipeId != Constants.INVALID_ID)
-            {
-                Log.d("AddEditActivity", "Found recipe ID, Trying database");
-                try
-                {
-                    mRecipe = Database.getRecipeWithId(recipeId);
-                    Log.d("AddEditActivity", "Found recipe in database");
-                }
-                catch (ItemNotFoundException e)
-                {
-                    e.printStackTrace();
-                    Log.d("AddEditActivity", "Database lookup failed, calling onRecipeNotFound()");
-                    onRecipeNotFound();
-                    return;
-                }
-            } else {
-                Log.d("AddEditActivity", "No recipe ID passed via Intent, Calling onRecipeNotFound()");
-                onRecipeNotFound();
-                return;
-            }
+    // On click listener
+    onClickListener = new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        /************************************************************
+         * Options for clicking on each of the editable views
+         ************************************************************/
+        AlertDialog alert;
+        if (v.equals(nameView))
+          alert = alertBuilder.editTextStringAlert(nameViewText, nameViewTitle).create();
+        else if (v.equals(amountView))
+          alert = alertBuilder.editTextFloatAlert(amountViewText, amountViewTitle).create();
+        else if (v.equals(timeView))
+          alert = alertBuilder.editTextIntegerAlert(timeViewText, timeViewTitle).create();
+        else {
+          Log.d("AddEditActivity", "View not found for click, calling onMissedClick()");
+          onMissedClick(v);
+          return;
         }
-        Log.d("AddEditActivity", "Successfully retrieved basic values from intent!");
-    }
 
-    public void onRecipeNotFound()
-    {
-        Log.d("AddEditActivity", "Recipe not found, finishing");
+        // Force keyboard open and show popup
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alert.show();
+      }
+    };
+
+    // Get buttons
+    submitButton = (Button) findViewById(R.id.submit_button);
+    cancelButton = (Button) findViewById(R.id.cancel_button);
+    deleteButton = (Button) findViewById(R.id.delete_button);
+
+    // Initialize views and such here
+    mainView = (ViewGroup) findViewById(R.id.main_layout);
+    searchableListView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+    nameView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+    amountView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+    timeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+    spinnerView = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+
+    /************************************************************************
+     ************* Add views *************************************************
+     *************************************************************************/
+    this.registerViews(Arrays.asList(spinnerView, nameView, timeView, amountView));
+    this.setViews(Arrays.asList(spinnerView, nameView, timeView, amountView));
+
+    /************************************************************************
+     ************* Get titles, set values   **********************************
+     *************************************************************************/
+    searchableListViewTitle = (TextView) searchableListView.findViewById(R.id.title);
+    searchableListViewTitle.setText("Select");
+
+    nameViewTitle = (TextView) nameView.findViewById(R.id.title);
+    nameViewTitle.setText("Name");
+
+    timeViewTitle = (TextView) timeView.findViewById(R.id.title);
+    timeViewTitle.setText("Time (mins)");
+
+    amountViewTitle = (TextView) amountView.findViewById(R.id.title);
+    amountViewTitle.setText("Amount (lbs)");
+
+    /************************************************************************
+     ************* Get content views, values set below  **********************
+     *************************************************************************/
+    searchableListViewText = (TextView) searchableListView.findViewById(R.id.text);
+    nameViewText = (TextView) nameView.findViewById(R.id.text);
+    timeViewText = (TextView) timeView.findViewById(R.id.text);
+    amountViewText = (TextView) amountView.findViewById(R.id.text);
+
+    // Set any initial values here.
+    Log.d("AddEditActivity", "Calling setInitialValues()");
+    setInitialValues();
+
+    // Set up type spinner
+    Log.d("AddEditActivity", "Calling createSpinner()");
+    createSpinner();
+    Log.d("AddEditActivity", "Calling setInitialSpinnerSelection()");
+    setInitialSpinnerSelection();
+
+    // Handle type spinner selections here
+    Log.d("AddEditActivity", "Calling configureSpinnerListener()");
+    configureSpinnerListener();
+    spinnerView.setOnItemSelectedListener(spinnerListener);
+  }
+
+  public void configureSpinnerListener() {
+    Log.d("AddEditActivity", "Configuring default spinner listener");
+    spinnerListener = new OnItemSelectedListener() {
+
+      @Override
+      public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        Log.d("AddEditActivity", "Item selected using default listener");
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> arg0) {
+      }
+    };
+  }
+
+  public void createCallback() {
+    callback = new Callback() {
+      @Override
+      public void call() {
+        Log.d("AddEditActivity", "Entering default callback");
+      }
+    };
+  }
+
+  public void getValuesFromIntent() {
+    recipeId = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
+    ingredientId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
+    mashProfileId = getIntent().getLongExtra(Constants.KEY_PROFILE_ID, Constants.INVALID_ID);
+
+    // Acquire recipe
+    mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
+
+    if (mRecipe == null) {
+      Log.d("AddEditActivity", "NULL Recipe passed via Intent");
+      if (recipeId != Constants.INVALID_ID) {
+        Log.d("AddEditActivity", "Found recipe ID, Trying database");
+        try {
+          mRecipe = Database.getRecipeWithId(recipeId);
+          Log.d("AddEditActivity", "Found recipe in database");
+        } catch (ItemNotFoundException e) {
+          e.printStackTrace();
+          Log.d("AddEditActivity", "Database lookup failed, calling onRecipeNotFound()");
+          onRecipeNotFound();
+          return;
+        }
+      } else {
+        Log.d("AddEditActivity", "No recipe ID passed via Intent, Calling onRecipeNotFound()");
+        onRecipeNotFound();
+        return;
+      }
+    }
+    Log.d("AddEditActivity", "Successfully retrieved basic values from intent!");
+  }
+
+  public void onRecipeNotFound() {
+    Log.d("AddEditActivity", "Recipe not found, finishing");
+    finish();
+  }
+
+  public void setInitialSpinnerSelection() {
+    spinnerView.setSelection(0);
+  }
+
+  public void setInitialValues() {
+    amountViewText.setText("1.0");
+    timeViewText.setText("60");
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.activity_add_ingredient, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
         finish();
-    }
-
-    public void setInitialSpinnerSelection()
-    {
-        spinnerView.setSelection(0);
-    }
-
-    public void setInitialValues()
-    {
-        amountViewText.setText("1.0");
-        timeViewText.setText("60");
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_add_ingredient, menu);
         return true;
     }
+    return super.onOptionsItemSelected(item);
+  }
 
-	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+  public void acquireValues() throws Exception {
+    Log.d("AddEditActivity", "Acquiring values");
+    name = nameViewText.getText().toString();
+    amount = Double.parseDouble(amountViewText.getText().toString());
+    time = Integer.parseInt(timeViewText.getText().toString());
+  }
 
-    	switch (item.getItemId())
-		{
-            case android.R.id.home:
-                finish();
-        		return true;
-        }
-        return super.onOptionsItemSelected(item);
+  public void onSubmitPressed() {
+    boolean readyToGo = true;
+    try {
+      acquireValues();
+    } catch (Exception e) {
+      Log.d("AddEditActivity", "Could not acquire values: " + e.toString());
+      e.printStackTrace();
+      readyToGo = false;
     }
 
-    public void acquireValues() throws Exception
-    {
-        Log.d("AddEditActivity::acquireValues", "Acquiring values");
-        name = nameViewText.getText().toString();
-        amount = Double.parseDouble(amountViewText.getText().toString());
-        time = Integer.parseInt(timeViewText.getText().toString());
+    if (readyToGo) {
+      Log.d("AddEditActivity", "Successfully acquired values, validate.");
+      if (this.validateValues()) {
+        Log.d("AddEditActivity", "Values valid, save");
+        mRecipe.save();
+        onFinished();
+      }
+    }
+  }
+
+  public boolean validateValues() {
+    // Validates the values stored in acquireValues.  Returns true if values are all valid,
+    // false otherwise.
+    return true;
+  }
+
+  public void onClick(View v) {
+    // if "SUBMIT" button pressed
+    if (v.getId() == R.id.submit_button) {
+      Log.d("AddEditActivity", "Submit Pressed");
+      onSubmitPressed();
     }
 
-    public void onSubmitPressed()
-    {
-        boolean readyToGo = true;
-        try
-        {
-            acquireValues();
-        }
-        catch (Exception e)
-        {
-            Log.d("AddEditActivity::onSubmitPressed", "Could not acquire values: " + e.toString());
-            e.printStackTrace();
-            readyToGo = false;
-        }
-
-        if (readyToGo)
-        {
-            Log.d("AddEditActivity::onSubmitPressed", "Successfully acquired values");
-            mRecipe.save();
-            onFinished();
-        }
+    // If "DELETE" button pressed
+    if (v.getId() == R.id.delete_button) {
+      Log.d("AddEditActivity", "Delete Pressed");
+      onDeletePressed();
     }
 
-	public void onClick(View v) {
-		// if "SUBMIT" button pressed
-		if (v.getId() == R.id.submit_button)
-		{
-            Log.d("AddEditActivity::onClick", "Submit Pressed");
-            onSubmitPressed();
-		}
+    // if "CANCEL" button pressed
+    if (v.getId() == R.id.cancel_button) {
+      Log.d("AddEditActivity", "Cancel Pressed");
+      onCancelPressed();
+    }
+  }
 
-        // If "DELETE" button pressed
-        if (v.getId() == R.id.delete_button)
-        {
-            Log.d("AddEditActivity::onClick", "Delete Pressed");
-            onDeletePressed();
-        }
-		
-		// if "CANCEL" button pressed
-		if (v.getId() == R.id.cancel_button)
-		{
-            Log.d("AddEditActivity::onClick", "Cancel Pressed");
-            onCancelPressed();
-		}
-	}
-	
-	public void registerViews(List<View> views)
-	{
-		if (this.registeredViews == null)
-		{
-			Log.d("AddEditActivity::registerViews", "Initializing registeredViews");
-			this.registeredViews = new ArrayList<View>();
-		}
-		
-		this.registeredViews.addAll(views);
-		for (View v : views)
-		{
-			Log.d("AddEditActivity::registerViews", "Registering view");
-			mainView.addView(v);
-			if (!(v instanceof Spinner))
-			{
-				// Don't perform this for spinners.
-				v.setOnClickListener(onClickListener);
-			}
-		}
-	}
-	
-	public void setViews(List<View> views)
-	{
-		Log.d("AddEditActivity::setViews", "Setting visible views");
-		for (View v : this.registeredViews)
-		{
-			if (views.contains(v))
-			{
-				v.setVisibility(View.VISIBLE);
-			}
-			else
-			{
-				v.setVisibility(View.GONE);
-			}
-		}
-		
-		for (View v : views)
-		{
-			mainView.removeView(v);
-			mainView.addView(v);
-		}
-	}
+  public void registerViews(List<View> views) {
+    if (this.registeredViews == null) {
+      Log.d("AddEditActivity", "Initializing registeredViews");
+      this.registeredViews = new ArrayList<View>();
+    }
+
+    this.registeredViews.addAll(views);
+    for (View v : views) {
+      Log.d("AddEditActivity", "Registering view");
+      mainView.addView(v);
+      if (!(v instanceof Spinner)) {
+        // Don't perform this for spinners.
+        v.setOnClickListener(onClickListener);
+      }
+    }
+  }
+
+  public void setViews(List<View> views) {
+    Log.d("AddEditActivity", "Setting visible views");
+    for (View v : this.registeredViews) {
+      if (views.contains(v)) {
+        v.setVisibility(View.VISIBLE);
+      } else {
+        v.setVisibility(View.GONE);
+      }
+    }
+
+    for (View v : views) {
+      mainView.removeView(v);
+      mainView.addView(v);
+    }
+  }
 }
