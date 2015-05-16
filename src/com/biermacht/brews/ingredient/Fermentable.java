@@ -268,10 +268,15 @@ public class Fermentable extends Ingredient implements Parcelable {
 	@Override
 	public String getUse()
 	{
-		if (this.getFermentableType().equals(TYPE_EXTRACT))
+		if (this.getFermentableType().equals(TYPE_EXTRACT) ||
+		    this.getFermentableType().equals(TYPE_SUGAR)) {
+			// Sugars and Extracts should be boiled.
 			return Ingredient.USE_BOIL;
-		else
+		}
+		else {
+			// Everything else should be mashed. Grains, Adjuncts.
 			return Ingredient.USE_MASH;
+		}
 	}
 
 	/**
