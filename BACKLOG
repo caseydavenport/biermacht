@@ -42,9 +42,13 @@ be recorded here
 * Support measured gravities < 1
 
 //////////////////////////////////////////////
-// Changlog for release 1.X.X ////////////////
+// Changelog for release 1.X.X ////////////////
 //////////////////////////////////////////////
 * Actually fix app drawer name to be Biermacht
+* Fix crash when no recipes and screen is touched
+* Add/Edit mash step now supports comma separated doubles
+* Implement Hydrometer adjustment tool
+* Change size calculation for mash step list
 
 //////////////////////////////////////////////
 // Changlog for release 1.0.0 ////////////////
