@@ -331,9 +331,11 @@ public class AddMashStepActivity extends AddEditActivity {
   @Override
   public void acquireValues() throws Exception {
     super.acquireValues();
-    double stepTemp = Double.parseDouble(stepTempViewText.getText().toString());
-    double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString());
-    double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString());
+    double stepTemp = Double.parseDouble(stepTempViewText.getText().toString().replace(",", "."));
+    double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString()
+            .replace(",", "."));
+    double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString()
+            .replace(",", "."));
 
     step.setDisplayInfuseAmount(amount);
     step.setStepTime(time);

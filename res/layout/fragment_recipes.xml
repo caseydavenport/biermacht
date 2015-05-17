@@ -47,7 +47,6 @@
                   android:background="#FFFFFF"
                   android:gravity="center"
                   android:visibility="gone"
-                  android:onClick="onClick"
                   android:textColor="@color/title_color"
                   android:textSize="15sp"
                   android:text="@string/no_recipes" />

@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -236,12 +235,12 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
-                Log.d("RecipesFragment::deleteAlert", "Deleting recipe: " + r);
+                Log.d("RecipesFragment", "Deleting recipe: " + r);
                 recipeList.remove(r);
                 mAdapter.notifyDataSetChanged();
                 Database.deleteRecipe(r);
                 setCorrectView();
-                Log.d("RecipesFragment::deleteAlert", "Recipe deleted");
+                Log.d("RecipesFragment", "Recipe deleted");
               }
 
             })
