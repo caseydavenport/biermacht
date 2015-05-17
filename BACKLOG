@@ -14,7 +14,6 @@ be recorded here
 * Fix bug where import recipes dialog is too big.
 * Import recipes has select / deselect all.  Defaults to all selected.
 * Mash temperature calculator.
-* Specific Gravity temperature adjuster.
 * Can't start brew timer if all grain, no mash steps.
 * Calculate water to grain ratio when not auto calculating water to add.
 * When entering measured gravity, user can also input temperature.
@@ -49,6 +48,7 @@ be recorded here
 * Add/Edit mash step now supports comma separated doubles
 * Implement Hydrometer adjustment tool
 * Change size calculation for mash step list
+* Add ABV calculator tool
 
 //////////////////////////////////////////////
 // Changlog for release 1.0.0 ////////////////

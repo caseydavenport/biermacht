@@ -1,7 +1,5 @@
 package com.biermacht.brews.frontend;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -17,14 +15,11 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.biermacht.brews.R;
@@ -34,6 +29,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddCustomHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomYeastActivity;
 import com.biermacht.brews.frontend.adapters.RecipeCheckboxArrayAdapter;
+import com.biermacht.brews.frontend.fragments.AlcoholAttenuationCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.EditIngredientsFragment;
 import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
@@ -46,34 +42,44 @@ import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
-import java.io.*;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-  // Poorly done globally used shit
+  // Poorly done globals
   public static DatabaseInterface databaseInterface;
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;
   public static SharedPreferences preferences;
+
   // Static drawer list items
   private static String DRAWER_RECIPES = "Recipes";
   private static String DRAWER_GRAVITY_CALC = "Hydrometer Adjustment";
   private static String DRAWER_MASH_EDIT = "Mash Profile Editor";
   private static String DRAWER_EQUIP_EDIT = "Equipment Editor";
   private static String DRAWER_INGRED_EDIT = "Ingredient Editor";
+  private static String DRAWER_ABV_CALC = "ABV Calculator";
+
   // Fragments
   ArrayList<ClickableFragment> fragmentList;
+
   // List to store drawer options
   private ArrayList<String> drawerItems;
+
   //Declare views here
   private ListView drawerListView;
+
   // Drawer stuff
   private DrawerLayout mDrawerLayout;
   private ActionBarDrawerToggle mDrawerToggle;
+
   // Selected item
   private int selectedItem;
+
   // Context
   private Context context;
+
   // Stores recipes found the the selected file
   private ArrayList<Recipe> foundImportedRecipes;
 
@@ -125,6 +131,7 @@ public class MainActivity extends Activity {
     drawerItems.add(DRAWER_INGRED_EDIT);
     drawerItems.add(DRAWER_MASH_EDIT);
     drawerItems.add(DRAWER_GRAVITY_CALC);
+    drawerItems.add(DRAWER_ABV_CALC);
     //drawerItems.add(DRAWER_EQUIP_EDIT); TODO:
 
     // Set the adapter and click listener for the list view
@@ -226,8 +233,7 @@ public class MainActivity extends Activity {
     return true;
   }
 
-  public void onClick(View v)
-  {
+  public void onClick(View v) {
     // Pass the event to the currently active fragment.
     this.fragmentList.get(selectedItem).handleClick(v);
   }
@@ -316,7 +322,8 @@ public class MainActivity extends Activity {
   private void selectItem(int pos) {
     // Insert the fragment by replacing any existing fragment
     FragmentManager fragmentManager = getFragmentManager();
-    fragmentManager.beginTransaction().replace(R.id.content_frame, (Fragment) fragmentList.get(pos)).commit();
+    fragmentManager.beginTransaction().replace(R.id.content_frame, (Fragment) fragmentList.get
+            (pos)).commit();
 
     // Highlight the selected item, update the title, and close the drawer
     drawerListView.setItemChecked(pos, true);
@@ -338,6 +345,7 @@ public class MainActivity extends Activity {
     fragmentList.add(new EditIngredientsFragment());
     fragmentList.add(new EditMashProfilesFragment());
     fragmentList.add(new HydrometerTempCalculatorFragment());
+    fragmentList.add(new AlcoholAttenuationCalculatorFragment());
     selectItem(selectedItem);
   }
 

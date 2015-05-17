@@ -281,9 +281,24 @@ public class BrewCalculator {
 	
 	public static double AlcoholByVolume(Recipe r)
 	{
-		return (r.getOG() - r.getFG()) * 131;
+		return AlcoholByVolume(r.getOG(), r.getFG());
 	}
-	
+
+	public static double AlcoholByVolume(double og, double fg)
+	{
+		return (og - fg) * 131;
+	}
+
+	/**
+	 * @param og Original gravity (SG)
+	 * @param fg Final gravity (SG)
+	 * @return Apparent attenuation as a percentage out of 100
+	 */
+	public static double Attenuation(double og, double fg)
+	{
+		return 100 * ((og - fg) / (og - 1));
+	}
+
 	public static double HopUtilization(Recipe r, Hop i)
 	{
 		float utilization;
