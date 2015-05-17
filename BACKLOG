@@ -27,13 +27,9 @@ be recorded here
 * Add Style guide viewing tool.
 * Can configure bottle / keg age.
 * Equipment Editor?
-* Add sparge steps / info
-* Add calculators for lots of things.
 * Perform mash calculation automatically
 * Maybe - Make a visual scale rather than numerical for recipe stats. e.g, FG, OG, Color.
-* Determine the best matching beer style for a given recipe?
 * Modify desired traits and the app will auto-modify your recipe to match?
-* Move setting "measured" attributes into own activity.
 * Handle actually setting the amount of yeast.
 * Should consider mash temp in ABV calc.
 * Add support for more custom fields to XML import / export.
@@ -41,7 +37,7 @@ be recorded here
 * Support measured gravities < 1
 
 //////////////////////////////////////////////
-// Changelog for release 1.X.X ////////////////
+// Changelog for release 1.0.1 ///////////////
 //////////////////////////////////////////////
 * Actually fix app drawer name to be Biermacht
 * Fix crash when no recipes and screen is touched

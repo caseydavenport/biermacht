@@ -38,6 +38,7 @@ import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
+import com.biermacht.brews.xml.RecipeXmlWriter;
 
 import java.util.ArrayList;
 
@@ -55,19 +56,26 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   private static String EXPORT_RECIPE = "Export as BeerXML";
   private static String BREW_TIMER = "Brew Timer";
   private static String RECIPE_NOTES = "Recipe Notes";
+
   ViewGroup pageView;
+
   // Recipe List stuff
   private RecipeArrayAdapter mAdapter;
   private AdapterView.OnItemClickListener mClickListener;
   private ArrayList<Recipe> recipeList;
+
   // Database Interface
   private DatabaseInterface databaseInterface;
+
   // Context menu items
   private ArrayList<String> menuItems;
+
   // Holds the selected recipe
   private Recipe selectedRecipe;
+
   // Context
   private Context c;
+
   //Declare views here
   private ListView listView;
   private TextView noRecipesView;
@@ -139,6 +147,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       menuItems.add(EDIT_FERM);
       menuItems.add(BREW_TIMER);
       menuItems.add(RECIPE_NOTES);
+      //menuItems.add(EXPORT_RECIPE);
       menuItems.add(SCALE_RECIPE);
       menuItems.add(COPY_RECIPE);
       menuItems.add(DELETE_RECIPE);
@@ -164,6 +173,11 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     // Scale recipe selected
     else if (selected.equals(SCALE_RECIPE)) {
       scaleAlert(selectedRecipe).show();
+    }
+
+    // Export recipe selected
+    else if (selected.equals(EXPORT_RECIPE)) {
+      exportAlert(selectedRecipe).show();
     }
 
     // Copy recipe selected
@@ -311,6 +325,74 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
       progress.setCancelable(true);
       //progress.show();
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+    }
+  }
+
+  private AlertDialog.Builder exportAlert(final Recipe r) {
+    return new AlertDialog.Builder(getActivity())
+            .setTitle("Export recipe")
+            .setMessage("Export '" + r.getRecipeName() + "' to BeerXML file?")
+            .setPositiveButton(R.string.export, new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                new ExportRecipe(r).execute("");
+              }
+
+            })
+
+            .setNegativeButton(R.string.cancel, null);
+  }
+
+  private AlertDialog.Builder finishedExporting(String pathToFile) {
+    return new AlertDialog.Builder(getActivity())
+            .setTitle("Complete")
+            .setMessage("Finished exporting recipe to: \n" + pathToFile)
+            .setPositiveButton(R.string.done, null);
+  }
+
+  // Async task to export all recipes
+  private class ExportRecipe extends AsyncTask<String, Void, String> {
+
+    private ProgressDialog progress;
+    private RecipeXmlWriter xmlWriter;
+    private Context context;
+    private Recipe r;
+    private String filePrefix;
+
+    private ExportRecipe(Recipe r) {
+      this.context = getActivity();
+      this.r = r;
+      this.filePrefix = r.getRecipeName().replaceAll("\\s", "") + "-";
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+      xmlWriter = new RecipeXmlWriter(context);
+      xmlWriter.writeRecipe(r, filePrefix);
+      return "Executed";
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+      super.onPostExecute(result);
+      progress.dismiss();
+      finishedExporting(xmlWriter.getSavedFileLocation()).show();
+      Log.d("ExportAllRecipes", "Finished exporting recipes");
+    }
+
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      progress = new ProgressDialog(context);
+      progress.setMessage("Exporting " + r.getRecipeName() + "...");
+      progress.setIndeterminate(false);
+      progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+      progress.setCancelable(true);
+      progress.show();
     }
 
     @Override

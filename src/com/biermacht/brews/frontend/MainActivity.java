@@ -257,14 +257,15 @@ public class MainActivity extends Activity {
   private AlertDialog.Builder recipeSelectorAlert() {
     // Build view which contains the recipes to select
     final ListView v = new ListView(getApplicationContext());
-    v.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    v.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+    v.setFitsSystemWindows(true);
     final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter
             (getApplicationContext(), foundImportedRecipes);
     v.setAdapter(adapter);
     final ArrayList<Recipe> recipesToImport = new ArrayList<Recipe>();
 
     return new AlertDialog.Builder(this)
-            .setTitle("Found Recipes")
+            .setTitle("Found " + adapter.getCount() + " Recipes")
             .setMessage("Select which recipes to import.")
             .setView(v)
             .setPositiveButton("Import", new DialogInterface.OnClickListener() {
