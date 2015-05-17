@@ -36,6 +36,7 @@
     <string name="edit">Save</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="calculate">Calculate</string>
     <string name="export">Export</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>

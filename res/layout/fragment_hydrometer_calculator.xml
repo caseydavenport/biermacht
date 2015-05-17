@@ -1,0 +1,152 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:orientation="vertical">
+
+    <!-- Colored bar at top -->
+    <TextView
+        android:id="@+id/colored_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="top"
+        android:background="@color/theme_main"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text=""
+        android:textColor="#fff">
+
+        <requestFocus/>
+    </TextView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_below="@id/colored_bar"
+        android:background="@color/activity_background">
+
+        <LinearLayout
+            android:id="@+id/main_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="0dp">
+
+            <TextView
+                android:id="@+id/meas_gravity_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Hydrometer Reading"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/measured_gravity_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="1.054"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            <TextView
+                android:id="@+id/meas_temperature_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Temperature of Wort (F)"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/measured_temperature_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="72"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            <TextView
+                android:id="@+id/calibrate_temperature_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Calibration Temperature (F)"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/calibrate_temperature_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="68"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            <TextView
+                android:id="@+id/calculated_gravity_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:text="Gravity at 60F"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <TextView
+                android:id="@+id/calculated_gravity_text_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="0.000"
+                android:textSize="70sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Bottom Bar -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/activity_background"
+        android:padding="10dp">
+
+        <!-- Delete Button -->
+        <Button
+            android:id="@+id/calculate_button"
+            style="@style/button"
+            android:onClick="onClick"
+            android:text="@string/calculate"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

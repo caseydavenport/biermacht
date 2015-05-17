@@ -38,10 +38,11 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
 import java.util.ArrayList;
 
-public class RecipesFragment extends Fragment {
+public class RecipesFragment extends Fragment implements ClickableFragment {
 
   // Layout resource
   private static int resource = R.layout.fragment_recipes;
@@ -268,6 +269,11 @@ public class RecipesFragment extends Fragment {
             })
 
             .setNegativeButton(R.string.cancel, null);
+  }
+
+  @Override
+  public void handleClick(View v) {
+
   }
 
   private class GetRecipeListFromDatabaseTask extends AsyncTask<String, Void, String> {

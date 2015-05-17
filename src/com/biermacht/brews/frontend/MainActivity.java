@@ -36,6 +36,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddCustomYeastActivity;
 import com.biermacht.brews.frontend.adapters.RecipeCheckboxArrayAdapter;
 import com.biermacht.brews.frontend.fragments.EditIngredientsFragment;
 import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
+import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
@@ -43,45 +44,38 @@ import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
+import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
 import java.io.*;
 
 public class MainActivity extends Activity {
-
-  // List to store drawer options
-  private ArrayList<String> drawerItems;
 
   // Poorly done globally used shit
   public static DatabaseInterface databaseInterface;
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;
   public static SharedPreferences preferences;
-
-  //Declare views here
-  private ListView drawerListView;
-
-  // Drawer stuff
-  private DrawerLayout mDrawerLayout;
-  private ActionBarDrawerToggle mDrawerToggle;
-
-  // Fragments
-  ArrayList<Fragment> fragmentList;
-
-  // Selected item
-  private int selectedItem;
-
-  // Context
-  private Context context;
-
-  // Stores recipes found the the selected file
-  private ArrayList<Recipe> foundImportedRecipes;
-
   // Static drawer list items
   private static String DRAWER_RECIPES = "Recipes";
-  private static String DRAWER_GRAVITY = "Gravity Calculator";
+  private static String DRAWER_GRAVITY_CALC = "Hydrometer Adjustment";
   private static String DRAWER_MASH_EDIT = "Mash Profile Editor";
   private static String DRAWER_EQUIP_EDIT = "Equipment Editor";
   private static String DRAWER_INGRED_EDIT = "Ingredient Editor";
+  // Fragments
+  ArrayList<ClickableFragment> fragmentList;
+  // List to store drawer options
+  private ArrayList<String> drawerItems;
+  //Declare views here
+  private ListView drawerListView;
+  // Drawer stuff
+  private DrawerLayout mDrawerLayout;
+  private ActionBarDrawerToggle mDrawerToggle;
+  // Selected item
+  private int selectedItem;
+  // Context
+  private Context context;
+  // Stores recipes found the the selected file
+  private ArrayList<Recipe> foundImportedRecipes;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -130,8 +124,8 @@ public class MainActivity extends Activity {
     drawerItems.add(DRAWER_RECIPES);
     drawerItems.add(DRAWER_INGRED_EDIT);
     drawerItems.add(DRAWER_MASH_EDIT);
+    drawerItems.add(DRAWER_GRAVITY_CALC);
     //drawerItems.add(DRAWER_EQUIP_EDIT); TODO:
-    //drawerItems.add(DRAWER_GRAVITY); TODO:
 
     // Set the adapter and click listener for the list view
     drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.row_layout_drawer_item,
@@ -232,6 +226,12 @@ public class MainActivity extends Activity {
     return true;
   }
 
+  public void onClick(View v)
+  {
+    // Pass the event to the currently active fragment.
+    this.fragmentList.get(selectedItem).handleClick(v);
+  }
+
   private AlertDialog.Builder importRecipeAlert() {
     return new AlertDialog.Builder(this)
             .setTitle("Import BeerXML Recipe")
@@ -310,20 +310,13 @@ public class MainActivity extends Activity {
     mDrawerToggle.onConfigurationChanged(newConfig);
   }
 
-  private class DrawerItemClickListener implements ListView.OnItemClickListener {
-    @Override
-    public void onItemClick(AdapterView parent, View view, int position, long id) {
-      selectItem(position);
-    }
-  }
-
   /**
    * Swaps fragments in the main content view
    */
   private void selectItem(int pos) {
     // Insert the fragment by replacing any existing fragment
     FragmentManager fragmentManager = getFragmentManager();
-    fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentList.get(pos)).commit();
+    fragmentManager.beginTransaction().replace(R.id.content_frame, (Fragment) fragmentList.get(pos)).commit();
 
     // Highlight the selected item, update the title, and close the drawer
     drawerListView.setItemChecked(pos, true);
@@ -340,15 +333,23 @@ public class MainActivity extends Activity {
   }
 
   private void updateFragments() {
-    fragmentList = new ArrayList<Fragment>();
+    fragmentList = new ArrayList<ClickableFragment>();
     fragmentList.add(new RecipesFragment());
     fragmentList.add(new EditIngredientsFragment());
     fragmentList.add(new EditMashProfilesFragment());
+    fragmentList.add(new HydrometerTempCalculatorFragment());
     selectItem(selectedItem);
   }
 
   public void setImportedRecipes(ArrayList<Recipe> recipeList) {
     this.foundImportedRecipes = recipeList;
+  }
+
+  private class DrawerItemClickListener implements ListView.OnItemClickListener {
+    @Override
+    public void onItemClick(AdapterView parent, View view, int position, long id) {
+      selectItem(position);
+    }
   }
 
   private class LoadRecipes extends AsyncTask<String, Void, String> {

@@ -32,8 +32,9 @@ import com.biermacht.brews.utils.Database;
 import android.content.*;
 
 import com.biermacht.brews.utils.comparators.IngredientComparator;
+import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
-public class EditIngredientsFragment extends Fragment {
+public class EditIngredientsFragment extends Fragment implements ClickableFragment {
 
     private static int resource = R.layout.fragment_view;;
     private OnItemClickListener mClickListener;
@@ -132,4 +133,8 @@ public class EditIngredientsFragment extends Fragment {
         inflater.inflate(R.menu.fragment_ingredient_menu, menu);
     }
 
+    @Override
+    public void handleClick(View v) {
+
+    }
 }
