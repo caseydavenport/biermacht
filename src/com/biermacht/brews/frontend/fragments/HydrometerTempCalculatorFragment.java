@@ -22,12 +22,12 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Clicka
 
   // Views which we need to access
   TextView measTempTitle;
-  EditText measGravityEditText;
+  EditText measGravEditText;
   EditText measTempEditText;
   TextView calcGravityTextView;
   TextView calcGravityTitle;
-  TextView calibrationTempTitle;
-  EditText calibrationTempEditText;
+  TextView calibTempTitle;
+  EditText calibTempEditText;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -40,23 +40,23 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Clicka
 
     // Get relevant views
     measTempTitle = (TextView) pageView.findViewById(R.id.meas_temperature_title);
-    measGravityEditText = (EditText) pageView.findViewById(R.id.measured_gravity_edit_text);
+    measGravEditText = (EditText) pageView.findViewById(R.id.measured_gravity_edit_text);
     measTempEditText = (EditText) pageView.findViewById(R.id.measured_temperature_edit_text);
     calcGravityTextView = (TextView) pageView.findViewById(R.id.calculated_gravity_text_view);
-    calibrationTempTitle = (TextView) pageView.findViewById(R.id.calibrate_temperature_title);
-    calibrationTempEditText = (EditText) pageView.findViewById(R.id.calibrate_temperature_edit_text);
+    calibTempTitle = (TextView) pageView.findViewById(R.id.calibrate_temperature_title);
+    calibTempEditText = (EditText) pageView.findViewById(R.id.calibrate_temperature_edit_text);
     calcGravityTitle = (TextView) pageView.findViewById(R.id.calculated_gravity_title);
 
     // Set the correct temperature titles / hints based on unit settings.
     measTempTitle.setText("Temperature of Wort (" + Units.getTemperatureUnits() + ")");
-    calibrationTempTitle.setText("Calibration Temperature (" + Units.getTemperatureUnits() + ")");
+    calibTempTitle.setText("Calibration Temperature (" + Units.getTemperatureUnits() + ")");
     if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
-      calibrationTempEditText.setText("68");
+      calibTempEditText.setText("68");
       measTempEditText.setHint("80");
       calcGravityTitle.setText("Gravity at 68" + Units.getTemperatureUnits());
     }
     else {
-      calibrationTempEditText.setText("20");
+      calibTempEditText.setText("20");
       measTempEditText.setHint("27");
       calcGravityTitle.setText("Gravity at 20" + Units.getTemperatureUnits());
     }
@@ -65,15 +65,29 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Clicka
   }
 
   public void calculate() {
-    double measGrav = Double.parseDouble(measGravityEditText.getText().toString()
-            .replace(",", "" + "."));
-    double measTemp = Double.parseDouble(measTempEditText.getText().toString().replace(",", "."));
-    double calibTemp = Double.parseDouble(calibrationTempEditText.getText().toString()
-            .replace(",", "."));
+    double measGrav;
+    double measTemp;
+    double calibTemp;
+
+    // Acquire data.  If an invalid double is supplied, short-circuit, but don't crash.
+    try {
+      measGrav = Double.parseDouble(measGravEditText.getText().toString().replace(",", "" + "."));
+      measTemp = Double.parseDouble(measTempEditText.getText().toString().replace(",", "."));
+      calibTemp = Double.parseDouble(calibTempEditText.getText().toString().replace(",", "."));
+    } catch (Exception e) {
+      return;
+    }
 
     if ((measGrav != 0)) {
       // Update the calculated gravity title
       calcGravityTitle.setText("Gravity at " + calibTemp + Units.getTemperatureUnits());
+
+      // Calculation of gravity in BrewCalculator is done in imperial units, so convert
+      // if we need to before performing calculation.
+      if (Units.getTemperatureUnits() == Units.CELSIUS) {
+        measTemp = Units.celsiusToFahrenheit(measTemp);
+        calibTemp = Units.celsiusToFahrenheit(calibTemp);
+      }
 
       // Update the calculated gravity view
       double adjustedGravity = BrewCalculator.adjustGravityForTemp(measGrav, measTemp, calibTemp);
