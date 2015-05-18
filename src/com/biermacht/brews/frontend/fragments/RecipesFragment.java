@@ -147,7 +147,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       menuItems.add(EDIT_FERM);
       menuItems.add(BREW_TIMER);
       menuItems.add(RECIPE_NOTES);
-      //menuItems.add(EXPORT_RECIPE);
+      menuItems.add(EXPORT_RECIPE);
       menuItems.add(SCALE_RECIPE);
       menuItems.add(COPY_RECIPE);
       menuItems.add(DELETE_RECIPE);
