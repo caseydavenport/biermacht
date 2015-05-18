@@ -10,9 +10,6 @@ be recorded here
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
-* Can export a single recipe.
-* Fix bug where import recipes dialog is too big.
-* Import recipes has select / deselect all.  Defaults to all selected.
 * Mash temperature calculator.
 * Can't start brew timer if all grain, no mash steps.
 * Calculate water to grain ratio when not auto calculating water to add.
@@ -45,6 +42,10 @@ be recorded here
 * Implement Hydrometer adjustment tool
 * Change size calculation for mash step list
 * Add ABV calculator tool
+* Can export a single recipe
+* Can import beer XML with comma separated doubles.
+* Fix bug where import recipes dialog is too big.
+* Import recipes has select / deselect all.
 
 //////////////////////////////////////////////
 // Changlog for release 1.0.0 ////////////////

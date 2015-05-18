@@ -15,11 +15,12 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.biermacht.brews.R;
@@ -255,24 +256,48 @@ public class MainActivity extends Activity {
   }
 
   private AlertDialog.Builder recipeSelectorAlert() {
-    // Build view which contains the recipes to select
-    final ListView v = new ListView(getApplicationContext());
-    v.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-    v.setFitsSystemWindows(true);
-    final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter
-            (getApplicationContext(), foundImportedRecipes);
+    // Inflater to inflate custom alert view.
+    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+    // Inflate our custom layout
+    View alertView = inflater.inflate(R.layout.alert_view_select_list, null);
+
+    // Get the listView from the layout
+    final ListView v = (ListView) alertView.findViewById(R.id.list);
+
+    // Get the checkBox from the layout
+    final CheckBox checkBox = (CheckBox) alertView.findViewById(R.id.checkbox);
+
+    // Create checkbox array adapter to hold recipes, and set it as the adapter for the listView.
+    final RecipeCheckboxArrayAdapter adapter =
+            new RecipeCheckboxArrayAdapter(getApplicationContext(), foundImportedRecipes);
     v.setAdapter(adapter);
     final ArrayList<Recipe> recipesToImport = new ArrayList<Recipe>();
 
+    // Set a listener for the checkbox so that we can select / unselect items in the list.
+    checkBox.setOnClickListener(new View.OnClickListener() {
+
+      @Override
+      public void onClick(View v) {
+        if (checkBox.isChecked()) {
+          // Checkbox is checked - select all recipes.
+          adapter.selectAll();
+        }
+        else {
+          // Checkbox is not checked - deselect all recipes.
+          adapter.deselectAll();
+        }
+      }
+    });
+
     return new AlertDialog.Builder(this)
             .setTitle("Found " + adapter.getCount() + " Recipes")
-            .setMessage("Select which recipes to import.")
-            .setView(v)
+            .setView(alertView)
             .setPositiveButton("Import", new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
-                // Iterate recipes, import those which are selected.  If selected and a recipe
-                // exists with that name, ask if we should overwrite.
+                // Iterate recipes, import those which are selected.
+                // TODO: Check if recipe already exists, ask to overwrite.
                 for (int i = 0; i < adapter.getCount(); i++) {
                   if (adapter.isChecked(adapter.getItem(i).getRecipeName())) {
                     recipesToImport.add(adapter.getItem(i));
@@ -284,7 +309,6 @@ public class MainActivity extends Activity {
               }
 
             })
-
             .setNegativeButton(R.string.cancel, null);
   }
 

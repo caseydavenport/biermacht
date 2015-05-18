@@ -88,4 +88,22 @@ public class RecipeCheckboxArrayAdapter extends ArrayAdapter<Recipe> {
 	{
 		return checkedByName.get(name);
 	}
+
+	public void selectAll()
+	{
+		for (int i=0; i < list.size(); i++)
+		{
+			checkedByName.put(list.get(i).getRecipeName(), true);
+		}
+		this.notifyDataSetChanged();
+	}
+
+	public void deselectAll()
+	{
+		for (int i=0; i < list.size(); i++)
+		{
+			checkedByName.put(list.get(i).getRecipeName(), false);
+		}
+		this.notifyDataSetChanged();
+	}
 }
