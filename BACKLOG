@@ -32,6 +32,8 @@ be recorded here
 * Add support for more custom fields to XML import / export.
 * Brewer profiles, social features.  This is a big task.
 * Support measured gravities < 1
+* Can choose where to export recipes.
+* Better integration with Dropbox / Google Drive
 
 //////////////////////////////////////////////
 // Changelog for release 1.0.1 ///////////////
