@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/transparent"
@@ -24,6 +23,7 @@
     </TextView>
 
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_nav"
@@ -85,6 +85,28 @@
                 android:selectAllOnFocus="true"/>
 
             <TextView
+                android:id="@+id/initial_temp_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Initial Temperature (F)"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/initial_temp_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
+                android:text="68"/>
+
+            <TextView
                 android:id="@+id/water_to_grain_ratio_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -102,31 +124,31 @@
                 style="@style/text_input"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="1.25"
                 android:inputType="numberDecimal"
-                android:selectAllOnFocus="true"/>
+                android:selectAllOnFocus="true"
+                android:text="1.25"/>
 
             TextView
-                android:id="@+id/strike_water_temperature_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/transparent"
-                android:gravity="center_vertical"
-                android:text="Water Temperature (F)"
-                android:textColor="#333"
-                android:textSize="18dp"/>
+            android:id="@+id/strike_water_temperature_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:text="Water Temperature (F)"
+            android:textColor="#333"
+            android:textSize="18dp"/>
 
             EditText
-                android:id="@+id/strike_water_temperature_edit_text"
-                style="@style/text_input"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="210"
-                android:inputType="numberDecimal"
-                android:selectAllOnFocus="true"/>
+            android:id="@+id/strike_water_temperature_edit_text"
+            style="@style/text_input"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="210"
+            android:inputType="numberDecimal"
+            android:selectAllOnFocus="true"/>
 
             <TextView
                 android:id="@+id/strike_water_temp_title"
@@ -137,7 +159,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/transparent"
                 android:gravity="center"
-                android:text="Add 12qt of Water at"
+                android:text="Add Water at:"
                 android:textColor="#333"
                 android:textSize="18dp"/>
 
@@ -147,7 +169,7 @@
                 android:layout_height="fill_parent"
                 android:gravity="center"
                 android:text="0.0"
-                android:textSize="50sp"/>
+                android:textSize="70sp"/>
 
         </LinearLayout>
 

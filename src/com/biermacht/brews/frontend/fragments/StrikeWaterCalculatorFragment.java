@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
@@ -25,11 +26,16 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
   TextView targetTempTitle;
   TextView grainWeightTitle;
   TextView waterToGrainTitle;
+  TextView initialTempTitle;
   TextView strikeTempTitle;
+
   EditText targetTempText;
   EditText grainWeightText;
+  EditText initialTempText;
   EditText waterToGrainText;
   TextView strikeTempText;
+
+  ScrollView scrollView;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -45,13 +51,19 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
     grainWeightTitle = (TextView) pageView.findViewById(R.id.grain_weight_title);
     waterToGrainTitle = (TextView) pageView.findViewById(R.id.water_to_grain_ratio_title);
     strikeTempTitle = (TextView) pageView.findViewById(R.id.strike_water_temp_title);
+    initialTempTitle = (TextView) pageView.findViewById(R.id.initial_temp_title);
+
     targetTempText = (EditText) pageView.findViewById(R.id.target_temperature_edit_text);
     grainWeightText= (EditText) pageView.findViewById(R.id.grain_weight_edit_text);
     waterToGrainText = (EditText) pageView.findViewById(R.id.water_to_grain_ratio_edit_text);
+    initialTempText = (EditText) pageView.findViewById(R.id.initial_temp_edit_text);
     strikeTempText = (TextView) pageView.findViewById(R.id.strike_water_temp_text_view);
+
+    scrollView = (ScrollView) pageView.findViewById(R.id.scrollview);
 
     // Set titles based on units
     targetTempTitle.setText("Target Temperature (" + Units.getTemperatureUnits() + ")");
+    initialTempTitle.setText("Initial Temperature (" + Units.getTemperatureUnits() + ")");
     grainWeightTitle.setText("Grain Weight (" + Units.getWeightUnits() + ")");
     waterToGrainTitle.setText("Water to Grain Ratio (" + Units.getWaterToGrainUnits() + ")");
 
@@ -71,9 +83,8 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
       targetTemp = Double.parseDouble(targetTempText.getText().toString().replace(",", "" + "."));
       grainWeight = Double.parseDouble(grainWeightText.getText().toString().replace(",", "" + "."));
       waterToGrainRatio = Double.parseDouble(waterToGrainText.getText().toString().replace(",", "" + "."));
+      initialTemp = Double.parseDouble(initialTempText.getText().toString().replace(",", "" + "."));
       strikeVol = waterToGrainRatio * grainWeight;
-      initialTemp = 68;
-
     } catch (Exception e)
     {
       Log.d("StrikeWaterCalculator", "Failed to calculate strike water " + e.toString());
@@ -93,6 +104,15 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
   public void handleClick(View v) {
     if (v.getId() == R.id.calculate_button) {
       this.calculate();
+
+      // The page is a bit long - scroll to the bottom so the user can see the
+      // calculation output.
+      scrollView.post(new Runnable() {
+        @Override
+        public void run() {
+          scrollView.fullScroll(View.FOCUS_DOWN);
+        }
+      });
     }
   }
 }
