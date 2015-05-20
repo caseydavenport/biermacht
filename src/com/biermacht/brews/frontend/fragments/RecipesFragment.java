@@ -46,6 +46,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
   // Layout resource
   private static int resource = R.layout.fragment_recipes;
+
   // Static menu items
   private static String EDIT_RECIPE = "Edit Recipe";
   private static String SCALE_RECIPE = "Scale Recipe";

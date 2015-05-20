@@ -1,0 +1,174 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:orientation="vertical">
+
+    <!-- Colored bar at top -->
+    <TextView
+        android:id="@+id/colored_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="top"
+        android:background="@color/theme_main"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text=""
+        android:textColor="#fff">
+
+        <requestFocus/>
+    </TextView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_below="@id/colored_bar"
+        android:background="@color/activity_background">
+
+        <LinearLayout
+            android:id="@+id/main_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="0dp">
+
+            <TextView
+                android:id="@+id/target_temperature_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Target Temperature (F)"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/target_temperature_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="155"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            <TextView
+                android:id="@+id/grain_weight_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Grain Weight (lbs)"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/grain_weight_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="10"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            <TextView
+                android:id="@+id/water_to_grain_ratio_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Water to Grain Ratio (qt/lb)"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/water_to_grain_ratio_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="1.25"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            TextView
+                android:id="@+id/strike_water_temperature_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Water Temperature (F)"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            EditText
+                android:id="@+id/strike_water_temperature_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="210"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            <TextView
+                android:id="@+id/strike_water_temp_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:text="Add 12qt of Water at"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <TextView
+                android:id="@+id/strike_water_temp_text_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="0.0"
+                android:textSize="50sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Bottom Bar -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/activity_background"
+        android:padding="10dp">
+
+        <!-- Delete Button -->
+        <Button
+            android:id="@+id/calculate_button"
+            style="@style/button"
+            android:onClick="onClick"
+            android:text="@string/calculate"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

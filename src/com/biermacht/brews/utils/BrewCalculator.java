@@ -12,26 +12,26 @@ import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 
 public class BrewCalculator {
-	
+
 	/**
 	 *  Beer details calculations
 	 *  http://www.howtobrew.com/section1/chapter5-5.html
      *  http://homebrew.stackexchange.com/questions/1434/wiki-how-do-you-calculate-original-gravity
-	 *  
+	 *
 	 *  MCU = (weight of grain in lbs)*(color of grain in lovibond) / (volume in gal)
 	 *  SRM = 1.4922 * MCU**.6859
-	 *  
+	 *
 	 *  OG = (Weight of grain in lbs)*(Extract potential of grain)*(Extraction Efficiency)
-	 *  
+	 *
 	 *  IBU = 7498*(Weight of hops in OZ)*(% of Alpha Acids)*(Utilization factor) / (Volume in gal)
 	 */
-	
+
 	public static float Color(Recipe r)
 	{
 		float SRM = 0;
 		float MCU = 0;
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
-		
+
 		for (Ingredient i : ingredientsList)
 		{
 			if (i.getType().equals(Ingredient.FERMENTABLE))
@@ -43,20 +43,20 @@ public class BrewCalculator {
 		SRM = (float) (1.4922*Math.pow(MCU, .6859));
 		return SRM;
 	}
-	
+
 	public static double GrainPercent(Recipe r, Ingredient i)
 	{
 		if(i.getType().equals(Ingredient.FERMENTABLE))
 		{
 			double g_amt = Units.kilosToPounds(i.getBeerXmlStandardAmount());
 			double tot_amt = TotalFermentableWeight(r);
-			
+
 			return (g_amt / tot_amt) * 100;
 		}
-		
+
 		return 0;
 	}
-	
+
 	public static double TotalFermentableWeight(Recipe r)
 	{
 		double amt = 0;
@@ -67,10 +67,10 @@ public class BrewCalculator {
 				amt += Units.kilosToPounds(i.getBeerXmlStandardAmount());
 			}
 		}
-		
+
 		return amt;
 	}
-	
+
 	public static double TotalBeerXmlMashWeight(Recipe r)
 	{
 		double amt = 0;
@@ -81,7 +81,7 @@ public class BrewCalculator {
 				amt += i.getBeerXmlStandardAmount();
 			}
 		}
-		
+
 		return amt;
 	}
 
@@ -127,7 +127,7 @@ public class BrewCalculator {
 		else
 			return AllGrainBoilGravity(r);
 	}
-	
+
 	public static double ExtractBoilGravity(Recipe r)
 	{
 		// Because this is used for hop utilization calculation,
@@ -136,7 +136,7 @@ public class BrewCalculator {
 		double mGPs = OriginalGravity(r) - 1; //milliGPs
 		double avgBoilTime = 0;
 		int t=0;
-		
+
 		// TODO: This is imprecise as it doesn't take into account
 		// how much extract is used as a late addition.. Its is only an approximate
 		for (Fermentable f : r.getFermentablesList())
@@ -151,7 +151,7 @@ public class BrewCalculator {
 		    avgBoilTime = avgBoilTime/t;
 		else
 		    avgBoilTime = r.getBoilTime();
-			
+
 		return 1 + (mGPs * Units.litersToGallons(r.getBeerXmlStandardBatchSize()) / Units.litersToGallons(r.getBeerXmlStandardBoilSize()))*(avgBoilTime/r.getBoilTime());
 	}
 
@@ -211,19 +211,19 @@ public class BrewCalculator {
 
         else return 0;
     }
-	
+
 	public static double Bitterness(Recipe r)
 	{
 		double ibu = 0;
-		
+
 		ArrayList<Ingredient> ingredientsList = r.getIngredientList();
-		
+
 		// http://www.howtobrew.com/section1/chapter5-5.html
 		for (Ingredient i : ingredientsList)
 		{
 			ibu += Bitterness(r, i);
 		}
-		
+
 		return ibu;
 	}
 
@@ -233,7 +233,7 @@ public class BrewCalculator {
 		double ibu = 0;
 		double AAU = 0;
 		double utilization = 0;
-		
+
 			if (i.getType().equals(Ingredient.HOP))
 			{
 				Hop h = (Hop) i;
@@ -248,7 +248,7 @@ public class BrewCalculator {
 
 		return ibu;
 	}
-	
+
 	public static double FinalGravity(Recipe r)
 	{
         double pts = FinalFermentableGravityPoints(r) + NonFermentableGravityPoints(r);
@@ -278,7 +278,7 @@ public class BrewCalculator {
         // If we don't have any yeast, there's no fermentation!
         return OriginalFermentableGravityPoints(r);
     }
-	
+
 	public static double AlcoholByVolume(Recipe r)
 	{
 		return AlcoholByVolume(r.getOG(), r.getFG());
@@ -305,20 +305,42 @@ public class BrewCalculator {
 		double bignessFactor;
 		double boilTimeFactor;
 		double boilGrav = BoilGravity(r);
-		
+
 		// Default : 1.65/4.25
 		bignessFactor = 1.65 * Math.pow(.00025, boilGrav-1);
 		boilTimeFactor = (1 - Math.pow(Math.E, -.04*i.getTime()))/4.25;
-		
+
 		utilization = (float) (bignessFactor * boilTimeFactor);
-		
+
 		// Pellets require a little bit more hops.
 		if (i.getForm().equals(Hop.FORM_PELLET))
 			return .94 * utilization;
 		else
 			return utilization;
 	}
-	
+
+  public static double calculateStrikeTemp(double r,
+                                           double T1,
+                                           double T2)
+  {
+    /**
+     * From Palmer:
+     *   Tw = (.2/r)(T2 - T1) + T2
+     *   Wa = (T2 - T1)(.2G + Wm)/(Tw - T2)
+     *
+     *   r = The ratio of water to grain in quarts per pound.
+     *   Wa = The amount of boiling water added (in quarts).
+     *   Wm = The total amount of water in the mash (in quarts).
+     *   T1 = The initial temperature (¡F) of the mash.
+     *   T2 = The target temperature (¡F) of the mash.
+     *   Tw = The actual temperature (¡F) of the infusion water.
+     *   G = The amount of grain in the mash (in pounds).
+     *
+     *   NOTE: All temperatures in degrees F.
+     */
+    return ((.2 / r) * (T2 - T1)) + T2;
+  }
+
 	/**
 	 * Adjusts a gravity reading based on temperature
 	 * @param mg - Measured gravity
@@ -331,7 +353,7 @@ public class BrewCalculator {
 		double cg; // Corrected grav
 		cg = mg * (1.00130346 - 0.000134722124 * temp + 0.00000204052596 * temp*temp - 0.00000000232820948 * temp*temp*temp);
 		cg = cg / (1.00130346 - 0.000134722124 * ct + 0.00000204052596 * ct*ct - 0.00000000232820948 * ct*ct*ct);
-		
+
 		return cg;
 	}
 

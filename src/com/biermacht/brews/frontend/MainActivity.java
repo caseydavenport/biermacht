@@ -35,6 +35,7 @@ import com.biermacht.brews.frontend.fragments.EditIngredientsFragment;
 import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
+import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
@@ -61,6 +62,7 @@ public class MainActivity extends Activity {
   private static String DRAWER_EQUIP_EDIT = "Equipment Editor";
   private static String DRAWER_INGRED_EDIT = "Ingredient Editor";
   private static String DRAWER_ABV_CALC = "ABV Calculator";
+  private static String DRAWER_STRIKE_CALC = "Strike Temperature";
 
   // Fragments
   ArrayList<ClickableFragment> fragmentList;
@@ -131,6 +133,7 @@ public class MainActivity extends Activity {
     drawerItems.add(DRAWER_RECIPES);
     drawerItems.add(DRAWER_INGRED_EDIT);
     drawerItems.add(DRAWER_MASH_EDIT);
+    drawerItems.add(DRAWER_STRIKE_CALC);
     drawerItems.add(DRAWER_GRAVITY_CALC);
     drawerItems.add(DRAWER_ABV_CALC);
     //drawerItems.add(DRAWER_EQUIP_EDIT); TODO:
@@ -369,6 +372,7 @@ public class MainActivity extends Activity {
     fragmentList.add(new RecipesFragment());
     fragmentList.add(new EditIngredientsFragment());
     fragmentList.add(new EditMashProfilesFragment());
+    fragmentList.add(new StrikeWaterCalculatorFragment());
     fragmentList.add(new HydrometerTempCalculatorFragment());
     fragmentList.add(new AlcoholAttenuationCalculatorFragment());
     selectItem(selectedItem);

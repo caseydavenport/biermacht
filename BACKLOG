@@ -10,7 +10,12 @@ be recorded here
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
-* Mash temperature calculator.
+* Weird default Water-to-Grain Ratios in mash steps.
+* Commas not supported in Mash Step activities.
+* Option for flame-out hops (calculate IBU)
+* Some misc items use volume instead of weight (orange peel, coriander seeds, for example)
+* Can search web for BeerXML Recipes
+* Mash strike temperature calculator.
 * Can't start brew timer if all grain, no mash steps.
 * Calculate water to grain ratio when not auto calculating water to add.
 * When entering measured gravity, user can also input temperature.

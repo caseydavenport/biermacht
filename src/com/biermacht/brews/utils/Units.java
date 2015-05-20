@@ -366,6 +366,26 @@ public class Units {
 		}
   }
 
+	public static String getWaterToGrainUnits() {
+		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+						(IMPERIAL)) {
+			return QUARTS_PER_POUND;
+		}
+		else {
+			return LITERS_PER_KG;
+		}
+	}
+
+	public static String getStrikeVolumeUnits() {
+		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+						(IMPERIAL)) {
+			return QUARTS;
+		}
+		else {
+			return LITERS;
+		}
+	}
+
   public static String getTemperatureUnits() {
 		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
 						(IMPERIAL)) {
