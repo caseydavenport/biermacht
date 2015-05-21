@@ -4,12 +4,13 @@ import android.util.Log;
 
 import com.biermacht.brews.frontend.MainActivity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Units {
 
   // Unit systems
-	public static final String IMPERIAL = "Imperial";
+  public static final String IMPERIAL = "Imperial";
   public static final String METRIC = "Metric";
 
   // Imperial Units
@@ -57,132 +58,132 @@ public class Units {
   public static final String UNITS_FORMAL = "Units";
 
   public static String toAbbreviation(String s) {
-		if (s.toLowerCase().equals(TEASPOONS_FORMAL.toLowerCase())) {
-			return TEASPOONS;
-		}
-		if (s.toLowerCase().equals(CUPS_FORMAL.toLowerCase())) {
-			return CUPS;
-		}
-		if (s.toLowerCase().equals(GRAMS_FORMAL.toLowerCase())) {
-			return GRAMS;
-		}
-		if (s.toLowerCase().equals(GALLONS_FORMAL.toLowerCase())) {
-			return GALLONS;
-		}
-		if (s.toLowerCase().equals(LITERS_FORMAL.toLowerCase())) {
-			return LITERS;
-		}
-		if (s.toLowerCase().equals(OUNCES_FORMAL.toLowerCase())) {
-			return OUNCES;
-		}
-		if (s.toLowerCase().equals(ITEMS_FORMAL.toLowerCase())) {
-			return ITEMS;
-		}
-		if (s.toLowerCase().equals(KILOGRAMS_FORMAL.toLowerCase())) {
-			return KILOGRAMS;
-		}
-		if (s.toLowerCase().equals(MILLILITERS_FORMAL.toLowerCase())) {
-			return MILLILITERS;
-		}
-		if (s.toLowerCase().equals(PACKAGES_FORMAL.toLowerCase())) {
-			return PACKAGES;
-		}
-		if (s.toLowerCase().equals(POUNDS_FORMAL.toLowerCase())) {
-			return POUNDS;
-		}
-		else {
-			return UNITS;
-		}
+    if (s.toLowerCase().equals(TEASPOONS_FORMAL.toLowerCase())) {
+      return TEASPOONS;
+    }
+    if (s.toLowerCase().equals(CUPS_FORMAL.toLowerCase())) {
+      return CUPS;
+    }
+    if (s.toLowerCase().equals(GRAMS_FORMAL.toLowerCase())) {
+      return GRAMS;
+    }
+    if (s.toLowerCase().equals(GALLONS_FORMAL.toLowerCase())) {
+      return GALLONS;
+    }
+    if (s.toLowerCase().equals(LITERS_FORMAL.toLowerCase())) {
+      return LITERS;
+    }
+    if (s.toLowerCase().equals(OUNCES_FORMAL.toLowerCase())) {
+      return OUNCES;
+    }
+    if (s.toLowerCase().equals(ITEMS_FORMAL.toLowerCase())) {
+      return ITEMS;
+    }
+    if (s.toLowerCase().equals(KILOGRAMS_FORMAL.toLowerCase())) {
+      return KILOGRAMS;
+    }
+    if (s.toLowerCase().equals(MILLILITERS_FORMAL.toLowerCase())) {
+      return MILLILITERS;
+    }
+    if (s.toLowerCase().equals(PACKAGES_FORMAL.toLowerCase())) {
+      return PACKAGES;
+    }
+    if (s.toLowerCase().equals(POUNDS_FORMAL.toLowerCase())) {
+      return POUNDS;
+    }
+    else {
+      return UNITS;
+    }
   }
 
   public static String toFormal(String s) {
-		if (s.toLowerCase().equals(TEASPOONS.toLowerCase())) {
-			return TEASPOONS_FORMAL;
-		}
-		if (s.toLowerCase().equals(CUPS.toLowerCase())) {
-			return CUPS_FORMAL;
-		}
-		if (s.toLowerCase().equals(GRAMS.toLowerCase())) {
-			return GRAMS_FORMAL;
-		}
-		if (s.toLowerCase().equals(GALLONS.toLowerCase())) {
-			return GALLONS_FORMAL;
-		}
-		if (s.toLowerCase().equals(LITERS.toLowerCase())) {
-			return LITERS_FORMAL;
-		}
-		if (s.toLowerCase().equals(OUNCES.toLowerCase())) {
-			return OUNCES_FORMAL;
-		}
-		if (s.toLowerCase().equals(ITEMS.toLowerCase())) {
-			return ITEMS_FORMAL;
-		}
-		if (s.toLowerCase().equals(KILOGRAMS.toLowerCase())) {
-			return KILOGRAMS_FORMAL;
-		}
-		if (s.toLowerCase().equals(MILLILITERS.toLowerCase())) {
-			return MILLILITERS_FORMAL;
-		}
-		if (s.toLowerCase().equals(PACKAGES.toLowerCase())) {
-			return PACKAGES_FORMAL;
-		}
-		if (s.toLowerCase().equals(POUNDS.toLowerCase())) {
-			return POUNDS_FORMAL;
-		}
-		else {
-			return UNITS_FORMAL;
-		}
+    if (s.toLowerCase().equals(TEASPOONS.toLowerCase())) {
+      return TEASPOONS_FORMAL;
+    }
+    if (s.toLowerCase().equals(CUPS.toLowerCase())) {
+      return CUPS_FORMAL;
+    }
+    if (s.toLowerCase().equals(GRAMS.toLowerCase())) {
+      return GRAMS_FORMAL;
+    }
+    if (s.toLowerCase().equals(GALLONS.toLowerCase())) {
+      return GALLONS_FORMAL;
+    }
+    if (s.toLowerCase().equals(LITERS.toLowerCase())) {
+      return LITERS_FORMAL;
+    }
+    if (s.toLowerCase().equals(OUNCES.toLowerCase())) {
+      return OUNCES_FORMAL;
+    }
+    if (s.toLowerCase().equals(ITEMS.toLowerCase())) {
+      return ITEMS_FORMAL;
+    }
+    if (s.toLowerCase().equals(KILOGRAMS.toLowerCase())) {
+      return KILOGRAMS_FORMAL;
+    }
+    if (s.toLowerCase().equals(MILLILITERS.toLowerCase())) {
+      return MILLILITERS_FORMAL;
+    }
+    if (s.toLowerCase().equals(PACKAGES.toLowerCase())) {
+      return PACKAGES_FORMAL;
+    }
+    if (s.toLowerCase().equals(POUNDS.toLowerCase())) {
+      return POUNDS_FORMAL;
+    }
+    else {
+      return UNITS_FORMAL;
+    }
   }
 
   public static String getUnitsFromDisplayAmount(String s) {
     Log.d("Units", "Getting units from display amount: " + s);
     String unit = "";
     ArrayList<String> temp = new ArrayList<String>(Arrays.asList(s.split(" ")));
-		if (temp.size() == 2) {
-			unit = temp.get(temp.size() - 1);
-		}
+    if (temp.size() == 2) {
+      unit = temp.get(temp.size() - 1);
+    }
 
     // Assign a Units class standard unit here
-		if (unit.equals("tsp") || unit.equals("teaspoons")) {
-			unit = Units.TEASPOONS;
-		}
-		if (unit.equalsIgnoreCase("qt") || unit.equalsIgnoreCase("quarts") || unit.equalsIgnoreCase
-						("quart") || unit.equalsIgnoreCase("qts")) {
-			unit = Units.QUARTS;
-		}
-		if (unit.equals("g") || unit.equals("grams")) {
-			unit = Units.GRAMS;
-		}
-		if (unit.equals("oz") || unit.equals("ounces")) {
-			unit = Units.OUNCES;
-		}
-		if (unit.contains("gal")) {
-			unit = Units.GALLONS;
-		}
-		if (unit.equals("item") || unit.equals("items")) {
-			unit = Units.ITEMS;
-		}
-		if (unit.contains("package") || unit.equals("pkg")) {
-			unit = Units.PACKAGES;
-		}
-		if (unit.equalsIgnoreCase(PLATO)) {
-			unit = Units.PLATO;
-		}
-		if (unit.equalsIgnoreCase(GRAVITY)) {
-			unit = Units.GRAVITY;
-		}
-		if (unit.equalsIgnoreCase("F")) {
-			unit = Units.FAHRENHEIT;
-		}
-		if (unit.equalsIgnoreCase("C")) {
-			unit = Units.CELSIUS;
-		}
-		if (unit.equalsIgnoreCase("qt/lb")) {
-			unit = Units.QUARTS_PER_POUND;
-		}
-		if (unit.equalsIgnoreCase(LITERS_PER_KG)) {
-			unit = Units.LITERS_PER_KG;
-		}
+    if (unit.equals("tsp") || unit.equals("teaspoons")) {
+      unit = Units.TEASPOONS;
+    }
+    if (unit.equalsIgnoreCase("qt") || unit.equalsIgnoreCase("quarts") || unit.equalsIgnoreCase
+            ("quart") || unit.equalsIgnoreCase("qts")) {
+      unit = Units.QUARTS;
+    }
+    if (unit.equals("g") || unit.equals("grams")) {
+      unit = Units.GRAMS;
+    }
+    if (unit.equals("oz") || unit.equals("ounces")) {
+      unit = Units.OUNCES;
+    }
+    if (unit.contains("gal")) {
+      unit = Units.GALLONS;
+    }
+    if (unit.equals("item") || unit.equals("items")) {
+      unit = Units.ITEMS;
+    }
+    if (unit.contains("package") || unit.equals("pkg")) {
+      unit = Units.PACKAGES;
+    }
+    if (unit.equalsIgnoreCase(PLATO)) {
+      unit = Units.PLATO;
+    }
+    if (unit.equalsIgnoreCase(GRAVITY)) {
+      unit = Units.GRAVITY;
+    }
+    if (unit.equalsIgnoreCase("F")) {
+      unit = Units.FAHRENHEIT;
+    }
+    if (unit.equalsIgnoreCase("C")) {
+      unit = Units.CELSIUS;
+    }
+    if (unit.equalsIgnoreCase("qt/lb")) {
+      unit = Units.QUARTS_PER_POUND;
+    }
+    if (unit.equalsIgnoreCase(LITERS_PER_KG)) {
+      unit = Units.LITERS_PER_KG;
+    }
 
     Log.d("Units", "Got units: " + unit);
     return unit;
@@ -212,12 +213,12 @@ public class Units {
   }
 
   public static int toSeconds(double time, String units) {
-		if (units.equals(MINUTES)) {
-			return (int) (time * 60);
-		}
-		if (units.equals(HOURS)) {
-			return (int) (time * 3600);
-		}
+    if (units.equals(MINUTES)) {
+      return (int) (time * 60);
+    }
+    if (units.equals(HOURS)) {
+      return (int) (time * 3600);
+    }
 
     return 0;
   }
@@ -337,133 +338,133 @@ public class Units {
 
   // Methods to return the units for each measurement system
   public static String getUnitSystem() {
-		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-						(IMPERIAL)) {
-			return IMPERIAL;
-		}
-		else {
-			return METRIC;
-		}
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+            (IMPERIAL)) {
+      return IMPERIAL;
+    }
+    else {
+      return METRIC;
+    }
   }
 
   public static String getHopUnits() {
-		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-						(IMPERIAL)) {
-			return OUNCES;
-		}
-		else {
-			return GRAMS;
-		}
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+            (IMPERIAL)) {
+      return OUNCES;
+    }
+    else {
+      return GRAMS;
+    }
   }
 
   public static String getFermentableUnits() {
-		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-						(IMPERIAL)) {
-			return POUNDS;
-		}
-		else {
-			return KILOGRAMS;
-		}
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+            (IMPERIAL)) {
+      return POUNDS;
+    }
+    else {
+      return KILOGRAMS;
+    }
   }
 
-	public static String getWaterToGrainUnits() {
-		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-						(IMPERIAL)) {
-			return QUARTS_PER_POUND;
-		}
-		else {
-			return LITERS_PER_KG;
-		}
-	}
+  public static String getWaterToGrainUnits() {
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+            (IMPERIAL)) {
+      return QUARTS_PER_POUND;
+    }
+    else {
+      return LITERS_PER_KG;
+    }
+  }
 
-	public static String getStrikeVolumeUnits() {
-		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-						(IMPERIAL)) {
-			return QUARTS;
-		}
-		else {
-			return LITERS;
-		}
-	}
+  public static String getStrikeVolumeUnits() {
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+            (IMPERIAL)) {
+      return QUARTS;
+    }
+    else {
+      return LITERS;
+    }
+  }
 
   public static String getTemperatureUnits() {
-		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-						(IMPERIAL)) {
-			return FAHRENHEIT;
-		}
-		else {
-			return CELSIUS;
-		}
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+            (IMPERIAL)) {
+      return FAHRENHEIT;
+    }
+    else {
+      return CELSIUS;
+    }
   }
 
   public static String getVolumeUnits() {
-		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-						(IMPERIAL)) {
-			return GALLONS;
-		}
-		else {
-			return LITERS;
-		}
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+            (IMPERIAL)) {
+      return GALLONS;
+    }
+    else {
+      return LITERS;
+    }
   }
 
   public static String getWeightUnits() {
-		if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-						(IMPERIAL)) {
-			return POUNDS;
-		}
-		else {
-			return KILOGRAMS;
-		}
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+            (IMPERIAL)) {
+      return POUNDS;
+    }
+    else {
+      return KILOGRAMS;
+    }
   }
 
   public static double toLiters(double amount, String unit) {
-		if (unit.equals(GALLONS)) {
-			return gallonsToLiters(amount);
-		}
-		if (unit.equals(QUARTS)) {
-			return quartsToLiters(amount);
-		}
-		if (unit.equals(MILLILITERS)) {
-			return millisToLiters(amount);
-		}
-		if (unit.equals(CUPS) || unit.equals(CUP)) {
-			return cupsToLiters(amount);
-		}
-		if (unit.equals(TEASPOONS)) {
-			return teaspoonsToLiters(amount);
-		}
-		if (unit.equals(OUNCES)) {
-			return ouncesToLiters(amount);
-		}
-		if (unit.equals(LITERS)) {
-			return amount;
-		}
+    if (unit.equals(GALLONS)) {
+      return gallonsToLiters(amount);
+    }
+    if (unit.equals(QUARTS)) {
+      return quartsToLiters(amount);
+    }
+    if (unit.equals(MILLILITERS)) {
+      return millisToLiters(amount);
+    }
+    if (unit.equals(CUPS) || unit.equals(CUP)) {
+      return cupsToLiters(amount);
+    }
+    if (unit.equals(TEASPOONS)) {
+      return teaspoonsToLiters(amount);
+    }
+    if (unit.equals(OUNCES)) {
+      return ouncesToLiters(amount);
+    }
+    if (unit.equals(LITERS)) {
+      return amount;
+    }
     return - 1;
   }
 
   public static String getMetricEquivalent(String imp, boolean isWeight) {
-		if (imp.equals(Units.GALLONS)) {
-			return LITERS;
-		}
-		else if (imp.equals(Units.TEASPOONS)) {
-			return MILLILITERS;
-		}
-		else if (imp.equals(Units.OUNCES)) {
-			if (isWeight) {
-				return GRAMS;
-			}
-			else {
-				return MILLILITERS;
-			}
-		}
-		else if (imp.equals(Units.POUNDS)) {
-			return KILOGRAMS;
-		}
-		else if (imp.equals(Units.CUP) || imp.equals(Units.CUPS)) {
-			return LITERS;
-		}
-		else {
-			return imp;
-		}
+    if (imp.equals(Units.GALLONS)) {
+      return LITERS;
+    }
+    else if (imp.equals(Units.TEASPOONS)) {
+      return MILLILITERS;
+    }
+    else if (imp.equals(Units.OUNCES)) {
+      if (isWeight) {
+        return GRAMS;
+      }
+      else {
+        return MILLILITERS;
+      }
+    }
+    else if (imp.equals(Units.POUNDS)) {
+      return KILOGRAMS;
+    }
+    else if (imp.equals(Units.CUP) || imp.equals(Units.CUPS)) {
+      return LITERS;
+    }
+    else {
+      return imp;
+    }
   }
 }

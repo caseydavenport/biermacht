@@ -1,18 +1,16 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Yeast;
-import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
 
@@ -150,7 +148,7 @@ public class AddYeastActivity extends AddEditIngredientActivity {
   public void acquireValues() throws Exception {
     super.acquireValues();
     double attenuation = Double.parseDouble(attenuationViewText.getText().toString()
-            .replace(",", "."));
+                                                    .replace(",", "."));
     String lab = labViewText.getText().toString();
     String pid = productIdViewText.getText().toString();
 

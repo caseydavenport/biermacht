@@ -1,79 +1,81 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!-- ===================================================================== -->
-<!-- ===================== THEME STYLES ================================== -->
-<!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- ===================== THEME STYLES ================================== -->
+    <!-- ===================================================================== -->
 
     <style name="Theme.Biermacht.Brews" parent="android:Theme.Holo.Light">
-		<item name="android:actionBarStyle">@style/Theme.Biermacht.Brews.ActionBarStyle</item>
-        <item name="android:actionBarTabStyle">@style/Theme.Biermacht.Brews.ActionBarTabBarStyle</item>
+        <item name="android:actionBarStyle">@style/Theme.Biermacht.Brews.ActionBarStyle</item>
+        <item name="android:actionBarTabStyle">@style/Theme.Biermacht.Brews.ActionBarTabBarStyle
+        </item>
     </style>
-    
+
     <style name="Theme.Biermacht.Brews.ActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/background</item>
-		<item name="android:titleTextStyle">@style/Theme.Biermacht.Brews.ActionBar.TitleTextStyle</item>
+        <item name="android:titleTextStyle">@style/Theme.Biermacht.Brews.ActionBar.TitleTextStyle
+        </item>
     </style>
-    
+
     <style name="Theme.Biermacht.Brews.ActionBarTabBarStyle">
         <item name="android:background">@drawable/actionbar_tab_bg</item>
         <item name="android:gravity">center</item>
     </style>
-    
+
     <style name="Theme.Biermacht.Brews.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@color/title_color</item>
     </style>
-    
-<!-- ===================================================================== -->
-<!-- ===================== OTHER STYLES ================================== -->
-<!-- ===================================================================== -->
 
-	<!-- Buttons -->
+    <!-- ===================================================================== -->
+    <!-- ===================== OTHER STYLES ================================== -->
+    <!-- ===================================================================== -->
+
+    <!-- Buttons -->
     <style name="button">
-		<item name="android:background">@drawable/button_bg</item>
-		<item name="android:textColor">@drawable/button_text</item>
-		<item name="android:layout_width">0dip</item>
-		<item name="android:layout_weight">1</item>
-		<item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textColor">@drawable/button_text</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">fill_parent</item>
     </style>
 
     <style name="button_left">
-		<item name="android:background">@drawable/left_button_bg</item>
-		<item name="android:textColor">@drawable/button_text</item>
-		<item name="android:layout_width">0dip</item>
-		<item name="android:layout_weight">1</item>
-		<item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@drawable/left_button_bg</item>
+        <item name="android:textColor">@drawable/button_text</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">fill_parent</item>
     </style>
-    
+
     <style name="button_right">
-		<item name="android:background">@drawable/right_button_bg</item>
-		<item name="android:textColor">@drawable/button_text</item>
-		<item name="android:layout_width">0dip</item>
-		<item name="android:layout_weight">1</item>
-		<item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@drawable/right_button_bg</item>
+        <item name="android:textColor">@drawable/button_text</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">fill_parent</item>
     </style>
-    
+
     <style name="title_light">
-		<item name="android:background">@color/transparent</item>
-		<item name="android:textColor">@color/title_color</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:textSize">15dip</item>
-		<item name="android:gravity">left</item>
-		<item name="android:layout_marginBottom">3dip</item>
-		<item name="android:layout_width">fill_parent</item>
-		<item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/title_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dip</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_marginBottom">3dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
-    
+
     <style name="title_dark">
-		<item name="android:background">@color/transparent</item>
-		<item name="android:textColor">@color/title_color</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:textSize">15dip</item>
-		<item name="android:gravity">left</item>
-		<item name="android:layout_marginBottom">3dip</item>
-		<item name="android:layout_width">fill_parent</item>
-		<item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/title_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dip</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_marginBottom">3dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
-    
+
     <style name="text_input">
         <item name="android:background">@drawable/rounded_bg_white</item>
         <item name="android:layout_width">fill_parent</item>

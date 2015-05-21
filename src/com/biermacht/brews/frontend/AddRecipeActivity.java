@@ -1,9 +1,6 @@
 package com.biermacht.brews.frontend;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,22 +9,24 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
+import com.biermacht.brews.frontend.adapters.BeerStyleSpinnerAdapter;
+import com.biermacht.brews.frontend.adapters.MashProfileSpinnerAdapter;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.BeerStyle;
-import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.MashProfile;
+import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Callbacks.BooleanCallback;
 import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Utils;
-import com.biermacht.brews.frontend.adapters.*;
 
-import android.widget.*;
+import java.util.ArrayList;
 
 public class AddRecipeActivity extends AddEditActivity {
 
@@ -137,7 +136,7 @@ public class AddRecipeActivity extends AddEditActivity {
     }
     else if (v.equals(boilSizeView)) {
       alert = alertBuilder.editTextFloatCheckBoxAlert(boilSizeViewText, boilSizeViewTitle,
-              mRecipe.getCalculateBoilVolume(), boilVolumeCallback).create();
+                                                      mRecipe.getCalculateBoilVolume(), boilVolumeCallback).create();
     }
     else {
       return; // In case its none of those views...

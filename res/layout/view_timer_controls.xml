@@ -7,94 +7,105 @@
               android:visibility="visible"
               android:background="@color/activity_background">
 
-    <View android:layout_width="fill_parent"
-          android:layout_height="1dip"
-          android:background="@color/divider" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider"/>
 
-    <LinearLayout android:id="@+id/next_step_timer"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:textSize="25sp"
-                  android:orientation="horizontal" >
+    <LinearLayout
+        android:id="@+id/next_step_timer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:orientation="horizontal">
 
-        <TextView android:id="@+id/step_status"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:textSize="25sp"
-                  android:text="" />
-
-    </LinearLayout>
-
-    <View android:layout_width="fill_parent"
-          android:layout_height="1dip"
-          android:background="@color/divider" />
-
-    <LinearLayout android:id="@+id/countdown_timer"
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/step_status"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal" >
-
-        <TextView android:id="@+id/hours"
-                  android:layout_width="wrap_content"
-                  android:layout_height="100dip"
-                  android:gravity="center"
-                  android:textSize="70sp"
-                  android:text="00" />
-
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="100dip"
-                  android:gravity="center"
-                  android:textSize="70sp"
-                  android:text=":" />
-
-        <TextView android:id="@+id/minutes"
-                  android:layout_width="wrap_content"
-                  android:layout_height="100dip"
-                  android:gravity="center"
-                  android:textSize="70sp"
-                  android:text="00" />
-
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="100dip"
-                  android:gravity="center"
-                  android:textSize="70sp"
-                  android:text=":" />
-
-        <TextView android:id="@+id/seconds"
-                  android:layout_width="wrap_content"
-                  android:layout_height="100dip"
-                  android:gravity="center"
-                  android:textSize="70sp"
-                  android:text="00" />
+            android:textSize="25sp"
+            android:text=""/>
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/timer_controls"
-                  android:orientation="horizontal"
-                  android:layout_width="fill_parent"
-                  android:layout_height="60dip"
-                  android:layout_gravity="center" >
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider"/>
+
+    <LinearLayout
+        android:id="@+id/countdown_timer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hours"
+            android:layout_width="wrap_content"
+            android:layout_height="100dip"
+            android:gravity="center"
+            android:textSize="70sp"
+            android:text="00"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="100dip"
+            android:gravity="center"
+            android:textSize="70sp"
+            android:text=":"/>
+
+        <TextView
+            android:id="@+id/minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="100dip"
+            android:gravity="center"
+            android:textSize="70sp"
+            android:text="00"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="100dip"
+            android:gravity="center"
+            android:textSize="70sp"
+            android:text=":"/>
+
+        <TextView
+            android:id="@+id/seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="100dip"
+            android:gravity="center"
+            android:textSize="70sp"
+            android:text="00"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timer_controls"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_gravity="center">
 
         <!-- Prev Button -->
         <ImageButton
-                android:id="@+id/stop_button"
-                android:onClick="onClick"
-                style="@style/button" />
+            android:id="@+id/stop_button"
+            android:onClick="onClick"
+            style="@style/button"/>
 
         <!-- Pause/Play Button -->
         <ImageButton
-                android:id="@+id/play_pause_button"
-                android:onClick="onClick"
-                style="@style/button" />
+            android:id="@+id/play_pause_button"
+            android:onClick="onClick"
+            style="@style/button"/>
 
         <!-- Next Button -->
         <ImageButton
-                android:id="@+id/go_to_current_button"
-                android:onClick="onClick"
-                style="@style/button" />
+            android:id="@+id/go_to_current_button"
+            android:onClick="onClick"
+            style="@style/button"/>
 
     </LinearLayout>
 </LinearLayout>

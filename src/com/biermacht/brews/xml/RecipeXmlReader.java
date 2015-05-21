@@ -177,8 +177,7 @@ public class RecipeXmlReader extends DefaultHandler {
     if (qName.equalsIgnoreCase("MASH")) {
       thingTypeStack.push(qName);
 
-      if (!thingTypeStack.contains("RECIPE"))
-      {
+      if (! thingTypeStack.contains("RECIPE")) {
         // We're not operating in the context of a recipe.  As such, we should create a new
         // recipe for this MashProfile before creating the Mashprofile itself, since a MashProfile
         // doesn't make sense outside the context of a recipe.  This occurs when importing

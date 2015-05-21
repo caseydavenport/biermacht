@@ -1,497 +1,498 @@
-<?xml version="1.0" encoding="ISO-8859-1"?><MISCS>
-<MISC>
- <NAME>Anise, Star</NAME>
- <VERSION>1</VERSION>
- <TYPE>Spice</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.073934</AMOUNT>
- <TIME>30.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Licorice flavor</USE_FOR>
- <NOTES>Adds a strong black licorice flavor.</NOTES>
- <DISPLAY_AMOUNT>2.50 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>30.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Apricot Extract</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>0.192229</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Apricot flavor</USE_FOR>
- <NOTES>Contributes apricot flavor.  Add during bottling.</NOTES>
- <DISPLAY_AMOUNT>6.50 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Baking Soda (NaHCO3)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.001000</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Increase mash pH</USE_FOR>
- <NOTES>Use to increase mash pH.  Too much may cause harsh salty flavor.</NOTES>
- <DISPLAY_AMOUNT>1.00 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Blackberries</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Secondary</USE>
- <AMOUNT>4</AMOUNT>
- <TIME>7</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Blackberry flavor</USE_FOR>
- <NOTES>Contributes blackberry flavor.  Add during secondary.</NOTES>
- <DISPLAY_AMOUNT>4 lbs</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>7 days</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Blackberry Extract</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>0.133082</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Blackberry flavor</USE_FOR>
- <NOTES>Contributes blackberry flavor.  Add during bottling.</NOTES>
- <DISPLAY_AMOUNT>4.50 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Bottle Caps</NAME>
- <VERSION>1</VERSION>
- <TYPE>Other</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>52.000000</AMOUNT>
- <TIME>1.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Bottles</USE_FOR>
- <NOTES>Keeps the beer in your bottles.</NOTES>
- <DISPLAY_AMOUNT>52.00 Items</DISPLAY_AMOUNT>
- <INVENTORY>0.00 Items</INVENTORY>
- <DISPLAY_TIME>1.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Burton Water Salts</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.014787</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Hardens water</USE_FOR>
- <NOTES>Mixture of salts used to harden water.</NOTES>
- <DISPLAY_AMOUNT>0.50 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Calcium Chloride</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.005000</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Decrease mash pH</USE_FOR>
- <NOTES>Lowers mash pH.</NOTES>
- <DISPLAY_AMOUNT>5.00 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Chalk (CaCO3)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.001000</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Harden water</USE_FOR>
- <NOTES>Hardens water when used in mash.</NOTES>
- <DISPLAY_AMOUNT>1.00 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Cherries</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Secondary</USE>
- <AMOUNT>4</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Cherry flavor</USE_FOR>
- <NOTES>Contributes cherry flavor.  Add during secondary.</NOTES>
- <DISPLAY_AMOUNT>4 lbs</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>7 days</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Cherry Extract</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>0.103508</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Cherry flavor</USE_FOR>
- <NOTES>Contributes cherry flavor.  Add during bottling.</NOTES>
- <DISPLAY_AMOUNT>3.50 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Cinnamon Stick</NAME>
- <VERSION>1</VERSION>
- <TYPE>Spice</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.002957</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Cinnamon flavor</USE_FOR>
- <NOTES>Contributes cinnamon flavor.  Add during the boil.</NOTES>
- <DISPLAY_AMOUNT>0.10 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Coriander Seed</NAME>
- <VERSION>1</VERSION>
- <TYPE>Spice</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.022180</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Nutty, citrus flavor</USE_FOR>
- <NOTES>Contributes a nutty, citrus flavor.</NOTES>
- <DISPLAY_AMOUNT>0.75 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Cranberry Extract</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>0.103508</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Cranberry flavor</USE_FOR>
- <NOTES>Contributes cranberry flavor.  Add during bottling.</NOTES>
- <DISPLAY_AMOUNT>3.50 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Epsom Salt (MgSO4)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.005000</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Decrease mash pH</USE_FOR>
- <NOTES>Causes a slight decrease in mash pH.</NOTES>
- <DISPLAY_AMOUNT>5.00 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Ginger Root</NAME>
- <VERSION>1</VERSION>
- <TYPE>Herb</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.029574</AMOUNT>
- <TIME>12.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Ginger flavor</USE_FOR>
- <NOTES>Contributes ginger flavor.  Add during the boil.</NOTES>
- <DISPLAY_AMOUNT>1.00 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>12.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Gypsum (Calcium Sulfate)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.010000</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Decrease mash pH</USE_FOR>
- <NOTES>Decreases mash pH and hardens soft water.</NOTES>
- <DISPLAY_AMOUNT>10.00 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Heading Liquid</NAME>
- <VERSION>1</VERSION>
- <TYPE>Other</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>0.002464</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Head retention</USE_FOR>
- <NOTES>Improves head retention. Add when bottling.</NOTES>
- <DISPLAY_AMOUNT>0.50 tsp</DISPLAY_AMOUNT>
- <INVENTORY>0.00 tsp</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Irish Moss</NAME>
- <VERSION>1</VERSION>
- <TYPE>Fining</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.001232</AMOUNT>
- <TIME>10.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Clarifies</USE_FOR>
- <NOTES>Improves clarity of beer by reducing protein haze.</NOTES>
- <DISPLAY_AMOUNT>0.25 tsp</DISPLAY_AMOUNT>
- <INVENTORY>0.00 tsp</INVENTORY>
- <DISPLAY_TIME>10.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Lactic Acid</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.004929</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Decrease mash pH</USE_FOR>
- <NOTES>Lowers mash pH without affecting mineral content.</NOTES>
- <DISPLAY_AMOUNT>1.00 tsp</DISPLAY_AMOUNT>
- <INVENTORY>0.00 tsp</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Malto-Dextrine</NAME>
- <VERSION>1</VERSION>
- <TYPE>Other</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.177442</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Adds Body</USE_FOR>
- <NOTES>Increases body and contributes minor sweet flavor.</NOTES>
- <DISPLAY_AMOUNT>6.00 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Oak Chips</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Secondary</USE>
- <AMOUNT>0.118295</AMOUNT>
- <TIME>10080.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Oak Flavor</USE_FOR>
- <NOTES>Contributes an oak flavor reminiscent of wood aged beers.</NOTES>
- <DISPLAY_AMOUNT>4.00 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>7.0 days</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Oak Essence (Liquid)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>0.059147</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Oak Flavor</USE_FOR>
- <NOTES>Contributes aged oak flavor.  Add during bottling.</NOTES>
- <DISPLAY_AMOUNT>2.00 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Orange Peel, Bitter</NAME>
- <VERSION>1</VERSION>
- <TYPE>Spice</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.022180</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Bitter orange flavor</USE_FOR>
- <NOTES>Contributes a dry, bitter orange flavor.</NOTES>
- <DISPLAY_AMOUNT>0.75 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Orange Peel, Sweet</NAME>
- <VERSION>1</VERSION>
- <TYPE>Spice</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.022180</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Sweet orange flavor</USE_FOR>
- <NOTES>Adds a sweet flavor and aroma, reminiscent of Grand Marnier.</NOTES>
- <DISPLAY_AMOUNT>0.75 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Pineapple</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Secondary</USE>
- <AMOUNT>4</AMOUNT>
- <TIME>7</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Pineapple flavor</USE_FOR>
- <NOTES>Contributes pineapple flavor.  Add during secondary.</NOTES>
- <DISPLAY_AMOUNT>4 lbs</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>7 days</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Raspberries</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Secondary</USE>
- <AMOUNT>4</AMOUNT>
- <TIME>7.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Raspberry flavor</USE_FOR>
- <NOTES>Contributes raspberry flavor.  Add during secondary.</NOTES>
- <DISPLAY_AMOUNT>4 lbs</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>7 days</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Raspberry Extract</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>0.192229</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Raspberry flavor</USE_FOR>
- <NOTES>Contributes raspberry flavor.  Add during bottling.</NOTES>
- <DISPLAY_AMOUNT>6.50 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Sassafras Root Bark</NAME>
- <VERSION>1</VERSION>
- <TYPE>Spice</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.029574</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Root beer flavor</USE_FOR>
- <NOTES>Contributes root beer flavor.  Add during the boil.</NOTES>
- <DISPLAY_AMOUNT>1.00 oz</DISPLAY_AMOUNT>
- <INVENTORY>0.00 oz</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Seeds of Paradise</NAME>
- <VERSION>1</VERSION>
- <TYPE>Spice</TYPE>
- <USE>Boil</USE>
- <AMOUNT>0.002000</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Pepper, citrus, pine</USE_FOR>
- <NOTES>Contributes pepper and citrus notes and a piny aroma.</NOTES>
- <DISPLAY_AMOUNT>2.00 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Spruce Extract</NAME>
- <VERSION>1</VERSION>
- <TYPE>Flavor</TYPE>
- <USE>Bottling</USE>
- <AMOUNT>0.004929</AMOUNT>
- <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Pine flavor</USE_FOR>
- <NOTES>Contributes fresh pine flavor and aroma.</NOTES>
- <DISPLAY_AMOUNT>1.00 tsp</DISPLAY_AMOUNT>
- <INVENTORY>0.00 tsp</INVENTORY>
- <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Whirlfloc Tablet</NAME>
- <VERSION>1</VERSION>
- <TYPE>Fining</TYPE>
- <USE>Boil</USE>
- <AMOUNT>1.000000</AMOUNT>
- <TIME>15.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Clarifies</USE_FOR>
- <NOTES>Improves clarity of beer by reducing protein haze.</NOTES>
- <DISPLAY_AMOUNT>1.00 Items</DISPLAY_AMOUNT>
- <INVENTORY>0.00 Items</INVENTORY>
- <DISPLAY_TIME>15.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Yeast Nutrient</NAME>
- <VERSION>1</VERSION>
- <TYPE>Other</TYPE>
- <USE>Primary</USE>
- <AMOUNT>0.004929</AMOUNT>
- <TIME>4320.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Yeast health</USE_FOR>
- <NOTES>Promotes healthy yeast and a strong ferment.</NOTES>
- <DISPLAY_AMOUNT>1.00 tsp</DISPLAY_AMOUNT>
- <INVENTORY>0.00 tsp</INVENTORY>
- <DISPLAY_TIME>3.0 days</DISPLAY_TIME>
- <BATCH_SIZE>5.00 gal</BATCH_SIZE>
-</MISC>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<MISCS>
+    <MISC>
+        <NAME>Anise, Star</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Spice</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.073934</AMOUNT>
+        <TIME>30.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Licorice flavor</USE_FOR>
+        <NOTES>Adds a strong black licorice flavor.</NOTES>
+        <DISPLAY_AMOUNT>2.50 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>30.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Apricot Extract</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>0.192229</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Apricot flavor</USE_FOR>
+        <NOTES>Contributes apricot flavor. Add during bottling.</NOTES>
+        <DISPLAY_AMOUNT>6.50 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Baking Soda (NaHCO3)</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Water Agent</TYPE>
+        <USE>Mash</USE>
+        <AMOUNT>0.001000</AMOUNT>
+        <TIME>60.00</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Increase mash pH</USE_FOR>
+        <NOTES>Use to increase mash pH. Too much may cause harsh salty flavor.</NOTES>
+        <DISPLAY_AMOUNT>1.00 g</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 g</INVENTORY>
+        <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Blackberries</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Secondary</USE>
+        <AMOUNT>4</AMOUNT>
+        <TIME>7</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Blackberry flavor</USE_FOR>
+        <NOTES>Contributes blackberry flavor. Add during secondary.</NOTES>
+        <DISPLAY_AMOUNT>4 lbs</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>7 days</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Blackberry Extract</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>0.133082</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Blackberry flavor</USE_FOR>
+        <NOTES>Contributes blackberry flavor. Add during bottling.</NOTES>
+        <DISPLAY_AMOUNT>4.50 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Bottle Caps</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Other</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>52.000000</AMOUNT>
+        <TIME>1.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Bottles</USE_FOR>
+        <NOTES>Keeps the beer in your bottles.</NOTES>
+        <DISPLAY_AMOUNT>52.00 Items</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 Items</INVENTORY>
+        <DISPLAY_TIME>1.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Burton Water Salts</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Water Agent</TYPE>
+        <USE>Mash</USE>
+        <AMOUNT>0.014787</AMOUNT>
+        <TIME>60.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Hardens water</USE_FOR>
+        <NOTES>Mixture of salts used to harden water.</NOTES>
+        <DISPLAY_AMOUNT>0.50 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Calcium Chloride</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Water Agent</TYPE>
+        <USE>Mash</USE>
+        <AMOUNT>0.005000</AMOUNT>
+        <TIME>60.00</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Decrease mash pH</USE_FOR>
+        <NOTES>Lowers mash pH.</NOTES>
+        <DISPLAY_AMOUNT>5.00 g</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 g</INVENTORY>
+        <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Chalk (CaCO3)</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Water Agent</TYPE>
+        <USE>Mash</USE>
+        <AMOUNT>0.001000</AMOUNT>
+        <TIME>60.00</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Harden water</USE_FOR>
+        <NOTES>Hardens water when used in mash.</NOTES>
+        <DISPLAY_AMOUNT>1.00 g</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 g</INVENTORY>
+        <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Cherries</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Secondary</USE>
+        <AMOUNT>4</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Cherry flavor</USE_FOR>
+        <NOTES>Contributes cherry flavor. Add during secondary.</NOTES>
+        <DISPLAY_AMOUNT>4 lbs</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>7 days</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Cherry Extract</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>0.103508</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Cherry flavor</USE_FOR>
+        <NOTES>Contributes cherry flavor. Add during bottling.</NOTES>
+        <DISPLAY_AMOUNT>3.50 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Cinnamon Stick</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Spice</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.002957</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Cinnamon flavor</USE_FOR>
+        <NOTES>Contributes cinnamon flavor. Add during the boil.</NOTES>
+        <DISPLAY_AMOUNT>0.10 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Coriander Seed</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Spice</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.022180</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Nutty, citrus flavor</USE_FOR>
+        <NOTES>Contributes a nutty, citrus flavor.</NOTES>
+        <DISPLAY_AMOUNT>0.75 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Cranberry Extract</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>0.103508</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Cranberry flavor</USE_FOR>
+        <NOTES>Contributes cranberry flavor. Add during bottling.</NOTES>
+        <DISPLAY_AMOUNT>3.50 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Epsom Salt (MgSO4)</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Water Agent</TYPE>
+        <USE>Mash</USE>
+        <AMOUNT>0.005000</AMOUNT>
+        <TIME>60.00</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Decrease mash pH</USE_FOR>
+        <NOTES>Causes a slight decrease in mash pH.</NOTES>
+        <DISPLAY_AMOUNT>5.00 g</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 g</INVENTORY>
+        <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Ginger Root</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Herb</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.029574</AMOUNT>
+        <TIME>12.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Ginger flavor</USE_FOR>
+        <NOTES>Contributes ginger flavor. Add during the boil.</NOTES>
+        <DISPLAY_AMOUNT>1.00 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>12.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Gypsum (Calcium Sulfate)</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Water Agent</TYPE>
+        <USE>Mash</USE>
+        <AMOUNT>0.010000</AMOUNT>
+        <TIME>60.00</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Decrease mash pH</USE_FOR>
+        <NOTES>Decreases mash pH and hardens soft water.</NOTES>
+        <DISPLAY_AMOUNT>10.00 g</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 g</INVENTORY>
+        <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Heading Liquid</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Other</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>0.002464</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Head retention</USE_FOR>
+        <NOTES>Improves head retention. Add when bottling.</NOTES>
+        <DISPLAY_AMOUNT>0.50 tsp</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 tsp</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Irish Moss</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Fining</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.001232</AMOUNT>
+        <TIME>10.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Clarifies</USE_FOR>
+        <NOTES>Improves clarity of beer by reducing protein haze.</NOTES>
+        <DISPLAY_AMOUNT>0.25 tsp</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 tsp</INVENTORY>
+        <DISPLAY_TIME>10.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Lactic Acid</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Water Agent</TYPE>
+        <USE>Mash</USE>
+        <AMOUNT>0.004929</AMOUNT>
+        <TIME>60.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Decrease mash pH</USE_FOR>
+        <NOTES>Lowers mash pH without affecting mineral content.</NOTES>
+        <DISPLAY_AMOUNT>1.00 tsp</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 tsp</INVENTORY>
+        <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Malto-Dextrine</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Other</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.177442</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Adds Body</USE_FOR>
+        <NOTES>Increases body and contributes minor sweet flavor.</NOTES>
+        <DISPLAY_AMOUNT>6.00 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Oak Chips</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Secondary</USE>
+        <AMOUNT>0.118295</AMOUNT>
+        <TIME>10080.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Oak Flavor</USE_FOR>
+        <NOTES>Contributes an oak flavor reminiscent of wood aged beers.</NOTES>
+        <DISPLAY_AMOUNT>4.00 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>7.0 days</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Oak Essence (Liquid)</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>0.059147</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Oak Flavor</USE_FOR>
+        <NOTES>Contributes aged oak flavor. Add during bottling.</NOTES>
+        <DISPLAY_AMOUNT>2.00 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Orange Peel, Bitter</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Spice</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.022180</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Bitter orange flavor</USE_FOR>
+        <NOTES>Contributes a dry, bitter orange flavor.</NOTES>
+        <DISPLAY_AMOUNT>0.75 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Orange Peel, Sweet</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Spice</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.022180</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Sweet orange flavor</USE_FOR>
+        <NOTES>Adds a sweet flavor and aroma, reminiscent of Grand Marnier.</NOTES>
+        <DISPLAY_AMOUNT>0.75 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Pineapple</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Secondary</USE>
+        <AMOUNT>4</AMOUNT>
+        <TIME>7</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Pineapple flavor</USE_FOR>
+        <NOTES>Contributes pineapple flavor. Add during secondary.</NOTES>
+        <DISPLAY_AMOUNT>4 lbs</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>7 days</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Raspberries</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Secondary</USE>
+        <AMOUNT>4</AMOUNT>
+        <TIME>7.00</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Raspberry flavor</USE_FOR>
+        <NOTES>Contributes raspberry flavor. Add during secondary.</NOTES>
+        <DISPLAY_AMOUNT>4 lbs</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>7 days</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Raspberry Extract</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>0.192229</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Raspberry flavor</USE_FOR>
+        <NOTES>Contributes raspberry flavor. Add during bottling.</NOTES>
+        <DISPLAY_AMOUNT>6.50 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Sassafras Root Bark</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Spice</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.029574</AMOUNT>
+        <TIME>60.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Root beer flavor</USE_FOR>
+        <NOTES>Contributes root beer flavor. Add during the boil.</NOTES>
+        <DISPLAY_AMOUNT>1.00 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Seeds of Paradise</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Spice</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>0.002000</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Pepper, citrus, pine</USE_FOR>
+        <NOTES>Contributes pepper and citrus notes and a piny aroma.</NOTES>
+        <DISPLAY_AMOUNT>2.00 g</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 g</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Spruce Extract</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Flavor</TYPE>
+        <USE>Bottling</USE>
+        <AMOUNT>0.004929</AMOUNT>
+        <TIME>5.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Pine flavor</USE_FOR>
+        <NOTES>Contributes fresh pine flavor and aroma.</NOTES>
+        <DISPLAY_AMOUNT>1.00 tsp</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 tsp</INVENTORY>
+        <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Whirlfloc Tablet</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Fining</TYPE>
+        <USE>Boil</USE>
+        <AMOUNT>1.000000</AMOUNT>
+        <TIME>15.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Clarifies</USE_FOR>
+        <NOTES>Improves clarity of beer by reducing protein haze.</NOTES>
+        <DISPLAY_AMOUNT>1.00 Items</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 Items</INVENTORY>
+        <DISPLAY_TIME>15.0 mins</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
+    <MISC>
+        <NAME>Yeast Nutrient</NAME>
+        <VERSION>1</VERSION>
+        <TYPE>Other</TYPE>
+        <USE>Primary</USE>
+        <AMOUNT>0.004929</AMOUNT>
+        <TIME>4320.00</TIME>
+        <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+        <USE_FOR>Yeast health</USE_FOR>
+        <NOTES>Promotes healthy yeast and a strong ferment.</NOTES>
+        <DISPLAY_AMOUNT>1.00 tsp</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 tsp</INVENTORY>
+        <DISPLAY_TIME>3.0 days</DISPLAY_TIME>
+        <BATCH_SIZE>5.00 gal</BATCH_SIZE>
+    </MISC>
 </MISCS>

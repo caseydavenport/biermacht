@@ -8,56 +8,61 @@
               android:focusable="false"
               android:orientation="horizontal">
 
-    <LinearLayout android:id="@+id/drag_handle"
+    <LinearLayout
+        android:id="@+id/drag_handle"
         android:layout_width="32dp"
         android:gravity="center"
         android:layout_height="fill_parent"
         android:background="@color/transparent"
         android:orientation="vertical">
 
-        <ImageView android:layout_width="16dp"
-                   android:layout_height="16dp"
-                   android:layout_gravity="center"
-                   android:layout_margin="0dip"
-                   android:src="@drawable/drag"
-                   android:contentDescription="icon"
-                   android:background="@color/transparent" />
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:layout_margin="0dip"
+            android:src="@drawable/drag"
+            android:contentDescription="icon"
+            android:background="@color/transparent"/>
 
     </LinearLayout>
 
 
     <!-- Linear layout for text type settings -->
-    <LinearLayout android:id="@+id/text_type"
-                  android:orientation="vertical"
-                  android:background="@color/transparent"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="center_vertical" >
+    <LinearLayout
+        android:id="@+id/text_type"
+        android:orientation="vertical"
+        android:background="@color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
 
-        <TextView android:id="@+id/title"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textSize="18dp"
-                  android:textColor="#333"
-                  android:text="Beer Name"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginRight="20dp"
-                  android:layout_marginLeft="15dp"
-                  android:background="@color/transparent" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="18dp"
+            android:textColor="#333"
+            android:text="Beer Name"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/transparent"/>
 
-        <TextView android:id="@+id/text"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="top"
-                  android:textSize="16dp"
-                  android:textColor="#777"
-                  android:layout_marginTop="0dp"
-                  android:layout_marginRight="20dp"
-                  android:layout_marginLeft="15dp"
-                  android:layout_marginBottom="5dp"
-                  android:text="Beer Style"
-                  android:background="@color/transparent" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:textSize="16dp"
+            android:textColor="#777"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="5dp"
+            android:text="Beer Style"
+            android:background="@color/transparent"/>
     </LinearLayout>
 
 </LinearLayout>

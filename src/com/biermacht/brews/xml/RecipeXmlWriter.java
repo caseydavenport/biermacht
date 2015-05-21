@@ -89,7 +89,7 @@ public class RecipeXmlWriter {
         map.put("SECONDARY_AGE", r.getFermentationAge(Recipe.STAGE_SECONDARY) + "");
         map.put("TERTIARY_AGE", r.getFermentationAge(Recipe.STAGE_TERTIARY) + "");
         map.put("PRIMARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY) + "");
-        map.put("SECONDARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY)+ "");
+        map.put("SECONDARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY) + "");
         map.put("TERTIARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY) + "");
         map.put("AGE", r.getBottleAge() + "");
 
@@ -120,7 +120,7 @@ public class RecipeXmlWriter {
       DOMSource source = new DOMSource(doc);
 
       // Generate date string
-      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss") ;
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
       String dateString = dateFormat.format(new Date());
 
       // Create file object

@@ -275,7 +275,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
               public void onClick(DialogInterface dialog, int which) {
                 double newVolume = Double.parseDouble(editText.getText().toString()
-                        .replace(",", "."));
+                                                              .replace(",", "."));
                 Utils.scaleRecipe(r, newVolume);
                 mAdapter.notifyDataSetChanged();
               }

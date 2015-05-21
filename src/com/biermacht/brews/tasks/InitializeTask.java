@@ -3,36 +3,34 @@ package com.biermacht.brews.tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.utils.IngredientHandler;
-import com.biermacht.brews.utils.Utils;
 
 public class InitializeTask extends AsyncTask<String, Void, String> {
 
-    private IngredientHandler ingredientHandler;
-    public InitializeTask(IngredientHandler i)
-    {
-        this.ingredientHandler = i;
-    }
+  private IngredientHandler ingredientHandler;
 
-    @Override
-    protected String doInBackground(String... params) {
-        ingredientHandler.getStylesList();
-        ingredientHandler.getMashProfileList();
+  public InitializeTask(IngredientHandler i) {
+    this.ingredientHandler = i;
+  }
 
-        return "Executed";
-    }
+  @Override
+  protected String doInBackground(String... params) {
+    ingredientHandler.getStylesList();
+    ingredientHandler.getMashProfileList();
 
-    @Override
-    protected void onPostExecute(String result) {
-        Log.d("GetAssetsFromXml", "Successfully retrieved all assets");
-    }
+    return "Executed";
+  }
 
-    @Override
-    protected void onPreExecute() {
-    }
+  @Override
+  protected void onPostExecute(String result) {
+    Log.d("GetAssetsFromXml", "Successfully retrieved all assets");
+  }
 
-    @Override
-    protected void onProgressUpdate(Void... values) {
-    }
+  @Override
+  protected void onPreExecute() {
+  }
+
+  @Override
+  protected void onProgressUpdate(Void... values) {
+  }
 }

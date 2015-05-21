@@ -134,7 +134,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
     spinnerView.setAdapter(this.adapter);
 
     fermentableTypeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView,
-            false);
+                                                        false);
     SpinnerAdapter adapter = new SpinnerAdapter(this, Constants.FERMENTABLE_TYPES, "Type");
     adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
     fermentableTypeSpinner.setAdapter(adapter);

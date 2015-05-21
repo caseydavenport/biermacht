@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
+import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.AddRecipeActivity;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 
 public class EditRecipeActivity extends AddRecipeActivity {
@@ -97,7 +96,7 @@ public class EditRecipeActivity extends AddRecipeActivity {
     }
     else if (v.equals(measuredBatchSizeView)) {
       alert = alertBuilder.editTextFloatAlert(measuredBatchSizeViewText,
-              measuredBatchSizeViewTitle).create();
+                                              measuredBatchSizeViewTitle).create();
     }
     else {
       Log.d("EditRecipeActivity", "onMissedClick did not handle the clicked view");
@@ -119,11 +118,11 @@ public class EditRecipeActivity extends AddRecipeActivity {
   public void acquireValues() throws Exception {
     super.acquireValues();
     double measuredOg = Double.parseDouble(measuredOGViewText.getText().toString()
-            .replace(",", "."));
+                                                   .replace(",", "."));
     double measuredFg = Double.parseDouble(measuredFGViewText.getText().toString()
-            .replace(",", "."));
+                                                   .replace(",", "."));
     double measuredBatchSize = Double.parseDouble(measuredBatchSizeViewText.getText().toString()
-            .replace(",", "."));
+                                                          .replace(",", "."));
 
     mRecipe.setMeasuredFG(measuredFg);
     mRecipe.setMeasuredOG(measuredOg);

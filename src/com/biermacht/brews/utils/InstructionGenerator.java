@@ -1,8 +1,5 @@
 package com.biermacht.brews.utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -13,492 +10,453 @@ import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.comparators.InstructionComparator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+
 public class InstructionGenerator {
 
-    // Holds all the instructions
-	private ArrayList<Instruction> list;
+  // Holds all the instructions
+  private ArrayList<Instruction> list;
 
-    // Holds instructions of each type
-    private ArrayList<Instruction> steepsList;
-    private ArrayList<Instruction> boilsList;
-    private ArrayList<Instruction> dryHopsList;
-    private ArrayList<Instruction> yeastsList;
-    private ArrayList<Instruction> mashesList;
-    private ArrayList<Instruction> mashStepsList;
-    private ArrayList<Instruction> bottlingList;
+  // Holds instructions of each type
+  private ArrayList<Instruction> steepsList;
+  private ArrayList<Instruction> boilsList;
+  private ArrayList<Instruction> dryHopsList;
+  private ArrayList<Instruction> yeastsList;
+  private ArrayList<Instruction> mashesList;
+  private ArrayList<Instruction> mashStepsList;
+  private ArrayList<Instruction> bottlingList;
 
+  private Recipe r;
+  private Instruction inst;
 
-	private Recipe r;
-	private Instruction inst;
-	
-	public InstructionGenerator(Recipe r)
-	{
-		this.list = new ArrayList<Instruction>();
-        this.steepsList = new ArrayList<Instruction>();
-        this.boilsList = new ArrayList<Instruction>();
-        this.dryHopsList = new ArrayList<Instruction>();
-        this.yeastsList = new ArrayList<Instruction>();
-        this.mashesList = new ArrayList<Instruction>();
-        this.mashStepsList = new ArrayList<Instruction>();
-        this.bottlingList = new ArrayList<Instruction>();
+  public InstructionGenerator(Recipe r) {
+    this.list = new ArrayList<Instruction>();
+    this.steepsList = new ArrayList<Instruction>();
+    this.boilsList = new ArrayList<Instruction>();
+    this.dryHopsList = new ArrayList<Instruction>();
+    this.yeastsList = new ArrayList<Instruction>();
+    this.mashesList = new ArrayList<Instruction>();
+    this.mashStepsList = new ArrayList<Instruction>();
+    this.bottlingList = new ArrayList<Instruction>();
 
-		this.r = r;
-		this.inst = new Instruction(r);
-	}
-	
-	public void generate()
-	{
-		// Clear the lists
-		this.list.removeAll(this.list);
-        this.steepsList.removeAll(this.steepsList);
-        this.boilsList.removeAll(this.boilsList);
-        this.dryHopsList.removeAll(this.dryHopsList);
-        this.yeastsList.removeAll(this.yeastsList);
-        this.mashesList.removeAll(this.mashesList);
-        this.mashStepsList.removeAll(this.mashStepsList);
-        this.bottlingList.removeAll(this.bottlingList);
-		
-		// Generate instructions for each instruction type
-		this.steeps();
-		this.boils();
-		this.dryHops();
-		this.yeasts();
-		//this.mashes();  // We do not add instructions for mashes right now, just mash steps
-		this.mashSteps();
-		this.bottling();
+    this.r = r;
+    this.inst = new Instruction(r);
+  }
 
-        // Configure the lists
-        this.configureLists();
+  public void generate() {
+    // Clear the lists
+    this.list.removeAll(this.list);
+    this.steepsList.removeAll(this.steepsList);
+    this.boilsList.removeAll(this.boilsList);
+    this.dryHopsList.removeAll(this.dryHopsList);
+    this.yeastsList.removeAll(this.yeastsList);
+    this.mashesList.removeAll(this.mashesList);
+    this.mashStepsList.removeAll(this.mashStepsList);
+    this.bottlingList.removeAll(this.bottlingList);
 
-        // We run miscs after all of this, because it depends
-        // on items being in 'list'
-        this.miscs();
+    // Generate instructions for each instruction type
+    this.steeps();
+    this.boils();
+    this.dryHops();
+    this.yeasts();
+    //this.mashes();  // We do not add instructions for mashes right now, just mash steps
+    this.mashSteps();
+    this.bottling();
 
-        // Sort based on order and then start time
-        Collections.sort(list, new InstructionComparator<Instruction>());
-	}
-	
-	public ArrayList<Instruction> getInstructions()
-	{
-		return list;
-	}
+    // Configure the lists
+    this.configureLists();
 
-    private void configureLists()
-    {
-        // Sort based on order and then start time
-        Collections.sort(steepsList, new InstructionComparator<Instruction>());
-        Collections.sort(boilsList, new InstructionComparator<Instruction>());
-        Collections.sort(dryHopsList, new InstructionComparator<Instruction>());
-        Collections.sort(yeastsList, new InstructionComparator<Instruction>());
-        Collections.sort(mashesList, new InstructionComparator<Instruction>());
-        Collections.sort(mashStepsList, new InstructionComparator<Instruction>());
-        Collections.sort(bottlingList, new InstructionComparator<Instruction>());
+    // We run miscs after all of this, because it depends
+    // on items being in 'list'
+    this.miscs();
 
-        // Tag the first instruction in each set
-        // Set the duration of each type
-        if (!steepsList.isEmpty())
-            steepsList.get(steepsList.size()-1).setLastInType(true);
+    // Sort based on order and then start time
+    Collections.sort(list, new InstructionComparator<Instruction>());
+  }
 
-        if (!boilsList.isEmpty())
-            boilsList.get(boilsList.size()-1).setLastInType(true);
+  public ArrayList<Instruction> getInstructions() {
+    return list;
+  }
 
-        if (!dryHopsList.isEmpty())
-            dryHopsList.get(dryHopsList.size()-1).setLastInType(true);
+  private void configureLists() {
+    // Sort based on order and then start time
+    Collections.sort(steepsList, new InstructionComparator<Instruction>());
+    Collections.sort(boilsList, new InstructionComparator<Instruction>());
+    Collections.sort(dryHopsList, new InstructionComparator<Instruction>());
+    Collections.sort(yeastsList, new InstructionComparator<Instruction>());
+    Collections.sort(mashesList, new InstructionComparator<Instruction>());
+    Collections.sort(mashStepsList, new InstructionComparator<Instruction>());
+    Collections.sort(bottlingList, new InstructionComparator<Instruction>());
 
-        if (!yeastsList.isEmpty())
-            yeastsList.get(yeastsList.size()-1).setLastInType(true);
-
-        if (!mashesList.isEmpty())
-            mashesList.get(mashesList.size()-1).setLastInType(true);
-
-        if (!mashStepsList.isEmpty())
-            mashStepsList.get(mashStepsList.size()-1).setLastInType(true);
-
-        if (!bottlingList.isEmpty())
-            bottlingList.get(bottlingList.size()-1).setLastInType(true);
-
-
-        // Add all the lists to the main list
-        list.addAll(steepsList);
-        list.addAll(boilsList);
-        list.addAll(dryHopsList);
-        list.addAll(yeastsList);
-        list.addAll(mashesList);
-        list.addAll(mashStepsList);
-        if (mashStepsList.size() > 0)
-        	list.add(getSpargeInstruction());
-        list.addAll(bottlingList);
-
-        // Set next task starting times.
-        for (int i=0; i < (list.size() - 1); i++)
-        {
-            if (!list.get(i).isLastInType())
-                list.get(i).setNextDuration(list.get(i+1).getDuration());
-        }
+    // Tag the first instruction in each set
+    // Set the duration of each type
+    if (! steepsList.isEmpty()) {
+      steepsList.get(steepsList.size() - 1).setLastInType(true);
     }
 
-    private Instruction getSpargeInstruction()
-    {
-    	Instruction i = new Instruction(r);
-		i = new Instruction(r);
-		i.setInstructionType(Instruction.TYPE_SPARGE);
-		i.setOrder(0);
-		i.setDurationUnits(Units.HOURS);
-		i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
-		i.setLastInType(true);
-
-        // Set duration to 0 so that we don't show timer
-        i.setDuration(0);
-
-        return i;
+    if (! boilsList.isEmpty()) {
+      boilsList.get(boilsList.size() - 1).setLastInType(true);
     }
-	
-	/**
-	 * Generates steep instructions from the recipe
-	 */
-	private void steeps()
-	{
-		// Do nothing if this is not an extract recipe
-		if (r.getType().equals(Recipe.EXTRACT))
-		{
-			HashMap<Integer,  ArrayList<Ingredient>> ingredients = new HashMap<Integer, ArrayList<Ingredient>>();
-			for(Fermentable f : r.getFermentablesList())
-			{
-				// We build up a map with K = steep duration
-				// and V = steeped grains at duration K
-				if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
-				{
-					if (!ingredients.containsKey(f.getTime()))
-					{
-						// Create the list for this duration
-						ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
-						ingList.add(f);
-						ingredients.put(f.getTime(), ingList);
-					}
-					else
-					{
-						// Create the list for this duration
-						ArrayList<Ingredient> ingList = ingredients.get(f.getTime());
-						ingList.add(f);
-						ingredients.put(f.getTime(), ingList);
-					}
-				}
-			}
 
-			// Build up the steep instructions
-			if (ingredients.size() > 0)
-			{
-				// for each k=steep_duration
-				for (Integer time : ingredients.keySet())
-				{
-					inst = new Instruction(r);
-					inst.setRelevantIngredients(ingredients.get(time));
-					inst.setInstructionType(Instruction.TYPE_STEEP);
-					inst.setDuration(time);
-					inst.setDurationUnits(Units.MINUTES);
-					inst.setOrder(-1 * time);                // Inversely proportional to time
-					inst.setInstructionTextFromIngredients();
-                    steepsList.add(inst);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Generates boil instructions from the recipe
-	 */
-	private void boils()
-	{
-		HashMap<Integer,  ArrayList<Ingredient>> ingredients = new HashMap<Integer, ArrayList<Ingredient>>();
-		ArrayList<Ingredient> potentialBoils = new ArrayList<Ingredient>();
-		
-		// Generate list of potentially boil-able ingredients
-		potentialBoils.addAll(r.getHopsList());
-		potentialBoils.addAll(r.getMiscList());
-		potentialBoils.addAll(r.getFermentablesList());
-		
-		for(Ingredient i : potentialBoils)
-		{
-			if (i.getUse().equals(Ingredient.USE_BOIL))
-			{
-				if (!ingredients.containsKey(i.getTime()))
-				{
-					// Create the list for this duration
-					ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
-					ingList.add(i);
-					ingredients.put(i.getTime(), ingList);
-				}
-				else
-				{
-					// Create the list for this duration
-					ArrayList<Ingredient> ingList = ingredients.get(i.getTime());
-					ingList.add(i);
-					ingredients.put(i.getTime(), ingList);
-				}
-			}
-		}
-		
-		if (ingredients.size() > 0)
-		{
-			// for each time=boil duration
-			for (Integer time : ingredients.keySet())
-			{
-				inst = new Instruction(r);
-				inst.setRelevantIngredients(ingredients.get(time));
-				inst.setInstructionType(Instruction.TYPE_BOIL);
-				inst.setDuration(time);
-				inst.setDurationUnits(Units.MINUTES);
-				inst.setOrder(r.getBoilTime()-time);
-				inst.setInstructionTextFromIngredients();
-                boilsList.add(inst);
-			}
-		}
-	}
+    if (! dryHopsList.isEmpty()) {
+      dryHopsList.get(dryHopsList.size() - 1).setLastInType(true);
+    }
 
-	/**
-	 * Generates dryHop instructions from the recipe
-	 */
-	private void dryHops()
-	{
-		HashMap<Integer,  ArrayList<Ingredient>> ingredients = new HashMap<Integer, ArrayList<Ingredient>>();
-		for(Hop h : r.getHopsList())
-		{
-			if (h.getUse().equals(Hop.USE_DRY_HOP))
-			{
-				if (!ingredients.containsKey(h.getTime()))
-				{
-					// Create the list for this duration
-					ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
-					ingList.add(h);
-					ingredients.put(h.getTime(), ingList);
-				}
-				else
-				{
-					// Create the list for this duration
-					ArrayList<Ingredient> ingList = ingredients.get(h.getTime());
-					ingList.add(h);
-					ingredients.put(h.getTime(), ingList);
-				}
-			}
-		}
-		
-		if (ingredients.size() > 0)
-		{
-			// for each time=dry hop duration
-			for (Integer time : ingredients.keySet())
-			{
-				inst = new Instruction(r);
-				inst.setRelevantIngredients(ingredients.get(time));
-				inst.setInstructionType(Instruction.TYPE_DRY_HOP);
-				inst.setDuration(time);
-				inst.setDurationUnits(Units.DAYS);
-				inst.setOrder(r.getBoilTime()-time);
-				inst.setInstructionTextFromIngredients();
-                dryHopsList.add(inst);
-			}
-		}
-	}
-	
-	/**
-	 * Generates dryHop instructions from the recipe
-	 */
-	private void bottling()
-	{
-		ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-		for(Misc m : r.getMiscList())
-		{
-			if (m.getUse().equals(Misc.USE_BOTTLING))
-			{	
-				ingredients.add(m);
-			}
-		}
-		
-		if (ingredients.size() > 0)
-		{
-			inst = new Instruction(r);
-			inst.setRelevantIngredients(ingredients);
-			inst.setInstructionType(Instruction.TYPE_BOTTLING);
-			inst.setDurationUnits(Units.HOURS);
-			inst.setInstructionTextFromIngredients();
-			inst.setOrder(0);
+    if (! yeastsList.isEmpty()) {
+      yeastsList.get(yeastsList.size() - 1).setLastInType(true);
+    }
 
-            // Set duration to 0 so that we don't show a timer
-            inst.setDuration(0);
+    if (! mashesList.isEmpty()) {
+      mashesList.get(mashesList.size() - 1).setLastInType(true);
+    }
 
-            bottlingList.add(inst);
-		}
-	}
+    if (! mashStepsList.isEmpty()) {
+      mashStepsList.get(mashStepsList.size() - 1).setLastInType(true);
+    }
 
-	/**
-	 * Generates yeast instructions from the recipe
-	 */
-	private void yeasts()
-	{
-		ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-		for (Yeast y : r.getYeastsList())
-		{
-			ingredients.add(y);
-		}
-		
-		if (ingredients.size() > 0)
-		{
-			inst = new Instruction(r);
-			inst.setRelevantIngredients(ingredients);
-			inst.setInstructionType(Instruction.TYPE_YEAST);
-			inst.setInstructionTextFromIngredients();
-			inst.setOrder(0);
+    if (! bottlingList.isEmpty()) {
+      bottlingList.get(bottlingList.size() - 1).setLastInType(true);
+    }
 
-            // Set duration to 0 so that we don't show a timer
-            inst.setDuration(0);
+    // Add all the lists to the main list
+    list.addAll(steepsList);
+    list.addAll(boilsList);
+    list.addAll(dryHopsList);
+    list.addAll(yeastsList);
+    list.addAll(mashesList);
+    list.addAll(mashStepsList);
+    if (mashStepsList.size() > 0) {
+      list.add(getSpargeInstruction());
+    }
+    list.addAll(bottlingList);
 
-            yeastsList.add(inst);
-		}
-	}
-	
-	/**
-	 * Generates misc instructions from the recipe
-	 */
-	private void miscs()
-	{
-		if (list.size() > 0)
-		{
-			// Add a cool wort stage
-			inst = new Instruction(r);
-			inst.setInstructionType(Instruction.TYPE_COOL);
-			inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + Units.getTemperatureUnits());
-			inst.setOrder(3);
-			inst.setDurationUnits(Units.HOURS);
+    // Set next task starting times.
+    for (int i = 0; i < (list.size() - 1); i++) {
+      if (! list.get(i).isLastInType()) {
+        list.get(i).setNextDuration(list.get(i + 1).getDuration());
+      }
+    }
+  }
 
-            // Set duration to 0 so that we don't show a timer
-            inst.setDuration(0);
+  private Instruction getSpargeInstruction() {
+    Instruction i = new Instruction(r);
+    i = new Instruction(r);
+    i.setInstructionType(Instruction.TYPE_SPARGE);
+    i.setOrder(0);
+    i.setDurationUnits(Units.HOURS);
+    i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
+    i.setLastInType(true);
 
-			list.add(inst);
+    // Set duration to 0 so that we don't show timer
+    i.setDuration(0);
 
-			int numStages = r.getFermentationStages();
-            if (r.getFermentationAge(Recipe.STAGE_PRIMARY) > 0 && (numStages > 0))
-            {
-                inst = new Instruction(r);
-                inst.setInstructionType(Instruction.TYPE_PRIMARY);
-                inst.setInstructionText("Primary fermentation");
-                inst.setDuration(r.getFermentationAge(Recipe.STAGE_PRIMARY));
-                inst.setDurationUnits(Units.DAYS);
-                inst.setOrder(5);
-                list.add(inst);
-            }
+    return i;
+  }
 
-            if (r.getFermentationAge(Recipe.STAGE_SECONDARY) > 0 && (numStages > 1))
-            {
-                inst = new Instruction(r);
-                inst.setInstructionType(Instruction.TYPE_SECONDARY);
-                inst.setInstructionText("Secondary fermentation");
-                        inst.setDuration(r.getFermentationAge(Recipe.STAGE_SECONDARY));
-                inst.setDurationUnits(Units.DAYS);
-                inst.setOrder(6);
-                list.add(inst);
-            }
-
-            if (r.getFermentationAge(Recipe.STAGE_TERTIARY) > 0 && (numStages > 2))
-            {
-                inst = new Instruction(r);
-                inst.setInstructionType(Instruction.TYPE_TERTIARY);
-                inst.setInstructionText("Tertiary fermentation");
-                inst.setDuration(r.getFermentationAge(Recipe.STAGE_TERTIARY));
-                inst.setDurationUnits(Units.DAYS);
-                inst.setOrder(7);
-                list.add(inst);
-            }
-
-            inst = new Instruction(r);
-            inst.setInstructionType(Instruction.TYPE_CALENDAR);
-            inst.setInstructionText("");
-            inst.setOrder(0);
-            inst.setDurationUnits(Units.HOURS);
-
-            // Set duration to 0 so that we don't show a timer
-            inst.setDuration(0);
-
-            list.add(inst);
+  /**
+   * Generates steep instructions from the recipe
+   */
+  private void steeps() {
+    // Do nothing if this is not an extract recipe
+    if (r.getType().equals(Recipe.EXTRACT)) {
+      HashMap<Integer, ArrayList<Ingredient>> ingredients = new HashMap<Integer, ArrayList<Ingredient>>();
+      for (Fermentable f : r.getFermentablesList()) {
+        // We build up a map with K = steep duration
+        // and V = steeped grains at duration K
+        if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN)) {
+          if (! ingredients.containsKey(f.getTime())) {
+            // Create the list for this duration
+            ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
+            ingList.add(f);
+            ingredients.put(f.getTime(), ingList);
+          }
+          else {
+            // Create the list for this duration
+            ArrayList<Ingredient> ingList = ingredients.get(f.getTime());
+            ingList.add(f);
+            ingredients.put(f.getTime(), ingList);
+          }
         }
-	}
-	
-	/**
-	 * Generates mash step instructions from the recipe
-	 */
-	private void mashSteps()
-	{
-		// Do nothing if this is an extract recipe
-		if (!r.getType().equals(Recipe.EXTRACT))
-		{
-			// Calculate relevant ingredients.
-			ArrayList<Ingredient> relevantIngredients = new ArrayList<Ingredient>();
-			for (Fermentable f : r.getFermentablesList())
-				if (f.getUse().equals(Ingredient.USE_MASH))
-					relevantIngredients.add(f);
-			
-			// Create the instructions.
-			ArrayList<MashStep> mashSteps = r.getMashProfile().getMashStepList();
-			if (mashSteps.size() > 0)
-			{
-				for (MashStep s : mashSteps)
-				{
-					inst = new Instruction(r);
-					inst.setInstructionText(s.getName());
-					inst.setInstructionType(Instruction.TYPE_MASH);
-					inst.setDuration(s.getStepTime());
-					inst.setOrder(s.getOrder());
-                    inst.setMashStep(s);
-                    inst.setLastInType(true);
-                    inst.setRelevantIngredients(relevantIngredients);
-                    mashStepsList.add(inst);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Generates mashed grain instructions from the recipe
-	 */
-	private void mashes()
-	{
-		// Do nothing if this is an extract recipe
-		if (!r.getType().equals(Recipe.EXTRACT))
-		{
-			HashMap<Integer, String> mashes = new HashMap<Integer, String>();
-			for(Fermentable f : r.getFermentablesList())
-			{
-				// We build up a map with K = steep duration
-				// and V = string of steeped grains at duration K
-				if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN))
-				{
-					if (!mashes.containsKey(f.getTime()))
-					{
-						// Add a new entry for that duration
-						mashes.put(f.getTime(), f.getName());	
-					}
-					else
-					{
-						// Append to existing duration
-						String s = mashes.get(f.getTime());
-						s += "\n";
-						s += f.getName();
-						mashes.put(f.getTime(), s);
-					}
-	
-				}
-			}
-			
-			if (mashes.size() > 0)
-			{
-				for (Integer time : mashes.keySet())
-				{
-					inst = new Instruction(r);
-					inst.setInstructionText(mashes.get(time));
-					inst.setInstructionType(Instruction.TYPE_MASH);
-					inst.setDuration(0); // TODO
-					inst.setOrder(0);
-                    mashesList.add(inst);
-				}
-			}
-		}
-	}
+      }
+
+      // Build up the steep instructions
+      if (ingredients.size() > 0) {
+        // for each k=steep_duration
+        for (Integer time : ingredients.keySet()) {
+          inst = new Instruction(r);
+          inst.setRelevantIngredients(ingredients.get(time));
+          inst.setInstructionType(Instruction.TYPE_STEEP);
+          inst.setDuration(time);
+          inst.setDurationUnits(Units.MINUTES);
+          inst.setOrder(- 1 * time);                // Inversely proportional to time
+          inst.setInstructionTextFromIngredients();
+          steepsList.add(inst);
+        }
+      }
+    }
+  }
+
+  /**
+   * Generates boil instructions from the recipe
+   */
+  private void boils() {
+    HashMap<Integer, ArrayList<Ingredient>> ingredients = new HashMap<Integer, ArrayList<Ingredient>>();
+    ArrayList<Ingredient> potentialBoils = new ArrayList<Ingredient>();
+
+    // Generate list of potentially boil-able ingredients
+    potentialBoils.addAll(r.getHopsList());
+    potentialBoils.addAll(r.getMiscList());
+    potentialBoils.addAll(r.getFermentablesList());
+
+    for (Ingredient i : potentialBoils) {
+      if (i.getUse().equals(Ingredient.USE_BOIL)) {
+        if (! ingredients.containsKey(i.getTime())) {
+          // Create the list for this duration
+          ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
+          ingList.add(i);
+          ingredients.put(i.getTime(), ingList);
+        }
+        else {
+          // Create the list for this duration
+          ArrayList<Ingredient> ingList = ingredients.get(i.getTime());
+          ingList.add(i);
+          ingredients.put(i.getTime(), ingList);
+        }
+      }
+    }
+
+    if (ingredients.size() > 0) {
+      // for each time=boil duration
+      for (Integer time : ingredients.keySet()) {
+        inst = new Instruction(r);
+        inst.setRelevantIngredients(ingredients.get(time));
+        inst.setInstructionType(Instruction.TYPE_BOIL);
+        inst.setDuration(time);
+        inst.setDurationUnits(Units.MINUTES);
+        inst.setOrder(r.getBoilTime() - time);
+        inst.setInstructionTextFromIngredients();
+        boilsList.add(inst);
+      }
+    }
+  }
+
+  /**
+   * Generates dryHop instructions from the recipe
+   */
+  private void dryHops() {
+    HashMap<Integer, ArrayList<Ingredient>> ingredients = new HashMap<Integer, ArrayList<Ingredient>>();
+    for (Hop h : r.getHopsList()) {
+      if (h.getUse().equals(Hop.USE_DRY_HOP)) {
+        if (! ingredients.containsKey(h.getTime())) {
+          // Create the list for this duration
+          ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
+          ingList.add(h);
+          ingredients.put(h.getTime(), ingList);
+        }
+        else {
+          // Create the list for this duration
+          ArrayList<Ingredient> ingList = ingredients.get(h.getTime());
+          ingList.add(h);
+          ingredients.put(h.getTime(), ingList);
+        }
+      }
+    }
+
+    if (ingredients.size() > 0) {
+      // for each time=dry hop duration
+      for (Integer time : ingredients.keySet()) {
+        inst = new Instruction(r);
+        inst.setRelevantIngredients(ingredients.get(time));
+        inst.setInstructionType(Instruction.TYPE_DRY_HOP);
+        inst.setDuration(time);
+        inst.setDurationUnits(Units.DAYS);
+        inst.setOrder(r.getBoilTime() - time);
+        inst.setInstructionTextFromIngredients();
+        dryHopsList.add(inst);
+      }
+    }
+  }
+
+  /**
+   * Generates dryHop instructions from the recipe
+   */
+  private void bottling() {
+    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    for (Misc m : r.getMiscList()) {
+      if (m.getUse().equals(Misc.USE_BOTTLING)) {
+        ingredients.add(m);
+      }
+    }
+
+    if (ingredients.size() > 0) {
+      inst = new Instruction(r);
+      inst.setRelevantIngredients(ingredients);
+      inst.setInstructionType(Instruction.TYPE_BOTTLING);
+      inst.setDurationUnits(Units.HOURS);
+      inst.setInstructionTextFromIngredients();
+      inst.setOrder(0);
+
+      // Set duration to 0 so that we don't show a timer
+      inst.setDuration(0);
+
+      bottlingList.add(inst);
+    }
+  }
+
+  /**
+   * Generates yeast instructions from the recipe
+   */
+  private void yeasts() {
+    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    for (Yeast y : r.getYeastsList()) {
+      ingredients.add(y);
+    }
+
+    if (ingredients.size() > 0) {
+      inst = new Instruction(r);
+      inst.setRelevantIngredients(ingredients);
+      inst.setInstructionType(Instruction.TYPE_YEAST);
+      inst.setInstructionTextFromIngredients();
+      inst.setOrder(0);
+
+      // Set duration to 0 so that we don't show a timer
+      inst.setDuration(0);
+
+      yeastsList.add(inst);
+    }
+  }
+
+  /**
+   * Generates misc instructions from the recipe
+   */
+  private void miscs() {
+    if (list.size() > 0) {
+      // Add a cool wort stage
+      inst = new Instruction(r);
+      inst.setInstructionType(Instruction.TYPE_COOL);
+      inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + Units.getTemperatureUnits());
+      inst.setOrder(3);
+      inst.setDurationUnits(Units.HOURS);
+
+      // Set duration to 0 so that we don't show a timer
+      inst.setDuration(0);
+
+      list.add(inst);
+
+      int numStages = r.getFermentationStages();
+      if (r.getFermentationAge(Recipe.STAGE_PRIMARY) > 0 && (numStages > 0)) {
+        inst = new Instruction(r);
+        inst.setInstructionType(Instruction.TYPE_PRIMARY);
+        inst.setInstructionText("Primary fermentation");
+        inst.setDuration(r.getFermentationAge(Recipe.STAGE_PRIMARY));
+        inst.setDurationUnits(Units.DAYS);
+        inst.setOrder(5);
+        list.add(inst);
+      }
+
+      if (r.getFermentationAge(Recipe.STAGE_SECONDARY) > 0 && (numStages > 1)) {
+        inst = new Instruction(r);
+        inst.setInstructionType(Instruction.TYPE_SECONDARY);
+        inst.setInstructionText("Secondary fermentation");
+        inst.setDuration(r.getFermentationAge(Recipe.STAGE_SECONDARY));
+        inst.setDurationUnits(Units.DAYS);
+        inst.setOrder(6);
+        list.add(inst);
+      }
+
+      if (r.getFermentationAge(Recipe.STAGE_TERTIARY) > 0 && (numStages > 2)) {
+        inst = new Instruction(r);
+        inst.setInstructionType(Instruction.TYPE_TERTIARY);
+        inst.setInstructionText("Tertiary fermentation");
+        inst.setDuration(r.getFermentationAge(Recipe.STAGE_TERTIARY));
+        inst.setDurationUnits(Units.DAYS);
+        inst.setOrder(7);
+        list.add(inst);
+      }
+
+      inst = new Instruction(r);
+      inst.setInstructionType(Instruction.TYPE_CALENDAR);
+      inst.setInstructionText("");
+      inst.setOrder(0);
+      inst.setDurationUnits(Units.HOURS);
+
+      // Set duration to 0 so that we don't show a timer
+      inst.setDuration(0);
+
+      list.add(inst);
+    }
+  }
+
+  /**
+   * Generates mash step instructions from the recipe
+   */
+  private void mashSteps() {
+    // Do nothing if this is an extract recipe
+    if (! r.getType().equals(Recipe.EXTRACT)) {
+      // Calculate relevant ingredients.
+      ArrayList<Ingredient> relevantIngredients = new ArrayList<Ingredient>();
+      for (Fermentable f : r.getFermentablesList()) {
+        if (f.getUse().equals(Ingredient.USE_MASH)) {
+          relevantIngredients.add(f);
+        }
+      }
+
+      // Create the instructions.
+      ArrayList<MashStep> mashSteps = r.getMashProfile().getMashStepList();
+      if (mashSteps.size() > 0) {
+        for (MashStep s : mashSteps) {
+          inst = new Instruction(r);
+          inst.setInstructionText(s.getName());
+          inst.setInstructionType(Instruction.TYPE_MASH);
+          inst.setDuration(s.getStepTime());
+          inst.setOrder(s.getOrder());
+          inst.setMashStep(s);
+          inst.setLastInType(true);
+          inst.setRelevantIngredients(relevantIngredients);
+          mashStepsList.add(inst);
+        }
+      }
+    }
+  }
+
+  /**
+   * Generates mashed grain instructions from the recipe
+   */
+  private void mashes() {
+    // Do nothing if this is an extract recipe
+    if (! r.getType().equals(Recipe.EXTRACT)) {
+      HashMap<Integer, String> mashes = new HashMap<Integer, String>();
+      for (Fermentable f : r.getFermentablesList()) {
+        // We build up a map with K = steep duration
+        // and V = string of steeped grains at duration K
+        if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN)) {
+          if (! mashes.containsKey(f.getTime())) {
+            // Add a new entry for that duration
+            mashes.put(f.getTime(), f.getName());
+          }
+          else {
+            // Append to existing duration
+            String s = mashes.get(f.getTime());
+            s += "\n";
+            s += f.getName();
+            mashes.put(f.getTime(), s);
+          }
+
+        }
+      }
+
+      if (mashes.size() > 0) {
+        for (Integer time : mashes.keySet()) {
+          inst = new Instruction(r);
+          inst.setInstructionText(mashes.get(time));
+          inst.setInstructionType(Instruction.TYPE_MASH);
+          inst.setDuration(0); // TODO
+          inst.setOrder(0);
+          mashesList.add(inst);
+        }
+      }
+    }
+  }
 }

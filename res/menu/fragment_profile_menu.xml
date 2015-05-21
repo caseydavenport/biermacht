@@ -1,20 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_profile_dropdown"
+    <item
+        android:id="@+id/menu_profile_dropdown"
         android:title="@string/menu_edit_profile"
         android:orderInCategory="1"
         android:icon="@drawable/icon_edit"
-        android:showAsAction="ifRoom|withText" >
-        
+        android:showAsAction="ifRoom|withText">
+
         <menu>
-		    <item android:id="@+id/menu_edit_mash_profile"
-		        android:title="Edit Mash Profile"
-		        android:orderInCategory="2" />
-		    
-		    <item android:id="@+id/menu_edit_fermentation_profile"
-		        android:title="Edit Fermentation"
-		        android:orderInCategory="3" />
-	    </menu>
-        
+            <item
+                android:id="@+id/menu_edit_mash_profile"
+                android:title="Edit Mash Profile"
+                android:orderInCategory="2"/>
+
+            <item
+                android:id="@+id/menu_edit_fermentation_profile"
+                android:title="Edit Fermentation"
+                android:orderInCategory="3"/>
+        </menu>
+
     </item>
 </menu>
 

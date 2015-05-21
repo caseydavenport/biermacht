@@ -16,10 +16,10 @@ import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
-import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Callbacks.BooleanCallback;
 import com.biermacht.brews.utils.Callbacks.Callback;
+import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
 
@@ -95,7 +95,6 @@ public class AddMashStepActivity extends AddEditActivity {
     infuseTemperatureViewText = (TextView) infuseTemperatureView.findViewById(R.id.text);
     stepAmountViewText = (TextView) stepAmountView.findViewById(R.id.text);
 
-
     // Set titles
     stepAmountViewTitle.setText("Water to Add (" + (Units.getUnitSystem() == Units.IMPERIAL ? "qt" : "L") + ")");
     stepTempViewTitle.setText("Step Temperature (" + Units.getTemperatureUnits() + ")");
@@ -123,7 +122,7 @@ public class AddMashStepActivity extends AddEditActivity {
     AlertDialog alert;
     if (v.equals(infuseTemperatureView)) {
       alert = alertBuilder.editTextFloatCheckBoxAlert(infuseTemperatureViewText, infuseTemperatureViewTitle,
-              step.getAutoCalcInfuseTemp(), infuseTempCallback).create();
+                                                      step.getAutoCalcInfuseTemp(), infuseTempCallback).create();
     }
     else if (v.equals(stepTempView)) {
       alert = alertBuilder.editTextFloatAlert(stepTempViewText, stepTempViewTitle).create();
@@ -135,15 +134,17 @@ public class AddMashStepActivity extends AddEditActivity {
       else {
         alert = alertBuilder.editTextDisabled(waterToGrainRatioViewText, waterToGrainRatioViewTitle, Constants.MESSAGE_AUTO_CALC_W2GR).create();
       }
-    } else if (v.equals(stepAmountView)) {
+    }
+    else if (v.equals(stepAmountView)) {
       if (step.getType().equals(MashStep.DECOCTION)) {
         alert = alertBuilder.editTextFloatAlert(stepAmountViewText, stepAmountViewTitle).create();
       }
       else {
         alert = alertBuilder.editTextFloatCheckBoxAlert(stepAmountViewText, stepAmountViewTitle,
-                step.getAutoCalcInfuseAmt(), infuseAmountCallback).create();
+                                                        step.getAutoCalcInfuseAmt(), infuseAmountCallback).create();
       }
-    } else {
+    }
+    else {
       return;
     }
 
@@ -280,11 +281,13 @@ public class AddMashStepActivity extends AddEditActivity {
           infuseTemperatureView.setVisibility(View.GONE);
           waterToGrainRatioView.setVisibility(View.GONE);
           stepAmountView.setVisibility(View.VISIBLE);
-        } else if (type.equals(MashStep.TEMPERATURE)) {
+        }
+        else if (type.equals(MashStep.TEMPERATURE)) {
           infuseTemperatureView.setVisibility(View.GONE);
           stepAmountView.setVisibility(View.GONE);
           waterToGrainRatioView.setVisibility(View.GONE);
-        } else {
+        }
+        else {
           stepAmountViewTitle.setText("Water to add (" + Units.getVolumeUnits() + ")");
           infuseTemperatureView.setVisibility(View.VISIBLE);
           waterToGrainRatioView.setVisibility(View.VISIBLE);
@@ -333,9 +336,9 @@ public class AddMashStepActivity extends AddEditActivity {
     super.acquireValues();
     double stepTemp = Double.parseDouble(stepTempViewText.getText().toString().replace(",", "."));
     double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString()
-            .replace(",", "."));
+                                                   .replace(",", "."));
     double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString()
-            .replace(",", "."));
+                                                          .replace(",", "."));
 
     step.setDisplayInfuseAmount(amount);
     step.setStepTime(time);

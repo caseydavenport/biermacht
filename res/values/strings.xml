@@ -9,12 +9,12 @@
     <string name="title_activity_edit_fermentable">Edit Fermentable</string>
     <string name="title_activity_edit_hop">Edit Hop</string>
     <string name="title_activity_edit_recipe">Edit Recipe</string>
-	<string name="title_activity_edit_profile">Edit Mash Profile</string>
+    <string name="title_activity_edit_profile">Edit Mash Profile</string>
     <string name="title_activity_add_profile">New Mash Profile</string>
     <string name="title_activity_add_hops">Add Hops</string>
-	<string name="title_activity_add_misc">Add Misc</string>
-	<string name="title_activity_edit_misc">Edit Misc</string>
-	<string name="title_activity_edit_fermentation_profile">Edit Fermentation</string>
+    <string name="title_activity_add_misc">Add Misc</string>
+    <string name="title_activity_edit_misc">Edit Misc</string>
+    <string name="title_activity_edit_fermentation_profile">Edit Fermentation</string>
     <string name="title_activity_add_mash_step">Add Mash Step</string>
     <string name="title_activity_edit_mash_step">Edit Mash Step</string>
     <string name="title_activity_notes">Recipe Notes</string>
@@ -26,9 +26,9 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_add_ingredient">Add Ingredient</string>
     <string name="menu_brew_timer">Brew Timer</string>
-    <string name ="menu_edit_details">Edit Details</string>
+    <string name="menu_edit_details">Edit Details</string>
     <string name="menu_edit_recipe">Edit Recipe</string>
-	<string name="menu_edit_profile">Edit Profile</string>
+    <string name="menu_edit_profile">Edit Profile</string>
 
     <!-- Standard messages -->
     <string name="error">Error</string>
@@ -48,46 +48,46 @@
     <string name="yeast">Yeast</string>
     <string name="units">Units:</string>
     <string name="brewer_name">Brewmaster</string>
-	<string name="amount">Amount (L)</string>
-	<string name="no_recipes">You have no recipes.  Press the plus to add one!</string>
-		
-	<!-- Titles for editTexts / fields -->
+    <string name="amount">Amount (L)</string>
+    <string name="no_recipes">You have no recipes.  Press the plus to add one!</string>
+
+    <!-- Titles for editTexts / fields -->
     <string name="enter_name">Enter a name</string>
     <string name="boil_start_time">Boil Start Time</string>
     <string name="boil_end_time">Boil End Time</string>
     <string name="boil_time">Boil Time (mins)</string>
-	<string name="steep_time">Steep Time (mins)</string>
+    <string name="steep_time">Steep Time (mins)</string>
     <string name="batch_volume">Final Batch Size (gal)</string>
     <string name="boil_volume">Boil Size (gal)</string>
     <string name="efficiency">Efficiency (%)</string>
     <string name="use">Use</string>
-	<string name="mash_profile">Mash Profile</string>
-	<string name="fermentation_profile">Fermentation Profile</string>
+    <string name="mash_profile">Mash Profile</string>
+    <string name="fermentation_profile">Fermentation Profile</string>
     <string name="style_profile">Style Profile</string>
-	<string name="mash_steps">Mash Steps</string>
-	<string name="form">Form</string>
+    <string name="mash_steps">Mash Steps</string>
+    <string name="form">Form</string>
     <string name="measured_og">Measured OG</string>
     <string name="measured_fg">Measured FG</string>
-	
-	<!-- Hints for editTexts -->
+
+    <!-- Hints for editTexts -->
     <string name="volume_gal_hint">Gal</string>
     <string name="efficiency_hint">1 - 100</string>
     <string name="minutes_hint">minutes</string>
-	
+
     <!-- from activity_add_fermentable.xml -->
     <string name="weight_lbs">Weight (lbs)</string>
     <string name="fermentable_type">Fermentable Type</string>
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
-		
+
     <!-- from activity_add_hops.xml -->
     <string name="select_hop">Select Hop</string>
     <string name="alpha_acids_title">Alpha Acids (%)</string>
     <string name="weight_oz">Weight (oz)</string>
 
-	<!-- from activity_add_misc.xm -->
-	<string name="select_misc">Select Misc</string>
-		
+    <!-- from activity_add_misc.xm -->
+    <string name="select_misc">Select Misc</string>
+
     <!-- from activity_main.xml -->
     <string name="recipe_search_hint">Filter Recipes</string>
     <string name="search_icon_description">Search Icon</string>

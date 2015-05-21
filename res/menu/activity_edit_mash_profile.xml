@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_save"
+    <item
+        android:id="@+id/menu_save"
         android:title="@string/save"
         android:orderInCategory="100"
         android:icon="@drawable/content_save"
-        android:showAsAction="always" />
+        android:showAsAction="always"/>
 </menu>

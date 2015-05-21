@@ -54,7 +54,7 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
     initialTempTitle = (TextView) pageView.findViewById(R.id.initial_temp_title);
 
     targetTempText = (EditText) pageView.findViewById(R.id.target_temperature_edit_text);
-    grainWeightText= (EditText) pageView.findViewById(R.id.grain_weight_edit_text);
+    grainWeightText = (EditText) pageView.findViewById(R.id.grain_weight_edit_text);
     waterToGrainText = (EditText) pageView.findViewById(R.id.water_to_grain_ratio_edit_text);
     initialTempText = (EditText) pageView.findViewById(R.id.initial_temp_edit_text);
     strikeTempText = (TextView) pageView.findViewById(R.id.strike_water_temp_text_view);
@@ -67,8 +67,7 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
     grainWeightTitle.setText("Grain Weight (" + Units.getWeightUnits() + ")");
     waterToGrainTitle.setText("Water to Grain Ratio (" + Units.getWaterToGrainUnits() + ")");
 
-    if (Units.getUnitSystem() == Units.METRIC)
-    {
+    if (Units.getUnitSystem() == Units.METRIC) {
       // If metric, set the default text of each edit text to be in metric.
       targetTempText.setHint("68");
       grainWeightText.setHint("4.5");
@@ -94,14 +93,12 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
       waterToGrainRatio = Double.parseDouble(waterToGrainText.getText().toString().replace(",", "" + "."));
       initialTemp = Double.parseDouble(initialTempText.getText().toString().replace(",", "" + "."));
       strikeVol = waterToGrainRatio * grainWeight;
-    } catch (Exception e)
-    {
+    } catch (Exception e) {
       Log.d("StrikeWaterCalculator", "Failed to calculate strike water " + e.toString());
       return;
     }
 
-    if (Units.getUnitSystem() == Units.METRIC)
-    {
+    if (Units.getUnitSystem() == Units.METRIC) {
       // If metric, we must convert to imperial first before performing calculation.
       targetTemp = Units.celsiusToFahrenheit(targetTemp);
       grainWeight = Units.kilosToPounds(grainWeight);
@@ -114,8 +111,7 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
     strikeTemp = BrewCalculator.calculateStrikeTemp(waterToGrainRatio, initialTemp, targetTemp);
 
     // Set text accordingly.
-    if (Units.getUnitSystem() == Units.METRIC)
-    {
+    if (Units.getUnitSystem() == Units.METRIC) {
       // We need to convert back to Metric for displaying.
       strikeTemp = Units.fahrenheitToCelsius(strikeTemp);
       strikeVol = Units.quartsToLiters(strikeVol);
@@ -123,8 +119,7 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
       strikeTempTitle.setText("Add " + volString + " of Water at:");
       strikeTempText.setText(String.format("%2.1f", strikeTemp) + Units.getTemperatureUnits());
     }
-    else
-    {
+    else {
       volString = String.format("%2.2f", strikeVol) + Units.getStrikeVolumeUnits();
       strikeTempTitle.setText("Add " + volString + " of Water at:");
       strikeTempText.setText(String.format("%2.1f", strikeTemp) + Units.getTemperatureUnits());

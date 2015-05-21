@@ -41,11 +41,11 @@ public class IngredientHandler {
   public void ImportAssets() {
     try {
       Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
-              getFermentablesFromXml(), Constants.OWNER_NONE);
+                                                  getFermentablesFromXml(), Constants.OWNER_NONE);
       Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getYeastsFromXml
               (), Constants.OWNER_NONE);
       Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getHopsFromXml(),
-              Constants.OWNER_NONE);
+                                                  Constants.OWNER_NONE);
       Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getMiscsFromXml()
               , Constants.OWNER_NONE);
       Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM, getProfilesFromXml
@@ -68,9 +68,9 @@ public class IngredientHandler {
 
     fermentablesList.removeAll(fermentablesList);
     fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
-            Ingredient.FERMENTABLE));
+                                                                       Ingredient.FERMENTABLE));
     fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants
-            .DATABASE_PERMANENT, Ingredient.FERMENTABLE));
+                                                                               .DATABASE_PERMANENT, Ingredient.FERMENTABLE));
 
     Collections.sort(fermentablesList, new ToStringComparator());
     Log.d("getFermentablesList", "Returning " + fermentablesList.size() + " fermentables");
@@ -90,9 +90,9 @@ public class IngredientHandler {
 
     yeastsList.removeAll(yeastsList);
     yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
-            Ingredient.YEAST));
+                                                                 Ingredient.YEAST));
     yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
-            Ingredient.YEAST));
+                                                                 Ingredient.YEAST));
 
     Collections.sort(yeastsList, new ToStringComparator());
     return this.yeastsList;
@@ -111,9 +111,9 @@ public class IngredientHandler {
 
     hopsList.removeAll(hopsList);
     hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
-            Ingredient.HOP));
+                                                               Ingredient.HOP));
     hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
-            Ingredient.HOP));
+                                                               Ingredient.HOP));
 
     Collections.sort(hopsList, new ToStringComparator());
     return this.hopsList;
@@ -132,9 +132,9 @@ public class IngredientHandler {
 
     miscsList.removeAll(miscsList);
     miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
-            Ingredient.MISC));
+                                                                Ingredient.MISC));
     miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
-            Ingredient.MISC));
+                                                                Ingredient.MISC));
 
     Collections.sort(miscsList, new ToStringComparator());
     return this.miscsList;

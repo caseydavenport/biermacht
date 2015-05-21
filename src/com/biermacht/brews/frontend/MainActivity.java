@@ -140,7 +140,7 @@ public class MainActivity extends Activity {
 
     // Set the adapter and click listener for the list view
     drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.row_layout_drawer_item,
-            drawerItems));
+                                                       drawerItems));
     drawerListView.setOnItemClickListener(new DrawerItemClickListener());
 
     // Drawer layout and ActionBarDrawerToggle

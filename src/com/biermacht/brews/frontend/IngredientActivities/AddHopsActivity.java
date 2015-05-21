@@ -1,31 +1,28 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import com.biermacht.brews.R;
-import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
-import com.biermacht.brews.ingredient.Hop;
-import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.ingredient.PlaceholderIngredient;
-import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.adapters.IngredientSpinnerAdapter;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
+import com.biermacht.brews.ingredient.Hop;
+import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.PlaceholderIngredient;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
-import android.view.*;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AddHopsActivity extends AddEditIngredientActivity {
 
@@ -64,7 +61,7 @@ public class AddHopsActivity extends AddEditIngredientActivity {
      *************************************************************************/
     this.registerViews(Arrays.asList(alphaAcidView, useSpinner, formSpinner));
     this.setViews(Arrays.asList(searchableListView, amountView, timeView, formSpinner,
-            useSpinner, alphaAcidView));
+                                useSpinner, alphaAcidView));
 
     // Configure titles
     alphaAcidViewTitle = (TextView) alphaAcidView.findViewById(R.id.title);

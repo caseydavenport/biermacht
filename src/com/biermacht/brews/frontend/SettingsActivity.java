@@ -53,7 +53,7 @@ public class SettingsActivity extends AddEditActivity {
 
     // Create our views
     preferredUnitsSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView,
-            false);
+                                                       false);
     deleteAllRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     exportRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
@@ -96,7 +96,7 @@ public class SettingsActivity extends AddEditActivity {
     unitsAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
     preferredUnitsSpinner.setAdapter(unitsAdapter);
     preferredUnitsSpinner.setSelection(unitSystemsArray.indexOf(preferences.getString(Constants
-            .PREF_MEAS_SYSTEM, Units.IMPERIAL)));
+                                                                                              .PREF_MEAS_SYSTEM, Units.IMPERIAL)));
 
     // Handle type selector here
     preferredUnitsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -184,19 +184,16 @@ public class SettingsActivity extends AddEditActivity {
 
   /**
    * ********************************************************************************* /*  Extra
-   * stuff goes below, unrelated to AddEditActivity methods. /*      Contains builders and
-   * tasks for
-   * this activity only.
-   * /
-  ***********************************************************************************
-          */
+   * stuff goes below, unrelated to AddEditActivity methods. /*      Contains builders and tasks for
+   * this activity only. / **********************************************************************************
+   */
 
   // Custom dialogs for this activity only
   private Builder deleteAllRecipes() {
     return new AlertDialog.Builder(this)
             .setTitle("Delete all recipes")
             .setMessage("Delete all local recipes from this device? This action cannot be undone." +
-                    "  Remote recipes will be unaffected.")
+                                "  Remote recipes will be unaffected.")
             .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {

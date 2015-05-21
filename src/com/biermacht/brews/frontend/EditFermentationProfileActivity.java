@@ -1,7 +1,5 @@
 package com.biermacht.brews.frontend;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,11 +16,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.frontend.adapters.*;
 import com.biermacht.brews.utils.Units;
+
+import java.util.ArrayList;
 
 public class EditFermentationProfileActivity extends Activity implements OnClickListener {
 
@@ -62,11 +62,11 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
     mainLayout = (LinearLayout) findViewById(R.id.main_layout);
     numStagesSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainLayout, false);
     primaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage,
-						mainLayout, false);
+                                                    mainLayout, false);
     secondaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage,
-						mainLayout, false);
+                                                      mainLayout, false);
     tertiaryLayout = (LinearLayout) inflater.inflate(R.layout.view_edit_fermentation_stage,
-						mainLayout, false);
+                                                     mainLayout, false);
 
     // Set units appropriately
     TextView tempUnitsView;
@@ -131,7 +131,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
     numStagesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position,
-																 long id) {
+                                 long id) {
 
         // Set number of stages
         mRecipe.setFermentationStages(position + 1);
@@ -207,7 +207,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
           tempView = (TextView) view.findViewById(R.id.temp_edit_text);
           mRecipe.setFermentationAge(i, Integer.parseInt(ageView.getText().toString()));
           mRecipe.setDisplayFermentationTemp(i, Double.parseDouble(tempView.getText().toString()
-                  .replace(",", ".")));
+                                                                           .replace(",", ".")));
         }
       } catch (Exception e) {
         readyToGo = false;

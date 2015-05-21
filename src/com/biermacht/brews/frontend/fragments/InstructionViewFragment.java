@@ -1,13 +1,13 @@
 package com.biermacht.brews.frontend.fragments;
 
-import java.util.ArrayList;
-
-import android.support.v4.app.Fragment;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.*;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,55 +15,54 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.adapters.InstructionArrayAdapter;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
-import android.annotation.SuppressLint;
-import android.content.*;
+
+import java.util.ArrayList;
 
 @SuppressLint("ValidFragment")
 public class InstructionViewFragment extends Fragment {
 
-	private int resource;
-	private Recipe r;
-	private OnItemClickListener mClickListener;
-	private ListView instructionListView;
-	private ArrayList<Instruction> instructionList;
-	View pageView;
-	Context c;
-	
-	public InstructionViewFragment(Context c, Recipe r)
-	{
-		this.resource = R.layout.fragment_instruction_view;
-		this.r = r;
-		this.c = c;
-	}
-	
-	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		pageView = inflater.inflate(resource, container, false);
+  private int resource;
+  private Recipe r;
+  private OnItemClickListener mClickListener;
+  private ListView instructionListView;
+  private ArrayList<Instruction> instructionList;
+  View pageView;
+  Context c;
 
-        setHasOptionsMenu(false);
-		
-		// Initialize important junk
-		instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
-		instructionList = new ArrayList<Instruction>();
+  public InstructionViewFragment(Context c, Recipe r) {
+    this.resource = R.layout.fragment_instruction_view;
+    this.r = r;
+    this.c = c;
+  }
 
-        // Only show instructions tagged for instruction list
-        for (Instruction i : r.getInstructionList())
-            if (i.showInInstructionList())
-                instructionList.add(i);
-  
-		if (instructionList.size() > 0)
-		{
-			InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(c, instructionList);
-			instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
-			instructionListView.setAdapter(instructionArrayAdapter);
-			instructionListView.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			TextView noInstructionsView = (TextView) pageView.findViewById(R.id.no_instructions_view);
-			noInstructionsView.setVisibility(View.VISIBLE);
-		}
-		
-		return pageView;
-	}
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    pageView = inflater.inflate(resource, container, false);
+
+    setHasOptionsMenu(false);
+
+    // Initialize important junk
+    instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
+    instructionList = new ArrayList<Instruction>();
+
+    // Only show instructions tagged for instruction list
+    for (Instruction i : r.getInstructionList()) {
+      if (i.showInInstructionList()) {
+        instructionList.add(i);
+      }
+    }
+
+    if (instructionList.size() > 0) {
+      InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(c, instructionList);
+      instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
+      instructionListView.setAdapter(instructionArrayAdapter);
+      instructionListView.setVisibility(View.VISIBLE);
+    }
+    else {
+      TextView noInstructionsView = (TextView) pageView.findViewById(R.id.no_instructions_view);
+      noInstructionsView.setVisibility(View.VISIBLE);
+    }
+
+    return pageView;
+  }
 }

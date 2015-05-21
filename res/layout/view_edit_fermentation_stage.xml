@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/transparent"
-    android:focusable="false"
-    android:orientation="vertical">
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/transparent"
+              android:focusable="false"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -23,7 +23,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical|right"
-            android:text="Primary: " />
+            android:text="Primary: "/>
 
         <EditText
             android:id="@+id/age_edit_text"
@@ -35,14 +35,14 @@
             android:gravity="center"
             android:hint="Age"
             android:inputType="number"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"/>
 
         <TextView
             style="@style/title_light"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dip"
-            android:text="days, at" />
+            android:text="days, at"/>
 
         <EditText
             android:id="@+id/temp_edit_text"
@@ -54,7 +54,7 @@
             android:gravity="center"
             android:hint="Temp"
             android:inputType="number"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"/>
 
         <TextView
             android:id="@+id/temperature_units"
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dip"
-            android:text="F" />
+            android:text="F"/>
     </LinearLayout>
 
     <LinearLayout

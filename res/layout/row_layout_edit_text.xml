@@ -9,45 +9,49 @@
               android:orientation="vertical">
 
     <!-- Linear layout for text type settings -->
-    <LinearLayout android:id="@+id/text_type"
-                  android:orientation="vertical"
-                  android:background="@color/transparent"
-                  android:layout_width="fill_parent"
-                  android:layout_weight="1"
-                  android:layout_gravity="center_vertical"
-                  android:layout_height="wrap_content" >
+    <LinearLayout
+        android:id="@+id/text_type"
+        android:orientation="vertical"
+        android:background="@color/transparent"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content">
 
-        <TextView android:id="@+id/title"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textSize="18dp"
-                  android:textColor="#333"
-                  android:text="Beer Name"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginRight="20dp"
-                  android:layout_marginLeft="20dp"
-                  android:background="@color/transparent" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="18dp"
+            android:textColor="#333"
+            android:text="Beer Name"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/transparent"/>
 
-        <TextView android:id="@+id/text"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="top"
-                  android:textSize="16dp"
-                  android:textColor="#777"
-                  android:layout_marginTop="0dp"
-                  android:layout_marginRight="20dp"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginBottom="5dp"
-                  android:text="Beer Style"
-                  android:background="@color/transparent" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:textSize="16dp"
+            android:textColor="#777"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="Beer Style"
+            android:background="@color/transparent"/>
     </LinearLayout>
 
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="1dip"
-                  android:orientation="vertical"
-                  android:padding="0dp"
-                  android:background="@color/divider" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:background="@color/divider">
 
     </LinearLayout>
 </LinearLayout>

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.BrewCalculator;
-import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
 public class AlcoholAttenuationCalculatorFragment extends Fragment implements ClickableFragment {

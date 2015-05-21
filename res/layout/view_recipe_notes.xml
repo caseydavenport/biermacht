@@ -8,16 +8,17 @@
               android:focusable="false"
               android:orientation="vertical">
 
-        <EditText android:id="@+id/edit_text"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:minHeight="100dp"
-                  android:gravity="top"
-                  android:textSize="20dp"
-                  android:textColor="#777"
-                  android:padding="10dp"
-                  android:layout_marginTop="10dp"
-                  android:text="Beer Style"
-                  android:background="@drawable/rounded_bg_transparent" />
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:gravity="top"
+        android:textSize="20dp"
+        android:textColor="#777"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Beer Style"
+        android:background="@drawable/rounded_bg_transparent"/>
 
 </LinearLayout>

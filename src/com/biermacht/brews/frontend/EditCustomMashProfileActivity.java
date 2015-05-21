@@ -1,54 +1,50 @@
 package com.biermacht.brews.frontend;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
-import android.view.*;
 
 public class EditCustomMashProfileActivity extends EditMashProfileActivity {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        // Disable delete button for this view
-        findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
-        
-        // Add fields we want
-        mainView.addView(nameView, 0);
-    }
+    // Disable delete button for this view
+    findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
 
-    @Override
-    public void getValuesFromIntent()
-    {
-        super.getValuesFromIntent();
+    // Add fields we want
+    mainView.addView(nameView, 0);
+  }
 
-        // Acquire profile
-        mProfile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
+  @Override
+  public void getValuesFromIntent() {
+    super.getValuesFromIntent();
 
-        // Initialize data containers
-        name = mProfile.getName();
-    }
-	
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        return true;
-    }
+    // Acquire profile
+    mProfile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
 
-    @Override
-    public void onFinished()
-    {
-        mProfile.save(Constants.DATABASE_CUSTOM);
-        finish();
-    }
+    // Initialize data containers
+    name = mProfile.getName();
+  }
 
-    @Override
-    public void onDeletePressed()
-    {
-    	mProfile.delete(Constants.DATABASE_CUSTOM);
-        finish();
-    }
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    return true;
+  }
+
+  @Override
+  public void onFinished() {
+    mProfile.save(Constants.DATABASE_CUSTOM);
+    finish();
+  }
+
+  @Override
+  public void onDeletePressed() {
+    mProfile.delete(Constants.DATABASE_CUSTOM);
+    finish();
+  }
 }

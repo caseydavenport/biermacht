@@ -1,6 +1,5 @@
 package com.biermacht.brews.utils.Callbacks;
 
-public abstract class Callback
-{
-    public abstract void call();
+public abstract class Callback {
+  public abstract void call();
 }

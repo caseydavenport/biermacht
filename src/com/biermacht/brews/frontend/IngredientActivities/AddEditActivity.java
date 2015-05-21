@@ -28,8 +28,8 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.utils.IngredientHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -180,7 +180,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
 
         // Force keyboard open and show popup
         alert.getWindow().setSoftInputMode(WindowManager.LayoutParams
-                .SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                                                   .SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         alert.show();
       }
     };

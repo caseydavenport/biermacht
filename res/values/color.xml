@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	
-	<!-- Theme colors -->
-	<color name="theme_main">#E6A627</color>
+
+    <!-- Theme colors -->
+    <color name="theme_main">#E6A627</color>
     <color name="theme_second">#FFBB33</color>
     <color name="button_color">#FFFFFF</color>
-	<color name="background">#FFFFFF</color>
-	<color name="activity_background">#FFFFFF</color>
-	<color name="activity_background_dark">#EEEEEE</color>
-	<color name="profile_title_bg">#EEEEEE</color>
+    <color name="background">#FFFFFF</color>
+    <color name="activity_background">#FFFFFF</color>
+    <color name="activity_background_dark">#EEEEEE</color>
+    <color name="profile_title_bg">#EEEEEE</color>
     <color name="title_color">#333333</color>
-	<color name="selected">#22000000</color>
+    <color name="selected">#22000000</color>
 
     <!-- Colors for drawer -->
     <color name="drawer_background">#FFF</color>
     <color name="drawer_text">#222</color>
     <color name="drawer_selector">#EEE</color>
     <color name="drawer_divider">#22000000</color>
-	
-	<!--  Colors for text -->
-	<color name="black_text">#333333</color>
+
+    <!--  Colors for text -->
+    <color name="black_text">#333333</color>
     <color name="white">#FFFFFF</color>
-	
-	<!--  Colors for views -->
-	<color name="divider">#22000000</color>
-	<color name="transparent">#00FFFFFF</color>
-    
+
+    <!--  Colors for views -->
+    <color name="divider">#22000000</color>
+    <color name="transparent">#00FFFFFF</color>
+
 </resources>

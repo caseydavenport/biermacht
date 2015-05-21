@@ -19,8 +19,9 @@ public class Database {
   public static ArrayList<Recipe> getRecipeList(DatabaseInterface dbi) {
     ArrayList<Recipe> list = dbi.getRecipeList();
 
-    for (Recipe r : list)
+    for (Recipe r : list) {
       r.update();
+    }
 
     Collections.sort(list, new RecipeComparator<Recipe>());
 
@@ -78,18 +79,21 @@ public class Database {
   public static boolean deleteIngredientWithId(long id, long dbid) {
     Log.d("Database", "Trying to delete ingredient from database: " + dbid);
     boolean b = MainActivity.databaseInterface.deleteIngredientIfExists(id, dbid);
-    if (b)
+    if (b) {
       Log.d("Database", "Successfully deleted ingredient");
-    else
+    }
+    else {
       Log.d("Database", "Failed to delete ingredient");
+    }
     return b;
   }
 
   // Gets the recipe with the given ID
   public static Recipe getRecipeWithId(long id) throws ItemNotFoundException {
     // If we receive a special ID, handle that here
-    if (id == Constants.INVALID_ID)
+    if (id == Constants.INVALID_ID) {
       throw new ItemNotFoundException("Passed id with value Utils.INVALID_ID");
+    }
 
     // Actually perform the lookup
     return MainActivity.databaseInterface.getRecipeWithId(id);

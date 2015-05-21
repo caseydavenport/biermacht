@@ -1,104 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="vertical">
 
     <!-- Colored bar at top -->
-    <TextView android:id="@+id/colored_bar"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:layout_gravity="top"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:paddingTop="4dp"
-              android:paddingBottom="4dp"
-              android:textColor="#fff"
-              android:background="@color/theme_main"
-              android:layout_alignParentTop="true"
-              android:text="">
-        <requestFocus />
+    <TextView
+        android:id="@+id/colored_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textColor="#fff"
+        android:background="@color/theme_main"
+        android:layout_alignParentTop="true"
+        android:text="">
+
+        <requestFocus/>
     </TextView>
 
-    <LinearLayout android:id="@+id/first_ll"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:padding="0dip"
-                  android:background="@color/transparent"
-                  android:orientation="vertical"
-                  android:layout_below="@id/colored_bar" >
+    <LinearLayout
+        android:id="@+id/first_ll"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="0dip"
+        android:background="@color/transparent"
+        android:orientation="vertical"
+        android:layout_below="@id/colored_bar">
 
         <ListView
-                android:id="@+id/recipe_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:padding="0dip"
-                android:dividerHeight="0dp"
-                android:drawSelectorOnTop="true"
-                android:listSelector="@drawable/selector" >
+            android:id="@+id/recipe_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="0dip"
+            android:dividerHeight="0dp"
+            android:drawSelectorOnTop="true"
+            android:listSelector="@drawable/selector">
         </ListView>
 
-        <TextView android:id="@+id/no_recipes_view"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:background="#FFFFFF"
-                  android:gravity="center"
-                  android:visibility="gone"
-                  android:textColor="@color/title_color"
-                  android:textSize="15sp"
-                  android:text="@string/no_recipes" />
-        
+        <TextView
+            android:id="@+id/no_recipes_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="@color/title_color"
+            android:textSize="15sp"
+            android:text="@string/no_recipes"/>
+
         <!-- Bottom border for listView -->
-	    <TextView android:id="@+id/list_view_border"
-	              android:layout_width="fill_parent"
-	              android:layout_height="1dp"
-	              android:layout_gravity="top"
-	              android:textColor="#fff"
-	              android:background="@color/divider"
-	              android:text="">
-	        <requestFocus />
-	    </TextView>
+        <TextView
+            android:id="@+id/list_view_border"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="top"
+            android:textColor="#fff"
+            android:background="@color/divider"
+            android:text="">
+
+            <requestFocus/>
+        </TextView>
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/recipe_search_view"
-                  android:orientation="horizontal"
-                  android:layout_width="fill_parent"
-                  android:layout_height="40dip"
-                  android:layout_marginTop="0dip"
-                  android:padding="0dip"
-                  android:layout_gravity="center"
-                  android:background="@color/activity_background"
-                  android:layout_alignParentBottom="true"
-                  android:visibility="gone">
+    <LinearLayout
+        android:id="@+id/recipe_search_view"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_marginTop="0dip"
+        android:padding="0dip"
+        android:layout_gravity="center"
+        android:background="@color/activity_background"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
 
-        <EditText android:id="@+id/search_bar"
-                  android:layout_width="0dip"
-                  android:layout_weight="1"
-                  android:layout_height="40dip"
-                  android:padding="0dip"
-                  android:layout_marginLeft="10dip"
-                  android:layout_marginTop="0dip"
-                  android:layout_marginBottom="0dip"
-                  android:background="#fff"
-                  android:hint="@string/recipe_search_hint" />
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="40dip"
+            android:padding="0dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="0dip"
+            android:layout_marginBottom="0dip"
+            android:background="#fff"
+            android:hint="@string/recipe_search_hint"/>
 
-        <ImageView android:id="@+id/search_icon"
-                   android:layout_width="wrap_content"
-                   android:layout_height="40dip"
-                   android:gravity="center"
-                   android:focusable="false"
-                   android:background="#fff"
-                   android:layout_marginTop="0dip"
-                   android:layout_marginBottom="0dip"
-                   android:layout_marginRight="10dip"
-                   android:paddingLeft="0dp"
-                   android:paddingRight="10dp"
-                   android:contentDescription="@string/search_icon_description"
-                   android:src="@drawable/action_search" />
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:gravity="center"
+            android:focusable="false"
+            android:background="#fff"
+            android:layout_marginTop="0dip"
+            android:layout_marginBottom="0dip"
+            android:layout_marginRight="10dip"
+            android:paddingLeft="0dp"
+            android:paddingRight="10dp"
+            android:contentDescription="@string/search_icon_description"
+            android:src="@drawable/action_search"/>
 
     </LinearLayout>
 </RelativeLayout>

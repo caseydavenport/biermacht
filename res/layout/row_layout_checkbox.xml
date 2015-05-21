@@ -8,16 +8,18 @@
               android:focusable="false"
               android:orientation="horizontal">
 
-    <CheckBox android:id="@+id/checkbox"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:gravity="center_vertical"
-              android:background="@color/transparent" 
-              android:layout_marginTop="5dp"
-              android:layout_marginLeft="5dp">
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/transparent"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp">
     </CheckBox>
-    
-    <TextView android:id="@+id/label"
+
+    <TextView
+        android:id="@+id/label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -27,7 +29,7 @@
         android:textColor="#333333"
         android:text="Beer Name"
         android:background="@color/transparent"
-        android:layout_marginLeft="5dp" />
-        
-    
+        android:layout_marginLeft="5dp"/>
+
+
 </LinearLayout>

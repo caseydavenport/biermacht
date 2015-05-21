@@ -110,7 +110,7 @@ public class AddMashProfileActivity extends AddEditActivity {
 
     // Initialize views and stuff
     dragDropListView = (DragSortListView) inflater.inflate(R.layout.view_drag_drop_list,
-            mainView, false);
+                                                           mainView, false);
     tunTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     grainTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     spargeTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
@@ -361,9 +361,9 @@ public class AddMashProfileActivity extends AddEditActivity {
     // We have trouble setting the size in XML, so we dynamically do it here based on
     // the number of steps. 149 is a magic number that seems to be the size of the mash step.
     // Add two for each step to handle the borders added in the list.
-    int height = (mProfile.getMashStepList().size() * 150) + (2*mProfile.getMashStepList().size());
+    int height = (mProfile.getMashStepList().size() * 150) + (2 * mProfile.getMashStepList().size());
     LinearLayout.LayoutParams params =
-                      new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+            new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
 
     // Drag list view
     dragDropAdapter = new MashStepArrayAdapter(this, mProfile.getMashStepList());
