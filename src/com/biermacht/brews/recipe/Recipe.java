@@ -4,13 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.utils.Units;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -18,8 +11,14 @@ import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
+import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.InstructionGenerator;
+import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Recipe implements Parcelable {
   // ===============================================================

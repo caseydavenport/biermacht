@@ -22,6 +22,7 @@ import com.biermacht.brews.frontend.adapters.MashStepArrayAdapter;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
+import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
@@ -250,8 +251,11 @@ public class AddMashProfileActivity extends AddEditActivity {
   public void getValuesFromIntent() {
     super.getValuesFromIntent();
 
-    // Acquire profile
-    mProfile = new MashProfile();
+    // We're creating a new mash profile, so we don't get it from the intent.
+    // Create a blank recipe and blank profile.
+    mRecipe = new Recipe();
+    mProfile = new MashProfile(mRecipe);
+    mRecipe.setMashProfile(mProfile);
 
     setTempVals();
 
@@ -395,9 +399,9 @@ public class AddMashProfileActivity extends AddEditActivity {
   @Override
   public void acquireValues() throws Exception {
     super.acquireValues();
-    double spargeTemp = Double.parseDouble(spargeTempViewText.getText().toString());
-    double grainTemp = Double.parseDouble(grainTempViewText.getText().toString());
-    double tunTemp = Double.parseDouble(tunTempViewText.getText().toString());
+    double spargeTemp = Double.parseDouble(spargeTempViewText.getText().toString().replace(",", "."));
+    double grainTemp = Double.parseDouble(grainTempViewText.getText().toString().replace(",", "."));
+    double tunTemp = Double.parseDouble(tunTempViewText.getText().toString().replace(",", "."));
 
     mProfile.setName(name);
     mProfile.setDisplaySpargeTemp(spargeTemp);

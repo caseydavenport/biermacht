@@ -2,18 +2,23 @@ package com.biermacht.brews.xml;
 
 import android.util.Log;
 
+import com.biermacht.brews.ingredient.Fermentable;
+import com.biermacht.brews.ingredient.Hop;
+import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.Misc;
+import com.biermacht.brews.ingredient.Yeast;
+import com.biermacht.brews.recipe.BeerStyle;
+import com.biermacht.brews.recipe.MashProfile;
+import com.biermacht.brews.recipe.MashStep;
+import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Stack;
+import com.biermacht.brews.utils.Units;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.biermacht.brews.ingredient.Fermentable;
-import com.biermacht.brews.recipe.*;
-
-import java.util.*;
-
-import com.biermacht.brews.ingredient.*;
-import com.biermacht.brews.utils.*;
-import com.biermacht.brews.utils.Stack;
+import java.util.ArrayList;
 
 public class RecipeXmlReader extends DefaultHandler {
 
@@ -171,6 +176,15 @@ public class RecipeXmlReader extends DefaultHandler {
     // Encounter new mash profile
     if (qName.equalsIgnoreCase("MASH")) {
       thingTypeStack.push(qName);
+
+      if (!thingTypeStack.contains("RECIPE"))
+      {
+        // We're not operating in the context of a recipe.  As such, we should create a new
+        // recipe for this MashProfile before creating the Mashprofile itself, since a MashProfile
+        // doesn't make sense outside the context of a recipe.  This occurs when importing
+        // mash profiles during initial configuration.
+        r = new Recipe();
+      }
       profile = new MashProfile(r);
     }
 

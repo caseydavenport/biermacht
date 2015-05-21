@@ -6,12 +6,15 @@ be recorded here
 //////////////////////////////////////////////
 // Issues required for next release. /////////
 //////////////////////////////////////////////
+* Mash profile sparge type does not save
+* Mash profiles have weird default water-to-grain ratio
+* Creating a new mash profile
+* Commas not supported in Mash Step activities.
+* Crash when saving a recipe mash profile to custom when it has been edited but not saved.
 
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
-* Weird default Water-to-Grain Ratios in mash steps.
-* Commas not supported in Mash Step activities.
 * Option for flame-out hops (calculate IBU)
 * Some misc items use volume instead of weight (orange peel, coriander seeds, for example)
 * Can search web for BeerXML Recipes

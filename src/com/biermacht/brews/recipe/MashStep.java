@@ -4,7 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.biermacht.brews.utils.*;
+import com.biermacht.brews.utils.BrewCalculator;
+import com.biermacht.brews.utils.Units;
 
 public class MashStep implements Parcelable {
   // ================================================================
@@ -57,8 +58,8 @@ public class MashStep implements Parcelable {
     this.setDescription("");
     this.setBeerXmlStandardWaterToGrainRatio(2.60793889);
     this.infuseTemp = 0.0;
-    this.id = -1;
-    this.ownerId = -1;
+    this.id = - 1;
+    this.ownerId = - 1;
     this.order = 1;
     this.decoctAmount = 0;
     this.calcInfuseAmt = true;
@@ -111,7 +112,6 @@ public class MashStep implements Parcelable {
     p.writeDouble(stepTemp);        // Temp for this step in C
     p.writeDouble(stepTime);        // Time for this step
 
-
     // Beer XML 1.0 Optional Fields ===================================
     // ================================================================
     p.writeDouble(rampTime);        // Time to ramp temp
@@ -159,9 +159,11 @@ public class MashStep implements Parcelable {
 
   @Override
   public boolean equals(Object o) {
-    if (o instanceof MashStep)
-      if (this.hashCode() == o.hashCode())
+    if (o instanceof MashStep) {
+      if (this.hashCode() == o.hashCode()) {
         return true;
+      }
+    }
     return false;
   }
 
@@ -176,7 +178,7 @@ public class MashStep implements Parcelable {
 
   public String getName() {
     if (this.name == "") {
-      return "Mash step (" + this.getOrder() + ")";
+      this.name = "Mash step (" + this.getOrder() + ")";
     }
     return this.name;
   }
@@ -198,17 +200,21 @@ public class MashStep implements Parcelable {
   }
 
   public double getDisplayDecoctAmount() {
-    if (Units.getVolumeUnits().equals(Units.GALLONS))
+    if (Units.getVolumeUnits().equals(Units.GALLONS)) {
       return Units.litersToGallons(this.decoctAmount);
-    else
+    }
+    else {
       return this.decoctAmount;
+    }
   }
 
   public void setDisplayDecoctAmount(double amt) {
-    if (Units.getVolumeUnits().equals(Units.GALLONS))
+    if (Units.getVolumeUnits().equals(Units.GALLONS)) {
       this.decoctAmount = Units.gallonsToLiters(this.decoctAmount);
-    else
+    }
+    else {
       this.decoctAmount = amt;
+    }
   }
 
   public void setBeerXmlDecoctAmount(double amt) {
@@ -220,35 +226,44 @@ public class MashStep implements Parcelable {
   }
 
   public void setDisplayInfuseAmount(double amt) {
-    if (Units.getVolumeUnits().equals(Units.GALLONS))
+    if (Units.getVolumeUnits().equals(Units.GALLONS)) {
       this.infuseAmount = Units.gallonsToLiters(amt);
-    else
+    }
+    else {
       this.infuseAmount = amt;
+    }
   }
 
   public double getDisplayAmount() {
-    if (this.getType().equals(DECOCTION))
+    if (this.getType().equals(DECOCTION)) {
       return this.getDisplayDecoctAmount();
-    else if (this.getType().equals(INFUSION))
+    }
+    else if (this.getType().equals(INFUSION)) {
       return this.getDisplayInfuseAmount();
-    else
+    }
+    else {
       return 0;
+    }
   }
 
   public double getDisplayInfuseAmount() {
     // No infuse amount for decoction steps. Ever.
-    if (this.getType().equals(MashStep.DECOCTION))
+    if (this.getType().equals(MashStep.DECOCTION)) {
       return 0;
+    }
 
     // If we are autocalculating.
-    if (this.calcInfuseAmt)
+    if (this.calcInfuseAmt) {
       return this.calculateInfuseAmount();
+    }
 
     // If we're not auto-calculating.
-    if (Units.getVolumeUnits().equals(Units.GALLONS))
+    if (Units.getVolumeUnits().equals(Units.GALLONS)) {
       return Units.litersToGallons(this.infuseAmount);
-    else
+    }
+    else {
       return this.infuseAmount;
+    }
   }
 
   // Calculates the infusion amount based on
@@ -257,11 +272,12 @@ public class MashStep implements Parcelable {
   // Also sets this.infuseAmount to the correct value.
   public double calculateInfuseAmount() {
     // We perform different calculations if this is the initial infusion.
-    double amt = -1;
+    double amt = - 1;
     if (this.firstInList()) {
       // Initial infusion. Water is constant * amount of grain.
       amt = this.getBeerXmlStandardWaterToGrainRatio() * this.getBeerXmlStandardMashWeight();
-    } else {
+    }
+    else {
       // The actual temperature of the water being infused.
       double actualInfuseTemp = calcInfuseTemp ? calculateBXSInfuseTemp() : getBeerXmlStandardInfuseTemp();
 
@@ -279,10 +295,12 @@ public class MashStep implements Parcelable {
     this.infuseAmount = amt;
 
     // Use appropriate units.
-    if (Units.getVolumeUnits().equals(Units.LITERS))
+    if (Units.getVolumeUnits().equals(Units.LITERS)) {
       return amt;
-    else
+    }
+    else {
       return Units.litersToGallons(amt);
+    }
   }
 
   // Calculates the infusion temperature for both
@@ -297,18 +315,20 @@ public class MashStep implements Parcelable {
       double tunTemp = .7 * this.recipe.getMashProfile().getBeerXmlStandardGrainTemp() + .3 * this.recipe.getMashProfile().getBeerXmlStandardTunTemp();
       temp = (.41) / (this.getBeerXmlStandardWaterToGrainRatio());
       temp = temp * (this.getBeerXmlStandardStepTemp() - tunTemp) + this.getBeerXmlStandardStepTemp();
-    } else {
+    }
+    else {
       // Not initial infusion.  Assume boiling water to make
       // calculation easier.  If the next step has a LOWER temperature,
       // use room temperature water (72F).
       try {
         if (getPreviousStep().getBeerXmlStandardStepTemp() < this.getBeerXmlStandardStepTemp()) {
           temp = 100;
-        } else {
+        }
+        else {
           temp = 22.2222;
         }
       } catch (Exception e) {
-        temp = -1;
+        temp = - 1;
       }
     }
 
@@ -316,17 +336,21 @@ public class MashStep implements Parcelable {
     this.infuseTemp = temp;
 
     // Use appropriate units.
-    if (Units.getTemperatureUnits().equals(Units.CELSIUS))
+    if (Units.getTemperatureUnits().equals(Units.CELSIUS)) {
       return temp;
-    else
+    }
+    else {
       return Units.celsiusToFahrenheit(temp);
+    }
   }
 
   private double calculateBXSInfuseTemp() {
-    if (Units.getTemperatureUnits().equals(Units.CELSIUS))
+    if (Units.getTemperatureUnits().equals(Units.CELSIUS)) {
       return this.calculateInfuseTemp();
-    else
+    }
+    else {
       return Units.fahrenheitToCelsius(this.calculateInfuseTemp());
+    }
   }
 
   public boolean firstInList() {
@@ -338,26 +362,32 @@ public class MashStep implements Parcelable {
   }
 
   public double getBeerXmlStandardInfuseAmount() {
-    if (this.calcInfuseAmt)
+    if (this.calcInfuseAmt) {
       calculateInfuseAmount();
+    }
     return this.infuseAmount;
   }
 
   public double getDisplayInfuseTemp() {
-    if (this.calcInfuseTemp)
+    if (this.calcInfuseTemp) {
       return Math.round(this.calculateInfuseTemp());
+    }
 
-    if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+    if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
       return Math.round(Units.celsiusToFahrenheit(this.infuseTemp));
-    else
+    }
+    else {
       return Math.round(this.infuseTemp);
+    }
   }
 
   public void setDisplayInfuseTemp(double d) {
-    if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+    if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
       this.infuseTemp = Units.fahrenheitToCelsius(d);
-    else
+    }
+    else {
       this.infuseTemp = d;
+    }
   }
 
   public double getBeerXmlStandardInfuseTemp() {
@@ -385,17 +415,21 @@ public class MashStep implements Parcelable {
   }
 
   public void setDisplayStepTemp(double temp) {
-    if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+    if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
       this.stepTemp = Units.fahrenheitToCelsius(temp);
-    else
+    }
+    else {
       this.stepTemp = temp;
+    }
   }
 
   public double getDisplayStepTemp() {
-    if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT))
+    if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
       return Units.celsiusToFahrenheit(this.stepTemp);
-    else
+    }
+    else {
       return this.stepTemp;
+    }
   }
 
   public void setBeerXmlStandardStepTemp(double temp) {
@@ -409,32 +443,39 @@ public class MashStep implements Parcelable {
   public double getBeerXmlStandardWaterToGrainRatio() {
     // If this is the first in the list, use the configured value.
     // Otherwise, we need to calculate it based on the water added.
-    if (this.firstInList())
+    if (this.firstInList()) {
       return this.waterToGrainRatio;
+    }
     return (this.getBeerXmlStandardInfuseAmount() + this.getBXSTotalWaterInMash()) / this.getBeerXmlStandardMashWeight();
   }
 
   public double getDisplayWaterToGrainRatio() {
-    if (Units.getUnitSystem().equals(Units.IMPERIAL))
+    if (Units.getUnitSystem().equals(Units.IMPERIAL)) {
       return Units.LPKGtoQPLB(getBeerXmlStandardWaterToGrainRatio());
-    else
+    }
+    else {
       return getBeerXmlStandardWaterToGrainRatio();
+    }
   }
 
   public void setBeerXmlStandardWaterToGrainRatio(double d) {
     // Don't update if less than 0. Impossible value.
-    if (d <= 0)
+    if (d <= 0) {
       return;
+    }
     this.waterToGrainRatio = d;
   }
 
   public void setDisplayWaterToGrainRatio(double d) {
-    if (d <= 0)
+    if (d <= 0) {
       return;
-    if (Units.getUnitSystem().equals(Units.IMPERIAL))
+    }
+    if (Units.getUnitSystem().equals(Units.IMPERIAL)) {
       this.waterToGrainRatio = Units.QPLBtoLPKG(d);
-    else
+    }
+    else {
       this.waterToGrainRatio = d;
+    }
   }
 
   public void setOrder(int i) {

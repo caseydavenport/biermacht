@@ -1,22 +1,24 @@
 package com.biermacht.brews.database;
 
-import java.util.ArrayList;
-
-import android.util.Log;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.ingredient.Yeast;
+import com.biermacht.brews.recipe.BeerStyle;
+import com.biermacht.brews.recipe.MashProfile;
+import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.ingredient.*;
-import com.biermacht.brews.recipe.*;
 import com.biermacht.brews.utils.Constants;
+
+import java.util.ArrayList;
 
 public class DatabaseInterface {
 
@@ -214,13 +216,13 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
     values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
     values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-            .STAGE_PRIMARY));
+                                                                                                 .STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-            .STAGE_SECONDARY));
+                                                                                                   .STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-            .STAGE_TERTIARY));
+                                                                                                  .STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
     values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
@@ -271,13 +273,13 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
     values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
     values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-            .STAGE_PRIMARY));
+                                                                                                 .STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-            .STAGE_SECONDARY));
+                                                                                                   .STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-            .STAGE_TERTIARY));
+                                                                                                  .STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
     values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
@@ -595,7 +597,7 @@ public class DatabaseInterface {
     String whereString = DatabaseHelper.REC_COL_ID + "=" + id;
 
     Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, whereString,
-            null, null, null, null);
+                                   null, null, null, null);
     cursor.moveToFirst();
     return cursorToRecipe(cursor);
   }
@@ -607,7 +609,7 @@ public class DatabaseInterface {
   public Ingredient getIngredientWithId(long id) {
     String whereString = DatabaseHelper.ING_COL_ID + "=" + id;
     Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
-            whereString, null, null, null, null);
+                                   whereString, null, null, null, null);
     cursor.moveToFirst();
 
     try {
@@ -627,7 +629,7 @@ public class DatabaseInterface {
             DatabaseHelper.ING_COL_TYPE + "=?";
     String[] args = {type};
     Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
-            whereString, args, null, null, null);
+                                   whereString, args, null, null, null);
 
     cursor.moveToFirst();
     while (! cursor.isAfterLast()) {
@@ -652,7 +654,7 @@ public class DatabaseInterface {
     ArrayList<MashProfile> list = new ArrayList<MashProfile>();
     String whereString = DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
     Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString,
-            null, null, null, null);
+                                   null, null, null, null);
 
     cursor.moveToFirst();
     while (! cursor.isAfterLast()) {
@@ -677,7 +679,7 @@ public class DatabaseInterface {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
     String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
     Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
-            whereString, null, null, null, null);
+                                   whereString, null, null, null, null);
 
     cursor.moveToFirst();
     while (! cursor.isAfterLast()) {
@@ -704,7 +706,7 @@ public class DatabaseInterface {
     ArrayList<Recipe> list = new ArrayList<Recipe>();
 
     Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, null, null,
-            null, null, null);
+                                   null, null, null);
     cursor.moveToFirst();
 
     // Move one forward, so we skip the master recipe
@@ -874,7 +876,7 @@ public class DatabaseInterface {
 
     String whereString = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
     Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
-            whereString, null, null, null, null);
+                                   whereString, null, null, null, null);
     cursor.moveToFirst();
 
     while (! cursor.isAfterLast()) {
@@ -898,7 +900,7 @@ public class DatabaseInterface {
 
     String whereString = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
     Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString,
-            null, null, null, null);
+                                   null, null, null, null);
 
     cursor.moveToFirst();
     BeerStyle style = cursorToStyle(cursor);
@@ -994,7 +996,7 @@ public class DatabaseInterface {
 
     String whereString = DatabaseHelper.PRO_COL_OWNER_ID + "=" + id;
     Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString,
-            null, null, null, null);
+                                   null, null, null, null);
 
     cursor.moveToFirst();
     try {
@@ -1067,7 +1069,7 @@ public class DatabaseInterface {
     ArrayList<MashStep> list = new ArrayList<MashStep>();
     String whereString = DatabaseHelper.STE_COL_OWNER_ID + "=" + id;
     Cursor cursor = database.query(DatabaseHelper.TABLE_STEPS, stepAllColumns, whereString, null,
-            null, null, null);
+                                   null, null, null);
 
     cursor.moveToFirst();
     while (! cursor.isAfterLast()) {

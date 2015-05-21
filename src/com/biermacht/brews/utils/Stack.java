@@ -31,4 +31,9 @@ public class Stack  {
     {
         return list.get(list.size()-1);
     }
+
+    public boolean contains(String s)
+    {
+        return list.contains(s);
+    }
 }
