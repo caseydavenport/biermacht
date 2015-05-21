@@ -67,6 +67,15 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
     grainWeightTitle.setText("Grain Weight (" + Units.getWeightUnits() + ")");
     waterToGrainTitle.setText("Water to Grain Ratio (" + Units.getWaterToGrainUnits() + ")");
 
+    if (Units.getUnitSystem() == Units.METRIC)
+    {
+      // If metric, set the default text of each edit text to be in metric.
+      targetTempText.setHint("68");
+      grainWeightText.setHint("4.5");
+      initialTempText.setText("18");
+      waterToGrainText.setText("2.5");
+    }
+
     return pageView;
   }
 
@@ -91,13 +100,36 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
       return;
     }
 
+    if (Units.getUnitSystem() == Units.METRIC)
+    {
+      // If metric, we must convert to imperial first before performing calculation.
+      targetTemp = Units.celsiusToFahrenheit(targetTemp);
+      grainWeight = Units.kilosToPounds(grainWeight);
+      waterToGrainRatio = Units.LPKGtoQPLB(waterToGrainRatio);
+      initialTemp = Units.celsiusToFahrenheit(initialTemp);
+      strikeVol = Units.litersToQuarts(strikeVol);
+    }
+
     // Calculate
     strikeTemp = BrewCalculator.calculateStrikeTemp(waterToGrainRatio, initialTemp, targetTemp);
-    volString = String.format("%2.2f", strikeVol) + Units.getStrikeVolumeUnits();
 
     // Set text accordingly.
-    strikeTempTitle.setText("Add " + volString + " of Water at:");
-    strikeTempText.setText(String.format("%2.1f", strikeTemp) + Units.getTemperatureUnits());
+    if (Units.getUnitSystem() == Units.METRIC)
+    {
+      // We need to convert back to Metric for displaying.
+      strikeTemp = Units.fahrenheitToCelsius(strikeTemp);
+      strikeVol = Units.quartsToLiters(strikeVol);
+      volString = String.format("%2.2f", strikeVol) + "L";
+      strikeTempTitle.setText("Add " + volString + " of Water at:");
+      strikeTempText.setText(String.format("%2.1f", strikeTemp) + Units.getTemperatureUnits());
+    }
+    else
+    {
+      volString = String.format("%2.2f", strikeVol) + Units.getStrikeVolumeUnits();
+      strikeTempTitle.setText("Add " + volString + " of Water at:");
+      strikeTempText.setText(String.format("%2.1f", strikeTemp) + Units.getTemperatureUnits());
+    }
+
   }
 
   @Override

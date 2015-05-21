@@ -299,7 +299,7 @@ public class Units {
     return q * .946353;
   }
 
-  public static double liersToQuarts(double l) {
+  public static double litersToQuarts(double l) {
     return l / .946353;
   }
 
