@@ -41,23 +41,9 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
   }
 
   @Override
-  public void setTempVals() {
-    // Do nothing for editing a mash profile.
-  }
-
-  @Override
-  public void configureSpinnerListener() {
-    // Override spinner listener because we don't show the spinner
-    // in edit mash profile.
-    spinnerListener = new AdapterView.OnItemSelectedListener() {
-
-      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-        mProfile = mRecipe.getMashProfile();
-      }
-
-      public void onNothingSelected(AdapterView<?> parentView) {
-      }
-    };
+  public void _getValuesFromIntent() {
+    // When editing a mash profile, we don't need to do any special acquisition from the intent.
+    // As such, override this method to do nothing.
   }
 
   @Override

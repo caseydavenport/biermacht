@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.biermacht.brews.DragDropList.DragSortListView;
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
-import com.biermacht.brews.frontend.adapters.MashProfileSpinnerAdapter;
 import com.biermacht.brews.frontend.adapters.MashStepArrayAdapter;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.MashProfile;
@@ -63,7 +62,6 @@ public class AddMashProfileActivity extends AddEditActivity {
   AdapterView.OnItemSelectedListener spargeTypeSpinnerListener;
 
   // Spinner array declarations
-  public ArrayList<MashProfile> profileArray;
   public ArrayList<String> mashTypeArray;
   public ArrayList<String> spargeTypeArray;
 
@@ -229,6 +227,7 @@ public class AddMashProfileActivity extends AddEditActivity {
         try {
           acquireValues();
         } catch (Exception e) {
+          Log.d("AddMashProfile", "Failed to acquire values");
         }
       }
     };
@@ -238,7 +237,6 @@ public class AddMashProfileActivity extends AddEditActivity {
     tunTempViewText.setText(String.format("%2.2f", mProfile.getDisplayTunTemp()));
     grainTempViewText.setText(String.format("%2.2f", mProfile.getDisplayGrainTemp()));
     spargeTempViewText.setText(String.format("%2.2f", mProfile.getDisplaySpargeTemp()));
-    //spargeVolumeViewText.setText(String.format("%2.2f", mProfile.getDisplaySpargeVolume()));
   }
 
   @Override
@@ -251,46 +249,35 @@ public class AddMashProfileActivity extends AddEditActivity {
   public void getValuesFromIntent() {
     super.getValuesFromIntent();
 
+    // This call allows each sub-class of this activity to acquire values from the intent
+    // differently, while still taking advantage of the super() call to AddEditActivity.  Override
+    // this method in sub-classes to change behavior.
+    _getValuesFromIntent();
+  }
+
+  public void _getValuesFromIntent() {
     // We're creating a new mash profile, so we don't get it from the intent.
     // Create a blank recipe and blank profile.
     mRecipe = new Recipe();
     mProfile = new MashProfile(mRecipe);
     mRecipe.setMashProfile(mProfile);
 
-    setTempVals();
-
-    // Initialize data containers
-    name = mProfile.getName();
-  }
-
-  public void setTempVals() {
-    // Add some temporary fields to the objects so that
-    // the mash profile has stuff to work with for calculating
-    // temps, volumes, etc.
+    // Adds a single mash step, since by default a mash profile does not have a mash step.
     mProfile.addMashStep(new MashStep(mRecipe));
+
+    // Set variables based on the profile.
+    name = mProfile.getName();
   }
 
   @Override
   public void getList() {
-    profileArray = MainActivity.ingredientHandler.getMashProfileList();
-
-    // If it doesn't contain the current profile
-    // then it is custom and we add it to the list.
-    if (! profileArray.contains(mRecipe.getMashProfile())) {
-      profileArray.add(mRecipe.getMashProfile());
-    }
-
-    // Get mash and sparge type lists for spinners.
+    // Get mash and sparge type lists for spinner values.
     mashTypeArray = Constants.MASH_TYPES;
     spargeTypeArray = Constants.SPARGE_TYPES;
   }
 
   @Override
   public void createSpinner() {
-    MashProfileSpinnerAdapter profileAdapter = new MashProfileSpinnerAdapter(this, profileArray);
-    profileAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-    spinnerView.setAdapter(profileAdapter);
-
     mashTypeSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
     SpinnerAdapter mashTypeAdapter = new SpinnerAdapter(this, mashTypeArray, "Mash Type");
     mashTypeAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -304,35 +291,16 @@ public class AddMashProfileActivity extends AddEditActivity {
 
   @Override
   public void setInitialSpinnerSelection() {
-    spinnerView.setSelection(profileArray.indexOf(mProfile));
     mashTypeSpinner.setSelection(mashTypeArray.indexOf(mProfile.getMashType()));
     spargeTypeSpinner.setSelection(spargeTypeArray.indexOf(mProfile.getSpargeType()));
   }
 
   @Override
   public void configureSpinnerListener() {
-    spinnerListener = new AdapterView.OnItemSelectedListener() {
-
-      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position,
-                                 long id) {
-        mProfile = profileArray.get(position);
-        nameViewText.setText(mProfile.getName());
-        tunTempViewText.setText(String.format("%2.2f", mProfile.getDisplayTunTemp()));
-        grainTempViewText.setText(String.format("%2.2f", mProfile.getDisplayGrainTemp()));
-        spargeTempViewText.setText(String.format("%2.2f", mProfile.getDisplaySpargeTemp()));
-
-        updateMashStepList();
-      }
-
-      public void onNothingSelected(AdapterView<?> parentView) {
-      }
-
-    };
 
     mashTypeSpinnerListener = new AdapterView.OnItemSelectedListener() {
 
-      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position,
-                                 long id) {
+      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
         mProfile.setMashType(mashTypeArray.get(position));
         callback.call();
       }
@@ -357,7 +325,6 @@ public class AddMashProfileActivity extends AddEditActivity {
   }
 
   public void updateMashStepList() {
-    // Layout parameters for listView
     // We have trouble setting the size in XML, so we dynamically do it here based on
     // the number of steps. 149 is a magic number that seems to be the size of the mash step.
     // Add two for each step to handle the borders added in the list.
@@ -376,7 +343,6 @@ public class AddMashProfileActivity extends AddEditActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    //getMenuInflater().inflate(R.menu.activity_add_new_recipe, menu);
     return true;
   }
 
@@ -424,6 +390,7 @@ public class AddMashProfileActivity extends AddEditActivity {
     MashProfile p;
 
     if (resultCode == Constants.RESULT_CANCELED) {
+      Log.d("AddMashProfileActivity", "Add/Edit mash step activity cancelled.");
       return;
     }
 
