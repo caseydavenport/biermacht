@@ -6,11 +6,7 @@ be recorded here
 //////////////////////////////////////////////
 // Issues required for next release. /////////
 //////////////////////////////////////////////
-* Mash profile sparge type does not save
-* Mash profiles have weird default water-to-grain ratio
-* Creating a new mash profile
-* Commas not supported in Mash Step activities.
-* Crash when saving a recipe mash profile to custom when it has been edited but not saved.
+
 
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
@@ -38,13 +34,28 @@ be recorded here
 * Handle actually setting the amount of yeast.
 * Should consider mash temp in ABV calc.
 * Add support for more custom fields to XML import / export.
-* Brewer profiles, social features.  This is a big task.
+* Brewer profiles, social features?  This is a big task.
 * Support measured gravities < 1
 * Can choose where to export recipes.
 * Better integration with Dropbox / Google Drive
 
 //////////////////////////////////////////////
-// Changelog for release 1.0.1 ///////////////
+// Changelog for release 1.0.4 ///////////////
+//////////////////////////////////////////////
+* Mash profile sparge type does not save.
+* Crash when saving a recipe mash profile to custom when it has been edited but not saved.
+* Mash profile can mysteriously disappear.
+* Auto-calculations not performed when step-type changes.
+* Can't manually set mash step amounts.
+
+//////////////////////////////////////////////
+// Changelog for release 1.0.3 ///////////////
+//////////////////////////////////////////////
+* Mash profiles have weird default water-to-grain ratio.
+* Commas not supported in Mash Step activities.
+
+//////////////////////////////////////////////
+// Changelog for release 1.0.2 ///////////////
 //////////////////////////////////////////////
 * Fix crashing when trying to add new custom yeast.
 

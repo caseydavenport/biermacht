@@ -126,7 +126,7 @@ public class RecipeXmlWriter {
       // Create file object
       File file = getStoragePath(filePrefix + dateString + ".xml");
       StreamResult result = new StreamResult(file);
-      Log.d("WriteXmlFile", "Outputing file to:" + file);
+      Log.d("WriteXmlFile", "Writing XML to:" + file);
 
       transformer.transform(source, result);
       this.lastFileLocation = file.getAbsolutePath();
@@ -440,7 +440,7 @@ public class RecipeXmlWriter {
     File sdCard = Environment.getExternalStorageDirectory();
     File filePath = new File(sdCard.getAbsolutePath() + "/BiermachtBrews");
     File file = new File(filePath.getAbsolutePath() + "/", fileName);
-    Log.d("XmlWriter", "Attempting to create " + file.getAbsolutePath());
+    Log.d("XmlWriter", "Attempting to create file: " + file.getAbsolutePath());
     if (! filePath.mkdirs()) {
       Log.e("XmlWriter", "Cannot create directory.");
     }

@@ -217,7 +217,7 @@ public class RecipeXmlReader extends DefaultHandler {
 
     currentElement = false;
 
-    Log.d("RecipeXMLReader", "Reading values: " + qName + ": " + currentValue);
+    Log.d("RecipeXMLReader", "Reading XML - " + qName + ": " + currentValue);
 
     if (qName.equalsIgnoreCase("RECIPE"))
     // We've finished a new recipe
@@ -307,7 +307,6 @@ public class RecipeXmlReader extends DefaultHandler {
       thingTypeStack.pop();
       r.addIngredient(h);
       hopList.add(h);
-      Log.d("RecipeHandler", "Added hop: " + h.getName());
       return;
     }
     else if (qName.equalsIgnoreCase("YEAST"))

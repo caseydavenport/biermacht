@@ -110,6 +110,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
   // Callback for on alertBuilder return.
   public Callback callback;
 
+  // Flags for use by sub-classes
+  public boolean saveRecipeOnSubmit;
+
   // Abstract methods
   public abstract void onMissedClick(View v);
 
@@ -127,6 +130,9 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_edit);
+
+    // By default, save the current recipe when submit is pressed.
+    this.saveRecipeOnSubmit = true;
 
     // Set icon as back button
     getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -349,7 +355,12 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
       Log.d("AddEditActivity", "Successfully acquired values, validate.");
       if (this.validateValues()) {
         Log.d("AddEditActivity", "Values valid, save");
-        mRecipe.save();
+
+        // Some activities don't want to save the recipe on submit.  Such an activity can set this
+        // flag to false, thus not saving the recipe when the submit button is pressed.
+        if (this.saveRecipeOnSubmit) {
+          mRecipe.save();
+        }
         onFinished();
       }
     }

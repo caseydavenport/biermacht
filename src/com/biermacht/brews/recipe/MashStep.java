@@ -209,8 +209,9 @@ public class MashStep implements Parcelable {
   }
 
   public void setDisplayDecoctAmount(double amt) {
+    Log.d("MashStep", "Setting display decoction amount: " + amt);
     if (Units.getVolumeUnits().equals(Units.GALLONS)) {
-      this.decoctAmount = Units.gallonsToLiters(this.decoctAmount);
+      this.decoctAmount = Units.gallonsToLiters(amt);
     }
     else {
       this.decoctAmount = amt;
@@ -236,14 +237,19 @@ public class MashStep implements Parcelable {
 
   public double getDisplayAmount() {
     if (this.getType().equals(DECOCTION)) {
+      Log.d("MashStep", "Returning display decoction amount: " + this.getDisplayDecoctAmount());
       return this.getDisplayDecoctAmount();
     }
     else if (this.getType().equals(INFUSION)) {
+      Log.d("MashStep", "Returning display infusion amount: " + this.getDisplayInfuseAmount());
       return this.getDisplayInfuseAmount();
     }
-    else {
+    else if (this.getType().equals(TEMPERATURE)) {
+      Log.d("MashStep", "Temperature mash, returning 0 for display amount");
       return 0;
     }
+    Log.d("MashStep", "Invalid type: " + this.getType() + ".  Returning -1 for display amount");
+    return - 1;
   }
 
   public double getDisplayInfuseAmount() {
@@ -555,7 +561,7 @@ public class MashStep implements Parcelable {
 
   public MashStep getPreviousStep() throws Exception {
     if (this.firstInList()) {
-      throw new Exception();
+      throw new Exception(); // TODO: This should throw a specific exception.
     }
 
     int idx = this.recipe.getMashProfile().getMashStepList().indexOf(this);

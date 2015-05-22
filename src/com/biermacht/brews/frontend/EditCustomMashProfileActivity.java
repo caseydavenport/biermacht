@@ -1,7 +1,6 @@
 package com.biermacht.brews.frontend;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 
 import com.biermacht.brews.R;
@@ -18,22 +17,6 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
 
     // Add fields we want
     mainView.addView(nameView, 0);
-  }
-
-  @Override
-  public void getValuesFromIntent() {
-    super.getValuesFromIntent();
-
-    // Acquire profile
-    mProfile = getIntent().getParcelableExtra(Constants.KEY_PROFILE);
-
-    // Initialize data containers
-    name = mProfile.getName();
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    return true;
   }
 
   @Override

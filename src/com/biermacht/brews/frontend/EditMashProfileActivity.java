@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.Constants;
@@ -74,46 +73,59 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
 
   @Override
   public void onFinished() {
+    // onFinished is called when the User has chosen to save changes made to the active profile.
+    // Save the profile, then exit the activity.
     mProfile.save(Constants.DATABASE_DEFAULT);
     finish();
   }
 
   @Override
   public void onCancelPressed() {
+    // If cancel is pressed, do not save the current profile.  Just finish the activity
+    // without committing any changes.
     finish();
   }
 
   @Override
   public void onDeletePressed() {
-    // Can't delete these!
+    // This activity is for editing a MashProfile which is attached to a User's recipe.
+    // As such, these can not be deleted (the user should change their recipe to be extract
+    // if their recipe does not use a mash profile).
   }
 
+  /**
+   * Returns a Builder for an AlertDialog which prompts the user if they would like to save the
+   * current recipe's mash profile to be used in future recipes.
+   *
+   * @return AlertDialog.Builder
+   */
   private AlertDialog.Builder saveMashProfileAlert() {
     return new AlertDialog.Builder(this)
             .setTitle("Save Mash Profile?")
             .setMessage("Save this profile for use in other recipes?")
             .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-
               public void onClick(DialogInterface dialog, int which) {
-                mProfile.setName("Profile from " + mRecipe.getRecipeName());
+                mProfile.setName(mRecipe.getRecipeName() + "'s profile");
                 Database.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, mProfile.getOwnerId());
                 onMashProfileSavedAlert().create().show();
               }
-
             })
-
             .setNegativeButton(R.string.cancel, null);
   }
 
+  /**
+   * Returns a Builder for an AlertDialog which informs the User that the active Mash Profile has
+   * been saved for use in other recipes.
+   *
+   * @return AlertDialog.Builder
+   */
   private AlertDialog.Builder onMashProfileSavedAlert() {
     return new AlertDialog.Builder(this)
             .setTitle("Profile Saved")
             .setMessage("Your mash profile has been saved! Make changes in the Mash Profile Editor.")
             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
               public void onClick(DialogInterface dialog, int which) {
               }
-
             });
   }
 }

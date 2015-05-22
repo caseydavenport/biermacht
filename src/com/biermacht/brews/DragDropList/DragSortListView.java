@@ -2197,8 +2197,8 @@ public class DragSortListView extends ListView {
 
   /**
    * Start a drag of item at <code>position</code> using the registered FloatViewManager. Calls
-   * through to {@link #startDrag(int, android.view.View, int, int, int)} after obtaining the floating
-   * View from the FloatViewManager.
+   * through to {@link #startDrag(int, android.view.View, int, int, int)} after obtaining the
+   * floating View from the FloatViewManager.
    *
    * @param position
    *         Item to drag.

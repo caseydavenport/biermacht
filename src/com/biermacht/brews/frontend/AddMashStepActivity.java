@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,7 +28,7 @@ public class AddMashStepActivity extends AddEditActivity {
   public View stepTempView;
   public View waterToGrainRatioView;
   public View infuseTemperatureView;
-  public View stepAmountView;    // Create custom amount view for autocalc.
+  public View stepAmountView;
 
   // Titles
   public TextView stepTempViewTitle;
@@ -43,22 +42,22 @@ public class AddMashStepActivity extends AddEditActivity {
   public TextView infuseTemperatureViewText;
   public TextView stepAmountViewText;
 
-  // mashProfile we are editing
+  // MashStep we are editing and its ID in the database.
   public MashStep step;
   public long stepId;
 
-  // Callbacks for autocalc fields.
+  // Callbacks for auto-calculation fields.
   public BooleanCallback infuseTempCallback;
   public BooleanCallback infuseAmountCallback;
 
-  // step type array
+  // Stores potential MashStep types - Temperature, Infusion, Decoction.
   ArrayList<String> stepTypeArray;
 
   // Data storage
   String type;
   MashProfile profile;
 
-  // Store the original order this step should belong in.
+  // Keeps track of the index of this MashStep in its MashProfile's mash step list.
   public int order;
 
   // Database to use when saving.
@@ -68,7 +67,13 @@ public class AddMashStepActivity extends AddEditActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // Disable delete button for this view
+    // Indicate to the superclass that it should not save the active Recipe (mRecipe) upon
+    // successful completion of this Activity.  The Recipe should not be saved by this activity,
+    // instead it should be saved when the entire MashProfile is saved.
+    this.saveRecipeOnSubmit = false;
+
+    // Disable delete button for this view, as delete is not a valid operation when adding a
+    // MashStep.
     findViewById(R.id.delete_button).setVisibility(View.GONE);
 
     // Inflate views
@@ -121,18 +126,23 @@ public class AddMashStepActivity extends AddEditActivity {
   public void onMissedClick(View v) {
     AlertDialog alert;
     if (v.equals(infuseTemperatureView)) {
-      alert = alertBuilder.editTextFloatCheckBoxAlert(infuseTemperatureViewText, infuseTemperatureViewTitle,
-                                                      step.getAutoCalcInfuseTemp(), infuseTempCallback).create();
+      alert = alertBuilder.editTextFloatCheckBoxAlert(infuseTemperatureViewText,
+                                                      infuseTemperatureViewTitle,
+                                                      step.getAutoCalcInfuseTemp(),
+                                                      infuseTempCallback).create();
     }
     else if (v.equals(stepTempView)) {
       alert = alertBuilder.editTextFloatAlert(stepTempViewText, stepTempViewTitle).create();
     }
     else if (v.equals(waterToGrainRatioView)) {
       if (step.firstInList()) {
-        alert = alertBuilder.editTextFloatAlert(waterToGrainRatioViewText, waterToGrainRatioViewTitle).create();
+        alert = alertBuilder.editTextFloatAlert(waterToGrainRatioViewText,
+                                                waterToGrainRatioViewTitle).create();
       }
       else {
-        alert = alertBuilder.editTextDisabled(waterToGrainRatioViewText, waterToGrainRatioViewTitle, Constants.MESSAGE_AUTO_CALC_W2GR).create();
+        alert = alertBuilder.editTextDisabled(waterToGrainRatioViewText,
+                                              waterToGrainRatioViewTitle,
+                                              Constants.MESSAGE_AUTO_CALC_W2GR).create();
       }
     }
     else if (v.equals(stepAmountView)) {
@@ -140,15 +150,17 @@ public class AddMashStepActivity extends AddEditActivity {
         alert = alertBuilder.editTextFloatAlert(stepAmountViewText, stepAmountViewTitle).create();
       }
       else {
-        alert = alertBuilder.editTextFloatCheckBoxAlert(stepAmountViewText, stepAmountViewTitle,
-                                                        step.getAutoCalcInfuseAmt(), infuseAmountCallback).create();
+        alert = alertBuilder.editTextFloatCheckBoxAlert(stepAmountViewText,
+                                                        stepAmountViewTitle,
+                                                        step.getAutoCalcInfuseAmt(),
+                                                        infuseAmountCallback).create();
       }
     }
     else {
       return;
     }
 
-    // Force keyboard open and show popup
+    // Force keyboard open and show the chosen alert.
     alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     alert.show();
   }
@@ -156,7 +168,7 @@ public class AddMashStepActivity extends AddEditActivity {
   @Override
   public void createCallback() {
     // Default callback, called when alertBuilders are finished.
-    // Allows us to update fields that are dependent on other fields.
+    // Allows us to update fields that are dependent on other field values.
     callback = new Callback() {
       @Override
       public void call() {
@@ -172,7 +184,7 @@ public class AddMashStepActivity extends AddEditActivity {
       }
     };
 
-    // Callbacks for autocalculation.
+    // Called when the "auto-calculate" checkbox is pressed for Infuse temperature.
     infuseTempCallback = new BooleanCallback() {
       @Override
       public void call(boolean b) {
@@ -184,7 +196,7 @@ public class AddMashStepActivity extends AddEditActivity {
       }
     };
 
-    // Callbacks for autocalculation.
+    // Called when the "auto-calculate" checkbox is pressed for Infuse amount.
     infuseAmountCallback = new BooleanCallback() {
       @Override
       public void call(boolean b) {
@@ -198,6 +210,7 @@ public class AddMashStepActivity extends AddEditActivity {
   }
 
   public void setValues() {
+    Log.d("AddMashStepActivity", "Setting TextView values based on the MashStep");
     nameViewText.setText(step.getName());
     timeViewText.setText(String.format("%d", (int) step.getStepTime()));
     stepAmountViewText.setText(String.format("%2.2f", step.getDisplayAmount()));
@@ -216,19 +229,25 @@ public class AddMashStepActivity extends AddEditActivity {
     // Set the recipes profile
     mRecipe.setMashProfile(profile);
 
-    // Get step, if not found, create new one.
-    // Create a new step, add to profile.
+    // Attempt to get the MashStep from the intent which started this Activity.  When adding a
+    // mash step, we do not expect to find one in the intent.  When editing a mash step, we do.
     try {
       step = getIntent().getParcelableExtra(Constants.KEY_MASH_STEP);
       step.setRecipe(mRecipe);
     } catch (Exception e) {
+      // If the step was not found, create a new one.  Call out to onStepNotFound() to do this work.
+      Log.d("AddMashStepActivity", "Mash step not provided in Intent, call onStepNotFound()");
       onStepNotFound();
     }
 
-    // Store off step order.
+    // Store off this step's order in the mash step list.
     order = step.getOrder();
   }
 
+  /**
+   * Called when a MashStep is not provided via the Intent which started this Activity.  Creates a
+   * new MashStep and adds it to the active profile.
+   */
   public void onStepNotFound() {
     step = new MashStep(mRecipe);
     profile.addMashStep(step);
@@ -236,17 +255,18 @@ public class AddMashStepActivity extends AddEditActivity {
     // Get step id.
     stepId = getIntent().getLongExtra(Constants.KEY_MASH_STEP_ID, Constants.INVALID_ID);
 
-    // Get the database to save to.
+    // Get the database to save to.  This varies based on whether we are editing a floating
+    // custom MashProfile, or if this MashProfile is attached to a user's recipe.
     database = getIntent().getLongExtra(Constants.KEY_DATABASE_ID, Constants.DATABASE_DEFAULT);
 
-    // See if there is a previous step.  Will throw an excpetion if this is the first
-    // step in the list, and we will just use this step's stuff.
+    // Since we're adding a new step, we should increment the step temperature, unless this is
+    // the first step in the list.  If this is not the first step in the list, increment the
+    // temperature by 2.77C (5F).
     try {
-      Log.d("AddMashStepActivity", "Step is not first in list, using previous step temp");
-      step.setBeerXmlStandardStepTemp(step.getPreviousStep().getBeerXmlStandardStepTemp() + 2.77777);
+      step.setBeerXmlStandardStepTemp(step.getPreviousStep().getBeerXmlStandardStepTemp() + 2.7777);
+      Log.d("AddMashStepActivity", "Step is not first in list, increment temperature.");
     } catch (Exception e) {
       Log.d("AddMashStepActivity", "Step is first in list, using own step temp.");
-      e.printStackTrace();
     }
   }
 
@@ -257,6 +277,7 @@ public class AddMashStepActivity extends AddEditActivity {
 
   @Override
   public void createSpinner() {
+    // Configure the spinner adapter for the MashStep type spinner.
     SpinnerAdapter adapter = new SpinnerAdapter(this, stepTypeArray, "Type");
     adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
     spinnerView.setAdapter(adapter);
@@ -264,7 +285,9 @@ public class AddMashStepActivity extends AddEditActivity {
 
   @Override
   public void setInitialSpinnerSelection() {
-    //
+    // Do nothing.  Since we're adding a new MashStep, there is no required
+    // initial position.  When editing a MashStep, this method is overridden to initialize the
+    // spinner to the active MashStep's type.
   }
 
   @Override
@@ -273,9 +296,9 @@ public class AddMashStepActivity extends AddEditActivity {
 
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
         type = stepTypeArray.get(position);
+        step.setType(type);
 
-        // Decoction mashes don't have an infuse amount, but they do have
-        // a decoction amount.
+        // We need to set the correct titles and visible views based on the selected MashStep type.
         if (type.equals(MashStep.DECOCTION)) {
           stepAmountViewTitle.setText("Amount to decoct (" + Units.getVolumeUnits() + ")");
           infuseTemperatureView.setVisibility(View.GONE);
@@ -303,12 +326,13 @@ public class AddMashStepActivity extends AddEditActivity {
     };
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    //getMenuInflater().inflate(R.menu.activity_add_new_recipe, menu);
-    return true;
-  }
-
+  /**
+   * Override this method so that we can return a RESULT_CANCELED code when the user pressed the
+   * home or back button.
+   *
+   * @param item
+   * @return
+   */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -321,6 +345,40 @@ public class AddMashStepActivity extends AddEditActivity {
     return super.onOptionsItemSelected(item);
   }
 
+  /**
+   * Acquire values from user-input EditTexts.  Invalid-values should throw an Exception, indicating
+   * to the superclass that the activity cannot be finished, since the user has input invalid
+   * values.
+   *
+   * @throws Exception
+   */
+  @Override
+  public void acquireValues() throws Exception {
+    super.acquireValues();
+    double stepTemp = Double.parseDouble(stepTempViewText.getText().toString().replace(",", "."));
+    double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString().replace(",", "."));
+    double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString().replace(",", "."));
+    amount = Double.parseDouble(stepAmountViewText.getText().toString().replace(",", "."));
+
+    if (step.getType().equals(MashStep.INFUSION)) {
+      step.setDisplayInfuseAmount(amount);
+    }
+    else if (step.getType().equals(MashStep.DECOCTION)) {
+      step.setDisplayDecoctAmount(amount);
+    }
+
+    step.setStepTime(time);
+    step.setType(type);
+    step.setDisplayStepTemp(stepTemp);
+    step.setDisplayWaterToGrainRatio(waterToGrainRatio);
+    step.setDisplayInfuseTemp(infuseTemp);
+    step.setName(name);
+  }
+
+  /**
+   * The user has chosen to save this MashStep.  Return the active MashProfile and step to the
+   * calling activity.
+   */
   @Override
   public void onFinished() {
     Intent result = new Intent();
@@ -331,38 +389,22 @@ public class AddMashStepActivity extends AddEditActivity {
     finish();
   }
 
-  @Override
-  public void acquireValues() throws Exception {
-    super.acquireValues();
-    double stepTemp = Double.parseDouble(stepTempViewText.getText().toString().replace(",", "."));
-    double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString()
-                                                   .replace(",", "."));
-    double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString()
-                                                          .replace(",", "."));
-
-    step.setDisplayInfuseAmount(amount);
-    step.setStepTime(time);
-    step.setType(type);
-    step.setDisplayStepTemp(stepTemp);
-    step.setDisplayWaterToGrainRatio(waterToGrainRatio);
-    step.setDisplayInfuseTemp(infuseTemp);
-    step.setName(name);
-  }
-
+  /**
+   * The user has pressed the Cancel button.  Return to the MashProfile activity, indicating the
+   * result to be RESULT_CANCELED.  The receiving activity will use this code to determine the
+   * result of this activity.  Do not return the active MashProfile, since it has not been updated.
+   */
   @Override
   public void onCancelPressed() {
     setResult(Constants.RESULT_CANCELED, new Intent());
     finish();
   }
 
+  /**
+   * Since we are adding a new MashStep, delete is an invalid operation.  The delete button is not
+   * shown for this Activity.
+   */
   @Override
   public void onDeletePressed() {
-    profile.removeMashStep(order);
-    Intent result = new Intent();
-    result.putExtra(Constants.KEY_MASH_STEP, step);
-    result.putExtra(Constants.KEY_MASH_PROFILE, profile);
-    result.putExtra(Constants.KEY_MASH_STEP_ID, stepId);
-    setResult(Constants.RESULT_DELETED, result);
-    finish();
   }
 }

@@ -143,7 +143,10 @@ public class AddMashProfileActivity extends AddEditActivity {
     mashStepTitleViewText = (TextView) mashStepTitleView.findViewById(R.id.title);
     mashStepTitleViewText.setText("Mash Steps");
 
-    // Add mash step button
+    // Listener for mash step list.  When a MashStep is clicked, this listener
+    // starts the AddMashStepActivity, passing the current Profile / Recipe.  The
+    // AddMashStepActivity will, upon completion, return an updated Recipe object which includes
+    // the most up-to-date MashProfile and MashStep list (with any new MashStep, if one was created)
     addMashStepButton = (ImageButton) mashStepTitleView.findViewById(R.id.button);
     addMashStepButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -163,7 +166,6 @@ public class AddMashProfileActivity extends AddEditActivity {
     mainView.removeView(spinnerView);
 
     // Add views that we want
-    //mainView.addView(mashTypeSpinner);
     mainView.addView(spargeTypeSpinner);
     mainView.addView(spargeTempView);
     mainView.addView(tunTempView);
@@ -173,7 +175,10 @@ public class AddMashProfileActivity extends AddEditActivity {
     mainView.addView(mashStepTitleView);
     mainView.addView(dragDropListView);
 
-    // Listener for mash step list
+    // Listener for mash step list.  When a MashStep is clicked, this listener
+    // starts the EditMashStepActivity, passing the current Profile / Recipe, as well as the
+    // Mash Step which was clicked.  The EditMashStepActivity will, upon completion, return
+    // an updated Recipe object which includes the most up-to-date MashProfile and MashStep list.
     dragDropListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
@@ -217,6 +222,11 @@ public class AddMashProfileActivity extends AddEditActivity {
     alert.show();
   }
 
+  /**
+   * Creates an Activity-wide callback object which can be called whenever values change which
+   * require a mash step list update, or require setting values on the active MashProfile
+   * (mProfile)
+   */
   public void createCallback() {
     callback = new Callback() {
       @Override
@@ -358,6 +368,7 @@ public class AddMashProfileActivity extends AddEditActivity {
 
   @Override
   public void onFinished() {
+    Log.d("AddMashProfileActivity", "Saving MashProfile");
     mProfile.save(Constants.DATABASE_CUSTOM);
     finish();
   }
@@ -377,6 +388,7 @@ public class AddMashProfileActivity extends AddEditActivity {
 
   @Override
   public void onCancelPressed() {
+    Log.d("AddMashProfileActivity", "Cancel Pressed.");
     finish();
   }
 
@@ -385,6 +397,17 @@ public class AddMashProfileActivity extends AddEditActivity {
 
   }
 
+  /**
+   * Called when the User completes an a call to Add or Edit a MashStep in the list of this
+   * MashProfile.  Upon return, this method will receive an updated MashProfile, or NULL (if the
+   * user canceled the activity). This method updates the current active MashProfile (mProfile), and
+   * sets the profile for the active Recipe (mRecipe).  Or, if NULL is returned, this method does
+   * nothing.
+   *
+   * @param requestCode
+   * @param resultCode
+   * @param data
+   */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     MashProfile p;
@@ -414,6 +437,7 @@ public class AddMashProfileActivity extends AddEditActivity {
 
     // Set the new profile.
     mProfile = p;
+    mRecipe.setMashProfile(mProfile);
     updateMashStepList();
     super.onActivityResult(requestCode, resultCode, data);
   }
