@@ -6,9 +6,7 @@ be recorded here
 //////////////////////////////////////////////
 // Issues required for next release. /////////
 //////////////////////////////////////////////
-* Views going off screen in mash step list.
-* Timer counting down at wrong rate.
-* Default mash profiles have wrong water-to-grain values from previous versions.
+* Remove hokey start-of-day mash step water-to-grain ratio thing when no users on less than version 8 (v1.0.5).
 
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
@@ -39,6 +37,13 @@ be recorded here
 * Support measured gravities < 1
 * Can choose where to export recipes.
 * Better integration with Dropbox / Google Drive
+
+//////////////////////////////////////////////
+// Changelog for release 1.0.5 ///////////////
+//////////////////////////////////////////////
+* Views going off screen in mash step list.
+* Timer counting down at wrong rate.
+* Default mash profiles have wrong water-to-grain values from previous versions.
 
 //////////////////////////////////////////////
 // Changelog for release 1.0.4 ///////////////
