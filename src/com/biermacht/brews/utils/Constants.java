@@ -63,6 +63,7 @@ public class Constants {
   public static final String PREF_LAST_OPENED = "com.biermacht.brews.lastOpened";
   public static final String PREF_BREWER_NAME = "com.biermacht.brews.brewerName";
   public static final String PREF_MEAS_SYSTEM = "com.biermacht.brews.measurementSystem";
+  public static final String PREF_FIXED_RATIOS = "com.biermacht.brews.waterToGrainRatiosFixed";
 
   // Activity for result return codes
   public static final int RESULT_DELETED = 1;

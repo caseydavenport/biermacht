@@ -6,7 +6,9 @@ be recorded here
 //////////////////////////////////////////////
 // Issues required for next release. /////////
 //////////////////////////////////////////////
-
+* Views going off screen in mash step list.
+* Timer counting down at wrong rate.
+* Default mash profiles have wrong water-to-grain values from previous versions.
 
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
@@ -14,7 +16,6 @@ be recorded here
 * Option for flame-out hops (calculate IBU)
 * Some misc items use volume instead of weight (orange peel, coriander seeds, for example)
 * Can search web for BeerXML Recipes
-* Mash strike temperature calculator.
 * Can't start brew timer if all grain, no mash steps.
 * Calculate water to grain ratio when not auto calculating water to add.
 * When entering measured gravity, user can also input temperature.

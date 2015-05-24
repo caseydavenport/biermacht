@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -213,10 +214,10 @@ class Timer extends BroadcastReceiver {
     if (timerState != Constants.RUNNING) {
       timerState = Constants.RUNNING;
       remainingSeconds = seconds;
-      this.alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                            SystemClock.elapsedRealtime() + 1000,
-                            pendingTimerIntent);
     }
+
+    // Schedule the first timer callback.
+    this.scheduleTimerTick();
   }
 
   // Alternative to start(time) which just continues using the current
@@ -258,11 +259,29 @@ class Timer extends BroadcastReceiver {
       stop();
     }
 
-    // If the timer is running, schedule a new tick
-    if (timerState == Constants.RUNNING) {
-      alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                       SystemClock.elapsedRealtime() + 1000,
-                       pendingTimerIntent);
+    // Schedule the next timer callback.
+    this.scheduleTimerTick();
+  }
+
+  /**
+   * Schedules a system alarm in 1000 milliseconds.  This alarm is received by the Service and is
+   * used to update the timer.
+   */
+  public void scheduleTimerTick() {
+    // For pre-KITKAT version of Android, AlarmManager.set() schedules an exact time in the future.
+    // For post-KITKAT version of Android, setExact() was added to perform this function, and set()
+    // is no-longer guaranteed to be exact (the OS may choose the reschedule in order to save
+    // battery life).  We don't want to allow the OS to reschedule the timer, so make sure to use
+    // setExact() if it is available.
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      this.alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                                 SystemClock.elapsedRealtime() + 1000,
+                                 pendingTimerIntent);
+    }
+    else {
+      this.alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                            SystemClock.elapsedRealtime() + 1000,
+                            pendingTimerIntent);
     }
   }
 }

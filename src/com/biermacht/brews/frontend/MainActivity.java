@@ -36,6 +36,8 @@ import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
+import com.biermacht.brews.recipe.MashProfile;
+import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
@@ -105,12 +107,12 @@ public class MainActivity extends Activity {
     databaseInterface = new DatabaseInterface(getApplicationContext());
     databaseInterface.open();
 
-    // SHARED PREFERENCES JUNK ALL GOES HERE!
-    SharedPreferences preferences = this.getSharedPreferences(Constants.PREFERENCES, Context
-            .MODE_PRIVATE);
+    // Check for important shared preferences flags and perform any required actions.
+    SharedPreferences preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
     usedBefore = preferences.getBoolean(Constants.PREF_USED_BEFORE, false);
     if (! usedBefore) {
-      // We've used the app! Woo!
+      // This is the first time the app has been used.  Mark that the app has been opened, and
+      // perform first-time use setup task.
       preferences.edit().putBoolean(Constants.PREF_USED_BEFORE, true).commit();
       new ImportXmlIngredientsTask(this).execute("");
 
@@ -118,9 +120,58 @@ public class MainActivity extends Activity {
       Database.createRecipeWithName("Master Recipe");
     }
     else {
-      // Async Initialize Assets on startup
+      // Async Initialize Assets on startup.
       new InitializeTask(ingredientHandler).execute("");
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // BEGIN BAD HACKY TEMPORARY FIX.
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Temporary fix - initial mash profiles which came with early version of Biermacht had
+    // bad water-to-grain ratios for their Mash In steps.  This procedure re-sets them to the correct
+    // values. This should be removed once enough of the user-base has upgraded to this SW version.
+    boolean fixedRatios = preferences.getBoolean(Constants.PREF_FIXED_RATIOS, false);
+    if (!fixedRatios)
+    {
+      // Get all profiles from the Custom database.  Iterate through, change the water-to-grain
+      // ratio for those what are wrong, and save them.
+      preferences.edit().putBoolean(Constants.PREF_FIXED_RATIOS, true).commit();
+      ArrayList<MashProfile> l = new ArrayList<MashProfile>();
+      l.addAll(Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM));
+      MashStep s;
+      Recipe masterRecipe;
+      try {
+        masterRecipe = Database.getRecipeWithId(Constants.MASTER_RECIPE_ID);
+      } catch (Exception e)
+      {
+        masterRecipe = new Recipe();
+      }
+      ArrayList<String> nameList = new ArrayList<String>();
+      nameList.add("Decoction Mash");
+      nameList.add("Infusion, Full Body");
+      nameList.add("Infusion, Light Body");
+      nameList.add("Infusion, Medium Body");
+
+      for (MashProfile mp : l) {
+        masterRecipe.setMashProfile(mp);
+        if (nameList.contains(mp.getName()))
+        {
+          s = mp.getMashStepList().get(0);
+          if (s.getBeerXmlStandardWaterToGrainRatio() > 4.2) {
+            if (mp.getName().contains("Infusion")) {
+              s.setBeerXmlStandardWaterToGrainRatio(2.607);
+            }
+            else {
+              s.setBeerXmlStandardWaterToGrainRatio(4.1727);
+            }
+            mp.save(Constants.DATABASE_CUSTOM);
+          }
+        }
+      }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // END BAD HACKY TEMPORARY FIX.
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Initialize storage for imported recipes
     foundImportedRecipes = new ArrayList<Recipe>();

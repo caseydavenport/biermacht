@@ -4,7 +4,7 @@
     xmlns:dslv="http://schemas.android.com/apk/res-auto"
     android:id="@+id/listview"
     android:layout_width="fill_parent"
-    android:layout_height="350dip"
+    android:layout_height="wrap_content"
     android:dividerHeight="1dp"
     android:background="@color/transparent"
     dslv:drag_enabled="true"
