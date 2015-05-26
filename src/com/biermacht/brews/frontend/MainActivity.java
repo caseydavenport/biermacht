@@ -131,8 +131,7 @@ public class MainActivity extends Activity {
     // bad water-to-grain ratios for their Mash In steps.  This procedure re-sets them to the correct
     // values. This should be removed once enough of the user-base has upgraded to this SW version.
     boolean fixedRatios = preferences.getBoolean(Constants.PREF_FIXED_RATIOS, false);
-    if (!fixedRatios)
-    {
+    if (! fixedRatios) {
       // Get all profiles from the Custom database.  Iterate through, change the water-to-grain
       // ratio for those what are wrong, and save them.
       preferences.edit().putBoolean(Constants.PREF_FIXED_RATIOS, true).commit();
@@ -142,8 +141,7 @@ public class MainActivity extends Activity {
       Recipe masterRecipe;
       try {
         masterRecipe = Database.getRecipeWithId(Constants.MASTER_RECIPE_ID);
-      } catch (Exception e)
-      {
+      } catch (Exception e) {
         masterRecipe = new Recipe();
       }
       ArrayList<String> nameList = new ArrayList<String>();
@@ -154,8 +152,7 @@ public class MainActivity extends Activity {
 
       for (MashProfile mp : l) {
         masterRecipe.setMashProfile(mp);
-        if (nameList.contains(mp.getName()))
-        {
+        if (nameList.contains(mp.getName())) {
           s = mp.getMashStepList().get(0);
           if (s.getBeerXmlStandardWaterToGrainRatio() > 4.2) {
             if (mp.getName().contains("Infusion")) {

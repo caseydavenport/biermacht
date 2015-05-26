@@ -22,11 +22,12 @@ import java.util.ArrayList;
 
 public class RecipeXmlReader extends DefaultHandler {
 
-  // Hold the current elements
-  boolean currentElement = false;
+  // Use a stringBuilder to store the characters read by the parser.  When the end of the
+  // element is reached, they are converted to a String and stored in currentValue.
   String currentValue = null;
+  StringBuilder stringBuilder;
 
-  // Lists to store all the things
+  // Lists to store all the objects created from the parsed XML.
   ArrayList<Recipe> list = new ArrayList<Recipe>();
   ArrayList<Ingredient> fermList = new ArrayList<Ingredient>();
   ArrayList<Ingredient> hopList = new ArrayList<Ingredient>();
@@ -94,7 +95,8 @@ public class RecipeXmlReader extends DefaultHandler {
   public void startElement(String uri, String localName, String qName, Attributes attributes)
           throws SAXException {
 
-    currentElement = true;
+    // Create a new StringBuilder to house the characters read for this element
+    stringBuilder = new StringBuilder();
 
     // We encounter a new recipe
     if (qName.equalsIgnoreCase("RECIPES")) {
@@ -215,7 +217,8 @@ public class RecipeXmlReader extends DefaultHandler {
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
 
-    currentElement = false;
+    // Convert the contents of the StringBuilder to a String.
+    currentValue = stringBuilder.toString().trim();
 
     Log.d("RecipeXMLReader", "Reading XML - " + qName + ": " + currentValue);
 
@@ -569,10 +572,8 @@ public class RecipeXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("MAX_IN_BATCH")) {
-        if (currentElement != false) {
-          double maxInBatch = Double.parseDouble(currentValue.replace(",", "."));
-          f.setMaxInBatch(maxInBatch);
-        }
+        double maxInBatch = Double.parseDouble(currentValue.replace(",", "."));
+        f.setMaxInBatch(maxInBatch);
       }
 
       else if (qName.equalsIgnoreCase("RECOMMEND_MASH")) {
@@ -1143,12 +1144,15 @@ public class RecipeXmlReader extends DefaultHandler {
   }
 
   @Override
-  public void characters(char[] ch, int start, int length)
-          throws SAXException {
+  public void characters(char[] ch, int start, int length) throws SAXException {
 
-    if (currentElement) {
-      currentValue = new String(ch, start, length);
-      currentElement = false;
+    // Populate the stringBuilder with characters read from the parser.  When the parser
+    // indicates that it has reached the end of this element via a call to endElement(), we will
+    // convert the contents of this builder to a string.
+    if (stringBuilder != null) {
+      for (int i = start; i < start + length; i++) {
+        stringBuilder.append(ch[i]);
+      }
     }
 
   }
