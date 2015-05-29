@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -81,7 +82,7 @@ public class BrewTimerService extends Service {
       Log.e("BrewTimerService", "NULL intent passed to brew timer service.  Likely due to " +
               "a service restart.  Canceling the service!");
       stopSelf();
-      return Service.START_NOT_STICKY;
+      return Service.START_STICKY;
     }
 
     // Use the service ID to keep track of our corresponding notification
@@ -105,7 +106,7 @@ public class BrewTimerService extends Service {
     // Indicate that the service is running
     BrewTimerService.isRunning = true;
 
-    return Service.START_NOT_STICKY;
+    return Service.START_STICKY;
   }
 
   @Override
@@ -115,14 +116,12 @@ public class BrewTimerService extends Service {
 
     // Unregister receivers
     unregisterReceiver(countdownReceiver);
-    unregisterReceiver(timer);
     unregisterReceiver(messageHandler);
   }
 
   public void registerReceivers() {
     // Create and register a new Timer.  This will count down and broadcast the remaining time.:w
     timer = new Timer(this);
-    registerReceiver(timer, new IntentFilter(Constants.BROADCAST_TIMER));
 
     // Register our receiver for remaining time broadcasts
     registerReceiver(countdownReceiver, new IntentFilter(Constants.BROADCAST_REMAINING_TIME));
@@ -189,8 +188,8 @@ public class BrewTimerService extends Service {
   }
 }
 
-// Broadcast receiver
-class Timer extends BroadcastReceiver {
+
+class Timer {
   // Keep track of timer state
   public int timerState = Constants.STOPPED;
 
@@ -199,89 +198,78 @@ class Timer extends BroadcastReceiver {
 
   // More private fields
   private Context c;
-  AlarmManager alarmManager;
-  PendingIntent pendingTimerIntent;
+  CountDownTimer timer;
 
   public Timer(Context c) {
     super();
     this.c = c;
-    this.alarmManager = (AlarmManager) (c.getSystemService(Context.ALARM_SERVICE));
-    this.pendingTimerIntent = PendingIntent.getBroadcast(c, 0, new Intent(Constants.BROADCAST_TIMER), 0);
-
   }
 
+  /**
+   * Starts the timer, initializing the timer to the given number of seconds.  If the timer is
+   * already running, this is a no-op.
+   * @param seconds
+   */
   public void start(int seconds) {
     if (timerState != Constants.RUNNING) {
       timerState = Constants.RUNNING;
       remainingSeconds = seconds;
-    }
 
-    // Schedule the first timer callback.
-    this.scheduleTimerTick();
+      // Create a new countdown timer which starts at the given number of seconds, and counts
+      // down at a rate of one tick per 1000 milliseconds.
+      timer = new CountDownTimer(seconds * 1000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+          remainingSeconds = (int) millisUntilFinished / 1000;
+          broadcastTime();
+        }
+
+        @Override
+        public void onFinish() {
+          // When the timer is finished, advertise that there is no time left remaining.  This
+          // case it not handled by onTick(), since it is never called with 0 time remaining.
+          remainingSeconds = 0;
+          broadcastTime();
+        }
+      };
+      timer.start();
+    }
   }
 
-  // Alternative to start(time) which just continues using the current
-  // remaining seconds.
+  /**
+   * An alternative to start(time) which starts the timer with the remaining number
+   * of seconds left.
+   */
   public void start() {
     start(remainingSeconds);
   }
 
+  /**
+   * Stops timer execution.  This cancels the current timer and sets the timerState
+   * appropriately.
+   */
   public void stop() {
     timerState = Constants.STOPPED;
+    timer.cancel();
   }
 
+  /**
+   * Pauses timer execution. This cancels the current timer, and sets the timerState
+   * appropriately.
+   */
   public void pause() {
     timerState = Constants.PAUSED;
+    timer.cancel();
   }
 
+  /**
+   * Broadcasts the current remaining time to the BrewTimerActivity, where it is displayed
+   * in the timer view.
+   */
   public void broadcastTime() {
     Intent i = new Intent();
     i.setAction(Constants.BROADCAST_REMAINING_TIME);
     i.putExtra(Constants.KEY_SECONDS, remainingSeconds);
     c.sendBroadcast(i);
-  }
-
-  @Override
-  public void onReceive(Context c, Intent i) {
-    // If we're not running, stop ticking down.
-    if (timerState != Constants.RUNNING) {
-      return;
-    }
-
-    // Decrement current seconds
-    remainingSeconds = remainingSeconds - 1;
-
-    // Broadcast time
-    broadcastTime();
-
-    // Stop when we reach zero seconds remaining
-    if (remainingSeconds <= 0) {
-      stop();
-    }
-
-    // Schedule the next timer callback.
-    this.scheduleTimerTick();
-  }
-
-  /**
-   * Schedules a system alarm in 1000 milliseconds.  This alarm is received by the Service and is
-   * used to update the timer.
-   */
-  public void scheduleTimerTick() {
-    // For pre-KITKAT version of Android, AlarmManager.set() schedules an exact time in the future.
-    // For post-KITKAT version of Android, setExact() was added to perform this function, and set()
-    // is no-longer guaranteed to be exact (the OS may choose the reschedule in order to save
-    // battery life).  We don't want to allow the OS to reschedule the timer, so make sure to use
-    // setExact() if it is available.
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-      this.alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                                 SystemClock.elapsedRealtime() + 1000,
-                                 pendingTimerIntent);
-    }
-    else {
-      this.alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                            SystemClock.elapsedRealtime() + 1000,
-                            pendingTimerIntent);
-    }
   }
 }

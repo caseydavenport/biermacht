@@ -398,6 +398,10 @@ public class BrewTimerActivity extends FragmentActivity {
   }
 
   public void stop() {
+    // Set the currently displayed page to be the first instruction.
+    mViewPager.setCurrentItem(0);
+    currentItem = 0;
+
     // Tell the timer serviced that we've stopped
     Intent i = new Intent();
     i.setAction(Constants.BROADCAST_TIMER_CONTROLS);
@@ -494,7 +498,7 @@ public class BrewTimerActivity extends FragmentActivity {
   }
 
   public void setTimerFromCurrentStep() {
-    if (! inst.showTimer()) {
+    if (!inst.showTimer()) {
       setTimerToNull();
     }
     else {
@@ -548,7 +552,6 @@ public class BrewTimerActivity extends FragmentActivity {
         break;
       }
       case R.id.stop_button: {
-        mViewPager.setCurrentItem(0);
         stop();
         break;
       }
