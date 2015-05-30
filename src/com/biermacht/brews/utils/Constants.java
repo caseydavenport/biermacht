@@ -42,6 +42,8 @@ public class Constants {
   public static final String COMMAND_STOP = "biermacht.brews.commands.stop";
   public static final String COMMAND_PAUSE = "biermacht.brews.commands.pause";
   public static final String COMMAND_QUERY = "biermacht.brews.commands.query";
+  public static final String COMMAND_STOP_ALARM = "biermacht.brews.commands.stop.alarm";
+
 
   // Different virtual databases
   public static final long DATABASE_PERMANENT = 2;  // Imported from assets.  Save these.

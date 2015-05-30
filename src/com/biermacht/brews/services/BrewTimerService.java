@@ -8,6 +8,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
@@ -40,10 +43,23 @@ public class BrewTimerService extends Service {
   // Current step
   private int currentStepNumber;
 
+  // Intent to start the BrewTimerActivity.  This is created and maintained when
+  // the notification is updated.
+  private Intent brewTimerIntent;
+
+  // Ringtone to use when a step completes and the alarm is triggered.
+  private Ringtone ringtone;
+
   // Receive timer updates using a CountdownReceiver
   private CountdownReceiver countdownReceiver = new CountdownReceiver() {
     @Override
     public void onNewTime(int seconds) {
+      if (seconds == 0) {
+        // The timer has finished counting down - start the alarm.
+        ringtone.play();
+      }
+
+      // Update the notification.
       updateNotification(notificationTitle, seconds);
     }
   };
@@ -54,21 +70,35 @@ public class BrewTimerService extends Service {
       String command = intent.getStringExtra(Constants.KEY_COMMAND);
 
       if (command.equals(Constants.COMMAND_STOP)) {
+        // We've received a stop command - stop the timer.  No notification update is necessary,
+        // as the service is about to be torn down by the BrewTimerActivity.
         Log.d("BrewTimerService", "Received command to stop timer");
         timer.stop();
       }
       else if (command.equals(Constants.COMMAND_PAUSE)) {
+        // We've received a pause command - pause the timer, and update the notification
+        // to include that the timer is paused.  Updating the notification is necessary, so that
+        // the correct pending intent is stored.
         Log.d("BrewTimerService", "Received command to pause timer");
         timer.pause();
+        updateNotification(notificationTitle, timer.remainingSeconds);
       }
       else if (command.equals(Constants.COMMAND_START)) {
+        // Received a start command - start the timer.  No update to the notification is
+        // necessary, as this will occur on each timer tick.  Get the remaining seconds from the
+        // Intent.  If no timer is provided, use the current timer's remaining seconds.
         Log.d("BrewTimerService", "Received command to start timer");
         int seconds = intent.getIntExtra(Constants.KEY_SECONDS, timer.remainingSeconds);
         timer.start(seconds);
       }
       else if (command.equals(Constants.COMMAND_QUERY)) {
+        // Received a query for current timer state - respond with the current timer state.
         Log.d("BrewTimerService", "Received command to query data");
         respondToQuery();
+      }
+      else if (command.equals(Constants.COMMAND_STOP_ALARM)) {
+        Log.d("BrewTimerService", "Received command to stop alarm.");
+        ringtone.stop();
       }
       else {
         Log.e("BrewTimerService", "Received unknown command: " + command);
@@ -94,14 +124,24 @@ public class BrewTimerService extends Service {
     r = intent.getParcelableExtra(Constants.KEY_RECIPE);
     int startTime = intent.getIntExtra(Constants.KEY_SECONDS, - 1);
 
-    // Create the notification
-    updateNotification(notificationTitle, startTime);
+    // Create and register a new Timer.  This will count down and broadcast the remaining time.
+    timer = new Timer(this);
 
     // Register timer receivers
     registerReceivers();
 
+    // Set up ringtone to alert user when timer is complete.
+    Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+    if (uri == null) {
+      uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    }
+    ringtone = RingtoneManager.getRingtone(this, uri);
+
     // Start the timer
     timer.start(startTime);
+
+    // Create the notification
+    updateNotification(notificationTitle, startTime);
 
     // Indicate that the service is running
     BrewTimerService.isRunning = true;
@@ -120,9 +160,6 @@ public class BrewTimerService extends Service {
   }
 
   public void registerReceivers() {
-    // Create and register a new Timer.  This will count down and broadcast the remaining time.:w
-    timer = new Timer(this);
-
     // Register our receiver for remaining time broadcasts
     registerReceiver(countdownReceiver, new IntentFilter(Constants.BROADCAST_REMAINING_TIME));
 
@@ -130,6 +167,10 @@ public class BrewTimerService extends Service {
     registerReceiver(messageHandler, new IntentFilter(Constants.BROADCAST_TIMER_CONTROLS));
   }
 
+  /**
+   * Broadcasts the current timer state to the QUERY_RESP broadcast destination.  This includes
+   * the current Recipe, step number, remaining time, and the timer state (paused, running, etc).
+   */
   public void respondToQuery() {
     Log.d("BrewTimerService", "Responding to query");
     Intent i = new Intent();
@@ -141,6 +182,13 @@ public class BrewTimerService extends Service {
     sendBroadcast(i);
   }
 
+  /**
+   * Updates the notification in the notification bar which shows the current step and the
+   * remaining time left.  This is updated every time the timer ticks down, as well as in special
+   * cases (like when the timer changes state).
+   * @param title
+   * @param remaining
+   */
   public void updateNotification(String title, int remaining) {
     // Build remaining time string
     java.text.DecimalFormat nft = new java.text.DecimalFormat("#00.###");
@@ -157,11 +205,11 @@ public class BrewTimerService extends Service {
             nft.format(seconds);
 
     // If no time remains, the timer is paused.
-    if (remaining == 0) {
+    if (timer.timerState == Constants.PAUSED) {
       remainingTime = "Paused";
     }
 
-    //; Notification builders
+    // Notification builders
     NotificationCompat.Builder nBuilder =
             new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.ic_launcher_64)
@@ -169,9 +217,12 @@ public class BrewTimerService extends Service {
                     .setContentText(remainingTime);
 
     // Intent for when notification is clicked.
-    Intent i = new Intent(this, BrewTimerActivity.class);
-    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-    PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+    brewTimerIntent = new Intent(this, BrewTimerActivity.class);
+    brewTimerIntent.putExtra(Constants.KEY_RECIPE, r);
+    brewTimerIntent.putExtra(Constants.KEY_STEP_NUMBER, currentStepNumber);
+    brewTimerIntent.putExtra(Constants.KEY_TIMER_STATE, timer.timerState);
+    brewTimerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    PendingIntent pi = PendingIntent.getActivity(this, 0, brewTimerIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
     nBuilder.setContentIntent(pi);
     Notification note = nBuilder.build();
@@ -191,7 +242,7 @@ public class BrewTimerService extends Service {
 
 class Timer {
   // Keep track of timer state
-  public int timerState = Constants.STOPPED;
+  public int timerState;
 
   // Keep track of remaining seconds
   public int remainingSeconds = 0;
@@ -203,6 +254,7 @@ class Timer {
   public Timer(Context c) {
     super();
     this.c = c;
+    this.timerState = Constants.STOPPED;
   }
 
   /**
@@ -211,6 +263,8 @@ class Timer {
    * @param seconds
    */
   public void start(int seconds) {
+
+    // If the timer is not currently running, start it.
     if (timerState != Constants.RUNNING) {
       timerState = Constants.RUNNING;
       remainingSeconds = seconds;
@@ -228,6 +282,8 @@ class Timer {
         public void onFinish() {
           // When the timer is finished, advertise that there is no time left remaining.  This
           // case it not handled by onTick(), since it is never called with 0 time remaining.
+          // Also, set the timer state to paused, since we are no longer counting down.
+          timerState = Constants.PAUSED;
           remainingSeconds = 0;
           broadcastTime();
         }

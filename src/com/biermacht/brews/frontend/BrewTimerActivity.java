@@ -16,7 +16,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,15 +38,30 @@ import com.biermacht.brews.utils.Utils;
 
 public class BrewTimerActivity extends FragmentActivity {
 
+  // Stores the recipe which is being brewed - provided by the caller via the Intent which
+  // started this Activity.
   private Recipe mRecipe;
-  private int currentItem; // For storing page for the current step.
-  private int currentPosition; // Stores the current page being viewed
+
+  // Holds the index of the current active brew step.  E.g, the step which is currently
+  // being performed.
+  private int currentActivePosition;
+
+  // Holds the index of the brew step currently being viewed, independent of the step which is
+  // being performed (if there is one).
+  private int currentSelectedPosition;
+
+  // Holds the currently SELECTED (not actively counting down) fragment and instruction.
+  BrewTimerStepFragment f;
+  Instruction inst;
+
+  // Adapter
   BrewTimerCollectionPagerAdapter cpAdapter;
 
-  // Formatter for timer values
+  // Formatter for countdown timer views.
   java.text.DecimalFormat nft;
 
-  // True if timer is running, paused, or stopped
+  // Indicates if timer is running, paused, or stopped.  Can be one of Constants.RUNNING,
+  // Constants.STOPPED, or Constants.PAUSED.
   private int timerState;
 
   // Views
@@ -60,28 +74,24 @@ public class BrewTimerActivity extends FragmentActivity {
   View countdownTimerView;
   TextView stepStatusView;
 
-  // Buttons
+  // Buttons to control the timer.
   ImageButton stopButton;
   ImageButton playPauseButton;
   ImageButton goToCurrentButton;
 
-  // LayoutInflater
+  // LayoutInflater to inflate views.
   LayoutInflater inflater;
-
-  // Ringtone
-  private Ringtone ringtone;
-
-  // Currently SELECTED (not counting down) fragment and instruction
-  BrewTimerStepFragment f;
-  Instruction inst;
 
   // Application context
   private Context appContext;
 
-  // Receive timer updates using a CountdownReceiver
+  // Receive timer updates using a CountdownReceiver.  The timer is run in the BrewTimerService,
+  // which advertises the timer ticks received by this CountDownReceiver.  The receiver then
+  // updates the UI to indicate the new time.
   private CountdownReceiver countdownReceiver = new CountdownReceiver() {
     @Override
     public void onNewTime(int seconds) {
+
       // Set the display
       setTimerFromSeconds(seconds);
 
@@ -109,7 +119,7 @@ public class BrewTimerActivity extends FragmentActivity {
       // Set timer state
       timerState = qTimerState;
 
-      // If this is not the recipe used by the current timer, alert the use and cancel the
+      // If this is not the recipe used by the current timer, alert the user and cancel the
       // activity.  We can't have two brew timers running at the same time.
       if (! qRecipe.equals(mRecipe)) {
         Log.e("BrewTimerActivity", "Currently running timer is not for this recipe, aborting");
@@ -119,7 +129,7 @@ public class BrewTimerActivity extends FragmentActivity {
                 .setMessage("The brew timer is already running for another recipe.")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                   public void onClick(DialogInterface dialog, int which) {
-                    finish();
+                    finishWithoutStoppingService();
                   }
                 }).show();
         return;
@@ -134,25 +144,29 @@ public class BrewTimerActivity extends FragmentActivity {
         Log.d("BrewTimerActivity", "Setting timer based on queried seconds: " + qSeconds);
         setTimerFromSeconds(qSeconds);
       }
+
+      // Update status bar text.
+      setStatusText();
     }
   };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
+    Log.d("BrewTimerActivity", "Begin onCreate() for BrewTimerActivity");
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_brew_timer);
 
+    // Set title for this activity.
+    setTitle("Timer");
+
     // Timer is not yet running
     timerState = Constants.STOPPED;
-    currentItem = 0;
+    currentActivePosition = 0;
 
     // Configure formatter used for timer values
     nft = new java.text.DecimalFormat("#00.###");
     nft.setDecimalSeparatorAlwaysShown(false);
-
-    // Set up ringtone alarm for alerts
-    Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-    ringtone = RingtoneManager.getRingtone(getApplicationContext(), uri);
 
     // Set icon as back button
     getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -166,11 +180,19 @@ public class BrewTimerActivity extends FragmentActivity {
     // Get context
     appContext = getApplicationContext();
 
-    // Get recipe from calling activity
+    // Get recipe from the caller.
     mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
-    // Set title
-    setTitle("Timer");
+    // Get the current timer state from the caller.  If no timer state is provided, default
+    // to STOPPED.  A timer state will be provided when this activity is being created after
+    // the user pressed the timer notification.
+    timerState = getIntent().getIntExtra(Constants.KEY_TIMER_STATE, Constants.STOPPED);
+    Log.d("BrewTimerActivity", "Initial timer state: " + timerState);
+
+    // Get current step - if the timer is already running, this may be non-zero, in which case
+    // we must set the pager adapter to the correct step after we create it.
+    currentActivePosition = getIntent().getIntExtra(Constants.KEY_STEP_NUMBER, 0);
+    currentSelectedPosition = currentActivePosition;
 
     // Inflate timer controls
     timerControls = inflater.inflate(R.layout.view_timer_controls, mainLayout, false);
@@ -204,21 +226,26 @@ public class BrewTimerActivity extends FragmentActivity {
     mViewPager.setAdapter(cpAdapter);
 
     // Set on page change listener
-    mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
       @Override
       public void onPageScrolled(int position, float offset, int offsetPixels) {
       }
 
       @Override
       public void onPageSelected(int position) {
-        // Currently selected data
+        Log.d("BrewTimerActivity", "Step #" + position + " selected.");
+
+        // Acquire objects corresponding to the currently selected BrewStep page.
         f = (BrewTimerStepFragment) cpAdapter.getItem(position);
         inst = f.getInstruction();
-        currentPosition = position;
+        currentSelectedPosition = position;
 
-        // If we're stopped, update some of our state whenever we switch instructions.
+        // If we're stopped, update some of our state whenever we switch instructions.  If we're
+        // stopped, it means we can change the current active step and update the timerView
+        // based on the remaining time for that step.
         if (timerState == Constants.STOPPED) {
-          currentItem = mViewPager.getCurrentItem();
+          Log.d("BrewTimerActivity", "Timer is stopped - update.");
+          currentActivePosition = mViewPager.getCurrentItem();
           setTimerFromCurrentStep();
 
           // If this instruction doesn't use a timer, hide the timer view.  Instructions might
@@ -228,6 +255,7 @@ public class BrewTimerActivity extends FragmentActivity {
             setTimerToNull();
           }
           else {
+            Log.d("BrewTimerActivity", "Update timer view with new remaining time.");
             hoursView.setText(nft.format(Utils.getHours(inst.getTimeToNextStep(), inst.getDurationUnits())) + "");
             minutesView.setText(nft.format(Utils.getMinutes(inst.getTimeToNextStep(), inst.getDurationUnits())) + "");
             secondsView.setText(nft.format(0) + "");
@@ -236,13 +264,13 @@ public class BrewTimerActivity extends FragmentActivity {
         }
 
         // Adjust fields based on the item we're looking at
-        if (position == currentItem) {
+        if (position == currentActivePosition) {
           goToCurrentButton.setImageResource(R.drawable.navigation_accept);
         }
-        else if (position < currentItem) {
+        else if (position < currentActivePosition) {
           goToCurrentButton.setImageResource(R.drawable.navigation_next_item);
         }
-        else if (position > currentItem) {
+        else if (position > currentActivePosition) {
           goToCurrentButton.setImageResource(R.drawable.navigation_previous_item);
         }
 
@@ -254,11 +282,16 @@ public class BrewTimerActivity extends FragmentActivity {
       public void onPageScrollStateChanged(int state) {
 
       }
-    });
+    };
+    mViewPager.setOnPageChangeListener(onPageChangeListener);
 
-    // Set to the first item
-    mViewPager.setCurrentItem(1);
-    mViewPager.setCurrentItem(0);
+    // Set the view pager to the current active step, if there is one.  We need to trigger the
+    // OnPageChangeListener to be called, so first setCurrentItem to a different page, and
+    // then set it to the desired one.  We store the desired active step so that we can change
+    // it back.
+    Log.d("BrewTimerActivity", "Set the current brew step to be step #" + currentActivePosition);
+    mViewPager.setCurrentItem(currentActivePosition);
+    onPageChangeListener.onPageSelected(currentActivePosition);
 
     // Add views
     mainLayout.addView(timerControls);
@@ -271,16 +304,19 @@ public class BrewTimerActivity extends FragmentActivity {
 
     // If the service is running, query it for current data
     if (BrewTimerService.isRunning) {
+      Log.d("BrewTimerActivity", "BrewTimerService is running, query it for current info.");
       Intent i = new Intent();
       i.setAction(Constants.BROADCAST_TIMER_CONTROLS);
       i.putExtra(Constants.KEY_COMMAND, Constants.COMMAND_QUERY);
       appContext.sendBroadcast(i);
-    }
-  }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    return true;
+      // If the brew timer service is running, stop any alarms that might be active.  This might
+      // occur if the BrewTimerActivity was destroyed while the service was still running, and
+      // is being re-opened after a step has completed.
+      stopAlarm();
+    }
+
+    Log.d("BrewTimerActivity", "End onCreate() for BrewTimerActivity");
   }
 
   @Override
@@ -320,10 +356,22 @@ public class BrewTimerActivity extends FragmentActivity {
     }
   }
 
+  /**
+   * The default finish() method.  This ends the activity, bringing the BrewTimerService
+   * with it.
+   */
   @Override
   public void finish() {
     // Override finish to also stop the timer.
     this.stop();
+    super.finish();
+  }
+
+  /**
+   * Use this to finish the BrewTimerActivity without stopping the service.
+   */
+  public void finishWithoutStoppingService()
+  {
     super.finish();
   }
 
@@ -338,7 +386,7 @@ public class BrewTimerActivity extends FragmentActivity {
     // ViewPager and pagerAdapter for slidy tabs!
     cpAdapter = new BrewTimerCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
     mViewPager.setAdapter(cpAdapter);
-    mViewPager.setCurrentItem(this.currentItem);
+    mViewPager.setCurrentItem(this.currentActivePosition);
   }
 
   public void togglePlayPause() {
@@ -351,7 +399,8 @@ public class BrewTimerActivity extends FragmentActivity {
   }
 
   public void play() {
-    mViewPager.setCurrentItem(currentItem);
+    mViewPager.setCurrentItem(currentActivePosition);
+    stopAlarm();
 
     // If the timer is 0, don't start!
     if (getTimerSeconds() != 0) {
@@ -363,16 +412,15 @@ public class BrewTimerActivity extends FragmentActivity {
       i.putExtra(Constants.KEY_TITLE, inst.getBrewTimerTitle());
       i.putExtra(Constants.KEY_SECONDS, getTimerSeconds());
       i.putExtra(Constants.KEY_RECIPE, mRecipe);
-      i.putExtra(Constants.KEY_STEP_NUMBER, currentItem);
+      i.putExtra(Constants.KEY_STEP_NUMBER, currentActivePosition);
       startService(i);
     }
     else {
       Log.d("BrewTimerService", "Play pressed when time remaining == 0.  Moving to next step.");
-      currentItem = currentItem + 1;
-      mViewPager.setCurrentItem(currentItem);
+      currentActivePosition = currentActivePosition + 1;
+      mViewPager.setCurrentItem(currentActivePosition);
       setTimerFromCurrentStep();
     }
-    stopAlarm();
     setStatusText();
   }
 
@@ -387,11 +435,10 @@ public class BrewTimerActivity extends FragmentActivity {
     timerState = Constants.PAUSED;
 
     // Jump to the current step
-    mViewPager.setCurrentItem(currentItem);
+    mViewPager.setCurrentItem(currentActivePosition);
 
     // Set the play/pause button to display the "Play" image
     playPauseButton.setImageResource(R.drawable.av_play);
-    stopAlarm();
 
     // Set appropriate text on status bar
     setStatusText();
@@ -400,7 +447,7 @@ public class BrewTimerActivity extends FragmentActivity {
   public void stop() {
     // Set the currently displayed page to be the first instruction.
     mViewPager.setCurrentItem(0);
-    currentItem = 0;
+    currentActivePosition = 0;
 
     // Tell the timer serviced that we've stopped
     Intent i = new Intent();
@@ -428,20 +475,30 @@ public class BrewTimerActivity extends FragmentActivity {
   }
 
   public void setStatusText() {
-    if (currentPosition == currentItem) {
+    if (currentSelectedPosition == currentActivePosition) {
       if (timerState == Constants.RUNNING) {
         stepStatusView.setText("IN PROGRESS");
         stepStatusView.setTextColor(Color.parseColor(ColorHandler.GREEN));
       }
       else if (timerState == Constants.PAUSED) {
-        stepStatusView.setText("PAUSED");
-        stepStatusView.setTextColor(Color.parseColor(ColorHandler.RED));
+        if (getTimerSeconds() == 0) {
+          // If the timer is paused and the remaining time is 0, then it means
+          // this step is complete.
+          stepStatusView.setText("COMPLETE");
+          stepStatusView.setTextColor(Color.parseColor(ColorHandler.GREEN));
+        }
+        else {
+          // Otherwise, it means that the timer is just paused, and that this step is not
+          // yet complete.
+          stepStatusView.setText("PAUSED");
+          stepStatusView.setTextColor(Color.parseColor(ColorHandler.RED));
+        }
       }
       else if (timerState == Constants.STOPPED) {
         stepStatusView.setText("");
       }
     }
-    else if (currentPosition < currentItem) {
+    else if (currentSelectedPosition < currentActivePosition) {
       if (timerState == Constants.RUNNING || timerState == Constants.PAUSED) {
         stepStatusView.setText("COMPLETE");
         stepStatusView.setTextColor(Color.parseColor(ColorHandler.GREEN));
@@ -450,7 +507,7 @@ public class BrewTimerActivity extends FragmentActivity {
         stepStatusView.setText("");
       }
     }
-    else if (currentPosition > currentItem) {
+    else if (currentSelectedPosition > currentActivePosition) {
       if (timerState == Constants.STOPPED) {
         stepStatusView.setText("");
       }
@@ -464,10 +521,13 @@ public class BrewTimerActivity extends FragmentActivity {
   public void onStepComplete() {
     // When we get to the next step, raise alarm, pause timer, switch views, update displayed time.
     pause();
-    startAlarm();
-    currentItem = currentItem + 1;
-    mViewPager.setCurrentItem(currentItem);
-    setTimerFromCurrentStep();
+
+    // Turn screen on
+    Window wind;
+    wind = this.getWindow();
+    wind.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+    wind.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+    wind.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
   }
 
   public int getTimerSeconds() {
@@ -514,29 +574,22 @@ public class BrewTimerActivity extends FragmentActivity {
     secondsView.setText("--");
   }
 
-  public void startAlarm() {
-    // Turn screen on
-    Window wind;
-    wind = this.getWindow();
-    wind.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-    wind.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-    wind.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-
-    // Play the alarm
-    ringtone.play();
-  }
-
   public void stopAlarm() {
-    ringtone.stop();
+    // Tell the timer service to stop the alarm.
+    Intent i = new Intent();
+    i.setAction(Constants.BROADCAST_TIMER_CONTROLS);
+    i.putExtra(Constants.KEY_COMMAND, Constants.COMMAND_STOP_ALARM);
+    appContext.sendBroadcast(i);
   }
 
   @Override
   protected void onDestroy() {
+    // Stop any running alarm
+    stopAlarm();
+
     // Unregister from our receivers
     unregisterReceiver(queryReceiver);
     unregisterReceiver(countdownReceiver);
-
-    stopAlarm();
     super.onDestroy();
   }
 
@@ -547,7 +600,7 @@ public class BrewTimerActivity extends FragmentActivity {
         break;
       }
       case R.id.go_to_current_button: {
-        mViewPager.setCurrentItem(currentItem);
+        mViewPager.setCurrentItem(currentActivePosition);
         stopAlarm();
         break;
       }
