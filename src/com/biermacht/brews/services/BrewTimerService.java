@@ -2,6 +2,7 @@ package com.biermacht.brews.services;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -42,6 +43,9 @@ public class BrewTimerService extends Service {
 
   // Current step
   private int currentStepNumber;
+
+  // keeps track of whether or not we've started the notification.
+  private boolean notificationStarted;
 
   // Intent to start the BrewTimerActivity.  This is created and maintained when
   // the notification is updated.
@@ -117,6 +121,7 @@ public class BrewTimerService extends Service {
 
     // Use the service ID to keep track of our corresponding notification
     notificationId = startId;
+    notificationStarted = false;
 
     // Get the desire title and time from the intent
     notificationTitle = intent.getStringExtra(Constants.KEY_TITLE);
@@ -229,7 +234,14 @@ public class BrewTimerService extends Service {
     note.flags |= Notification.FLAG_NO_CLEAR;
 
     // Start the notification
-    startForeground(notificationId, note);
+    NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    if (! notificationStarted) {
+      startForeground(notificationId, note);
+      notificationStarted = true;
+    }
+    else {
+      nm.notify(notificationId, note);
+    }
   }
 
   @Override
