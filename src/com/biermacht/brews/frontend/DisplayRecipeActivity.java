@@ -66,7 +66,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
       }
     };
 
-    //Update user interface
+    // Update user interface
     updateUI();
   }
 

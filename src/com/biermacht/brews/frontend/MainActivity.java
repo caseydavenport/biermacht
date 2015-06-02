@@ -2,8 +2,9 @@ package com.biermacht.brews.frontend;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,7 +50,7 @@ import com.biermacht.brews.utils.interfaces.ClickableFragment;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
   // Poorly done globals
   public static DatabaseInterface databaseInterface;
@@ -97,7 +98,7 @@ public class MainActivity extends Activity {
     // Store context
     context = this;
 
-    // Instantiate my ingredient handler
+    // Instantiate ingredient handler
     ingredientHandler = new IngredientHandler(getApplicationContext());
 
     // Get shared preferences
@@ -224,9 +225,9 @@ public class MainActivity extends Activity {
   @Override
   public void onResume() {
     super.onResume();
-    updateFragments();
+	Log.d("MainActivity", "onResume() called");
+    //updateFragments();
     selectItem(selectedItem);
-
   }
 
   @Override
@@ -374,7 +375,7 @@ public class MainActivity extends Activity {
         }
       }
       if (resultCode == RESULT_CANCELED) {
-        //Write your code on no result return
+        // Action to get recipes was cancelled - do nothing.
       }
     }
   }
@@ -396,11 +397,11 @@ public class MainActivity extends Activity {
    * Swaps fragments in the main content view
    */
   private void selectItem(int pos) {
-    // Insert the fragment by replacing any existing fragment
-    FragmentManager fragmentManager = getFragmentManager();
-    fragmentManager.beginTransaction().replace(R.id.content_frame, (Fragment) fragmentList.get
-            (pos)).commit();
-
+    // Insert the fragment by replacing any existing fragment.
+    FragmentManager fragmentManager = getSupportFragmentManager();
+	Fragment f = (Fragment) fragmentList.get(pos);
+    fragmentManager.beginTransaction().replace(R.id.content_frame, f).commit();
+   
     // Highlight the selected item, update the title, and close the drawer
     drawerListView.setItemChecked(pos, true);
     setTitle(drawerItems.get(pos));

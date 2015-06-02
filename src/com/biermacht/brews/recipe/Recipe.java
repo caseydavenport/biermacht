@@ -487,12 +487,12 @@ public class Recipe implements Parcelable {
   private void addFermentable(Ingredient i) {
     Log.d(getRecipeName() + "::addFermentable", "Adding fermentable: " + i.getName());
     Fermentable f = (Fermentable) i;
-    fermentables.add(f);
+    this.fermentables.add(f);
   }
 
   private void addHop(Ingredient i) {
     Hop h = (Hop) i;
-    hops.add(h);
+    this.hops.add(h);
   }
 
   public ArrayList<Instruction> getInstructionList() {

@@ -1,46 +1,29 @@
 package com.biermacht.brews.frontend.fragments;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
 
-import com.biermacht.brews.R;
-import com.biermacht.brews.database.DatabaseInterface;
-import com.biermacht.brews.frontend.BrewTimerActivity;
-import com.biermacht.brews.frontend.DisplayRecipeActivity;
-import com.biermacht.brews.frontend.EditFermentationProfileActivity;
-import com.biermacht.brews.frontend.EditMashProfileActivity;
-import com.biermacht.brews.frontend.EditRecipeNotesActivity;
-import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
-import com.biermacht.brews.frontend.MainActivity;
-import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
-import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
-import com.biermacht.brews.utils.Utils;
-import com.biermacht.brews.utils.interfaces.ClickableFragment;
-import com.biermacht.brews.xml.RecipeXmlWriter;
+import com.biermacht.brews.*;
+import com.biermacht.brews.database.*;
+import com.biermacht.brews.frontend.*;
+import com.biermacht.brews.frontend.IngredientActivities.*;
+import com.biermacht.brews.frontend.adapters.*;
+import com.biermacht.brews.recipe.*;
+import com.biermacht.brews.utils.*;
+import com.biermacht.brews.utils.interfaces.*;
+import com.biermacht.brews.xml.*;
+import java.util.*;
 
-import java.util.ArrayList;
 
 public class RecipesFragment extends Fragment implements ClickableFragment {
 
@@ -77,38 +60,64 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   // Context
   private Context c;
 
-  //Declare views here
+  // Declare views here
   private ListView listView;
   private TextView noRecipesView;
-
+  private LinearLayout detailsView;
+  
+  // Fields used when running on a tablet
+  private boolean isTablet = false;
+  private DisplayRecipeCollectionPagerAdapter cpAdapter;
+  private ViewPager mViewPager;
+  private int currentSelectedIndex = 0;
+  
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
-          savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	Log.d("RecipesFragment", "Starting onCreateView()");
+	
     // Get views
     pageView = (RelativeLayout) inflater.inflate(resource, container, false);
     listView = (ListView) pageView.findViewById(R.id.recipe_list);
     noRecipesView = (TextView) pageView.findViewById(R.id.no_recipes_view);
 
+	// Get Context
+	c = getActivity();
+
+	// Create recipe adapter
+	recipeList = new ArrayList<Recipe>();
+	mAdapter = new RecipeArrayAdapter(c, recipeList);
+
+	// Set adapter for listView
+	listView.setAdapter(mAdapter);
+	
+	// Search for the details view.  If it exists, it means we're 
+	// running on a tablet, and we should inflate the details.
+	detailsView = (LinearLayout) pageView.findViewById(R.id.details_view);
+	if (detailsView != null) {
+		Log.d("RecipesFragment", "Found detailsView - running on tablet");
+		isTablet = true;		
+	}
+	
     // Get database Interface
     databaseInterface = MainActivity.databaseInterface;
 
-    // Get Context
-    c = getActivity();
-
-    // Create adapter
-    recipeList = new ArrayList<Recipe>();
-    mAdapter = new RecipeArrayAdapter(c, recipeList);
-
-    // Set adapter for listView
-    listView.setAdapter(mAdapter);
-
-    // Set up the onClickListener
+    // Set up the onClickListener for when a Recipe is selected 
+	// in the main recipe list.
     mClickListener = new AdapterView.OnItemClickListener() {
-      public void onItemClick(AdapterView<?> parentView, View childView, int pos,
-                              long id) {
-        Intent intent = new Intent(c, DisplayRecipeActivity.class);
-        intent.putExtra(Constants.KEY_RECIPE, recipeList.get(pos));
-        startActivity(intent);
+      public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
+		// If we're running on a tablet, update the details view.
+		// Otherwise, open the DisplayRecipeActivity to display the recipe.
+		if (isTablet) {
+		  Log.d("RecipesFragment", "Running on tablet - update details");
+		  currentSelectedIndex = pos;
+		  updateTabletDetailsView(recipeList.get(pos));
+		}
+		else {
+		  Log.d("RecipesFragment", "Launching DisplayRecipeActivity");
+          Intent intent = new Intent(c, DisplayRecipeActivity.class);
+          intent.putExtra(Constants.KEY_RECIPE, recipeList.get(pos));
+          startActivity(intent);
+		}
       }
     };
 
@@ -119,8 +128,15 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
     // Turn on options menu
     setHasOptionsMenu(true);
-
+	
+	Log.d("RecipesFragment", "Exiting onCreateView()");
     return pageView;
+  }
+  
+  @Override
+  public void onResume() {	
+    super.onResume();
+	Log.d("RecipesFragment", "onResume: currentSelectedIndex = " + currentSelectedIndex);
   }
 
   @Override
@@ -241,6 +257,20 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       listView.setVisibility(View.VISIBLE);
     }
   }
+  
+  public void updateTabletDetailsView(Recipe r)
+  {
+	  // ViewPager and pagerAdapter for Slidy tabs!
+	  cpAdapter = new DisplayRecipeCollectionPagerAdapter(getFragmentManager(), r, c);
+
+	  // Set Adapter
+	  mViewPager = (ViewPager) detailsView.findViewById(R.id.pager);
+	  mViewPager.setAdapter(cpAdapter);
+
+	  // Set to the first page - the ingredients list.
+	  mViewPager.setCurrentItem(0);//currentItem);
+	  //mViewPager.setOnPageChangeListener(pageListener);
+  }
 
   private AlertDialog.Builder deleteAlert(final Recipe r) {
     return new AlertDialog.Builder(c)
@@ -311,10 +341,18 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     @Override
     protected void onPostExecute(String result) {
       super.onPostExecute(result);
-      //progress.dismiss();
       mAdapter.notifyDataSetChanged();
       setCorrectView();
       Log.d("readRecipesFromDatabase", "Finished reading recipes");
+	  
+	  // If we're running in tablet mode, try to set the details view to
+      // display the most recently selected receipe.
+	  if (isTablet) {
+	    Recipe r = recipeList.get(currentSelectedIndex);
+		  if (r != null) {
+		    updateTabletDetailsView(r);
+		  }
+	  }
     }
 
     @Override
