@@ -38,7 +38,7 @@ public class ImportXmlIngredientsTask extends AsyncTask<String, Void, String> {
     progress.setMessage("Performing first use setup");
     progress.setIndeterminate(false);
     progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-    progress.setCancelable(true);
+    progress.setCancelable(false);
     progress.show();
   }
 

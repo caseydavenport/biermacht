@@ -16,7 +16,6 @@ public class EditCustomYeastActivity extends EditYeastActivity {
     mainView.removeView(searchableListView);
 
     // Add those we do
-    mainView.addView(nameView, 0);
     mainView.addView(labView);
     mainView.addView(productIdView);
 
