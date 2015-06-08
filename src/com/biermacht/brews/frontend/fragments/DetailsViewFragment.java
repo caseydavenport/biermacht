@@ -16,15 +16,15 @@ import com.biermacht.brews.frontend.adapters.DetailArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 
 import java.util.ArrayList;
+import com.biermacht.brews.utils.*;
 
 @SuppressLint("ValidFragment")
 public class DetailsViewFragment extends Fragment {
 
-  private int resource;
+  private int resource = R.layout.fragment_details_view;
   private Recipe r;
   private OnItemClickListener mClickListener;
   View pageView;
-  Context c;
 
   // List stuff
   private DetailArrayAdapter mAdapter;
@@ -40,20 +40,37 @@ public class DetailsViewFragment extends Fragment {
   Detail color;
   Detail bitterness;
 
-  public DetailsViewFragment(Context c, Recipe r) {
-    this.resource = R.layout.fragment_details_view;
-    this.r = r;
-    this.c = c;
-
+  public DetailsViewFragment() {
+    // TODO: What does this do? No wi-fi right now.
     setRetainInstance(true);
+  }
+  
+  public static DetailsViewFragment instance(Recipe r) {
+    // Create the fragment.
+    DetailsViewFragment f = new DetailsViewFragment();
+
+    // Store the recipe in the arguments bundle.
+    Bundle b = new Bundle();
+    b.putParcelable(Constants.KEY_RECIPE, r);
+    f.setArguments(b);
+
+    // Return the newly created fragment.
+    return f;
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    // Get stored arguments from bundle.
+    this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
+    
+    // Inflate the resource for this fragment.
     pageView = inflater.inflate(resource, container, false);
     listView = (ListView) pageView.findViewById(R.id.details_list);
+    
+    // Create a new details list.
     this.detailList = new ArrayList<Detail>();
 
+    // No options menu.
     setHasOptionsMenu(false);
 
     // Configure details
@@ -154,7 +171,7 @@ public class DetailsViewFragment extends Fragment {
     }
 
     // Adapter stuff
-    mAdapter = new DetailArrayAdapter(c, detailList);
+    mAdapter = new DetailArrayAdapter(getActivity(), detailList);
     listView.setAdapter(mAdapter);
 
     return pageView;

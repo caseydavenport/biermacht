@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- pressed -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle" android:padding="10dp">
+            <solid android:color="@color/theme_main"/>
+        </shape>
+    </item>
+
+    <!-- focused -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle" android:padding="10dp">
+            <solid android:color="@color/theme_main"/>
+        </shape>
+    </item>
+
+    <!-- default -->
+    <item>
+        <shape android:shape="rectangle" android:padding="10dp">
+            <solid android:color="@color/button_color"/>
+        </shape>
+    </item>
+
+</selector>

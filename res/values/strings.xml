@@ -45,7 +45,6 @@
     <string name="color">Color</string>
     <string name="name">Name</string>
     <string name="scale">Scale</string>
-    <string name="yeast">Yeast</string>
     <string name="units">Units:</string>
     <string name="brewer_name">Brewmaster</string>
     <string name="amount">Amount (L)</string>
@@ -73,6 +72,15 @@
     <string name="volume_gal_hint">Gal</string>
     <string name="efficiency_hint">1 - 100</string>
     <string name="minutes_hint">minutes</string>
+    
+    <!-- Button text to add ingredients -->
+    <string name="add_ingredients">Add Ingredients</string>
+    
+    <!-- Ingredient types -->
+    <string name="fermentable">Fermentable</string>
+    <string name="hop">Hop</string>
+    <string name="yeast">Yeast</string>
+    <string name="misc">Misc</string>
 
     <!-- from activity_add_fermentable.xml -->
     <string name="weight_lbs">Weight (lbs)</string>

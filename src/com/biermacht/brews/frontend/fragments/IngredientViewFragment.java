@@ -25,25 +25,39 @@ import com.biermacht.brews.utils.Constants;
 
 import java.util.ArrayList;
 
-@SuppressLint("ValidFragment")
+
 public class IngredientViewFragment extends Fragment {
 
-  private int resource;
+  private int resource = R.layout.fragment_ingredient_view;
   private Recipe r;
   private OnItemClickListener mClickListener;
   private ListView ingredientListView;
   private ArrayList<Ingredient> ingredientList;
   View pageView;
-  Context c;
 
-  public IngredientViewFragment(Context c, Recipe r) {
-    this.resource = R.layout.fragment_ingredient_view;
-    this.r = r;
-    this.c = c;
+  public IngredientViewFragment() {
+  }
+  
+  public static IngredientViewFragment instance(Recipe r) {
+    // Create the fragment.
+    IngredientViewFragment f = new IngredientViewFragment();
+    
+    // Store the recipe in the arguments bundle.
+    Bundle b = new Bundle();
+    b.putParcelable(Constants.KEY_RECIPE, r);
+    f.setArguments(b);
+    
+    // Return the newly created fragment.
+    return f;
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    
+    // Get arguments and store them in variables.
+    this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
+    
+    // Inflate the resource for this fragment.
     pageView = inflater.inflate(resource, container, false);
 
     setHasOptionsMenu(false);
@@ -59,7 +73,7 @@ public class IngredientViewFragment extends Fragment {
 
         // Grain pressed
         if (ing.getType().equals(Ingredient.FERMENTABLE)) {
-          Intent i = new Intent(c, EditFermentableActivity.class);
+          Intent i = new Intent(getActivity(), EditFermentableActivity.class);
           i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
           i.putExtra(Constants.KEY_RECIPE, r);
           i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
@@ -69,7 +83,7 @@ public class IngredientViewFragment extends Fragment {
 
         // Hop Pressed
         if (ing.getType().equals(Ingredient.HOP)) {
-          Intent i = new Intent(c, EditHopActivity.class);
+          Intent i = new Intent(getActivity(), EditHopActivity.class);
           i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
           i.putExtra(Constants.KEY_RECIPE, r);
           i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
@@ -79,7 +93,7 @@ public class IngredientViewFragment extends Fragment {
 
         // Yeast Pressed
         if (ing.getType().equals(Ingredient.YEAST)) {
-          Intent i = new Intent(c, EditYeastActivity.class);
+          Intent i = new Intent(getActivity(), EditYeastActivity.class);
           i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
           i.putExtra(Constants.KEY_RECIPE, r);
           i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
@@ -89,7 +103,7 @@ public class IngredientViewFragment extends Fragment {
 
         // Misc Pressed
         if (ing.getType().equals(Ingredient.MISC)) {
-          Intent i = new Intent(c, EditMiscActivity.class);
+          Intent i = new Intent(getActivity(), EditMiscActivity.class);
           i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
           i.putExtra(Constants.KEY_RECIPE, r);
           i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
@@ -101,7 +115,7 @@ public class IngredientViewFragment extends Fragment {
 
     // Set whether or not we show the list view
     if (ingredientList.size() > 0) {
-      IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(c, ingredientList, r);
+      IngredientArrayAdapter ingredientArrayAdapter = new IngredientArrayAdapter(getActivity(), ingredientList, r);
       ingredientListView.setVisibility(View.VISIBLE);
       ingredientListView.setAdapter(ingredientArrayAdapter);
       registerForContextMenu(ingredientListView);

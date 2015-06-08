@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -14,8 +15,8 @@ import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
-public class HydrometerTempCalculatorFragment extends Fragment implements ClickableFragment {
-
+public class HydrometerTempCalculatorFragment extends Fragment implements ClickableFragment
+{
   private static int resource = R.layout.fragment_hydrometer_calculator;
   View pageView;
   Context c;
@@ -93,6 +94,18 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Clicka
       double adjustedGravity = BrewCalculator.adjustGravityForTemp(measGrav, measTemp, calibTemp);
       calcGravityTextView.setText(String.format("%1.3f", adjustedGravity));
     }
+  }
+  
+  //**************************************************************************
+  // The following set of methods implement the Biermacht Fragment Interface
+  //**************************************************************************
+  @Override
+  public void update() {
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    return false;
   }
 
   @Override

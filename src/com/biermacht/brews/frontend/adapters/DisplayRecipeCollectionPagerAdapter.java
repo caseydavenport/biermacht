@@ -10,9 +10,9 @@ import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
 import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
 import com.biermacht.brews.recipe.Recipe;
+import android.os.*;
 
-// Since this is an object collection, use a FragmentStatePagerAdapter,
-// and NOT a FragmentPagerAdapter.
+
 public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
   Recipe r;
   Context c;
@@ -25,10 +25,10 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
     super(fm);
     this.r = r;
     this.c = c;
-    this.ingVf = new IngredientViewFragment(c, r);
-    this.insVf = new InstructionViewFragment(c, r);
-    this.detVf = new DetailsViewFragment(c, r);
-    this.proVf = new ProfileViewFragment(c, r);
+    this.ingVf = IngredientViewFragment.instance(r);
+    this.insVf = InstructionViewFragment.instance(r);
+    this.detVf = DetailsViewFragment.instance(r);
+    this.proVf = ProfileViewFragment.instance(r);
   }
 
   @Override
@@ -75,6 +75,13 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
 
   public InstructionViewFragment getInstructionViewFragment() {
     return this.insVf;
+  }
+  
+  @Override
+  public void restoreState(Parcelable p, ClassLoader cl)
+  {
+    // Override this to do nothing.  It is not needed, and throws exceptions for reasons.
+    return;
   }
 }
 

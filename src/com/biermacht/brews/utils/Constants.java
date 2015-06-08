@@ -36,6 +36,9 @@ public class Constants {
   public static final String KEY_STEP_NUMBER = "biermacht.brews.stepnumber";
   public static final String KEY_TIMER_STATE = "biermacht.brews.timer.state";
   public static final int INVALID_ID = - 1;
+  
+  // Indicates if a recipe should be displayed after it is created.
+  public static final String DISPLAY_ON_CREATE = "biermacht.brews.recipe.display.on.create";
 
   // Valid commands
   public static final String COMMAND_START = "biermacht.brews.commands.start";
@@ -43,7 +46,6 @@ public class Constants {
   public static final String COMMAND_PAUSE = "biermacht.brews.commands.pause";
   public static final String COMMAND_QUERY = "biermacht.brews.commands.query";
   public static final String COMMAND_STOP_ALARM = "biermacht.brews.commands.stop.alarm";
-
 
   // Different virtual databases
   public static final long DATABASE_PERMANENT = 2;  // Imported from assets.  Save these.

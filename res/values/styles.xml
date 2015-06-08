@@ -37,6 +37,23 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">fill_parent</item>
     </style>
+   
+    <style name="button_no_stroke">
+        <item name="android:background">@drawable/button_bg_no_stroke</item>
+        <item name="android:textColor">@drawable/button_text</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+    
+    <!-- Style for when using vertical button stacks -->
+    <style name="button_no_stroke_vert">
+        <item name="android:background">@drawable/button_bg_no_stroke</item>
+        <item name="android:textColor">@drawable/button_text</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
     <style name="button_left">
         <item name="android:background">@drawable/left_button_bg</item>

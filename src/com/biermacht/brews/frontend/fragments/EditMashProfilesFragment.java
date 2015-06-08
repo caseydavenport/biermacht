@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,8 @@ import com.biermacht.brews.utils.interfaces.ClickableFragment;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class EditMashProfilesFragment extends Fragment implements ClickableFragment {
-
+public class EditMashProfilesFragment extends Fragment implements ClickableFragment
+{
   private static int resource = R.layout.fragment_view;
   private OnItemClickListener mClickListener;
   private ListView listView;
@@ -85,8 +86,20 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
     inflater.inflate(R.menu.fragment_mash_profiles_menu, menu);
   }
 
+  //**************************************************************************
+  // The following set of methods implement the Biermacht Fragment Interface
+  //**************************************************************************
   @Override
   public void handleClick(View v) {
 
+  }
+
+  @Override
+  public void update() {
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    return false;
   }
 }

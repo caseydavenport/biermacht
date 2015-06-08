@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -16,8 +17,8 @@ import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
-public class StrikeWaterCalculatorFragment extends Fragment implements ClickableFragment {
-
+public class StrikeWaterCalculatorFragment extends Fragment implements ClickableFragment
+{
   private static int resource = R.layout.fragment_mash_strike_calculator;
   View pageView;
   Context c;
@@ -125,6 +126,18 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
       strikeTempText.setText(String.format("%2.1f", strikeTemp) + Units.getTemperatureUnits());
     }
 
+  }
+  
+  //**************************************************************************
+  // The following set of methods implement the Biermacht Fragment Interface
+  //**************************************************************************
+  @Override
+  public void update() {
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    return false;
   }
 
   @Override

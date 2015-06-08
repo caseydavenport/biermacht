@@ -17,28 +17,42 @@ import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
 
 import java.util.ArrayList;
+import com.biermacht.brews.utils.*;
 
-@SuppressLint("ValidFragment")
 public class InstructionViewFragment extends Fragment {
 
-  private int resource;
+  private int resource = R.layout.fragment_instruction_view;;
   private Recipe r;
   private OnItemClickListener mClickListener;
   private ListView instructionListView;
   private ArrayList<Instruction> instructionList;
   View pageView;
-  Context c;
 
-  public InstructionViewFragment(Context c, Recipe r) {
-    this.resource = R.layout.fragment_instruction_view;
-    this.r = r;
-    this.c = c;
+  public InstructionViewFragment() {
+  }
+  
+  public static InstructionViewFragment instance(Recipe r) {
+    // Create the fragment.
+    InstructionViewFragment f = new InstructionViewFragment();
+
+    // Store the recipe in the arguments bundle.
+    Bundle b = new Bundle();
+    b.putParcelable(Constants.KEY_RECIPE, r);
+    f.setArguments(b);
+
+    // Return the newly created fragment.
+    return f;
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    // Get arguments from the stored bundle.
+    this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
+    
+    // Inflate the resource.
     pageView = inflater.inflate(resource, container, false);
 
+    // Don't show options menu.
     setHasOptionsMenu(false);
 
     // Initialize important junk
@@ -53,7 +67,7 @@ public class InstructionViewFragment extends Fragment {
     }
 
     if (instructionList.size() > 0) {
-      InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(c, instructionList);
+      InstructionArrayAdapter instructionArrayAdapter = new InstructionArrayAdapter(getActivity(), instructionList);
       instructionListView = (ListView) pageView.findViewById(R.id.instruction_list);
       instructionListView.setAdapter(instructionArrayAdapter);
       instructionListView.setVisibility(View.VISIBLE);

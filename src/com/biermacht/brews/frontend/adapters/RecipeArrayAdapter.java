@@ -14,18 +14,21 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.ColorHandler;
 
 import java.util.List;
+import com.biermacht.brews.frontend.fragments.*;
 
 public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 
   // Fields
   private Context context;
   private List<Recipe> list;
+  private RecipesFragment frag;
 
   // Constructor
-  public RecipeArrayAdapter(Context context, List<Recipe> list) {
+  public RecipeArrayAdapter(Context context, List<Recipe> list, RecipesFragment fr) {
     super(context, android.R.layout.simple_list_item_1, list);
     this.context = context;
     this.list = list;
+    this.frag = fr;
   }
 
   @Override
@@ -53,7 +56,19 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
     // Set beer color here
     String color = ColorHandler.getSrmColor(list.get(position).getColor());
     imageView.setBackgroundColor(Color.parseColor(color));
-
+    
+    // If we're running as a tablet, we should do some extra stuff here.
+    if (frag.isTablet) {
+      // If currently selected, set the background to indicate it.
+      // Otherwise, set the background to transparent.
+      if (position == frag.currentSelectedIndex)
+      {
+        row.setBackgroundResource(R.drawable.selector_tablet);
+      }
+      else {
+        row.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+      }
+    }
     return row;
   }
 }

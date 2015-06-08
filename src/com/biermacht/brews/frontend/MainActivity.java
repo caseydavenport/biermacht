@@ -52,7 +52,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
 
-  // Poorly done globals
+  // Globals
   public static DatabaseInterface databaseInterface;
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;
@@ -217,16 +217,23 @@ public class MainActivity extends FragmentActivity {
     getActionBar().setDisplayHomeAsUpEnabled(true);
     getActionBar().setHomeButtonEnabled(true);
 
-    // Set up fragment List
+    // Set up fragment List to contain the correct fragments.
     selectedItem = 0;
-    updateFragments();
+    fragmentList = new ArrayList<ClickableFragment>();
+    fragmentList.add(new RecipesFragment());
+    fragmentList.add(new EditIngredientsFragment());
+    fragmentList.add(new EditMashProfilesFragment());
+    fragmentList.add(new StrikeWaterCalculatorFragment());
+    fragmentList.add(new HydrometerTempCalculatorFragment());
+    fragmentList.add(new AlcoholAttenuationCalculatorFragment());
+    //updateFragments();
   }
 
   @Override
   public void onResume() {
     super.onResume();
-	Log.d("MainActivity", "onResume() called");
-    //updateFragments();
+	  Log.d("MainActivity", "onResume() called");
+    updateFragments();
     selectItem(selectedItem);
   }
 
@@ -237,22 +244,26 @@ public class MainActivity extends FragmentActivity {
     if (mDrawerToggle.onOptionsItemSelected(item)) {
       return true;
     }
+    
+    // Pass the event to the active fragment.  If it returns true,
+    // then it has handled the touch event.
+    if (fragmentList.get(selectedItem).onOptionsItemSelected(item)) {
+      Log.d("MainActivity", "Current frag handled item selection");
+      return true;
+    }
 
+    // The option selection is unhandled.  See if we can handle it.
+    Intent i;
     switch (item.getItemId()) {
-      case R.id.menu_new_recipe:
-        Intent i = new Intent(getApplicationContext(), AddRecipeActivity.class);
-        startActivity(i);
-        break;
-
       case R.id.menu_settings:
         Intent i2 = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(i2);
-        break;
-
+        return true;
+        
       case R.id.menu_import_recipe:
         importRecipeAlert().show();
         break;
-
+        
       case R.id.add_fermentable:
         i = new Intent(this, AddCustomFermentableActivity.class);
         i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
@@ -399,7 +410,7 @@ public class MainActivity extends FragmentActivity {
   private void selectItem(int pos) {
     // Insert the fragment by replacing any existing fragment.
     FragmentManager fragmentManager = getSupportFragmentManager();
-	Fragment f = (Fragment) fragmentList.get(pos);
+	  Fragment f = (Fragment) fragmentList.get(pos);
     fragmentManager.beginTransaction().replace(R.id.content_frame, f).commit();
    
     // Highlight the selected item, update the title, and close the drawer
@@ -417,14 +428,15 @@ public class MainActivity extends FragmentActivity {
   }
 
   private void updateFragments() {
-    fragmentList = new ArrayList<ClickableFragment>();
-    fragmentList.add(new RecipesFragment());
-    fragmentList.add(new EditIngredientsFragment());
-    fragmentList.add(new EditMashProfilesFragment());
-    fragmentList.add(new StrikeWaterCalculatorFragment());
-    fragmentList.add(new HydrometerTempCalculatorFragment());
-    fragmentList.add(new AlcoholAttenuationCalculatorFragment());
-    selectItem(selectedItem);
+    //fragmentList = new ArrayList<ClickableFragment>();
+    //fragmentList.add(new RecipesFragment());
+    //fragmentList.add(new EditIngredientsFragment());
+    //fragmentList.add(new EditMashProfilesFragment());
+    //fragmentList.add(new StrikeWaterCalculatorFragment());
+    //fragmentList.add(new HydrometerTempCalculatorFragment());
+    //fragmentList.add(new AlcoholAttenuationCalculatorFragment());
+    fragmentList.get(selectedItem).update();
+    //selectItem(selectedItem);
   }
 
   public void setImportedRecipes(ArrayList<Recipe> recipeList) {

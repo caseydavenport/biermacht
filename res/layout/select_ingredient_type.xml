@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Divider -->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider"/>
+
+    <!-- Fermentables Button -->
+    <Button
+        android:id="@+id/add_fermentable_button"
+        style="@style/button_no_stroke_vert"
+        android:onClick="onClick"
+        android:text="@string/fermentable"/>
+    
+    <!-- Divider -->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider"/>
+    
+
+    <!-- Hops Button -->
+    <Button
+        android:id="@+id/add_hops_button"
+        style="@style/button_no_stroke_vert"
+        android:onClick="onClick"
+        android:text="@string/hop"/>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider"/>
+    
+
+    <!-- Yeast Button -->
+    <Button
+        android:id="@+id/add_yeast_button"
+        style="@style/button_no_stroke_vert"
+        android:onClick="onClick"
+        android:text="@string/yeast"/>
+    
+    <!-- Divider -->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider"/>
+
+    <!-- Misc Button -->
+    <Button
+        android:id="@+id/add_misc_button"
+        style="@style/button_no_stroke_vert"
+        android:onClick="onClick"
+        android:text="@string/misc"/>
+    
+    <!-- Divider -->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider"/>
+    
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -13,8 +14,8 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
-public class AlcoholAttenuationCalculatorFragment extends Fragment implements ClickableFragment {
-
+public class AlcoholAttenuationCalculatorFragment extends Fragment implements ClickableFragment
+{
   private static int resource = R.layout.fragment_abv_attenuation_calculator;
   View pageView;
   Context c;
@@ -67,6 +68,18 @@ public class AlcoholAttenuationCalculatorFragment extends Fragment implements Cl
     }
   }
 
+  //**************************************************************************
+  // The following set of methods implement the Biermacht Fragment Interface
+  //**************************************************************************
+  @Override
+  public void update() {
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    return false;
+  }
+  
   @Override
   public void handleClick(View v) {
     if (v.getId() == R.id.calculate_button) {
