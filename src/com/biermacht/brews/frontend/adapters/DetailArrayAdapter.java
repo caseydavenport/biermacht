@@ -17,86 +17,115 @@ import java.util.List;
 
 public class DetailArrayAdapter extends ArrayAdapter<Detail> {
 
-  // Fields
-  private Context context;
   private List<Detail> list;
-
+  
+  // Variables used in getView().  Stored at class-level to 
+  // improve performance.
+  private View row;
+  private LayoutInflater inflater;
+  private Detail detail;
+  private ViewStorage vs;
+  private String range;
+  private String value;
+  private Boolean isGood;
+  private Boolean isOk;
+  
   // Constructor
-  public DetailArrayAdapter(Context context, List<Detail> list) {
-    super(context, android.R.layout.simple_list_item_1, list);
-    this.context = context;
+  public DetailArrayAdapter(Context c, List<Detail> list) {
+    super(c, android.R.layout.simple_list_item_1, list);
     this.list = list;
+    this.inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    // View to return
-    View row = convertView;
+    // Assume convertView is a valid View.  If it is now, we will inflate
+    // a  new View.
+    this.row = convertView;
 
-    // Detail we're looking at
-    Detail detail = list.get(position);
+    // Get the detail from the list.
+    this.detail = list.get(position);
 
-    if (row == null) {
-      // Get inflater
-      LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      row = inflater.inflate(R.layout.row_layout_detail, parent, false);
+    if (this.row == null) {
+      // Inflate a new row layout.
+      this.row = inflater.inflate(R.layout.row_layout_detail, parent, false);
+      
+      // Store the component views.
+      this.vs = new ViewStorage();
+      this.vs.titleView = (TextView) row.findViewById(R.id.tag);
+      this.vs.rangeView = (TextView) row.findViewById(R.id.range);
+      this.vs.valueView = (TextView) row.findViewById(R.id.value);
+      this.vs.subTextView = (TextView) row.findViewById(R.id.subtext);
+      this.row.setTag(this.vs);
     }
+    
+    // Get the component views for this row.
+    vs = (ViewStorage) this.row.getTag();
 
-    TextView titleView = (TextView) row.findViewById(R.id.tag);
-    TextView rangeView = (TextView) row.findViewById(R.id.range);
-    TextView valueView = (TextView) row.findViewById(R.id.value);
-    TextView subTextView = (TextView) row.findViewById(R.id.subtext);
-
+    // Check what type of detail this is.  The type of detail determines 
+    // which views to dislay and how to populate them.
     if (detail.getType().equals(Detail.TYPE_BLANK)) {
-      rangeView.setVisibility(View.GONE);
-      titleView.setVisibility(View.GONE);
-      valueView.setVisibility(View.GONE);
-      subTextView.setVisibility(View.GONE);
+      // If this is a blank detail, set all views to GONE.
+      this.vs.rangeView.setVisibility(View.GONE);
+      this.vs.titleView.setVisibility(View.GONE);
+      this.vs.valueView.setVisibility(View.GONE);
+      this.vs.subTextView.setVisibility(View.GONE);
     }
+    else if (detail.getType().equals(Detail.TYPE_TEXT)) {
+      // This is a text type detail.  These details contain a title, content,
+      // and an optional subtext.
+      this.vs.titleView.setText(detail.getTitle());
+      this.vs.valueView.setText(detail.getContent());
+      this.vs.rangeView.setVisibility(View.GONE);
 
-    if (detail.getType().equals(Detail.TYPE_TEXT)) {
-      titleView.setText(detail.getTitle());
-      valueView.setText(detail.getContent());
-      rangeView.setVisibility(View.GONE);
-
-      if (! detail.getSubText().isEmpty()) {
-        subTextView.setVisibility(View.VISIBLE);
-        subTextView.setText(detail.getSubText());
+      if (!detail.getSubText().isEmpty()) {
+        // There is subtext for this detai - make sure the subtext view is visible.
+        this.vs.subTextView.setVisibility(View.VISIBLE);
+        this.vs.subTextView.setText(detail.getSubText());
       }
     }
-
     else if (detail.getType().equals(Detail.TYPE_RANGE)) {
-
-      // get the range
-      String range, value;
-      range = String.format(detail.getFormat(), detail.getMin());
-      range += " - ";
-      range += String.format(detail.getFormat(), detail.getMax());
-      value = String.format(detail.getFormat(), detail.getValue());
+      // This is a range type detail.  These details contain a title, range, and value.
+      // The value will be colored based on whether or not it falls within the range.
+      this.range = String.format(this.detail.getFormat(), detail.getMin()) + 
+                   " - " + 
+                   String.format(this.detail.getFormat(), detail.getMax());
+      this.value = String.format(this.detail.getFormat(), detail.getValue());
 
       // Set values
-      titleView.setText(detail.getTitle());
-      rangeView.setText(range);
-      valueView.setText(value);
+      this.vs.titleView.setText(this.detail.getTitle());
+      this.vs.rangeView.setText(this.range);
+      this.vs.valueView.setText(this.value);
 
-      // If its in this range, we're all good - make it green.
-      Boolean isGood = Utils.isWithinRange(detail.getValue(), detail.getMin(), detail.getMax());
+      // Determine if the value is squarely within the specified range.
+      this.isGood = Utils.isWithinRange(this.detail.getValue(), this.detail.getMin(), this.detail.getMax());
 
-      // If it is in this range but not the GOOD ranges above, color it yellow
-      Boolean isOk = Utils.isWithinRange(detail.getValue(), detail.getMinOk(), detail.getMaxOk());
+      // Determine if the value is within the range + some tolerance.
+      this.isOk = Utils.isWithinRange(detail.getValue(), detail.getMinOk(), detail.getMaxOk());
 
-      // Set all the colors appropriately
-      if (isGood) {
-        valueView.setTextColor(Color.parseColor(ColorHandler.GREEN));
+      // Set all the colors appropriately.
+      if (this.isGood) {
+        // The value is within the specified range.  Color the text green.
+        this.vs.valueView.setTextColor(Color.parseColor(ColorHandler.GREEN));
       }
-      else if (isOk) {
-        valueView.setTextColor(Color.parseColor(ColorHandler.YELLOW));
+      else if (this.isOk) {
+        // The value is within the range + tolerance.  Color the text yellow.
+        this.vs.valueView.setTextColor(Color.parseColor(ColorHandler.YELLOW));
       }
       else {
-        valueView.setTextColor(Color.parseColor(ColorHandler.RED));
+        // The value is not good enough.  Color the text red.
+        this.vs.valueView.setTextColor(Color.parseColor(ColorHandler.RED));
       }
     }
 
-    return row;
+    // Return the now populated row.
+    return this.row;
+  }
+  
+  private class ViewStorage {
+    TextView titleView;
+    TextView rangeView;
+    TextView valueView;
+    TextView subTextView;
   }
 }

@@ -55,8 +55,9 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   // Context menu items
   private ArrayList<String> menuItems;
 
-  // Holds the selected recipe
-  private Recipe selectedRecipe;
+  // Holds the recipe for which the current context menu (long press)
+  // action is being performed.
+  private Recipe contextActionRecipe;
 
   // Context
   private Context c;
@@ -147,28 +148,38 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    // For now, only the recipe listView supports the context menu.
     if (v == listView) {
+      // Cast the given ContextMenuInfo into an AdapterContextMenuInfo
       AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-      String title = recipeList.get(info.position).getRecipeName();
+      
+      // Get the recipe which has been selected.
+      contextActionRecipe = recipeList.get(info.position);
 
-      selectedRecipe = recipeList.get(info.position);
-
+      // Determine the title for the context menu based on the selected recipe.      
+      String title = contextActionRecipe.getRecipeName();
       menu.setHeaderTitle(title);
+      
+      // Build the list of menu items to display in the context menu.  This list is accessed
+      // later to determine which menu item was selected by the user.
       menuItems = new ArrayList<String>();
-
-      // Build menu items
       menuItems.add(EDIT_RECIPE);
-      if (! selectedRecipe.getType().equals(Recipe.EXTRACT)) {
+      if (!contextActionRecipe.getType().equals(Recipe.EXTRACT)) {
+        // Only allow editing of mash profile when not an extract recipe.
         menuItems.add(EDIT_MASH);
       }
       menuItems.add(EDIT_FERM);
-      menuItems.add(BREW_TIMER);
+      if (contextActionRecipe.getInstructionList().size() > 0 ) {
+        // Only allow entering the brew timer if there are instructions.
+        menuItems.add(BREW_TIMER);
+      }
       menuItems.add(RECIPE_NOTES);
       menuItems.add(EXPORT_RECIPE);
       menuItems.add(SCALE_RECIPE);
       menuItems.add(COPY_RECIPE);
       menuItems.add(DELETE_RECIPE);
 
+      // Build the actual menu to display using the list generated above.
       for (int i = 0; i < menuItems.size(); i++) {
         menu.add(Menu.NONE, i, i, menuItems.get(i));
       }
@@ -182,65 +193,65 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     // Edit recipe selected
     if (selected.equals(EDIT_RECIPE)) {
       Intent i = new Intent(c, EditRecipeActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
       startActivity(i);
     }
 
     // Scale recipe selected
     else if (selected.equals(SCALE_RECIPE)) {
-      scaleAlert(selectedRecipe).show();
+      scaleAlert(contextActionRecipe).show();
     }
 
     // Export recipe selected
     else if (selected.equals(EXPORT_RECIPE)) {
-      exportAlert(selectedRecipe).show();
+      exportAlert(contextActionRecipe).show();
     }
 
     // Copy recipe selected
     else if (selected.equals(COPY_RECIPE)) {
-      Recipe copy = Database.createRecipeFromExisting(selectedRecipe);
-      copy.setRecipeName(selectedRecipe.getRecipeName() + " - Copy");
+      Recipe copy = Database.createRecipeFromExisting(contextActionRecipe);
+      copy.setRecipeName(contextActionRecipe.getRecipeName() + " - Copy");
       copy.save();
-      recipeList.add(mAdapter.getPosition(selectedRecipe) + 1, copy);
+      recipeList.add(mAdapter.getPosition(contextActionRecipe) + 1, copy);
       mAdapter.notifyDataSetChanged();
     }
 
     // Delete recipe selected
     else if (selected.equals(DELETE_RECIPE)) {
-      deleteAlert(selectedRecipe).show();
+      deleteAlert(contextActionRecipe).show();
     }
 
     // Edit fermentation selected
     else if (selected.equals(EDIT_FERM)) {
       Intent i = new Intent(c, EditFermentationProfileActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
       startActivity(i);
     }
 
     //  Brew timer
     else if (selected.equals(BREW_TIMER)) {
       Intent i = new Intent(c, BrewTimerActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
+      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
       startActivity(i);
     }
 
     // Edit Mash profile
     else if (selected.equals(EDIT_MASH)) {
       Intent i = new Intent(c, EditMashProfileActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
-      i.putExtra(Constants.KEY_PROFILE_ID, selectedRecipe.getMashProfile().getId());
-      i.putExtra(Constants.KEY_PROFILE, selectedRecipe.getMashProfile());
+      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+      i.putExtra(Constants.KEY_PROFILE_ID, contextActionRecipe.getMashProfile().getId());
+      i.putExtra(Constants.KEY_PROFILE, contextActionRecipe.getMashProfile());
       startActivity(i);
     }
 
     else if (selected.equals(RECIPE_NOTES)) {
       Intent i = new Intent(c, EditRecipeNotesActivity.class);
-      i.putExtra(Constants.KEY_RECIPE, selectedRecipe);
-      i.putExtra(Constants.KEY_RECIPE_ID, selectedRecipe.getId());
+      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
       startActivity(i);
     }
 
@@ -276,9 +287,14 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
 	  // Set to the first page - the ingredients list.
 	  mViewPager.setCurrentItem(0);
-	  //mViewPager.setOnPageChangeListener(pageListener);
   }
 
+  /**
+  * Returns a builder for an alert which prompts the user if they would
+  * like to delete the given Recipe.  If the user selects yes, the 
+  * Recipe will be deleted.  If the user cancels the alert, the Recipe will 
+  * not be deleted.
+  */
   private AlertDialog.Builder deleteAlert(final Recipe r) {
     return new AlertDialog.Builder(c)
             .setTitle("Confirm Delete")
@@ -291,7 +307,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                 recipeList.remove(r);
                 mAdapter.notifyDataSetChanged();
                 Database.deleteRecipe(r);
-                setCorrectView();
                 if (isTablet)
                 {
                   // If we're running on a tablet, we should set the current selected item to 0
@@ -300,6 +315,10 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                   currentSelectedIndex = (currentSelectedIndex > 0) ? currentSelectedIndex - 1 : 0;
                   updateTabletDetailsView(recipeList.get(currentSelectedIndex));
                 }
+
+                // If the last recipe was just deleted, we need to update which
+                // view is being displayed.
+                setCorrectView();
                 Log.d("RecipesFragment", "Recipe deleted");
               }
 
@@ -508,7 +527,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       .setNegativeButton(R.string.cancel, null);
   }
 
-  // Async task to export all recipes
+  // Async task to export a single recipe.
   private class ExportRecipe extends AsyncTask<String, Void, String> {
 
     private ProgressDialog progress;

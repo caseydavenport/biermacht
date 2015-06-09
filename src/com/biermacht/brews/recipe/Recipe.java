@@ -192,8 +192,7 @@ public class Recipe implements Parcelable {
     p.readTypedList(yeasts, Yeast.CREATOR);            // Yeasts used
     p.readTypedList(miscs, Misc.CREATOR);           // Misc ingredients used
     p.readTypedList(waters, Water.CREATOR);           // Waters used
-    mashProfile = p.readParcelable(MashProfile.class.getClassLoader()); // Mash profile for
-    // non-extracts
+    mashProfile = p.readParcelable(MashProfile.class.getClassLoader()); // Mash profile for non-extracts
     mashProfile.setRecipe(this);
 
     // Beer XML 1.0 Optional Fields ===================================
@@ -313,14 +312,33 @@ public class Recipe implements Parcelable {
     return 0;
   }
 
+  /**
+  * Recipe objects are identified by the recipe name and the recipe's ID, as 
+  * used when stored in the database.  If a recipe has not been stored in the database,
+  * it will not necessarily have a unique ID.
+  */
   @Override
   public boolean equals(Object o) {
-    if (! (o instanceof Recipe)) {
+    // If the given object is not a Recipe, it cannot be equal.
+    if (!(o instanceof Recipe)) {
       return false;
     }
 
+    // The given object is a recipe - cast it.
     Recipe other = (Recipe) o;
-    return other.getRecipeName().equals(getRecipeName());
+    
+    // Check index fields.
+    if (!other.getRecipeName().equals(this.getRecipeName())) {
+      // If the given recipe does not have the same name, it is not equal.
+      return false;
+    }
+    else if (other.getId() != this.getId()) {
+      // If the given recipe does not have the same ID, it is not equal.
+      return false;
+    }
+    
+    // Otherwise, the two recipes are equal.
+    return true;
   }
 
   @Override

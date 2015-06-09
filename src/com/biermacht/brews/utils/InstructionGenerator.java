@@ -61,7 +61,6 @@ public class InstructionGenerator {
     this.boils();
     this.dryHops();
     this.yeasts();
-    //this.mashes();  // We do not add instructions for mashes right now, just mash steps
     this.mashSteps();
     this.bottling();
 

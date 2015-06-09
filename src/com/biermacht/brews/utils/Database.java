@@ -57,7 +57,7 @@ public class Database {
     return MainActivity.databaseInterface.updateExistingIngredientInDatabase(i, dbid);
   }
 
-  // Deletes the given recipe
+  // Deletes the given recipe if it exists in the database.
   public static boolean deleteRecipe(Recipe r) {
     return MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
   }
