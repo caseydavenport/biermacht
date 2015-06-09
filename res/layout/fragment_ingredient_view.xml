@@ -132,7 +132,7 @@
                     android:id="@+id/add_ingredient_button"
                     style="@style/button_no_stroke"
                     android:onClick="onClick"
-                    android:text="@string/add_ingredients"/>
+                    android:text="@string/menu_add_ingredient"/>
             </LinearLayout>
             
             <!-- Divider below the add button -->

@@ -73,9 +73,6 @@
     <string name="efficiency_hint">1 - 100</string>
     <string name="minutes_hint">minutes</string>
     
-    <!-- Button text to add ingredients -->
-    <string name="add_ingredients">Add Ingredients</string>
-    
     <!-- Ingredient types -->
     <string name="fermentable">Fermentable</string>
     <string name="hop">Hop</string>

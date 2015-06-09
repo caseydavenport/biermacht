@@ -25,43 +25,63 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
   private Context context;
   private List<Ingredient> list;
   private Recipe r;
-
+  private ViewStorage vs;
+  
+  // Variables for temporary storage.  These are declared at the class-level so that 
+  // they do not need to be allocated / cleaned up whenever getView is called, but rather 
+  // when the adapter is first created.
+  private View row;
+  private LayoutInflater inflater;
+  private String s1;
+  private String s2;
+  private String ingType;
+  private String detailText;
+  private Fermentable f;
+  private Hop h;
+  
   public IngredientArrayAdapter(Context c, List<Ingredient> list, Recipe r) {
     super(c, android.R.layout.simple_list_item_1, list);
     this.context = c;
     this.list = list;
     this.r = r;
+    this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     // View to return
-    View row = convertView;
+    row = convertView;
 
     if (row == null) {
       // Get inflater
-      LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       row = inflater.inflate(R.layout.row_layout_ingredient, parent, false);
+      
+      // Store component views
+      vs = new ViewStorage();
+      vs.labelView = (TextView) row.findViewById(R.id.label);
+      vs.amountView = (TextView) row.findViewById(R.id.amount);
+      vs.imageView = (ImageView) row.findViewById(R.id.row_icon);
+      vs.unitView = (TextView) row.findViewById(R.id.unit_text);
+      vs.detailView = (TextView) row.findViewById(R.id.ing_detail_text);
+      row.setTag(vs); 
     }
 
-    TextView labelView = (TextView) row.findViewById(R.id.label);
-    TextView amountView = (TextView) row.findViewById(R.id.amount);
-    ImageView imageView = (ImageView) row.findViewById(R.id.row_icon);
-    TextView unitView = (TextView) row.findViewById(R.id.unit_text);
-    TextView detailView = (TextView) row.findViewById(R.id.ing_detail_text);
-
-    labelView.setText(list.get(position).getName());
-    amountView.setText(String.format("%2.2f", list.get(position).getDisplayAmount()));
-    unitView.setText(list.get(position).getDisplayUnits());
+    // Get component views from row
+    vs = (ViewStorage) row.getTag();
+    
+    // Set label, amount, and units.
+    vs.labelView.setText(list.get(position).getName());
+    vs.amountView.setText(String.format("%2.2f", list.get(position).getDisplayAmount()));
+    vs.unitView.setText(list.get(position).getDisplayUnits());
 
     // Set imageView based on ingredient type
-    String ingType = list.get(position).getType();
-    String detailText = "";
+    ingType = list.get(position).getType();
+    detailText = "";
 
     if (ingType == Ingredient.HOP) {
-      Hop h = (Hop) list.get(position);
-      imageView.setImageResource(R.drawable.icon_hops);
-      labelView.setText(h.getName() + ", " + String.format("%1.1f", h.getAlphaAcidContent()) + "%");
+      h = (Hop) list.get(position);
+      vs.imageView.setImageResource(R.drawable.icon_hops);
+      vs.labelView.setText(h.getName() + ", " + String.format("%1.1f", h.getAlphaAcidContent()) + "%");
 
       if (h.getUse().equals(Hop.USE_BOIL) || h.getUse().equals(Hop.USE_AROMA)) {
         detailText += String.format("%d", h.getDisplayTime()) + " mins, ";
@@ -73,38 +93,45 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
       }
     }
     else if (ingType == Ingredient.FERMENTABLE) {
-      Fermentable f = (Fermentable) list.get(position);
+      f = (Fermentable) list.get(position);
       if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN)) {
-        imageView.setImageResource(R.drawable.icon_wheat);
+        vs.imageView.setImageResource(R.drawable.icon_wheat);
       }
       else {
-        imageView.setImageResource(R.drawable.icon_extract);
+        vs.imageView.setImageResource(R.drawable.icon_extract);
       }
 
-      String s = String.format("%2.2f", BrewCalculator.GrainPercent(r, list.get(position)));
-      String t = String.format("%2.2f", BrewCalculator.FermentableGravityPoints(r, list.get(position)));
-      detailText += s;
+      s1 = String.format("%2.2f", BrewCalculator.GrainPercent(r, list.get(position)));
+      s2 = String.format("%2.2f", BrewCalculator.FermentableGravityPoints(r, list.get(position)));
+      detailText += s1;
       detailText += "%, ";
-      detailText += t + " GPts.";
+      detailText += s2 + " GPts.";
     }
     else if (ingType == Ingredient.YEAST) {
-      // Display type is always a packet really...
-      amountView.setText("1.00");
-      unitView.setText("pkg");
-      imageView.setImageResource(R.drawable.icon_yeast);
+      // TODO: Display type is always a packet.
+      vs.amountView.setText("1.00");
+      vs.unitView.setText("pkg");
+      vs.imageView.setImageResource(R.drawable.icon_yeast);
       detailText = ((Yeast) list.get(position)).getArrayAdapterDescription();
     }
     else if (ingType == Ingredient.MISC) {
-      imageView.setImageResource(R.drawable.icon_idk);
+      vs.imageView.setImageResource(R.drawable.icon_idk);
       detailText = ((Misc) list.get(position)).getArrayAdapterDescription();
     }
     else {
-      // We don't handle these instructions!
+      // We don't handle these!
       Log.d("CustomIngredientArrayAdapter", "Unknown ingredient type received");
     }
-
-    detailView.setText(detailText);
+    vs.detailView.setText(detailText);
 
     return row;
+  }
+  
+  private class ViewStorage {
+    public TextView labelView;
+    public TextView amountView;
+    public ImageView imageView;
+    public TextView unitView;
+    public TextView detailView; 
   }
 }

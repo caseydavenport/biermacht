@@ -41,6 +41,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   private static String BREW_TIMER = "Brew Timer";
   private static String RECIPE_NOTES = "Recipe Notes";
 
+  // The parent view group.
   ViewGroup pageView;
 
   // Recipe List stuff
@@ -64,6 +65,9 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   private ListView listView;
   private TextView noRecipesView;
   private LinearLayout detailsView;
+  
+  // Currently displayed AlertDialog
+  private AlertDialog currentAlert;
   
   // Fields used when running on a tablet
   public boolean isTablet = false;
@@ -133,12 +137,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 	
 	Log.d("RecipesFragment", "Exiting onCreateView()");
   return pageView;
-  }
-  
-  @Override
-  public void onResume() {	
-    super.onResume();
-	  Log.d("RecipesFragment", "onResume: currentSelectedIndex = " + currentSelectedIndex);
   }
 
   @Override
@@ -350,7 +348,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       // options for which type of ingredient to add.  This button should 
       // only be present on tablets.
       Log.d("RecipesFragment", "User pressed add-ingredient button");
-      ingredientSelectAlert().show();
+      currentAlert = ingredientSelectAlert().show();
     }
     else if (v.getId() == R.id.add_fermentable_button) {
       // User has chosen to add a fermentable - start the 
@@ -358,24 +356,36 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       Intent i = new Intent(getActivity(), AddFermentableActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
+      
+      // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
+      currentAlert.dismiss();
     }
     else if (v.getId() == R.id.add_hops_button) {
       // User has chosen to add a hop - start the add hop activity.
       Intent i = new Intent(getActivity(), AddHopsActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
+      
+      // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
+      currentAlert.dismiss();
     }
     else if (v.getId() == R.id.add_yeast_button) {
       // User has chosen to add a yeast - start the add yeast activity.
       Intent i = new Intent(getActivity(), AddYeastActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
+      
+      // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
+      currentAlert.dismiss();
     }
     else if (v.getId() == R.id.add_misc_button) {
       // User has chosen to add a misc - start the add misc activity.
       Intent i = new Intent(getActivity(), AddMiscActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
+      
+      // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
+      currentAlert.dismiss();
     }
   }
   
@@ -479,17 +489,23 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
             .setPositiveButton(R.string.done, null);
   }
   
+  /**
+  * Returns a builder to display an alert to the User which asks them
+  * which type of ingredient to add to the current selected recipe.  
+  * Selections made in this alert should be handled by the 
+  * handleClick() method.
+  */
   private AlertDialog.Builder ingredientSelectAlert() {
     // Inflater to inflate custom alert view.
     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     // Inflate our custom layout
-    View v = inflater.inflate(R.layout.select_ingredient_type, null);
+    View v = inflater.inflate(R.layout.alert_view_select_ingredient_type, null);
     
     return new AlertDialog.Builder(getActivity())
       .setTitle("Select Ingredient Type")
       .setView(v)
-      .setNegativeButton(R.string.done, null);
+      .setNegativeButton(R.string.cancel, null);
   }
 
   // Async task to export all recipes
@@ -529,7 +545,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       progress.setMessage("Exporting " + r.getRecipeName() + "...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-      progress.setCancelable(true);
+      progress.setCancelable(false);
       progress.show();
     }
 
