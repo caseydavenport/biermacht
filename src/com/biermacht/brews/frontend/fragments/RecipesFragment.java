@@ -83,8 +83,8 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 	// Get Context
 	c = getActivity();
 
-	// Create recipe adapter
-	recipeList = new ArrayList<Recipe>();
+	// Create recipe adapter.
+  recipeList = new ArrayList<Recipe>();
 	mAdapter = new RecipeArrayAdapter(c, recipeList, this);
 
 	// Set adapter for listView
@@ -123,7 +123,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     }
   };
 
-  // Set up my listView with title and ArrayAdapter
+  // Set up listView with title and ArrayAdapter
   new GetRecipeListFromDatabaseTask(getActivity()).execute("");
   listView.setOnItemClickListener(mClickListener);
   registerForContextMenu(listView);
@@ -132,7 +132,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   setHasOptionsMenu(true);
 	
 	Log.d("RecipesFragment", "Exiting onCreateView()");
-    return pageView;
+  return pageView;
   }
   
   @Override
@@ -366,13 +366,13 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       startActivity(i);
     }
     else if (v.getId() == R.id.add_yeast_button) {
-      // User has chosen to add a yeast - start the add hop activity.
+      // User has chosen to add a yeast - start the add yeast activity.
       Intent i = new Intent(getActivity(), AddYeastActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
     }
     else if (v.getId() == R.id.add_misc_button) {
-      // User has chosen to add a misc - start the add hop activity.
+      // User has chosen to add a misc - start the add misc activity.
       Intent i = new Intent(getActivity(), AddMiscActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
@@ -409,17 +409,17 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   private class GetRecipeListFromDatabaseTask extends AsyncTask<String, Void, String> {
 
     private Context context;
-    //private ProgressDialog progress;
-
+    private ArrayList<Recipe> loadedRecipes;
+    
     public GetRecipeListFromDatabaseTask(Context c) {
       this.context = c;
+      this.loadedRecipes = new ArrayList<Recipe>();
     }
 
     @Override
     protected String doInBackground(String... params) {
       // Get recipes to display
-      recipeList.removeAll(recipeList);
-      recipeList.addAll(Database.getRecipeList(databaseInterface));
+     loadedRecipes.addAll(Database.getRecipeList(databaseInterface));
 
       return "Executed";
     }
@@ -427,9 +427,15 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     @Override
     protected void onPostExecute(String result) {
       super.onPostExecute(result);
+      Log.d("readRecipesFromDatabase", "Finished reading recipes from database");
+      
+      // Update the recipe list with the loaded recipes.
+      recipeList.removeAll(recipeList);
+      recipeList.addAll(loadedRecipes);
+      
+      // Update the adapter and UI.
       mAdapter.notifyDataSetChanged();
       setCorrectView();
-      Log.d("readRecipesFromDatabase", "Finished reading recipes from database");
 	  
 	    // If we're running in tablet mode, try to set the details view to
       // display the most recently selected receipe.

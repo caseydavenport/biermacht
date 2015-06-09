@@ -22,6 +22,10 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
   private Context context;
   private List<Recipe> list;
   private RecipesFragment frag;
+  private ViewStorage vs;
+  private String color;
+  private LayoutInflater inflater;
+  private View row;
 
   // Constructor
   public RecipeArrayAdapter(Context context, List<Recipe> list, RecipesFragment fr) {
@@ -29,33 +33,40 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
     this.context = context;
     this.list = list;
     this.frag = fr;
+    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     // View to return
-    View row = convertView;
+    row = convertView;
 
     if (row == null) {
-      // Get inflater
-      LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+      // If the row does not yet exist, inflate a new row_layout_recipe.
       row = inflater.inflate(R.layout.row_layout_recipe, parent, false);
+      
+      // Create storage for the component views.
+      vs = new ViewStorage();
+      vs.textView = (TextView) row.findViewById(R.id.label);
+      vs.styleView = (TextView) row.findViewById(R.id.beer_style);
+      vs.volView = (TextView) row.findViewById(R.id.batch_volume);
+      vs.imageView = (ImageView) row.findViewById(R.id.row_icon);
+      vs.unitsView = (TextView) row.findViewById(R.id.unit_text);
+      row.setTag(vs);
     }
+    
+    // Get the component views for this row.
+    vs = (ViewStorage) row.getTag();
 
-    TextView textView = (TextView) row.findViewById(R.id.label);
-    TextView beerStyleView = (TextView) row.findViewById(R.id.beer_style);
-    TextView batchVolumeView = (TextView) row.findViewById(R.id.batch_volume);
-    ImageView imageView = (ImageView) row.findViewById(R.id.row_icon);
-    TextView unitsView = (TextView) row.findViewById(R.id.unit_text);
+    // Set the correct values for these views.
+    vs.textView.setText(list.get(position).getRecipeName());
+    vs.styleView.setText((list.get(position).getStyle().getName()));
+    vs.volView.setText(String.format("%2.2f", list.get(position).getDisplayBatchSize()));
+    vs.unitsView.setText(list.get(position).getVolumeUnits());
 
-    textView.setText(list.get(position).getRecipeName());
-    beerStyleView.setText((list.get(position).getStyle().getName()));
-    batchVolumeView.setText(String.format("%2.2f", list.get(position).getDisplayBatchSize()));
-    unitsView.setText(list.get(position).getVolumeUnits());
-
-    // Set beer color here
-    String color = ColorHandler.getSrmColor(list.get(position).getColor());
-    imageView.setBackgroundColor(Color.parseColor(color));
+    // Set beer color
+    color = ColorHandler.getSrmColor(list.get(position).getColor());
+    vs.imageView.setBackgroundColor(Color.parseColor(color));
     
     // If we're running as a tablet, we should do some extra stuff here.
     if (frag.isTablet) {
@@ -70,5 +81,14 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
       }
     }
     return row;
+  }
+
+  // A private class for storing views for a given row.
+  private class ViewStorage {
+    public TextView textView;
+    public ImageView imageView;
+    public TextView styleView;
+    public TextView volView;
+    public TextView unitsView;
   }
 }
