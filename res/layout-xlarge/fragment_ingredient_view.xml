@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    android:orientation="vertical" >
+
+    <!-- Header -->
+    <TextView
+        android:id="@+id/ingredient_list_header"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="" />
+
+    <!-- Body -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <!--
+        This layout encapsules the list and the button that must be immediately
+        below the list with a wrap_content height, so the list plus the button
+        fills only as much space as they need (if the list is not big enouth to
+        fill the entire screen).
+        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!--
+            Layout with varaible size with a list inside.
+            Using layout_weight tells android that this layout should not grow
+            greater then the screen, but uses only the free space. 
+            -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <!--
+                Inside this limited height layout, there is a list with height
+                wrap_content so it can grow as much as it needs INSIDE the
+                layout (through scrolling).
+                -->
+                <ListView
+                    android:id="@+id/ingredient_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:id="@+id/no_ingredients_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="72dip"
+                    android:background="#fff"
+                    android:gravity="center"
+                    android:layout_margin="10dip"
+                    android:visibility="gone"
+                    android:text="No ingredients found"/>
+
+            </LinearLayout>
+
+            <!-- Divider above the add button -->
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/divider"/>
+
+            <!-- Button to add a new ingredient -->
+            <LinearLayout 
+                android:layout_width="fill_parent"
+                android:layout_height="60dp" 
+                android:background="@color/transparent">
+
+                <!-- Actual Button -->
+                <Button
+                    android:id="@+id/add_ingredient_button"
+                    style="@style/button_no_stroke"
+                    android:onClick="onClick"
+                    android:text="@string/menu_add_ingredient"/>
+            </LinearLayout>
+
+            <!-- Divider below the add button -->
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/divider"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
