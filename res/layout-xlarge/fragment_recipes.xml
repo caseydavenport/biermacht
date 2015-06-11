@@ -51,7 +51,7 @@
             	android:dividerHeight="0dp"
         	    android:drawSelectorOnTop="true"
               android:choiceMode="singleChoice"
-    	        android:listSelector="@drawable/selector">
+    	        android:listSelector="@drawable/selector" >
 	        </ListView>
 
     	    <TextView

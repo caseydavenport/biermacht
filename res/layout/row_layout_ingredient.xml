@@ -6,22 +6,14 @@
               android:background="@color/transparent"
               android:orientation="horizontal">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="60dp"
-        android:layout_height="fill_parent"
-        android:background="@color/transparent"
-        android:layout_marginRight="0dp">
-
-        <ImageView
+    <ImageView
             android:id="@+id/row_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_margin="14dip"
+            android:layout_margin="15dip"
             android:src="@drawable/beer_icon"
             android:contentDescription="icon"
             android:background="@color/transparent"/>
-    </LinearLayout>
 
     <!-- Divider line -->
     <View
