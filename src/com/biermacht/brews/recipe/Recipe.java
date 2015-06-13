@@ -313,22 +313,22 @@ public class Recipe implements Parcelable {
   }
 
   /**
-  * Recipe objects are identified by the recipe name and the recipe's ID, as 
-  * used when stored in the database.  If a recipe has not been stored in the database,
-  * it will not necessarily have a unique ID.
-  */
+   * Recipe objects are identified by the recipe name and the recipe's ID, as used when stored in
+   * the database.  If a recipe has not been stored in the database, it will not necessarily have a
+   * unique ID.
+   */
   @Override
   public boolean equals(Object o) {
     // If the given object is not a Recipe, it cannot be equal.
-    if (!(o instanceof Recipe)) {
+    if (! (o instanceof Recipe)) {
       return false;
     }
 
     // The given object is a recipe - cast it.
     Recipe other = (Recipe) o;
-    
+
     // Check index fields.
-    if (!other.getRecipeName().equals(this.getRecipeName())) {
+    if (! other.getRecipeName().equals(this.getRecipeName())) {
       // If the given recipe does not have the same name, it is not equal.
       return false;
     }
@@ -336,7 +336,7 @@ public class Recipe implements Parcelable {
       // If the given recipe does not have the same ID, it is not equal.
       return false;
     }
-    
+
     // Otherwise, the two recipes are equal.
     return true;
   }

@@ -42,28 +42,28 @@ public class IngredientHandler {
     try {
       // Import all ingredient assets.
       this.importIngredients();
-      
+
       // Import mash profile assets.
-      Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM, 
-                                                   getProfilesFromXml(), 
+      Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM,
+                                                   getProfilesFromXml(),
                                                    Constants.OWNER_NONE);
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
-  
+
   // Imports ingredient assets only (not mash profiles).
   public void importIngredients() throws IOException {
     Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                getFermentablesFromXml(), 
+                                                getFermentablesFromXml(),
                                                 Constants.OWNER_NONE);
-    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, 
-                                                getYeastsFromXml(), 
+    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
+                                                getYeastsFromXml(),
                                                 Constants.OWNER_NONE);
-    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, 
+    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getHopsFromXml(),
                                                 Constants.OWNER_NONE);
-    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, 
+    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getMiscsFromXml(),
                                                 Constants.OWNER_NONE);
   }

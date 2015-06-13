@@ -1,10 +1,6 @@
 package com.biermacht.brews.frontend;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +10,9 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -226,7 +225,7 @@ public class MainActivity extends FragmentActivity {
     fragmentList.add(new StrikeWaterCalculatorFragment());
     fragmentList.add(new HydrometerTempCalculatorFragment());
     fragmentList.add(new AlcoholAttenuationCalculatorFragment());
-    
+
     // Select the recipe fragment
     selectItem(0);
   }
@@ -234,7 +233,7 @@ public class MainActivity extends FragmentActivity {
   @Override
   public void onResume() {
     super.onResume();
-	  Log.d("MainActivity", "onResume() called");
+    Log.d("MainActivity", "onResume() called");
     updateFragments();
   }
 
@@ -245,7 +244,7 @@ public class MainActivity extends FragmentActivity {
     if (mDrawerToggle.onOptionsItemSelected(item)) {
       return true;
     }
-    
+
     // Pass the event to the active fragment.  If it returns true,
     // then it has handled the touch event.
     if (fragmentList.get(selectedItem).onOptionsItemSelected(item)) {
@@ -260,11 +259,11 @@ public class MainActivity extends FragmentActivity {
         Intent i2 = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(i2);
         return true;
-        
+
       case R.id.menu_import_recipe:
         importRecipeAlert().show();
         break;
-        
+
       case R.id.add_fermentable:
         i = new Intent(this, AddCustomFermentableActivity.class);
         i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
@@ -411,9 +410,9 @@ public class MainActivity extends FragmentActivity {
   private void selectItem(int pos) {
     // Insert the fragment by replacing any existing fragment.
     FragmentManager fragmentManager = getSupportFragmentManager();
-	  Fragment f = (Fragment) fragmentList.get(pos);
+    Fragment f = (Fragment) fragmentList.get(pos);
     fragmentManager.beginTransaction().replace(R.id.content_frame, f).commit();
-   
+
     // Highlight the selected item, update the title, and close the drawer
     drawerListView.setItemChecked(pos, true);
     setTitle(drawerItems.get(pos));

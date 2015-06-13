@@ -1,13 +1,10 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.biermacht.brews.R;
@@ -17,7 +14,6 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 
 import java.util.ArrayList;
-
 
 public class DetailsViewFragment extends Fragment {
 
@@ -42,11 +38,11 @@ public class DetailsViewFragment extends Fragment {
   public DetailsViewFragment() {
     // TODO: What does this do? No wi-fi right now.
     setRetainInstance(true);
-    
+
     // No options menu.
     setHasOptionsMenu(false);
   }
-  
+
   public static DetailsViewFragment instance(Recipe r) {
     // Create the fragment.
     DetailsViewFragment f = new DetailsViewFragment();
@@ -64,11 +60,11 @@ public class DetailsViewFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Get stored arguments from bundle.
     this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
-    
+
     // Inflate the resource for this fragment and find the component views.
     pageView = inflater.inflate(resource, container, false);
     listView = (ListView) pageView.findViewById(R.id.details_list);
-    
+
     // Create a new details list.
     this.detailList = new ArrayList<Detail>();
 
@@ -180,8 +176,8 @@ public class DetailsViewFragment extends Fragment {
 
     // If a measured efficiency is present, display it as a Detail.  This
     // detail is not valid for Extract recipes.
-    if ((this.r.getMeasuredEfficiency() > 0) && 
-        (!this.r.getType().equals(Recipe.EXTRACT))) {
+    if ((this.r.getMeasuredEfficiency() > 0) &&
+            (! this.r.getType().equals(Recipe.EXTRACT))) {
       // Add the Measured Efficiency Detail.  This is a range type which displays
       // mash efficiency as calculated using the user-input OG and volume.
       this.eff = new Detail();

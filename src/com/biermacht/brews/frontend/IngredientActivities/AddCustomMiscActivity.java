@@ -17,10 +17,10 @@ public class AddCustomMiscActivity extends AddMiscActivity {
     super.onCreate(savedInstanceState);
 
     // Remove the timeView from the mainView, as it should never be visible.
-	// This prevents it from appearing based on the useSpinner selection.
-	mainView.removeView(timeView);
-	
-	// Set the views that should be visible.
+    // This prevents it from appearing based on the useSpinner selection.
+    mainView.removeView(timeView);
+
+    // Set the views that should be visible.
     this.setViews(Arrays.asList(nameView, amountView, unitsSpinner, useSpinner, typeSpinner));
     if (! haveRecipe()) {
       timeView.setVisibility(View.GONE);

@@ -1,7 +1,5 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,7 +23,6 @@ import com.biermacht.brews.utils.Constants;
 
 import java.util.ArrayList;
 
-
 public class IngredientViewFragment extends Fragment {
 
   private int resource = R.layout.fragment_ingredient_view;
@@ -40,41 +37,41 @@ public class IngredientViewFragment extends Fragment {
   Ingredient ing;
   Intent intent;
   IngredientArrayAdapter ingredientArrayAdapter;
-  
+
   /**
-  * Public constructor.  All fragments must have an empty public constructor.
-  * Arguments are passed via the setArguments method.  Use instance() to 
-  * create new IngredientViewFragments rather than this constructor.
-  */
+   * Public constructor.  All fragments must have an empty public constructor. Arguments are passed
+   * via the setArguments method.  Use instance() to create new IngredientViewFragments rather than
+   * this constructor.
+   */
   public IngredientViewFragment() {
     // This fragment has no options menu.
     setHasOptionsMenu(false);
   }
-  
+
   public static IngredientViewFragment instance(Recipe r) {
     // Create the fragment.
     IngredientViewFragment f = new IngredientViewFragment();
-    
+
     // Store the recipe in the arguments bundle.
     Bundle b = new Bundle();
     b.putParcelable(Constants.KEY_RECIPE, r);
     f.setArguments(b);
-    
+
     // Return the newly created fragment.
     return f;
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    
+
     // Get arguments and store them in variables.
     r = getArguments().getParcelable(Constants.KEY_RECIPE);
-    
+
     // Inflate the resource for this fragment, and find any
     // important component views.
     pageView = inflater.inflate(resource, container, false);
     ingredientListView = (ListView) pageView.findViewById(R.id.ingredient_list);
-  
+
     // Get the ingredient list from the recipe.
     ingredientList = r.getIngredientList();
 

@@ -72,11 +72,11 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
     alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     alert.show();
   }
-  
+
   @Override
   public void setInitialSearchableListSelection() {
-	// Override this method becaue there is no searchable list for this activity.  Since this activity
-	// is meant to add new custom Fermentables, rather than select a fermentable from a list.
+    // Override this method becaue there is no searchable list for this activity.  Since this activity
+    // is meant to add new custom Fermentables, rather than select a fermentable from a list.
     Log.d("AddCustomFermentableActivity", "No searchable list for this activity");
   }
 

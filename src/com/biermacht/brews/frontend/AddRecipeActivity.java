@@ -61,7 +61,7 @@ public class AddRecipeActivity extends AddEditActivity {
 
   // Callbacks
   public BooleanCallback boilVolumeCallback;
-  
+
   // Whether or not to open the DisplayRecipeActivity when the new 
   // recipe is saved.  This defaults to true.
   public boolean displayOnCreate = true;
@@ -154,7 +154,7 @@ public class AddRecipeActivity extends AddEditActivity {
   @Override
   public void getValuesFromIntent() {
     super.getValuesFromIntent();
-    
+
     // Determine if we should display the recipe, or just finish,
     // upon save.
     displayOnCreate = getIntent().getBooleanExtra(Constants.DISPLAY_ON_CREATE, true);
@@ -360,7 +360,7 @@ public class AddRecipeActivity extends AddEditActivity {
   public void onFinished() {
     // Create the recipe in the database.
     Recipe r = Database.createRecipeFromExisting(mRecipe);
-    
+
     if (this.displayOnCreate) {
       // Open up the display recipe activity.
       Intent intent = new Intent(AddRecipeActivity.this, DisplayRecipeActivity.class);

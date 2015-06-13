@@ -16,15 +16,15 @@ import android.widget.TextView;
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import com.biermacht.brews.ingredient.*;
-import java.io.*;
 
 public class SettingsActivity extends AddEditActivity {
 
@@ -89,7 +89,7 @@ public class SettingsActivity extends AddEditActivity {
 
     exportRecipesViewTitle = (TextView) exportRecipesView.findViewById(R.id.title);
     exportRecipesViewTitle.setText("Export recipes");
-    
+
     resetIngredientsViewTitle = (TextView) resetIngredientsView.findViewById(R.id.title);
     resetIngredientsViewTitle.setText("Reset Ingredients");
 
@@ -313,22 +313,22 @@ public class SettingsActivity extends AddEditActivity {
     protected void onProgressUpdate(Void... values) {
     }
   }
-  
+
   private Builder resetIngredients() {
     return new AlertDialog.Builder(this)
-      .setTitle("Reset Ingredients")
-      .setMessage("Reset default ingredient list? This will not affect any custom made ingredients.")
-      .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+            .setTitle("Reset Ingredients")
+            .setMessage("Reset default ingredient list? This will not affect any custom made ingredients.")
+            .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
 
-        public void onClick(DialogInterface dialog, int which) {
-          new ResetIngredients().execute("");
-        }
+              public void onClick(DialogInterface dialog, int which) {
+                new ResetIngredients().execute("");
+              }
 
-      })
+            })
 
-      .setNegativeButton(R.string.cancel, null);
+            .setNegativeButton(R.string.cancel, null);
   }
-  
+
   // Async task to reset all ingredients.
   private class ResetIngredients extends AsyncTask<String, Void, String> {
 
@@ -338,16 +338,16 @@ public class SettingsActivity extends AddEditActivity {
     protected String doInBackground(String... params) {
       Log.d("ResetIngredients", "Deleting all 'permanent' ingredients");
       for (Ingredient ing : Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT)) {
-        Database.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());  
+        Database.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
       }
-      
+
       Log.d("ResetIngredients", "Re-initializing ingredient assets");
       try {
         ingredientHandler.importIngredients();
       } catch (IOException e) {
         Log.e("ResetIngredients", e.toString());
       }
-      
+
       return "Executed";
     }
 
@@ -373,5 +373,5 @@ public class SettingsActivity extends AddEditActivity {
     protected void onProgressUpdate(Void... values) {
     }
   }
-  
+
 }

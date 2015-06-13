@@ -26,7 +26,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
   private List<Ingredient> list;
   private Recipe r;
   private ViewStorage vs;
-  
+
   // Variables for temporary storage.  These are declared at the class-level so that 
   // they do not need to be allocated / cleaned up whenever getView is called, but rather 
   // when the adapter is first created.
@@ -38,7 +38,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
   private String detailText;
   private Fermentable f;
   private Hop h;
-  
+
   public IngredientArrayAdapter(Context c, List<Ingredient> list, Recipe r) {
     super(c, android.R.layout.simple_list_item_1, list);
     this.context = c;
@@ -55,7 +55,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
     if (row == null) {
       // Get inflater
       row = inflater.inflate(R.layout.row_layout_ingredient, parent, false);
-      
+
       // Store component views
       vs = new ViewStorage();
       vs.labelView = (TextView) row.findViewById(R.id.label);
@@ -63,12 +63,12 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
       vs.imageView = (ImageView) row.findViewById(R.id.row_icon);
       vs.unitView = (TextView) row.findViewById(R.id.unit_text);
       vs.detailView = (TextView) row.findViewById(R.id.ing_detail_text);
-      row.setTag(vs); 
+      row.setTag(vs);
     }
 
     // Get component views from row
     vs = (ViewStorage) row.getTag();
-    
+
     // Set label, amount, and units.
     vs.labelView.setText(list.get(position).getName());
     vs.amountView.setText(String.format("%2.2f", list.get(position).getDisplayAmount()));
@@ -126,12 +126,12 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
 
     return row;
   }
-  
+
   private class ViewStorage {
     public TextView labelView;
     public TextView amountView;
     public ImageView imageView;
     public TextView unitView;
-    public TextView detailView; 
+    public TextView detailView;
   }
 }

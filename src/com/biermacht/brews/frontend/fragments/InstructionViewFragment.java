@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,24 +18,24 @@ import java.util.ArrayList;
 
 public class InstructionViewFragment extends Fragment {
 
-  private int resource = R.layout.fragment_instruction_view;;
+  private int resource = R.layout.fragment_instruction_view;
+  ;
   private Recipe r;
   private ListView instructionListView;
   private ArrayList<Instruction> instructionList;
   private View pageView;
   private InstructionArrayAdapter instructionArrayAdapter;
-  
 
   /**
-  * Public constructor.  All fragments must have an empty public constructor.
-  * Arguments are passed via the setArguments method.  Use instance() to 
-  * create new InstructionViewFragments rather than this constructor.
-  */
+   * Public constructor.  All fragments must have an empty public constructor. Arguments are passed
+   * via the setArguments method.  Use instance() to create new InstructionViewFragments rather than
+   * this constructor.
+   */
   public InstructionViewFragment() {
     // Don't show options menu.
     setHasOptionsMenu(false);
   }
-  
+
   public static InstructionViewFragment instance(Recipe r) {
     // Create the fragment.
     InstructionViewFragment f = new InstructionViewFragment();
@@ -54,11 +53,11 @@ public class InstructionViewFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Get arguments from the stored bundle.
     this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
-    
+
     // Inflate the UI resource for this fragment..
     this.pageView = inflater.inflate(this.resource, container, false);
     this.instructionListView = (ListView) this.pageView.findViewById(R.id.instruction_list);
-    
+
     // Initialize a new empty list to hold instructions.
     this.instructionList = new ArrayList<Instruction>();
 

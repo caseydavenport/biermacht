@@ -1,8 +1,8 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,8 +17,7 @@ import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
-public class StrikeWaterCalculatorFragment extends Fragment implements ClickableFragment
-{
+public class StrikeWaterCalculatorFragment extends Fragment implements ClickableFragment {
   private static int resource = R.layout.fragment_mash_strike_calculator;
   View pageView;
   Context c;
@@ -127,7 +126,7 @@ public class StrikeWaterCalculatorFragment extends Fragment implements Clickable
     }
 
   }
-  
+
   //**************************************************************************
   // The following set of methods implement the Biermacht Fragment Interface
   //**************************************************************************

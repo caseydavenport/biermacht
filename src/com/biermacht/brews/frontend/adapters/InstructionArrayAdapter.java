@@ -15,7 +15,7 @@ import java.util.List;
 public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 
   private List<Instruction> list;
-  
+
   // Variables for use in getView().  These are owned at the class 
   // scope so that they do not get garbage collected as frequently,
   // improving list performance.
@@ -38,7 +38,7 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
     if (this.row == null) {
       // Inflate a new view, since convertView was null.
       row = inflater.inflate(R.layout.row_layout_instruction, parent, false);
-    
+
       // Store component views.
       vs = new ViewStorage();
       vs.labelView = (TextView) this.row.findViewById(R.id.label);
@@ -46,10 +46,10 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
       vs.durationView = (TextView) this.row.findViewById(R.id.duration_view);
       row.setTag(vs);
     }
-    
+
     // Get the component views for this row.
     vs = (ViewStorage) row.getTag();
-    
+
     // Set what type of instruction it is
     vs.tagView.setText(list.get(position).getInstructionType());
 
@@ -69,7 +69,7 @@ public class InstructionArrayAdapter extends ArrayAdapter<Instruction> {
 
     return row;
   }
-  
+
   private class ViewStorage {
     TextView labelView;
     TextView tagView;

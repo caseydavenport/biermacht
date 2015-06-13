@@ -1,6 +1,5 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,14 +13,15 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.Detail;
 import com.biermacht.brews.frontend.adapters.DetailArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
-import com.biermacht.brews.utils.*;
 
 public class ProfileViewFragment extends Fragment {
 
-  private int resource = R.layout.fragment_profile_view;;
+  private int resource = R.layout.fragment_profile_view;
+  ;
   private Recipe r;
   private OnItemClickListener mClickListener;
   View pageView;
@@ -53,15 +53,15 @@ public class ProfileViewFragment extends Fragment {
     // Return the newly created fragment.
     return f;
   }
-  
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Get arguments from stored bundle.
     this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
-    
+
     // No options menu.
     setHasOptionsMenu(false);
-    
+
     // Inflate and find views.
     pageView = inflater.inflate(resource, container, false);
     mashProfileView = (ViewGroup) pageView.findViewById(R.id.mash_profile_view);

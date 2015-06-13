@@ -2,7 +2,6 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 
-import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
 import java.util.Arrays;

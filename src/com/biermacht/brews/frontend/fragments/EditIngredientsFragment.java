@@ -1,13 +1,13 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,10 +29,8 @@ import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import com.biermacht.brews.frontend.adapters.*;
 
-public class EditIngredientsFragment extends Fragment implements ClickableFragment
-{
+public class EditIngredientsFragment extends Fragment implements ClickableFragment {
   private static int resource = R.layout.fragment_view;
   ;
   private OnItemClickListener mClickListener;
@@ -55,7 +53,7 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
     list = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
     list.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT));
     Collections.sort(list, new IngredientComparator());
-    
+
     // Set up the list adapter
     ingredientArrayAdapter = new CustomIngredientArrayAdapter(c, list);
 
@@ -133,24 +131,24 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
   public void handleClick(View v) {
 
   }
-  
+
   @Override
   public void update() {
     // Get the full list of ingredients from the custom database and permanent database.
     ArrayList<Ingredient> loadedList = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
     loadedList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT));
-    
+
     // Add the loaded ingredients to the list for the list view.
     list.removeAll(list);
     list.addAll(loadedList);
-    
+
     // Sort the list.
     Collections.sort(list, new IngredientComparator());
-    
+
     // Notify the adapter that the list has changed.
     ingredientArrayAdapter.notifyDataSetChanged();
   }
-  
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     return false;

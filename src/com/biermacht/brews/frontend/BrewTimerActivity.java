@@ -8,9 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -357,8 +354,7 @@ public class BrewTimerActivity extends FragmentActivity {
   }
 
   /**
-   * The default finish() method.  This ends the activity, bringing the BrewTimerService
-   * with it.
+   * The default finish() method.  This ends the activity, bringing the BrewTimerService with it.
    */
   @Override
   public void finish() {
@@ -370,8 +366,7 @@ public class BrewTimerActivity extends FragmentActivity {
   /**
    * Use this to finish the BrewTimerActivity without stopping the service.
    */
-  public void finishWithoutStoppingService()
-  {
+  public void finishWithoutStoppingService() {
     super.finish();
   }
 
@@ -558,7 +553,7 @@ public class BrewTimerActivity extends FragmentActivity {
   }
 
   public void setTimerFromCurrentStep() {
-    if (!inst.showTimer()) {
+    if (! inst.showTimer()) {
       setTimerToNull();
     }
     else {

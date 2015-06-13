@@ -1,6 +1,5 @@
 package com.biermacht.brews.services;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,10 +11,8 @@ import android.content.IntentFilter;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -173,8 +170,8 @@ public class BrewTimerService extends Service {
   }
 
   /**
-   * Broadcasts the current timer state to the QUERY_RESP broadcast destination.  This includes
-   * the current Recipe, step number, remaining time, and the timer state (paused, running, etc).
+   * Broadcasts the current timer state to the QUERY_RESP broadcast destination.  This includes the
+   * current Recipe, step number, remaining time, and the timer state (paused, running, etc).
    */
   public void respondToQuery() {
     Log.d("BrewTimerService", "Responding to query");
@@ -188,9 +185,10 @@ public class BrewTimerService extends Service {
   }
 
   /**
-   * Updates the notification in the notification bar which shows the current step and the
-   * remaining time left.  This is updated every time the timer ticks down, as well as in special
-   * cases (like when the timer changes state).
+   * Updates the notification in the notification bar which shows the current step and the remaining
+   * time left.  This is updated every time the timer ticks down, as well as in special cases (like
+   * when the timer changes state).
+   *
    * @param title
    * @param remaining
    */
@@ -251,7 +249,6 @@ public class BrewTimerService extends Service {
   }
 }
 
-
 class Timer {
   // Keep track of timer state
   public int timerState;
@@ -272,6 +269,7 @@ class Timer {
   /**
    * Starts the timer, initializing the timer to the given number of seconds.  If the timer is
    * already running, this is a no-op.
+   *
    * @param seconds
    */
   public void start(int seconds) {
@@ -305,16 +303,15 @@ class Timer {
   }
 
   /**
-   * An alternative to start(time) which starts the timer with the remaining number
-   * of seconds left.
+   * An alternative to start(time) which starts the timer with the remaining number of seconds
+   * left.
    */
   public void start() {
     start(remainingSeconds);
   }
 
   /**
-   * Stops timer execution.  This cancels the current timer and sets the timerState
-   * appropriately.
+   * Stops timer execution.  This cancels the current timer and sets the timerState appropriately.
    */
   public void stop() {
     timerState = Constants.STOPPED;
@@ -322,8 +319,7 @@ class Timer {
   }
 
   /**
-   * Pauses timer execution. This cancels the current timer, and sets the timerState
-   * appropriately.
+   * Pauses timer execution. This cancels the current timer, and sets the timerState appropriately.
    */
   public void pause() {
     timerState = Constants.PAUSED;
@@ -331,8 +327,8 @@ class Timer {
   }
 
   /**
-   * Broadcasts the current remaining time to the BrewTimerActivity, where it is displayed
-   * in the timer view.
+   * Broadcasts the current remaining time to the BrewTimerActivity, where it is displayed in the
+   * timer view.
    */
   public void broadcastTime() {
     Intent i = new Intent();

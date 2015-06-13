@@ -18,7 +18,7 @@ import java.util.List;
 public class DetailArrayAdapter extends ArrayAdapter<Detail> {
 
   private List<Detail> list;
-  
+
   // Variables used in getView().  Stored at class-level to 
   // improve performance.
   private View row;
@@ -29,7 +29,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
   private String value;
   private Boolean isGood;
   private Boolean isOk;
-  
+
   // Constructor
   public DetailArrayAdapter(Context c, List<Detail> list) {
     super(c, android.R.layout.simple_list_item_1, list);
@@ -49,7 +49,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
     if (this.row == null) {
       // Inflate a new row layout.
       this.row = inflater.inflate(R.layout.row_layout_detail, parent, false);
-      
+
       // Store the component views.
       this.vs = new ViewStorage();
       this.vs.titleView = (TextView) row.findViewById(R.id.tag);
@@ -58,7 +58,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       this.vs.subTextView = (TextView) row.findViewById(R.id.subtext);
       this.row.setTag(this.vs);
     }
-    
+
     // Get the component views for this row.
     vs = (ViewStorage) this.row.getTag();
 
@@ -78,7 +78,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       this.vs.valueView.setText(detail.getContent());
       this.vs.rangeView.setVisibility(View.GONE);
 
-      if (!detail.getSubText().isEmpty()) {
+      if (! detail.getSubText().isEmpty()) {
         // There is subtext for this detai - make sure the subtext view is visible.
         this.vs.subTextView.setVisibility(View.VISIBLE);
         this.vs.subTextView.setText(detail.getSubText());
@@ -87,9 +87,9 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
     else if (detail.getType().equals(Detail.TYPE_RANGE)) {
       // This is a range type detail.  These details contain a title, range, and value.
       // The value will be colored based on whether or not it falls within the range.
-      this.range = String.format(this.detail.getFormat(), detail.getMin()) + 
-                   " - " + 
-                   String.format(this.detail.getFormat(), detail.getMax());
+      this.range = String.format(this.detail.getFormat(), detail.getMin()) +
+              " - " +
+              String.format(this.detail.getFormat(), detail.getMax());
       this.value = String.format(this.detail.getFormat(), detail.getValue());
 
       // Set values
@@ -121,7 +121,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
     // Return the now populated row.
     return this.row;
   }
-  
+
   private class ViewStorage {
     TextView titleView;
     TextView rangeView;

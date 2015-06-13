@@ -3,27 +3,51 @@ package com.biermacht.brews.frontend.fragments;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.DialogInterface;
-import android.os.Bundle;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.*;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.biermacht.brews.*;
-import com.biermacht.brews.database.*;
-import com.biermacht.brews.frontend.*;
-import com.biermacht.brews.frontend.IngredientActivities.*;
-import com.biermacht.brews.frontend.adapters.*;
-import com.biermacht.brews.recipe.*;
-import com.biermacht.brews.utils.*;
-import com.biermacht.brews.utils.interfaces.*;
-import com.biermacht.brews.xml.*;
-import java.util.*;
+import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseInterface;
+import com.biermacht.brews.frontend.AddRecipeActivity;
+import com.biermacht.brews.frontend.BrewTimerActivity;
+import com.biermacht.brews.frontend.DisplayRecipeActivity;
+import com.biermacht.brews.frontend.EditFermentationProfileActivity;
+import com.biermacht.brews.frontend.EditMashProfileActivity;
+import com.biermacht.brews.frontend.EditRecipeNotesActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddFermentableActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddHopsActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
+import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
+import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
+import com.biermacht.brews.frontend.MainActivity;
+import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter;
+import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
+import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.interfaces.ClickableFragment;
+import com.biermacht.brews.xml.RecipeXmlWriter;
 
+import java.util.ArrayList;
 
 public class RecipesFragment extends Fragment implements ClickableFragment {
 
@@ -66,78 +90,78 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   private ListView listView;
   private TextView noRecipesView;
   private LinearLayout detailsView;
-  
+
   // Currently displayed AlertDialog
   private AlertDialog currentAlert;
-  
+
   // Fields used when running on a tablet
   public boolean isTablet = false;
   private DisplayRecipeCollectionPagerAdapter cpAdapter;
   private ViewPager mViewPager;
   public int currentSelectedIndex = 0;
-  
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	Log.d("RecipesFragment", "Starting onCreateView()");
-	
+    Log.d("RecipesFragment", "Starting onCreateView()");
+
     // Get views
     pageView = (RelativeLayout) inflater.inflate(resource, container, false);
     listView = (ListView) pageView.findViewById(R.id.recipe_list);
     noRecipesView = (TextView) pageView.findViewById(R.id.no_recipes_view);
 
-	// Get Context
-	c = getActivity();
+    // Get Context
+    c = getActivity();
 
-	// Create recipe adapter.
-  recipeList = new ArrayList<Recipe>();
-	mAdapter = new RecipeArrayAdapter(c, recipeList, this);
+    // Create recipe adapter.
+    recipeList = new ArrayList<Recipe>();
+    mAdapter = new RecipeArrayAdapter(c, recipeList, this);
 
-	// Set adapter for listView
-	listView.setAdapter(mAdapter);
-	
-	// Search for the details view.  If it exists, it means we're 
-	// running on a tablet, and we should inflate the details.
-	detailsView = (LinearLayout) pageView.findViewById(R.id.details_view);
-	if (detailsView != null) {
-		Log.d("RecipesFragment", "Found detailsView - running on tablet");
-	  mViewPager = (ViewPager) detailsView.findViewById(R.id.pager);
-		isTablet = true;		
-	}
-	
-  // Get database Interface
-  databaseInterface = MainActivity.databaseInterface;
+    // Set adapter for listView
+    listView.setAdapter(mAdapter);
 
-  // Set up the onClickListener for when a Recipe is selected 
-	// in the main recipe list.
-  mClickListener = new AdapterView.OnItemClickListener() {
-    public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
-		  // If we're running on a tablet, update the details view.
-		  // Otherwise, open the DisplayRecipeActivity to display the recipe.
-		  if (isTablet) {
-		    Log.d("RecipesFragment", "Running on tablet - update details");
-		    currentSelectedIndex = pos;
-		    updateTabletDetailsView(recipeList.get(pos));
-        mAdapter.notifyDataSetChanged();
-	  	}
-		  else {
-		    Log.d("RecipesFragment", "Launching DisplayRecipeActivity");
-        Intent intent = new Intent(c, DisplayRecipeActivity.class);
-        intent.putExtra(Constants.KEY_RECIPE, recipeList.get(pos));
-        startActivity(intent);
-		  }
+    // Search for the details view.  If it exists, it means we're
+    // running on a tablet, and we should inflate the details.
+    detailsView = (LinearLayout) pageView.findViewById(R.id.details_view);
+    if (detailsView != null) {
+      Log.d("RecipesFragment", "Found detailsView - running on tablet");
+      mViewPager = (ViewPager) detailsView.findViewById(R.id.pager);
+      isTablet = true;
     }
-  };
 
-  // Set up listView with title and ArrayAdapter
-  updateRecipesFromDatabase();
-  listView.setOnItemClickListener(mClickListener);
-  registerForContextMenu(listView);
+    // Get database Interface
+    databaseInterface = MainActivity.databaseInterface;
 
-  // Turn on options menu
-  setHasOptionsMenu(true);
-	
-	Log.d("RecipesFragment", "Exiting onCreateView()");
-  return pageView;
+    // Set up the onClickListener for when a Recipe is selected
+    // in the main recipe list.
+    mClickListener = new AdapterView.OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
+        // If we're running on a tablet, update the details view.
+        // Otherwise, open the DisplayRecipeActivity to display the recipe.
+        if (isTablet) {
+          Log.d("RecipesFragment", "Running on tablet - update details");
+          currentSelectedIndex = pos;
+          updateTabletDetailsView(recipeList.get(pos));
+          mAdapter.notifyDataSetChanged();
+        }
+        else {
+          Log.d("RecipesFragment", "Launching DisplayRecipeActivity");
+          Intent intent = new Intent(c, DisplayRecipeActivity.class);
+          intent.putExtra(Constants.KEY_RECIPE, recipeList.get(pos));
+          startActivity(intent);
+        }
+      }
+    };
+
+    // Set up listView with title and ArrayAdapter
+    updateRecipesFromDatabase();
+    listView.setOnItemClickListener(mClickListener);
+    registerForContextMenu(listView);
+
+    // Turn on options menu
+    setHasOptionsMenu(true);
+
+    Log.d("RecipesFragment", "Exiting onCreateView()");
+    return pageView;
   }
 
   @Override
@@ -152,24 +176,24 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     if (v == listView) {
       // Cast the given ContextMenuInfo into an AdapterContextMenuInfo
       AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-      
+
       // Get the recipe which has been selected.
       contextActionRecipe = recipeList.get(info.position);
 
       // Determine the title for the context menu based on the selected recipe.      
       String title = contextActionRecipe.getRecipeName();
       menu.setHeaderTitle(title);
-      
+
       // Build the list of menu items to display in the context menu.  This list is accessed
       // later to determine which menu item was selected by the user.
       menuItems = new ArrayList<String>();
       menuItems.add(EDIT_RECIPE);
-      if (!contextActionRecipe.getType().equals(Recipe.EXTRACT)) {
+      if (! contextActionRecipe.getType().equals(Recipe.EXTRACT)) {
         // Only allow editing of mash profile when not an extract recipe.
         menuItems.add(EDIT_MASH);
       }
       menuItems.add(EDIT_FERM);
-      if (contextActionRecipe.getInstructionList().size() > 0 ) {
+      if (contextActionRecipe.getInstructionList().size() > 0) {
         // Only allow entering the brew timer if there are instructions.
         menuItems.add(BREW_TIMER);
       }
@@ -275,26 +299,24 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       }
     }
   }
-  
-  public void updateTabletDetailsView(Recipe r)
-  {
-	  // ViewPager and pagerAdapter for Slidy tabs!
-	  cpAdapter = new DisplayRecipeCollectionPagerAdapter(getChildFragmentManager(), r, c);
 
-	  // Set Adapter
-	  mViewPager = (ViewPager) detailsView.findViewById(R.id.pager);
-	  mViewPager.setAdapter(cpAdapter);
+  public void updateTabletDetailsView(Recipe r) {
+    // ViewPager and pagerAdapter for Slidy tabs!
+    cpAdapter = new DisplayRecipeCollectionPagerAdapter(getChildFragmentManager(), r, c);
 
-	  // Set to the first page - the ingredients list.
-	  mViewPager.setCurrentItem(0);
+    // Set Adapter
+    mViewPager = (ViewPager) detailsView.findViewById(R.id.pager);
+    mViewPager.setAdapter(cpAdapter);
+
+    // Set to the first page - the ingredients list.
+    mViewPager.setCurrentItem(0);
   }
 
   /**
-  * Returns a builder for an alert which prompts the user if they would
-  * like to delete the given Recipe.  If the user selects yes, the 
-  * Recipe will be deleted.  If the user cancels the alert, the Recipe will 
-  * not be deleted.
-  */
+   * Returns a builder for an alert which prompts the user if they would like to delete the given
+   * Recipe.  If the user selects yes, the Recipe will be deleted.  If the user cancels the alert,
+   * the Recipe will not be deleted.
+   */
   private AlertDialog.Builder deleteAlert(final Recipe r) {
     return new AlertDialog.Builder(c)
             .setTitle("Confirm Delete")
@@ -307,8 +329,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                 recipeList.remove(r);
                 mAdapter.notifyDataSetChanged();
                 Database.deleteRecipe(r);
-                if (isTablet)
-                {
+                if (isTablet) {
                   // If we're running on a tablet, we should set the current selected item to 0
                   // and update the details view.  Otherwise, the details view will remain stuck on the 
                   // current (now deleted) recipe.
@@ -354,14 +375,14 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     // Currently, the handleClick method is only valid when running on
     // a tablet.  If we hit this method when not running on a tablet,
     // we should just return.
-    if (!isTablet) {
+    if (! isTablet) {
       Log.d("RecipesFragment", "Not on tablet, do nothing");
       return;
     }
-    
+
     // Get the current selected recipe.
     Recipe r = recipeList.get(currentSelectedIndex);
-    
+
     if (v.getId() == R.id.add_ingredient_button) {
       // The user has pressed the add-ingredient button.  Display
       // options for which type of ingredient to add.  This button should 
@@ -375,7 +396,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       Intent i = new Intent(getActivity(), AddFermentableActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
-      
+
       // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
       currentAlert.dismiss();
     }
@@ -384,7 +405,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       Intent i = new Intent(getActivity(), AddHopsActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
-      
+
       // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
       currentAlert.dismiss();
     }
@@ -393,7 +414,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       Intent i = new Intent(getActivity(), AddYeastActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
-      
+
       // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
       currentAlert.dismiss();
     }
@@ -402,12 +423,12 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       Intent i = new Intent(getActivity(), AddMiscActivity.class);
       i.putExtra(Constants.KEY_RECIPE, r);
       startActivity(i);
-      
+
       // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
       currentAlert.dismiss();
     }
   }
-  
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     // Check if we can handle this options item.  The recipes fragment
@@ -418,27 +439,27 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
         // that the display recipe activity should be started if we're 
         // not running on a tablet.
         Intent i = new Intent(getActivity(), AddRecipeActivity.class);
-        i.putExtra(Constants.DISPLAY_ON_CREATE, !isTablet);
+        i.putExtra(Constants.DISPLAY_ON_CREATE, ! isTablet);
         startActivity(i);
         return true;
     }
-    
+
     // Return false if the item was unhandled.
     return false;
   }
-  
+
   @Override
   public void update() {
-      Log.d("RecipesFragment", "Updating RecipesFragment UI");
-      if (recipeList != null && c != null) {
-        updateRecipesFromDatabase();
-      }
+    Log.d("RecipesFragment", "Updating RecipesFragment UI");
+    if (recipeList != null && c != null) {
+      updateRecipesFromDatabase();
+    }
   }
-  
+
   public void updateRecipesFromDatabase() {
     // Load all recipes from database.
     ArrayList<Recipe> loadedRecipes = Database.getRecipeList(databaseInterface);
-    
+
     // Update the recipe list with the loaded recipes.
     recipeList.removeAll(recipeList);
     recipeList.addAll(loadedRecipes);
@@ -456,7 +477,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       }
     }
   }
- 
+
   private AlertDialog.Builder exportAlert(final Recipe r) {
     return new AlertDialog.Builder(getActivity())
             .setTitle("Export recipe")
@@ -478,24 +499,23 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
             .setMessage("Finished exporting recipe to: \n" + pathToFile)
             .setPositiveButton(R.string.done, null);
   }
-  
+
   /**
-  * Returns a builder to display an alert to the User which asks them
-  * which type of ingredient to add to the current selected recipe.  
-  * Selections made in this alert should be handled by the 
-  * handleClick() method.
-  */
+   * Returns a builder to display an alert to the User which asks them which type of ingredient to
+   * add to the current selected recipe. Selections made in this alert should be handled by the
+   * handleClick() method.
+   */
   private AlertDialog.Builder ingredientSelectAlert() {
     // Inflater to inflate custom alert view.
     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     // Inflate our custom layout
     View v = inflater.inflate(R.layout.alert_view_select_ingredient_type, null);
-    
+
     return new AlertDialog.Builder(getActivity())
-      .setTitle("Select Ingredient Type")
-      .setView(v)
-      .setNegativeButton(R.string.cancel, null);
+            .setTitle("Select Ingredient Type")
+            .setView(v)
+            .setNegativeButton(R.string.cancel, null);
   }
 
   // Async task to export a single recipe.

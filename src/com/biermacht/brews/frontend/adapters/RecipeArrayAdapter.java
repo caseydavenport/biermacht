@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.ColorHandler;
 
 import java.util.List;
-import com.biermacht.brews.frontend.fragments.*;
 
 public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 
@@ -44,7 +44,7 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
     if (row == null) {
       // If the row does not yet exist, inflate a new row_layout_recipe.
       row = inflater.inflate(R.layout.row_layout_recipe, parent, false);
-      
+
       // Create storage for the component views.
       vs = new ViewStorage();
       vs.textView = (TextView) row.findViewById(R.id.label);
@@ -54,7 +54,7 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
       vs.unitsView = (TextView) row.findViewById(R.id.unit_text);
       row.setTag(vs);
     }
-    
+
     // Get the component views for this row.
     vs = (ViewStorage) row.getTag();
 
@@ -67,13 +67,12 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
     // Set beer color
     color = ColorHandler.getSrmColor(list.get(position).getColor());
     vs.imageView.setBackgroundColor(Color.parseColor(color));
-    
+
     // If we're running as a tablet, we should do some extra stuff here.
     if (frag.isTablet) {
       // If currently selected, set the background to indicate it.
       // Otherwise, set the background to transparent.
-      if (position == frag.currentSelectedIndex)
-      {
+      if (position == frag.currentSelectedIndex) {
         row.setBackgroundResource(R.drawable.selector_tablet);
       }
       else {

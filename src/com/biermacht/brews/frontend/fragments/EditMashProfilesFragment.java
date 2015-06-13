@@ -1,13 +1,13 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,8 +27,7 @@ import com.biermacht.brews.utils.interfaces.ClickableFragment;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class EditMashProfilesFragment extends Fragment implements ClickableFragment
-{
+public class EditMashProfilesFragment extends Fragment implements ClickableFragment {
   private static int resource = R.layout.fragment_view;
   private OnItemClickListener mClickListener;
   private ListView listView;
@@ -99,14 +98,14 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
   public void update() {
     // Get the full list of profiles from the custom database.
     ArrayList<MashProfile> loadedList = Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM);
-    
+
     // Add the loaded profiles to the list for the list view.
     list.removeAll(list);
     list.addAll(loadedList);
 
     // Sort the list.
     Collections.sort(list, new ToStringComparator());
-    
+
     // Notify the adapter that the list has changed.
     arrayAdapter.notifyDataSetChanged();
   }

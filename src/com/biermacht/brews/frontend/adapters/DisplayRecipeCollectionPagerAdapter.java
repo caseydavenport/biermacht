@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.adapters;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -10,8 +11,6 @@ import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
 import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
 import com.biermacht.brews.recipe.Recipe;
-import android.os.*;
-
 
 public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
   Recipe r;
@@ -76,10 +75,9 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
   public InstructionViewFragment getInstructionViewFragment() {
     return this.insVf;
   }
-  
+
   @Override
-  public void restoreState(Parcelable p, ClassLoader cl)
-  {
+  public void restoreState(Parcelable p, ClassLoader cl) {
     // Override this to do nothing.  It is not needed, and throws exceptions for reasons.
     return;
   }

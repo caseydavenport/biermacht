@@ -2,7 +2,6 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 
-import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
 import java.util.Arrays;
@@ -13,10 +12,10 @@ public class EditCustomMiscActivity extends EditMiscActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-	// Remove the timeView, making it impossible to become visible.  It doesn't make sense
-	// to ever have a timeView for this Activity.
-	mainView.removeView(timeView);
-	
+    // Remove the timeView, making it impossible to become visible.  It doesn't make sense
+    // to ever have a timeView for this Activity.
+    mainView.removeView(timeView);
+
     // Set views we want visible
     this.setViews(Arrays.asList(nameView, unitsSpinner, useSpinner, typeSpinner));
 
