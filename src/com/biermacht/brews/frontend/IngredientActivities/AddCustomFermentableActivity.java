@@ -27,7 +27,6 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
 
   // Storage for acquired values
   String description;
-  String type;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +71,13 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
     // Force keyboard open and show popup
     alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     alert.show();
+  }
+  
+  @Override
+  public void setInitialSearchableListSelection() {
+	// Override this method becaue there is no searchable list for this activity.  Since this activity
+	// is meant to add new custom Fermentables, rather than select a fermentable from a list.
+    Log.d("AddCustomFermentableActivity", "No searchable list for this activity");
   }
 
   // We need this because we don't use spinners in this activity

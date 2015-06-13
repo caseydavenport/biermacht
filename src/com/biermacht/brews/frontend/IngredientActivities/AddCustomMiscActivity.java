@@ -16,8 +16,12 @@ public class AddCustomMiscActivity extends AddMiscActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // Set views
-    this.setViews(Arrays.asList(nameView, amountView, unitsSpinner, timeView, useSpinner, typeSpinner));
+    // Remove the timeView from the mainView, as it should never be visible.
+	// This prevents it from appearing based on the useSpinner selection.
+	mainView.removeView(timeView);
+	
+	// Set the views that should be visible.
+    this.setViews(Arrays.asList(nameView, amountView, unitsSpinner, useSpinner, typeSpinner));
     if (! haveRecipe()) {
       timeView.setVisibility(View.GONE);
       amountView.setVisibility(View.GONE);
@@ -54,5 +58,4 @@ public class AddCustomMiscActivity extends AddMiscActivity {
     Log.d("AddCustomMisc::onFinished", "Closing activity");
     finish();
   }
-
 }

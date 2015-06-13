@@ -13,8 +13,12 @@ public class EditCustomMiscActivity extends EditMiscActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // Set views
-    this.setViews(Arrays.asList(nameView, amountView, unitsSpinner, timeView, useSpinner, typeSpinner));
+	// Remove the timeView, making it impossible to become visible.  It doesn't make sense
+	// to ever have a timeView for this Activity.
+	mainView.removeView(timeView);
+	
+    // Set views we want visible
+    this.setViews(Arrays.asList(nameView, unitsSpinner, useSpinner, typeSpinner));
 
     // Set values for the given misc.
     setValues(misc);

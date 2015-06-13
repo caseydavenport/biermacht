@@ -113,7 +113,7 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
     }
     else {
       TextView noListView = (TextView) pageView.findViewById(R.id.nothing_to_show_view);
-      noListView.setText("No ingredients to display");
+      noListView.setText("If you can't find the ingredient you need for your recipe, create a custom one here!");
       noListView.setVisibility(View.VISIBLE);
     }
 
