@@ -32,12 +32,12 @@ public class EditCustomHopActivity extends EditHopActivity {
   }
 
   public void onFinished() {
-    Database.updateIngredient(hop, Constants.DATABASE_CUSTOM);
+    Database.updateIngredient(hop, hop.getDatabaseId());
     finish();
   }
 
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_CUSTOM);
+    Database.deleteIngredientWithId(ingredientId, hop.getDatabaseId());
     finish();
   }
 }

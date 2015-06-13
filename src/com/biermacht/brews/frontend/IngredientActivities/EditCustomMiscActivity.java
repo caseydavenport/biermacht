@@ -39,13 +39,13 @@ public class EditCustomMiscActivity extends EditMiscActivity {
 
   @Override
   public void onFinished() {
-    Database.updateIngredient(misc, Constants.DATABASE_CUSTOM);
+    Database.updateIngredient(misc, misc.getDatabaseId());
     finish();
   }
 
   @Override
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_CUSTOM);
+    Database.deleteIngredientWithId(ingredientId, misc.getDatabaseId());
     finish();
   }
 }

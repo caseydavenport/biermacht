@@ -20,7 +20,7 @@ public abstract class Ingredient implements Parcelable {
   private long id;                        // Lookup ID for database
   private long ownerId;                   // ID of recipe that contains this
   private double inventory;               // Amount in inventory (standard units)
-  private long databaseId;                // Which virtual database to store this ing in
+  private long databaseId;                // Which virtual database to store this in
 
   // Static values =================================================
   // ===============================================================

@@ -129,7 +129,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   };
 
   // Set up listView with title and ArrayAdapter
-  new GetRecipeListFromDatabaseTask(getActivity()).execute("");
+  updateRecipesFromDatabase();
   listView.setOnItemClickListener(mClickListener);
   registerForContextMenu(listView);
 
@@ -431,61 +431,32 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   public void update() {
       Log.d("RecipesFragment", "Updating RecipesFragment UI");
       if (recipeList != null && c != null) {
-        new GetRecipeListFromDatabaseTask(getActivity()).execute("");
+        updateRecipesFromDatabase();
       }
   }
-
-  private class GetRecipeListFromDatabaseTask extends AsyncTask<String, Void, String> {
-
-    private Context context;
-    private ArrayList<Recipe> loadedRecipes;
+  
+  public void updateRecipesFromDatabase() {
+    // Load all recipes from database.
+    ArrayList<Recipe> loadedRecipes = Database.getRecipeList(databaseInterface);
     
-    public GetRecipeListFromDatabaseTask(Context c) {
-      this.context = c;
-      this.loadedRecipes = new ArrayList<Recipe>();
-    }
+    // Update the recipe list with the loaded recipes.
+    recipeList.removeAll(recipeList);
+    recipeList.addAll(loadedRecipes);
 
-    @Override
-    protected String doInBackground(String... params) {
-      // Get recipes to display
-     loadedRecipes.addAll(Database.getRecipeList(databaseInterface));
+    // Update the adapter and UI.
+    mAdapter.notifyDataSetChanged();
+    setCorrectView();
 
-      return "Executed";
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-      super.onPostExecute(result);
-      Log.d("readRecipesFromDatabase", "Finished reading recipes from database");
-      
-      // Update the recipe list with the loaded recipes.
-      recipeList.removeAll(recipeList);
-      recipeList.addAll(loadedRecipes);
-      
-      // Update the adapter and UI.
-      mAdapter.notifyDataSetChanged();
-      setCorrectView();
-	  
-	    // If we're running in tablet mode, try to set the details view to
-      // display the most recently selected receipe.
-	    if (isTablet) {
-        if (currentSelectedIndex < recipeList.size()) {
-          Log.d("RecipesFragment", "Found recipes, set pageView");
-          updateTabletDetailsView(recipeList.get(currentSelectedIndex));
-        }
-	    }
-    }
-
-    @Override
-    protected void onPreExecute() {
-      super.onPreExecute();
-    }
-
-    @Override
-    protected void onProgressUpdate(Void... values) {
+    // If we're running in tablet mode, try to set the details view to
+    // display the most recently selected receipe.
+    if (isTablet) {
+      if (currentSelectedIndex < recipeList.size()) {
+        Log.d("RecipesFragment", "Found recipes, set pageView");
+        updateTabletDetailsView(recipeList.get(currentSelectedIndex));
+      }
     }
   }
-
+ 
   private AlertDialog.Builder exportAlert(final Recipe r) {
     return new AlertDialog.Builder(getActivity())
             .setTitle("Export recipe")

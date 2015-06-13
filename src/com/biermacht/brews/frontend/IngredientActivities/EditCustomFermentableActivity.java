@@ -70,14 +70,13 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
 
   @Override
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_CUSTOM);
+    Database.deleteIngredientWithId(ingredientId, fermentable.getDatabaseId());
     finish();
   }
 
   @Override
   public void onFinished() {
-    Database.deleteIngredientWithId(ingredientId, Constants.MASTER_RECIPE_ID);
-    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
+    Database.updateIngredient(fermentable, fermentable.getDatabaseId());
     finish();
   }
 }

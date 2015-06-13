@@ -53,6 +53,7 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
 
     // Get ingredient list
     list = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+    list.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT));
     Collections.sort(list, new IngredientComparator());
     
     // Set up the list adapter
@@ -135,8 +136,9 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
   
   @Override
   public void update() {
-    // Get the full list of ingredients from the custom database.
+    // Get the full list of ingredients from the custom database and permanent database.
     ArrayList<Ingredient> loadedList = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+    loadedList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT));
     
     // Add the loaded ingredients to the list for the list view.
     list.removeAll(list);

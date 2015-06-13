@@ -23,6 +23,8 @@ import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
 import java.util.ArrayList;
+import com.biermacht.brews.ingredient.*;
+import java.io.*;
 
 public class SettingsActivity extends AddEditActivity {
 
@@ -30,15 +32,18 @@ public class SettingsActivity extends AddEditActivity {
   public Spinner preferredUnitsSpinner;
   public View deleteAllRecipesView;
   public View exportRecipesView;
+  public View resetIngredientsView;
 
   // View titles
   public TextView deleteAllRecipesViewTitle;
   public TextView exportRecipesViewTitle;
+  public TextView resetIngredientsViewTitle;
 
   // View contents
   public TextView preferredUnitsViewText;
   public TextView deleteAllRecipesViewText;
   public TextView exportRecipesViewText;
+  public TextView resetIngredientsViewText;
 
   // Lists for spinners
   public ArrayList<String> unitSystemsArray;
@@ -56,12 +61,14 @@ public class SettingsActivity extends AddEditActivity {
                                                        false);
     deleteAllRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     exportRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+    resetIngredientsView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
     // Set click listeners for views
     deleteAllRecipesView.setOnClickListener(onClickListener);
     exportRecipesView.setOnClickListener(onClickListener);
+    resetIngredientsView.setOnClickListener(onClickListener);
 
-    // Get context for async tasks
+    // Store context for use in async tasks
     appContext = this;
 
     // Remove views we don't want
@@ -73,6 +80,7 @@ public class SettingsActivity extends AddEditActivity {
     mainView.addView(preferredUnitsSpinner);
     mainView.addView(deleteAllRecipesView);
     mainView.addView(exportRecipesView);
+    mainView.addView(resetIngredientsView);
 
     // Get titles and set correct text
     deleteAllRecipesViewTitle = (TextView) deleteAllRecipesView.findViewById(R.id.title);
@@ -81,22 +89,26 @@ public class SettingsActivity extends AddEditActivity {
 
     exportRecipesViewTitle = (TextView) exportRecipesView.findViewById(R.id.title);
     exportRecipesViewTitle.setText("Export recipes");
+    
+    resetIngredientsViewTitle = (TextView) resetIngredientsView.findViewById(R.id.title);
+    resetIngredientsViewTitle.setText("Reset Ingredients");
 
     // Get content views
     deleteAllRecipesViewText = (TextView) deleteAllRecipesView.findViewById(R.id.text);
     exportRecipesViewText = (TextView) exportRecipesView.findViewById(R.id.text);
+    resetIngredientsViewText = (TextView) resetIngredientsView.findViewById(R.id.text);
 
     // Set content view values
     deleteAllRecipesViewText.setText("Permanently delete local recipes");
     nameViewText.setText(preferences.getString(Constants.PREF_BREWER_NAME, "No name provided"));
     exportRecipesViewText.setText("Export recipes to XML file.");
+    resetIngredientsViewText.setText("Restore default ingredient database");
 
     // Configure spinner for preferred units
     SpinnerAdapter unitsAdapter = new SpinnerAdapter(this, unitSystemsArray, "Preferred units");
     unitsAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
     preferredUnitsSpinner.setAdapter(unitsAdapter);
-    preferredUnitsSpinner.setSelection(unitSystemsArray.indexOf(preferences.getString(Constants
-                                                                                              .PREF_MEAS_SYSTEM, Units.IMPERIAL)));
+    preferredUnitsSpinner.setSelection(unitSystemsArray.indexOf(preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL)));
 
     // Handle type selector here
     preferredUnitsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -127,6 +139,10 @@ public class SettingsActivity extends AddEditActivity {
     }
     else if (v.equals(exportRecipesView)) {
       exportRecipes().show();
+      return;
+    }
+    else if (v.equals(resetIngredientsView)) {
+      resetIngredients().show();
       return;
     }
     else {
@@ -297,4 +313,65 @@ public class SettingsActivity extends AddEditActivity {
     protected void onProgressUpdate(Void... values) {
     }
   }
+  
+  private Builder resetIngredients() {
+    return new AlertDialog.Builder(this)
+      .setTitle("Reset Ingredients")
+      .setMessage("Reset default ingredient list? This will not affect any custom made ingredients.")
+      .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+
+        public void onClick(DialogInterface dialog, int which) {
+          new ResetIngredients().execute("");
+        }
+
+      })
+
+      .setNegativeButton(R.string.cancel, null);
+  }
+  
+  // Async task to reset all ingredients.
+  private class ResetIngredients extends AsyncTask<String, Void, String> {
+
+    private ProgressDialog progress;
+
+    @Override
+    protected String doInBackground(String... params) {
+      Log.d("ResetIngredients", "Deleting all 'permanent' ingredients");
+      for (Ingredient ing : Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT)) {
+        Database.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());  
+      }
+      
+      Log.d("ResetIngredients", "Re-initializing ingredient assets");
+      try {
+        ingredientHandler.importIngredients();
+      } catch (IOException e) {
+        Log.e("ResetIngredients", e.toString());
+      }
+      
+      return "Executed";
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+      super.onPostExecute(result);
+      progress.dismiss();
+      Log.d("ResetIngredients", "Finished exporting recipes");
+    }
+
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      progress = new ProgressDialog(appContext);
+      progress.setMessage("Resetting ingredient database...");
+      progress.setIndeterminate(false);
+      progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+      progress.setCancelable(false);
+      progress.show();
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+    }
+  }
+  
 }

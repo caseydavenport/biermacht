@@ -37,22 +37,35 @@ public class IngredientHandler {
     this.mContext = c;
   }
 
-  // First time use - put ingredients into SQLite
+  // First time use - put ingredients and mash profiles into SQLite
   public void ImportAssets() {
     try {
-      Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                  getFermentablesFromXml(), Constants.OWNER_NONE);
-      Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getYeastsFromXml
-              (), Constants.OWNER_NONE);
-      Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getHopsFromXml(),
-                                                  Constants.OWNER_NONE);
-      Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, getMiscsFromXml()
-              , Constants.OWNER_NONE);
-      Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM, getProfilesFromXml
-              (), Constants.OWNER_NONE);
+      // Import all ingredient assets.
+      this.importIngredients();
+      
+      // Import mash profile assets.
+      Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM, 
+                                                   getProfilesFromXml(), 
+                                                   Constants.OWNER_NONE);
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+  
+  // Imports ingredient assets only (not mash profiles).
+  public void importIngredients() throws IOException {
+    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
+                                                getFermentablesFromXml(), 
+                                                Constants.OWNER_NONE);
+    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, 
+                                                getYeastsFromXml(), 
+                                                Constants.OWNER_NONE);
+    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, 
+                                                getHopsFromXml(),
+                                                Constants.OWNER_NONE);
+    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT, 
+                                                getMiscsFromXml(),
+                                                Constants.OWNER_NONE);
   }
 
   /**
