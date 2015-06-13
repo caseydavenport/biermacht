@@ -64,21 +64,25 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
     vs.volView.setText(String.format("%2.2f", list.get(position).getDisplayBatchSize()));
     vs.unitsView.setText(list.get(position).getVolumeUnits());
 
-    // Set beer color
-    color = ColorHandler.getSrmColor(list.get(position).getColor());
-    vs.imageView.setBackgroundColor(Color.parseColor(color));
-
     // If we're running as a tablet, we should do some extra stuff here.
     if (frag.isTablet) {
       // If currently selected, set the background to indicate it.
       // Otherwise, set the background to transparent.
       if (position == frag.currentSelectedIndex) {
         row.setBackgroundResource(R.drawable.selector_tablet);
+        vs.imageView.setImageResource(R.drawable.beer_icon_selected);
       }
       else {
         row.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+        vs.imageView.setImageResource(R.drawable.beer_icon);
       }
     }
+    
+    // Set beer color
+    color = ColorHandler.getSrmColor(list.get(position).getColor());
+    vs.imageView.setBackgroundColor(Color.parseColor(color));
+    
+    
     return row;
   }
 
