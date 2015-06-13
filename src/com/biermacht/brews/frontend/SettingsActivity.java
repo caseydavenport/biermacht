@@ -271,7 +271,7 @@ public class SettingsActivity extends AddEditActivity {
       progress.setMessage("Exporting all recipes...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-      progress.setCancelable(true);
+      progress.setCancelable(false);
       progress.show();
     }
 
@@ -305,7 +305,7 @@ public class SettingsActivity extends AddEditActivity {
       progress.setMessage("Deleting all recipes...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-      progress.setCancelable(true);
+      progress.setCancelable(false);
       progress.show();
     }
 

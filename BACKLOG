@@ -12,6 +12,7 @@ be recorded here
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
 * Make fragment transactions smooth.
+* Ask users to rate the app every once in a while.
 * Option for flame-out hops (calculate IBU) (Not enough science for an equation yet).
 * Some misc items use volume instead of weight (orange peel, coriander seeds, for example)
 * Can search web for BeerXML Recipes
@@ -40,12 +41,13 @@ be recorded here
 * Better integration with Dropbox / Google Drive
 
 //////////////////////////////////////////////
-// Changelog for release XXXXX ///////////////
+// Changelog for release 1.0.9 ///////////////
 //////////////////////////////////////////////
 * Add basic tablet UI.
 * Various bugfixes and performance tweaks.
 * Default ingredients can be modified via the ingredient editor.
 * Can restore default ingredients from settings.
+* Spinners are no longer cancelable.
 
 //////////////////////////////////////////////
 // Changelog for release 1.0.8 ///////////////
