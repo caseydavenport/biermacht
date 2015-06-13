@@ -11,6 +11,7 @@ be recorded here
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
+* Make fragment transactions smooth.
 * Option for flame-out hops (calculate IBU) (Not enough science for an equation yet).
 * Some misc items use volume instead of weight (orange peel, coriander seeds, for example)
 * Can search web for BeerXML Recipes
@@ -37,6 +38,14 @@ be recorded here
 * Support measured gravities < 1
 * Can choose where to export recipes.
 * Better integration with Dropbox / Google Drive
+
+//////////////////////////////////////////////
+// Changelog for release XXXXX ///////////////
+//////////////////////////////////////////////
+* Add basic tablet UI.
+* Various bugfixes and performance tweaks.
+* Default ingredients can be modified via the ingredient editor.
+* Can restore default ingredients from settings.
 
 //////////////////////////////////////////////
 // Changelog for release 1.0.8 ///////////////

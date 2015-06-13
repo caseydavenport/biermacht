@@ -484,7 +484,7 @@ public class MainActivity extends FragmentActivity {
       progress.setMessage("Loading...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-      progress.setCancelable(true);
+      progress.setCancelable(false);
       progress.show();
     }
 
@@ -530,7 +530,7 @@ public class MainActivity extends FragmentActivity {
       progress.setMessage("Importing...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-      progress.setCancelable(true);
+      progress.setCancelable(false);
       progress.show();
     }
 
