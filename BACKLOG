@@ -11,7 +11,7 @@ be recorded here
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
-* Option for flame-out hops (calculate IBU)
+* Option for flame-out hops (calculate IBU) (Not enough science for an equation yet).
 * Some misc items use volume instead of weight (orange peel, coriander seeds, for example)
 * Can search web for BeerXML Recipes
 * Can't start brew timer if all grain, no mash steps.
@@ -39,7 +39,7 @@ be recorded here
 * Better integration with Dropbox / Google Drive
 
 //////////////////////////////////////////////
-// Changelog for release 1.0.6 ///////////////
+// Changelog for release 1.0.8 ///////////////
 //////////////////////////////////////////////
 * Brew timer now stays open even when app is closed.
 * Fix bug where brew timer would crash if stop was pressed.

@@ -29,6 +29,7 @@ import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import com.biermacht.brews.frontend.adapters.*;
 
 public class EditIngredientsFragment extends Fragment implements ClickableFragment
 {
@@ -37,6 +38,7 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
   private OnItemClickListener mClickListener;
   private ListView listView;
   private ArrayList<Ingredient> list;
+  private CustomIngredientArrayAdapter ingredientArrayAdapter;
   View pageView;
   Context c;
 
@@ -52,6 +54,9 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
     // Get ingredient list
     list = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
     Collections.sort(list, new IngredientComparator());
+    
+    // Set up the list adapter
+    ingredientArrayAdapter = new CustomIngredientArrayAdapter(c, list);
 
     // Initialize important junk
     listView = (ListView) pageView.findViewById(R.id.listview);
@@ -101,7 +106,6 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
 
     // Set whether or not we show the list view
     if (list.size() > 0) {
-      CustomIngredientArrayAdapter ingredientArrayAdapter = new CustomIngredientArrayAdapter(c, list);
       listView.setVisibility(View.VISIBLE);
       listView.setAdapter(ingredientArrayAdapter);
       registerForContextMenu(listView);
@@ -131,6 +135,18 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
   
   @Override
   public void update() {
+    // Get the full list of ingredients from the custom database.
+    ArrayList<Ingredient> loadedList = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+    
+    // Add the loaded ingredients to the list for the list view.
+    list.removeAll(list);
+    list.addAll(loadedList);
+    
+    // Sort the list.
+    Collections.sort(list, new IngredientComparator());
+    
+    // Notify the adapter that the list has changed.
+    ingredientArrayAdapter.notifyDataSetChanged();
   }
   
   @Override

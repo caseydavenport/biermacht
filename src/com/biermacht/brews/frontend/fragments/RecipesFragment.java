@@ -298,7 +298,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   private AlertDialog.Builder deleteAlert(final Recipe r) {
     return new AlertDialog.Builder(c)
             .setTitle("Confirm Delete")
-            .setMessage("Do you really want to delete '" + r.getRecipeName() + "'")
+            .setMessage("Do you really want to delete '" + r.getRecipeName() + "'?")
             .setIcon(android.R.drawable.ic_delete)
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

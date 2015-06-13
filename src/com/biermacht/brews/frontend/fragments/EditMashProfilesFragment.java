@@ -33,6 +33,7 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
   private OnItemClickListener mClickListener;
   private ListView listView;
   private ArrayList<MashProfile> list;
+  MashProfileArrayAdapter arrayAdapter;
   View pageView;
   Context c;
 
@@ -49,8 +50,9 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
     list = Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM);
     Collections.sort(list, new ToStringComparator());
 
-    // Initialize important junk
+    // Initialize list
     listView = (ListView) pageView.findViewById(R.id.listview);
+    arrayAdapter = new MashProfileArrayAdapter(c, list);
 
     // Set up the onClickListener
     mClickListener = new OnItemClickListener() {
@@ -66,7 +68,6 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
 
     // Set whether or not we show the list view
     if (list.size() > 0) {
-      MashProfileArrayAdapter arrayAdapter = new MashProfileArrayAdapter(c, list);
       listView.setVisibility(View.VISIBLE);
       listView.setAdapter(arrayAdapter);
       registerForContextMenu(listView);
@@ -96,6 +97,18 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
 
   @Override
   public void update() {
+    // Get the full list of profiles from the custom database.
+    ArrayList<MashProfile> loadedList = Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+    
+    // Add the loaded profiles to the list for the list view.
+    list.removeAll(list);
+    list.addAll(loadedList);
+
+    // Sort the list.
+    Collections.sort(list, new ToStringComparator());
+    
+    // Notify the adapter that the list has changed.
+    arrayAdapter.notifyDataSetChanged();
   }
 
   @Override

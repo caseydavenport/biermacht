@@ -226,7 +226,9 @@ public class MainActivity extends FragmentActivity {
     fragmentList.add(new StrikeWaterCalculatorFragment());
     fragmentList.add(new HydrometerTempCalculatorFragment());
     fragmentList.add(new AlcoholAttenuationCalculatorFragment());
-    //updateFragments();
+    
+    // Select the recipe fragment
+    selectItem(0);
   }
 
   @Override
@@ -234,7 +236,6 @@ public class MainActivity extends FragmentActivity {
     super.onResume();
 	  Log.d("MainActivity", "onResume() called");
     updateFragments();
-    selectItem(selectedItem);
   }
 
   @Override
@@ -428,15 +429,7 @@ public class MainActivity extends FragmentActivity {
   }
 
   private void updateFragments() {
-    //fragmentList = new ArrayList<ClickableFragment>();
-    //fragmentList.add(new RecipesFragment());
-    //fragmentList.add(new EditIngredientsFragment());
-    //fragmentList.add(new EditMashProfilesFragment());
-    //fragmentList.add(new StrikeWaterCalculatorFragment());
-    //fragmentList.add(new HydrometerTempCalculatorFragment());
-    //fragmentList.add(new AlcoholAttenuationCalculatorFragment());
     fragmentList.get(selectedItem).update();
-    //selectItem(selectedItem);
   }
 
   public void setImportedRecipes(ArrayList<Recipe> recipeList) {
