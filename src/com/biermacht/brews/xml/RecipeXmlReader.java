@@ -24,31 +24,62 @@ public class RecipeXmlReader extends DefaultHandler {
 
   // Use a stringBuilder to store the characters read by the parser.  When the end of the
   // element is reached, they are converted to a String and stored in currentValue.
-  String currentValue = null;
-  StringBuilder stringBuilder;
+  private String currentValue;
+  private StringBuilder stringBuilder;
 
   // Lists to store all the objects created from the parsed XML.
-  ArrayList<Recipe> list = new ArrayList<Recipe>();
-  ArrayList<Ingredient> fermList = new ArrayList<Ingredient>();
-  ArrayList<Ingredient> hopList = new ArrayList<Ingredient>();
-  ArrayList<Ingredient> yeastList = new ArrayList<Ingredient>();
-  ArrayList<Ingredient> miscList = new ArrayList<Ingredient>();
-  ArrayList<BeerStyle> beerStyleList = new ArrayList<BeerStyle>();
-  ArrayList<MashProfile> mashProfileList = new ArrayList<MashProfile>();
-  ArrayList<MashStep> mashStepList = new ArrayList<MashStep>();
+  private ArrayList<Recipe> list;
+  private ArrayList<Ingredient> fermList;
+  private ArrayList<Ingredient> hopList;
+  private ArrayList<Ingredient> yeastList;
+  private ArrayList<Ingredient> miscList;
+  private ArrayList<BeerStyle> beerStyleList;
+  private ArrayList<MashProfile> mashProfileList;
+  private ArrayList<MashStep> mashStepList;
 
   // Objects for each type of thing
-  Recipe r = new Recipe("");
-  Fermentable f = new Fermentable("");
-  Hop h = new Hop("");
-  Yeast y = new Yeast("");
-  Misc misc = new Misc("");
-  BeerStyle style = new BeerStyle("");
-  MashProfile profile = new MashProfile(r);
-  MashStep mashStep = new MashStep(r);
+  private Recipe r;
+  private Fermentable f;
+  private Hop h;
+  private Yeast y;
+  private Misc misc;
+  private BeerStyle style;
+  private MashProfile profile;
+  private MashStep mashStep;
 
-  // How we know what thing we're looking at
-  Stack thingTypeStack = new Stack();
+  // How we know what thing we're looking at.
+  private Stack thingTypeStack;
+
+  public RecipeXmlReader() {
+
+    // Lists to store all the objects created from the parsed XML.
+    this.list = new ArrayList<Recipe>();
+    this.fermList = new ArrayList<Ingredient>();
+    this.hopList = new ArrayList<Ingredient>();
+    this.yeastList = new ArrayList<Ingredient>();
+    this.miscList = new ArrayList<Ingredient>();
+    this.beerStyleList = new ArrayList<BeerStyle>();
+    this.mashProfileList = new ArrayList<MashProfile>();
+    this.mashStepList = new ArrayList<MashStep>();
+
+    // Objects for each type of thing
+    this.r = new Recipe();
+    this.f = new Fermentable("");
+    this.h = new Hop("");
+    this.y = new Yeast("");
+    this.misc = new Misc("");
+    this.style = new BeerStyle("");
+    this.profile = new MashProfile(r);
+
+    // Mash steps should not perform auto-calculation, and should instead use any
+    // values read from the XML file.
+    this.mashStep = new MashStep(r);
+    this.mashStep.setAutoCalcInfuseAmt(false);
+    this.mashStep.setAutoCalcInfuseTemp(false);
+
+    // How we know what thing we're looking at
+    this.thingTypeStack = new Stack();
+  }
 
   /**
    * The return methods that will return lists of all of the elements that have been parsed in the
@@ -191,8 +222,10 @@ public class RecipeXmlReader extends DefaultHandler {
 
     // Encounter new mash step
     if (qName.equalsIgnoreCase("MASH_STEP")) {
-      thingTypeStack.push(qName);
-      mashStep = new MashStep(r);
+      this.thingTypeStack.push(qName);
+      this.mashStep = new MashStep(r);
+      this.mashStep.setAutoCalcInfuseAmt(false);
+      this.mashStep.setAutoCalcInfuseTemp(false);
     }
 
     // Encounter new mash step list
