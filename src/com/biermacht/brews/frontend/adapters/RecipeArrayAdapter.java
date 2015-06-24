@@ -70,17 +70,16 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
       // Otherwise, set the background to transparent.
       if (position == frag.currentSelectedIndex) {
         row.setBackgroundResource(R.drawable.selector_tablet);
-        vs.imageView.setImageResource(R.drawable.beer_icon_selected);
       }
       else {
+        // Set background color transparent.
         row.setBackgroundColor(Color.parseColor("#00FFFFFF"));
-        vs.imageView.setImageResource(R.drawable.beer_icon);
       }
     }
     
     // Set beer color
     color = ColorHandler.getSrmColor(list.get(position).getColor());
-    vs.imageView.setBackgroundColor(Color.parseColor(color));
+    vs.imageView.setColorFilter(Color.parseColor(color));
     
     
     return row;
