@@ -55,7 +55,6 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       this.vs.titleView = (TextView) row.findViewById(R.id.tag);
       this.vs.rangeView = (TextView) row.findViewById(R.id.range);
       this.vs.valueView = (TextView) row.findViewById(R.id.value);
-      this.vs.subTextView = (TextView) row.findViewById(R.id.subtext);
       this.row.setTag(this.vs);
     }
 
@@ -69,24 +68,17 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       this.vs.rangeView.setVisibility(View.GONE);
       this.vs.titleView.setVisibility(View.GONE);
       this.vs.valueView.setVisibility(View.GONE);
-      this.vs.subTextView.setVisibility(View.GONE);
     }
     else if (detail.getType().equals(Detail.TYPE_TEXT)) {
-      // This is a text type detail.  These details contain a title, content,
-      // and an optional subtext.
+      // This is a text type detail.
       this.vs.titleView.setText(detail.getTitle());
       this.vs.valueView.setText(detail.getContent());
       this.vs.rangeView.setVisibility(View.GONE);
-
-      if (! detail.getSubText().isEmpty()) {
-        // There is subtext for this detai - make sure the subtext view is visible.
-        this.vs.subTextView.setVisibility(View.VISIBLE);
-        this.vs.subTextView.setText(detail.getSubText());
-      }
     }
     else if (detail.getType().equals(Detail.TYPE_RANGE)) {
       // This is a range type detail.  These details contain a title, range, and value.
       // The value will be colored based on whether or not it falls within the range.
+      this.vs.rangeView.setVisibility(View.VISIBLE);
       this.range = String.format(this.detail.getFormat(), detail.getMin()) +
               " - " +
               String.format(this.detail.getFormat(), detail.getMax());
@@ -126,6 +118,5 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
     TextView titleView;
     TextView rangeView;
     TextView valueView;
-    TextView subTextView;
   }
 }
