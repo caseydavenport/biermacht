@@ -8,12 +8,13 @@
 
     <CheckBox
         android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
         android:background="@color/white"
-        android:text="Select All"
-        />
+        android:text="Select All" />
 
     <TextView
         android:id="@+id/divider"

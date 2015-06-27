@@ -5,29 +5,38 @@
               android:background="@color/activity_background"
               android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/instruction_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawSelectorOnTop="true"
-            android:listSelector="@drawable/selector"
-            android:background="#fff"
-            android:visibility="gone">
-        </ListView>
+    <!-- Divider below pager title -->
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:textColor="@color/transparent"
+        android:background="@color/theme_blue">
+    </TextView>
 
-        <TextView
-            android:id="@+id/no_instructions_view"
-            android:layout_width="fill_parent"
-            android:layout_height="72dip"
-            android:background="@color/transparent"
-            android:gravity="center"
-            android:layout_margin="10dip"
-            android:visibility="gone"
-            android:text="No instructions found"/>
+    <ListView
+        android:id="@+id/instruction_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:listSelector="@drawable/selector"
+        android:background="#fff"
+        android:visibility="gone">
+    </ListView>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:background="@color/divider"/>
+    <TextView
+        android:id="@+id/no_instructions_view"
+        android:layout_width="fill_parent"
+        android:layout_height="72dip"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:layout_margin="10dip"
+        android:visibility="gone"
+        android:text="No instructions found"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider"/>
 
 </LinearLayout>

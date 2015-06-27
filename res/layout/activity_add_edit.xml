@@ -1,34 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/transparent"
+                android:background="@color/activity_background"
                 android:orientation="vertical">
-
-    <!-- Colored bar at top -->
-    <TextView
-        android:id="@+id/colored_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="top"
-        android:background="@color/theme_main"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:text=""
-        android:textColor="#fff">
-
-        <requestFocus/>
-    </TextView>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0sp"
+        android:layout_alignParentTop="true"
         android:layout_above="@+id/bottom_nav"
-        android:layout_below="@id/colored_bar"
         android:layout_weight="1"
-        android:background="@color/activity_background">
+        android:background="@color/transparent">
 
         <LinearLayout
             android:id="@+id/main_layout"
@@ -50,7 +32,7 @@
         android:layout_width="fill_parent"
         android:layout_height="60dip"
         android:layout_alignParentBottom="true"
-        android:background="@color/activity_background"
+        android:background="@color/transparent"
         android:padding="10dp">
 
         <!-- Cancel Button -->

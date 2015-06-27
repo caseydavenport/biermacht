@@ -5,6 +5,15 @@
               android:orientation="vertical"
               android:background="@color/activity_background">
 
+    <!-- Divider below pager title -->
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:textColor="@color/transparent"
+        android:background="@color/theme_blue">
+    </TextView>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +40,8 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:background="@drawable/profile_title_bg"
-                    android:text="@string/mash_profile"/>
+                    android:text="@string/mash_profile"
+                    android:textColor="@color/title_color"/>
 
             </LinearLayout>
 
@@ -49,7 +59,8 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:background="@drawable/profile_title_bg"
-                    android:text="@string/fermentation_profile"/>
+                    android:text="@string/fermentation_profile"
+                    android:textColor="@color/title_color"/>
 
             </LinearLayout>
 
@@ -67,7 +78,8 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:background="@drawable/profile_title_bg"
-                    android:text="@string/style_profile"/>
+                    android:text="@string/style_profile"
+                    android:textColor="@color/title_color"/>
 
                 <TextView
                     android:id="@+id/style_profile_name"
@@ -75,7 +87,8 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:background="@color/transparent"
-                    android:text="Other"/>
+                    android:text="Other"
+                    android:textColor="@color/text"/>
 
             </LinearLayout>
         </LinearLayout>

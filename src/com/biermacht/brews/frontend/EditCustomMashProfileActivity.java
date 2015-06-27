@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 
 import com.biermacht.brews.R;
@@ -30,4 +31,13 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
     mProfile.delete(Constants.DATABASE_CUSTOM);
     finish();
   }
+
+  /**
+   * Override the options menu so that nothing is displayed.
+   */
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    return true;
+  }
+
 }

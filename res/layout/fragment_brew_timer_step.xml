@@ -3,14 +3,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/activity_background"
-            android:layout_above="@+id/bottom_nav"
-            android:layout_below="@id/colored_bar">
+            android:layout_above="@+id/bottom_nav">
 
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/activity_background"
+        android:background="@color/transparent"
         android:padding="15dip"
         android:orientation="vertical">
 
@@ -20,7 +19,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Title"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            android:textColor="@color/text"/>
 
         <TextView
             android:id="@+id/description"
@@ -30,7 +30,8 @@
             android:layout_marginBottom="15dip"
             android:gravity="center_vertical"
             android:text="This is just some dummy content for now, this should say stuff about the step later"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/text"/>
 
         <ImageButton
             android:id="@+id/calendar_button"

@@ -69,10 +69,10 @@
     </style>
 
     <style name="text_input">
-        <item name="android:background">@drawable/rounded_bg_white</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">40dip</item>
+        <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">15dip</item>
         <item name="android:paddingLeft">10dip</item>
     </style>

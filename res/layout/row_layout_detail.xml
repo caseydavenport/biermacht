@@ -25,6 +25,7 @@
         android:layout_height="72dp"
         android:gravity="left|center_vertical"
         android:textSize="16sp"
+        android:textColor="@color/text"
         android:text="Beer Name"
         android:layout_marginTop="0dp"
         android:layout_marginRight="20dp"
