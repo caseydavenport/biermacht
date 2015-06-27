@@ -9,11 +9,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -49,7 +49,7 @@ import com.biermacht.brews.utils.interfaces.ClickableFragment;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 
   // Globals
   public static DatabaseInterface databaseInterface;
@@ -196,25 +196,24 @@ public class MainActivity extends FragmentActivity {
     mDrawerToggle = new ActionBarDrawerToggle(
             this,                  /* host Activity */
             mDrawerLayout,         /* DrawerLayout object */
-            R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
             R.string.drawer_open,  /* "open drawer" description */
             R.string.drawer_close  /* "close drawer" description */) {
 
       /** Called when a drawer has settled in a completely closed state. */
       public void onDrawerClosed(View view) {
-        getActionBar().setTitle(drawerItems.get(selectedItem));
+        getSupportActionBar().setTitle(drawerItems.get(selectedItem));
       }
 
       /** Called when a drawer has settled in a completely open state. */
       public void onDrawerOpened(View drawerView) {
-        getActionBar().setTitle(R.string.drawer_open_title);
+        getSupportActionBar().setTitle(R.string.drawer_open_title);
       }
     };
 
     // Set the drawer toggle as the DrawerListener
     mDrawerLayout.setDrawerListener(mDrawerToggle);
-    getActionBar().setDisplayHomeAsUpEnabled(true);
-    getActionBar().setHomeButtonEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
 
     // Set up fragment List to contain the correct fragments.
     selectedItem = 0;
@@ -424,7 +423,7 @@ public class MainActivity extends FragmentActivity {
 
   @Override
   public void setTitle(CharSequence title) {
-    getActionBar().setTitle(title);
+    getSupportActionBar().setTitle(title);
   }
 
   private void updateFragments() {

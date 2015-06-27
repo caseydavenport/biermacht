@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:background="@color/theme_main"
-        android:textColor="@color/title_color"
+        android:background="?attr/colorPrimary"
+        android:textColor="@color/white"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"/>
 

@@ -3,8 +3,8 @@ package com.biermacht.brews.frontend;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +21,7 @@ import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 
-public class DisplayRecipeActivity extends FragmentActivity {
+public class DisplayRecipeActivity extends ActionBarActivity {
 
   private Recipe mRecipe;
   private long id; // id of recipe we use
@@ -100,7 +100,7 @@ public class DisplayRecipeActivity extends FragmentActivity {
 
   private void updateUI() {
     // Set icon as back button
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // Get recipe id from calling activity
     id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);

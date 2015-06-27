@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend;
 
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,7 +35,7 @@ import com.biermacht.brews.utils.ColorHandler;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
 
-public class BrewTimerActivity extends FragmentActivity {
+public class BrewTimerActivity extends ActionBarActivity {
 
   // Stores the recipe which is being brewed - provided by the caller via the Intent which
   // started this Activity.
@@ -98,7 +100,7 @@ public class BrewTimerActivity extends FragmentActivity {
       }
       else {
         // We're receiving ticks, set the button to be "pause"
-        playPauseButton.setImageResource(R.drawable.av_pause);
+        playPauseButton.setImageResource(R.drawable.ic_pause_black_48dp);
         timerState = Constants.RUNNING;
       }
     }
@@ -166,7 +168,7 @@ public class BrewTimerActivity extends FragmentActivity {
     nft.setDecimalSeparatorAlwaysShown(false);
 
     // Set icon as back button
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // Get inflater
     inflater = getLayoutInflater();
@@ -214,8 +216,8 @@ public class BrewTimerActivity extends FragmentActivity {
     stepStatusView = (TextView) timerControls.findViewById(R.id.step_status);
 
     // Set default button backgrounds
-    stopButton.setImageResource(R.drawable.av_stop);
-    playPauseButton.setImageResource(R.drawable.av_play);
+    stopButton.setImageResource(R.drawable.ic_stop_black_48dp);
+    playPauseButton.setImageResource(R.drawable.ic_play_arrow_black_48dp);
 
     // ViewPager and pagerAdapter for slidy tabs!
     cpAdapter = new BrewTimerCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, appContext);
@@ -257,18 +259,18 @@ public class BrewTimerActivity extends FragmentActivity {
             minutesView.setText(nft.format(Utils.getMinutes(inst.getTimeToNextStep(), inst.getDurationUnits())) + "");
             secondsView.setText(nft.format(0) + "");
           }
-          goToCurrentButton.setImageResource(R.drawable.navigation_accept);
+          goToCurrentButton.setImageResource(R.drawable.ic_check_black_48dp);
         }
 
         // Adjust fields based on the item we're looking at
         if (position == currentActivePosition) {
-          goToCurrentButton.setImageResource(R.drawable.navigation_accept);
+          goToCurrentButton.setImageResource(R.drawable.ic_check_black_48dp);
         }
         else if (position < currentActivePosition) {
-          goToCurrentButton.setImageResource(R.drawable.navigation_next_item);
+          goToCurrentButton.setImageResource(R.drawable.ic_navigate_next_black_48dp);
         }
         else if (position > currentActivePosition) {
-          goToCurrentButton.setImageResource(R.drawable.navigation_previous_item);
+          goToCurrentButton.setImageResource(R.drawable.ic_navigate_before_black_48dp);
         }
 
         // Set text on the status bar
@@ -401,7 +403,7 @@ public class BrewTimerActivity extends FragmentActivity {
     if (getTimerSeconds() != 0) {
       // Set timer state
       timerState = Constants.RUNNING;
-      playPauseButton.setImageResource(R.drawable.av_pause);
+      playPauseButton.setImageResource(R.drawable.ic_pause_black_48dp);
 
       Intent i = new Intent(this, BrewTimerService.class);
       i.putExtra(Constants.KEY_TITLE, inst.getBrewTimerTitle());
@@ -433,7 +435,7 @@ public class BrewTimerActivity extends FragmentActivity {
     mViewPager.setCurrentItem(currentActivePosition);
 
     // Set the play/pause button to display the "Play" image
-    playPauseButton.setImageResource(R.drawable.av_play);
+    playPauseButton.setImageResource(R.drawable.ic_play_arrow_black_48dp);
 
     // Set appropriate text on status bar
     setStatusText();
@@ -457,7 +459,7 @@ public class BrewTimerActivity extends FragmentActivity {
     setTimerFromCurrentStep();
 
     // Set play/pause button to display the "Play" image
-    playPauseButton.setImageResource(R.drawable.av_play);
+    playPauseButton.setImageResource(R.drawable.ic_play_arrow_black_48dp);
 
     // Stop any alarms
     stopAlarm();

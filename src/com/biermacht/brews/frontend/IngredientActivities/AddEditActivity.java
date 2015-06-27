@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AddEditActivity extends Activity implements OnClickListener {
+public abstract class AddEditActivity extends ActionBarActivity implements OnClickListener {
 
   // Main view - holds all the rows
   public ViewGroup mainView;
@@ -135,7 +136,7 @@ public abstract class AddEditActivity extends Activity implements OnClickListene
     this.saveRecipeOnSubmit = true;
 
     // Set icon as back button
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // Get the Ingredient Handler
     ingredientHandler = MainActivity.ingredientHandler;

@@ -3,7 +3,8 @@
 
     <!-- Theme colors -->
     <color name="theme_main">#E6A627</color>
-    <color name="theme_yellow">#E6D627</color>
+    <color name="theme_main_light">#E6A627</color>
+    <color name="theme_primary_dark">#F0C227</color>
     <color name="theme_blue">#2767E6</color>
     <color name="theme_dark_blue">#1A4499</color>
     <color name="theme_brown">#B38D42</color>

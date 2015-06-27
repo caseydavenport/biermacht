@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +25,7 @@ import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
 
-public class EditFermentationProfileActivity extends Activity implements OnClickListener {
+public class EditFermentationProfileActivity extends ActionBarActivity implements OnClickListener {
 
   // Main Layout
   private LinearLayout mainLayout;
@@ -53,7 +54,7 @@ public class EditFermentationProfileActivity extends Activity implements OnClick
     mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
     // Set icon as back button
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // Disable delete button for this view
     findViewById(R.id.delete_button).setVisibility(View.GONE);

@@ -10,11 +10,12 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'com.android.support:support-v4:22.2.0'
+    compile "com.android.support:appcompat-v7:21.0.+"
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.1"
 
     sourceSets {
         main {
