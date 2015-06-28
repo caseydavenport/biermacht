@@ -12,7 +12,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">fill_parent</item>
     </style>
-   
+
     <style name="button_no_stroke">
         <item name="android:background">@drawable/button_bg_no_stroke</item>
         <item name="android:textColor">@drawable/button_text</item>
@@ -20,7 +20,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">fill_parent</item>
     </style>
-    
+
     <!-- Style for when using vertical button stacks -->
     <style name="button_no_stroke_vert">
         <item name="android:background">@drawable/button_bg_no_stroke</item>

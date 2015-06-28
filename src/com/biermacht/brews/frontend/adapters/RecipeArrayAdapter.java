@@ -76,12 +76,11 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
         row.setBackgroundColor(Color.parseColor("#00FFFFFF"));
       }
     }
-    
+
     // Set beer color
     color = ColorHandler.getSrmColor(list.get(position).getColor());
     vs.imageView.setColorFilter(Color.parseColor(color));
-    
-    
+
     return row;
   }
 

@@ -73,7 +73,7 @@
     <string name="volume_gal_hint">Gal</string>
     <string name="efficiency_hint">1 - 100</string>
     <string name="minutes_hint">minutes</string>
-    
+
     <!-- Ingredient types -->
     <string name="fermentable">Fermentable</string>
     <string name="hop">Hop</string>

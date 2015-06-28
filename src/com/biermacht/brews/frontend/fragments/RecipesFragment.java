@@ -334,7 +334,14 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                   // and update the details view.  Otherwise, the details view will remain stuck on the 
                   // current (now deleted) recipe.
                   currentSelectedIndex = (currentSelectedIndex > 0) ? currentSelectedIndex - 1 : 0;
-                  updateTabletDetailsView(recipeList.get(currentSelectedIndex));
+                  if (recipeList.size() != 0) {
+                    // Only update the details view if there is a recipe to show.
+                    updateTabletDetailsView(recipeList.get(currentSelectedIndex));
+                  }
+                  else {
+                    // Otherwise, set the correct views to show.
+                    setCorrectView();
+                  }
                 }
 
                 // If the last recipe was just deleted, we need to update which

@@ -5,20 +5,12 @@
               android:background="@color/activity_background"
               android:orientation="vertical">
 
-    <!-- Divider below pager title -->
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="top"
-        android:textColor="@color/transparent"
-        android:background="@color/theme_blue">
-    </TextView>
-
     <ListView
         android:id="@+id/instruction_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:drawSelectorOnTop="true"
+        android:background="#fff"
         android:visibility="gone">
     </ListView>
 

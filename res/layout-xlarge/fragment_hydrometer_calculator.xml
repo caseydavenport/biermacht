@@ -1,11 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/activity_background"
+                android:background="@color/transparent"
                 android:orientation="vertical">
 
     <ScrollView
-        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
@@ -23,7 +22,7 @@
             android:paddingTop="0dp">
 
             <TextView
-                android:id="@+id/target_temperature_title"
+                android:id="@+id/meas_gravity_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -31,22 +30,21 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/transparent"
                 android:gravity="center_vertical"
-                android:text="Target Temperature (F)"
-                android:textColor="@color/title_color"
+                android:text="Hydrometer Reading"
+                android:textColor="#333"
                 android:textSize="18dp"/>
 
             <EditText
-                android:id="@+id/target_temperature_edit_text"
+                android:id="@+id/measured_gravity_edit_text"
                 style="@style/text_input"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="155"
-                android:textColor="@color/text"
+                android:hint="1.054"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"/>
 
             <TextView
-                android:id="@+id/grain_weight_title"
+                android:id="@+id/meas_temperature_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -54,22 +52,21 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/transparent"
                 android:gravity="center_vertical"
-                android:text="Grain Weight (lbs)"
-                android:textColor="@color/title_color"
+                android:text="Temperature of Wort (F)"
+                android:textColor="#333"
                 android:textSize="18dp"/>
 
             <EditText
-                android:id="@+id/grain_weight_edit_text"
+                android:id="@+id/measured_temperature_edit_text"
                 style="@style/text_input"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="10"
-                android:textColor="@color/text"
+                android:hint="72"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"/>
 
             <TextView
-                android:id="@+id/initial_temp_title"
+                android:id="@+id/calibrate_temperature_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -77,68 +74,21 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/transparent"
                 android:gravity="center_vertical"
-                android:text="Initial Temperature (F)"
-                android:textColor="@color/title_color"
+                android:text="Calibration Temperature (F)"
+                android:textColor="#333"
                 android:textSize="18dp"/>
 
             <EditText
-                android:id="@+id/initial_temp_edit_text"
+                android:id="@+id/calibrate_temperature_edit_text"
                 style="@style/text_input"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:inputType="numberDecimal"
-                android:selectAllOnFocus="true"
                 android:text="68"
-                android:textColor="@color/text"/>
-
-            <TextView
-                android:id="@+id/water_to_grain_ratio_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/transparent"
-                android:gravity="center_vertical"
-                android:text="Water to Grain Ratio (qt/lb)"
-                android:textColor="@color/title_color"
-                android:textSize="18dp"/>
-
-            <EditText
-                android:id="@+id/water_to_grain_ratio_edit_text"
-                style="@style/text_input"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:inputType="numberDecimal"
-                android:selectAllOnFocus="true"
-                android:text="1.25"
-                android:textColor="@color/text"/>
-
-            <TextView
-                android:id="@+id/strike_water_temperature_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/transparent"
-                android:gravity="center_vertical"
-                android:text="Water Temperature (F)"
-                android:textColor="@color/title_color"
-                android:textSize="18dp"/>
-
-            <EditText
-                android:id="@+id/strike_water_temperature_edit_text"
-                style="@style/text_input"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="210"
-                android:textColor="@color/text"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"/>
 
             <TextView
-                android:id="@+id/strike_water_temp_title"
+                android:id="@+id/calculated_gravity_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -146,17 +96,16 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/transparent"
                 android:gravity="center"
-                android:text="Add Water at:"
-                android:textColor="@color/title_color"
+                android:text="Gravity at 60F"
+                android:textColor="#333"
                 android:textSize="18dp"/>
 
             <TextView
-                android:id="@+id/strike_water_temp_text_view"
+                android:id="@+id/calculated_gravity_text_view"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
-                android:text="0.0"
-                android:textColor="@color/text"
+                android:text="0.000"
                 android:textSize="70sp"/>
 
         </LinearLayout>

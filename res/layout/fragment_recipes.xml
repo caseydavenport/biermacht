@@ -5,31 +5,16 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/first_ll"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:padding="0dip"
-        android:background="@color/transparent"
-        android:orientation="vertical"
-        android:layout_below="@id/colored_bar">
-
         <ListView
             android:id="@+id/recipe_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="0dip"
-            android:dividerHeight="0dp"
-            android:drawSelectorOnTop="true"
-            android:listSelector="@drawable/selector">
-        </ListView>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/no_recipes_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:gravity="center"
             android:visibility="gone"
             android:textColor="@color/title_color"
@@ -45,9 +30,5 @@
             android:textColor="#fff"
             android:background="@color/divider"
             android:text="">
-
-            <requestFocus/>
         </TextView>
-
-    </LinearLayout>
 </RelativeLayout>
