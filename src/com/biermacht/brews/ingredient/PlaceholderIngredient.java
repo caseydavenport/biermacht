@@ -3,7 +3,13 @@ package com.biermacht.brews.ingredient;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-// Grain subclass of Ingredient
+/**
+ * The PlaceholderIngredient class is a dummy implementation of the abstract Ingredient class.
+ * Instances of this class are used in lists of Ingredients to denote special actions.  For example,
+ * the "Create New" option when adding a new ingredient to a recipe.
+ *
+ * TODO: The placeholder ingredient is an overly complicated way of (essentially) implementing list headers - remove and replace this class.
+ */
 public class PlaceholderIngredient extends Ingredient implements Parcelable {
 
   private String description;

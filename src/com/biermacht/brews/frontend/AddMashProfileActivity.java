@@ -30,9 +30,13 @@ import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
 
+/**
+ * This Activity is called when the user creates a new Mash Profile to be added to the Mash Profile
+ * Editor.
+ */
 public class AddMashProfileActivity extends AddEditActivity {
 
-  // Views
+  // Rows which apply to this Activity.
   public Spinner mashTypeSpinner;
   public Spinner spargeTypeSpinner;
   public View tunTempView;
@@ -40,23 +44,23 @@ public class AddMashProfileActivity extends AddEditActivity {
   public View spargeTempView;
   public View spargeVolumeView;
 
-  // Titles
+  // Title sub-views from the above rows.
   public TextView tunTempViewTitle;
   public TextView grainTempViewTitle;
   public TextView spargeTempViewTitle;
   public TextView spargeVolumeViewTitle;
 
-  // Content text
+  // Sub-title sub-views from the above rows.
   public TextView tunTempViewText;
   public TextView grainTempViewText;
   public TextView spargeTempViewText;
   public TextView spargeVolumeViewText;
 
-  // Title divider
+  // Views which compose the divider between the MashProfile settings and the MashStep list.
   public View mashStepTitleView;
   public TextView mashStepTitleViewText;
 
-  // mashProfile we are editing
+  // MashProfile object being added.
   public MashProfile mProfile;
 
   // Spinner listeners
@@ -67,24 +71,24 @@ public class AddMashProfileActivity extends AddEditActivity {
   public ArrayList<String> mashTypeArray;
   public ArrayList<String> spargeTypeArray;
 
-  // DragDrop ListView stuff
+  // Special ListView and adapter to implement "swipe-to-dismiss" and "drag reordering"
   public DragSortListView dragDropListView;
   public MashStepArrayAdapter dragDropAdapter;
 
-  // add mash step button
+  // Button to add new Mash Step.
   public ImageButton addMashStepButton;
 
-  // Callback for when a view is dropped
+  // Callback for a MashStep is dropped into a new position in the mash step list.
   public DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
     @Override
     public void drop(int oldPosition, int newPosition) {
       if (oldPosition != newPosition) {
-        // Move the step
+        // Move the step in the adapter.
         MashStep step = dragDropAdapter.getItem(oldPosition);
         dragDropAdapter.remove(step);
         dragDropAdapter.insert(step, newPosition);
 
-        // Set the new list in the profile
+        // Update the MashProfile with the newly organized steps.
         mProfile.clearMashSteps();
         for (int i = 0; i < dragDropAdapter.getCount(); i++) {
           mProfile.addMashStep(dragDropAdapter.getItem(i));
@@ -93,7 +97,7 @@ public class AddMashProfileActivity extends AddEditActivity {
     }
   };
 
-  // Callback for when a view is removed from the list
+  // Callback for when a MashStep is removed from the mash step list
   public DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
     @Override
     public void remove(int pos) {
@@ -108,9 +112,8 @@ public class AddMashProfileActivity extends AddEditActivity {
     // Disable delete button for this view
     findViewById(R.id.delete_button).setVisibility(View.GONE);
 
-    // Initialize views and stuff
-    dragDropListView = (DragSortListView) inflater.inflate(R.layout.view_drag_drop_list,
-                                                           mainView, false);
+    // Initialize views
+    dragDropListView = (DragSortListView) inflater.inflate(R.layout.view_drag_drop_list, mainView, false);
     tunTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     grainTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     spargeTempView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
@@ -122,7 +125,7 @@ public class AddMashProfileActivity extends AddEditActivity {
     spargeTempView.setOnClickListener(onClickListener);
     spargeVolumeView.setOnClickListener(onClickListener);
 
-    // Titles here
+    // Get title views
     tunTempViewTitle = (TextView) tunTempView.findViewById(R.id.title);
     grainTempViewTitle = (TextView) grainTempView.findViewById(R.id.title);
     spargeTempViewTitle = (TextView) spargeTempView.findViewById(R.id.title);
@@ -134,13 +137,13 @@ public class AddMashProfileActivity extends AddEditActivity {
     spargeTempViewTitle.setText("Sparge Water Temperature (" + Units.getTemperatureUnits() + ")");
     spargeVolumeViewTitle.setText("Sparge Volume (" + Units.getVolumeUnits() + ")");
 
-    // Get content views
+    // Get sub-title views
     tunTempViewText = (TextView) tunTempView.findViewById(R.id.text);
     grainTempViewText = (TextView) grainTempView.findViewById(R.id.text);
     spargeTempViewText = (TextView) spargeTempView.findViewById(R.id.text);
     spargeVolumeViewText = (TextView) spargeVolumeView.findViewById(R.id.text);
 
-    // Mash Step view Title
+    // Mash Step divider title
     mashStepTitleView = inflater.inflate(R.layout.view_title, mainView, false);
     mashStepTitleViewText = (TextView) mashStepTitleView.findViewById(R.id.title);
     mashStepTitleViewText.setText("Mash Steps");
@@ -195,6 +198,7 @@ public class AddMashProfileActivity extends AddEditActivity {
 
     updateMashStepList();
     setValues();
+
     spargeTypeSpinner.setOnItemSelectedListener(spargeTypeSpinnerListener);
     mashTypeSpinner.setOnItemSelectedListener(mashTypeSpinnerListener);
   }
@@ -336,13 +340,17 @@ public class AddMashProfileActivity extends AddEditActivity {
     };
   }
 
+  /**
+   * Updates the visible list of MashSteps based on the current set of MashSteps in the MashProfile.
+   */
   public void updateMashStepList() {
-    // Drag list view
     dragDropAdapter = new MashStepArrayAdapter(this, mProfile.getMashStepList());
     dragDropListView.setAdapter(dragDropAdapter);
     dragDropListView.setDropListener(onDrop);
     dragDropListView.setRemoveListener(onRemove);
     dragDropListView.setDragEnabled(true);
+
+    // Adjust the MashStep list height.
     setListViewHeightBasedOnChildren(dragDropListView);
   }
 
@@ -351,7 +359,7 @@ public class AddMashProfileActivity extends AddEditActivity {
    * children and the dividers between list items.  This is used to set the height of the mash step
    * list such that it does not scroll, since it is encompassed by a ScrollView.
    *
-   * @param listView
+   * @param listView ListView to adjust.
    */
   public static void setListViewHeightBasedOnChildren(ListView listView) {
     ListAdapter listAdapter = listView.getAdapter();
@@ -430,9 +438,9 @@ public class AddMashProfileActivity extends AddEditActivity {
    * sets the profile for the active Recipe (mRecipe).  Or, if NULL is returned, this method does
    * nothing.
    *
-   * @param requestCode
-   * @param resultCode
-   * @param data
+   * @param requestCode Indicates the original intention of calling the Activity.
+   * @param resultCode Indicates the result of the called Activity.
+   * @param data Intent which includes the Activity result.
    */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {

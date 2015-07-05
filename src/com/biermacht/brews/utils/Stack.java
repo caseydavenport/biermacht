@@ -24,6 +24,7 @@ public class Stack {
   }
 
   public String read() {
+    Log.d("Stack", "Reading top of stack " + list.size() + " " + list.isEmpty() + " " + list.toString());
     return list.get(list.size() - 1);
   }
 

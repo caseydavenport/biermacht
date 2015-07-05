@@ -140,10 +140,11 @@ public class AddRecipeActivity extends AddEditActivity {
     }
     else if (v.equals(boilSizeView)) {
       alert = alertBuilder.editTextFloatCheckBoxAlert(boilSizeViewText, boilSizeViewTitle,
-                                                      mRecipe.getCalculateBoilVolume(), boilVolumeCallback).create();
+                                                      mRecipe.getCalculateBoilVolume(),
+                                                      boilVolumeCallback).create();
     }
     else {
-      return; // In case its none of those views...
+      return;
     }
 
     // Force keyboard open and show popup
@@ -155,15 +156,15 @@ public class AddRecipeActivity extends AddEditActivity {
   public void getValuesFromIntent() {
     super.getValuesFromIntent();
 
-    // Determine if we should display the recipe, or just finish,
-    // upon save.
+    // Determine if we should display the recipe, or just finish upon save.
     displayOnCreate = getIntent().getBooleanExtra(Constants.DISPLAY_ON_CREATE, true);
   }
 
   @Override
   public void createCallback() {
     // Default callback, called when alertBuilders are finished.
-    // Allows us to update fields that are dependent on other fields.
+    // Allows us to update fields that are dependent on other fields which may have been changed
+    // by the user..
     callback = new Callback() {
       @Override
       public void call() {
@@ -180,9 +181,8 @@ public class AddRecipeActivity extends AddEditActivity {
       }
     };
 
-    // Callback for when boilVolume is updated.  We need to
-    // check if the option to auto-calc boil volume has changed via user
-    // selection.
+    // Callback for when boilVolume is updated.  We need to check if the option to auto-calc
+    // boil volume has changed via user selection.
     boilVolumeCallback = new BooleanCallback() {
       @Override
       public void call(boolean b) {

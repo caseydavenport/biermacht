@@ -14,6 +14,9 @@ public class Detail {
   public static String TYPE_TEXT = "text";
   public static String TYPE_BLANK = "blank";
 
+  /**
+   * A helper class for displaying lists of details about a Recipe.
+   */
   public Detail() {
     this.title = "";
     this.type = TYPE_RANGE;
@@ -42,8 +45,7 @@ public class Detail {
   }
 
   public void setVariance(Double v) {
-    // Percentage a value can be above or below
-    // and still fit (out of 1.0)
+    // Percentage a value can be above or below and still fit (out of 1.0)
     this.variance = v;
   }
 

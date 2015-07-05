@@ -92,7 +92,7 @@ public class Database {
   public static Recipe getRecipeWithId(long id) throws ItemNotFoundException {
     // If we receive a special ID, handle that here
     if (id == Constants.INVALID_ID) {
-      throw new ItemNotFoundException("Passed id with value Utils.INVALID_ID");
+      throw new ItemNotFoundException("Passed ID with value Utils.INVALID_ID");
     }
 
     // Actually perform the lookup

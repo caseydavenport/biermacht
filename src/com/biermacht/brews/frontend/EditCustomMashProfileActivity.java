@@ -13,7 +13,7 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // Disable delete button for this view
+    // Enable delete button for this view
     findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
 
     // Add fields we want

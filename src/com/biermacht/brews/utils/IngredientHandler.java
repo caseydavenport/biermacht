@@ -13,7 +13,8 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.comparators.BeerStyleComparator;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
-import com.biermacht.brews.xml.RecipeXmlReader;
+import com.biermacht.brews.xml.BeerXmlReader;
+import com.biermacht.brews.xml.BsmxXmlReader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -197,7 +198,7 @@ public class IngredientHandler {
    */
   private ArrayList<Ingredient> getFermentablesFromXml() throws IOException {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-    RecipeXmlReader myXMLHandler = new RecipeXmlReader();
+    BeerXmlReader myXMLHandler = new BeerXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
     AssetManager am = mContext.getAssets();
 
@@ -225,7 +226,7 @@ public class IngredientHandler {
    */
   private ArrayList<Ingredient> getYeastsFromXml() throws IOException {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-    RecipeXmlReader myXMLHandler = new RecipeXmlReader();
+    BeerXmlReader myXMLHandler = new BeerXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
     AssetManager am = mContext.getAssets();
 
@@ -253,7 +254,7 @@ public class IngredientHandler {
    */
   private ArrayList<Ingredient> getHopsFromXml() throws IOException {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-    RecipeXmlReader myXMLHandler = new RecipeXmlReader();
+    BeerXmlReader myXMLHandler = new BeerXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
     AssetManager am = mContext.getAssets();
 
@@ -282,7 +283,7 @@ public class IngredientHandler {
    */
   private ArrayList<BeerStyle> getStylesFromXml() throws IOException {
     ArrayList<BeerStyle> list = new ArrayList<BeerStyle>();
-    RecipeXmlReader myXMLHandler = new RecipeXmlReader();
+    BeerXmlReader myXMLHandler = new BeerXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
     AssetManager am = mContext.getAssets();
 
@@ -310,7 +311,7 @@ public class IngredientHandler {
    */
   private ArrayList<Ingredient> getMiscsFromXml() throws IOException {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-    RecipeXmlReader myXMLHandler = new RecipeXmlReader();
+    BeerXmlReader myXMLHandler = new BeerXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
     AssetManager am = mContext.getAssets();
 
@@ -331,26 +332,42 @@ public class IngredientHandler {
   }
 
   /**
-   * Gets Recipes from XMl file passed in path s
+   * Gets Recipes from XMl file passed in path s.
+   *
+   * If the file extension if .bsmx, will use the .bsmx parser.  Otherwise, the BeerXML parser
+   * is used.
    *
    * @return ArrayList of Ingredient Objects
    * @throws IOException
    */
   public ArrayList<Recipe> getRecipesFromXml(String s) throws IOException {
     ArrayList<Recipe> retlist = new ArrayList<Recipe>();
-    RecipeXmlReader myXMLHandler = new RecipeXmlReader();
+    ArrayList<Recipe> list;
+    BeerXmlReader beerXmlReader = new BeerXmlReader();
+    BsmxXmlReader bsmxXmlReader = new BsmxXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
 
     try {
       ContentResolver cr = mContext.getContentResolver();
       SAXParser sp = spf.newSAXParser();
       InputStream is = cr.openInputStream((Uri.parse("file://" + s)));
-      sp.parse(is, myXMLHandler);
 
-      ArrayList<Recipe> list = myXMLHandler.getRecipes();
+      // If this is a .bsmx, use the .bsmx parser.  Otherwise, assume it is BeerXML.
+      if (s.endsWith(".bsmx")) {
+        Log.d("IngredientHandler", "Attempting to parse .bsmx file");
+        sp.parse(is, bsmxXmlReader);
+        list = bsmxXmlReader.getRecipes();
+      }
+      else {
+        Log.d("IngredientHandler", "Attempting to parse BeerXML file");
+        sp.parse(is, beerXmlReader);
+        list = beerXmlReader.getRecipes();
+      }
+
       retlist.addAll(list);
     } catch (Exception e) {
-      Log.e("getRecipesFromXml", e.toString());
+      e.printStackTrace();
+      Log.e("getRecipesFromXml", "Failed to load file '" + s + "' : " + e.toString());
     }
 
     return retlist;
@@ -364,7 +381,7 @@ public class IngredientHandler {
    */
   private ArrayList<MashProfile> getProfilesFromXml() throws IOException {
     ArrayList<MashProfile> list = new ArrayList<MashProfile>();
-    RecipeXmlReader myXMLHandler = new RecipeXmlReader();
+    BeerXmlReader myXMLHandler = new BeerXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
     AssetManager am = mContext.getAssets();
 

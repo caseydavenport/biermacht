@@ -1,16 +1,22 @@
-=======================================
-Features / bugs that need workin' can
-be recorded here
-=======================================
+//////////////////////////////////////////////
+// Open source release checklist
+//////////////////////////////////////////////
+* Delete this file and move backlog into GitHub
+* Add a license
+* Make sure code isn't too embarrassing.
+* Make sure code is (mostly) readable and commented.
+* Need a decent README
 
 //////////////////////////////////////////////
 // Issues required for next release. /////////
 //////////////////////////////////////////////
-* Remove hokey start-of-day mash step water-to-grain ratio thing when no users on less than version 8 (v1.0.5).
 
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////
 //////////////////////////////////////////////
+* Replace hard-coded strings with XML resources.
+* Replace hard-coded colors with XML resources.
+* Unit Tests
 * Make fragment transactions smooth.
 * Ask users to rate the app every once in a while.
 * Option for flame-out hops (calculate IBU) (Not enough science for an equation yet).
@@ -39,6 +45,11 @@ be recorded here
 * Support measured gravities < 1
 * Can choose where to export recipes.
 * Better integration with Dropbox / Google Drive
+
+//////////////////////////////////////////////
+// Changelog for release 1.0.12 //////////////
+//////////////////////////////////////////////
+* BETA: .bsmx (BeerSmith 2) recipe import.
 
 //////////////////////////////////////////////
 // Changelog for release 1.0.11 //////////////

@@ -20,7 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
-public class RecipeXmlReader extends DefaultHandler {
+public class BeerXmlReader extends DefaultHandler {
 
   // Use a stringBuilder to store the characters read by the parser.  When the end of the
   // element is reached, they are converted to a String and stored in currentValue.
@@ -50,7 +50,7 @@ public class RecipeXmlReader extends DefaultHandler {
   // How we know what thing we're looking at.
   private Stack thingTypeStack;
 
-  public RecipeXmlReader() {
+  public BeerXmlReader() {
 
     // Lists to store all the objects created from the parsed XML.
     this.list = new ArrayList<Recipe>();

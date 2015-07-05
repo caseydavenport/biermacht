@@ -23,10 +23,13 @@ public class Units {
   public static final String CUPS = "Cups";
   public static final String QUARTS_PER_POUND = "qt/lb";
   public static final String QUARTS = "qt";
+  public static final String PINTS = "pt";
+  public static final String TABLESPOONS = "tbps";
 
   // Metric Units
   public static final String KILOGRAMS = "kg";
   public static final String GRAMS = "grams";
+  public static final String MILLIGRAMS = "mg";
   public static final String LITERS = "liters";
   public static final String MILLILITERS = "ml";
   public static final String CELSIUS = "\u2103";
@@ -292,16 +295,32 @@ public class Units {
     return l * 202.884;
   }
 
+  public static double litersToTablespoons(double l) {
+    return l * 67.628;
+  }
+
   public static double teaspoonsToLiters(double t) {
     return t / 202.884;
+  }
+
+  public static double tablespoonsToLiters(double t) {
+    return t / 67.628;
   }
 
   public static double quartsToLiters(double q) {
     return q * .946353;
   }
 
+  public static double pintsToLiters(double p) {
+    return p / 2.11338;
+  }
+
   public static double litersToQuarts(double l) {
     return l / .946353;
+  }
+
+  public static double litersToPints(double l) {
+    return 1 / 2.11338;
   }
 
   public static double kilosToPounds(double k) {
@@ -326,6 +345,14 @@ public class Units {
 
   public static double gramsToKilos(double g) {
     return g / 1000;
+  }
+
+  public static double milligramsToKilos(double mg) {
+    return mg / 1000 / 1000;
+  }
+
+  public static double kilosToMilligrams(double kg) {
+    return kg * 1000 * 1000;
   }
 
   public static double ouncesToGrams(double o) {

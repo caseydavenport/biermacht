@@ -36,6 +36,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This abstract class is used as a basis for all Activities which add or edit an object.
+ * Some examples would be Recipes, MashProfiles, or Settings.  This class defines a framework for
+ * adding views, acquiring values from those views, saving or deleting objects, and more.
+ */
 public abstract class AddEditActivity extends ActionBarActivity implements OnClickListener {
 
   // Main view - holds all the rows
@@ -117,14 +122,29 @@ public abstract class AddEditActivity extends ActionBarActivity implements OnCli
   // Abstract methods
   public abstract void onMissedClick(View v);
 
+  /**
+   * Called when spinner views should be configured.
+   */
   public abstract void createSpinner();
 
+  /**
+   * Hook to acquire a list of items relevant to this specific AddEditActivity implementation.
+   */
   public abstract void getList();
 
+  /**
+   * Called when the cancel button is pressed by the user - no config should be changed.
+   */
   public abstract void onCancelPressed();
 
+  /**
+   * Called when the delete button is pressed by the user - should delete the object in reference.
+   */
   public abstract void onDeletePressed();
 
+  /**
+   * Called when the save/create button is pressed by the user.  Should save the object in reference.
+   */
   public abstract void onFinished();
 
   @Override
@@ -404,12 +424,17 @@ public abstract class AddEditActivity extends ActionBarActivity implements OnCli
       Log.d("AddEditActivity", "Registering view");
       mainView.addView(v);
       if (! (v instanceof Spinner)) {
-        // Don't perform this for spinners.
+        // Register any text row views with the onClickListener so that they can receive
+        // notification when the view is clicked.
         v.setOnClickListener(onClickListener);
       }
     }
   }
 
+  /**
+   * Helper method to define the set of visible row Views.
+   * @param views List of Views which should be displayed.
+   */
   public void setViews(List<View> views) {
     Log.d("AddEditActivity", "Setting visible views");
     for (View v : this.registeredViews) {
@@ -421,6 +446,7 @@ public abstract class AddEditActivity extends ActionBarActivity implements OnCli
       }
     }
 
+    // Remove and re-add each view so that ordering matches the given list.
     for (View v : views) {
       mainView.removeView(v);
       mainView.addView(v);

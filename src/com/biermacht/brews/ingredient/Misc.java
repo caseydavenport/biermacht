@@ -160,22 +160,28 @@ public class Misc extends Ingredient {
     if (unit.equalsIgnoreCase(Units.GALLONS)) {
       return Units.litersToGallons(this.amount);
     }
-    if (unit.equalsIgnoreCase(Units.GRAMS)) {
+    else if (unit.equalsIgnoreCase(Units.GRAMS)) {
       return Units.kilosToGrams(this.amount);
     }
-    if (unit.equalsIgnoreCase(Units.KILOGRAMS)) {
+    else if (unit.equalsIgnoreCase(Units.MILLIGRAMS)) {
+      return Units.kilosToMilligrams(this.amount);
+    }
+    else if (unit.equalsIgnoreCase(Units.KILOGRAMS)) {
       return this.amount;
     }
-    if (unit.equalsIgnoreCase(Units.LITERS)) {
+    else if (unit.equalsIgnoreCase(Units.LITERS)) {
       return this.amount;
     }
-    if (unit.equalsIgnoreCase(Units.MILLILITERS)) {
+    else if (unit.equalsIgnoreCase(Units.MILLILITERS)) {
       return Units.litersToMillis(this.amount);
     }
-    if (unit.equalsIgnoreCase(Units.TEASPOONS)) {
+    else if (unit.equalsIgnoreCase(Units.TEASPOONS)) {
       return Units.litersToTeaspoons(this.amount);
     }
-    if (unit.equalsIgnoreCase(Units.OUNCES)) {
+    else if (unit.equalsIgnoreCase(Units.TABLESPOONS)) {
+      return Units.litersToTablespoons(this.amount);
+    }
+    else if (unit.equalsIgnoreCase(Units.OUNCES)) {
       if (this.amountIsWeight()) {
         return Units.kilosToOunces(this.amount);
       }
@@ -183,19 +189,26 @@ public class Misc extends Ingredient {
         return Units.litersToOunces(this.amount);
       }
     }
-    if (unit.equalsIgnoreCase(Units.POUNDS)) {
+    else if (unit.equalsIgnoreCase(Units.POUNDS)) {
       return Units.kilosToPounds(this.amount);
     }
-    if (unit.equalsIgnoreCase(Units.CUP) || unit.equalsIgnoreCase(Units.CUPS)) {
+    else if (unit.equalsIgnoreCase(Units.QUARTS)) {
+      return Units.litersToQuarts(this.amount);
+    }
+    else if (unit.equalsIgnoreCase(Units.PINTS)) {
+      return Units.litersToPints(this.amount);
+    }
+    else if (unit.equalsIgnoreCase(Units.CUP) || unit.equalsIgnoreCase(Units.CUPS)) {
       return Units.litersToCups(this.amount);
     }
-    if (unit.equalsIgnoreCase(Units.ITEMS)) {
+    else if (unit.equalsIgnoreCase(Units.ITEMS)) {
       return this.amount;
     }
-    if (unit.equalsIgnoreCase(Units.PACKAGES)) {
+    else if (unit.equalsIgnoreCase(Units.PACKAGES)) {
       return this.amount;
     }
     else {
+      Log.e("Misc", "Failed to get display amount - bad units? " + unit);
       return 0; // Should show that we couldn't compute
     }
   }
@@ -222,6 +235,9 @@ public class Misc extends Ingredient {
     else if (unit.equalsIgnoreCase(Units.GRAMS)) {
       this.amount = Units.gramsToKilos(amt);
     }
+    else if (unit.equalsIgnoreCase(Units.MILLIGRAMS)) {
+      this.amount = Units.milligramsToKilos(amt);
+    }
     else if (unit.equalsIgnoreCase(Units.KILOGRAMS)) {
       this.amount = amt;
     }
@@ -235,6 +251,12 @@ public class Misc extends Ingredient {
     }
     else if (unit.equalsIgnoreCase(Units.TEASPOONS)) {
       this.amount = Units.teaspoonsToLiters(amt);
+    }
+    else if (unit.equalsIgnoreCase(Units.TABLESPOONS)) {
+      this.amount = Units.tablespoonsToLiters(amt);
+    }
+    else if (unit.equalsIgnoreCase(Units.PINTS)) {
+      this.amount = Units.pintsToLiters(amt);
     }
     else if (unit.equalsIgnoreCase(Units.OUNCES)) {
       if (this.amountIsWeight()) {

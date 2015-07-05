@@ -114,7 +114,7 @@ public class EditFermentationProfileActivity extends ActionBarActivity implement
       tempView.setText(String.format("%2.0f", mRecipe.getDisplayFermentationTemp(i)));
     }
 
-    //Arraylist of Profiles
+    // Arraylist of Profiles
     numStagesArray = new ArrayList<String>();
     numStagesArray.add("1");
     numStagesArray.add("2");

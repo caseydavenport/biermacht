@@ -7,7 +7,10 @@ import android.util.Log;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 
-// Grain subclass of Ingredient
+/**
+ * Subclass of Ingredient which represents a Fermentable.  Fermentables can be a grain, extract,
+ * sugar, or adjunct.
+ */
 public class Fermentable extends Ingredient implements Parcelable {
 
   // Beer XML 1.0 Required Fields ===================================
@@ -21,11 +24,11 @@ public class Fermentable extends Ingredient implements Parcelable {
   // Beer XML 1.0 Optional Fields ===================================
   // ================================================================
   private boolean addAfterBoil;                  // True if added after boil
-  private double maxInBatch;             // Max reccomended in this batch
+  private double maxInBatch;                     // Max reccomended in this batch
 
   // Custom Fields ==================================================
   // ================================================================
-  private String description;             // Description of fermentable
+  private String description;                     // Description of fermentable
 
   // Static values =================================================
   // ===============================================================
@@ -67,8 +70,8 @@ public class Fermentable extends Ingredient implements Parcelable {
     p.writeDouble(yield);                          // Dry yeild / raw yield
     p.writeDouble(color);                          // Color in Lovibond (SRM)
     p.writeInt(addAfterBoil ? 1 : 0);              // True if added after boil
-    p.writeDouble(maxInBatch);             // Max reccomended in this batch
-    p.writeString(description);             // Description of fermentable
+    p.writeDouble(maxInBatch);                     // Max reccomended in this batch
+    p.writeString(description);                    // Description of fermentable
   }
 
   public static final Parcelable.Creator<Fermentable> CREATOR =
@@ -99,29 +102,14 @@ public class Fermentable extends Ingredient implements Parcelable {
     this.color = color;
   }
 
-  /**
-   * Gets the gravity
-   *
-   * @return
-   */
   public double getGravity() {
     return yieldToGravity(yield);
   }
 
-  /**
-   * Sets gravity and yield accordingly
-   *
-   * @param gravity
-   */
   public void setGravity(double gravity) {
     this.yield = gravityToYield(gravity);
   }
 
-  /**
-   * gets the fermentables points per pound per gallon
-   *
-   * @return
-   */
   public float getPpg() {
     return (float) (yield * 46) / 100;
   }
@@ -182,13 +170,6 @@ public class Fermentable extends Ingredient implements Parcelable {
   }
 
   @Override
-  /**
-   * Used for calculating if two fermentables are equal.
-   * We want to match on the following fields:
-   *         * Name
-   *         * SRM Color
-   *         * Gravity contribution
-   */
   public int hashCode() {
     int hc = this.getName().hashCode();
     hc = hc ^ (int) this.getLovibondColor();
@@ -196,6 +177,11 @@ public class Fermentable extends Ingredient implements Parcelable {
     return hc;
   }
 
+  /**
+   * Evaluates equality of this Fermentable and the given Object.
+   * @param o
+   * @return true if this Fermentable equals Object o, false otherwise.
+   */
   @Override
   public boolean equals(Object o) {
     if (o instanceof Fermentable) {
@@ -313,20 +299,21 @@ public class Fermentable extends Ingredient implements Parcelable {
     return gravity;
   }
 
+  /**
+   * Compares the given Ingredient to this Fermentable and returns and indicator of (in)equality.
+   * @param other The Ingredient with which to compare this Fermentable
+   * @return   0 if argument is equal to this,
+   *         < 0 if argument is greater than this,
+   *         > 0 if argument is less than this
+   */
   @Override
   public int compareTo(Ingredient other) {
-    /**
-     * Returns:
-     * 		0 if argument is equal to this
-     * 		< 0 if argument is greater than this
-     * 		> 0 if argument is less than this
-     */
-    // If not the same type, sort based on type.
+    // If not the same type of Ingredient, sort based on Ingredient type.
     if (! this.getType().equals(other.getType())) {
       return this.getType().compareTo(other.getType());
     }
 
-    // If they are the same, sort based on amount
+    // If they are both Fermentables, sort based on amount
     return this.getBeerXmlStandardAmount() > other.getBeerXmlStandardAmount() ? - 1 : 1;
   }
 }

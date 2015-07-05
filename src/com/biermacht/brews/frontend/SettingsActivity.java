@@ -198,12 +198,6 @@ public class SettingsActivity extends AddEditActivity {
     // Should never be pressed. We disable delete button for this activity
   }
 
-  /**
-   * ********************************************************************************* /*  Extra
-   * stuff goes below, unrelated to AddEditActivity methods. /*      Contains builders and tasks for
-   * this activity only. / **********************************************************************************
-   */
-
   // Custom dialogs for this activity only
   private Builder deleteAllRecipes() {
     return new AlertDialog.Builder(this)
@@ -243,7 +237,9 @@ public class SettingsActivity extends AddEditActivity {
             .setPositiveButton(R.string.done, null);
   }
 
-  // Async task to export all recipes
+  /**
+   *   Async task to export all recipes to BeerXML file.
+   */
   private class ExportRecipes extends AsyncTask<String, Void, String> {
 
     private ProgressDialog progress;
@@ -280,7 +276,9 @@ public class SettingsActivity extends AddEditActivity {
     }
   }
 
-  // Async task to delete all recipes
+  /**
+   * Async task to delete all recipes.
+   */
   private class DeleteRecipes extends AsyncTask<String, Void, String> {
 
     private ProgressDialog progress;
@@ -329,7 +327,9 @@ public class SettingsActivity extends AddEditActivity {
             .setNegativeButton(R.string.cancel, null);
   }
 
-  // Async task to reset all ingredients.
+  /**
+   * Async task to reset the default ingredient database.
+   */
   private class ResetIngredients extends AsyncTask<String, Void, String> {
 
     private ProgressDialog progress;

@@ -51,7 +51,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
-  // Globals
+  // Globals, for reference outside of this Activity.
   public static DatabaseInterface databaseInterface;
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;
@@ -61,29 +61,24 @@ public class MainActivity extends ActionBarActivity {
   private static String DRAWER_RECIPES = "Recipes";
   private static String DRAWER_GRAVITY_CALC = "Hydrometer Adjustment";
   private static String DRAWER_MASH_EDIT = "Mash Profile Editor";
-  private static String DRAWER_EQUIP_EDIT = "Equipment Editor";
   private static String DRAWER_INGRED_EDIT = "Ingredient Editor";
   private static String DRAWER_ABV_CALC = "ABV Calculator";
   private static String DRAWER_STRIKE_CALC = "Strike Temperature";
 
-  // Fragments
-  ArrayList<ClickableFragment> fragmentList;
-
-  // List to store drawer options
+  // List to store drawer option names.
   private ArrayList<String> drawerItems;
 
-  //Declare views here
-  private ListView drawerListView;
+  // List of Fragments which can be shown in the main view.  These correspond to the drawer items
+  // in the above ArrayList<String> drawerItems
+  ArrayList<ClickableFragment> fragmentList;
 
-  // Drawer stuff
+  // Drawer related variables.
   private DrawerLayout mDrawerLayout;
   private ActionBarDrawerToggle mDrawerToggle;
+  private ListView drawerListView;
 
-  // Selected item
+  // Currently selected drawer item - for use as an index in drawerItems and fragmentList.
   private int selectedItem;
-
-  // Context
-  private Context context;
 
   // Stores recipes found the the selected file
   private ArrayList<Recipe> foundImportedRecipes;
@@ -93,9 +88,6 @@ public class MainActivity extends ActionBarActivity {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
-    // Store context
-    context = this;
 
     // Instantiate ingredient handler
     ingredientHandler = new IngredientHandler(getApplicationContext());
@@ -120,55 +112,10 @@ public class MainActivity extends ActionBarActivity {
       Database.createRecipeWithName("Master Recipe");
     }
     else {
-      // Async Initialize Assets on startup.
+      // Async Initialize Assets on startup.  This loads styles and mash profiles for faster
+      // access later.
       new InitializeTask(ingredientHandler).execute("");
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // BEGIN BAD HACKY TEMPORARY FIX.
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // Temporary fix - initial mash profiles which came with early version of Biermacht had
-    // bad water-to-grain ratios for their Mash In steps.  This procedure re-sets them to the correct
-    // values. This should be removed once enough of the user-base has upgraded to this SW version.
-    boolean fixedRatios = preferences.getBoolean(Constants.PREF_FIXED_RATIOS, false);
-    if (! fixedRatios) {
-      // Get all profiles from the Custom database.  Iterate through, change the water-to-grain
-      // ratio for those what are wrong, and save them.
-      preferences.edit().putBoolean(Constants.PREF_FIXED_RATIOS, true).commit();
-      ArrayList<MashProfile> l = new ArrayList<MashProfile>();
-      l.addAll(Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM));
-      MashStep s;
-      Recipe masterRecipe;
-      try {
-        masterRecipe = Database.getRecipeWithId(Constants.MASTER_RECIPE_ID);
-      } catch (Exception e) {
-        masterRecipe = new Recipe();
-      }
-      ArrayList<String> nameList = new ArrayList<String>();
-      nameList.add("Decoction Mash");
-      nameList.add("Infusion, Full Body");
-      nameList.add("Infusion, Light Body");
-      nameList.add("Infusion, Medium Body");
-
-      for (MashProfile mp : l) {
-        masterRecipe.setMashProfile(mp);
-        if (nameList.contains(mp.getName())) {
-          s = mp.getMashStepList().get(0);
-          if (s.getBeerXmlStandardWaterToGrainRatio() > 4.2) {
-            if (mp.getName().contains("Infusion")) {
-              s.setBeerXmlStandardWaterToGrainRatio(2.607);
-            }
-            else {
-              s.setBeerXmlStandardWaterToGrainRatio(4.1727);
-            }
-            mp.save(Constants.DATABASE_CUSTOM);
-          }
-        }
-      }
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // END BAD HACKY TEMPORARY FIX.
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Initialize storage for imported recipes
     foundImportedRecipes = new ArrayList<Recipe>();
@@ -184,7 +131,6 @@ public class MainActivity extends ActionBarActivity {
     drawerItems.add(DRAWER_STRIKE_CALC);
     drawerItems.add(DRAWER_GRAVITY_CALC);
     drawerItems.add(DRAWER_ABV_CALC);
-    //drawerItems.add(DRAWER_EQUIP_EDIT); TODO:
 
     // Set the adapter and click listener for the list view
     drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.row_layout_drawer_item,
@@ -252,6 +198,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     // The option selection is unhandled.  See if we can handle it.
+    // TODO: Some of these should be handled by the underlying fragment, rather than this Activity.
     Intent i;
     switch (item.getItemId()) {
       case R.id.menu_settings:
@@ -317,63 +264,10 @@ public class MainActivity extends ActionBarActivity {
             .setNegativeButton(R.string.cancel, null);
   }
 
-  private AlertDialog.Builder recipeSelectorAlert() {
-    // Inflater to inflate custom alert view.
-    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-    // Inflate our custom layout
-    View alertView = inflater.inflate(R.layout.alert_view_select_list, null);
-
-    // Get the listView from the layout
-    final ListView v = (ListView) alertView.findViewById(R.id.list);
-
-    // Get the checkBox from the layout
-    final CheckBox checkBox = (CheckBox) alertView.findViewById(R.id.checkbox);
-
-    // Create checkbox array adapter to hold recipes, and set it as the adapter for the listView.
-    final RecipeCheckboxArrayAdapter adapter =
-            new RecipeCheckboxArrayAdapter(getApplicationContext(), foundImportedRecipes);
-    v.setAdapter(adapter);
-    final ArrayList<Recipe> recipesToImport = new ArrayList<Recipe>();
-
-    // Set a listener for the checkbox so that we can select / unselect items in the list.
-    checkBox.setOnClickListener(new View.OnClickListener() {
-
-      @Override
-      public void onClick(View v) {
-        if (checkBox.isChecked()) {
-          // Checkbox is checked - select all recipes.
-          adapter.selectAll();
-        }
-        else {
-          // Checkbox is not checked - deselect all recipes.
-          adapter.deselectAll();
-        }
-      }
-    });
-
-    return new AlertDialog.Builder(this)
-            .setTitle("Found " + adapter.getCount() + " Recipes")
-            .setView(alertView)
-            .setPositiveButton("Import", new DialogInterface.OnClickListener() {
-
-              public void onClick(DialogInterface dialog, int which) {
-                // Iterate recipes, import those which are selected.
-                // TODO: Check if recipe already exists, ask to overwrite.
-                for (int i = 0; i < adapter.getCount(); i++) {
-                  if (adapter.isChecked(adapter.getItem(i).getRecipeName())) {
-                    recipesToImport.add(adapter.getItem(i));
-                  }
-                }
-
-                // Store the recipes
-                new StoreRecipes(context, ingredientHandler, recipesToImport).execute("");
-              }
-
-            })
-            .setNegativeButton(R.string.cancel, null);
-  }
-
+  /**
+   * Called after the user selects a BeerXML file on their device to import recipes.  This method
+   * gets the chosen file path and loads the recipes therein.
+   */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     if (requestCode == 1) {
@@ -404,7 +298,18 @@ public class MainActivity extends ActionBarActivity {
   }
 
   /**
-   * Swaps fragments in the main content view
+   * Private class which handles selections in the app drawer and selects the appropriate
+   * Fragment to display.
+   */
+  private class DrawerItemClickListener implements ListView.OnItemClickListener {
+    @Override
+    public void onItemClick(AdapterView parent, View view, int position, long id) {
+      selectItem(position);
+    }
+  }
+
+  /**
+   * Swaps fragments in the main content view so that the Fragment as position 'pos' is displayed.
    */
   private void selectItem(int pos) {
     // Insert the fragment by replacing any existing fragment.
@@ -421,26 +326,27 @@ public class MainActivity extends ActionBarActivity {
     selectedItem = pos;
   }
 
-  @Override
-  public void setTitle(CharSequence title) {
-    getSupportActionBar().setTitle(title);
-  }
-
+  /**
+   * Calls through to the udpate() method of the currently active Fragment.  Call this method after
+   * making data changes so that the active Fragment can update its UI.
+   */
   private void updateFragments() {
     fragmentList.get(selectedItem).update();
   }
 
+  /**
+   * Called by the LoadRecipes task to store off the loaded recipes.  Referenced by the recipe
+   * selector alert.
+   * @param recipeList
+   */
   public void setImportedRecipes(ArrayList<Recipe> recipeList) {
     this.foundImportedRecipes = recipeList;
   }
 
-  private class DrawerItemClickListener implements ListView.OnItemClickListener {
-    @Override
-    public void onItemClick(AdapterView parent, View view, int position, long id) {
-      selectItem(position);
-    }
-  }
-
+  /**
+   * This AsyncTask loads recipes from the given BeerXML file path and then displays the recipe
+   * selector alert which allows the user to select which recipes they would like to import.
+   */
   private class LoadRecipes extends AsyncTask<String, Void, String> {
 
     private String path;
@@ -492,16 +398,76 @@ public class MainActivity extends ActionBarActivity {
     }
   }
 
+  /***
+   * Creates the Builder for the Recipe selector, which is shown after Recipes have been loaded
+   * from a user-chosen XML resource.
+   * @return
+   */
+  private AlertDialog.Builder recipeSelectorAlert() {
+    // Inflater to inflate custom alert view.
+    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+    // Inflate our custom layout
+    View alertView = inflater.inflate(R.layout.alert_view_select_list, null);
+
+    // Get the listView from the layout
+    final ListView v = (ListView) alertView.findViewById(R.id.list);
+
+    // Get the checkBox from the layout
+    final CheckBox checkBox = (CheckBox) alertView.findViewById(R.id.checkbox);
+
+    // Create checkbox array adapter to hold recipes, and set it as the adapter for the listView.
+    final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter(getApplicationContext(), foundImportedRecipes);
+    v.setAdapter(adapter);
+    final ArrayList<Recipe> recipesToImport = new ArrayList<Recipe>();
+
+    // Set a listener for the checkbox so that we can select / unselect items in the list.
+    checkBox.setOnClickListener(new View.OnClickListener() {
+
+      @Override
+      public void onClick(View v) {
+        if (checkBox.isChecked()) {
+          // Checkbox is checked - select all recipes.
+          adapter.selectAll();
+        }
+        else {
+          // Checkbox is not checked - deselect all recipes.
+          adapter.deselectAll();
+        }
+      }
+    });
+
+    return new AlertDialog.Builder(this)
+            .setTitle("Found " + adapter.getCount() + " Recipes")
+            .setView(alertView)
+            .setPositiveButton("Import", new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                // Iterate recipes, import those which are selected.
+                // TODO: Check if recipe already exists, ask to overwrite.
+                for (int i = 0; i < adapter.getCount(); i++) {
+                  if (adapter.isChecked(adapter.getItem(i).getRecipeName())) {
+                    recipesToImport.add(adapter.getItem(i));
+                  }
+                }
+
+                // Store the recipes
+                new StoreRecipes(recipesToImport).execute("");
+              }
+
+            })
+            .setNegativeButton(R.string.cancel, null);
+  }
+
+  /**
+   * This AsyncTask stores the given list of Recipes to the Recipes database.
+   */
   private class StoreRecipes extends AsyncTask<String, Void, String> {
 
-    private IngredientHandler ingredientHandler;
-    private Context context;
     private ProgressDialog progress;
     private ArrayList<Recipe> list;
 
-    public StoreRecipes(Context c, IngredientHandler i, ArrayList<Recipe> list) {
-      this.ingredientHandler = i;
-      this.context = c;
+    public StoreRecipes(ArrayList<Recipe> list) {
       this.list = list;
     }
 
@@ -525,7 +491,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
-      progress = new ProgressDialog(context);
+      progress = new ProgressDialog(MainActivity.this);
       progress.setMessage("Importing...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
