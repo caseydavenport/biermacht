@@ -341,7 +341,8 @@ public class AddMashProfileActivity extends AddEditActivity {
   }
 
   /**
-   * Updates the visible list of MashSteps based on the current set of MashSteps in the MashProfile.
+   * Updates the visible list of MashSteps based on the current set of MashSteps in the
+   * MashProfile.
    */
   public void updateMashStepList() {
     dragDropAdapter = new MashStepArrayAdapter(this, mProfile.getMashStepList());
@@ -359,7 +360,8 @@ public class AddMashProfileActivity extends AddEditActivity {
    * children and the dividers between list items.  This is used to set the height of the mash step
    * list such that it does not scroll, since it is encompassed by a ScrollView.
    *
-   * @param listView ListView to adjust.
+   * @param listView
+   *         ListView to adjust.
    */
   public static void setListViewHeightBasedOnChildren(ListView listView) {
     ListAdapter listAdapter = listView.getAdapter();
@@ -438,9 +440,12 @@ public class AddMashProfileActivity extends AddEditActivity {
    * sets the profile for the active Recipe (mRecipe).  Or, if NULL is returned, this method does
    * nothing.
    *
-   * @param requestCode Indicates the original intention of calling the Activity.
-   * @param resultCode Indicates the result of the called Activity.
-   * @param data Intent which includes the Activity result.
+   * @param requestCode
+   *         Indicates the original intention of calling the Activity.
+   * @param resultCode
+   *         Indicates the result of the called Activity.
+   * @param data
+   *         Intent which includes the Activity result.
    */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {

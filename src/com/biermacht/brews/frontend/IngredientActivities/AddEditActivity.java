@@ -1,6 +1,5 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -37,9 +36,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This abstract class is used as a basis for all Activities which add or edit an object.
- * Some examples would be Recipes, MashProfiles, or Settings.  This class defines a framework for
- * adding views, acquiring values from those views, saving or deleting objects, and more.
+ * This abstract class is used as a basis for all Activities which add or edit an object. Some
+ * examples would be Recipes, MashProfiles, or Settings.  This class defines a framework for adding
+ * views, acquiring values from those views, saving or deleting objects, and more.
  */
 public abstract class AddEditActivity extends ActionBarActivity implements OnClickListener {
 
@@ -143,7 +142,8 @@ public abstract class AddEditActivity extends ActionBarActivity implements OnCli
   public abstract void onDeletePressed();
 
   /**
-   * Called when the save/create button is pressed by the user.  Should save the object in reference.
+   * Called when the save/create button is pressed by the user.  Should save the object in
+   * reference.
    */
   public abstract void onFinished();
 
@@ -433,7 +433,9 @@ public abstract class AddEditActivity extends ActionBarActivity implements OnCli
 
   /**
    * Helper method to define the set of visible row Views.
-   * @param views List of Views which should be displayed.
+   *
+   * @param views
+   *         List of Views which should be displayed.
    */
   public void setViews(List<View> views) {
     Log.d("AddEditActivity", "Setting visible views");

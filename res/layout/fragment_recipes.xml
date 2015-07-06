@@ -5,30 +5,30 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/recipe_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <ListView
+        android:id="@+id/recipe_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/no_recipes_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@color/white"
-            android:gravity="center"
-            android:visibility="gone"
-            android:textColor="@color/title_color"
-            android:textSize="15sp"
-            android:text="@string/no_recipes"/>
+    <TextView
+        android:id="@+id/no_recipes_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textColor="@color/title_color"
+        android:textSize="15sp"
+        android:text="@string/no_recipes"/>
 
-        <!-- Bottom border for listView -->
-        <TextView
-            android:id="@+id/list_view_border"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="top"
-            android:textColor="#fff"
-            android:background="@color/divider"
-            android:text="">
-        </TextView>
+    <!-- Bottom border for listView -->
+    <TextView
+        android:id="@+id/list_view_border"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:textColor="#fff"
+        android:background="@color/divider"
+        android:text="">
+    </TextView>
 </RelativeLayout>

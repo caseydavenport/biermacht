@@ -238,7 +238,7 @@ public class SettingsActivity extends AddEditActivity {
   }
 
   /**
-   *   Async task to export all recipes to BeerXML file.
+   * Async task to export all recipes to BeerXML file.
    */
   private class ExportRecipes extends AsyncTask<String, Void, String> {
 

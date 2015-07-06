@@ -9,11 +9,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -36,8 +36,6 @@ import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
-import com.biermacht.brews.recipe.MashProfile;
-import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
@@ -298,8 +296,8 @@ public class MainActivity extends ActionBarActivity {
   }
 
   /**
-   * Private class which handles selections in the app drawer and selects the appropriate
-   * Fragment to display.
+   * Private class which handles selections in the app drawer and selects the appropriate Fragment
+   * to display.
    */
   private class DrawerItemClickListener implements ListView.OnItemClickListener {
     @Override
@@ -337,6 +335,7 @@ public class MainActivity extends ActionBarActivity {
   /**
    * Called by the LoadRecipes task to store off the loaded recipes.  Referenced by the recipe
    * selector alert.
+   *
    * @param recipeList
    */
   public void setImportedRecipes(ArrayList<Recipe> recipeList) {
@@ -398,9 +397,10 @@ public class MainActivity extends ActionBarActivity {
     }
   }
 
-  /***
-   * Creates the Builder for the Recipe selector, which is shown after Recipes have been loaded
-   * from a user-chosen XML resource.
+  /**
+   * Creates the Builder for the Recipe selector, which is shown after Recipes have been loaded from
+   * a user-chosen XML resource.
+   *
    * @return
    */
   private AlertDialog.Builder recipeSelectorAlert() {

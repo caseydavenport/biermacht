@@ -37,9 +37,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:paddingLeft="8dp"
         android:text="Beer Style"
         android:layout_toRightOf="@id/row_icon"
+        android:layout_toLeftOf="@+id/batch_volume"
         android:layout_below="@id/label"
         android:textColor="@color/subtitle"
         android:background="@color/transparent"/>

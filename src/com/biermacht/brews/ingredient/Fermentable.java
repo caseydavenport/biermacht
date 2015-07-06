@@ -179,6 +179,7 @@ public class Fermentable extends Ingredient implements Parcelable {
 
   /**
    * Evaluates equality of this Fermentable and the given Object.
+   *
    * @param o
    * @return true if this Fermentable equals Object o, false otherwise.
    */
@@ -301,10 +302,11 @@ public class Fermentable extends Ingredient implements Parcelable {
 
   /**
    * Compares the given Ingredient to this Fermentable and returns and indicator of (in)equality.
-   * @param other The Ingredient with which to compare this Fermentable
-   * @return   0 if argument is equal to this,
-   *         < 0 if argument is greater than this,
-   *         > 0 if argument is less than this
+   *
+   * @param other
+   *         The Ingredient with which to compare this Fermentable
+   * @return 0 if argument is equal to this, < 0 if argument is greater than this, > 0 if argument
+   * is less than this
    */
   @Override
   public int compareTo(Ingredient other) {

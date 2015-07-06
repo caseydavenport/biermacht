@@ -4,6 +4,10 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.recipe.Recipe;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class Utils {
   /**
    * Determines if the given value is within the given range
@@ -50,6 +54,17 @@ public class Utils {
     }
 
     return num_minutes;
+  }
+
+  public static String convertStreamToString(InputStream is) throws Exception {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+    StringBuilder sb = new StringBuilder();
+    String line = null;
+    while ((line = reader.readLine()) != null) {
+      sb.append(line).append("\n");
+    }
+    reader.close();
+    return sb.toString();
   }
 
   /**
