@@ -12,6 +12,7 @@
 //////////////////////////////////////////////
 * Can select multiple recipes for deletion at a time (rework context presses?)
 * More options for overriding, skipping, duplicating existing recipes on import.
+* "About" page for app - shows developer, version, etc.
 
 //////////////////////////////////////////////
 // Backlog ///////////////////////////////////

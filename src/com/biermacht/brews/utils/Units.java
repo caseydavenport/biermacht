@@ -425,8 +425,7 @@ public class Units {
   }
 
   public static String getVolumeUnits() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
-            (IMPERIAL)) {
+    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL)) {
       return GALLONS;
     }
     else {

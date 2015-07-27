@@ -47,7 +47,7 @@ public class MashStep implements Parcelable {
 
   // Basic Constructor
   public MashStep(Recipe r) {
-    this.setName("");
+    this.setName("Mash Step (" + (r.getMashProfile().getMashStepList().size() + 1) + ")");
     this.setVersion(1);
     this.setType(MashStep.INFUSION);
     this.setDisplayInfuseAmount(0);
@@ -190,9 +190,6 @@ public class MashStep implements Parcelable {
   }
 
   public String getName() {
-    if (this.name == "") {
-      this.name = "Mash step (" + this.getOrder() + ")";
-    }
     return this.name;
   }
 
