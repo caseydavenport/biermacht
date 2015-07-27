@@ -149,22 +149,35 @@ public class MashStep implements Parcelable {
   }
 
   @Override
-  public int hashCode() {
-    int hc = this.name.hashCode();
-    hc += this.order;
-    hc ^= (int) (this.stepTemp * 12345678 * this.stepTime);
-    hc ^= this.type.hashCode();
-    return hc;
-  }
-
-  @Override
   public boolean equals(Object o) {
-    if (o instanceof MashStep) {
-      if (this.hashCode() == o.hashCode()) {
-        return true;
-      }
+    // Non-MashStep objects cannot equal a MashStep.
+    if (!(o instanceof MashStep)) {
+      return false;
     }
-    return false;
+
+    // Comparing to a MashStep - cast the given Object.
+    MashStep other = (MashStep) o;
+
+    // Both are MashStep objects - compare important fields.
+    if (!this.getName().equals(other.getName())) {
+      Log.d("MashStep", "MashStep.equals(): " + this.getName() + " != " + other.getName());
+      return false;
+    }
+    else if (this.getStepTime() != other.getStepTime()) {
+      Log.d("MashStep", "MashStep.equals(): " + this.getStepTime() + " != " + other.getStepTime());
+      return false;
+    }
+    else if (this.getBeerXmlStandardStepTemp() != other.getBeerXmlStandardStepTemp()) {
+      Log.d("MashStep", "MashStep.equals(): " + this.getBeerXmlStandardStepTemp() + " != " + other.getBeerXmlStandardStepTemp());
+      return false;
+    }
+    else if (!this.getType().equals(other.getType())) {
+      Log.d("MashStep", "MashStep.equals(): " + this.getType() + " != " + other.getType());
+      return false;
+    }
+
+    // All index fields match - these objects are equal.
+    return true;
   }
 
   @Override

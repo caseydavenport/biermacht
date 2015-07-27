@@ -42,10 +42,12 @@ import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
+import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -248,8 +250,8 @@ public class MainActivity extends ActionBarActivity {
 
   private AlertDialog.Builder importRecipeAlert() {
     return new AlertDialog.Builder(this)
-            .setTitle("Import BeerXML Recipe")
-            .setMessage("Select a BeerXML file on your device to import recipes.")
+            .setTitle("Import Recipe(s) from XML")
+            .setMessage("Select a BeerXML (.xml) or BeerSmith2 (.bsmx) file on your device to import recipes.")
             .setPositiveButton("Select", new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
@@ -415,6 +417,9 @@ public class MainActivity extends ActionBarActivity {
 
     // Get the checkBox from the layout
     final CheckBox checkBox = (CheckBox) alertView.findViewById(R.id.checkbox);
+
+    // Sort the found recipes by name.
+    Collections.sort(foundImportedRecipes, new ToStringComparator());
 
     // Create checkbox array adapter to hold recipes, and set it as the adapter for the listView.
     final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter(getApplicationContext(), foundImportedRecipes);

@@ -11,7 +11,7 @@ public abstract class Ingredient implements Parcelable {
   // Beer XML 1.0 Required Fields (To be inherited) =================
   // ================================================================
   private String name;                    // Ingredient name
-  private int version;          // bXML Version being used
+  private int version;                   // bXML Version being used
   public double amount;                  // Amount in beerXML standard units
   public int time;                       // Time ingredient is used - units vary based on use
 

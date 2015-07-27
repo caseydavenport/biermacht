@@ -293,9 +293,9 @@ public class BrewCalculator {
      *   r = The ratio of water to grain in quarts per pound.
      *   Wa = The amount of boiling water added (in quarts).
      *   Wm = The total amount of water in the mash (in quarts).
-     *   T1 = The initial temperature (¡F) of the mash.
-     *   T2 = The target temperature (¡F) of the mash.
-     *   Tw = The actual temperature (¡F) of the infusion water.
+     *   T1 = The initial temperature (ï¿½F) of the mash.
+     *   T2 = The target temperature (ï¿½F) of the mash.
+     *   Tw = The actual temperature (ï¿½F) of the infusion water.
      *   G = The amount of grain in the mash (in pounds).
      *
      *   NOTE: All temperatures in degrees F.

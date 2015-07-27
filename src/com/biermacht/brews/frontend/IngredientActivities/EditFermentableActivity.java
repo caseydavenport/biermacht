@@ -89,7 +89,7 @@ public class EditFermentableActivity extends AddFermentableActivity {
           }
         }
         else {
-          // TODO: Do we ever want to enter a time for mashes?
+          // TODO: Support extract / adjunct times for all-grain recipes.
           timeView.setVisibility(View.GONE);
         }
 

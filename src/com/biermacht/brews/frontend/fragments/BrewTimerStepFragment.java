@@ -57,7 +57,7 @@ public class BrewTimerStepFragment extends Fragment {
 
   @Override
   public String toString() {
-    // For some reason we're calling this before onCreateView?
+    // TODO: For some reason we're calling this before onCreateView?
     if (this.i == null || this.r == null) {
       this.r = getArguments().getParcelable(Constants.KEY_RECIPE);
       this.i = getArguments().getParcelable(Constants.KEY_INSTRUCTION);

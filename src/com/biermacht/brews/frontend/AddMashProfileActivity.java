@@ -83,6 +83,7 @@ public class AddMashProfileActivity extends AddEditActivity {
     @Override
     public void drop(int oldPosition, int newPosition) {
       if (oldPosition != newPosition) {
+
         // Move the step in the adapter.
         MashStep step = dragDropAdapter.getItem(oldPosition);
         dragDropAdapter.remove(step);
@@ -92,6 +93,7 @@ public class AddMashProfileActivity extends AddEditActivity {
         mProfile.clearMashSteps();
         for (int i = 0; i < dragDropAdapter.getCount(); i++) {
           mProfile.addMashStep(dragDropAdapter.getItem(i));
+          Log.e("AddMashProfile", "Adding Mash Profile with hash " + dragDropAdapter.getItem(i).hashCode());
         }
       }
     }

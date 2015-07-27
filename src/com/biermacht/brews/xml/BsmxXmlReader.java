@@ -334,13 +334,22 @@ public class BsmxXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("F_R_VERSION")) {
-        // Versions in .bsmx are doubles, wheras Biermacht uses integers.
-        r.setVersion((int) Math.ceil(Double.parseDouble(currentValue)));
+        // TODO: Support this field.
       }
 
       else if (qName.equalsIgnoreCase("F_R_TYPE")) {
-        String type = Recipe.ALL_GRAIN;
-        //TODO
+        String type;
+
+        if (Integer.parseInt(currentValue) == 0) {
+          type = Recipe.EXTRACT;
+        }
+        else if (Integer.parseInt(currentValue) == 1) {
+          type = Recipe.PARTIAL_MASH;
+        }
+        else {
+          type = Recipe.ALL_GRAIN;
+        }
+
         r.setType(type);
       }
 
@@ -500,6 +509,10 @@ public class BsmxXmlReader extends DefaultHandler {
 
       else if (qName.equalsIgnoreCase("F_G_NOTES")) {
         f.setShortDescription(currentValue);
+      }
+
+      else if (qName.equalsIgnoreCase("F_G_BOIL_TIME")) {
+        f.setTime((int) Double.parseDouble(currentValue));
       }
 
       else if (qName.equalsIgnoreCase("F_G_COARSE_FINE_DIFF")) {
@@ -1065,12 +1078,12 @@ public class BsmxXmlReader extends DefaultHandler {
         mashStep.setBeerXmlStandardInfuseAmount(Units.ouncesToLiters(amt));
       }
 
-      else if (qName.equalsIgnoreCase("INFUSE_TEMP")) {
+      else if (qName.equalsIgnoreCase("F_MS_INFUSION_TEMP")) {
         double temp = Double.parseDouble(currentValue.replace(",", "."));
         mashStep.setBeerXmlStandardInfuseTemp(Units.fahrenheitToCelsius(temp));
       }
 
-      else if (qName.equalsIgnoreCase("DECOCTION_AMT")) {
+      else if (qName.equalsIgnoreCase("F_MS_DECOCTION_AMT")) {
         double amt = Double.parseDouble(currentValue);
         mashStep.setBeerXmlDecoctAmount(Units.ouncesToLiters(amt));
       }
