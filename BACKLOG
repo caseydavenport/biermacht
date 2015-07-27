@@ -55,6 +55,8 @@
 * BETA: .bsmx (BeerSmith 2) recipe import.
 * Alphabetize the 'select recipes to import' list.
 * Fix some mash step indexing bugs.
+* Potential fix for IngredientComparator sorting crash
+* Potential fix for no-file-browser installed crash.
 
 //////////////////////////////////////////////
 // Changelog for release 1.0.11 //////////////
