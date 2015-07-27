@@ -255,9 +255,16 @@ public class MainActivity extends ActionBarActivity {
             .setPositiveButton("Select", new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
-                Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
-                i3.setType("file/*");
-                startActivityForResult(i3, 1);
+                try {
+                  Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
+                  i3.setType("file/*");
+                  startActivityForResult(i3, 1);
+                } catch (android.content.ActivityNotFoundException e){
+                  new AlertDialog.Builder(getApplicationContext())
+                          .setTitle("No File Browser Found")
+                          .setMessage("Please install a file browser from the Play Store")
+                          .setPositiveButton("OK", null).show();
+                }
               }
 
             })
