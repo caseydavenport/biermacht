@@ -16,9 +16,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final int DATABASE_ALPHA = 1; // Database used in development stages
   public static final int DATABASE_BETA = 2;  // Database in first release.
   public static final int DATABASE_GAMMA = 3; // Add measured batch size to the Recipe class.
+  public static final int DATABASE_DELTA = 4; // Add recipe snapshot table.
 
   // Current database version
-  public static final int DATABASE_VERSION = DATABASE_GAMMA;
+  public static final int DATABASE_VERSION = DATABASE_DELTA;
 
   // Tables
   public static final String TABLE_RECIPES = "RecipeTable";
@@ -26,6 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final String TABLE_STYLES = "StyleTable";
   public static final String TABLE_PROFILES = "MashProfileTable";
   public static final String TABLE_STEPS = "MashStepTable";
+  public static final String TABLE_SNAPSHOTS = "RecipeSnapshotTable";
 
   // Column name defines for RECIPES
   public static final String REC_COL_ID = "_id";
@@ -70,6 +72,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final String REC_COL_CALC_STRIKE_TEMP = "calculateStrikeTemp";
   public static final String REC_COL_CALC_STRIKE_VOL = "calculateStrikeVolume";
   public static final String REC_COL_MEAS_BATCH_SIZE = "measuredBatchSize";
+
+  // Column name defines for SNAPSHOTS (augments the recipe columns)
+  public static final String SNAP_COL_OWNER_ID = "snapshotOwnerId";
+  public static final String SNAP_COL_DESCRIPTION = "snapshotDescription";
 
   // Column name defines for INGREDIENTS
   public static final String ING_COL_ID = "_id";
@@ -224,6 +230,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + REC_COL_MEAS_BATCH_SIZE + " float"
           + ");";
 
+  private static final String CREATE_SNAPSHOT_TABLE = "create table " +
+          TABLE_SNAPSHOTS
+          + "("
+          + REC_COL_ID + " integer primary key autoincrement, "
+          + SNAP_COL_OWNER_ID + " long not null, "
+          + REC_COL_DB_ID + " long not null, "
+          + REC_COL_NAME + " text not null, "
+          + REC_COL_VER + " int not null, "
+          + REC_COL_TYPE + " text not null, "
+          + REC_COL_BREWER + " text not null, "
+          + REC_COL_BATCH_SIZE + " float not null, "
+          + REC_COL_BOIL_SIZE + " float not null, "
+          + REC_COL_BOIL_TIME + " int not null, "
+          + REC_COL_BOIL_EFF + " float not null, "
+          + REC_COL_OG + " float not null, "
+          + REC_COL_FG + " float not null, "
+          + REC_COL_STAGES + " int not null, "
+          + REC_COL_DESC + " text not null, "
+          + REC_COL_BATCH_TIME + " int not null, "
+          + REC_COL_ABV + " float not null, "
+          + REC_COL_BITTER + " float not null, "
+          + REC_COL_COLOR + " float not null, "
+          + REC_COL_MEAS_OG + " float, "
+          + REC_COL_MEAS_FG + " float, "
+          + REC_COL_PRIMARY_TEMP + " float, "
+          + REC_COL_PRIMARY_AGE + " integer, "
+          + REC_COL_SECONDARY_TEMP + " float, "
+          + REC_COL_SECONDARY_AGE + " integer, "
+          + REC_COL_TERTIARY_TEMP + " float, "
+          + REC_COL_TERTIARY_AGE + " integer, "
+          + REC_COL_TASTE_NOTES + " string, "
+          + REC_COL_TASTE_RATING + " integer, "
+          + REC_COL_BOTTLE_AGE + " integer, "
+          + REC_COL_BOTTLE_TEMP + " float, "
+          + REC_COL_BREW_DATE + " string, "
+          + REC_COL_CARBONATION + " float, "
+          + REC_COL_FORCED_CARB + " integer, "
+          + REC_COL_PRIMING_SUGAR_NAME + " string, "
+          + REC_COL_CARB_TEMP + " float, "
+          + REC_COL_PRIMING_SUGAR_EQUIV + " float, "
+          + REC_COL_KEG_PRIMING_FACTOR + " float, "
+          + REC_COL_CALORIES + " integer, "
+          + REC_COL_CALC_BOIL_VOL + " integer, "
+          + REC_COL_CALC_STRIKE_TEMP + " integer, "
+          + REC_COL_CALC_STRIKE_VOL + " integer, "
+          + REC_COL_MEAS_BATCH_SIZE + " float, "
+          + SNAP_COL_DESCRIPTION + " string"
+          + ");";
+
   private static final String CREATE_INGREDIENT_TABLE = "create table " +
           TABLE_INGREDIENTS
           + "("
@@ -351,6 +406,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Create the tables
     Log.d("DatabaseHelper", "Creating database tables");
     database.execSQL(CREATE_RECIPE_TABLE);
+    database.execSQL(CREATE_SNAPSHOT_TABLE);
     database.execSQL(CREATE_INGREDIENT_TABLE);
     database.execSQL(CREATE_STYLE_TABLE);
     database.execSQL(CREATE_PROFILE_TABLE);
@@ -378,13 +434,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           db.execSQL(sql);
           break;
         case DATABASE_GAMMA:
-          // Upgrade from BETA to ALPHA.  Adds column to recipe table in order to store
+          // Upgrade from BETA to GAMMA.  Adds column to recipe table in order to store
           // measured batch size in beer XML format (Liters).
           Log.d("DatabaseHelper", "Upgrading database from BETA to GAMMA");
           sql = "ALTER TABLE " + TABLE_RECIPES + " ADD COLUMN " +
                   DatabaseHelper.REC_COL_MEAS_BATCH_SIZE + " float";
           db.execSQL(sql);
           break;
+        case DATABASE_DELTA:
+          // Upgrade from GAMMA to DELTA.  Adds the recipe snapshot table.
+          Log.d("DatabaseHelper", "Upgrading database from GAMMA to DELTA");
+          db.execSQL(CREATE_SNAPSHOT_TABLE);
       }
     }
   }

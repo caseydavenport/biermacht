@@ -16,7 +16,9 @@ import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
 
@@ -69,6 +71,53 @@ public class DatabaseInterface {
           DatabaseHelper.REC_COL_CALC_STRIKE_TEMP,
           DatabaseHelper.REC_COL_CALC_STRIKE_VOL,
           DatabaseHelper.REC_COL_MEAS_BATCH_SIZE,
+  };
+
+  private String[] snapshotAllColumns = {
+          DatabaseHelper.REC_COL_ID,
+          DatabaseHelper.SNAP_COL_OWNER_ID,
+          DatabaseHelper.REC_COL_DB_ID,
+          DatabaseHelper.REC_COL_NAME,
+          DatabaseHelper.REC_COL_VER,
+          DatabaseHelper.REC_COL_TYPE,
+          DatabaseHelper.REC_COL_BREWER,
+          DatabaseHelper.REC_COL_BATCH_SIZE,
+          DatabaseHelper.REC_COL_BOIL_SIZE,
+          DatabaseHelper.REC_COL_BOIL_TIME,
+          DatabaseHelper.REC_COL_BOIL_EFF,
+          DatabaseHelper.REC_COL_OG,
+          DatabaseHelper.REC_COL_FG,
+          DatabaseHelper.REC_COL_STAGES,
+          DatabaseHelper.REC_COL_DESC,
+          DatabaseHelper.REC_COL_BATCH_TIME,
+          DatabaseHelper.REC_COL_ABV,
+          DatabaseHelper.REC_COL_BITTER,
+          DatabaseHelper.REC_COL_COLOR,
+          DatabaseHelper.REC_COL_MEAS_OG,
+          DatabaseHelper.REC_COL_MEAS_FG,
+          DatabaseHelper.REC_COL_PRIMARY_TEMP,
+          DatabaseHelper.REC_COL_PRIMARY_AGE,
+          DatabaseHelper.REC_COL_SECONDARY_TEMP,
+          DatabaseHelper.REC_COL_SECONDARY_AGE,
+          DatabaseHelper.REC_COL_TERTIARY_TEMP,
+          DatabaseHelper.REC_COL_TERTIARY_AGE,
+          DatabaseHelper.REC_COL_TASTE_NOTES,
+          DatabaseHelper.REC_COL_TASTE_RATING,
+          DatabaseHelper.REC_COL_BOTTLE_AGE,
+          DatabaseHelper.REC_COL_BOTTLE_TEMP,
+          DatabaseHelper.REC_COL_BREW_DATE,
+          DatabaseHelper.REC_COL_CARBONATION,
+          DatabaseHelper.REC_COL_FORCED_CARB,
+          DatabaseHelper.REC_COL_PRIMING_SUGAR_NAME,
+          DatabaseHelper.REC_COL_CARB_TEMP,
+          DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV,
+          DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR,
+          DatabaseHelper.REC_COL_CALORIES,
+          DatabaseHelper.REC_COL_CALC_BOIL_VOL,
+          DatabaseHelper.REC_COL_CALC_STRIKE_TEMP,
+          DatabaseHelper.REC_COL_CALC_STRIKE_VOL,
+          DatabaseHelper.REC_COL_MEAS_BATCH_SIZE,
+          DatabaseHelper.SNAP_COL_DESCRIPTION,
   };
 
   private String[] ingredientAllColumns = {
@@ -272,14 +321,11 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
     values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
     values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
-    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                 .STAGE_PRIMARY));
+    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
-    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                   .STAGE_SECONDARY));
+    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
-    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                  .STAGE_TERTIARY));
+    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
     values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
@@ -324,17 +370,27 @@ public class DatabaseInterface {
     return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
   }
 
-  public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id, long
-          dbid) {
+  /**
+   * Deletes to give Recipe if it exists.
+   * @param r
+   * @return True if a recipe is deleted, False otherwise.
+   */
+  public boolean deleteRecipe(Recipe r) {
+    String whereClause = DatabaseHelper.REC_COL_ID + "=" + r.getId();
+    return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null) > 0;
+  }
+
+  public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id, long dbid) {
     for (Ingredient ing : ingredientList) {
       addIngredientToDatabase(ing, id, dbid);
     }
   }
 
-  public void addIngredientToDatabase(Ingredient ing, long ownerid, long dbid) {
+  public long addIngredientToDatabase(Ingredient ing, long ownerid, long dbid) {
     ContentValues values = getIngredientValues(ing, dbid, ownerid);
-    long ingid = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
+    long ingId = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
     values.clear();
+    return ingId;
   }
 
   public boolean updateExistingIngredientInDatabase(Ingredient ing, long dbid) {
@@ -342,6 +398,72 @@ public class DatabaseInterface {
             DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
     ContentValues values = getIngredientValues(ing, dbid, ing.getOwnerId());
     return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
+  }
+
+  public long addSnapshotToDatabase(RecipeSnapshot snap, long ownerId) {
+    ContentValues values = getSnapshotValues(snap, ownerId);
+    long snapshotId = database.insert(DatabaseHelper.TABLE_SNAPSHOTS, null, values);
+    values.clear();
+    return snapshotId;
+  }
+
+  public boolean updateExistingSnapshot(RecipeSnapshot snap) {
+    String whereClause = DatabaseHelper.REC_COL_ID + "=" + snap.getId();
+    ContentValues values = getSnapshotValues(snap, snap.getOwnerId());
+    return database.update(DatabaseHelper.TABLE_SNAPSHOTS, values, whereClause, null) > 0;
+  }
+
+  public boolean deleteSnapshot(RecipeSnapshot snap) {
+    String whereClause = DatabaseHelper.REC_COL_ID + "=" + snap.getId();
+    return database.delete(DatabaseHelper.TABLE_SNAPSHOTS, whereClause, null) > 0;
+  }
+
+  public ContentValues getSnapshotValues (RecipeSnapshot rs, long ownerId) {
+    ContentValues values = new ContentValues();
+    values.put(DatabaseHelper.REC_COL_DB_ID, Constants.DATABASE_DEFAULT);
+    values.put(DatabaseHelper.SNAP_COL_OWNER_ID, ownerId);
+    values.put(DatabaseHelper.REC_COL_NAME, rs.getRecipeName());
+    values.put(DatabaseHelper.REC_COL_VER, rs.getVersion());
+    values.put(DatabaseHelper.REC_COL_TYPE, rs.getType());
+    values.put(DatabaseHelper.REC_COL_BREWER, rs.getBrewer());
+    values.put(DatabaseHelper.REC_COL_BATCH_SIZE, rs.getBeerXmlStandardBatchSize());
+    values.put(DatabaseHelper.REC_COL_BOIL_SIZE, rs.getBeerXmlStandardBoilSize());
+    values.put(DatabaseHelper.REC_COL_BOIL_TIME, rs.getBoilTime());
+    values.put(DatabaseHelper.REC_COL_BOIL_EFF, rs.getEfficiency());
+    values.put(DatabaseHelper.REC_COL_OG, rs.getOG());
+    values.put(DatabaseHelper.REC_COL_FG, rs.getFG());
+    values.put(DatabaseHelper.REC_COL_STAGES, rs.getFermentationStages());
+    values.put(DatabaseHelper.REC_COL_DESC, rs.getNotes());
+    values.put(DatabaseHelper.REC_COL_BATCH_TIME, rs.getBatchTime());
+    values.put(DatabaseHelper.REC_COL_ABV, rs.getABV());
+    values.put(DatabaseHelper.REC_COL_BITTER, rs.getBitterness());
+    values.put(DatabaseHelper.REC_COL_COLOR, rs.getColor());
+    values.put(DatabaseHelper.REC_COL_MEAS_OG, rs.getMeasuredOG());
+    values.put(DatabaseHelper.REC_COL_MEAS_FG, rs.getMeasuredFG());
+    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, rs.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
+    values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, rs.getFermentationAge(Recipe.STAGE_PRIMARY));
+    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, rs.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
+    values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, rs.getFermentationAge(Recipe.STAGE_SECONDARY));
+    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, rs.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
+    values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, rs.getFermentationAge(Recipe.STAGE_TERTIARY));
+    values.put(DatabaseHelper.REC_COL_TASTE_NOTES, rs.getTasteNotes());
+    values.put(DatabaseHelper.REC_COL_TASTE_RATING, rs.getTasteRating());
+    values.put(DatabaseHelper.REC_COL_BOTTLE_AGE, rs.getBottleAge());
+    values.put(DatabaseHelper.REC_COL_BOTTLE_TEMP, rs.getBeerXmlStandardBottleTemp());
+    values.put(DatabaseHelper.REC_COL_BREW_DATE, rs.getBrewDate());
+    values.put(DatabaseHelper.REC_COL_CARBONATION, rs.getCarbonation());
+    values.put(DatabaseHelper.REC_COL_FORCED_CARB, rs.isForceCarbonated());
+    values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_NAME, rs.getPrimingSugarName());
+    values.put(DatabaseHelper.REC_COL_CARB_TEMP, rs.getBeerXmlStandardCarbonationTemp());
+    values.put(DatabaseHelper.REC_COL_PRIMING_SUGAR_EQUIV, rs.getPrimingSugarEquiv());
+    values.put(DatabaseHelper.REC_COL_KEG_PRIMING_FACTOR, rs.getKegPrimingFactor());
+    values.put(DatabaseHelper.REC_COL_CALORIES, rs.getCalories());
+    values.put(DatabaseHelper.REC_COL_CALC_BOIL_VOL, rs.getCalculateBoilVolume() ? 1 : 0);
+    values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, rs.getCalculateStrikeTemp() ? 1 : 0);
+    values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, rs.getCalculateStrikeVolume() ? 1 : 0);
+    values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, rs.getBeerXmlMeasuredBatchSize());
+
+    return values;
   }
 
   public ContentValues getIngredientValues(Ingredient ing, long dbid, long ownerid) {
@@ -563,17 +685,6 @@ public class DatabaseInterface {
    * @param id
    * @return 1 if it was deleted or 0 if not
    */
-  public boolean deleteRecipeIfExists(long id) {
-    String whereClause = DatabaseHelper.REC_COL_ID + "=" + id;
-    return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null) > 0;
-  }
-
-  /**
-   * Takes id as input, deletes if it exists
-   *
-   * @param id
-   * @return 1 if it was deleted or 0 if not
-   */
 
   public boolean deleteIngredientIfExists(long id, long dbid) {
     String whereClause = DatabaseHelper.ING_COL_ID + "=" + id + " AND " +
@@ -698,6 +809,27 @@ public class DatabaseInterface {
   }
 
   /**
+   * Returns a list of snapshots stored for the recipe with the given ID.
+   * @param ownerId Index of the stored Recipe whose snapshots will be returned.
+   * @return List of RecipeSnapshots.
+   */
+  public ArrayList<RecipeSnapshot> getRecipeSnapshots(long ownerId) {
+    ArrayList<RecipeSnapshot> list = new ArrayList<RecipeSnapshot>();
+    String whereString = DatabaseHelper.SNAP_COL_OWNER_ID + "=" + ownerId;
+
+    Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, snapshotAllColumns, whereString,
+                                   null, null, null, null);
+    cursor.moveToFirst();
+
+    while (! cursor.isAfterLast()) {
+      list.add(cursorToSnapshot(cursor));
+      cursor.moveToNext();
+    }
+
+    return list;
+  }
+
+  /**
    * returns arraylist of all recipes in database
    *
    * @return
@@ -710,6 +842,7 @@ public class DatabaseInterface {
     cursor.moveToFirst();
 
     // Move one forward, so we skip the master recipe
+    // TODO What? Get rid of Master Recipe.  I don't remember why it is a thing.
     cursor.moveToNext();
 
     while (! cursor.isAfterLast()) {
@@ -868,6 +1001,157 @@ public class DatabaseInterface {
     r.setIngredientsList(ingredientsList);
 
     return r;
+  }
+
+  /**
+   * This takes a cursor and converts it into a Recipe object
+   *
+   * @param cursor
+   * @return
+   */
+  private RecipeSnapshot cursorToSnapshot(Cursor cursor) {
+    int cid = 0;
+
+    long id = cursor.getLong(cid);
+    cid++;
+    long ownerId = cursor.getLong(cid);
+    cid++;
+    long dbid = cursor.getLong(cid);
+    cid++;
+    String recipeName = cursor.getString(cid);
+    cid++;
+    int version = cursor.getInt(cid);
+    cid++;
+    String type = cursor.getString(cid);
+    cid++;
+    String brewer = cursor.getString(cid);
+    cid++;
+    double batchSize = cursor.getDouble(cid);
+    cid++;
+    double boilSize = cursor.getDouble(cid);
+    cid++;
+    int boilTime = cursor.getInt(cid);
+    cid++;
+    double boilEff = cursor.getDouble(cid);
+    cid++;
+    double OG = cursor.getDouble(cid);
+    cid++;
+    double FG = cursor.getDouble(cid);
+    cid++;
+    int fermentationStages = cursor.getInt(cid);
+    cid++;
+    String description = cursor.getString(cid);
+    cid++;
+    int batchTime = cursor.getInt(cid);
+    cid++;
+    double ABV = cursor.getDouble(cid);
+    cid++;
+    double bitterness = cursor.getDouble(cid);
+    cid++;
+    double color = cursor.getDouble(cid);
+    cid++;
+    double measOG = cursor.getDouble(cid);
+    cid++;
+    double measFG = cursor.getDouble(cid);
+    cid++;
+    double primaryTemp = cursor.getDouble(cid);
+    cid++;
+    int primaryAge = cursor.getInt(cid);
+    cid++;
+    double secondaryTemp = cursor.getDouble(cid);
+    cid++;
+    int secondaryAge = cursor.getInt(cid);
+    cid++;
+    double tertiaryTemp = cursor.getDouble(cid);
+    cid++;
+    int tertiaryAge = cursor.getInt(cid);
+    cid++;
+    String tasteNotes = cursor.getString(cid);
+    cid++;
+    int tasteRating = cursor.getInt(cid);
+    cid++;
+    int bottleAge = cursor.getInt(cid);
+    cid++;
+    double bottleTemp = cursor.getDouble(cid);
+    cid++;
+    String brewDate = cursor.getString(cid);
+    cid++;
+    double carbonation = cursor.getDouble(cid);
+    cid++;
+    int isForceCarbed = cursor.getInt(cid);
+    cid++;
+    String primingSugar = cursor.getString(cid);
+    cid++;
+    double carbTemp = cursor.getDouble(cid);
+    cid++;
+    double sugarEquivalent = cursor.getDouble(cid);
+    cid++;
+    double kegPrimingFactor = cursor.getDouble(cid);
+    cid++;
+    int calories = cursor.getInt(cid);
+    cid++;
+    int calcBoilVol = cursor.getInt(cid);
+    cid++;
+    int calcStrikeTemp = cursor.getInt(cid);
+    cid++;
+    int calcStrikeVol = cursor.getInt(cid);
+    cid++;
+    double measBatchsize = cursor.getFloat(cid);
+    cid++;
+
+    ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
+    BeerStyle style = readStyle(id);
+    MashProfile profile = readMashProfile(id);
+
+    Log.d("DatabaseInterface", "Creating recipe '" + recipeName + "' from cursor");
+
+    RecipeSnapshot snapshot = new RecipeSnapshot(recipeName);
+    snapshot.setId(id);
+    snapshot.setVersion(version);
+    snapshot.setType(type);
+    snapshot.setBrewer(brewer);
+    snapshot.setBeerXmlStandardBatchSize(batchSize);
+    snapshot.setBeerXmlStandardBoilSize(boilSize);
+    snapshot.setBoilTime(boilTime);
+    snapshot.setEfficiency(boilEff);
+    snapshot.setOG(OG);
+    snapshot.setFG(FG);
+    snapshot.setFermentationStages(fermentationStages);
+    snapshot.setNotes(description);
+    snapshot.setBatchTime(batchTime);
+    snapshot.setABV(ABV);
+    snapshot.setBitterness(bitterness);
+    snapshot.setColor(color);
+    snapshot.setMeasuredFG(measFG);
+    snapshot.setMeasuredOG(measOG);
+    snapshot.setFermentationAge(Recipe.STAGE_PRIMARY, primaryAge);
+    snapshot.setFermentationAge(Recipe.STAGE_SECONDARY, secondaryAge);
+    snapshot.setFermentationAge(Recipe.STAGE_TERTIARY, tertiaryAge);
+    snapshot.setBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY, primaryTemp);
+    snapshot.setBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY, secondaryTemp);
+    snapshot.setBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY, tertiaryTemp);
+    snapshot.setTasteNotes(tasteNotes);
+    snapshot.setTasteRating(tasteRating);
+    snapshot.setBottleAge(bottleAge);
+    snapshot.setBeerXmlStandardBottleTemp(bottleTemp);
+    snapshot.setBrewDate(brewDate);
+    snapshot.setCarbonation(carbonation);
+    snapshot.setIsForceCarbonated(isForceCarbed > 0);
+    snapshot.setPrimingSugarName(primingSugar);
+    snapshot.setBeerXmlStandardCarbonationTemp(carbTemp);
+    snapshot.setPrimingSugarEquiv(sugarEquivalent);
+    snapshot.setKegPrimingFactor(kegPrimingFactor);
+    snapshot.setCalories(calories);
+    snapshot.setCalculateBoilVolume(calcBoilVol > 0);
+    snapshot.setCalculateStrikeTemp(calcStrikeTemp > 0);
+    snapshot.setCalculateStrikeVolume(calcStrikeVol > 0);
+    snapshot.setBeerXmlMeasuredBatchSize(measBatchsize);
+
+    snapshot.setStyle(style);
+    snapshot.setMashProfile(profile);
+    snapshot.setIngredientsList(ingredientsList);
+
+    return snapshot;
   }
 
   // gets the ingredients list for recipe with given ID=id

@@ -8,24 +8,47 @@ import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Wrapper around the DatabaseInterface class that exposes higher-level database APIs.
+ */
 public class Database {
 
-  // Get all recipes in database, sorted
-  public static ArrayList<Recipe> getRecipeList(DatabaseInterface dbi) {
-    ArrayList<Recipe> list = dbi.getRecipeList();
+  /**
+   * Returns all Recipes in the database sorted alphabetically.
+   * @return Sorted list of Recipe objects.
+   */
+  public static ArrayList<Recipe> getRecipeList() {
+    ArrayList<Recipe> list = MainActivity.databaseInterface.getRecipeList();
 
     for (Recipe r : list) {
       r.update();
     }
-
     Collections.sort(list, new RecipeComparator<Recipe>());
 
     return list;
+  }
+
+  public static ArrayList<RecipeSnapshot> getSnapshots(Recipe r) {
+    ArrayList<RecipeSnapshot> list = new ArrayList<RecipeSnapshot>();
+
+    // Get all the snapshots for the given recipe from the database.
+    list.addAll(MainActivity.databaseInterface.getRecipeSnapshots(r.getId()));
+
+    return list;
+  }
+
+  /**
+   * Saves the given RecipeSnapshot to the database.
+   * @param snap
+   */
+  public static void saveSnapshot(RecipeSnapshot snap) {
+    MainActivity.databaseInterface.addSnapshotToDatabase(snap, snap.getOwnerId());
   }
 
   // Create recipe with the given name
@@ -59,20 +82,21 @@ public class Database {
 
   // Deletes the given recipe if it exists in the database.
   public static boolean deleteRecipe(Recipe r) {
-    return MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
+    return MainActivity.databaseInterface.deleteRecipe(r);
   }
 
-  // Deletes all recipes, and their ingredients
-  public static boolean deleteAllRecipes() {
-    boolean bool = true;
-
-    for (Recipe r : getRecipeList(MainActivity.databaseInterface)) {
+  /**
+   * Deletes all recipes in the Database, as well as any Ingredients associated
+   * with them.
+   * @return
+   */
+  public static void deleteAllRecipes() {
+    for (Recipe r : getRecipeList()) {
       for (Ingredient i : r.getIngredientList()) {
         deleteIngredientWithId(i.getId(), Constants.DATABASE_DEFAULT);
       }
-      bool = deleteRecipe(r);
+      deleteRecipe(r);
     }
-    return bool;
   }
 
   // Deletes the given ingredient, in the given database
@@ -80,10 +104,10 @@ public class Database {
     Log.d("Database", "Trying to delete ingredient from database: " + dbid);
     boolean b = MainActivity.databaseInterface.deleteIngredientIfExists(id, dbid);
     if (b) {
-      Log.d("Database", "Successfully deleted ingredient");
+      Log.d("Database", "  Successfully deleted ingredient");
     }
     else {
-      Log.d("Database", "Failed to delete ingredient");
+      Log.d("Database", "  Failed to delete ingredient");
     }
     return b;
   }
