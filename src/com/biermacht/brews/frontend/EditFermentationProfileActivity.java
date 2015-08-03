@@ -16,10 +16,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
@@ -214,7 +214,7 @@ public class EditFermentationProfileActivity extends ActionBarActivity implement
       }
 
       if (readyToGo) {
-        Database.updateRecipe(mRecipe);
+        DatabaseAPI.updateRecipe(mRecipe);
         finish();
       }
     }

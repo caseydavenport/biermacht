@@ -2,7 +2,7 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 
-import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.database.DatabaseAPI;
 
 import java.util.Arrays;
 
@@ -14,10 +14,10 @@ public class EditCustomHopActivity extends EditHopActivity {
 
     // Set views
     this.setViews(Arrays.asList(nameView,
-            descriptionView,
             formSpinner,
             useSpinner,
-            alphaAcidView));
+            alphaAcidView,
+            descriptionView));
 
     // Set values for the given hop
     setValues(hop);
@@ -35,12 +35,12 @@ public class EditCustomHopActivity extends EditHopActivity {
   }
 
   public void onFinished() {
-    Database.updateIngredient(hop, hop.getDatabaseId());
+    DatabaseAPI.updateIngredient(hop, hop.getDatabaseId());
     finish();
   }
 
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, hop.getDatabaseId());
+    DatabaseAPI.deleteIngredientWithId(ingredientId, hop.getDatabaseId());
     finish();
   }
 }

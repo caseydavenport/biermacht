@@ -12,44 +12,42 @@ import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
 import com.biermacht.brews.recipe.Recipe;
 
+import java.util.ArrayList;
+
 public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
   Recipe r;
   Context c;
-  IngredientViewFragment ingVf;
-  InstructionViewFragment insVf;
-  DetailsViewFragment detVf;
-  ProfileViewFragment proVf;
+  ArrayList<Fragment> fragmentList;
+  IngredientViewFragment ingredientFragment;
+  InstructionViewFragment instructionFragment;
+  DetailsViewFragment detailsFragment;
+  ProfileViewFragment profileFragment;
 
   public DisplayRecipeCollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
     super(fm);
     this.r = r;
     this.c = c;
-    this.ingVf = IngredientViewFragment.instance(r);
-    this.insVf = InstructionViewFragment.instance(r);
-    this.detVf = DetailsViewFragment.instance(r);
-    this.proVf = ProfileViewFragment.instance(r);
+    this.ingredientFragment = IngredientViewFragment.instance(r);
+    this.instructionFragment = InstructionViewFragment.instance(r);
+    this.detailsFragment = DetailsViewFragment.instance(r);
+    this.profileFragment = ProfileViewFragment.instance(r);
+
+    // Keep in list.
+    this.fragmentList = new ArrayList<>();
+    this.fragmentList.add(ingredientFragment);
+    this.fragmentList.add(instructionFragment);
+    this.fragmentList.add(detailsFragment);
+    this.fragmentList.add(profileFragment);
   }
 
   @Override
   public Fragment getItem(int i) {
-
-    if (i == 0) {
-      return ingVf;
-    }
-    else if (i == 1) {
-      return insVf;
-    }
-    else if (i == 2) {
-      return detVf;
-    }
-    else {
-      return proVf;
-    }
+    return this.fragmentList.get(i);
   }
 
   @Override
   public int getCount() {
-    return 4;
+    return this.fragmentList.size();
   }
 
   @Override
@@ -72,13 +70,9 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
     return "Unknown Tab";
   }
 
-  public InstructionViewFragment getInstructionViewFragment() {
-    return this.insVf;
-  }
-
   @Override
   public void restoreState(Parcelable p, ClassLoader cl) {
-    // Override this to do nothing.  It is not needed, and throws exceptions for reasons.
+    // Override this to do nothing.  It is not needed, and throws exceptions for "reasons".
     return;
   }
 }

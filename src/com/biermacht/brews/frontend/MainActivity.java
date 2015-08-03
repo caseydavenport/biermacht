@@ -1,6 +1,5 @@
 package com.biermacht.brews.frontend;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -11,11 +10,13 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomFermentableActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomHopsActivity;
@@ -42,7 +44,6 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
@@ -51,9 +52,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
-  // Globals, for reference outside of this Activity.
+  // Globals, referenced outside of this Activity.
   public static DatabaseInterface databaseInterface;
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;
@@ -98,7 +99,7 @@ public class MainActivity extends ActionBarActivity {
     preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
     // Instantiate my database interface
-    databaseInterface = new DatabaseInterface(getApplicationContext());
+    databaseInterface = DatabaseAPI.newDatabaseInterface(getApplicationContext());
     databaseInterface.open();
 
     // Check for important shared preferences flags and perform any required actions.
@@ -111,7 +112,7 @@ public class MainActivity extends ActionBarActivity {
       new ImportXmlIngredientsTask(this).execute("");
 
       // Create the master recipe - used as placeholder for stuff
-      Database.createRecipeWithName("Master Recipe");
+      DatabaseAPI.createRecipeWithName("Master Recipe");
     }
     else {
       // Async Initialize Assets on startup.  This loads styles and mash profiles for faster
@@ -477,7 +478,7 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 // Store the recipes
-                new StoreRecipes(recipesToImport).execute("");
+                new StoreRecipes(recipesToImport, findViewById(R.id.drawer_layout)).execute("");
               }
 
             })
@@ -491,16 +492,18 @@ public class MainActivity extends ActionBarActivity {
 
     private ProgressDialog progress;
     private ArrayList<Recipe> list;
+    private View mainView;
 
-    public StoreRecipes(ArrayList<Recipe> list) {
+    public StoreRecipes(ArrayList<Recipe> list, View mainView) {
       this.list = list;
+      this.mainView = mainView;
     }
 
     @Override
     protected String doInBackground(String... params) {
       for (Recipe r : list) {
         r.update();
-        Database.createRecipeFromExisting(r);
+        DatabaseAPI.createRecipeFromExisting(r);
       }
       return "Executed";
     }
@@ -509,6 +512,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onPostExecute(String result) {
       super.onPostExecute(result);
       progress.dismiss();
+
+      // Show SnackBar and update the fragments to display the new recipes.
+      String snack = list.size() + " Recipe(s) Imported";
+      Snackbar.make(mainView, snack, Snackbar.LENGTH_LONG).show();
       updateFragments();
       Log.d("StoreRecipes", "Finished importing recipes");
     }

@@ -16,11 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.EditCustomMashProfileActivity;
 import com.biermacht.brews.frontend.adapters.MashProfileArrayAdapter;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
@@ -46,7 +46,7 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
     c = getActivity();
 
     // Get ingredient list
-    list = Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+    list = DatabaseAPI.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM);
     Collections.sort(list, new ToStringComparator());
 
     // Initialize list
@@ -97,7 +97,7 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
   @Override
   public void update() {
     // Get the full list of profiles from the custom database.
-    ArrayList<MashProfile> loadedList = Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+    ArrayList<MashProfile> loadedList = DatabaseAPI.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM);
 
     // Add the loaded profiles to the list for the list view.
     list.removeAll(list);

@@ -1,16 +1,18 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.AddRecipeActivity;
 import com.biermacht.brews.frontend.BrewTimerActivity;
@@ -42,7 +45,6 @@ import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 import com.biermacht.brews.xml.RecipeXmlWriter;
@@ -54,23 +56,13 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   // Layout resource
   private static int resource = R.layout.fragment_recipes;
 
-  // Static menu items
-  private static String EDIT_RECIPE = "Edit Recipe";
-  private static String SCALE_RECIPE = "Scale Recipe";
-  private static String COPY_RECIPE = "Copy Recipe";
-  private static String DELETE_RECIPE = "Delete Recipe";
-  private static String EDIT_FERM = "Edit Fermentation Profile";
-  private static String EDIT_MASH = "Edit Mash Profile";
-  private static String EXPORT_RECIPE = "Export as BeerXML";
-  private static String BREW_TIMER = "Brew Timer";
-  private static String RECIPE_NOTES = "Recipe Notes";
-
   // The parent view group.
   ViewGroup pageView;
 
   // Recipe List stuff
   private RecipeArrayAdapter mAdapter;
   private AdapterView.OnItemClickListener mClickListener;
+  private AdapterView.OnItemLongClickListener mLongClickListener;
   private ArrayList<Recipe> recipeList;
 
   // Database Interface
@@ -99,6 +91,10 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   private DisplayRecipeCollectionPagerAdapter cpAdapter;
   private ViewPager mViewPager;
   public int currentSelectedIndex = 0;
+
+  // Contextual action bar (CAB) stuff
+  ActionMode.Callback mActionModeCallback;
+  ActionMode mActionMode;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -131,10 +127,123 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     // Get database Interface
     databaseInterface = MainActivity.databaseInterface;
 
+    // Callback which handles the creation and operation of the contextual action bar when
+    // a Recipe is long-pressed.
+    mActionModeCallback = new ActionMode.Callback() {
+
+      @Override
+      public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        // Called when the action mode is created; startActionMode() was called
+        // Inflate a menu resource providing context menu items
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.context_recipe_selected, menu);
+        return true;
+      }
+
+      @Override
+      public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        return false; // Return false if nothing is done
+      }
+
+      @Override
+      public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        // Declare Intent used to start new apps
+        Intent i;
+
+        // Get the recipe here, in case it has changed since the user long pressed the list item.
+        contextActionRecipe = recipeList.get(currentSelectedIndex);
+
+        // Determine which context item was selected.
+        switch (item.getItemId()) {
+          case R.id.menu_delete_recipe:
+            deleteAlert(contextActionRecipe).show();
+            return true;
+
+          case R.id.menu_scale_recipe:
+            scaleAlert(contextActionRecipe).show();
+            return true;
+
+          case R.id.menu_copy_recipe:
+            // TODO: Ask user for new name, animate new recipe entering list.
+            Recipe copy = DatabaseAPI.createRecipeFromExisting(contextActionRecipe);
+            copy.setRecipeName(contextActionRecipe.getRecipeName() + " - Copy");
+            recipeList.add(mAdapter.getPosition(contextActionRecipe) + 1, copy);
+            mAdapter.notifyDataSetChanged();
+            Snackbar.make(listView, R.string.recipe_copied, Snackbar.LENGTH_LONG).show();
+            copy.save();
+            return true;
+
+          case R.id.edit_recipe:
+            i = new Intent(c, EditRecipeActivity.class);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            startActivity(i);
+            return true;
+
+          case R.id.export_recipe:
+            exportAlert(contextActionRecipe).show();
+            return true;
+
+          case R.id.edit_fermentation_profile:
+            i = new Intent(c, EditFermentationProfileActivity.class);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            startActivity(i);
+            return true;
+
+          case R.id.brew_timer:
+            i = new Intent(c, BrewTimerActivity.class);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            startActivity(i);
+            return true;
+
+          case R.id.edit_mash_profile:
+            i = new Intent(c, EditMashProfileActivity.class);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            i.putExtra(Constants.KEY_PROFILE_ID, contextActionRecipe.getMashProfile().getId());
+            i.putExtra(Constants.KEY_PROFILE, contextActionRecipe.getMashProfile());
+            startActivity(i);
+            return true;
+
+          case R.id.recipe_notes:
+            i = new Intent(c, EditRecipeNotesActivity.class);
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            startActivity(i);
+            return true;
+        }
+        return false;
+      }
+
+      @Override
+      public void onDestroyActionMode(ActionMode mode) {
+        // Called when the user exits the action mode
+
+        // Nullify the CAB.
+        mActionMode = null;
+
+        // Clear any selections in the list.
+        mAdapter.clearChecks();
+        mAdapter.notifyDataSetChanged();
+      }
+    };
+
     // Set up the onClickListener for when a Recipe is selected
     // in the main recipe list.
     mClickListener = new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
+
+        // If the contextual action bar is shown, and we've clicked another recipe,
+        // while we're in tablet mode, we need to cancel the CAB so that it isn't
+        // confusing.  The other option would be to update contextActionRecipe.
+        if (mActionMode != null && isTablet) {
+          mActionMode.finish();
+        }
+
         // If we're running on a tablet, update the details view.
         // Otherwise, open the DisplayRecipeActivity to display the recipe.
         if (isTablet) {
@@ -152,10 +261,35 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       }
     };
 
+    // Set up the onLongClickListener for when a Recipe is long clicked.
+    mLongClickListener = new AdapterView.OnItemLongClickListener() {
+      @Override
+      public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
+        // Mark this list item and only this list item as selected.
+        mAdapter.clearChecks();
+        mAdapter.setChecked(pos, true);
+        mAdapter.notifyDataSetChanged();
+        currentSelectedIndex = pos;
+
+        // If the Contextual action bar is already being displayed, don't start a new action bar.
+        if (mActionMode != null) {
+          // Return true so that onItemClick is not invoked.
+          return true;
+        }
+
+        // Otherwise, start the CAB.
+        mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+
+        // Return true to indicate we have handled the action.  This prevents the onClickListener from
+        // being called after the onItemLongClick event.
+        return true;
+      }
+    };
+
     // Set up listView with title and ArrayAdapter
     updateRecipesFromDatabase();
     listView.setOnItemClickListener(mClickListener);
-    registerForContextMenu(listView);
+    listView.setOnItemLongClickListener(mLongClickListener);
 
     // Turn on options menu
     setHasOptionsMenu(true);
@@ -168,118 +302,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.activity_main, menu);
-  }
-
-  @Override
-  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-    // For now, only the recipe listView supports the context menu.
-    if (v == listView) {
-      // Cast the given ContextMenuInfo into an AdapterContextMenuInfo
-      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-
-      // Get the recipe which has been selected.
-      contextActionRecipe = recipeList.get(info.position);
-
-      // Determine the title for the context menu based on the selected recipe.      
-      String title = contextActionRecipe.getRecipeName();
-      menu.setHeaderTitle(title);
-
-      // Build the list of menu items to display in the context menu.  This list is accessed
-      // later to determine which menu item was selected by the user.
-      menuItems = new ArrayList<String>();
-      menuItems.add(EDIT_RECIPE);
-      if (! contextActionRecipe.getType().equals(Recipe.EXTRACT)) {
-        // Only allow editing of mash profile when not an extract recipe.
-        menuItems.add(EDIT_MASH);
-      }
-      menuItems.add(EDIT_FERM);
-      if (contextActionRecipe.getInstructionList().size() > 0) {
-        // Only allow entering the brew timer if there are instructions.
-        menuItems.add(BREW_TIMER);
-      }
-      menuItems.add(RECIPE_NOTES);
-      menuItems.add(EXPORT_RECIPE);
-      menuItems.add(SCALE_RECIPE);
-      menuItems.add(COPY_RECIPE);
-      menuItems.add(DELETE_RECIPE);
-
-      // Build the actual menu to display using the list generated above.
-      for (int i = 0; i < menuItems.size(); i++) {
-        menu.add(Menu.NONE, i, i, menuItems.get(i));
-      }
-    }
-  }
-
-  @Override
-  public boolean onContextItemSelected(MenuItem item) {
-    String selected = menuItems.get(item.getItemId());
-
-    // Edit recipe selected
-    if (selected.equals(EDIT_RECIPE)) {
-      Intent i = new Intent(c, EditRecipeActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      startActivity(i);
-    }
-
-    // Scale recipe selected
-    else if (selected.equals(SCALE_RECIPE)) {
-      scaleAlert(contextActionRecipe).show();
-    }
-
-    // Export recipe selected
-    else if (selected.equals(EXPORT_RECIPE)) {
-      exportAlert(contextActionRecipe).show();
-    }
-
-    // Copy recipe selected
-    else if (selected.equals(COPY_RECIPE)) {
-      Recipe copy = Database.createRecipeFromExisting(contextActionRecipe);
-      copy.setRecipeName(contextActionRecipe.getRecipeName() + " - Copy");
-      copy.save();
-      recipeList.add(mAdapter.getPosition(contextActionRecipe) + 1, copy);
-      mAdapter.notifyDataSetChanged();
-    }
-
-    // Delete recipe selected
-    else if (selected.equals(DELETE_RECIPE)) {
-      deleteAlert(contextActionRecipe).show();
-    }
-
-    // Edit fermentation selected
-    else if (selected.equals(EDIT_FERM)) {
-      Intent i = new Intent(c, EditFermentationProfileActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      startActivity(i);
-    }
-
-    //  Brew timer
-    else if (selected.equals(BREW_TIMER)) {
-      Intent i = new Intent(c, BrewTimerActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      startActivity(i);
-    }
-
-    // Edit Mash profile
-    else if (selected.equals(EDIT_MASH)) {
-      Intent i = new Intent(c, EditMashProfileActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      i.putExtra(Constants.KEY_PROFILE_ID, contextActionRecipe.getMashProfile().getId());
-      i.putExtra(Constants.KEY_PROFILE, contextActionRecipe.getMashProfile());
-      startActivity(i);
-    }
-
-    else if (selected.equals(RECIPE_NOTES)) {
-      Intent i = new Intent(c, EditRecipeNotesActivity.class);
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      startActivity(i);
-    }
-
-    return true;
   }
 
   public void setCorrectView() {
@@ -328,7 +350,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                 Log.d("RecipesFragment", "Deleting recipe: " + r);
                 recipeList.remove(r);
                 mAdapter.notifyDataSetChanged();
-                Database.deleteRecipe(r);
+                DatabaseAPI.deleteRecipe(r);
                 if (isTablet) {
                   // If we're running on a tablet, we should set the current selected item to 0
                   // and update the details view.  Otherwise, the details view will remain stuck on the 
@@ -347,7 +369,13 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                 // If the last recipe was just deleted, we need to update which
                 // view is being displayed.
                 setCorrectView();
+
+                // Dismiss the CAB
+                mActionMode.finish();
                 Log.d("RecipesFragment", "Recipe deleted");
+
+                // Show Snackbar to indicate deletion.
+                Snackbar.make(listView, R.string.recipe_deleted, Snackbar.LENGTH_LONG).show();
               }
 
             })
@@ -370,6 +398,12 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                                                               .replace(",", "."));
                 Utils.scaleRecipe(r, newVolume);
                 mAdapter.notifyDataSetChanged();
+
+                // Dismiss the CAB
+                mActionMode.finish();
+
+                // Show Snackbar to indicate completion.
+                Snackbar.make(listView, R.string.recipe_scaled, Snackbar.LENGTH_LONG).show();
               }
 
             })
@@ -465,7 +499,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
   public void updateRecipesFromDatabase() {
     // Load all recipes from database.
-    ArrayList<Recipe> loadedRecipes = Database.getRecipeList(databaseInterface);
+    ArrayList<Recipe> loadedRecipes = DatabaseAPI.getRecipeList();
 
     // Update the recipe list with the loaded recipes.
     recipeList.removeAll(recipeList);
@@ -493,10 +527,11 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
               public void onClick(DialogInterface dialog, int which) {
                 new ExportRecipe(r).execute("");
+                mActionMode.finish();
+                Snackbar.make(listView, R.string.recipe_exported, Snackbar.LENGTH_LONG).show();
               }
 
             })
-
             .setNegativeButton(R.string.cancel, null);
   }
 

@@ -1,10 +1,9 @@
 package com.biermacht.brews.frontend;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +13,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
@@ -199,7 +198,7 @@ public class SettingsActivity extends AddEditActivity {
   }
 
   // Custom dialogs for this activity only
-  private Builder deleteAllRecipes() {
+  private AlertDialog.Builder deleteAllRecipes() {
     return new AlertDialog.Builder(this)
             .setTitle("Delete all recipes")
             .setMessage("Delete all local recipes from this device? This action cannot be undone." +
@@ -215,7 +214,7 @@ public class SettingsActivity extends AddEditActivity {
             .setNegativeButton(R.string.cancel, null);
   }
 
-  private Builder exportRecipes() {
+  private AlertDialog.Builder exportRecipes() {
     return new AlertDialog.Builder(this)
             .setTitle("Export all recipes")
             .setMessage("Export all recipes to BeerXML.")
@@ -230,7 +229,7 @@ public class SettingsActivity extends AddEditActivity {
             .setNegativeButton(R.string.cancel, null);
   }
 
-  private Builder finishedExporting(String pathToFile) {
+  private AlertDialog.Builder finishedExporting(String pathToFile) {
     return new AlertDialog.Builder(this)
             .setTitle("Complete")
             .setMessage("Finished exporting recipes to: \n" + pathToFile)
@@ -248,7 +247,7 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected String doInBackground(String... params) {
       xmlWriter = new RecipeXmlWriter(SettingsActivity.this);
-      xmlWriter.writeRecipes(Database.getRecipeList(MainActivity.databaseInterface), "recipes-");
+      xmlWriter.writeRecipes(DatabaseAPI.getRecipeList(), "recipes-");
       return "Executed";
     }
 
@@ -285,7 +284,7 @@ public class SettingsActivity extends AddEditActivity {
 
     @Override
     protected String doInBackground(String... params) {
-      Database.deleteAllRecipes();
+      DatabaseAPI.deleteAllRecipes();
       return "Executed";
     }
 
@@ -312,7 +311,7 @@ public class SettingsActivity extends AddEditActivity {
     }
   }
 
-  private Builder resetIngredients() {
+  private AlertDialog.Builder resetIngredients() {
     return new AlertDialog.Builder(this)
             .setTitle("Reset Ingredients")
             .setMessage("Reset default ingredient list? This will not affect any custom made ingredients.")
@@ -337,8 +336,8 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected String doInBackground(String... params) {
       Log.d("ResetIngredients", "Deleting all 'permanent' ingredients");
-      for (Ingredient ing : Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT)) {
-        Database.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
+      for (Ingredient ing : DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT)) {
+        DatabaseAPI.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
       }
 
       Log.d("ResetIngredients", "Re-initializing ingredient assets");

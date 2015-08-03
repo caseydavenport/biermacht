@@ -8,9 +8,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 public class EditRecipeNotesActivity extends AddEditActivity {
 
@@ -119,7 +119,7 @@ public class EditRecipeNotesActivity extends AddEditActivity {
 
   @Override
   public void onFinished() {
-    Database.updateRecipe(mRecipe);
+    DatabaseAPI.updateRecipe(mRecipe);
     finish();
   }
 

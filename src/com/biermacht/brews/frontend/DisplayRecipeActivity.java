@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.IngredientActivities.AddFermentableActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
@@ -19,12 +20,10 @@ import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
-public class DisplayRecipeActivity extends ActionBarActivity {
+public class DisplayRecipeActivity extends AppCompatActivity {
 
   private Recipe mRecipe;
-  private long id; // id of recipe we use
   private int currentItem; // For storing current page
   DisplayRecipeCollectionPagerAdapter cpAdapter;
   ViewPager mViewPager;
@@ -39,25 +38,23 @@ public class DisplayRecipeActivity extends ActionBarActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_display_recipe);
 
-    // Set current item to be the first
-    currentItem = 0;
+    // Set icon as back button
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // Get recipe from intent
     mRecipe = getIntent().getParcelableExtra(Constants.KEY_RECIPE);
 
-    // Create alert builder with no callback, as we don't use one.
+    // Create alert builder with no callback.
     alertBuilder = new AlertBuilder(this, null);
 
     // Set on page change listener
     pageListener = new ViewPager.OnPageChangeListener() {
       @Override
       public void onPageScrolled(int position, float offset, int offsetPixels) {
-
       }
 
       @Override
       public void onPageSelected(int position) {
-        currentItem = position;
         updateOptionsMenu();
       }
 
@@ -66,8 +63,42 @@ public class DisplayRecipeActivity extends ActionBarActivity {
       }
     };
 
+    // Set to the current item (default to IngredientView)
+    currentItem = 0;
+
     // Update user interface
     updateUI();
+  }
+
+  /**
+   * TODO: This creates an entire new pager adapter adapter in order to update the UI.  It would be nice
+   * if we could just update things in place, without having to create / destroy so many
+   * objects.
+   */
+  public void updatePagerAdater() {
+    cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, getApplicationContext());
+
+    // Set Adapter and onPageChangeListener.
+    mViewPager = (ViewPager) findViewById(R.id.pager);
+    mViewPager.setAdapter(cpAdapter);
+    mViewPager.addOnPageChangeListener(pageListener);
+
+    // Set the current item
+    mViewPager.setCurrentItem(currentItem);
+  }
+
+  /**
+   * Updates the UI after (potentially) changes have been made to the Recipe being viewed.
+   */
+  private void updateUI() {
+    // Update the PagerAdapter.
+    updatePagerAdater();
+
+    // Set title based on recipe name
+    setTitle(mRecipe.getRecipeName());
+
+    // Update which options menu is displayed.
+    updateOptionsMenu();
   }
 
   @Override
@@ -78,7 +109,7 @@ public class DisplayRecipeActivity extends ActionBarActivity {
     menu.removeItem(R.id.menu_timer);
     menu.removeItem(R.id.menu_profile_dropdown);
 
-    switch (currentItem) {
+    switch (mViewPager.getCurrentItem()) {
       case 0:
         getMenuInflater().inflate(R.menu.fragment_ingredient_menu, menu);
         break;
@@ -98,38 +129,16 @@ public class DisplayRecipeActivity extends ActionBarActivity {
     return true;
   }
 
-  private void updateUI() {
-    // Set icon as back button
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-    // Get recipe id from calling activity
-    id = getIntent().getLongExtra(Constants.KEY_RECIPE_ID, Constants.INVALID_ID);
-
-    // ViewPager and pagerAdapter for Slidy tabs!
-    cpAdapter = new DisplayRecipeCollectionPagerAdapter(getSupportFragmentManager(), mRecipe, getApplicationContext());
-
-    // Set title based on recipe name
-    setTitle(mRecipe.getRecipeName());
-
-    // TODO: Temporary hack to fix dumb bug
-    if (currentItem == 1) {
-      currentItem = 0;
-    }
-
-    // Set Adapter
-    mViewPager = (ViewPager) findViewById(R.id.pager);
-    mViewPager.setAdapter(cpAdapter);
-
-    // Set to the current item
-    mViewPager.setCurrentItem(currentItem);
-    mViewPager.setOnPageChangeListener(pageListener);
-
-    updateOptionsMenu();
-  }
-
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent i;
+
+    // Pass the given event to the currently selected Fragment to handle.  If handled, return.
+    if (cpAdapter.getItem(mViewPager.getCurrentItem()).onOptionsItemSelected(item)) {
+      return true;
+    }
+
+    // Otherwise, switch on the item ID.
     switch (item.getItemId()) {
       case android.R.id.home:
         finish();
@@ -204,8 +213,10 @@ public class DisplayRecipeActivity extends ActionBarActivity {
   public void onResume() {
     super.onResume();
     Log.d("DisplayRecipeActivity", "onResume: Getting recipe from database");
+    // Changes may have been made to this Recipe in another activity - get the Recipe
+    // from the database and update the UI.
     try {
-      mRecipe = Database.getRecipeWithId(mRecipe.getId());
+      mRecipe = DatabaseAPI.getRecipeWithId(mRecipe.getId());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -216,9 +227,6 @@ public class DisplayRecipeActivity extends ActionBarActivity {
   public void updateOptionsMenu() {
     if (menu != null) {
       onCreateOptionsMenu(menu);
-    }
-    else {
-      mViewPager.setCurrentItem(0);
     }
   }
 

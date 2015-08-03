@@ -2,7 +2,7 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 
-import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.database.DatabaseAPI;
 
 public class EditCustomYeastActivity extends EditYeastActivity {
 
@@ -37,13 +37,13 @@ public class EditCustomYeastActivity extends EditYeastActivity {
 
   @Override
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, yeast.getDatabaseId());
+    DatabaseAPI.deleteIngredientWithId(ingredientId, yeast.getDatabaseId());
     finish();
   }
 
   @Override
   public void onFinished() {
-    Database.updateIngredient(yeast, yeast.getDatabaseId());
+    DatabaseAPI.updateIngredient(yeast, yeast.getDatabaseId());
     finish();
   }
 }
