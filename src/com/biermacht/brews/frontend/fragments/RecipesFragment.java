@@ -71,6 +71,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   // Recipe List stuff
   private RecipeArrayAdapter mAdapter;
   private AdapterView.OnItemClickListener mClickListener;
+  private AdapterView.OnItemLongClickListener mLongClickListener;
   private ArrayList<Recipe> recipeList;
 
   // Database Interface
@@ -135,6 +136,10 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     // in the main recipe list.
     mClickListener = new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
+        // Any time an item is clicked, reset any checked list items.
+        mAdapter.clearChecks();
+        mAdapter.notifyDataSetChanged();
+
         // If we're running on a tablet, update the details view.
         // Otherwise, open the DisplayRecipeActivity to display the recipe.
         if (isTablet) {
@@ -152,10 +157,26 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       }
     };
 
+    // Set up the onLongClickListener for when a Recipe is long clicked.
+    mLongClickListener = new AdapterView.OnItemLongClickListener() {
+      @Override
+      public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
+        // Mark this list item and only this list item as selected.
+        mAdapter.clearChecks();
+        mAdapter.setChecked(pos, true);
+        mAdapter.notifyDataSetChanged();
+
+        // Return true to indicate we have handled the action.  This prevents the onClickListener from
+        // being called after the onItemLongClick event.
+        return true;
+      }
+    };
+
     // Set up listView with title and ArrayAdapter
     updateRecipesFromDatabase();
     listView.setOnItemClickListener(mClickListener);
-    registerForContextMenu(listView);
+    listView.setOnItemLongClickListener(mLongClickListener);
+    //registerForContextMenu(listView);
 
     // Turn on options menu
     setHasOptionsMenu(true);
@@ -465,7 +486,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
   public void updateRecipesFromDatabase() {
     // Load all recipes from database.
-    ArrayList<Recipe> loadedRecipes = Database.getRecipeList(databaseInterface);
+    ArrayList<Recipe> loadedRecipes = Database.getRecipeList();
 
     // Update the recipe list with the loaded recipes.
     recipeList.removeAll(recipeList);
@@ -496,7 +517,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
               }
 
             })
-
             .setNegativeButton(R.string.cancel, null);
   }
 

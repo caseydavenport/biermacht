@@ -248,7 +248,7 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected String doInBackground(String... params) {
       xmlWriter = new RecipeXmlWriter(SettingsActivity.this);
-      xmlWriter.writeRecipes(Database.getRecipeList(MainActivity.databaseInterface), "recipes-");
+      xmlWriter.writeRecipes(Database.getRecipeList(), "recipes-");
       return "Executed";
     }
 
