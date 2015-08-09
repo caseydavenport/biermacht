@@ -15,41 +15,46 @@ import com.biermacht.brews.recipe.Recipe;
 public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
   Recipe r;
   Context c;
-  IngredientViewFragment ingVf;
-  InstructionViewFragment insVf;
-  DetailsViewFragment detVf;
-  ProfileViewFragment proVf;
+  IngredientViewFragment ingredientFragment;
+  InstructionViewFragment instructionFragment;
+  DetailsViewFragment detailsFragment;
+  ProfileViewFragment profileFragment;
+  ProfileViewFragment snapshotFragment;
 
   public DisplayRecipeCollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
     super(fm);
     this.r = r;
     this.c = c;
-    this.ingVf = IngredientViewFragment.instance(r);
-    this.insVf = InstructionViewFragment.instance(r);
-    this.detVf = DetailsViewFragment.instance(r);
-    this.proVf = ProfileViewFragment.instance(r);
+    this.ingredientFragment = IngredientViewFragment.instance(r);
+    this.instructionFragment = InstructionViewFragment.instance(r);
+    this.detailsFragment = DetailsViewFragment.instance(r);
+    this.profileFragment = ProfileViewFragment.instance(r);
+    this.snapshotFragment = ProfileViewFragment.instance(r);
   }
 
   @Override
   public Fragment getItem(int i) {
 
     if (i == 0) {
-      return ingVf;
+      return snapshotFragment;
     }
     else if (i == 1) {
-      return insVf;
+      return ingredientFragment;
     }
     else if (i == 2) {
-      return detVf;
+      return instructionFragment;
+    }
+    else if (i == 3) {
+      return detailsFragment;
     }
     else {
-      return proVf;
+      return profileFragment;
     }
   }
 
   @Override
   public int getCount() {
-    return 4;
+    return 5;
   }
 
   @Override
@@ -57,28 +62,27 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
 
     // Set title based on position in list
     if (position == 0) {
-      return "Ingredients";
+      return "Snapshots";
     }
     else if (position == 1) {
-      return "Instructions";
+      return "Ingredients";
     }
     else if (position == 2) {
-      return "Details";
+      return "Instructions";
     }
     else if (position == 3) {
+      return "Details";
+    }
+    else if (position == 4) {
       return "Profiles";
     }
 
     return "Unknown Tab";
   }
 
-  public InstructionViewFragment getInstructionViewFragment() {
-    return this.insVf;
-  }
-
   @Override
   public void restoreState(Parcelable p, ClassLoader cl) {
-    // Override this to do nothing.  It is not needed, and throws exceptions for reasons.
+    // Override this to do nothing.  It is not needed, and throws exceptions for "reasons".
     return;
   }
 }

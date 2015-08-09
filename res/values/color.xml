@@ -33,4 +33,6 @@
     <color name="divider">#22000000</color>
     <color name="transparent">#00FFFFFF</color>
 
+    <color name="red">#FF0000</color>
+
 </resources>

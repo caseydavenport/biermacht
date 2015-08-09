@@ -1,16 +1,18 @@
 package com.biermacht.brews.frontend.fragments;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -54,17 +56,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
   // Layout resource
   private static int resource = R.layout.fragment_recipes;
-
-  // Static menu items
-  private static String EDIT_RECIPE = "Edit Recipe";
-  private static String SCALE_RECIPE = "Scale Recipe";
-  private static String COPY_RECIPE = "Copy Recipe";
-  private static String DELETE_RECIPE = "Delete Recipe";
-  private static String EDIT_FERM = "Edit Fermentation Profile";
-  private static String EDIT_MASH = "Edit Mash Profile";
-  private static String EXPORT_RECIPE = "Export as BeerXML";
-  private static String BREW_TIMER = "Brew Timer";
-  private static String RECIPE_NOTES = "Recipe Notes";
 
   // The parent view group.
   ViewGroup pageView;
@@ -159,7 +150,10 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
       @Override
       public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-        // Called when the user selects a contextual menu item.
+        // Declare Intent used to start new apps
+        Intent i;
+
+        // Determine which context item was selected.
         switch (item.getItemId()) {
           case R.id.menu_delete_recipe:
             deleteAlert(contextActionRecipe).show();
@@ -173,10 +167,51 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
             // TODO: Ask user for new name, animate new recipe entering list.
             Recipe copy = Database.createRecipeFromExisting(contextActionRecipe);
             copy.setRecipeName(contextActionRecipe.getRecipeName() + " - Copy");
-            copy.save();
             recipeList.add(mAdapter.getPosition(contextActionRecipe) + 1, copy);
             mAdapter.notifyDataSetChanged();
-            mActionMode.finish();
+            Snackbar.make(listView, R.string.recipe_copied, Snackbar.LENGTH_LONG).show();
+            copy.save();
+            return true;
+
+          case R.id.edit_recipe:
+            i = new Intent(c, EditRecipeActivity.class);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            startActivity(i);
+            return true;
+
+          case R.id.export_recipe:
+            exportAlert(contextActionRecipe).show();
+            return true;
+
+          case R.id.edit_fermentation_profile:
+            i = new Intent(c, EditFermentationProfileActivity.class);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            startActivity(i);
+            return true;
+
+          case R.id.brew_timer:
+            i = new Intent(c, BrewTimerActivity.class);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            startActivity(i);
+            return true;
+
+          case R.id.edit_mash_profile:
+            i = new Intent(c, EditMashProfileActivity.class);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            i.putExtra(Constants.KEY_PROFILE_ID, contextActionRecipe.getMashProfile().getId());
+            i.putExtra(Constants.KEY_PROFILE, contextActionRecipe.getMashProfile());
+            startActivity(i);
+            return true;
+
+          case R.id.recipe_notes:
+            i = new Intent(c, EditRecipeNotesActivity.class);
+            i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
+            i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
+            startActivity(i);
             return true;
         }
         return false;
@@ -235,7 +270,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
         }
 
         // Otherwise, start the CAB.
-        mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+        mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
 
         // Return true to indicate we have handled the action.  This prevents the onClickListener from
         // being called after the onItemLongClick event.
@@ -259,59 +294,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.activity_main, menu);
-  }
-
-  @Override
-  public boolean onContextItemSelected(MenuItem item) {
-    String selected = menuItems.get(item.getItemId());
-
-    // Edit recipe selected
-    if (selected.equals(EDIT_RECIPE)) {
-      Intent i = new Intent(c, EditRecipeActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      startActivity(i);
-    }
-
-    // Export recipe selected
-    else if (selected.equals(EXPORT_RECIPE)) {
-      exportAlert(contextActionRecipe).show();
-    }
-
-    // Edit fermentation selected
-    else if (selected.equals(EDIT_FERM)) {
-      Intent i = new Intent(c, EditFermentationProfileActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      startActivity(i);
-    }
-
-    //  Brew timer
-    else if (selected.equals(BREW_TIMER)) {
-      Intent i = new Intent(c, BrewTimerActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      startActivity(i);
-    }
-
-    // Edit Mash profile
-    else if (selected.equals(EDIT_MASH)) {
-      Intent i = new Intent(c, EditMashProfileActivity.class);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      i.putExtra(Constants.KEY_PROFILE_ID, contextActionRecipe.getMashProfile().getId());
-      i.putExtra(Constants.KEY_PROFILE, contextActionRecipe.getMashProfile());
-      startActivity(i);
-    }
-
-    else if (selected.equals(RECIPE_NOTES)) {
-      Intent i = new Intent(c, EditRecipeNotesActivity.class);
-      i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
-      i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
-      startActivity(i);
-    }
-
-    return true;
   }
 
   public void setCorrectView() {
@@ -383,6 +365,9 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                 // Dismiss the CAB
                 mActionMode.finish();
                 Log.d("RecipesFragment", "Recipe deleted");
+
+                // Show Snackbar to indicate deletion.
+                Snackbar.make(listView, R.string.recipe_deleted, Snackbar.LENGTH_LONG).show();
               }
 
             })
@@ -408,6 +393,9 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
                 // Dismiss the CAB
                 mActionMode.finish();
+
+                // Show Snackbar to indicate completion.
+                Snackbar.make(listView, R.string.recipe_scaled, Snackbar.LENGTH_LONG).show();
               }
 
             })
@@ -531,6 +519,8 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
               public void onClick(DialogInterface dialog, int which) {
                 new ExportRecipe(r).execute("");
+                mActionMode.finish();
+                Snackbar.make(listView, R.string.recipe_exported, Snackbar.LENGTH_LONG).show();
               }
 
             })

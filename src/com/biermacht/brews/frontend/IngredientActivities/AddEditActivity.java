@@ -1,10 +1,10 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,7 +40,7 @@ import java.util.List;
  * examples would be Recipes, MashProfiles, or Settings.  This class defines a framework for adding
  * views, acquiring values from those views, saving or deleting objects, and more.
  */
-public abstract class AddEditActivity extends ActionBarActivity implements OnClickListener {
+public abstract class AddEditActivity extends AppCompatActivity implements OnClickListener {
 
   // Main view - holds all the rows
   public ViewGroup mainView;

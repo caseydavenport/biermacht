@@ -1,10 +1,9 @@
 package com.biermacht.brews.frontend;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -199,7 +198,7 @@ public class SettingsActivity extends AddEditActivity {
   }
 
   // Custom dialogs for this activity only
-  private Builder deleteAllRecipes() {
+  private AlertDialog.Builder deleteAllRecipes() {
     return new AlertDialog.Builder(this)
             .setTitle("Delete all recipes")
             .setMessage("Delete all local recipes from this device? This action cannot be undone." +
@@ -215,7 +214,7 @@ public class SettingsActivity extends AddEditActivity {
             .setNegativeButton(R.string.cancel, null);
   }
 
-  private Builder exportRecipes() {
+  private AlertDialog.Builder exportRecipes() {
     return new AlertDialog.Builder(this)
             .setTitle("Export all recipes")
             .setMessage("Export all recipes to BeerXML.")
@@ -230,7 +229,7 @@ public class SettingsActivity extends AddEditActivity {
             .setNegativeButton(R.string.cancel, null);
   }
 
-  private Builder finishedExporting(String pathToFile) {
+  private AlertDialog.Builder finishedExporting(String pathToFile) {
     return new AlertDialog.Builder(this)
             .setTitle("Complete")
             .setMessage("Finished exporting recipes to: \n" + pathToFile)
@@ -312,7 +311,7 @@ public class SettingsActivity extends AddEditActivity {
     }
   }
 
-  private Builder resetIngredients() {
+  private AlertDialog.Builder resetIngredients() {
     return new AlertDialog.Builder(this)
             .setTitle("Reset Ingredients")
             .setMessage("Reset default ingredient list? This will not affect any custom made ingredients.")

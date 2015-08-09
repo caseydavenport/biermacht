@@ -1,8 +1,8 @@
 package com.biermacht.brews.utils;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,9 +21,6 @@ import com.biermacht.brews.utils.Callbacks.Callback;
 
 import java.util.ArrayList;
 
-/**
- * Created by Casey on 7/30/13.
- */
 public class AlertBuilder {
 
   private Context context;
@@ -48,13 +45,8 @@ public class AlertBuilder {
     final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_searchable_list, null);
     final EditText editText = (EditText) alertView.findViewById(R.id.edit_text);
     final ListView listView = (ListView) alertView.findViewById(R.id.list);
-    final ArrayList<T> storedList = new ArrayList<T>();
-    storedList.addAll(list);
     listView.setOnItemClickListener(listener);
     listView.setAdapter(adapter);
-
-    // Stores the currently displayed list.
-    final ArrayList<T> curList = new ArrayList<T>();
 
     // Search text watcher.
     editText.addTextChangedListener(textWatcher);

@@ -1,6 +1,5 @@
 package com.biermacht.brews.frontend;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,7 +9,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,7 +33,7 @@ import com.biermacht.brews.utils.ColorHandler;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
 
-public class BrewTimerActivity extends ActionBarActivity {
+public class BrewTimerActivity extends AppCompatActivity {
 
   // Stores the recipe which is being brewed - provided by the caller via the Intent which
   // started this Activity.
@@ -359,7 +359,9 @@ public class BrewTimerActivity extends ActionBarActivity {
   @Override
   public void finish() {
     // Override finish to also stop the timer.
-    this.stop();
+    if (timerState != Constants.STOPPED) {
+      this.stop();
+    }
     super.finish();
   }
 

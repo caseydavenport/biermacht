@@ -9,9 +9,9 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/menu_scale_recipe"
+        android:id="@+id/edit_recipe"
         android:title="Scale"
-        android:icon="@drawable/ic_aspect_ratio_white_48dp"
+        android:icon="@drawable/ic_mode_edit_white_48dp"
         android:orderInCategory="103"
         app:showAsAction="always"/>
 
@@ -27,6 +27,40 @@
         android:title="More"
         android:icon="@drawable/ic_more_vert_white_48dp"
         android:orderInCategory="104"
-        app:showAsAction="always"/>
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/export_recipe"
+                android:title="Export Recipe"
+                android:orderInCategory="1"/>
+
+            <item
+                android:id="@+id/menu_scale_recipe"
+                android:title="Scale Recipe"
+                android:orderInCategory="2"/>
+
+            <item
+                android:id="@+id/brew_timer"
+                android:title="Brew Timer"
+                android:orderInCategory="3"/>
+
+            <item
+                android:id="@+id/edit_fermentation_profile"
+                android:title="Edit Fermentation"
+                android:orderInCategory="4"/>
+
+            <item
+                android:id="@+id/edit_mash_profile"
+                android:title="Edit Mash"
+                android:orderInCategory="5"/>
+
+            <item
+                android:id="@+id/recipe_notes"
+                android:title="Recipe Notes"
+                android:orderInCategory="6"/>
+        </menu>
+
+    </item>
 
 </menu>

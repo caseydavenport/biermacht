@@ -77,4 +77,9 @@
         <item name="android:paddingLeft">10dip</item>
     </style>
 
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/theme_blue</item>
+        <item name="android:textColorPrimary">@color/title_color</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
 </resources>
