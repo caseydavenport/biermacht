@@ -9,8 +9,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -101,6 +102,10 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   private ViewPager mViewPager;
   public int currentSelectedIndex = 0;
 
+  // Contextual action bar (CAB) stuff
+  ActionMode.Callback mActionModeCallback;
+  ActionMode mActionMode;
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     Log.d("RecipesFragment", "Starting onCreateView()");
@@ -132,13 +137,68 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     // Get database Interface
     databaseInterface = MainActivity.databaseInterface;
 
+    // Callback which handles the creation and operation of the contextual action bar when
+    // a Recipe is long-pressed.
+    mActionModeCallback = new ActionMode.Callback() {
+
+      @Override
+      public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        // Called when the action mode is created; startActionMode() was called
+        // Inflate a menu resource providing context menu items
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.context_recipe_selected, menu);
+        return true;
+      }
+
+      @Override
+      public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        return false; // Return false if nothing is done
+      }
+
+      @Override
+      public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        // Called when the user selects a contextual menu item.
+        switch (item.getItemId()) {
+          case R.id.menu_delete_recipe:
+            deleteAlert(contextActionRecipe).show();
+            return true;
+
+          case R.id.menu_scale_recipe:
+            scaleAlert(contextActionRecipe).show();
+            return true;
+
+          case R.id.menu_copy_recipe:
+            // TODO: Ask user for new name, animate new recipe entering list.
+            Recipe copy = Database.createRecipeFromExisting(contextActionRecipe);
+            copy.setRecipeName(contextActionRecipe.getRecipeName() + " - Copy");
+            copy.save();
+            recipeList.add(mAdapter.getPosition(contextActionRecipe) + 1, copy);
+            mAdapter.notifyDataSetChanged();
+            mActionMode.finish();
+            return true;
+        }
+        return false;
+      }
+
+      @Override
+      public void onDestroyActionMode(ActionMode mode) {
+        // Called when the user exits the action mode
+
+        // Nullify the CAB.
+        mActionMode = null;
+
+        // Clear any selections in the list.
+        mAdapter.clearChecks();
+        mAdapter.notifyDataSetChanged();
+      }
+    };
+
     // Set up the onClickListener for when a Recipe is selected
     // in the main recipe list.
     mClickListener = new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
-        // Any time an item is clicked, reset any checked list items.
-        mAdapter.clearChecks();
-        mAdapter.notifyDataSetChanged();
 
         // If we're running on a tablet, update the details view.
         // Otherwise, open the DisplayRecipeActivity to display the recipe.
@@ -165,6 +225,17 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
         mAdapter.clearChecks();
         mAdapter.setChecked(pos, true);
         mAdapter.notifyDataSetChanged();
+        currentSelectedIndex = pos;
+        contextActionRecipe = recipeList.get(pos);
+
+        // If the Contextual action bar is already being displayed, don't start a new action bar.
+        if (mActionMode != null) {
+          // Return true so that onItemClick is not invoked.
+          return true;
+        }
+
+        // Otherwise, start the CAB.
+        mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
 
         // Return true to indicate we have handled the action.  This prevents the onClickListener from
         // being called after the onItemLongClick event.
@@ -176,7 +247,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     updateRecipesFromDatabase();
     listView.setOnItemClickListener(mClickListener);
     listView.setOnItemLongClickListener(mLongClickListener);
-    //registerForContextMenu(listView);
 
     // Turn on options menu
     setHasOptionsMenu(true);
@@ -192,46 +262,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
   }
 
   @Override
-  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-    // For now, only the recipe listView supports the context menu.
-    if (v == listView) {
-      // Cast the given ContextMenuInfo into an AdapterContextMenuInfo
-      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-
-      // Get the recipe which has been selected.
-      contextActionRecipe = recipeList.get(info.position);
-
-      // Determine the title for the context menu based on the selected recipe.      
-      String title = contextActionRecipe.getRecipeName();
-      menu.setHeaderTitle(title);
-
-      // Build the list of menu items to display in the context menu.  This list is accessed
-      // later to determine which menu item was selected by the user.
-      menuItems = new ArrayList<String>();
-      menuItems.add(EDIT_RECIPE);
-      if (! contextActionRecipe.getType().equals(Recipe.EXTRACT)) {
-        // Only allow editing of mash profile when not an extract recipe.
-        menuItems.add(EDIT_MASH);
-      }
-      menuItems.add(EDIT_FERM);
-      if (contextActionRecipe.getInstructionList().size() > 0) {
-        // Only allow entering the brew timer if there are instructions.
-        menuItems.add(BREW_TIMER);
-      }
-      menuItems.add(RECIPE_NOTES);
-      menuItems.add(EXPORT_RECIPE);
-      menuItems.add(SCALE_RECIPE);
-      menuItems.add(COPY_RECIPE);
-      menuItems.add(DELETE_RECIPE);
-
-      // Build the actual menu to display using the list generated above.
-      for (int i = 0; i < menuItems.size(); i++) {
-        menu.add(Menu.NONE, i, i, menuItems.get(i));
-      }
-    }
-  }
-
-  @Override
   public boolean onContextItemSelected(MenuItem item) {
     String selected = menuItems.get(item.getItemId());
 
@@ -243,28 +273,9 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
       startActivity(i);
     }
 
-    // Scale recipe selected
-    else if (selected.equals(SCALE_RECIPE)) {
-      scaleAlert(contextActionRecipe).show();
-    }
-
     // Export recipe selected
     else if (selected.equals(EXPORT_RECIPE)) {
       exportAlert(contextActionRecipe).show();
-    }
-
-    // Copy recipe selected
-    else if (selected.equals(COPY_RECIPE)) {
-      Recipe copy = Database.createRecipeFromExisting(contextActionRecipe);
-      copy.setRecipeName(contextActionRecipe.getRecipeName() + " - Copy");
-      copy.save();
-      recipeList.add(mAdapter.getPosition(contextActionRecipe) + 1, copy);
-      mAdapter.notifyDataSetChanged();
-    }
-
-    // Delete recipe selected
-    else if (selected.equals(DELETE_RECIPE)) {
-      deleteAlert(contextActionRecipe).show();
     }
 
     // Edit fermentation selected
@@ -368,6 +379,9 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                 // If the last recipe was just deleted, we need to update which
                 // view is being displayed.
                 setCorrectView();
+
+                // Dismiss the CAB
+                mActionMode.finish();
                 Log.d("RecipesFragment", "Recipe deleted");
               }
 
@@ -391,6 +405,9 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                                                               .replace(",", "."));
                 Utils.scaleRecipe(r, newVolume);
                 mAdapter.notifyDataSetChanged();
+
+                // Dismiss the CAB
+                mActionMode.finish();
               }
 
             })

@@ -8,5 +8,8 @@
         <item name="colorPrimaryDark">@color/theme_primary_dark</item>
         <item name="colorAccent">@color/theme_blue</item>
         <item name="android:textColorHint">@color/subtitle</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/context_action_bar_bg</item> (or)
+        <item name="android:actionModeBackground">@color/context_action_bar_bg</item>
     </style>
 </resources>

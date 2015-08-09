@@ -9,6 +9,7 @@
     <color name="theme_brown">#B38D42</color>
     <color name="theme_grey">#E6E6E6</color>
     <color name="white">#FFFFFF</color>
+    <color name="context_action_bar_bg">#777777</color>
 
     <color name="tablet_selector_bg">#E6E6E6</color>
     <color name="button_color">#FFFFFF</color>
