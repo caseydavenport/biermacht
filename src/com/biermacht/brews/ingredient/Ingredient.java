@@ -18,7 +18,8 @@ public abstract class Ingredient implements Parcelable {
   // Custom Fields ==================================================
   // ================================================================
   private long id;                        // Lookup ID for database
-  private long ownerId;                   // ID of recipe that contains this
+  private long recipeId;                  // ID of recipe that contains this.
+  private long snapshotId;                // Snapshot this belongs to, or -1 if None.
   private double inventory;               // Amount in inventory (standard units)
   private long databaseId;                // Which virtual database to store this in
 
@@ -46,7 +47,8 @@ public abstract class Ingredient implements Parcelable {
   public Ingredient(String name) {
     this.name = name;
     this.id = Constants.INVALID_ID;
-    this.ownerId = Constants.INVALID_ID;
+    this.recipeId = Constants.INVALID_ID;
+    this.snapshotId = Constants.SNAPSHOT_NONE;
     this.databaseId = Constants.DATABASE_DEFAULT;
     this.amount = 0;
     this.time = 0;
@@ -58,7 +60,8 @@ public abstract class Ingredient implements Parcelable {
     version = p.readInt();
     amount = p.readDouble();
     id = p.readLong();
-    ownerId = p.readLong();
+    recipeId = p.readLong();
+    snapshotId = p.readLong();
     inventory = p.readDouble();
     databaseId = p.readLong();
     time = p.readInt();
@@ -71,7 +74,8 @@ public abstract class Ingredient implements Parcelable {
     p.writeInt(version);
     p.writeDouble(amount);
     p.writeLong(id);
-    p.writeLong(ownerId);
+    p.writeLong(recipeId);
+    p.writeLong(snapshotId);
     p.writeDouble(inventory);
     p.writeLong(databaseId);
     p.writeInt(time);
@@ -181,12 +185,20 @@ public abstract class Ingredient implements Parcelable {
     this.name = name;
   }
 
-  public long getOwnerId() {
-    return ownerId;
+  public long getRecipeId() {
+    return recipeId;
   }
 
-  public void setOwnerId(long ownerId) {
-    this.ownerId = ownerId;
+  public void setRecipeId(long recipeId) {
+    this.recipeId = recipeId;
+  }
+
+  public long getSnapshotId() {
+    return snapshotId;
+  }
+
+  public void setSnapshotId(long id) {
+    this.snapshotId = id;
   }
 
   public long getId() {

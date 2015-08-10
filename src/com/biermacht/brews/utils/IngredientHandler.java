@@ -51,7 +51,8 @@ public class IngredientHandler {
       // Import mash profile assets.
       Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM,
                                                    getProfilesFromXml(),
-                                                   Constants.OWNER_NONE);
+                                                   Constants.OWNER_NONE,
+                                                   Constants.SNAPSHOT_NONE);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -61,16 +62,23 @@ public class IngredientHandler {
   public void importIngredients() throws IOException {
     Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getFermentablesFromXml(),
-                                                Constants.OWNER_NONE);
+                                                Constants.OWNER_NONE,
+                                                Constants.SNAPSHOT_NONE);
+
     Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getYeastsFromXml(),
-                                                Constants.OWNER_NONE);
+                                                Constants.OWNER_NONE,
+                                                Constants.SNAPSHOT_NONE);
+
     Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getHopsFromXml(),
-                                                Constants.OWNER_NONE);
+                                                Constants.OWNER_NONE,
+                                                Constants.SNAPSHOT_NONE);
+
     Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getMiscsFromXml(),
-                                                Constants.OWNER_NONE);
+                                                Constants.OWNER_NONE,
+                                                Constants.SNAPSHOT_NONE);
   }
 
   /**

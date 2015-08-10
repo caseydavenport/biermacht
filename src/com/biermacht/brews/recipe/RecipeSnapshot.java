@@ -5,25 +5,30 @@ import android.os.Parcel;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.InstructionGenerator;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class RecipeSnapshot extends Recipe {
 
-  private long ownerId;                             // ID of the Recipe of which this is a snapshot.
-  private String description;                       // Short description, e.g. "For Event X"
+  private long recipeId;                             // ID of the Recipe of which this is a snapshot.
+  private String description;                        // Short description, e.g. "For Event X"
+  private String snapshotTime;                       // Time of day that this snapshot was taken.
 
   // Public constructors
   public RecipeSnapshot(String s) {
     super(s);
-    this.ownerId = -1;
+    this.recipeId = -1;
     this.setDescription("");
+    this.setSnapshotTime("00:00:00");
   }
 
   public static RecipeSnapshot fromRecipe(Recipe r) {
     RecipeSnapshot s = new RecipeSnapshot(r.getRecipeName());
     // Set the owner ID to be the given recipe.
-    s.setOwnerId(r.getId());
+    s.setRecipeId(r.getId());
 
     // Set all the other fields.
     s.setVersion(r.getVersion());
@@ -78,28 +83,46 @@ public class RecipeSnapshot extends Recipe {
 
     // Set the date based on the current date.
     String snapshotDate = new SimpleDateFormat("dd MMM yyyy").format(new Date());
+    String snapshotTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
     s.setBrewDate(snapshotDate);
+    s.setSnapshotTime(snapshotTime);
 
     return s;
   }
 
   public RecipeSnapshot(Parcel p) {
     super(p);
-    this.ownerId = p.readLong();
+    this.recipeId = p.readLong();
   }
 
   @Override
   public void writeToParcel(Parcel p, int flags) {
     super.writeToParcel(p, flags);
-    p.writeLong(ownerId);
+    p.writeLong(recipeId);
   }
 
-  public void setOwnerId(long id) {
-    this.ownerId = id;
+  public String getSnapshotTime() {
+    return snapshotTime;
   }
 
-  public long getOwnerId() {
-    return this.ownerId;
+  public void setSnapshotTime(String snapshotTime) {
+    this.snapshotTime = snapshotTime;
+  }
+
+  public Date getSnapshotDate() throws ParseException {
+    String dateString = this.getBrewDate() + " " + this.getSnapshotTime();
+    DateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.ENGLISH);
+
+    Date result =  df.parse(dateString);
+    return result;
+  }
+
+  public void setRecipeId(long id) {
+    this.recipeId = id;
+  }
+
+  public long getRecipeId() {
+    return this.recipeId;
   }
 
   public void setDescription(String s) {

@@ -10,6 +10,7 @@ import com.biermacht.brews.frontend.fragments.DetailsViewFragment;
 import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
 import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
+import com.biermacht.brews.frontend.fragments.SnapshotsViewFragment;
 import com.biermacht.brews.recipe.Recipe;
 
 public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
@@ -19,7 +20,7 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
   InstructionViewFragment instructionFragment;
   DetailsViewFragment detailsFragment;
   ProfileViewFragment profileFragment;
-  ProfileViewFragment snapshotFragment;
+  SnapshotsViewFragment snapshotFragment;
 
   public DisplayRecipeCollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
     super(fm);
@@ -29,7 +30,7 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
     this.instructionFragment = InstructionViewFragment.instance(r);
     this.detailsFragment = DetailsViewFragment.instance(r);
     this.profileFragment = ProfileViewFragment.instance(r);
-    this.snapshotFragment = ProfileViewFragment.instance(r);
+    this.snapshotFragment = SnapshotsViewFragment.instance(r);
   }
 
   @Override

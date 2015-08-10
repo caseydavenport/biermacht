@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -477,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Store the recipes
-                new StoreRecipes(recipesToImport).execute("");
+                new StoreRecipes(recipesToImport, findViewById(R.id.drawer_layout)).execute("");
               }
 
             })
@@ -491,9 +492,11 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog progress;
     private ArrayList<Recipe> list;
+    private View mainView;
 
-    public StoreRecipes(ArrayList<Recipe> list) {
+    public StoreRecipes(ArrayList<Recipe> list, View mainView) {
       this.list = list;
+      this.mainView = mainView;
     }
 
     @Override
@@ -509,6 +512,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostExecute(String result) {
       super.onPostExecute(result);
       progress.dismiss();
+
+      // Show SnackBar and update the fragments to display the new recipes.
+      String snack = list.size() + " Recipe(s) Imported";
+      Snackbar.make(mainView, snack, Snackbar.LENGTH_LONG).show();
       updateFragments();
       Log.d("StoreRecipes", "Finished importing recipes");
     }

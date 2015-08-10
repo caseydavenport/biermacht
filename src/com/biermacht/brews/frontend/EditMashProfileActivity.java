@@ -106,7 +106,7 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
             .setPositiveButton("Save", new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
                 mProfile.setName(mRecipe.getRecipeName() + "'s profile");
-                Database.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, mProfile.getOwnerId());
+                Database.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, mProfile.getRecipeId(), Constants.SNAPSHOT_NONE);
                 onMashProfileSavedAlert().create().show();
               }
             })

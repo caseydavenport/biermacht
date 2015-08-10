@@ -109,7 +109,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
   @Override
   public void onFinished() {
     Log.d("AddCustomFermentableActivity::onFinished", "Adding fermentable to db_custom: " + fermentable.getName());
-    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
+    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID, Constants.SNAPSHOT_NONE);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
       Log.d("AddCustomFermentableActivity::onFinished", "Adding fermentable '" +

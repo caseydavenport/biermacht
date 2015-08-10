@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.biermacht.brews.frontend.adapters.DetailArrayAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -18,9 +19,9 @@ import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DatabaseInterface {
 
@@ -118,6 +119,7 @@ public class DatabaseInterface {
           DatabaseHelper.REC_COL_CALC_STRIKE_VOL,
           DatabaseHelper.REC_COL_MEAS_BATCH_SIZE,
           DatabaseHelper.SNAP_COL_DESCRIPTION,
+          DatabaseHelper.SNAP_COL_SNAPSHOT_TIME,
   };
 
   private String[] ingredientAllColumns = {
@@ -159,8 +161,11 @@ public class DatabaseInterface {
           DatabaseHelper.ING_MC_COL_VERSION,
           DatabaseHelper.ING_MC_COL_AMT_IS_WEIGHT,
           DatabaseHelper.ING_MC_COL_USE_FOR,
-          DatabaseHelper.ING_MC_COL_USE
+          DatabaseHelper.ING_MC_COL_USE,
+
+          DatabaseHelper.COL_SNAPSHOT_ID
   };
+  private ArrayList<String> ingredientColumns = new ArrayList<>(Arrays.asList(ingredientAllColumns));
 
   private String[] stylesAllColumns = {
           DatabaseHelper.STY_COL_ID,
@@ -187,7 +192,8 @@ public class DatabaseInterface {
           DatabaseHelper.STY_COL_NOTES,
           DatabaseHelper.STY_COL_PROFILE,
           DatabaseHelper.STY_COL_INGREDIENTS,
-          DatabaseHelper.STY_COL_EXAMPLES
+          DatabaseHelper.STY_COL_EXAMPLES,
+          DatabaseHelper.COL_SNAPSHOT_ID
   };
 
   private String[] profileAllColumns = {
@@ -205,7 +211,8 @@ public class DatabaseInterface {
           DatabaseHelper.PRO_COL_TUN_SPEC_HEAT,
           DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ,
           DatabaseHelper.PRO_COL_MASH_TYPE,
-          DatabaseHelper.PRO_COL_SPARGE_TYPE
+          DatabaseHelper.PRO_COL_SPARGE_TYPE,
+          DatabaseHelper.COL_SNAPSHOT_ID
   };
 
   private String[] stepAllColumns = {
@@ -264,14 +271,11 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
     values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
     values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
-    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                 .STAGE_PRIMARY));
+    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
-    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                   .STAGE_SECONDARY));
+    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
-    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                  .STAGE_TERTIARY));
+    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
     values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
@@ -290,12 +294,12 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.getCalculateStrikeVolume() ? 1 : 0);
     values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, r.getBeerXmlMeasuredBatchSize());
 
-    long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
-    addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_DEFAULT);
-    addStyleToDatabase(r.getStyle(), id);
-    addMashProfileToDatabase(r.getMashProfile(), id, Constants.DATABASE_DEFAULT);
+    long recipeId = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
+    addIngredientListToDatabase(r.getIngredientList(), recipeId, Constants.DATABASE_DEFAULT, Constants.SNAPSHOT_NONE);
+    addStyleToDatabase(r.getStyle(), recipeId, Constants.SNAPSHOT_NONE);
+    addMashProfileToDatabase(r.getMashProfile(), recipeId, Constants.DATABASE_DEFAULT, Constants.SNAPSHOT_NONE);
 
-    return id;
+    return recipeId;
   }
 
   public boolean updateExistingRecipe(Recipe r) {
@@ -347,25 +351,25 @@ public class DatabaseInterface {
     for (Ingredient i : r.getIngredientList()) {
       Boolean exists = updateExistingIngredientInDatabase(i, Constants.DATABASE_DEFAULT);
       if (! exists) {
-        addIngredientToDatabase(i, r.getId(), Constants.DATABASE_DEFAULT);
+        addIngredientToDatabase(i, r.getId(), Constants.DATABASE_DEFAULT, Constants.SNAPSHOT_NONE);
       }
     }
 
     // Update mash profile
-    Boolean exists = updateMashProfile(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
+    Boolean exists = updateMashProfile(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT, Constants.SNAPSHOT_NONE);
     if (! exists) {
       // Delete any mash profiles owned by this recipe so we don't build up
       // a bunch over time.
-      MashProfile oldProfile = readMashProfile(r.getId());
+      MashProfile oldProfile = readMashProfileRecipe(r.getId());
       deleteMashProfile(oldProfile.getId(), Constants.DATABASE_DEFAULT);
 
       // Add the new one to the database.
-      addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
+      addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT, Constants.SNAPSHOT_NONE);
     }
 
     // TODO: Implement style update methods.
     deleteStyle(r.getId());
-    addStyleToDatabase(r.getStyle(), r.getId());
+    addStyleToDatabase(r.getStyle(), r.getId(), -1);
 
     return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
   }
@@ -380,14 +384,14 @@ public class DatabaseInterface {
     return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null) > 0;
   }
 
-  public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id, long dbid) {
+  public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long recipeId, long dbid, long snapshotId) {
     for (Ingredient ing : ingredientList) {
-      addIngredientToDatabase(ing, id, dbid);
+      addIngredientToDatabase(ing, recipeId, dbid, snapshotId);
     }
   }
 
-  public long addIngredientToDatabase(Ingredient ing, long ownerid, long dbid) {
-    ContentValues values = getIngredientValues(ing, dbid, ownerid);
+  public long addIngredientToDatabase(Ingredient ing, long recipeId, long dbid, long snapshotId) {
+    ContentValues values = getIngredientValues(ing, dbid, recipeId, snapshotId);
     long ingId = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
     values.clear();
     return ingId;
@@ -396,20 +400,22 @@ public class DatabaseInterface {
   public boolean updateExistingIngredientInDatabase(Ingredient ing, long dbid) {
     String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId() + " AND " +
             DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
-    ContentValues values = getIngredientValues(ing, dbid, ing.getOwnerId());
+    ContentValues values = getIngredientValues(ing, dbid, ing.getRecipeId(), ing.getSnapshotId());
     return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
   }
 
-  public long addSnapshotToDatabase(RecipeSnapshot snap, long ownerId) {
-    ContentValues values = getSnapshotValues(snap, ownerId);
+  public long addSnapshotToDatabase(RecipeSnapshot snap, long recipeId) {
+    ContentValues values = getSnapshotValues(snap, recipeId);
     long snapshotId = database.insert(DatabaseHelper.TABLE_SNAPSHOTS, null, values);
-    values.clear();
+    addIngredientListToDatabase(snap.getIngredientList(), Constants.INVALID_ID, Constants.DATABASE_DEFAULT, snapshotId);
+    addStyleToDatabase(snap.getStyle(), Constants.INVALID_ID, snapshotId);
+    addMashProfileToDatabase(snap.getMashProfile(), Constants.INVALID_ID, Constants.DATABASE_DEFAULT, snapshotId);
     return snapshotId;
   }
 
   public boolean updateExistingSnapshot(RecipeSnapshot snap) {
     String whereClause = DatabaseHelper.REC_COL_ID + "=" + snap.getId();
-    ContentValues values = getSnapshotValues(snap, snap.getOwnerId());
+    ContentValues values = getSnapshotValues(snap, snap.getRecipeId());
     return database.update(DatabaseHelper.TABLE_SNAPSHOTS, values, whereClause, null) > 0;
   }
 
@@ -462,16 +468,18 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, rs.getCalculateStrikeTemp() ? 1 : 0);
     values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, rs.getCalculateStrikeVolume() ? 1 : 0);
     values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, rs.getBeerXmlMeasuredBatchSize());
+    values.put(DatabaseHelper.SNAP_COL_DESCRIPTION, rs.getDescription());
+    values.put(DatabaseHelper.SNAP_COL_SNAPSHOT_TIME, rs.getSnapshotTime());
 
     return values;
   }
 
-  public ContentValues getIngredientValues(Ingredient ing, long dbid, long ownerid) {
+  public ContentValues getIngredientValues(Ingredient ing, long dbid, long recipeId, long snapshotId) {
     // values stored here
     ContentValues values = new ContentValues();
 
     // Load up values to store
-    values.put(DatabaseHelper.ING_COL_OWNER_ID, ownerid);
+    values.put(DatabaseHelper.ING_COL_OWNER_ID, recipeId);
     values.put(DatabaseHelper.ING_COL_DB_ID, dbid);
     values.put(DatabaseHelper.ING_COL_TYPE, ing.getType());
     values.put(DatabaseHelper.ING_COL_NAME, ing.getName());
@@ -480,6 +488,7 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.ING_COL_AMT, ing.getBeerXmlStandardAmount());
     values.put(DatabaseHelper.ING_COL_TIME, ing.getTime());
     values.put(DatabaseHelper.ING_COL_INVENTORY, ing.getBeerXmlStandardInventory());
+    values.put(DatabaseHelper.COL_SNAPSHOT_ID, snapshotId);
 
     // Grain specific values
     if (ing.getType().equals(Ingredient.FERMENTABLE)) {
@@ -529,10 +538,10 @@ public class DatabaseInterface {
     return values;
   }
 
-  public long addStyleToDatabase(BeerStyle s, long ownerId) {
+  public long addStyleToDatabase(BeerStyle s, long recipeId, long snapshotId) {
     // Load up values to store
     ContentValues values = new ContentValues();
-    values.put(DatabaseHelper.STY_COL_OWNER_ID, ownerId);
+    values.put(DatabaseHelper.STY_COL_OWNER_ID, recipeId);
     values.put(DatabaseHelper.STY_COL_DB_ID, Constants.DATABASE_DEFAULT);
     values.put(DatabaseHelper.STY_COL_NAME, s.getName());
     values.put(DatabaseHelper.STY_COL_CATEGORY, s.getCategory());
@@ -556,31 +565,32 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.STY_COL_PROFILE, s.getProfile());
     values.put(DatabaseHelper.STY_COL_INGREDIENTS, s.getIngredients());
     values.put(DatabaseHelper.STY_COL_EXAMPLES, s.getExamples());
+    values.put(DatabaseHelper.COL_SNAPSHOT_ID, snapshotId);
 
     long id = database.insert(DatabaseHelper.TABLE_STYLES, null, values);
 
     return id;
   }
 
-  public long addMashProfileToDatabase(MashProfile p, long ownerId, long dbid) {
-    ContentValues values = getMashProfileValues(p, ownerId, dbid);
+  public long addMashProfileToDatabase(MashProfile p, long recipeId, long dbid, long snapshotId) {
+    ContentValues values = getMashProfileValues(p, recipeId, dbid, snapshotId);
     long id = database.insert(DatabaseHelper.TABLE_PROFILES, null, values);
     addMashStepListToDatabase(p.getMashStepList(), id);
     return id;
   }
 
-  public boolean updateMashProfile(MashProfile p, long ownerId, long dbid) {
+  public boolean updateMashProfile(MashProfile p, long recipeId, long dbid, long snapshotId) {
     String whereClause = DatabaseHelper.PRO_COL_ID + "=" + p.getId() + " AND " +
             DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
-    ContentValues values = getMashProfileValues(p, ownerId, dbid);
+    ContentValues values = getMashProfileValues(p, recipeId, dbid, snapshotId);
     updateMashStepList(p.getMashStepList(), p.getId());
     return database.update(DatabaseHelper.TABLE_PROFILES, values, whereClause, null) > 0;
   }
 
-  public ContentValues getMashProfileValues(MashProfile p, long ownerId, long dbid) {
+  public ContentValues getMashProfileValues(MashProfile p, long recipeId, long dbid, long snapshotId) {
     // Load up values to store
     ContentValues values = new ContentValues();
-    values.put(DatabaseHelper.PRO_COL_OWNER_ID, ownerId);
+    values.put(DatabaseHelper.PRO_COL_OWNER_ID, recipeId);
     values.put(DatabaseHelper.PRO_COL_DB_ID, dbid);
     values.put(DatabaseHelper.PRO_COL_NAME, p.getName());
     values.put(DatabaseHelper.PRO_COL_VERSION, p.getVersion());
@@ -594,22 +604,23 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.PRO_COL_TUN_EQUIP_ADJ, (p.getEquipmentAdjust()) ? 1 : 0);
     values.put(DatabaseHelper.PRO_COL_MASH_TYPE, p.getMashType());
     values.put(DatabaseHelper.PRO_COL_SPARGE_TYPE, p.getSpargeType());
+    values.put(DatabaseHelper.COL_SNAPSHOT_ID, snapshotId);
     return values;
   }
 
-  public void addMashStepListToDatabase(ArrayList<MashStep> l, long ownerId) {
+  public void addMashStepListToDatabase(ArrayList<MashStep> l, long mashProfileId) {
     for (MashStep step : l) {
-      addMashStepToDatabase(step, ownerId);
+      addMashStepToDatabase(step, mashProfileId);
     }
   }
 
-  public void updateMashStepList(ArrayList<MashStep> l, long ownerId) {
-    ArrayList<MashStep> existingSteps = readMashStepsList(ownerId);
+  public void updateMashStepList(ArrayList<MashStep> l, long mashProfileId) {
+    ArrayList<MashStep> existingSteps = readMashStepsList(mashProfileId);
     for (MashStep step : l) {
       Log.d("DatabaseInterface", "Updating MashStep " + step.getName());
-      boolean exists = updateMashStep(step, ownerId);
+      boolean exists = updateMashStep(step, mashProfileId);
       if (! exists) {
-        this.addMashStepToDatabase(step, ownerId);
+        this.addMashStepToDatabase(step, mashProfileId);
       }
     }
 
@@ -628,22 +639,22 @@ public class DatabaseInterface {
     }
   }
 
-  public long addMashStepToDatabase(MashStep s, long ownerId) {
-    ContentValues values = getMashStepValues(s, ownerId);
+  public long addMashStepToDatabase(MashStep s, long mashStepId) {
+    ContentValues values = getMashStepValues(s, mashStepId);
     long id = database.insert(DatabaseHelper.TABLE_STEPS, null, values);
     return id;
   }
 
-  public boolean updateMashStep(MashStep s, long ownerId) {
+  public boolean updateMashStep(MashStep s, long recipeId) {
     String whereClause = DatabaseHelper.STE_COL_ID + "=" + s.getId();
-    ContentValues values = getMashStepValues(s, ownerId);
+    ContentValues values = getMashStepValues(s, recipeId);
     return database.update(DatabaseHelper.TABLE_STEPS, values, whereClause, null) > 0;
   }
 
-  public ContentValues getMashStepValues(MashStep s, long ownerId) {
+  public ContentValues getMashStepValues(MashStep s, long mashProfileId) {
     // Load up values to store
     ContentValues values = new ContentValues();
-    values.put(DatabaseHelper.STE_COL_OWNER_ID, ownerId);
+    values.put(DatabaseHelper.STE_COL_OWNER_ID, mashProfileId);
     values.put(DatabaseHelper.STE_COL_DB_ID, Constants.DATABASE_DEFAULT);
     values.put(DatabaseHelper.STE_COL_NAME, s.getName());
     values.put(DatabaseHelper.STE_COL_VERSION, s.getVersion());
@@ -704,7 +715,6 @@ public class DatabaseInterface {
   }
 
   public Recipe getRecipeWithId(long id) {
-    Recipe r;
     String whereString = DatabaseHelper.REC_COL_ID + "=" + id;
 
     Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, whereString,
@@ -810,14 +820,14 @@ public class DatabaseInterface {
 
   /**
    * Returns a list of snapshots stored for the recipe with the given ID.
-   * @param ownerId Index of the stored Recipe whose snapshots will be returned.
+   * @param recipeId Index of the stored Recipe whose snapshots will be returned.
    * @return List of RecipeSnapshots.
    */
-  public ArrayList<RecipeSnapshot> getRecipeSnapshots(long ownerId) {
+  public ArrayList<RecipeSnapshot> getRecipeSnapshots(long recipeId) {
     ArrayList<RecipeSnapshot> list = new ArrayList<RecipeSnapshot>();
-    String whereString = DatabaseHelper.SNAP_COL_OWNER_ID + "=" + ownerId;
+    String whereString = DatabaseHelper.SNAP_COL_OWNER_ID + "=" + recipeId;
 
-    Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, snapshotAllColumns, whereString,
+    Cursor cursor = database.query(DatabaseHelper.TABLE_SNAPSHOTS, snapshotAllColumns, whereString,
                                    null, null, null, null);
     cursor.moveToFirst();
 
@@ -863,7 +873,7 @@ public class DatabaseInterface {
   private Recipe cursorToRecipe(Cursor cursor) {
     int cid = 0;
 
-    long id = cursor.getLong(cid);
+    long recipeId = cursor.getLong(cid);
     cid++;
     long dbid = cursor.getLong(cid);
     cid++;
@@ -948,14 +958,14 @@ public class DatabaseInterface {
     double measBatchsize = cursor.getFloat(cid);
     cid++;
 
-    ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
-    BeerStyle style = readStyle(id);
-    MashProfile profile = readMashProfile(id);
+    ArrayList<Ingredient> ingredientsList = readIngredientListRecipe(recipeId);
+    BeerStyle style = readStyleRecipe(recipeId);
+    MashProfile profile = readMashProfileRecipe(recipeId);
 
     Log.d("DatabaseInterface", "Creating recipe '" + recipeName + "' from cursor");
 
     Recipe r = new Recipe(recipeName);
-    r.setId(id);
+    r.setId(recipeId);
     r.setVersion(version);
     r.setType(type);
     r.setBrewer(brewer);
@@ -1012,9 +1022,9 @@ public class DatabaseInterface {
   private RecipeSnapshot cursorToSnapshot(Cursor cursor) {
     int cid = 0;
 
-    long id = cursor.getLong(cid);
+    long snapshotId = cursor.getLong(cid);
     cid++;
-    long ownerId = cursor.getLong(cid);
+    long recipeId = cursor.getLong(cid);
     cid++;
     long dbid = cursor.getLong(cid);
     cid++;
@@ -1098,15 +1108,20 @@ public class DatabaseInterface {
     cid++;
     double measBatchsize = cursor.getFloat(cid);
     cid++;
+    String snapDescription = cursor.getString(cid);
+    cid++;
+    String snapshotTime = cursor.getString(cid);
+    cid++;
 
-    ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
-    BeerStyle style = readStyle(id);
-    MashProfile profile = readMashProfile(id);
+    ArrayList<Ingredient> ingredientsList = readIngredientsListSnapshot(snapshotId);
+    BeerStyle style = readStyleSnapshot(snapshotId);
+    MashProfile profile = readMashProfileSnapshot(snapshotId);
 
     Log.d("DatabaseInterface", "Creating recipe '" + recipeName + "' from cursor");
 
     RecipeSnapshot snapshot = new RecipeSnapshot(recipeName);
-    snapshot.setId(id);
+    snapshot.setId(snapshotId);
+    snapshot.setRecipeId(recipeId);
     snapshot.setVersion(version);
     snapshot.setType(type);
     snapshot.setBrewer(brewer);
@@ -1146,19 +1161,34 @@ public class DatabaseInterface {
     snapshot.setCalculateStrikeTemp(calcStrikeTemp > 0);
     snapshot.setCalculateStrikeVolume(calcStrikeVol > 0);
     snapshot.setBeerXmlMeasuredBatchSize(measBatchsize);
-
     snapshot.setStyle(style);
     snapshot.setMashProfile(profile);
     snapshot.setIngredientsList(ingredientsList);
+    snapshot.setDescription(snapDescription);
+    snapshot.setSnapshotTime(snapshotTime);
 
     return snapshot;
   }
 
-  // gets the ingredients list for recipe with given ID=id
-  private ArrayList<Ingredient> readIngredientsList(long id) {
+  private ArrayList<Ingredient> readIngredientsListSnapshot(long snapshotId) {
+    String whereString = DatabaseHelper.COL_SNAPSHOT_ID + "=" + snapshotId;
+    return getIngredientsWhere(whereString);
+  }
+
+  private ArrayList<Ingredient> readIngredientListRecipe(long recipeId) {
+    String whereString = DatabaseHelper.ING_COL_OWNER_ID + "=" + recipeId;
+    return getIngredientsWhere(whereString);
+  }
+
+  /**
+   * Generic helper for retrieving a list of ingredients from the database that match the given
+   * SQL query string.
+   * @param whereString
+   * @return
+   */
+  private ArrayList<Ingredient> getIngredientsWhere(String whereString) {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
 
-    String whereString = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
     Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
                                    whereString, null, null, null, null);
     cursor.moveToFirst();
@@ -1179,10 +1209,23 @@ public class DatabaseInterface {
     return list;
   }
 
-  // gets the style for recipe with given ID=id
-  private BeerStyle readStyle(long id) {
+  private BeerStyle readStyleRecipe(long recipeId) {
+    String whereString = DatabaseHelper.STY_COL_OWNER_ID + "=" + recipeId;
+    return readStyleWhere(whereString);
+  }
 
-    String whereString = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
+  private BeerStyle readStyleSnapshot(long snapshotId) {
+    String whereString = DatabaseHelper.COL_SNAPSHOT_ID + "=" + snapshotId;
+    return readStyleWhere(whereString);
+  }
+
+  /**
+   * Returns the first Style in the database to match the given SQL string.
+   * @param whereString
+   * @return
+   */
+  private BeerStyle readStyleWhere(String whereString) {
+
     Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString,
                                    null, null, null, null);
 
@@ -1247,10 +1290,12 @@ public class DatabaseInterface {
     cid++;
     String examples = cursor.getString(cid);
     cid++;
+    long snapshotId = cursor.getLong(cid);
+    cid++;
 
     // Stick them all in a new object
     BeerStyle style = new BeerStyle(name);
-    style.setOwnerId(ownerId);
+    style.setRecipeId(ownerId);
     style.setCategory(category);
     style.setCategoryNumber(catNumber);
     style.setStyleLetter(styleLetter);
@@ -1272,13 +1317,27 @@ public class DatabaseInterface {
     style.setIngredients(ingredients);
     style.setExamples(examples);
     style.setNotes(notes);
+    style.setSnapshotId(snapshotId);
 
     return style;
   }
 
-  private MashProfile readMashProfile(long id) {
+  private MashProfile readMashProfileRecipe(long recipeId) {
+    String whereString = DatabaseHelper.PRO_COL_OWNER_ID + "=" + recipeId;
+    return readMashProfileWhere(whereString);
+  }
 
-    String whereString = DatabaseHelper.PRO_COL_OWNER_ID + "=" + id;
+  private MashProfile readMashProfileSnapshot(long snapshotId) {
+    String whereString = DatabaseHelper.COL_SNAPSHOT_ID + "=" + snapshotId;
+    return readMashProfileWhere(whereString);
+  }
+
+  /**
+   * Returns the first MashProfile in the database that matches the given SQL string.
+   * @param whereString
+   * @return
+   */
+  private MashProfile readMashProfileWhere(String whereString) {
     Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString,
                                    null, null, null, null);
 
@@ -1299,7 +1358,7 @@ public class DatabaseInterface {
 
     long id = cursor.getLong(cid);
     cid++;
-    long ownerId = cursor.getLong(cid);
+    long recipeId = cursor.getLong(cid);
     cid++;
     long dbid = cursor.getLong(cid);
     cid++;
@@ -1327,12 +1386,13 @@ public class DatabaseInterface {
     cid++;
     String spargeType = cursor.getString(cid);
     cid++;
+    long snapshotId = cursor.getLong(cid);
 
     ArrayList<MashStep> stepsList = readMashStepsList(id);
 
     MashProfile p = new MashProfile();
     p.setId(id);
-    p.setOwnerId(ownerId);
+    p.setRecipeId(recipeId);
     p.setName(name);
     p.setVersion(version);
     p.setBeerXmlStandardGrainTemp(grainTemp);
@@ -1346,6 +1406,7 @@ public class DatabaseInterface {
     p.setMashStepList(stepsList);
     p.setMashType(mashType);
     p.setSpargeType(spargeType);
+    p.setSnapshotId(snapshotId);
     return p;
   }
 
@@ -1434,7 +1495,7 @@ public class DatabaseInterface {
     // Ingredient type agnostic stuff
     long id = cursor.getLong(cid);
     cid++;
-    long ownerId = cursor.getLong(cid);
+    long recipeId = cursor.getLong(cid);
     cid++;
     long databaseId = cursor.getLong(cid);
     cid++;
@@ -1453,6 +1514,9 @@ public class DatabaseInterface {
     double inventory = cursor.getDouble(cid);
     cid++;
 
+    // Get non-specific stuff before creating Ingredient objects.
+    long snapshotId = cursor.getLong(ingredientColumns.indexOf(DatabaseHelper.COL_SNAPSHOT_ID));
+
     // Fermentable specific stuff
     if (ingType.equals(Ingredient.FERMENTABLE)) {
       String type = cursor.getString(cid);
@@ -1470,23 +1534,24 @@ public class DatabaseInterface {
 
       boolean addAfterBoil = (afterBoil == 0) ? false : true;
 
-      Fermentable fer = new Fermentable(name);
-      fer.setId(id);
-      fer.setDatabaseId(databaseId);
-      fer.setBeerXmlStandardInventory(inventory);
-      fer.setOwnerId(ownerId);
-      fer.setShortDescription(description);
-      fer.setDisplayUnits(units);
-      fer.setBeerXmlStandardAmount(amount);
-      fer.setTime(time);
-      fer.setFermentableType(type);
-      fer.setYield(yield);
-      fer.setLovibondColor(color);
-      fer.setAddAfterBoil(addAfterBoil);
-      fer.setMaxInBatch(maxInBatch);
-      fer.setGravity(gravity);
+      Fermentable ingredient = new Fermentable(name);
+      ingredient.setId(id);
+      ingredient.setDatabaseId(databaseId);
+      ingredient.setBeerXmlStandardInventory(inventory);
+      ingredient.setRecipeId(recipeId);
+      ingredient.setShortDescription(description);
+      ingredient.setDisplayUnits(units);
+      ingredient.setBeerXmlStandardAmount(amount);
+      ingredient.setTime(time);
+      ingredient.setFermentableType(type);
+      ingredient.setYield(yield);
+      ingredient.setLovibondColor(color);
+      ingredient.setAddAfterBoil(addAfterBoil);
+      ingredient.setMaxInBatch(maxInBatch);
+      ingredient.setGravity(gravity);
+      ingredient.setSnapshotId(snapshotId);
 
-      return fer;
+      return ingredient;
     }
 
     // Hop specific stuff
@@ -1504,22 +1569,23 @@ public class DatabaseInterface {
       String origin = cursor.getString(cid);
       cid++;
 
-      Hop hop = new Hop(name);
-      hop.setDatabaseId(databaseId);
-      hop.setBeerXmlStandardInventory(inventory);
-      hop.setId(id);
-      hop.setOwnerId(ownerId);
-      hop.setShortDescription(description);
-      hop.setDisplayUnits(units);
-      hop.setBeerXmlStandardAmount(amount);
-      hop.setHopType(type);
-      hop.setAlphaAcidContent(alpha);
-      hop.setUse(use);
-      hop.setDisplayTime(time);
-      hop.setForm(form);
-      hop.setOrigin(origin);
+      Hop ingredient = new Hop(name);
+      ingredient.setDatabaseId(databaseId);
+      ingredient.setBeerXmlStandardInventory(inventory);
+      ingredient.setId(id);
+      ingredient.setRecipeId(recipeId);
+      ingredient.setShortDescription(description);
+      ingredient.setDisplayUnits(units);
+      ingredient.setBeerXmlStandardAmount(amount);
+      ingredient.setHopType(type);
+      ingredient.setAlphaAcidContent(alpha);
+      ingredient.setUse(use);
+      ingredient.setDisplayTime(time);
+      ingredient.setForm(form);
+      ingredient.setOrigin(origin);
+      ingredient.setSnapshotId(snapshotId);
 
-      return hop;
+      return ingredient;
     }
 
     // Yeast specific stuff
@@ -1545,32 +1611,33 @@ public class DatabaseInterface {
       String productId = cursor.getString(cid);
       cid++;
 
-      Yeast yeast = new Yeast(name);
-      yeast.setDatabaseId(databaseId);
-      yeast.setBeerXmlStandardInventory(inventory);
-      yeast.setId(id);
-      yeast.setOwnerId(ownerId);
-      yeast.setShortDescription(description);
-      yeast.setDisplayUnits(units);
-      yeast.setBeerXmlStandardAmount(amount);
-      yeast.setTime(time);
-      yeast.setType(type);
-      yeast.setForm(form);
-      yeast.setMinTemp(minTemp);
-      yeast.setMaxTemp(maxTemp);
-      yeast.setAttenuation(attn);
-      yeast.setNotes(notes);
-      yeast.setBestFor(bestFor);
-      yeast.setLaboratory(lab);
-      yeast.setProductId(productId);
+      Yeast ingredient = new Yeast(name);
+      ingredient.setDatabaseId(databaseId);
+      ingredient.setBeerXmlStandardInventory(inventory);
+      ingredient.setId(id);
+      ingredient.setRecipeId(recipeId);
+      ingredient.setShortDescription(description);
+      ingredient.setDisplayUnits(units);
+      ingredient.setBeerXmlStandardAmount(amount);
+      ingredient.setTime(time);
+      ingredient.setType(type);
+      ingredient.setForm(form);
+      ingredient.setMinTemp(minTemp);
+      ingredient.setMaxTemp(maxTemp);
+      ingredient.setAttenuation(attn);
+      ingredient.setNotes(notes);
+      ingredient.setBestFor(bestFor);
+      ingredient.setLaboratory(lab);
+      ingredient.setProductId(productId);
+      ingredient.setSnapshotId(snapshotId);
 
-      return yeast;
+      return ingredient;
     }
 
     if (ingType.equals(Ingredient.MISC)) {
       cid += 20;
 
-      Misc misc = new Misc(name);
+      Misc ingredient = new Misc(name);
       String miscType = cursor.getString(cid);
       cid++;
       int version = cursor.getInt(cid);
@@ -1582,21 +1649,22 @@ public class DatabaseInterface {
       String use = cursor.getString(cid);
       cid++;
 
-      misc.setId(id);
-      misc.setDatabaseId(databaseId);
-      misc.setBeerXmlStandardInventory(inventory);
-      misc.setOwnerId(ownerId);
-      misc.setShortDescription(description);
-      misc.setDisplayUnits(units);
-      misc.setBeerXmlStandardAmount(amount);
-      misc.setTime(time);
-      misc.setMiscType(miscType);
-      misc.setVersion(version);
-      misc.setAmountIsWeight(amtIsWeight > 0 ? true : false);
-      misc.setUse(use);
-      misc.setUseFor(useFor);
+      ingredient.setId(id);
+      ingredient.setDatabaseId(databaseId);
+      ingredient.setBeerXmlStandardInventory(inventory);
+      ingredient.setRecipeId(recipeId);
+      ingredient.setShortDescription(description);
+      ingredient.setDisplayUnits(units);
+      ingredient.setBeerXmlStandardAmount(amount);
+      ingredient.setTime(time);
+      ingredient.setMiscType(miscType);
+      ingredient.setVersion(version);
+      ingredient.setAmountIsWeight(amtIsWeight > 0 ? true : false);
+      ingredient.setUse(use);
+      ingredient.setUseFor(useFor);
+      ingredient.setSnapshotId(snapshotId);
 
-      return misc;
+      return ingredient;
     }
 
     throw new Exception("No ingredient found");

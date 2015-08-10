@@ -29,6 +29,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final String TABLE_STEPS = "MashStepTable";
   public static final String TABLE_SNAPSHOTS = "RecipeSnapshotTable";
 
+  // Common column names
+  public static final String COL_SNAPSHOT_ID = "ownerSnapshotId";       // Identifies the snapshot which owns this item.
+
   // Column name defines for RECIPES
   public static final String REC_COL_ID = "_id";
   public static final String REC_COL_DB_ID = "databaseId";
@@ -76,6 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   // Column name defines for SNAPSHOTS (augments the recipe columns)
   public static final String SNAP_COL_OWNER_ID = "snapshotOwnerId";
   public static final String SNAP_COL_DESCRIPTION = "snapshotDescription";
+  public static final String SNAP_COL_SNAPSHOT_TIME = "snapshotTime";
 
   // Column name defines for INGREDIENTS
   public static final String ING_COL_ID = "_id";
@@ -276,7 +280,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + REC_COL_CALC_STRIKE_TEMP + " integer, "
           + REC_COL_CALC_STRIKE_VOL + " integer, "
           + REC_COL_MEAS_BATCH_SIZE + " float, "
-          + SNAP_COL_DESCRIPTION + " string"
+          + SNAP_COL_DESCRIPTION + " string, "
+          + SNAP_COL_SNAPSHOT_TIME + " string"
           + ");";
 
   private static final String CREATE_INGREDIENT_TABLE = "create table " +
@@ -320,7 +325,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + ING_MC_COL_VERSION + " int, "
           + ING_MC_COL_AMT_IS_WEIGHT + " int, "
           + ING_MC_COL_USE_FOR + " text, "
-          + ING_MC_COL_USE + " text"
+          + ING_MC_COL_USE + " text, "
+          + COL_SNAPSHOT_ID + " int default -1"
           + ");";
 
   public static final String CREATE_STYLE_TABLE = "create table " +
@@ -350,7 +356,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + STY_COL_NOTES + " text, "
           + STY_COL_PROFILE + " text, "
           + STY_COL_INGREDIENTS + " text, "
-          + STY_COL_EXAMPLES + " text"
+          + STY_COL_EXAMPLES + " text, "
+          + COL_SNAPSHOT_ID + " int default -1"
           + ");";
 
   public static final String CREATE_PROFILE_TABLE = "create table " +
@@ -370,7 +377,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + PRO_COL_TUN_SPEC_HEAT + " float, "
           + PRO_COL_TUN_EQUIP_ADJ + " integer, "
           + PRO_COL_MASH_TYPE + " text, "
-          + PRO_COL_SPARGE_TYPE + " text"
+          + PRO_COL_SPARGE_TYPE + " text, "
+          + COL_SNAPSHOT_ID + " int default -1"
           + ");";
 
   public static final String CREATE_STEP_TABLE = "create table " +
@@ -445,6 +453,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           // Upgrade from GAMMA to DELTA.  Adds the recipe snapshot table.
           Log.d("DatabaseHelper", "Upgrading database from GAMMA to DELTA");
           db.execSQL(CREATE_SNAPSHOT_TABLE);
+
+          // Add columns which indicate if owner is a Recipe or a RecipeSnapshot.
+          sql = "ALTER TABLE " + TABLE_INGREDIENTS + " ADD COLUMN " +
+                DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
+          db.execSQL(sql);
+          sql = "ALTER TABLE " + TABLE_PROFILES + " ADD COLUMN " +
+                  DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
+          db.execSQL(sql);
+          db.execSQL(sql);
+          sql = "ALTER TABLE " + TABLE_STYLES + " ADD COLUMN " +
+                  DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
+          db.execSQL(sql);
       }
     }
   }

@@ -54,6 +54,7 @@ public class Constants {
 
   // No owner ID for use in database
   public static final long OWNER_NONE = - 1;
+  public static final long SNAPSHOT_NONE = -1;
 
   // Broadcast types
   public static final String BROADCAST_TIMER = "com.biermacht.brews.broadcast.timer";

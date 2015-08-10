@@ -153,6 +153,9 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
         // Declare Intent used to start new apps
         Intent i;
 
+        // Get the recipe here, in case it has changed since the user long pressed the list item.
+        contextActionRecipe = recipeList.get(currentSelectedIndex);
+
         // Determine which context item was selected.
         switch (item.getItemId()) {
           case R.id.menu_delete_recipe:
@@ -261,7 +264,6 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
         mAdapter.setChecked(pos, true);
         mAdapter.notifyDataSetChanged();
         currentSelectedIndex = pos;
-        contextActionRecipe = recipeList.get(pos);
 
         // If the Contextual action bar is already being displayed, don't start a new action bar.
         if (mActionMode != null) {

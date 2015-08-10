@@ -1,10 +1,13 @@
 package com.biermacht.brews.frontend;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +21,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Database;
@@ -105,6 +109,7 @@ public class DisplayRecipeActivity extends AppCompatActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     this.menu = menu;
+    menu.removeItem(R.id.menu_new_snapshot);
     menu.removeItem(R.id.menu_add_ing);
     menu.removeItem(R.id.menu_edit_recipe);
     menu.removeItem(R.id.menu_timer);
@@ -112,6 +117,7 @@ public class DisplayRecipeActivity extends AppCompatActivity {
 
     switch (mViewPager.getCurrentItem()) {
       case 0:
+        getMenuInflater().inflate(R.menu.fragment_snapshots_menu, menu);
         break;
       case 1:
         getMenuInflater().inflate(R.menu.fragment_ingredient_menu, menu);
@@ -135,6 +141,13 @@ public class DisplayRecipeActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent i;
+
+    // Pass the given event to the currently selected Fragment to handle.  If handled, return.
+    if (cpAdapter.getItem(mViewPager.getCurrentItem()).onOptionsItemSelected(item)) {
+      return true;
+    }
+
+    // Otherwise, switch on the item ID.
     switch (item.getItemId()) {
       case android.R.id.home:
         finish();

@@ -31,7 +31,8 @@ public class BeerStyle implements Parcelable {
   private double maxAbv;
 
   // More
-  private long ownerId;
+  private long recipeId;
+  private long snapshotId;
 
   // Defines
   public static String TYPE_ALE = "Ale";
@@ -53,7 +54,7 @@ public class BeerStyle implements Parcelable {
     setStyleGuide("");
     setCategoryNumber("");
     setVersion(1);
-    setOwnerId(- 1);
+    setRecipeId(- 1);
 
     this.MinOg = 1;
     this.MaxOg = 2;
@@ -90,7 +91,8 @@ public class BeerStyle implements Parcelable {
     maxColor = p.readDouble();
     minAbv = p.readDouble();
     maxAbv = p.readDouble();
-    ownerId = p.readLong();
+    recipeId = p.readLong();
+    snapshotId = p.readLong();
   }
 
   @Override
@@ -117,7 +119,8 @@ public class BeerStyle implements Parcelable {
     p.writeDouble(maxColor);
     p.writeDouble(minAbv);
     p.writeDouble(maxAbv);
-    p.writeLong(ownerId);
+    p.writeLong(recipeId);
+    p.writeLong(snapshotId);
   }
 
   @Override
@@ -159,12 +162,20 @@ public class BeerStyle implements Parcelable {
     return name;
   }
 
-  public void setOwnerId(long i) {
-    this.ownerId = i;
+  public void setRecipeId(long i) {
+    this.recipeId = i;
   }
 
-  public long getOwnerId() {
-    return this.ownerId;
+  public long getRecipeId() {
+    return this.recipeId;
+  }
+
+  public void setSnapshotId(long i) {
+    this.snapshotId = i;
+  }
+
+  public long getSnapshotId() {
+    return this.snapshotId;
   }
 
   public void setMinCarb(double d) {

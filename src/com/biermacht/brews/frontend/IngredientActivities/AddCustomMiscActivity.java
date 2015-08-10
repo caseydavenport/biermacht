@@ -47,7 +47,7 @@ public class AddCustomMiscActivity extends AddMiscActivity {
   @Override
   public void onFinished() {
     Log.d("AddCustomMisc::onFinished", "Adding misc to db_custom: " + misc.getName());
-    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID);
+    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID, Constants.SNAPSHOT_NONE);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
       Log.d("AddCustomMisc::onFinished", "Adding misc '" +
