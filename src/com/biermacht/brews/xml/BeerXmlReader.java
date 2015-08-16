@@ -138,6 +138,8 @@ public class BeerXmlReader extends DefaultHandler {
     if (qName.equalsIgnoreCase("RECIPE")) {
       thingTypeStack.push(qName);
       r = new Recipe("");
+      r.setCalculateStrikeVolume(false);
+      r.setCalculateStrikeTemp(false);
     }
 
     // We encounter a new fermentables list
@@ -447,6 +449,7 @@ public class BeerXmlReader extends DefaultHandler {
 
       else if (qName.equalsIgnoreCase("BOIL_SIZE")) {
         double s = Float.parseFloat(currentValue);
+        r.setCalculateBoilVolume(false);
         r.setBeerXmlStandardBoilSize(s);
       }
 

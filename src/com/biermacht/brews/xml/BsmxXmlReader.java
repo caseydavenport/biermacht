@@ -144,6 +144,8 @@ public class BsmxXmlReader extends DefaultHandler {
     if (qName.equalsIgnoreCase("Recipe")) {
       thingTypeStack.push(qName);
       r = new Recipe("");
+      r.setCalculateStrikeTemp(false);
+      r.setCalculateStrikeVolume(false);
     }
 
     // We encounter a new hop
@@ -374,6 +376,7 @@ public class BsmxXmlReader extends DefaultHandler {
       else if (qName.equalsIgnoreCase("F_E_BOIL_VOL")) {
         // .bsmx uses ounces for volume, so convert to liters first.
         double s = Units.ouncesToLiters(Float.parseFloat(currentValue));
+        r.setCalculateBoilVolume(false);
         r.setBeerXmlStandardBoilSize(s);
       }
 
@@ -847,7 +850,7 @@ public class BsmxXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("F_M_TIME")) {
-        double time = Units.getAmountFromDisplayAmount(currentValue);
+        double time = Double.parseDouble(currentValue);
         misc.setTime((int) time);
       }
 
