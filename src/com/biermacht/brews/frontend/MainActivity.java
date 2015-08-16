@@ -27,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomFermentableActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomHopsActivity;
@@ -43,7 +44,6 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
     // Instantiate my database interface
-    databaseInterface = new DatabaseInterface(getApplicationContext());
+    databaseInterface = DatabaseAPI.newDatabaseInterface(getApplicationContext());
     databaseInterface.open();
 
     // Check for important shared preferences flags and perform any required actions.
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
       new ImportXmlIngredientsTask(this).execute("");
 
       // Create the master recipe - used as placeholder for stuff
-      Database.createRecipeWithName("Master Recipe");
+      DatabaseAPI.createRecipeWithName("Master Recipe");
     }
     else {
       // Async Initialize Assets on startup.  This loads styles and mash profiles for faster
@@ -503,7 +503,7 @@ public class MainActivity extends AppCompatActivity {
     protected String doInBackground(String... params) {
       for (Recipe r : list) {
         r.update();
-        Database.createRecipeFromExisting(r);
+        DatabaseAPI.createRecipeFromExisting(r);
       }
       return "Executed";
     }

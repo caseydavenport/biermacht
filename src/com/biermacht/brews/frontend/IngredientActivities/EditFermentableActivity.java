@@ -7,11 +7,10 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.exceptions.ItemNotFoundException;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 import java.util.Arrays;
 
@@ -44,7 +43,8 @@ public class EditFermentableActivity extends AddFermentableActivity {
 
     // Get the ingredient as well
     long grainId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
-    fermentable = (Fermentable) Database.getIngredientWithId(grainId);
+    fermentable = (Fermentable) DatabaseAPI.getIngredientWithId(grainId);
+    Log.d("EditFermentableActivity::getValuesFromIntent", "Retrieved fermentable: " + fermentable.getName());
   }
 
   @Override
@@ -124,21 +124,14 @@ public class EditFermentableActivity extends AddFermentableActivity {
 
   @Override
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
+    DatabaseAPI.deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
     finish();
   }
 
   @Override
   public void onFinished() {
     // Update the ingredient, and finish the activity
-    Database.updateIngredient(fermentable, Constants.DATABASE_DEFAULT);
-    try {
-      mRecipe = Database.getRecipeWithId(mRecipe.getId());
-    } catch (ItemNotFoundException e) {
-      e.printStackTrace();
-    }
-
-    mRecipe.save();
+    DatabaseAPI.updateIngredient(fermentable, Constants.DATABASE_DEFAULT);
     finish();
   }
 }

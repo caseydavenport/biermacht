@@ -36,6 +36,11 @@
                 android:value="com.biermacht.brews.MainActivity"/>
         </activity>
         <activity
+            android:name=".frontend.DisplaySnapshotActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_display_snapshot">
+        </activity>
+        <activity
             android:name=".frontend.AddRecipeActivity"
             android:label="@string/title_activity_add_new_recipe"
             android:windowSoftInputMode="adjustResize">

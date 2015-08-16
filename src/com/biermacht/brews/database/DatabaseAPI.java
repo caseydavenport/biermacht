@@ -1,5 +1,6 @@
-package com.biermacht.brews.utils;
+package com.biermacht.brews.database;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.biermacht.brews.exceptions.ItemNotFoundException;
@@ -8,6 +9,7 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeSnapshot;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 import java.util.ArrayList;
@@ -16,7 +18,11 @@ import java.util.Collections;
 /**
  * Wrapper around the DatabaseInterface class that exposes higher-level database APIs.
  */
-public class Database {
+public class DatabaseAPI {
+
+  public static DatabaseInterface newDatabaseInterface(Context c) {
+    return new DatabaseInterface(c);
+  }
 
   /**
    * Returns all Recipes in the database sorted alphabetically.
@@ -42,12 +48,16 @@ public class Database {
     return list;
   }
 
+  public static RecipeSnapshot getSnapshot(long snapshotId) {
+    return MainActivity.databaseInterface.getSnapshot(snapshotId);
+  }
+
   /**
    * Saves the given RecipeSnapshot to the database.
    * @param snap
    */
-  public static void saveSnapshot(RecipeSnapshot snap) {
-    MainActivity.databaseInterface.addSnapshotToDatabase(snap, snap.getRecipeId());
+  public static long saveSnapshot(RecipeSnapshot snap) {
+    return MainActivity.databaseInterface.addSnapshotToDatabase(snap, snap.getRecipeId());
   }
 
   // Create recipe with the given name
@@ -74,6 +84,12 @@ public class Database {
     return MainActivity.databaseInterface.updateExistingRecipe(r);
   }
 
+  // Updates existing recipe
+  public static boolean updateSnapshot(RecipeSnapshot snap) {
+    snap.update();
+    return MainActivity.databaseInterface.updateExistingSnapshot(snap);
+  }
+
   // Updates existing ingredient
   public static boolean updateIngredient(Ingredient i, long dbid) {
     return MainActivity.databaseInterface.updateExistingIngredientInDatabase(i, dbid);
@@ -90,12 +106,32 @@ public class Database {
     r.getMashProfile().delete(Constants.DATABASE_DEFAULT);
 
     // Delete this Recipe's Snapshots
-    for (RecipeSnapshot snap : Database.getSnapshots(r)) {
-      MainActivity.databaseInterface.deleteSnapshot(snap);
+    for (RecipeSnapshot snap : DatabaseAPI.getSnapshots(r)) {
+      deleteSnapshot(snap);
     }
+
+    // Delete this Recipe's style
+    MainActivity.databaseInterface.deleteStyleRecipe(r.getId());
 
     // And delete the recipe.
     return MainActivity.databaseInterface.deleteRecipe(r);
+  }
+
+  // Deletes the given snapshot if it exists in the database.
+  public static boolean deleteSnapshot(RecipeSnapshot snapshot) {
+    // Delete ingredients.
+    for (Ingredient i : snapshot.getIngredientList()) {
+      deleteIngredientWithId(i.getId(), Constants.DATABASE_DEFAULT);
+    }
+
+    // Delete MashProfile
+    snapshot.getMashProfile().delete(Constants.DATABASE_DEFAULT);
+
+    // Delete style
+    MainActivity.databaseInterface.deleteStyleSnapshot(snapshot.getId());
+
+    // And delete the Snapshot
+    return MainActivity.databaseInterface.deleteSnapshot(snapshot);
   }
 
   /**
@@ -126,7 +162,7 @@ public class Database {
   public static Recipe getRecipeWithId(long id) throws ItemNotFoundException {
     // If we receive a special ID, handle that here
     if (id == Constants.INVALID_ID) {
-      throw new ItemNotFoundException("Passed ID with value Utils.INVALID_ID");
+      throw new ItemNotFoundException();
     }
 
     // Actually perform the lookup
@@ -162,12 +198,12 @@ public class Database {
 
   public static void addMashProfileListToVirtualDatabase(long dbid, ArrayList<MashProfile> list, long recipeId, long snapshotId) {
     for (MashProfile p : list) {
-      MainActivity.databaseInterface.addMashProfileToDatabase(p, recipeId, dbid, snapshotId);
+      MainActivity.databaseInterface.addMashProfileToDatabase(p, recipeId, snapshotId, dbid);
     }
   }
 
   public static long addMashProfileToVirtualDatabase(long dbid, MashProfile p, long recipeId, long snapshotId) {
-    return MainActivity.databaseInterface.addMashProfileToDatabase(p, recipeId, dbid, snapshotId);
+    return MainActivity.databaseInterface.addMashProfileToDatabase(p, recipeId, snapshotId, dbid);
   }
 
   public static void updateMashProfile(MashProfile p, long recipeId, long snapshotId, long dbid) {

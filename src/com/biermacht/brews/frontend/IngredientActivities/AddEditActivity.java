@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -28,7 +29,6 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
 
 import java.util.ArrayList;
@@ -307,7 +307,7 @@ public abstract class AddEditActivity extends AppCompatActivity implements OnCli
       if (recipeId != Constants.INVALID_ID) {
         Log.d("AddEditActivity", "Found recipe ID, Trying database");
         try {
-          mRecipe = Database.getRecipeWithId(recipeId);
+          mRecipe = DatabaseAPI.getRecipeWithId(recipeId);
           Log.d("AddEditActivity", "Found recipe in database");
         } catch (ItemNotFoundException e) {
           e.printStackTrace();

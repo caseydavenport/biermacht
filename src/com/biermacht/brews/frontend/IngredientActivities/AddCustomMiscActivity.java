@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 import java.util.Arrays;
 
@@ -47,7 +47,7 @@ public class AddCustomMiscActivity extends AddMiscActivity {
   @Override
   public void onFinished() {
     Log.d("AddCustomMisc::onFinished", "Adding misc to db_custom: " + misc.getName());
-    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID, Constants.SNAPSHOT_NONE);
+    DatabaseAPI.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID, Constants.SNAPSHOT_NONE);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
       Log.d("AddCustomMisc::onFinished", "Adding misc '" +

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.AddRecipeActivity;
 import com.biermacht.brews.frontend.BrewTimerActivity;
@@ -45,7 +45,6 @@ import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 import com.biermacht.brews.xml.RecipeXmlWriter;
@@ -168,7 +167,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
           case R.id.menu_copy_recipe:
             // TODO: Ask user for new name, animate new recipe entering list.
-            Recipe copy = Database.createRecipeFromExisting(contextActionRecipe);
+            Recipe copy = DatabaseAPI.createRecipeFromExisting(contextActionRecipe);
             copy.setRecipeName(contextActionRecipe.getRecipeName() + " - Copy");
             recipeList.add(mAdapter.getPosition(contextActionRecipe) + 1, copy);
             mAdapter.notifyDataSetChanged();
@@ -344,7 +343,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
                 Log.d("RecipesFragment", "Deleting recipe: " + r);
                 recipeList.remove(r);
                 mAdapter.notifyDataSetChanged();
-                Database.deleteRecipe(r);
+                DatabaseAPI.deleteRecipe(r);
                 if (isTablet) {
                   // If we're running on a tablet, we should set the current selected item to 0
                   // and update the details view.  Otherwise, the details view will remain stuck on the 
@@ -493,7 +492,7 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
   public void updateRecipesFromDatabase() {
     // Load all recipes from database.
-    ArrayList<Recipe> loadedRecipes = Database.getRecipeList();
+    ArrayList<Recipe> loadedRecipes = DatabaseAPI.getRecipeList();
 
     // Update the recipe list with the loaded recipes.
     recipeList.removeAll(recipeList);

@@ -17,11 +17,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
+import com.biermacht.brews.frontend.DisplaySnapshotActivity;
 import com.biermacht.brews.frontend.adapters.SnapshotArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.comparators.RecipeSnapshotComparator;
 
 import java.util.ArrayList;
@@ -80,18 +81,22 @@ public class SnapshotsViewFragment extends Fragment {
 
     // Get the snapshot list from the database.
     // TODO: Refactor for efficiency - don't want to do database lookups in onCreateView!
-    snapshotList = Database.getSnapshots(r);
+    snapshotList = DatabaseAPI.getSnapshots(r);
     Collections.sort(snapshotList, new RecipeSnapshotComparator<RecipeSnapshot>());
     snapshotArrayAdapter = new SnapshotArrayAdapter(getActivity(), snapshotList);
     listView.setAdapter(snapshotArrayAdapter);
-    listView.setOnItemClickListener(mClickListener);
 
     // Set up the onClickListener. This handles click events when the 
     // user clicks on snapshot in the list.
     mClickListener = new OnItemClickListener() {
       public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
+        // Start the "display" activity for snapshots.
+        Intent i = new Intent(getActivity(), DisplaySnapshotActivity.class);
+        i.putExtra(Constants.KEY_SNAPSHOT, snapshotList.get(pos));
+        startActivity(i);
       }
     };
+    listView.setOnItemClickListener(mClickListener);
 
     // Set whether or not we show the list view
     setCorrectView();
@@ -137,7 +142,7 @@ public class SnapshotsViewFragment extends Fragment {
     return new AlertDialog.Builder(getActivity())
             .setTitle("New Snapshot")
             .setMessage("Create a new Snapshot?")
-            .setIcon(android.R.drawable.ic_menu_save)
+            //.setIcon(android.R.drawable.ic_menu_save)
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {

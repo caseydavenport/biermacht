@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 public class EditMashProfileActivity extends AddMashProfileActivity {
 
@@ -106,7 +106,7 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
             .setPositiveButton("Save", new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
                 mProfile.setName(mRecipe.getRecipeName() + "'s profile");
-                Database.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, mProfile.getRecipeId(), Constants.SNAPSHOT_NONE);
+                DatabaseAPI.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, mProfile.getRecipeId(), Constants.SNAPSHOT_NONE);
                 onMashProfileSavedAlert().create().show();
               }
             })

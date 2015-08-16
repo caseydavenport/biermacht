@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.IngredientActivities.EditCustomFermentableActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditCustomHopActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditCustomMiscActivity;
@@ -23,7 +24,6 @@ import com.biermacht.brews.frontend.IngredientActivities.EditCustomYeastActivity
 import com.biermacht.brews.frontend.adapters.CustomIngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
 import com.biermacht.brews.utils.interfaces.ClickableFragment;
 
@@ -50,8 +50,8 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
     c = getActivity();
 
     // Get ingredient list
-    list = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
-    list.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT));
+    list = DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+    list.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT));
     Collections.sort(list, new IngredientComparator());
 
     // Set up the list adapter
@@ -135,8 +135,8 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
   @Override
   public void update() {
     // Get the full list of ingredients from the custom database and permanent database.
-    ArrayList<Ingredient> loadedList = Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
-    loadedList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT));
+    ArrayList<Ingredient> loadedList = DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM);
+    loadedList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT));
 
     // Add the loaded ingredients to the list for the list view.
     list.removeAll(list);

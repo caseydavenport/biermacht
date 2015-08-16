@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 
 public class EditMiscActivity extends AddMiscActivity {
@@ -99,13 +99,13 @@ public class EditMiscActivity extends AddMiscActivity {
 
   @Override
   public void onFinished() {
-    Database.updateIngredient(misc, Constants.DATABASE_DEFAULT);
+    DatabaseAPI.updateIngredient(misc, Constants.DATABASE_DEFAULT);
     finish();
   }
 
   @Override
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(misc.getId(), Constants.DATABASE_DEFAULT);
+    DatabaseAPI.deleteIngredientWithId(misc.getId(), Constants.DATABASE_DEFAULT);
     finish();
   }
 }

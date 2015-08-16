@@ -20,6 +20,7 @@ public class Constants {
   // Keys for passing objects
   public static final String KEY_RECIPE_ID = "biermacht.brews.recipe.id";
   public static final String KEY_RECIPE = "biermacht.brews.recipe";
+  public static final String KEY_SNAPSHOT = "biermacht.brews.snapshot";
   public static final String KEY_PROFILE_ID = "biermacht.brews.mash.profile.id";
   public static final String KEY_PROFILE = "biermacht.brews.mash.profile";
   public static final String KEY_INGREDIENT_ID = "biermacht.brews.ingredient.id";

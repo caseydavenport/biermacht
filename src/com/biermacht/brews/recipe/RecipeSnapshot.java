@@ -1,7 +1,10 @@
 package com.biermacht.brews.recipe;
 
 import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.InstructionGenerator;
 
@@ -16,6 +19,19 @@ public class RecipeSnapshot extends Recipe {
   private long recipeId;                             // ID of the Recipe of which this is a snapshot.
   private String description;                        // Short description, e.g. "For Event X"
   private String snapshotTime;                       // Time of day that this snapshot was taken.
+
+  public static final Parcelable.Creator<Recipe> CREATOR =
+          new Parcelable.Creator<Recipe>() {
+            @Override
+            public RecipeSnapshot createFromParcel(Parcel p) {
+              return new RecipeSnapshot(p);
+            }
+
+            @Override
+            public RecipeSnapshot[] newArray(int size) {
+              return new RecipeSnapshot[]{};
+            }
+          };
 
   // Public constructors
   public RecipeSnapshot(String s) {
@@ -93,12 +109,16 @@ public class RecipeSnapshot extends Recipe {
   public RecipeSnapshot(Parcel p) {
     super(p);
     this.recipeId = p.readLong();
+    this.description = p.readString();
+    this.snapshotTime = p.readString();
   }
 
   @Override
   public void writeToParcel(Parcel p, int flags) {
     super.writeToParcel(p, flags);
     p.writeLong(recipeId);
+    p.writeString(this.description);
+    p.writeString(this.snapshotTime);
   }
 
   public String getSnapshotTime() {
@@ -131,6 +151,15 @@ public class RecipeSnapshot extends Recipe {
 
   public String getDescription() {
     return this.description;
+  }
+
+  /**
+   * Saves this RecipeSnapshot to the database.
+   */
+  @Override
+  public void save() {
+    Log.d("Snapshot::save()", "Saving " + this.getRecipeName() + " snapshot with id: " + this.getId());
+    DatabaseAPI.updateSnapshot(this);
   }
 
 }

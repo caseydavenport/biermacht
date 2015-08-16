@@ -13,12 +13,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
@@ -247,7 +247,7 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected String doInBackground(String... params) {
       xmlWriter = new RecipeXmlWriter(SettingsActivity.this);
-      xmlWriter.writeRecipes(Database.getRecipeList(), "recipes-");
+      xmlWriter.writeRecipes(DatabaseAPI.getRecipeList(), "recipes-");
       return "Executed";
     }
 
@@ -284,7 +284,7 @@ public class SettingsActivity extends AddEditActivity {
 
     @Override
     protected String doInBackground(String... params) {
-      Database.deleteAllRecipes();
+      DatabaseAPI.deleteAllRecipes();
       return "Executed";
     }
 
@@ -336,8 +336,8 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected String doInBackground(String... params) {
       Log.d("ResetIngredients", "Deleting all 'permanent' ingredients");
-      for (Ingredient ing : Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT)) {
-        Database.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
+      for (Ingredient ing : DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT)) {
+        DatabaseAPI.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
       }
 
       Log.d("ResetIngredients", "Re-initializing ingredient assets");

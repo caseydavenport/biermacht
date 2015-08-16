@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.frontend.adapters.BeerStyleSpinnerAdapter;
 import com.biermacht.brews.frontend.adapters.MashProfileSpinnerAdapter;
@@ -22,7 +23,6 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Callbacks.BooleanCallback;
 import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Utils;
 
@@ -359,7 +359,7 @@ public class AddRecipeActivity extends AddEditActivity {
   @Override
   public void onFinished() {
     // Create the recipe in the database.
-    Recipe r = Database.createRecipeFromExisting(mRecipe);
+    Recipe r = DatabaseAPI.createRecipeFromExisting(mRecipe);
 
     if (this.displayOnCreate) {
       // Open up the display recipe activity.

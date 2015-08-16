@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.comparators.FromDatabaseMashStepComparator;
 
@@ -438,15 +438,15 @@ public class MashProfile implements Parcelable {
     Log.d("MashProfile", "Saving " + name + " to database " + database);
     if (this.id < 0) {
       // We haven't yet saved this.  Add it to the database.
-      Database.addMashProfileToVirtualDatabase(database, this, this.getRecipeId(), this.getSnapshotId());
+      DatabaseAPI.addMashProfileToVirtualDatabase(database, this, this.getRecipeId(), this.getSnapshotId());
     }
     else {
       // Already exists.  Update it.
-      Database.updateMashProfile(this, this.getRecipeId(), this.getSnapshotId(), database);
+      DatabaseAPI.updateMashProfile(this, this.getRecipeId(), this.getSnapshotId(), database);
     }
   }
 
   public void delete(long database) {
-    Database.deleteMashProfile(this, database);
+    DatabaseAPI.deleteMashProfile(this, database);
   }
 }

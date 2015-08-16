@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.biermacht.brews.exceptions.InvalidCursorException;
 import com.biermacht.brews.frontend.adapters.DetailArrayAdapter;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
@@ -237,7 +238,7 @@ public class DatabaseInterface {
   };
 
   // Constructor
-  public DatabaseInterface(Context context) {
+  protected DatabaseInterface(Context context) {
     dbHelper = new DatabaseHelper(context);
   }
 
@@ -249,7 +250,7 @@ public class DatabaseInterface {
     dbHelper.close();
   }
 
-  public long addRecipeToDatabase(Recipe r) {
+  protected long addRecipeToDatabase(Recipe r) {
     // Load up values to store
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.REC_COL_DB_ID, Constants.DATABASE_DEFAULT);
@@ -297,12 +298,12 @@ public class DatabaseInterface {
     long recipeId = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
     addIngredientListToDatabase(r.getIngredientList(), recipeId, Constants.DATABASE_DEFAULT, Constants.SNAPSHOT_NONE);
     addStyleToDatabase(r.getStyle(), recipeId, Constants.SNAPSHOT_NONE);
-    addMashProfileToDatabase(r.getMashProfile(), recipeId, Constants.DATABASE_DEFAULT, Constants.SNAPSHOT_NONE);
+    addMashProfileToDatabase(r.getMashProfile(), recipeId, Constants.SNAPSHOT_NONE, Constants.DATABASE_DEFAULT);
 
     return recipeId;
   }
 
-  public boolean updateExistingRecipe(Recipe r) {
+  protected boolean updateExistingRecipe(Recipe r) {
     String whereClause = DatabaseHelper.REC_COL_ID + "=" + r.getId();
 
     // Load up values to store
@@ -364,12 +365,12 @@ public class DatabaseInterface {
       deleteMashProfile(oldProfile.getId(), Constants.DATABASE_DEFAULT);
 
       // Add the new one to the database.
-      addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT, Constants.SNAPSHOT_NONE);
+      addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.SNAPSHOT_NONE, Constants.DATABASE_DEFAULT);
     }
 
     // TODO: Implement style update methods.
-    deleteStyle(r.getId());
-    addStyleToDatabase(r.getStyle(), r.getId(), -1);
+    deleteStyleRecipe(r.getId());
+    addStyleToDatabase(r.getStyle(), r.getId(), Constants.SNAPSHOT_NONE);
 
     return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
   }
@@ -379,52 +380,78 @@ public class DatabaseInterface {
    * @param r
    * @return True if a recipe is deleted, False otherwise.
    */
-  public boolean deleteRecipe(Recipe r) {
+  protected boolean deleteRecipe(Recipe r) {
     String whereClause = DatabaseHelper.REC_COL_ID + "=" + r.getId();
     return database.delete(DatabaseHelper.TABLE_RECIPES, whereClause, null) > 0;
   }
 
-  public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long recipeId, long dbid, long snapshotId) {
+  protected void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long recipeId, long dbid, long snapshotId) {
     for (Ingredient ing : ingredientList) {
       addIngredientToDatabase(ing, recipeId, dbid, snapshotId);
     }
   }
 
-  public long addIngredientToDatabase(Ingredient ing, long recipeId, long dbid, long snapshotId) {
+  protected long addIngredientToDatabase(Ingredient ing, long recipeId, long dbid, long snapshotId) {
     ContentValues values = getIngredientValues(ing, dbid, recipeId, snapshotId);
     long ingId = database.insert(DatabaseHelper.TABLE_INGREDIENTS, null, values);
     values.clear();
     return ingId;
   }
 
-  public boolean updateExistingIngredientInDatabase(Ingredient ing, long dbid) {
+  protected boolean updateExistingIngredientInDatabase(Ingredient ing, long dbid) {
     String whereClause = DatabaseHelper.ING_COL_ID + "=" + ing.getId() + " AND " +
             DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
     ContentValues values = getIngredientValues(ing, dbid, ing.getRecipeId(), ing.getSnapshotId());
     return database.update(DatabaseHelper.TABLE_INGREDIENTS, values, whereClause, null) > 0;
   }
 
-  public long addSnapshotToDatabase(RecipeSnapshot snap, long recipeId) {
+  protected long addSnapshotToDatabase(RecipeSnapshot snap, long recipeId) {
     ContentValues values = getSnapshotValues(snap, recipeId);
     long snapshotId = database.insert(DatabaseHelper.TABLE_SNAPSHOTS, null, values);
     addIngredientListToDatabase(snap.getIngredientList(), Constants.INVALID_ID, Constants.DATABASE_DEFAULT, snapshotId);
     addStyleToDatabase(snap.getStyle(), Constants.INVALID_ID, snapshotId);
-    addMashProfileToDatabase(snap.getMashProfile(), Constants.INVALID_ID, Constants.DATABASE_DEFAULT, snapshotId);
+    addMashProfileToDatabase(snap.getMashProfile(), Constants.INVALID_ID, snapshotId, Constants.DATABASE_DEFAULT);
     return snapshotId;
   }
 
-  public boolean updateExistingSnapshot(RecipeSnapshot snap) {
+  protected boolean updateExistingSnapshot(RecipeSnapshot snap) {
     String whereClause = DatabaseHelper.REC_COL_ID + "=" + snap.getId();
     ContentValues values = getSnapshotValues(snap, snap.getRecipeId());
+
+    // Add / update all ingredients.
+    for (Ingredient i : snap.getIngredientList()) {
+      Boolean exists = updateExistingIngredientInDatabase(i, Constants.DATABASE_DEFAULT);
+      if (! exists) {
+        addIngredientToDatabase(i, Constants.INVALID_ID, Constants.DATABASE_DEFAULT, snap.getId());
+      }
+    }
+
+    // Update mash profile
+    Boolean exists = updateMashProfile(snap.getMashProfile(), Constants.INVALID_ID, Constants.DATABASE_DEFAULT, snap.getId());
+    if (! exists) {
+      // Delete any mash profiles owned by this recipe so we don't build up
+      // a bunch over time.
+      MashProfile oldProfile = readMashProfileSnapshot(snap.getId());
+      deleteMashProfile(oldProfile.getId(), Constants.DATABASE_DEFAULT);
+
+      // Add the new one to the database.
+      addMashProfileToDatabase(snap.getMashProfile(), Constants.INVALID_ID, snap.getId(), Constants.DATABASE_DEFAULT);
+    }
+
+    // Update the style profile
+    deleteStyleSnapshot(snap.getId());
+    addStyleToDatabase(snap.getStyle(), Constants.INVALID_ID, snap.getId());
+
+    // Finally, update fields on the Snapshot row.
     return database.update(DatabaseHelper.TABLE_SNAPSHOTS, values, whereClause, null) > 0;
   }
 
-  public boolean deleteSnapshot(RecipeSnapshot snap) {
+  protected boolean deleteSnapshot(RecipeSnapshot snap) {
     String whereClause = DatabaseHelper.REC_COL_ID + "=" + snap.getId();
     return database.delete(DatabaseHelper.TABLE_SNAPSHOTS, whereClause, null) > 0;
   }
 
-  public ContentValues getSnapshotValues (RecipeSnapshot rs, long ownerId) {
+  protected ContentValues getSnapshotValues (RecipeSnapshot rs, long ownerId) {
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.REC_COL_DB_ID, Constants.DATABASE_DEFAULT);
     values.put(DatabaseHelper.SNAP_COL_OWNER_ID, ownerId);
@@ -474,7 +501,7 @@ public class DatabaseInterface {
     return values;
   }
 
-  public ContentValues getIngredientValues(Ingredient ing, long dbid, long recipeId, long snapshotId) {
+  protected ContentValues getIngredientValues(Ingredient ing, long dbid, long recipeId, long snapshotId) {
     // values stored here
     ContentValues values = new ContentValues();
 
@@ -538,7 +565,7 @@ public class DatabaseInterface {
     return values;
   }
 
-  public long addStyleToDatabase(BeerStyle s, long recipeId, long snapshotId) {
+  protected long addStyleToDatabase(BeerStyle s, long recipeId, long snapshotId) {
     // Load up values to store
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.STY_COL_OWNER_ID, recipeId);
@@ -572,14 +599,14 @@ public class DatabaseInterface {
     return id;
   }
 
-  public long addMashProfileToDatabase(MashProfile p, long recipeId, long dbid, long snapshotId) {
+  protected long addMashProfileToDatabase(MashProfile p, long recipeId, long snapshotId, long dbid) {
     ContentValues values = getMashProfileValues(p, recipeId, dbid, snapshotId);
     long id = database.insert(DatabaseHelper.TABLE_PROFILES, null, values);
     addMashStepListToDatabase(p.getMashStepList(), id);
     return id;
   }
 
-  public boolean updateMashProfile(MashProfile p, long recipeId, long dbid, long snapshotId) {
+  protected boolean updateMashProfile(MashProfile p, long recipeId, long dbid, long snapshotId) {
     String whereClause = DatabaseHelper.PRO_COL_ID + "=" + p.getId() + " AND " +
             DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
     ContentValues values = getMashProfileValues(p, recipeId, dbid, snapshotId);
@@ -587,7 +614,7 @@ public class DatabaseInterface {
     return database.update(DatabaseHelper.TABLE_PROFILES, values, whereClause, null) > 0;
   }
 
-  public ContentValues getMashProfileValues(MashProfile p, long recipeId, long dbid, long snapshotId) {
+  protected ContentValues getMashProfileValues(MashProfile p, long recipeId, long dbid, long snapshotId) {
     // Load up values to store
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.PRO_COL_OWNER_ID, recipeId);
@@ -608,13 +635,13 @@ public class DatabaseInterface {
     return values;
   }
 
-  public void addMashStepListToDatabase(ArrayList<MashStep> l, long mashProfileId) {
+  protected void addMashStepListToDatabase(ArrayList<MashStep> l, long mashProfileId) {
     for (MashStep step : l) {
       addMashStepToDatabase(step, mashProfileId);
     }
   }
 
-  public void updateMashStepList(ArrayList<MashStep> l, long mashProfileId) {
+  protected void updateMashStepList(ArrayList<MashStep> l, long mashProfileId) {
     ArrayList<MashStep> existingSteps = readMashStepsList(mashProfileId);
     for (MashStep step : l) {
       Log.d("DatabaseInterface", "Updating MashStep " + step.getName());
@@ -639,19 +666,19 @@ public class DatabaseInterface {
     }
   }
 
-  public long addMashStepToDatabase(MashStep s, long mashStepId) {
+  protected long addMashStepToDatabase(MashStep s, long mashStepId) {
     ContentValues values = getMashStepValues(s, mashStepId);
     long id = database.insert(DatabaseHelper.TABLE_STEPS, null, values);
     return id;
   }
 
-  public boolean updateMashStep(MashStep s, long recipeId) {
+  protected boolean updateMashStep(MashStep s, long recipeId) {
     String whereClause = DatabaseHelper.STE_COL_ID + "=" + s.getId();
     ContentValues values = getMashStepValues(s, recipeId);
     return database.update(DatabaseHelper.TABLE_STEPS, values, whereClause, null) > 0;
   }
 
-  public ContentValues getMashStepValues(MashStep s, long mashProfileId) {
+  protected ContentValues getMashStepValues(MashStep s, long mashProfileId) {
     // Load up values to store
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.STE_COL_OWNER_ID, mashProfileId);
@@ -675,18 +702,29 @@ public class DatabaseInterface {
   }
 
   /**
-   * Deletes all ingredients with the given owner id
+   * Deletes all ingredients with the given recipeId
    */
-  private boolean deleteIngredientList(long id) {
-    String whereClause = DatabaseHelper.ING_COL_OWNER_ID + "=" + id;
+  protected boolean deleteIngredientList(long recipeId) {
+    String whereClause = DatabaseHelper.ING_COL_OWNER_ID + "=" + recipeId;
     return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
   }
 
+  protected boolean deleteStyleRecipe(long recipeId) {
+    String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + recipeId;
+    return deleteStyleWhere(whereClause);
+  }
+
+  protected boolean deleteStyleSnapshot(long snapshotId) {
+    String whereClause = DatabaseHelper.COL_SNAPSHOT_ID + "=" + snapshotId;
+    return deleteStyleWhere(whereClause);
+  }
+
   /**
-   * Deletes all styles with given owner id
+   * Deletes all styles that match the given SQL string.
+   * @param whereClause
+   * @return
    */
-  private boolean deleteStyle(long id) {
-    String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
+  private boolean deleteStyleWhere(String whereClause) {
     return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
   }
 
@@ -697,24 +735,24 @@ public class DatabaseInterface {
    * @return 1 if it was deleted or 0 if not
    */
 
-  public boolean deleteIngredientIfExists(long id, long dbid) {
+  protected boolean deleteIngredientIfExists(long id, long dbid) {
     String whereClause = DatabaseHelper.ING_COL_ID + "=" + id + " AND " +
             DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
     return database.delete(DatabaseHelper.TABLE_INGREDIENTS, whereClause, null) > 0;
   }
 
-  public boolean deleteMashProfile(long id, long dbid) {
+  protected boolean deleteMashProfile(long id, long dbid) {
     String whereClause = DatabaseHelper.PRO_COL_ID + "=" + id + " AND " +
             DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
     return database.delete(DatabaseHelper.TABLE_PROFILES, whereClause, null) > 0;
   }
 
-  public boolean deleteMashStep(long id) {
+  protected boolean deleteMashStep(long id) {
     String whereClause = DatabaseHelper.STE_COL_ID + "=" + id;
     return database.delete(DatabaseHelper.TABLE_STEPS, whereClause, null) > 0;
   }
 
-  public Recipe getRecipeWithId(long id) {
+  protected Recipe getRecipeWithId(long id) {
     String whereString = DatabaseHelper.REC_COL_ID + "=" + id;
 
     Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, whereString,
@@ -727,7 +765,7 @@ public class DatabaseInterface {
    * Takes ingredient ID and returns the ingredient with that ID from the database Undefined for
    * nonexistent IDs
    */
-  public Ingredient getIngredientWithId(long id) {
+  protected Ingredient getIngredientWithId(long id) {
     String whereString = DatabaseHelper.ING_COL_ID + "=" + id;
     Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
                                    whereString, null, null, null, null);
@@ -744,7 +782,7 @@ public class DatabaseInterface {
   /**
    * Returns ingredients from the given database with the given ingredient type
    */
-  public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid, String type) {
+  protected ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid, String type) {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
     String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid + " AND " +
             DatabaseHelper.ING_COL_TYPE + "=?";
@@ -771,7 +809,7 @@ public class DatabaseInterface {
   /**
    * Returns ingredients from the given database with the given ingredient type
    */
-  public ArrayList<MashProfile> getMashProfilesFromVirtualDatabase(long dbid) {
+  protected ArrayList<MashProfile> getMashProfilesFromVirtualDatabase(long dbid) {
     ArrayList<MashProfile> list = new ArrayList<MashProfile>();
     String whereString = DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
     Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString,
@@ -796,7 +834,7 @@ public class DatabaseInterface {
   /**
    * Returns ingredients from the given database with the given ingredient type
    */
-  public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid) {
+  protected ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid) {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
     String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
     Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
@@ -818,12 +856,21 @@ public class DatabaseInterface {
     return list;
   }
 
+  protected RecipeSnapshot getSnapshot(long snapshotId) {
+    String whereString = DatabaseHelper.REC_COL_ID + "=" + snapshotId;
+
+    Cursor cursor = database.query(DatabaseHelper.TABLE_SNAPSHOTS, snapshotAllColumns, whereString,
+                                   null, null, null, null);
+    cursor.moveToFirst();
+    return cursorToSnapshot(cursor);
+  }
+
   /**
    * Returns a list of snapshots stored for the recipe with the given ID.
    * @param recipeId Index of the stored Recipe whose snapshots will be returned.
    * @return List of RecipeSnapshots.
    */
-  public ArrayList<RecipeSnapshot> getRecipeSnapshots(long recipeId) {
+  protected ArrayList<RecipeSnapshot> getRecipeSnapshots(long recipeId) {
     ArrayList<RecipeSnapshot> list = new ArrayList<RecipeSnapshot>();
     String whereString = DatabaseHelper.SNAP_COL_OWNER_ID + "=" + recipeId;
 
@@ -844,7 +891,7 @@ public class DatabaseInterface {
    *
    * @return
    */
-  public ArrayList<Recipe> getRecipeList() {
+  protected ArrayList<Recipe> getRecipeList() {
     ArrayList<Recipe> list = new ArrayList<Recipe>();
 
     Cursor cursor = database.query(DatabaseHelper.TABLE_RECIPES, recipeAllColumns, null, null,
@@ -1225,7 +1272,6 @@ public class DatabaseInterface {
    * @return
    */
   private BeerStyle readStyleWhere(String whereString) {
-
     Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString,
                                    null, null, null, null);
 
@@ -1295,6 +1341,7 @@ public class DatabaseInterface {
 
     // Stick them all in a new object
     BeerStyle style = new BeerStyle(name);
+    style.setId(id);
     style.setRecipeId(ownerId);
     style.setCategory(category);
     style.setCategoryNumber(catNumber);

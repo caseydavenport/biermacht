@@ -1,5 +1,6 @@
 package com.biermacht.brews.utils;
 
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.recipe.Recipe;
@@ -88,7 +89,7 @@ public class Utils {
       else {
         i.setDisplayAmount(i.getDisplayAmount() * ratio);
       }
-      Database.updateIngredient(i, Constants.DATABASE_DEFAULT);
+      DatabaseAPI.updateIngredient(i, Constants.DATABASE_DEFAULT);
     }
 
     r.save();
