@@ -151,7 +151,7 @@ public class MashStep implements Parcelable {
   @Override
   public boolean equals(Object o) {
     // Non-MashStep objects cannot equal a MashStep.
-    if (!(o instanceof MashStep)) {
+    if (! (o instanceof MashStep)) {
       return false;
     }
 
@@ -159,7 +159,7 @@ public class MashStep implements Parcelable {
     MashStep other = (MashStep) o;
 
     // Both are MashStep objects - compare important fields.
-    if (!this.getName().equals(other.getName())) {
+    if (! this.getName().equals(other.getName())) {
       Log.d("MashStep", "MashStep.equals(): " + this.getName() + " != " + other.getName());
       return false;
     }
@@ -171,7 +171,7 @@ public class MashStep implements Parcelable {
       Log.d("MashStep", "MashStep.equals(): " + this.getBeerXmlStandardStepTemp() + " != " + other.getBeerXmlStandardStepTemp());
       return false;
     }
-    else if (!this.getType().equals(other.getType())) {
+    else if (! this.getType().equals(other.getType())) {
       Log.d("MashStep", "MashStep.equals(): " + this.getType() + " != " + other.getType());
       return false;
     }

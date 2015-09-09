@@ -78,6 +78,7 @@ public class Constants {
   public static final int REQUEST_NEW_MASH_STEP = 1;
   public static final int REQUEST_EDIT_MASH_STEP = 2;
   public static final int REQUEST_EDIT_RECIPE = 3;
+  public static final int REQUEST_IMPORT_FILE = 4;
 
   // Possible timer states
   public static int PAUSED = 0;

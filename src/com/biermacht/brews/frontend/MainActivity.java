@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -256,10 +257,12 @@ public class MainActivity extends ActionBarActivity {
 
               public void onClick(DialogInterface dialog, int which) {
                 try {
-                  Intent i3 = new Intent(Intent.ACTION_GET_CONTENT);
-                  i3.setType("file/*");
-                  startActivityForResult(i3, 1);
-                } catch (android.content.ActivityNotFoundException e){
+                  Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                  String[] mimeTypes = {"file/*.xml", "file/*.bsmx", "text/*"};
+                  intent.setType("*/*");
+                  intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                  startActivityForResult(intent, Constants.REQUEST_IMPORT_FILE);
+                } catch (android.content.ActivityNotFoundException e) {
                   new AlertDialog.Builder(getApplicationContext())
                           .setTitle("No File Browser Found")
                           .setMessage("Please install a file browser from the Play Store")
@@ -277,16 +280,21 @@ public class MainActivity extends ActionBarActivity {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    if (requestCode == 1) {
+    if (requestCode == Constants.REQUEST_IMPORT_FILE) {
       if (resultCode == RESULT_OK) {
-        String path = data.getData().getPath().toString();
+        Log.d("MainActivity::onActivityResult", "User selected a file.");
+        Uri uri = data.getData();
+        String path = uri.getPath().toString();
+        Log.d("MainActivity::onActivityResult", "URI: " + uri.toString());
+        Log.d("MainActivity::onActivityResult", "Path: " + path);
 
         if (path != null) {
-          new LoadRecipes(this, path, ingredientHandler).execute("");
+          new LoadRecipes(this, uri, ingredientHandler).execute("");
         }
       }
       if (resultCode == RESULT_CANCELED) {
         // Action to get recipes was cancelled - do nothing.
+        Log.d("MainActivity::onActivityResult", "Load recipes from file cancelled by user");
       }
     }
   }
@@ -357,14 +365,15 @@ public class MainActivity extends ActionBarActivity {
    */
   private class LoadRecipes extends AsyncTask<String, Void, String> {
 
-    private String path;
+    private Uri uri;
     private IngredientHandler ingredientHandler;
     private Context context;
     private ProgressDialog progress;
     private ArrayList<Recipe> importedRecipes;
 
-    public LoadRecipes(Context c, String path, IngredientHandler i) {
-      this.path = path;
+    public LoadRecipes(Context c, Uri uri, IngredientHandler i) {
+      Log.d("MainActivity", "Loading URI: " + uri.toString());
+      this.uri = uri;
       this.ingredientHandler = i;
       this.context = c;
       this.importedRecipes = new ArrayList<Recipe>();
@@ -373,7 +382,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected String doInBackground(String... params) {
       try {
-        importedRecipes = ingredientHandler.getRecipesFromXml(path);
+        importedRecipes = ingredientHandler.getRecipesFromXml(uri);
       } catch (IOException e) {
         Log.e("LoadRecipes", e.toString());
       }
