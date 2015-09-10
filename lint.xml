@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<lint>
-    <issue id="ValidFragment">
-        <ignore path="src/com/biermacht/brews/frontend/fragments/ProfileViewFragment.java"/>
-    </issue>
-</lint>

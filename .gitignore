@@ -53,3 +53,4 @@ gradlew*
 gradle
 .gradle
 .settings
+local.properties
