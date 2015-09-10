@@ -1,4 +1,4 @@
-# README #
+# Biermacht #
 
 Biermacht is a home-brewer's companion app for Android.  It is a recipe formulator and selection of brewing tools to make the brewing process as simple as can be.
 
