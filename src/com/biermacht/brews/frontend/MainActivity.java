@@ -2,6 +2,7 @@ package com.biermacht.brews.frontend;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -258,8 +259,8 @@ public class MainActivity extends ActionBarActivity {
               public void onClick(DialogInterface dialog, int which) {
                 try {
                   Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                  String[] mimeTypes = {"file/*.xml", "file/*.bsmx", "text/*"};
-                  intent.setType("*/*");
+                  String[] mimeTypes = {"file/*", "text/xml", "text/bsmx"};
+                  intent.setType("text/xml");
                   intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                   startActivityForResult(intent, Constants.REQUEST_IMPORT_FILE);
                 } catch (android.content.ActivityNotFoundException e) {
@@ -287,6 +288,9 @@ public class MainActivity extends ActionBarActivity {
         String path = uri.getPath().toString();
         Log.d("MainActivity::onActivityResult", "URI: " + uri.toString());
         Log.d("MainActivity::onActivityResult", "Path: " + path);
+
+        ContentResolver cR = getContentResolver();
+        Log.d("MainActivity::onActivityResult", "MIME type: " + cR.getType(uri));
 
         if (path != null) {
           new LoadRecipes(this, uri, ingredientHandler).execute("");
