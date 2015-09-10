@@ -458,10 +458,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           sql = "ALTER TABLE " + TABLE_INGREDIENTS + " ADD COLUMN " +
                 DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
           db.execSQL(sql);
+
           sql = "ALTER TABLE " + TABLE_PROFILES + " ADD COLUMN " +
                   DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
           db.execSQL(sql);
-          db.execSQL(sql);
+          
           sql = "ALTER TABLE " + TABLE_STYLES + " ADD COLUMN " +
                   DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
           db.execSQL(sql);
