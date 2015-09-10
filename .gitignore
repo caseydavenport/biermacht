@@ -52,3 +52,4 @@ build
 gradlew*
 gradle
 .gradle
+.settings
