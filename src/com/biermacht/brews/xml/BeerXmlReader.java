@@ -1197,12 +1197,12 @@ public class BeerXmlReader extends DefaultHandler {
 
   }
 
-  private double parseDouble(String s, Double def) {
+  private double parseDouble(String s, Double defaultValue) {
     try {
       return Double.parseDouble(s);
     } catch (Exception e) {
       Log.e("BeerXmlReader", "Exception parsing double: " + s);
-      return def;
+      return defaultValue;
     }
   }
 }

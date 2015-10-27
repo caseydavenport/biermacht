@@ -133,10 +133,18 @@ public class Instruction implements Parcelable {
   public String getBrewTimerText() {
     String s = "";
     if (this.instructionType.equals(Instruction.TYPE_MASH)) {
+      double qts = Units.litersToQuarts(mashStep.getBeerXmlStandardInfuseAmount());
       if (mashStep.getDisplayInfuseAmount() != 0) {
-        s += "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount()) + " " + Units.getVolumeUnits() + " of " +
-                "" + String.format("%2.0f", mashStep.getDisplayInfuseTemp()) + Units.getTemperatureUnits() + "" +
-                " water.\n\n";
+        s += "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount())
+                + " " + Units.getVolumeUnits()
+                + " ("
+                + String.format("%2.2f", qts)
+                + "qt)"
+                + " of "
+                + String.format("%2.0f", mashStep.getDisplayInfuseTemp())
+                + Units.getTemperatureUnits()
+                + ""
+                + " water.\n\n";
       }
 
       if (mashStep.getDisplayDecoctAmount() != 0) {

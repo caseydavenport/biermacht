@@ -376,7 +376,9 @@ public class IngredientHandler {
       }
       else {
         Log.d("IngredientHandler", "Attempting to parse BeerXML file");
-        sp.parse(is, beerXmlReader);
+        InputSource inSrc = new InputSource(new StringReader(Utils.convertStreamToString(is)));
+        inSrc.setEncoding("ISO-8859-2");
+        sp.parse(inSrc, beerXmlReader);
         list = beerXmlReader.getRecipes();
       }
 
