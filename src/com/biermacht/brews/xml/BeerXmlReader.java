@@ -466,7 +466,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("PRIMARY_AGE")) {
-        r.setFermentationAge(Recipe.STAGE_PRIMARY, (int) Double.parseDouble(currentValue.replace(",", ".")));
+        r.setFermentationAge(Recipe.STAGE_PRIMARY, (int) this.parseDouble(currentValue, 0.0));
       }
 
       else if (qName.equalsIgnoreCase("PRIMARY_TEMP")) {
@@ -474,7 +474,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("SECONDARY_AGE")) {
-        r.setFermentationAge(Recipe.STAGE_SECONDARY, (int) Double.parseDouble(currentValue.replace(",", ".")));
+        r.setFermentationAge(Recipe.STAGE_SECONDARY, (int) this.parseDouble(currentValue, 0.0));
       }
 
       else if (qName.equalsIgnoreCase("SECONDARY_TEMP")) {
@@ -483,7 +483,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("TERTIARY_AGE")) {
-        r.setFermentationAge(Recipe.STAGE_TERTIARY, (int) Double.parseDouble(currentValue.replace(",", ".")));
+        r.setFermentationAge(Recipe.STAGE_TERTIARY, (int) this.parseDouble(currentValue, 0.0));
       }
 
       else if (qName.equalsIgnoreCase("TERTIARY_TEMP")) {
@@ -509,7 +509,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("CARBONATION")) {
-        r.setCarbonation(Double.parseDouble(currentValue.replace(",", ".")));
+        r.setCarbonation(this.parseDouble(currentValue, r.getCarbonation()));
       }
 
       else if (qName.equalsIgnoreCase("FORCED_CARBONATION")) {
@@ -517,7 +517,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("CARBONATION_TEMP")) {
-        r.setBeerXmlStandardCarbonationTemp(Double.parseDouble(currentValue.replace(",", ".")));
+        r.setBeerXmlStandardCarbonationTemp(this.parseDouble(currentValue, r.getBeerXmlStandardCarbonationTemp()));
       }
 
       else if (qName.equalsIgnoreCase("CALORIES")) {
@@ -543,34 +543,38 @@ public class BeerXmlReader extends DefaultHandler {
         if (currentValue.equalsIgnoreCase(Fermentable.TYPE_ADJUNCT)) {
           type = Fermentable.TYPE_ADJUNCT;
         }
-        if (currentValue.equalsIgnoreCase(Fermentable.TYPE_EXTRACT)) {
+        else if (currentValue.equalsIgnoreCase(Fermentable.TYPE_EXTRACT)) {
           type = Fermentable.TYPE_EXTRACT;
         }
-        if (currentValue.contains("Extract")) {
+        else if (currentValue.contains("Extract")) {
           type = Fermentable.TYPE_EXTRACT;
         }
-        if (currentValue.equalsIgnoreCase(Fermentable.TYPE_GRAIN)) {
+        else if (currentValue.equalsIgnoreCase(Fermentable.TYPE_GRAIN)) {
           type = Fermentable.TYPE_GRAIN;
         }
-        if (currentValue.equalsIgnoreCase(Fermentable.TYPE_SUGAR)) {
+        else if (currentValue.equalsIgnoreCase(Fermentable.TYPE_SUGAR)) {
           type = Fermentable.TYPE_SUGAR;
+        }
+        else {
+          Log.e("BeerXmlReader", "Invalid fermentable type: " + currentValue);
+          type = Fermentable.TYPE_GRAIN;
         }
 
         f.setFermentableType(type);
       }
 
       else if (qName.equalsIgnoreCase("AMOUNT")) {
-        double amt = Double.parseDouble(currentValue.replace(",", "."));
+        double amt = this.parseDouble(currentValue, f.getBeerXmlStandardAmount());
         f.setBeerXmlStandardAmount(amt);
       }
 
       else if (qName.equalsIgnoreCase("YIELD")) {
-        double yield = Double.parseDouble(currentValue.replace(",", "."));
+        double yield = this.parseDouble(currentValue, f.getYield());
         f.setYield(yield);
       }
 
       else if (qName.equalsIgnoreCase("COLOR")) {
-        double color = Double.parseDouble(currentValue.replace(",", "."));
+        double color = this.parseDouble(currentValue, f.getLovibondColor());
         f.setLovibondColor(color);
       }
 
@@ -608,7 +612,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("MAX_IN_BATCH")) {
-        double maxInBatch = Double.parseDouble(currentValue.replace(",", "."));
+        double maxInBatch = this.parseDouble(currentValue, f.getMaxInBatch());
         f.setMaxInBatch(maxInBatch);
       }
 
@@ -653,11 +657,11 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("ALPHA")) {
-        h.setAlphaAcidContent(Double.parseDouble(currentValue.replace(",", ".")));
+        h.setAlphaAcidContent(this.parseDouble(currentValue, h.getAlphaAcidContent()));
       }
 
       else if (qName.equalsIgnoreCase("AMOUNT")) {
-        double amt = Double.parseDouble(currentValue.replace(",", "."));
+        double amt = this.parseDouble(currentValue, h.getBeerXmlStandardAmount());
         h.setBeerXmlStandardAmount(amt);
       }
 
@@ -684,7 +688,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("TIME")) {
-        h.setBeerXmlStandardTime((int) Double.parseDouble(currentValue.replace(",", ".")));
+        h.setBeerXmlStandardTime((int) this.parseDouble(currentValue, 0.0));
       }
 
       else if (qName.equalsIgnoreCase("NOTES")) {
@@ -776,7 +780,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("AMOUNT")) {
-        double amt = Double.parseDouble(currentValue.replace(",", "."));
+        double amt = this.parseDouble(currentValue, y.getBeerXmlStandardAmount());
         y.setBeerXmlStandardAmount(amt);
       }
 
@@ -793,12 +797,12 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("MIN_TEMPERATURE")) {
-        double minTemp = Double.parseDouble(currentValue.replace(",", "."));
+        double minTemp = this.parseDouble(currentValue, y.getMinTemp());
         y.setMinTemp(minTemp);
       }
 
       else if (qName.equalsIgnoreCase("MAX_TEMPERATURE")) {
-        double maxTemp = Double.parseDouble(currentValue.replace(",", "."));
+        double maxTemp = this.parseDouble(currentValue, y.getMaxTemp());
         y.setMaxTemp(maxTemp);
       }
 
@@ -807,7 +811,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("ATTENUATION")) {
-        double attenuation = Double.parseDouble(currentValue.replace(",", "."));
+        double attenuation = this.parseDouble(currentValue, y.getAttenuation());
         y.setAttenuation(attenuation);
       }
 
@@ -890,7 +894,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("AMOUNT")) {
-        double amt = Double.parseDouble(currentValue.replace(",", "."));
+        double amt = this.parseDouble(currentValue, misc.getBeerXmlStandardAmount());
         misc.setBeerXmlStandardAmount(amt);
       }
 
@@ -1000,43 +1004,43 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("OG_MIN")) {
-        style.setMinOg(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMinOg(this.parseDouble(currentValue, style.getMinOg()));
       }
 
       else if (qName.equalsIgnoreCase("OG_MAX")) {
-        style.setMaxOg(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMaxOg(this.parseDouble(currentValue, style.getMaxOg()));
       }
 
       else if (qName.equalsIgnoreCase("FG_MIN")) {
-        style.setMinFg(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMinFg(this.parseDouble(currentValue, style.getMinFg()));
       }
 
       else if (qName.equalsIgnoreCase("FG_MAX")) {
-        style.setMaxFg(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMaxFg(this.parseDouble(currentValue, style.getMaxFg()));
       }
 
       else if (qName.equalsIgnoreCase("IBU_MIN")) {
-        style.setMinIbu(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMinIbu(this.parseDouble(currentValue, style.getMinIbu()));
       }
 
       else if (qName.equalsIgnoreCase("IBU_MAX")) {
-        style.setMaxIbu(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMaxIbu(this.parseDouble(currentValue, style.getMaxIbu()));
       }
 
       else if (qName.equalsIgnoreCase("COLOR_MIN")) {
-        style.setMinColor(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMinColor(this.parseDouble(currentValue, style.getMinColor()));
       }
 
       else if (qName.equalsIgnoreCase("COLOR_MAX")) {
-        style.setMaxColor(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMaxColor(this.parseDouble(currentValue, style.getMaxColor()));
       }
 
       else if (qName.equalsIgnoreCase("ABV_MIN")) {
-        style.setMinAbv(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMinAbv(this.parseDouble(currentValue, style.getMinAbv()));
       }
 
       else if (qName.equalsIgnoreCase("ABV_MAX")) {
-        style.setMaxAbv(Double.parseDouble(currentValue.replace(",", ".")));
+        style.setMaxAbv(this.parseDouble(currentValue, style.getMaxAbv()));
       }
 
       else if (qName.equalsIgnoreCase("NOTES")) {
@@ -1069,7 +1073,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("GRAIN_TEMP")) {
-        profile.setBeerXmlStandardGrainTemp(Double.parseDouble(currentValue.replace(",", ".")));
+        profile.setBeerXmlStandardGrainTemp(this.parseDouble(currentValue, profile.getBeerXmlStandardGrainTemp()));
       }
 
       else if (qName.equalsIgnoreCase("NOTES")) {
@@ -1077,23 +1081,23 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("TUN_TEMP")) {
-        profile.setBeerXmlStandardTunTemp(Double.parseDouble(currentValue.replace(",", ".")));
+        profile.setBeerXmlStandardTunTemp(this.parseDouble(currentValue, profile.getBeerXmlStandardTunTemp()));
       }
 
       else if (qName.equalsIgnoreCase("SPARGE_TEMP")) {
-        profile.setBeerXmlStandardSpargeTemp(Double.parseDouble(currentValue.replace(",", ".")));
+        profile.setBeerXmlStandardSpargeTemp(this.parseDouble(currentValue, profile.getBeerXmlStandardSpargeTemp()));
       }
 
       else if (qName.equalsIgnoreCase("PH")) {
-        profile.setpH(Double.parseDouble(currentValue.replace(",", ".")));
+        profile.setpH(this.parseDouble(currentValue, profile.getpH()));
       }
 
       else if (qName.equalsIgnoreCase("TUN_WEIGHT")) {
-        profile.setBeerXmlStandardTunWeight(Double.parseDouble(currentValue.replace(",", ".")));
+        profile.setBeerXmlStandardTunWeight(this.parseDouble(currentValue, profile.getBeerXmlStandardTunWeight()));
       }
 
       else if (qName.equalsIgnoreCase("TUN_SPECIFIC_HEAT")) {
-        profile.setBeerXmlStandardTunSpecHeat(Double.parseDouble(currentValue.replace(",", ".")));
+        profile.setBeerXmlStandardTunSpecHeat(this.parseDouble(currentValue, profile.getBeerXmlStandardTunSpecHeat()));
       }
 
       else if (qName.equalsIgnoreCase("EQUIP_ADJUST")) {
@@ -1126,7 +1130,7 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("INFUSE_AMOUNT")) {
-        mashStep.setBeerXmlStandardInfuseAmount(Double.parseDouble(currentValue.replace(",", ".")));
+        mashStep.setBeerXmlStandardInfuseAmount(this.parseDouble(currentValue, mashStep.getBeerXmlStandardInfuseAmount()));
       }
 
       else if (qName.equalsIgnoreCase("INFUSE_TEMP")) {
@@ -1147,19 +1151,19 @@ public class BeerXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("STEP_TIME")) {
-        mashStep.setStepTime(Double.parseDouble(currentValue.replace(",", ".")));
+        mashStep.setStepTime(this.parseDouble(currentValue, mashStep.getStepTime()));
       }
 
       else if (qName.equalsIgnoreCase("STEP_TEMP")) {
-        mashStep.setBeerXmlStandardStepTemp(Double.parseDouble(currentValue.replace(",", ".")));
+        mashStep.setBeerXmlStandardStepTemp(this.parseDouble(currentValue, mashStep.getBeerXmlStandardStepTemp()));
       }
 
       else if (qName.equalsIgnoreCase("RAMP_TIME")) {
-        mashStep.setRampTime(Double.parseDouble(currentValue.replace(",", ".")));
+        mashStep.setRampTime(this.parseDouble(currentValue, mashStep.getRampTime()));
       }
 
       else if (qName.equalsIgnoreCase("END_TEMP")) {
-        mashStep.setBeerXmlStandardEndTemp(Double.parseDouble(currentValue.replace(",", ".")));
+        mashStep.setBeerXmlStandardEndTemp(this.parseDouble(currentValue, mashStep.getBeerXmlStandardEndTemp()));
       }
 
       else if (qName.equalsIgnoreCase("DESCRIPTION")) {
@@ -1193,4 +1197,12 @@ public class BeerXmlReader extends DefaultHandler {
 
   }
 
+  private double parseDouble(String s, Double def) {
+    try {
+      return Double.parseDouble(s);
+    } catch (Exception e) {
+      Log.e("BeerXmlReader", "Exception parsing double: " + s);
+      return def;
+    }
+  }
 }
