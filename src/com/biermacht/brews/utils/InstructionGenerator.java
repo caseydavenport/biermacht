@@ -127,7 +127,7 @@ public class InstructionGenerator {
     list.addAll(mashesList);
     list.addAll(mashStepsList);
     if (mashStepsList.size() > 0) {
-      list.add(getSpargeInstruction());
+      list.addAll(getSpargeInstructions());
     }
     list.addAll(bottlingList);
 
@@ -139,19 +139,33 @@ public class InstructionGenerator {
     }
   }
 
-  private Instruction getSpargeInstruction() {
+  private ArrayList<Instruction> getSpargeInstructions() {
+    ArrayList<Instruction> list = new ArrayList<>();
+
+    // If there are first wort hops, create a first wort instruction.
+    if (r.firstWortHops().size() != 0) {
+      Instruction i = new Instruction(r);
+      i.setRelevantIngredients(r.firstWortHops());
+      i.setInstructionType(Instruction.TYPE_SPARGE);
+      i.setOrder(1);
+      i.setDurationUnits(Units.HOURS);
+      i.setLastInType(false);
+      i.setInstructionText("Add First Wort Hops");
+      i.setDuration(0);  // Set duration to 0 so we don't show timer.
+      list.add(i);
+    }
+
+    // Create the sparge instruction.
     Instruction i = new Instruction(r);
-    i = new Instruction(r);
     i.setInstructionType(Instruction.TYPE_SPARGE);
-    i.setOrder(0);
+    i.setOrder(1);
     i.setDurationUnits(Units.HOURS);
-    i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
     i.setLastInType(true);
+    i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
+    i.setDuration(0);  // Set duration to 0 so we don't show timer.
+    list.add(i);
 
-    // Set duration to 0 so that we don't show timer
-    i.setDuration(0);
-
-    return i;
+    return list;
   }
 
   /**
@@ -218,7 +232,7 @@ public class InstructionGenerator {
           ingredients.put(i.getTime(), ingList);
         }
         else {
-          // Create the list for this duration
+          // Add to the existing list for this duration.
           ArrayList<Ingredient> ingList = ingredients.get(i.getTime());
           ingList.add(i);
           ingredients.put(i.getTime(), ingList);
@@ -234,15 +248,27 @@ public class InstructionGenerator {
         inst.setInstructionType(Instruction.TYPE_BOIL);
         inst.setDuration(time);
         inst.setDurationUnits(Units.MINUTES);
-        inst.setOrder(r.getBoilTime() - time);
+        inst.setOrder(1 + r.getBoilTime() - time);
         inst.setInstructionTextFromIngredients();
+        boilsList.add(inst);
+      }
+
+      // There is a special case where the boil lasts longer than the longest ingredient's
+      // boil time.  For this, we must add a special step to indicate the start of the boil.
+      if (Collections.max(ingredients.keySet()) < r.getBoilTime()) {
+        inst = new Instruction(r);
+        inst.setInstructionType(Instruction.TYPE_BOIL);
+        inst.setDuration(r.getBoilTime());
+        inst.setDurationUnits(Units.MINUTES);
+        inst.setOrder(0);
+        inst.setInstructionText("Begin boil");
         boilsList.add(inst);
       }
     }
   }
 
   /**
-   * Generates dryHop instructions from the recipe
+   * Generates dry hop instructions from the recipe
    */
   private void dryHops() {
     HashMap<Integer, ArrayList<Ingredient>> ingredients = new HashMap<Integer, ArrayList<Ingredient>>();
@@ -415,45 +441,6 @@ public class InstructionGenerator {
           inst.setLastInType(true);
           inst.setRelevantIngredients(relevantIngredients);
           mashStepsList.add(inst);
-        }
-      }
-    }
-  }
-
-  /**
-   * Generates mashed grain instructions from the recipe
-   */
-  private void mashes() {
-    // Do nothing if this is an extract recipe
-    if (! r.getType().equals(Recipe.EXTRACT)) {
-      HashMap<Integer, String> mashes = new HashMap<Integer, String>();
-      for (Fermentable f : r.getFermentablesList()) {
-        // We build up a map with K = steep duration
-        // and V = string of steeped grains at duration K
-        if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN)) {
-          if (! mashes.containsKey(f.getTime())) {
-            // Add a new entry for that duration
-            mashes.put(f.getTime(), f.getName());
-          }
-          else {
-            // Append to existing duration
-            String s = mashes.get(f.getTime());
-            s += "\n";
-            s += f.getName();
-            mashes.put(f.getTime(), s);
-          }
-
-        }
-      }
-
-      if (mashes.size() > 0) {
-        for (Integer time : mashes.keySet()) {
-          inst = new Instruction(r);
-          inst.setInstructionText(mashes.get(time));
-          inst.setInstructionType(Instruction.TYPE_MASH);
-          inst.setDuration(0); // TODO
-          inst.setOrder(0);
-          mashesList.add(inst);
         }
       }
     }

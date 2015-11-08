@@ -39,6 +39,7 @@ public abstract class Ingredient implements Parcelable {
   public static final String USE_BOTTLING = "Bottling";
   public static final String USE_DRY_HOP = "Dry Hop";
   public static final String USE_FIRST_WORT = "First Wort";
+  public static final String USE_WHIRLPOOL = "Whirlpool";
   public static final String USE_AROMA = "Aroma";
   public static final String USE_OTHER = "other";
 

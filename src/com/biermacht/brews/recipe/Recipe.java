@@ -764,6 +764,16 @@ public class Recipe implements Parcelable {
     return waters;
   }
 
+  public ArrayList<Ingredient> firstWortHops() {
+    ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+    for (Hop h : this.getHopsList()) {
+      if (h.getUse().equals(Ingredient.USE_FIRST_WORT)) {
+        list.add(h);
+      }
+    }
+    return list;
+  }
+
   public double getMeasuredOG() {
     return this.measuredOG;
   }
