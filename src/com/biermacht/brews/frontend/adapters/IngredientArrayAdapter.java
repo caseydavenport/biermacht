@@ -81,20 +81,22 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
     if (ingType == Ingredient.HOP) {
       h = (Hop) list.get(position);
       vs.imageView.setImageResource(R.drawable.icon_hops);
-      vs.labelView.setText(h.getName() + ", " + String.format("%1.1f", h.getAlphaAcidContent()) + "%");
+      vs.labelView.setText(String.format("%s, %1.1f", h.getName(), h.getAlphaAcidContent()) + "%");
 
-      if (h.getUse().equals(Hop.USE_BOIL) || h.getUse().equals(Hop.USE_AROMA)) {
-        detailText += String.format("%d", h.getDisplayTime()) + " mins, ";
-        detailText += String.format("%2.2f", BrewCalculator.Bitterness(r, h));
-        detailText += " IBU";
+      if (h.getUse().equals(Hop.USE_BOIL)) {
+        detailText += String.format("%d mins, ", h.getDisplayTime());
+        detailText += String.format("%2.2f IBU", BrewCalculator.Bitterness(r, h));
       }
       else if (h.getUse().equals(Hop.USE_FIRST_WORT)) {
-        detailText += "First Wort, ";
-        detailText += String.format("%2.2f", BrewCalculator.Bitterness(r, h));
-        detailText += " IBU";
+        detailText += String.format("First Wort, %2.2f IBU", BrewCalculator.Bitterness(r, h));
       }
       else if (h.getUse().equals(Hop.USE_DRY_HOP)) {
-        detailText = "Dry Hop, " + String.format("%d", h.getDisplayTime()) + " days";
+        detailText = String.format("Dry Hop, %d days", h.getDisplayTime());
+      }
+      else if (h.getUse().equals(Hop.USE_AROMA)) {
+        detailText = String.format("Steep, %d mins, %2.2f IBU",
+                                   h.getDisplayTime(),
+                                   BrewCalculator.Bitterness(r, h));
       }
     }
     else if (ingType == Ingredient.FERMENTABLE) {

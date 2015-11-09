@@ -65,11 +65,18 @@ public class InstructionGenerator {
     this.bottling();
 
     // Configure the lists
-    this.configureLists();
+    this.combineLists();
 
-    // We run miscs after all of this, because it depends
+    // We run postBoils after all of this, because it depends
     // on items being in 'list'
-    this.miscs();
+    this.postBoils();
+
+    // Set next task starting times.
+    for (int i = 0; i < (list.size() - 1); i++) {
+      if (! list.get(i).isLastInType()) {
+        list.get(i).setNextDuration(list.get(i + 1).getDuration());
+      }
+    }
 
     // Sort based on order and then start time
     Collections.sort(list, new InstructionComparator<Instruction>());
@@ -79,7 +86,7 @@ public class InstructionGenerator {
     return list;
   }
 
-  private void configureLists() {
+  private void combineLists() {
     // Sort based on order and then start time
     Collections.sort(steepsList, new InstructionComparator<Instruction>());
     Collections.sort(boilsList, new InstructionComparator<Instruction>());
@@ -89,8 +96,7 @@ public class InstructionGenerator {
     Collections.sort(mashStepsList, new InstructionComparator<Instruction>());
     Collections.sort(bottlingList, new InstructionComparator<Instruction>());
 
-    // Tag the first instruction in each set
-    // Set the duration of each type
+    // Mark the end of each
     if (! steepsList.isEmpty()) {
       steepsList.get(steepsList.size() - 1).setLastInType(true);
     }
@@ -130,22 +136,15 @@ public class InstructionGenerator {
       list.addAll(getSpargeInstructions());
     }
     list.addAll(bottlingList);
-
-    // Set next task starting times.
-    for (int i = 0; i < (list.size() - 1); i++) {
-      if (! list.get(i).isLastInType()) {
-        list.get(i).setNextDuration(list.get(i + 1).getDuration());
-      }
-    }
   }
 
   private ArrayList<Instruction> getSpargeInstructions() {
     ArrayList<Instruction> list = new ArrayList<>();
 
     // If there are first wort hops, create a first wort instruction.
-    if (r.firstWortHops().size() != 0) {
+    if (r.getHops(Ingredient.USE_FIRST_WORT).size() != 0) {
       Instruction i = new Instruction(r);
-      i.setRelevantIngredients(r.firstWortHops());
+      i.setRelevantIngredients(r.getHops(Ingredient.USE_FIRST_WORT));
       i.setInstructionType(Instruction.TYPE_SPARGE);
       i.setOrder(1);
       i.setDurationUnits(Units.HOURS);
@@ -356,18 +355,67 @@ public class InstructionGenerator {
   /**
    * Generates misc instructions from the recipe
    */
-  private void miscs() {
+  private void postBoils() {
+    // Only generate these if there are already steps in the list.
     if (list.size() > 0) {
-      // Add a cool wort stage
+      // Check for USE_AROMA / whirlpool / flame out hops.
+      ArrayList<Ingredient> aromaHops = r.getHops(Ingredient.USE_AROMA);
+      ArrayList<Instruction> aromaInstructions = new ArrayList<>();
+      if (aromaHops.size() != 0) {
+        // There are aroma hops.  We need to sort them based on time.  Generate the mapping.
+        HashMap<Integer, ArrayList<Ingredient>> hopMap = new HashMap<Integer, ArrayList<Ingredient>>();
+        for (Ingredient i : aromaHops) {
+          Hop h = (Hop) i;
+          if (! hopMap.containsKey(h.getTime())) {
+            // Create the list for this duration
+            ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
+            ingList.add(h);
+            hopMap.put(h.getTime(), ingList);
+          }
+          else {
+            // Add hop to the existing list for this time.
+            ArrayList<Ingredient> ingList = hopMap.get(h.getTime());
+            ingList.add(h);
+            hopMap.put(h.getTime(), ingList);
+            }
+        }
+
+        // We need an instruction to indicate that the boil is over and that the temperature
+        // should be adjusted to the desired steep temperature.
+        inst = new Instruction(r);
+        inst.setInstructionType(Instruction.TYPE_AROMA);
+        inst.setOrder(0);
+        inst.showInBrewTimer();
+        inst.setInstructionText("Boil Complete");
+        inst.setDurationUnits(Units.MINUTES);
+        inst.setDuration(0);
+        aromaInstructions.add(inst);
+
+        for (Integer time : hopMap.keySet()) {
+          // Generate instructions for each time slot.
+          inst = new Instruction(r);
+          inst.setInstructionType(Instruction.TYPE_AROMA);
+          inst.setOrder(1 + Collections.max(hopMap.keySet()) - time);
+          inst.setDurationUnits(Units.MINUTES);
+          inst.setDuration(time);
+          inst.setRelevantIngredients(hopMap.get(time));
+          inst.setInstructionTextFromIngredients();
+          aromaInstructions.add(inst);
+        }
+
+        // Set last in Aroma type and add to instruction list.
+        Collections.sort(aromaInstructions, new InstructionComparator<Instruction>());
+        aromaInstructions.get(aromaInstructions.size() - 1).setLastInType(true);
+        list.addAll(aromaInstructions);
+      }
+
+      // Add a cool wort stage.
       inst = new Instruction(r);
       inst.setInstructionType(Instruction.TYPE_COOL);
       inst.setInstructionText("Cool wort to " + r.getDisplayCoolToFermentationTemp() + Units.getTemperatureUnits());
       inst.setOrder(3);
       inst.setDurationUnits(Units.HOURS);
-
-      // Set duration to 0 so that we don't show a timer
-      inst.setDuration(0);
-
+      inst.setDuration(0); // Set to zero so we don't show a timer.
       list.add(inst);
 
       int numStages = r.getFermentationStages();
@@ -406,10 +454,7 @@ public class InstructionGenerator {
       inst.setInstructionText("");
       inst.setOrder(0);
       inst.setDurationUnits(Units.HOURS);
-
-      // Set duration to 0 so that we don't show a timer
-      inst.setDuration(0);
-
+      inst.setDuration(0); // Set to zero to indicate we shouldn't show timer.
       list.add(inst);
     }
   }
