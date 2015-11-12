@@ -201,8 +201,8 @@ public class BrewCalculator {
   // Returns the given bitterness in IBUs
   public static double Bitterness(Recipe r, Ingredient i) {
     double ibu = 0;
-    double AAU = 0;
-    double utilization = 0;
+    double AAU;
+    double utilization;
 
     if (i.getType().equals(Ingredient.HOP)) {
       Hop h = (Hop) i;
@@ -217,6 +217,14 @@ public class BrewCalculator {
         AAU = Units.kilosToOunces(h.getBeerXmlStandardAmount()) * h.getAlphaAcidContent();
         ibu = (AAU * utilization * 75) / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
         ibu = ibu * 1.1;
+      }
+      else if (h.getUse().equals(Hop.USE_AROMA)) {
+        // There is no real research which indicates how many IBUs are added for flame-out
+        // additions.  We'll approximate by assuming 25% IBU contribution.
+        utilization = HopUtilization(r, h);
+        AAU = Units.kilosToOunces(h.getBeerXmlStandardAmount()) * h.getAlphaAcidContent();
+        ibu = (AAU * utilization * 75) / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+        ibu = ibu * .25;
       }
     }
 

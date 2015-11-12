@@ -764,10 +764,15 @@ public class Recipe implements Parcelable {
     return waters;
   }
 
-  public ArrayList<Ingredient> firstWortHops() {
+  /**
+   * Generates a list of hops in this recipe with the given use.
+   * @param use One of Ingredient.USE_*
+   * @return An ArrayList of Ingredients.
+   */
+  public ArrayList<Ingredient> getHops(String use) {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
     for (Hop h : this.getHopsList()) {
-      if (h.getUse().equals(Ingredient.USE_FIRST_WORT)) {
+      if (h.getUse().equals(use)) {
         list.add(h);
       }
     }

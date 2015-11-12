@@ -25,20 +25,21 @@ public class Instruction implements Parcelable {
   private MashStep mashStep;     // Used for mash step instructions ONLY
   private Recipe r;         // Recipe to get important values for this instruction.
 
-  public static String TYPE_STEEP = "Steep";
-  public static String TYPE_BOIL = "Boil";
-  public static String TYPE_PRIMARY = "1st";
-  public static String TYPE_SECONDARY = "2nd";
-  public static String TYPE_TERTIARY = "3rd";
-  public static String TYPE_DRY_HOP = "Hop";
-  public static String TYPE_MASH = "Mash";
-  public static String TYPE_SPARGE = "Sparge";
-  public static String TYPE_RAMP = "Ramp";
-  public static String TYPE_YEAST = "Yeast";
-  public static String TYPE_COOL = "Cool";
-  public static String TYPE_BOTTLING = "Bottle";
-  public static String TYPE_CALENDAR = "Calendar";
-  public static String TYPE_OTHER = "";
+  public static final String TYPE_STEEP = "Steep";
+  public static final String TYPE_BOIL = "Boil";
+  public static final String TYPE_PRIMARY = "1st";
+  public static final String TYPE_SECONDARY = "2nd";
+  public static final String TYPE_TERTIARY = "3rd";
+  public static final String TYPE_DRY_HOP = "Hop";
+  public static final String TYPE_MASH = "Mash";
+  public static final String TYPE_SPARGE = "Sparge";
+  public static final String TYPE_RAMP = "Ramp";
+  public static final String TYPE_YEAST = "Yeast";
+  public static final String TYPE_COOL = "Cool";
+  public static final String TYPE_AROMA = "Aroma";
+  public static final String TYPE_BOTTLING = "Bottle";
+  public static final String TYPE_CALENDAR = "Calendar";
+  public static final String TYPE_OTHER = "";
 
   public Instruction(Recipe r) {
     this.r = r;
@@ -111,16 +112,8 @@ public class Instruction implements Parcelable {
     return instructionText;
   }
 
-  public void addToText(String s) {
-    instructionText += s;
-  }
-
   public void setMashStep(MashStep s) {
     this.mashStep = s;
-  }
-
-  public MashStep getMashStep() {
-    return this.mashStep;
   }
 
   public String getBrewTimerTitle() {
@@ -174,6 +167,14 @@ public class Instruction implements Parcelable {
         // In some cases, there are no ingredients to boil yet, but the wort itself must
         // still boil.
         s = "Boil the wort.";
+      }
+    }
+    else if (this.instructionType.equals(Instruction.TYPE_AROMA)) {
+      if (this.relevantIngredients.size() != 0) {
+        return "Add the following aroma hops to the kettle.";
+      }
+      else {
+        return "Stop the boil and cool the wort to the desired temperature before adding Aroma hops.";
       }
     }
     else if (this.instructionType.equals(Instruction.TYPE_PRIMARY)) {
@@ -240,10 +241,6 @@ public class Instruction implements Parcelable {
     this.nextDuration = i;
   }
 
-  public double getNextDuration() {
-    return this.nextDuration;
-  }
-
   public void setLastInType(boolean b) {
     this.lastInType = b;
   }
@@ -295,29 +292,19 @@ public class Instruction implements Parcelable {
   }
 
   public boolean showInBrewTimer() {
-    if (this.instructionType.equals(TYPE_BOIL)) {
-      return true;
+    switch (this.instructionType) {
+      case TYPE_BOIL:
+      case TYPE_STEEP:
+      case TYPE_MASH:
+      case TYPE_COOL:
+      case TYPE_YEAST:
+      case TYPE_CALENDAR:
+      case TYPE_SPARGE:
+      case TYPE_AROMA:
+        return true;
+      default:
+        return false;
     }
-    if (this.instructionType.equals(TYPE_STEEP)) {
-      return true;
-    }
-    if (this.instructionType.equals(TYPE_MASH)) {
-      return true;
-    }
-    if (this.instructionType.equals(TYPE_COOL)) {
-      return true;
-    }
-    if (this.instructionType.equals(TYPE_YEAST)) {
-      return true;
-    }
-    if (this.instructionType.equals(TYPE_CALENDAR)) {
-      return true;
-    }
-    if (this.instructionType.equals(TYPE_SPARGE)) {
-      return true;
-    }
-
-    return false;
   }
 
   public boolean showInInstructionList() {
@@ -359,6 +346,8 @@ public class Instruction implements Parcelable {
     this.typeToOrder.put(TYPE_SPARGE, i);
     i += 100;
     this.typeToOrder.put(TYPE_BOIL, i);
+    i += 100;
+    this.typeToOrder.put(TYPE_AROMA, i);
     i += 100;
     this.typeToOrder.put(TYPE_COOL, i);
     i += 100;
