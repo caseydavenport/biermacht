@@ -206,11 +206,17 @@ public class BrewCalculator {
 
     if (i.getType().equals(Ingredient.HOP)) {
       Hop h = (Hop) i;
-      // Only add bitterness if we are boiling the hops!
       if (h.getUse().equals(Hop.USE_BOIL)) {
         utilization = HopUtilization(r, h);
         AAU = Units.kilosToOunces(h.getBeerXmlStandardAmount()) * h.getAlphaAcidContent();
         ibu = (AAU * utilization * 75) / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+      }
+      else if (h.getUse().equals(Hop.USE_FIRST_WORT)) {
+        // First wort hops get an extra 10% IBU boost!
+        utilization = HopUtilization(r, h);
+        AAU = Units.kilosToOunces(h.getBeerXmlStandardAmount()) * h.getAlphaAcidContent();
+        ibu = (AAU * utilization * 75) / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+        ibu = ibu * 1.1;
       }
     }
 

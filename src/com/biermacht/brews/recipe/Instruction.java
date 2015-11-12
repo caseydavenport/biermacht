@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Units;
 
@@ -166,7 +167,14 @@ public class Instruction implements Parcelable {
     }
 
     else if (this.instructionType.equals(Instruction.TYPE_BOIL)) {
-      s = "Add the ingredients shown below to the boil kettle.";
+      if (this.relevantIngredients.size() != 0) {
+        s = "Add the ingredients shown below to the boil kettle.";
+      }
+      else {
+        // In some cases, there are no ingredients to boil yet, but the wort itself must
+        // still boil.
+        s = "Boil the wort.";
+      }
     }
     else if (this.instructionType.equals(Instruction.TYPE_PRIMARY)) {
     }
@@ -190,9 +198,17 @@ public class Instruction implements Parcelable {
     else if (this.instructionType.equals(Instruction.TYPE_OTHER)) {
     }
     else if (this.instructionType.equals(Instruction.TYPE_SPARGE)) {
-      s = getInstructionText() + " until you have " + String.format("%2.2f", r.getDisplayBoilSize()) +
-              " " + Units.getVolumeUnits() + " of wort.  Then, add wort to the" +
-              " boil kettle and bring to a steady boil.";
+
+      // There are two types of Sparge instructions - First Wort, and Sparge.  They can be
+      // differentiated by the presence of ingredients.
+      if (this.relevantIngredients.size() != 0) {
+        s = "Add First Wort hops to the sparge vessel.";
+      }
+      else {
+        s = getInstructionText() + " until you have " + String.format("%2.2f", r.getDisplayBoilSize()) +
+                " " + Units.getVolumeUnits() + " of wort.  Then, add wort to the" +
+                " boil kettle and bring to a steady boil.";
+      }
     }
     else if (this.instructionType.equals(Instruction.TYPE_CALENDAR)) {
       s = "Keep track of '" + r.getRecipeName() + "' in your calendar - click below!";
@@ -242,10 +258,6 @@ public class Instruction implements Parcelable {
 
   public ArrayList<Ingredient> getRelevantIngredients() {
     return this.relevantIngredients;
-  }
-
-  public void addRelevantIngredient(Ingredient i) {
-    this.relevantIngredients.add(i);
   }
 
   @Override

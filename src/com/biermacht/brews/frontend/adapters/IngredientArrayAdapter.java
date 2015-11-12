@@ -88,6 +88,11 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
         detailText += String.format("%2.2f", BrewCalculator.Bitterness(r, h));
         detailText += " IBU";
       }
+      else if (h.getUse().equals(Hop.USE_FIRST_WORT)) {
+        detailText += "First Wort, ";
+        detailText += String.format("%2.2f", BrewCalculator.Bitterness(r, h));
+        detailText += " IBU";
+      }
       else if (h.getUse().equals(Hop.USE_DRY_HOP)) {
         detailText = "Dry Hop, " + String.format("%d", h.getDisplayTime()) + " days";
       }

@@ -89,7 +89,7 @@ public class Constants {
   public static String MESSAGE_AUTO_CALC_W2GR = "Water-to-grain ratio is calculated automatically for this step.";
 
   // Other Constants
-  private static final String[] hop_uses = {Hop.USE_BOIL, Hop.USE_AROMA, Hop.USE_DRY_HOP};
+  private static final String[] hop_uses = {Hop.USE_BOIL, Hop.USE_AROMA, Hop.USE_DRY_HOP, Hop.USE_FIRST_WORT};
   private static final String[] hop_forms = {Hop.FORM_PELLET, Hop.FORM_WHOLE, Hop.FORM_PLUG};
   private static final String[] ferm_types = {Fermentable.TYPE_GRAIN, Fermentable.TYPE_EXTRACT, Fermentable.TYPE_SUGAR, Fermentable.TYPE_ADJUNCT};
   private static final String[] step_types = {MashStep.INFUSION, MashStep.DECOCTION, MashStep.TEMPERATURE};
