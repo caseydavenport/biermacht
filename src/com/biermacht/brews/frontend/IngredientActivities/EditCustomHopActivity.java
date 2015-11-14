@@ -13,7 +13,11 @@ public class EditCustomHopActivity extends EditHopActivity {
     super.onCreate(savedInstanceState);
 
     // Set views
-    this.setViews(Arrays.asList(nameView, formSpinner, useSpinner, alphaAcidView));
+    this.setViews(Arrays.asList(nameView,
+            descriptionView,
+            formSpinner,
+            useSpinner,
+            alphaAcidView));
 
     // Set values for the given hop
     setValues(hop);

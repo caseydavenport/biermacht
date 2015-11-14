@@ -30,15 +30,23 @@ public class AddHopsActivity extends AddEditIngredientActivity {
   public Spinner useSpinner;
   public Spinner formSpinner;
   public View alphaAcidView;
+  public View descriptionView;
+
   // Titles from rows
   public TextView alphaAcidViewTitle;
+  public TextView descriptionViewTitle;
+
   // Content from rows
   public TextView alphaAcidViewText;
+  public TextView descriptionViewText;
+
   // Spinner array declarations
   public ArrayList<String> formArray;
   public ArrayList<String> useArray;
+
   // Holds the currently selected hop, and hop being edited
   Hop hop;
+
   // Storage for acquired values
   String use;
   String form;
@@ -53,24 +61,30 @@ public class AddHopsActivity extends AddEditIngredientActivity {
 
     // Initialize views and such here
     alphaAcidView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+    descriptionView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     useSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
     formSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
 
     /************************************************************************
      ************* Add views *************************************************
      *************************************************************************/
-    this.registerViews(Arrays.asList(alphaAcidView, useSpinner, formSpinner));
+    this.registerViews(Arrays.asList(alphaAcidView, descriptionView, useSpinner, formSpinner));
     this.setViews(Arrays.asList(searchableListView, amountView, timeView, formSpinner,
                                 useSpinner, alphaAcidView));
 
-    // Configure titles
+    // Inflate title views.
     alphaAcidViewTitle = (TextView) alphaAcidView.findViewById(R.id.title);
+    descriptionViewTitle = (TextView) descriptionView.findViewById(R.id.title);
+
+    // Configure titles
     alphaAcidViewTitle.setText("Alpha Acids (%)");
     amountViewTitle.setText("Amount " + "(" + Units.getHopUnits() + ")");
     searchableListViewTitle.setText("Hop");
+    descriptionViewTitle.setText("Description");
 
     // Get content views
     alphaAcidViewText = (TextView) alphaAcidView.findViewById(R.id.text);
+    descriptionViewText = (TextView) descriptionView.findViewById(R.id.text);
 
     // Hop form spinner
     formArray = Constants.HOP_FORMS;
@@ -133,6 +147,9 @@ public class AddHopsActivity extends AddEditIngredientActivity {
 
     if (v.equals(alphaAcidView)) {
       dialog = alertBuilder.editTextFloatAlert(alphaAcidViewText, alphaAcidViewTitle).create();
+    }
+    else if (v.equals(descriptionView)) {
+      dialog = alertBuilder.editTextStringAlert(descriptionViewText, descriptionViewTitle).create();
     }
     else {
       return;
@@ -214,6 +231,7 @@ public class AddHopsActivity extends AddEditIngredientActivity {
     timeViewText.setText(mRecipe.getBoilTime() + "");
     alphaAcidViewText.setText(String.format("%2.2f", h.getAlphaAcidContent()));
     amountViewText.setText(1.0 + "");
+    descriptionViewText.setText(h.getDescription());
   }
 
   @Override
@@ -230,6 +248,7 @@ public class AddHopsActivity extends AddEditIngredientActivity {
   public void acquireValues() throws Exception {
     super.acquireValues();
     alpha = Double.parseDouble(alphaAcidViewText.getText().toString().replace(",", "."));
+    String description = descriptionViewText.getText().toString();
 
     hop.setName(name);
     hop.setAlphaAcidContent(alpha);
@@ -237,6 +256,7 @@ public class AddHopsActivity extends AddEditIngredientActivity {
     hop.setUse(use);
     hop.setForm(form);
     hop.setDisplayTime(time);
+    hop.setDescription(description);
   }
 
   @Override

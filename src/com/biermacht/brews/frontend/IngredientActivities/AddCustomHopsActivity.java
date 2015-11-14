@@ -17,7 +17,13 @@ public class AddCustomHopsActivity extends AddHopsActivity {
     super.onCreate(savedInstanceState);
 
     // Set views
-    this.setViews(Arrays.asList(nameView, amountView, timeView, formSpinner, useSpinner, alphaAcidView));
+    this.setViews(Arrays.asList(nameView,
+            descriptionView,
+            amountView,
+            timeView,
+            formSpinner,
+            useSpinner,
+            alphaAcidView));
     if (! haveRecipe()) {
       timeView.setVisibility(View.GONE);
       amountView.setVisibility(View.GONE);
@@ -27,12 +33,6 @@ public class AddCustomHopsActivity extends AddHopsActivity {
     setValues(hop);
   }
 
-  @Override
-  public void acquireValues() throws Exception {
-    super.acquireValues();
-    hop.setShortDescription("Custom hop");
-  }
-
   public void setInitialSearchableListSelection() {
     // Don't set the searchable list selector.
     // Initial values are set based on the new ingredient.
@@ -40,16 +40,16 @@ public class AddCustomHopsActivity extends AddHopsActivity {
 
   @Override
   public void onFinished() {
-    Log.d("AddCustomHop::onFinished", "Adding hop to db_custom: " + hop.getName());
+    Log.d("AddCustomHop", "Adding hop to db_custom: " + hop.getName());
     Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, hop, Constants.MASTER_RECIPE_ID);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
-      Log.d("AddCustomHop::onFinished", "Adding hop '" +
+      Log.d("AddCustomHop", "Adding hop '" +
               hop.getName() + "' to recipe '" + mRecipe.getRecipeName() + "'");
       mRecipe.addIngredient(hop);
       mRecipe.save();
     }
-    Log.d("AddCustomHop::onFinished", "Closing activity");
+    Log.d("AddCustomHop", "Closing activity");
     finish();
   }
 

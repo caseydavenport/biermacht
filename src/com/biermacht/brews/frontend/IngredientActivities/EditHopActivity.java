@@ -86,6 +86,7 @@ public class EditHopActivity extends AddHopsActivity {
     timeViewText.setText(String.format("%d", hop.getDisplayTime()));
     alphaAcidViewText.setText(String.format("%2.2f", h.getAlphaAcidContent()));
     amountViewText.setText(String.format("%2.2f", hop.getDisplayAmount()));
+    descriptionViewText.setText(hop.getDescription());
   }
 
   public void setInitialSearchableListSelection() {
@@ -95,14 +96,14 @@ public class EditHopActivity extends AddHopsActivity {
   @Override
   public void getList() {
     super.getList();
-    Log.d("EditHopActivity::getList", "Getting hops list");
+    Log.d("EditHopActivity", "Getting hops list");
 
     // Remove the placeholder ingredient
-    Log.d("EditHopActivity::getList", "Removing placeholder ingredient");
+    Log.d("EditHopActivity", "Removing placeholder ingredient");
     ingredientList.remove(0);
 
     if (! ingredientList.contains(hop)) {
-      Log.d("EditHopActivity::getList", "Adding custom hop to list: " + hop.getName());
+      Log.d("EditHopActivity", "Adding custom hop to list: " + hop.getName());
       ingredientList.add(0, hop);
     }
   }
