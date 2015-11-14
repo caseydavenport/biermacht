@@ -2,9 +2,9 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 
-import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 
 public class AddCustomYeastActivity extends AddYeastActivity {
 
@@ -39,7 +39,7 @@ public class AddCustomYeastActivity extends AddYeastActivity {
 
   @Override
   public void onFinished() {
-    DatabaseAPI.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, yeast, Constants.MASTER_RECIPE_ID, Constants.SNAPSHOT_NONE);
+    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, yeast, Constants.MASTER_RECIPE_ID);
     finish();
   }
 }

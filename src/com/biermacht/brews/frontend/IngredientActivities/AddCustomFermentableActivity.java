@@ -1,16 +1,16 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 
 import java.util.Arrays;
 
@@ -109,7 +109,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
   @Override
   public void onFinished() {
     Log.d("AddCustomFermentableActivity::onFinished", "Adding fermentable to db_custom: " + fermentable.getName());
-    DatabaseAPI.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID, Constants.SNAPSHOT_NONE);
+    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
       Log.d("AddCustomFermentableActivity::onFinished", "Adding fermentable '" +
