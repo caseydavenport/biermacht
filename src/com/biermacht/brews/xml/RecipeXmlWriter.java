@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;
@@ -209,11 +210,11 @@ public class RecipeXmlWriter {
       versionElement.setTextContent(h.getVersion() + "");
       alphaElement.setTextContent(h.getAlphaAcidContent() + "");
       amountElement.setTextContent(h.getBeerXmlStandardAmount() + "");
-      useElement.setTextContent(h.getUse());
       timeElement.setTextContent(h.getTime() + "");
       notesElement.setTextContent(h.getDescription());
       typeElement.setTextContent(h.getType());
       formElement.setTextContent(h.getForm());
+      useElement.setTextContent(h.getUse());
 
       // Attach to element.
       hopElement.appendChild(nameElement);
