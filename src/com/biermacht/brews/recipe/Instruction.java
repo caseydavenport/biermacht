@@ -126,37 +126,47 @@ public class Instruction implements Parcelable {
 
   public String getBrewTimerText() {
     String s = "";
+
+
     if (this.instructionType.equals(Instruction.TYPE_MASH)) {
-      double qts = Units.litersToQuarts(mashStep.getBeerXmlStandardInfuseAmount());
-      if (mashStep.getDisplayInfuseAmount() != 0) {
-        s += "Add " + String.format("%2.2f", mashStep.getDisplayInfuseAmount())
-                + " " + Units.getVolumeUnits()
-                + " ("
-                + String.format("%2.2f", qts)
-                + "qt)"
-                + " of "
-                + String.format("%2.0f", mashStep.getDisplayInfuseTemp())
-                + Units.getTemperatureUnits()
-                + ""
-                + " water.\n\n";
+      // This is a mash step.
+      if (mashStep.getDisplayInfuseAmount() != 0 && mashStep.getType().equals(MashStep.INFUSION)) {
+        // This is an infusion step.
+        String fmt = "Add %2.2f %s (%2.2fqt) of %s%s water.\n\n";
+        s += String.format(fmt,
+                mashStep.getDisplayInfuseAmount(),
+                Units.getVolumeUnits(),
+                Units.litersToQuarts(mashStep.getBeerXmlStandardInfuseAmount()),
+                mashStep.getDisplayInfuseTemp(),
+                Units.getTemperatureUnits());
       }
 
       if (mashStep.getDisplayDecoctAmount() != 0) {
-        s += "Remove " + String.format("%2.2f", mashStep.getDisplayDecoctAmount()) + " " + Units.getVolumeUnits() +
-                " of mash, and boil it.  Then, add it back to the mash.\n\n";
+        // This is a decoction step.
+        String fmt = "Remove %2.2f %s of mash and boil it.  Then, add it back to the mash.";
+        s += String.format(fmt, mashStep.getDisplayDecoctAmount(), Units.getVolumeUnits());
       }
 
-      if (mashStep.getRampTime() != 0 && mashStep.getType().equals(MashStep.TEMPERATURE)) {
-        s += "Adjust mash temperature to " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + Units.getTemperatureUnits();
-        s += " over " + mashStep.getRampTime() + " minutes.\n\n";
+      if (mashStep.getType().equals(MashStep.TEMPERATURE)) {
+        // This is a temperature step.
+        String fmt = "Adjust mash temperature to %2.0f%s over %2.0f minutes.\n\n";
+        s += String.format(fmt,
+                mashStep.getDisplayStepTemp(),
+                Units.getTemperatureUnits(),
+                mashStep.getRampTime());
       }
 
-      s += "Hold at " + String.format("%2.0f", mashStep.getDisplayStepTemp()) + Units.getTemperatureUnits();
-      s += " for " + String.format("%2.0f", mashStep.getStepTime()) + " minutes.";
+      String fmt = "Hold at %2.0f%s for %2.0f minutes.";
+      s += String.format(fmt,
+              mashStep.getDisplayStepTemp(),
+              Units.getTemperatureUnits(),
+              mashStep.getStepTime());
     }
 
     else if (this.instructionType.equals(Instruction.TYPE_STEEP)) {
-      s += "Steep ingredients at " + r.getDisplaySteepTemp() + " " + Units.getTemperatureUnits();
+      s += String.format("Steep ingredients at %2.0f%s.",
+              r.getDisplaySteepTemp(),
+              Units.getTemperatureUnits());
     }
 
     else if (this.instructionType.equals(Instruction.TYPE_BOIL)) {

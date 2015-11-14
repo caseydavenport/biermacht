@@ -29,18 +29,21 @@ public class AddMashStepActivity extends AddEditActivity {
   public View waterToGrainRatioView;
   public View infuseTemperatureView;
   public View stepAmountView;
+  public View rampTimeView;
 
   // Titles
   public TextView stepTempViewTitle;
   public TextView waterToGrainRatioViewTitle;
   public TextView infuseTemperatureViewTitle;
   public TextView stepAmountViewTitle;
+  public TextView rampTimeViewTitle;
 
   // Content text
   public TextView stepTempViewText;
   public TextView waterToGrainRatioViewText;
   public TextView infuseTemperatureViewText;
   public TextView stepAmountViewText;
+  public TextView rampTimeViewText;
 
   // MashStep we are editing and its ID in the database.
   public MashStep step;
@@ -81,30 +84,35 @@ public class AddMashStepActivity extends AddEditActivity {
     waterToGrainRatioView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     infuseTemperatureView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     stepAmountView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
+    rampTimeView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
 
     // Set listeners
     stepTempView.setOnClickListener(onClickListener);
     waterToGrainRatioView.setOnClickListener(onClickListener);
     infuseTemperatureView.setOnClickListener(onClickListener);
     stepAmountView.setOnClickListener(onClickListener);
+    rampTimeView.setOnClickListener(onClickListener);
 
     // Get titles, set values
     stepTempViewTitle = (TextView) stepTempView.findViewById(R.id.title);
     waterToGrainRatioViewTitle = (TextView) waterToGrainRatioView.findViewById(R.id.title);
     infuseTemperatureViewTitle = (TextView) infuseTemperatureView.findViewById(R.id.title);
     stepAmountViewTitle = (TextView) stepAmountView.findViewById(R.id.title);
+    rampTimeViewTitle = (TextView) rampTimeView.findViewById(R.id.title);
 
     // Get content views
     stepTempViewText = (TextView) stepTempView.findViewById(R.id.text);
     waterToGrainRatioViewText = (TextView) waterToGrainRatioView.findViewById(R.id.text);
     infuseTemperatureViewText = (TextView) infuseTemperatureView.findViewById(R.id.text);
     stepAmountViewText = (TextView) stepAmountView.findViewById(R.id.text);
+    rampTimeViewText = (TextView) rampTimeView.findViewById(R.id.text);
 
     // Set titles
     stepAmountViewTitle.setText("Water to Add (" + (Units.getUnitSystem() == Units.IMPERIAL ? "qt" : "L") + ")");
     stepTempViewTitle.setText("Step Temperature (" + Units.getTemperatureUnits() + ")");
     waterToGrainRatioViewTitle.setText("Water to Grain Ratio (" + (Units.getUnitSystem() == Units.IMPERIAL ? "qt/lb" : "L/kg") + ")");
     infuseTemperatureViewTitle.setText("Water Temperature (" + Units.getTemperatureUnits() + ")");
+    rampTimeViewTitle.setText("Ramp Time");
 
     // Remove views we don't want
     mainView.removeView(amountView);
@@ -114,6 +122,7 @@ public class AddMashStepActivity extends AddEditActivity {
     mainView.addView(waterToGrainRatioView);
     mainView.addView(infuseTemperatureView);
     mainView.addView(stepAmountView);
+    mainView.addView(rampTimeView);
 
     // Change button text to say "Add" instead of "Submit"
     submitButton.setText("Add");
@@ -155,6 +164,9 @@ public class AddMashStepActivity extends AddEditActivity {
                                                         step.getAutoCalcInfuseAmt(),
                                                         infuseAmountCallback).create();
       }
+    }
+    else if (v.equals(rampTimeView)) {
+      alert = alertBuilder.editTextIntegerAlert(rampTimeViewText, rampTimeViewTitle).create();
     }
     else {
       return;
@@ -217,6 +229,7 @@ public class AddMashStepActivity extends AddEditActivity {
     stepTempViewText.setText(String.format("%2.2f", step.getDisplayStepTemp()));
     waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
     infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemp()));
+    rampTimeViewText.setText(String.format("%2.2f", step.getRampTime()));
   }
 
   @Override
@@ -304,17 +317,20 @@ public class AddMashStepActivity extends AddEditActivity {
           infuseTemperatureView.setVisibility(View.GONE);
           waterToGrainRatioView.setVisibility(View.GONE);
           stepAmountView.setVisibility(View.VISIBLE);
+          rampTimeView.setVisibility(View.GONE);
         }
         else if (type.equals(MashStep.TEMPERATURE)) {
           infuseTemperatureView.setVisibility(View.GONE);
           stepAmountView.setVisibility(View.GONE);
           waterToGrainRatioView.setVisibility(View.GONE);
+          rampTimeView.setVisibility(View.VISIBLE);
         }
         else {
           stepAmountViewTitle.setText("Water to add (" + Units.getVolumeUnits() + ")");
           infuseTemperatureView.setVisibility(View.VISIBLE);
           waterToGrainRatioView.setVisibility(View.VISIBLE);
           stepAmountView.setVisibility(View.VISIBLE);
+          rampTimeView.setVisibility(View.GONE);
         }
 
         // Update selected values.
@@ -359,16 +375,26 @@ public class AddMashStepActivity extends AddEditActivity {
     double infuseTemp = Double.parseDouble(infuseTemperatureViewText.getText().toString().replace(",", "."));
     double waterToGrainRatio = Double.parseDouble(waterToGrainRatioViewText.getText().toString().replace(",", "."));
     amount = Double.parseDouble(stepAmountViewText.getText().toString().replace(",", "."));
+    double rampTime = Double.parseDouble(rampTimeViewText.getText().toString().replace(",", "."));
 
+    // Make sure the type is set.
+    step.setType(type);
+
+    // Set the amount based on the type of step.
     if (step.getType().equals(MashStep.INFUSION)) {
       step.setDisplayInfuseAmount(amount);
     }
     else if (step.getType().equals(MashStep.DECOCTION)) {
       step.setDisplayDecoctAmount(amount);
     }
+    else if (step.getType().equals(MashStep.TEMPERATURE)) {
+      step.setDisplayInfuseAmount(0);
+      step.setDisplayDecoctAmount(0);
+      step.setRampTime(rampTime);
+    }
 
+    // Set common fields.
     step.setStepTime(time);
-    step.setType(type);
     step.setDisplayStepTemp(stepTemp);
     step.setDisplayWaterToGrainRatio(waterToGrainRatio);
     step.setDisplayInfuseTemp(infuseTemp);
