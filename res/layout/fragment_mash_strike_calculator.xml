@@ -115,29 +115,6 @@
                 android:textColor="@color/text"/>
 
             <TextView
-                android:id="@+id/strike_water_temperature_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/transparent"
-                android:gravity="center_vertical"
-                android:text="Water Temperature (F)"
-                android:textColor="@color/title_color"
-                android:textSize="18dp"/>
-
-            <EditText
-                android:id="@+id/strike_water_temperature_edit_text"
-                style="@style/text_input"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="210"
-                android:textColor="@color/text"
-                android:inputType="numberDecimal"
-                android:selectAllOnFocus="true"/>
-
-            <TextView
                 android:id="@+id/strike_water_temp_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
