@@ -31,9 +31,14 @@ public class EditHopActivity extends AddHopsActivity {
 
         if (use.equals(Hop.USE_DRY_HOP)) {
           timeViewTitle.setText("Time (days)");
+          timeView.setVisibility(View.VISIBLE);
+        }
+        else if (use.equals(Hop.USE_FIRST_WORT)) {
+          timeView.setVisibility(View.GONE);
         }
         else {
           timeViewTitle.setText("Time (mins)");
+          timeView.setVisibility(View.VISIBLE);
         }
       }
 

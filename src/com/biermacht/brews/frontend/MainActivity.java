@@ -46,7 +46,7 @@ import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
-import com.biermacht.brews.utils.interfaces.ClickableFragment;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
   // List of Fragments which can be shown in the main view.  These correspond to the drawer items
   // in the above ArrayList<String> drawerItems
-  ArrayList<ClickableFragment> fragmentList;
+  ArrayList<BiermachtFragment> fragmentList;
 
   // Drawer related variables.
   private DrawerLayout mDrawerLayout;
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Set up fragment List to contain the correct fragments.
     selectedItem = 0;
-    fragmentList = new ArrayList<ClickableFragment>();
+    fragmentList = new ArrayList<BiermachtFragment>();
     fragmentList.add(new RecipesFragment());
     fragmentList.add(new EditIngredientsFragment());
     fragmentList.add(new EditMashProfilesFragment());

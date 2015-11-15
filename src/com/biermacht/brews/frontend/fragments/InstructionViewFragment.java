@@ -13,10 +13,11 @@ import com.biermacht.brews.frontend.adapters.InstructionArrayAdapter;
 import com.biermacht.brews.recipe.Instruction;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 
-public class InstructionViewFragment extends Fragment {
+public class InstructionViewFragment extends Fragment implements BiermachtFragment {
 
   private int resource = R.layout.fragment_instruction_view;
   ;
@@ -85,5 +86,20 @@ public class InstructionViewFragment extends Fragment {
     }
 
     return this.pageView;
+  }
+
+  @Override
+  public void handleClick(View v) {
+    // Not used.
+  }
+
+  @Override
+  public void update() {
+    // Not used.
+  }
+
+  @Override
+  public String name() {
+    return "Instructions";
   }
 }

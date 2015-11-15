@@ -17,9 +17,14 @@ import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter;
+import com.biermacht.brews.frontend.fragments.DetailsViewFragment;
+import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
+import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
+import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 public class DisplayRecipeActivity extends AppCompatActivity {
 
@@ -109,22 +114,32 @@ public class DisplayRecipeActivity extends AppCompatActivity {
     menu.removeItem(R.id.menu_timer);
     menu.removeItem(R.id.menu_profile_dropdown);
 
-    switch (mViewPager.getCurrentItem()) {
-      case 0:
-        getMenuInflater().inflate(R.menu.fragment_ingredient_menu, menu);
-        break;
-      case 1:
-        getMenuInflater().inflate(R.menu.fragment_instruction_menu, menu);
-        break;
-      case 2:
-        getMenuInflater().inflate(R.menu.fragment_details_menu, menu);
-        break;
-      case 3:
-        getMenuInflater().inflate(R.menu.fragment_profile_menu, menu);
-        if (mRecipe.getType().equals(Recipe.EXTRACT)) {
-          menu.findItem(R.id.menu_edit_mash_profile).setVisible(false);
-        }
-        break;
+    BiermachtFragment f = (BiermachtFragment) cpAdapter.getItem(mViewPager.getCurrentItem());
+
+    if (f instanceof IngredientViewFragment) {
+      Log.d("DisplayRecipeActivity", "Displaying fragment_ingredient_menu");
+      getMenuInflater().inflate(R.menu.fragment_ingredient_menu, menu);
+    }
+    else if (f instanceof InstructionViewFragment) {
+      Log.d("DisplayRecipeActivity", "Displaying fragment_instruction_menu");
+      getMenuInflater().inflate(R.menu.fragment_instruction_menu, menu);
+    }
+    else if (f instanceof DetailsViewFragment) {
+      Log.d("DisplayRecipeActivity", "Displaying fragment_details_menu");
+      getMenuInflater().inflate(R.menu.fragment_details_menu, menu);
+    }
+    else if (f instanceof ProfileViewFragment) {
+      Log.d("DisplayRecipeActivity", "Displaying fragment_profile_menu");
+      getMenuInflater().inflate(R.menu.fragment_profile_menu, menu);
+      if (mRecipe.getType().equals(Recipe.EXTRACT)) {
+        Log.d("DisplayRecipeActivity", "Including menu_edit_mash_profile");
+        menu.findItem(R.id.menu_edit_mash_profile).setVisible(false);
+      }
+    }
+    else {
+      // No cases were matched - return false.
+      Log.e("DisplayRecipeActivity", "Unable to select menu.");
+      return false;
     }
     return true;
   }

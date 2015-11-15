@@ -25,12 +25,12 @@ import com.biermacht.brews.frontend.adapters.CustomIngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
-import com.biermacht.brews.utils.interfaces.ClickableFragment;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class EditIngredientsFragment extends Fragment implements ClickableFragment {
+public class EditIngredientsFragment extends Fragment implements BiermachtFragment {
   private static int resource = R.layout.fragment_view;
   ;
   private OnItemClickListener mClickListener;
@@ -152,5 +152,10 @@ public class EditIngredientsFragment extends Fragment implements ClickableFragme
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     return false;
+  }
+
+  @Override
+  public String name() {
+    return "Ingredients";
   }
 }

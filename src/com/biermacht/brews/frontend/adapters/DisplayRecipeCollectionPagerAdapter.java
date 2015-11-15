@@ -11,6 +11,7 @@ import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
 import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 
@@ -35,8 +36,8 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
     // Keep in list.
     this.fragmentList = new ArrayList<>();
     this.fragmentList.add(ingredientFragment);
-    this.fragmentList.add(instructionFragment);
     this.fragmentList.add(detailsFragment);
+    this.fragmentList.add(instructionFragment);
     this.fragmentList.add(profileFragment);
   }
 
@@ -52,22 +53,8 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
 
   @Override
   public CharSequence getPageTitle(int position) {
-
-    // Set title based on position in list
-    if (position == 0) {
-      return "Ingredients";
-    }
-    else if (position == 1) {
-      return "Instructions";
-    }
-    else if (position == 2) {
-      return "Details";
-    }
-    else if (position == 3) {
-      return "Profiles";
-    }
-
-    return "Unknown Tab";
+    BiermachtFragment f = (BiermachtFragment) this.fragmentList.get(position);
+    return f.name();
   }
 
   @Override

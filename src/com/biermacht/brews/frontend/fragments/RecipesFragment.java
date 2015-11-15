@@ -46,12 +46,12 @@ import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
-import com.biermacht.brews.utils.interfaces.ClickableFragment;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
 import java.util.ArrayList;
 
-public class RecipesFragment extends Fragment implements ClickableFragment {
+public class RecipesFragment extends Fragment implements BiermachtFragment {
 
   // Layout resource
   private static int resource = R.layout.fragment_recipes;
@@ -487,6 +487,11 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
     // Return false if the item was unhandled.
     return false;
+  }
+
+  @Override
+  public String name() {
+    return "Recipes";
   }
 
   @Override

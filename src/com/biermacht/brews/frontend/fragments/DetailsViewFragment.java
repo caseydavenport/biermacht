@@ -12,10 +12,11 @@ import com.biermacht.brews.frontend.Detail;
 import com.biermacht.brews.frontend.adapters.DetailArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 
-public class DetailsViewFragment extends Fragment {
+public class DetailsViewFragment extends Fragment implements BiermachtFragment {
 
   private int resource = R.layout.fragment_details_view;
   private Recipe r;
@@ -195,5 +196,20 @@ public class DetailsViewFragment extends Fragment {
     this.listView.setAdapter(this.mAdapter);
 
     return this.pageView;
+  }
+
+  @Override
+  public void handleClick(View v) {
+
+  }
+
+  @Override
+  public void update() {
+
+  }
+
+  @Override
+  public String name() {
+    return "Details";
   }
 }

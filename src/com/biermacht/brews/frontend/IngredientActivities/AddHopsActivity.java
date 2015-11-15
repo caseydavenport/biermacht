@@ -108,10 +108,17 @@ public class AddHopsActivity extends AddEditIngredientActivity {
         if (use.equals(Hop.USE_DRY_HOP)) {
           timeViewTitle.setText("Time (days)");
           timeViewText.setText(5 + "");
+          timeView.setVisibility(View.VISIBLE);
+        }
+        else if (use.equals(Hop.USE_FIRST_WORT)) {
+          // First wort hops are included in the full boil.
+          timeViewText.setText(String.format("%d", mRecipe.getBoilTime()));
+          timeView.setVisibility(View.GONE);
         }
         else {
           timeViewTitle.setText("Time (mins)");
-          timeViewText.setText(mRecipe.getBoilTime() + "");
+          timeViewText.setText(String.format("%d", mRecipe.getBoilTime()));
+          timeView.setVisibility(View.VISIBLE);
         }
       }
 

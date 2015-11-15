@@ -22,12 +22,12 @@ import com.biermacht.brews.frontend.adapters.MashProfileArrayAdapter;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
-import com.biermacht.brews.utils.interfaces.ClickableFragment;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class EditMashProfilesFragment extends Fragment implements ClickableFragment {
+public class EditMashProfilesFragment extends Fragment implements BiermachtFragment {
   private static int resource = R.layout.fragment_view;
   private OnItemClickListener mClickListener;
   private ListView listView;
@@ -113,5 +113,10 @@ public class EditMashProfilesFragment extends Fragment implements ClickableFragm
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     return false;
+  }
+
+  @Override
+  public String name() {
+    return "Mash Profiles";
   }
 }
