@@ -10,7 +10,6 @@ import com.biermacht.brews.frontend.fragments.DetailsViewFragment;
 import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
 import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
-import com.biermacht.brews.frontend.fragments.SnapshotsViewFragment;
 import com.biermacht.brews.recipe.Recipe;
 
 public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
@@ -20,7 +19,6 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
   InstructionViewFragment instructionFragment;
   DetailsViewFragment detailsFragment;
   ProfileViewFragment profileFragment;
-  SnapshotsViewFragment snapshotFragment;
 
   public DisplayRecipeCollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
     super(fm);
@@ -30,22 +28,18 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
     this.instructionFragment = InstructionViewFragment.instance(r);
     this.detailsFragment = DetailsViewFragment.instance(r);
     this.profileFragment = ProfileViewFragment.instance(r);
-    this.snapshotFragment = SnapshotsViewFragment.instance(r);
   }
 
   @Override
   public Fragment getItem(int i) {
 
     if (i == 0) {
-      return snapshotFragment;
-    }
-    else if (i == 1) {
       return ingredientFragment;
     }
-    else if (i == 2) {
+    else if (i == 1) {
       return instructionFragment;
     }
-    else if (i == 3) {
+    else if (i == 2) {
       return detailsFragment;
     }
     else {
@@ -63,18 +57,15 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
 
     // Set title based on position in list
     if (position == 0) {
-      return "Snapshots";
-    }
-    else if (position == 1) {
       return "Ingredients";
     }
-    else if (position == 2) {
+    else if (position == 1) {
       return "Instructions";
     }
-    else if (position == 3) {
+    else if (position == 2) {
       return "Details";
     }
-    else if (position == 4) {
+    else if (position == 3) {
       return "Profiles";
     }
 
