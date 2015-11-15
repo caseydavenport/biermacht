@@ -237,9 +237,10 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     mClickListener = new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
 
-        // If the contextual action bar is shown, and we've clicked a recipe,
-        // we need to cancel the CAB.
-        if (mActionMode != null) {
+        // If the contextual action bar is shown, and we've clicked another recipe,
+        // while we're in tablet mode, we need to cancel the CAB so that it isn't
+        // confusing.  The other option would be to update contextActionRecipe.
+        if (mActionMode != null && isTablet) {
           mActionMode.finish();
         }
 
