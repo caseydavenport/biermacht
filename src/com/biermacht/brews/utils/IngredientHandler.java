@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.util.Log;
 
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.MashProfile;
@@ -49,7 +50,7 @@ public class IngredientHandler {
       this.importIngredients();
 
       // Import mash profile assets.
-      Database.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM,
+      DatabaseAPI.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM,
                                                    getProfilesFromXml(),
                                                    Constants.OWNER_NONE);
     } catch (IOException e) {
@@ -59,16 +60,16 @@ public class IngredientHandler {
 
   // Imports ingredient assets only (not mash profiles).
   public void importIngredients() throws IOException {
-    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
+    DatabaseAPI.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getFermentablesFromXml(),
                                                 Constants.OWNER_NONE);
-    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
+    DatabaseAPI.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getYeastsFromXml(),
                                                 Constants.OWNER_NONE);
-    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
+    DatabaseAPI.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getHopsFromXml(),
                                                 Constants.OWNER_NONE);
-    Database.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
+    DatabaseAPI.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                 getMiscsFromXml(),
                                                 Constants.OWNER_NONE);
   }
@@ -85,9 +86,9 @@ public class IngredientHandler {
     }
 
     fermentablesList.removeAll(fermentablesList);
-    fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
+    fermentablesList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
                                                                        Ingredient.FERMENTABLE));
-    fermentablesList.addAll(Database.getIngredientsFromVirtualDatabase(Constants
+    fermentablesList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants
                                                                                .DATABASE_PERMANENT, Ingredient.FERMENTABLE));
 
     Collections.sort(fermentablesList, new ToStringComparator());
@@ -107,9 +108,9 @@ public class IngredientHandler {
     }
 
     yeastsList.removeAll(yeastsList);
-    yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
+    yeastsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
                                                                  Ingredient.YEAST));
-    yeastsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
+    yeastsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                                  Ingredient.YEAST));
 
     Collections.sort(yeastsList, new ToStringComparator());
@@ -128,9 +129,9 @@ public class IngredientHandler {
     }
 
     hopsList.removeAll(hopsList);
-    hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
+    hopsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
                                                                Ingredient.HOP));
-    hopsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
+    hopsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                                Ingredient.HOP));
 
     Collections.sort(hopsList, new ToStringComparator());
@@ -149,9 +150,9 @@ public class IngredientHandler {
     }
 
     miscsList.removeAll(miscsList);
-    miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
+    miscsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
                                                                 Ingredient.MISC));
-    miscsList.addAll(Database.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
+    miscsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                                 Ingredient.MISC));
 
     Collections.sort(miscsList, new ToStringComparator());
@@ -186,8 +187,8 @@ public class IngredientHandler {
     }
 
     profileList.removeAll(profileList);
-    profileList.addAll(Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM));
-    profileList.addAll(Database.getMashProfilesFromVirtualDatabase(Constants.DATABASE_PERMANENT));
+    profileList.addAll(DatabaseAPI.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM));
+    profileList.addAll(DatabaseAPI.getMashProfilesFromVirtualDatabase(Constants.DATABASE_PERMANENT));
 
     Collections.sort(profileList, new ToStringComparator());
     return this.profileList;

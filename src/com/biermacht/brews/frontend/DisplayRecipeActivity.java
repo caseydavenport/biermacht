@@ -64,7 +64,7 @@ public class DisplayRecipeActivity extends AppCompatActivity {
     };
 
     // Set to the current item (default to IngredientView)
-    currentItem = 1;
+    currentItem = 0;
 
     // Update user interface
     updateUI();
@@ -104,7 +104,6 @@ public class DisplayRecipeActivity extends AppCompatActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     this.menu = menu;
-    menu.removeItem(R.id.menu_new_snapshot);
     menu.removeItem(R.id.menu_add_ing);
     menu.removeItem(R.id.menu_edit_recipe);
     menu.removeItem(R.id.menu_timer);
@@ -112,18 +111,15 @@ public class DisplayRecipeActivity extends AppCompatActivity {
 
     switch (mViewPager.getCurrentItem()) {
       case 0:
-        getMenuInflater().inflate(R.menu.fragment_snapshots_menu, menu);
-        break;
-      case 1:
         getMenuInflater().inflate(R.menu.fragment_ingredient_menu, menu);
         break;
-      case 2:
+      case 1:
         getMenuInflater().inflate(R.menu.fragment_instruction_menu, menu);
         break;
-      case 3:
+      case 2:
         getMenuInflater().inflate(R.menu.fragment_details_menu, menu);
         break;
-      case 4:
+      case 3:
         getMenuInflater().inflate(R.menu.fragment_profile_menu, menu);
         if (mRecipe.getType().equals(Recipe.EXTRACT)) {
           menu.findItem(R.id.menu_edit_mash_profile).setVisible(false);
