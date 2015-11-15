@@ -7,9 +7,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 public class EditHopActivity extends AddHopsActivity {
 
@@ -114,12 +114,12 @@ public class EditHopActivity extends AddHopsActivity {
   }
 
   public void onFinished() {
-    Database.updateIngredient(hop, Constants.DATABASE_DEFAULT);
+    DatabaseAPI.updateIngredient(hop, Constants.DATABASE_DEFAULT);
     finish();
   }
 
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
+    DatabaseAPI.deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
     finish();
   }
 }

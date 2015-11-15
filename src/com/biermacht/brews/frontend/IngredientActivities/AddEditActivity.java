@@ -1,10 +1,10 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -28,7 +29,6 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.IngredientHandler;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.List;
  * examples would be Recipes, MashProfiles, or Settings.  This class defines a framework for adding
  * views, acquiring values from those views, saving or deleting objects, and more.
  */
-public abstract class AddEditActivity extends ActionBarActivity implements OnClickListener {
+public abstract class AddEditActivity extends AppCompatActivity implements OnClickListener {
 
   // Main view - holds all the rows
   public ViewGroup mainView;
@@ -307,7 +307,7 @@ public abstract class AddEditActivity extends ActionBarActivity implements OnCli
       if (recipeId != Constants.INVALID_ID) {
         Log.d("AddEditActivity", "Found recipe ID, Trying database");
         try {
-          mRecipe = Database.getRecipeWithId(recipeId);
+          mRecipe = DatabaseAPI.getRecipeWithId(recipeId);
           Log.d("AddEditActivity", "Found recipe in database");
         } catch (ItemNotFoundException e) {
           e.printStackTrace();

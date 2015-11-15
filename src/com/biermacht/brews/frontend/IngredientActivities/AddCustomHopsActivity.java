@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 import java.util.Arrays;
 
@@ -18,12 +18,12 @@ public class AddCustomHopsActivity extends AddHopsActivity {
 
     // Set views
     this.setViews(Arrays.asList(nameView,
-            descriptionView,
             amountView,
             timeView,
             formSpinner,
             useSpinner,
-            alphaAcidView));
+            alphaAcidView,
+            descriptionView));
     if (! haveRecipe()) {
       timeView.setVisibility(View.GONE);
       amountView.setVisibility(View.GONE);
@@ -41,7 +41,7 @@ public class AddCustomHopsActivity extends AddHopsActivity {
   @Override
   public void onFinished() {
     Log.d("AddCustomHop", "Adding hop to db_custom: " + hop.getName());
-    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, hop, Constants.MASTER_RECIPE_ID);
+    DatabaseAPI.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, hop, Constants.MASTER_RECIPE_ID);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
       Log.d("AddCustomHop", "Adding hop '" +

@@ -1,5 +1,6 @@
-package com.biermacht.brews.utils;
+package com.biermacht.brews.database;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.biermacht.brews.database.DatabaseInterface;
@@ -8,16 +9,21 @@ import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Database {
+public class DatabaseAPI {
+
+  public static DatabaseInterface newDatabaseInterface(Context c) {
+        return new DatabaseInterface(c);
+  }
 
   // Get all recipes in database, sorted
-  public static ArrayList<Recipe> getRecipeList(DatabaseInterface dbi) {
-    ArrayList<Recipe> list = dbi.getRecipeList();
+  public static ArrayList<Recipe> getRecipeList() {
+    ArrayList<Recipe> list = MainActivity.databaseInterface.getRecipeList();
 
     for (Recipe r : list) {
       r.update();
@@ -66,7 +72,7 @@ public class Database {
   public static boolean deleteAllRecipes() {
     boolean bool = true;
 
-    for (Recipe r : getRecipeList(MainActivity.databaseInterface)) {
+    for (Recipe r : getRecipeList()) {
       for (Ingredient i : r.getIngredientList()) {
         deleteIngredientWithId(i.getId(), Constants.DATABASE_DEFAULT);
       }

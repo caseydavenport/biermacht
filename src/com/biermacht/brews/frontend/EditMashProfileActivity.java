@@ -1,15 +1,15 @@
 package com.biermacht.brews.frontend;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 public class EditMashProfileActivity extends AddMashProfileActivity {
 
@@ -106,7 +106,7 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
             .setPositiveButton("Save", new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
                 mProfile.setName(mRecipe.getRecipeName() + "'s profile");
-                Database.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, mProfile.getOwnerId());
+                DatabaseAPI.addMashProfileToVirtualDatabase(Constants.DATABASE_CUSTOM, mProfile, mProfile.getOwnerId());
                 onMashProfileSavedAlert().create().show();
               }
             })

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -12,7 +13,6 @@ import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.InstructionGenerator;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
@@ -1151,6 +1151,6 @@ public class Recipe implements Parcelable {
 
   public void save() {
     Log.d(getRecipeName() + "::save", "Saving with id: " + this.getId());
-    Database.updateRecipe(this);
+    DatabaseAPI.updateRecipe(this);
   }
 }

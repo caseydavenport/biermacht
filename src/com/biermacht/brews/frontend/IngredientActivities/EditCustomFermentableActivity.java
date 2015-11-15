@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 public class EditCustomFermentableActivity extends AddCustomFermentableActivity {
 
@@ -70,13 +70,13 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
 
   @Override
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, fermentable.getDatabaseId());
+    DatabaseAPI.deleteIngredientWithId(ingredientId, fermentable.getDatabaseId());
     finish();
   }
 
   @Override
   public void onFinished() {
-    Database.updateIngredient(fermentable, fermentable.getDatabaseId());
+    DatabaseAPI.updateIngredient(fermentable, fermentable.getDatabaseId());
     finish();
   }
 }

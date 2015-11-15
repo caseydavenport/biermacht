@@ -1,16 +1,16 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Database;
 
 import java.util.Arrays;
 
@@ -56,15 +56,15 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
   @Override
   public void onMissedClick(View v) {
     super.onMissedClick(v);
-    Log.d("AddCustomFermentableActivity::onMissedClick", "Checking views for: " + v);
+    Log.d("AddCustomFerm", "Checking views for: " + v);
 
     AlertDialog alert;
     if (v.equals(descriptionView)) {
-      Log.d("AddCustomFermentableActivity::onMissedClick", "Displaying descriptionView edit alert");
+      Log.d("AddCustomFerm", "Displaying descriptionView edit alert");
       alert = alertBuilder.editTextMultilineStringAlert(descriptionViewText, descriptionViewTitle).create();
     }
     else {
-      Log.d("AddCustomFermentableActivity::onMissedClick", "View not found: " + v);
+      Log.d("AddCustomFerm", "View not found: " + v);
       return;
     }
 
@@ -77,12 +77,12 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
   public void setInitialSearchableListSelection() {
     // Override this method becaue there is no searchable list for this activity.  Since this activity
     // is meant to add new custom Fermentables, rather than select a fermentable from a list.
-    Log.d("AddCustomFermentableActivity", "No searchable list for this activity");
+    Log.d("AddCustomFerm", "No searchable list for this activity");
   }
 
   // We need this because we don't use spinners in this activity
   public void setValues() {
-    Log.d("AddCustomFermentableActivity::setValues", "Setting textEdit values");
+    Log.d("AddCustomFerm", "Setting textEdit values");
 
     // Create new fermentable
     fermentable = new Fermentable("New Fermentable");
@@ -99,7 +99,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
   @Override
   public void acquireValues() throws Exception {
     super.acquireValues();
-    Log.d("AddCustomFermentableActivity::acquireValues", "Acquiring values for: " + fermentable.getName());
+    Log.d("AddCustomFerm", "Acquiring values for: " + fermentable.getName());
     description = descriptionViewText.getText().toString();
 
     // Set to user provided values
@@ -108,16 +108,16 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
 
   @Override
   public void onFinished() {
-    Log.d("AddCustomFermentableActivity::onFinished", "Adding fermentable to db_custom: " + fermentable.getName());
-    Database.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
+    Log.d("AddCustomFerm", "Adding fermentable to db_custom: " + fermentable.getName());
+    DatabaseAPI.addIngredientToVirtualDatabase(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
-      Log.d("AddCustomFermentableActivity::onFinished", "Adding fermentable '" +
+      Log.d("AddCustomFerm", "Adding fermentable '" +
               fermentable.getName() + "' to recipe '" + mRecipe.getRecipeName() + "'");
       mRecipe.addIngredient(fermentable);
       mRecipe.save();
     }
-    Log.d("AddCustomFermentableActivity::onFinished", "Closing activity");
+    Log.d("AddCustomFerm", "Closing activity");
     finish();
   }
 }

@@ -50,6 +50,7 @@
     <string name="brewer_name">Brewmaster</string>
     <string name="amount">Amount (L)</string>
     <string name="no_recipes">You have no recipes.  Press the plus to add one!</string>
+    <string name="dismiss">Dismiss</string>
 
     <!-- Titles for editTexts / fields -->
     <string name="enter_name">Enter a name</string>
@@ -105,5 +106,11 @@
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_open_title">Tools</string>
     <string name="drawer_close">Drawer Open</string>
+
+    <!-- SnackBar strings -->
+    <string name="recipe_deleted">1 Recipe Deleted</string>
+    <string name="recipe_scaled">1 Recipe Scaled</string>
+    <string name="recipe_copied">1 Recipe Copied</string>
+    <string name="recipe_exported">1 Recipe Exported</string>
 
 </resources>

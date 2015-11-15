@@ -2,6 +2,7 @@ package com.biermacht.brews.frontend.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,26 +15,27 @@ import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.ColorHandler;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
 
   // Fields
-  private Context context;
   private List<Recipe> list;
   private RecipesFragment frag;
   private ViewStorage vs;
   private String color;
   private LayoutInflater inflater;
   private View row;
+  private HashMap<Integer, Boolean> checked;
 
   // Constructor
   public RecipeArrayAdapter(Context context, List<Recipe> list, RecipesFragment fr) {
     super(context, android.R.layout.simple_list_item_1, list);
-    this.context = context;
     this.list = list;
     this.frag = fr;
-    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    this.checked = new HashMap<Integer, Boolean>();
   }
 
   @Override
@@ -64,6 +66,15 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
     vs.volView.setText(String.format("%2.2f", list.get(position).getDisplayBatchSize()));
     vs.unitsView.setText(list.get(position).getVolumeUnits());
 
+    if (this.checked.get(position) != null && this.checked.get(position)) {
+      // This item is checked - make the background selected.
+      row.setBackgroundResource(R.color.theme_grey);
+    }
+    else {
+      // Otherwise, set the background to be transparent.
+      row.setBackgroundResource(R.color.transparent);
+    }
+
     // If we're running as a tablet, we should do some extra stuff here.
     if (frag.isTablet) {
       // If currently selected, set the background to indicate it.
@@ -73,15 +84,33 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
       }
       else {
         // Set background color transparent.
-        row.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+        row.setBackgroundResource(R.color.transparent);
       }
     }
+
 
     // Set beer color
     color = ColorHandler.getSrmColor(list.get(position).getColor());
     vs.imageView.setColorFilter(Color.parseColor(color));
 
     return row;
+  }
+
+  /**
+   * Marks the given position in the list as checked.  This will cause the list item to be
+   * highlighted.
+   * @param pos Position to mark
+   * @param checked Whether to mark as checked or un-checked.
+   */
+  public void setChecked(int pos, boolean checked) {
+    this.checked.put(pos, checked);
+  }
+
+  /**
+   * Un-checks all items in the list.
+   */
+  public void clearChecks() {
+    this.checked = new HashMap<Integer, Boolean>();
   }
 
   // A private class for storing views for a given row.

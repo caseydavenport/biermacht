@@ -2,7 +2,7 @@ package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
 
-import com.biermacht.brews.utils.Database;
+import com.biermacht.brews.database.DatabaseAPI;
 
 import java.util.Arrays;
 
@@ -38,13 +38,13 @@ public class EditCustomMiscActivity extends EditMiscActivity {
 
   @Override
   public void onFinished() {
-    Database.updateIngredient(misc, misc.getDatabaseId());
+    DatabaseAPI.updateIngredient(misc, misc.getDatabaseId());
     finish();
   }
 
   @Override
   public void onDeletePressed() {
-    Database.deleteIngredientWithId(ingredientId, misc.getDatabaseId());
+    DatabaseAPI.deleteIngredientWithId(ingredientId, misc.getDatabaseId());
     finish();
   }
 }
