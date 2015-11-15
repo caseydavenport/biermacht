@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.biermacht.brews.database.DatabaseAPI;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.comparators.FromDatabaseMashStepComparator;
 
@@ -31,12 +31,11 @@ public class MashProfile implements Parcelable {
 
   // Custom Fields ==================================================
   // ================================================================
-  private long id;                  // ID for use in database
-  private long recipeId;            // ID for parent recipe
-  private long snapshotId;          // ID of parent snapshot, or -1 if None.
+  private long id;                  // id for use in database
+  private long ownerId;        // id for parent recipe
   private String mashType;          // one of infusion, decoction, temperature
   private String spargeType;        // one of batch, fly
-  private Recipe recipe;            // Recipe which owns this mash.
+  private Recipe recipe;        // Recipe which owns this mash.
 
   // Static values =================================================
   // ===============================================================
@@ -60,7 +59,7 @@ public class MashProfile implements Parcelable {
     this.setEquipmentAdjust(false);
     this.setNotes("");
     this.id = - 1;
-    this.recipeId = - 1;
+    this.ownerId = - 1;
     this.mashType = MASH_TYPE_INFUSION;
     this.spargeType = SPARGE_TYPE_BATCH;
     this.recipe = r;
@@ -91,8 +90,7 @@ public class MashProfile implements Parcelable {
     // Custom Fields ==================================================
     // ================================================================
     id = p.readLong();
-    recipeId = p.readLong();
-    snapshotId = p.readLong();
+    ownerId = p.readLong();
     mashType = p.readString();
     spargeType = p.readString();
     // Don't read recipe because it recurses.
@@ -118,8 +116,7 @@ public class MashProfile implements Parcelable {
     // Custom Fields ==================================================
     // ================================================================
     p.writeLong(id);                  // id for use in database
-    p.writeLong(recipeId);        // id for parent recipe
-    p.writeLong(snapshotId);
+    p.writeLong(ownerId);        // id for parent recipe
     p.writeString(mashType);
     p.writeString(spargeType);
     // Don't write recipe because it recurses.
@@ -342,20 +339,12 @@ public class MashProfile implements Parcelable {
     return this.id;
   }
 
-  public void setRecipeId(long id) {
-    this.recipeId = id;
+  public void setOwnerId(long id) {
+    this.ownerId = id;
   }
 
-  public long getRecipeId() {
-    return this.recipeId;
-  }
-
-  public void setSnapshotId(long id) {
-    this.snapshotId = id;
-  }
-
-  public long getSnapshotId() {
-    return this.snapshotId;
+  public long getOwnerId() {
+    return this.ownerId;
   }
 
   public void setNotes(String s) {
@@ -438,15 +427,15 @@ public class MashProfile implements Parcelable {
     Log.d("MashProfile", "Saving " + name + " to database " + database);
     if (this.id < 0) {
       // We haven't yet saved this.  Add it to the database.
-      DatabaseAPI.addMashProfileToVirtualDatabase(database, this, this.getRecipeId(), this.getSnapshotId());
+      Database.addMashProfileToVirtualDatabase(database, this, this.getOwnerId());
     }
     else {
       // Already exists.  Update it.
-      DatabaseAPI.updateMashProfile(this, this.getRecipeId(), this.getSnapshotId(), database);
+      Database.updateMashProfile(this, this.getOwnerId(), database);
     }
   }
 
   public void delete(long database) {
-    DatabaseAPI.deleteMashProfile(this, database);
+    Database.deleteMashProfileFromDatabase(this.getId(), database);
   }
 }

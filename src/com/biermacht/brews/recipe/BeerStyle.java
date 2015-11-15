@@ -3,8 +3,6 @@ package com.biermacht.brews.recipe;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.biermacht.brews.utils.Constants;
-
 public class BeerStyle implements Parcelable {
 
   // Categories based on beerXMl standard
@@ -33,9 +31,7 @@ public class BeerStyle implements Parcelable {
   private double maxAbv;
 
   // More
-  private long id;
-  private long recipeId;
-  private long snapshotId;
+  private long ownerId;
 
   // Defines
   public static String TYPE_ALE = "Ale";
@@ -57,9 +53,7 @@ public class BeerStyle implements Parcelable {
     setStyleGuide("");
     setCategoryNumber("");
     setVersion(1);
-    setRecipeId(-1);
-
-    this.id = Constants.INVALID_ID;
+    setOwnerId(- 1);
 
     this.MinOg = 1;
     this.MaxOg = 2;
@@ -75,7 +69,6 @@ public class BeerStyle implements Parcelable {
 
   public BeerStyle(Parcel p) {
     // Categories based on beerXMl standard
-    id = p.readLong();
     name = p.readString();
     category = p.readString();
     version = p.readInt();
@@ -97,14 +90,12 @@ public class BeerStyle implements Parcelable {
     maxColor = p.readDouble();
     minAbv = p.readDouble();
     maxAbv = p.readDouble();
-    recipeId = p.readLong();
-    snapshotId = p.readLong();
+    ownerId = p.readLong();
   }
 
   @Override
   public void writeToParcel(Parcel p, int flags) {
     // Categories based on beerXMl standard
-    p.writeLong(id);
     p.writeString(name);
     p.writeString(category);
     p.writeInt(version);
@@ -126,8 +117,7 @@ public class BeerStyle implements Parcelable {
     p.writeDouble(maxColor);
     p.writeDouble(minAbv);
     p.writeDouble(maxAbv);
-    p.writeLong(recipeId);
-    p.writeLong(snapshotId);
+    p.writeLong(ownerId);
   }
 
   @Override
@@ -169,28 +159,12 @@ public class BeerStyle implements Parcelable {
     return name;
   }
 
-  public void setId(long id) {
-    this.id = id;
+  public void setOwnerId(long i) {
+    this.ownerId = i;
   }
 
-  public long getId() {
-    return this.id;
-  }
-
-  public void setRecipeId(long i) {
-    this.recipeId = i;
-  }
-
-  public long getRecipeId() {
-    return this.recipeId;
-  }
-
-  public void setSnapshotId(long i) {
-    this.snapshotId = i;
-  }
-
-  public long getSnapshotId() {
-    return this.snapshotId;
+  public long getOwnerId() {
+    return this.ownerId;
   }
 
   public void setMinCarb(double d) {

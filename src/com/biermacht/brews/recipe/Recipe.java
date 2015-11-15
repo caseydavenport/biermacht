@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -13,6 +12,7 @@ import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Database;
 import com.biermacht.brews.utils.InstructionGenerator;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
@@ -46,68 +46,68 @@ public class Recipe implements Parcelable {
   // ================================================================
   // Beer XML 1.0 Required Fields ===================================
   // ================================================================
-  public String name;                 // Recipe name
-  public int version;                 // XML Version -- 1
-  public String type;                 // Extract, Grain, Mash
-  public BeerStyle style;             // Stout, Pilsner, etc.
-  public String brewer;               // Brewer's name
-  public double batchSize;            // Target size (L)
-  public double boilSize;             // Pre-boil vol (L)
-  public int boilTime;                // In Minutes
-  public double efficiency;           // 100 for extract
-  public ArrayList<Hop> hops;         // Hops used
-  public ArrayList<Fermentable> fermentables;  // Fermentables used
-  public ArrayList<Yeast> yeasts;     // Yeasts used
-  public ArrayList<Misc> miscs;       // Misc ingredients used
-  public ArrayList<Water> waters;     // Waters used
-  public MashProfile mashProfile;     // Mash profile for non-extracts
+  private String name;                 // Recipe name
+  private int version;                 // XML Version -- 1
+  private String type;                 // Extract, Grain, Mash
+  private BeerStyle style;             // Stout, Pilsner, etc.
+  private String brewer;               // Brewer's name
+  private double batchSize;            // Target size (L)
+  private double boilSize;             // Pre-boil vol (L)
+  private int boilTime;                // In Minutes
+  private double efficiency;           // 100 for extract
+  private ArrayList<Hop> hops;         // Hops used
+  private ArrayList<Fermentable> fermentables;  // Fermentables used
+  private ArrayList<Yeast> yeasts;     // Yeasts used
+  private ArrayList<Misc> miscs;       // Misc ingredients used
+  private ArrayList<Water> waters;     // Waters used
+  private MashProfile mashProfile;     // Mash profile for non-extracts
 
   // ================================================================
   // Beer XML 1.0 Optional Fields ===================================
   // ================================================================
-  public double OG;                // Original Gravity
-  public double FG;                // Final Gravity
-  public int fermentationStages;   // # of Fermentation stages
-  public int primaryAge;           // Time in primary in days
-  public double primaryTemp;       // Temp in primary in C
-  public int secondaryAge;         // Time in Secondary in days
-  public double secondaryTemp;     // Temp in secondary in C
-  public int tertiaryAge;          // Time in tertiary in days
-  public double tertiaryTemp;      // Temp in tertiary in C
-  public String tasteNotes;        // Taste notes
-  public int tasteRating;          // Taste score out of 50
-  public int bottleAge;            // Bottle age in days
-  public double bottleTemp;        // Bottle temp in C
-  public boolean isForceCarbonated;// True if force carb is used
-  public double carbonation;       // Volumes of carbonation
-  public String brewDate;          // Date brewed
-  public String primingSugarName;  // Name of sugar for priming
-  public double primingSugarEquiv; // Equivalent amount of priming sugar to be used
-  public double kegPrimingFactor;  // factor - use less sugar when kegging vs bottles
-  public double carbonationTemp;   // Carbonation temperature in C
-  public int calories;             // Calories (KiloCals)
+  private double OG;                // Original Gravity
+  private double FG;                // Final Gravity
+  private int fermentationStages;   // # of Fermentation stages
+  private int primaryAge;           // Time in primary in days
+  private double primaryTemp;       // Temp in primary in C
+  private int secondaryAge;         // Time in Secondary in days
+  private double secondaryTemp;     // Temp in secondary in C
+  private int tertiaryAge;          // Time in tertiary in days
+  private double tertiaryTemp;      // Temp in tertiary in C
+  private String tasteNotes;        // Taste notes
+  private int tasteRating;          // Taste score out of 50
+  private int bottleAge;            // Bottle age in days
+  private double bottleTemp;        // Bottle temp in C
+  private boolean isForceCarbonated;// True if force carb is used
+  private double carbonation;       // Volumes of carbonation
+  private String brewDate;          // Date brewed
+  private String primingSugarName;  // Name of sugar for priming
+  private double primingSugarEquiv; // Equivalent amount of priming sugar to be used
+  private double kegPrimingFactor;  // factor - use less sugar when kegging vs bottles
+  private double carbonationTemp;   // Carbonation temperature in C
+  private int calories;             // Calories (KiloCals)
 
   // ================================================================
   // Custom Fields ==================================================
   // ================================================================
-  public long id;                   // id for use in database
-  public String notes;              // User input notes
-  public int batchTime;             // Total length in weeks
-  public double ABV;                // Alcohol by volume
-  public double bitterness;         // Bitterness in IBU
-  public double color;              // Color - SRM
-  public InstructionGenerator instructionGenerator;
-  public double measuredOG;         // Brew day stat: measured OG
-  public double measuredFG;         // Brew stat: measured FG
-  public double measuredVol;        // Measured final volume (L) of batch.
-  public double steepTemp;          // Temperature to steep grains.
+  private long id;                   // id for use in database
+  private String notes;              // User input notes
+  private int batchTime;             // Total length in weeks
+  private double ABV;                // Alcohol by volume
+  private double bitterness;         // Bitterness in IBU
+  private double color;              // Color - SRM
+  private InstructionGenerator instructionGenerator;
+  private double measuredOG;         // Brew day stat: measured OG
+  private double measuredFG;         // Brew stat: measured FG
+  private double measuredVol;        // Measured final volume (L) of batch.
+  private double steepTemp;          // Temperature to steep grains.
 
   // ================================================================
   // Fields for auto-calculation ====================================
   // ================================================================
-  public boolean calculateBoilVolume;            // Calculate the boil volume automatically
-  public boolean calculateStrikeVolume;          // Calculate strike vol automatically
-  public boolean calculateStrikeTemp;            // Calculate strike temp automatically
+  private boolean calculateBoilVolume;            // Calculate the boil volume automatically
+  private boolean calculateStrikeVolume;          // Calculate strike vol automatically
+  private boolean calculateStrikeTemp;            // Calculate strike temp automatically
 
   // Public constructors
   public Recipe(String s) {
@@ -142,7 +142,6 @@ public class Recipe implements Parcelable {
     this.secondaryTemp = 21;
     this.tertiaryTemp = 21;
     this.bottleAge = 14;
-    this.brewDate = "01 Jan 1900";
 
     // Custom Fields ==================================================
     // ================================================================
@@ -347,6 +346,7 @@ public class Recipe implements Parcelable {
     return this.getRecipeName();
   }
 
+  // Public methods
   public void update() {
     setColor(BrewCalculator.Color(this));
     setOG(BrewCalculator.OriginalGravity(this));
@@ -1149,22 +1149,8 @@ public class Recipe implements Parcelable {
     }
   }
 
-  /**
-   * Creates and saves a new snapshot of this recipe.
-   * @return The created snapshot.
-   */
-  public RecipeSnapshot createSnapshot() {
-    RecipeSnapshot snap = RecipeSnapshot.fromRecipe(this);
-    long snapId = DatabaseAPI.saveSnapshot(snap);
-    snap.setId(snapId);
-    return snap;
-  }
-
-  /**
-   * Saves this recipe to the database.
-   */
   public void save() {
     Log.d(getRecipeName() + "::save", "Saving with id: " + this.getId());
-    DatabaseAPI.updateRecipe(this);
+    Database.updateRecipe(this);
   }
 }
