@@ -15,10 +15,11 @@ import com.biermacht.brews.frontend.adapters.DetailArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 
-public class ProfileViewFragment extends Fragment {
+public class ProfileViewFragment extends Fragment implements BiermachtFragment {
 
   private int resource = R.layout.fragment_profile_view;
   ;
@@ -174,5 +175,20 @@ public class ProfileViewFragment extends Fragment {
     styleNameView.setText(r.getStyle().getName());
 
     //styleProfileView.addView(tv);
+  }
+
+  @Override
+  public void handleClick(View v) {
+
+  }
+
+  @Override
+  public void update() {
+
+  }
+
+  @Override
+  public String name() {
+    return "Profiles";
   }
 }

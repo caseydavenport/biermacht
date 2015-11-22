@@ -12,10 +12,14 @@ import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
 import com.biermacht.brews.frontend.fragments.SnapshotsViewFragment;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
+
+import java.util.ArrayList;
 
 public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
   Recipe r;
   Context c;
+  ArrayList<Fragment> fragmentList;
   IngredientViewFragment ingredientFragment;
   InstructionViewFragment instructionFragment;
   DetailsViewFragment detailsFragment;
@@ -31,54 +35,30 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
     this.detailsFragment = DetailsViewFragment.instance(r);
     this.profileFragment = ProfileViewFragment.instance(r);
     this.snapshotFragment = SnapshotsViewFragment.instance(r);
+
+    // Keep in list.
+    this.fragmentList = new ArrayList<>();
+    this.fragmentList.add(snapshotFragment);
+    this.fragmentList.add(ingredientFragment);
+    this.fragmentList.add(detailsFragment);
+    this.fragmentList.add(instructionFragment);
+    this.fragmentList.add(profileFragment);
   }
 
   @Override
   public Fragment getItem(int i) {
-
-    if (i == 0) {
-      return snapshotFragment;
-    }
-    else if (i == 1) {
-      return ingredientFragment;
-    }
-    else if (i == 2) {
-      return instructionFragment;
-    }
-    else if (i == 3) {
-      return detailsFragment;
-    }
-    else {
-      return profileFragment;
-    }
+    return this.fragmentList.get(i);
   }
 
   @Override
   public int getCount() {
-    return 5;
+    return this.fragmentList.size();
   }
 
   @Override
   public CharSequence getPageTitle(int position) {
-
-    // Set title based on position in list
-    if (position == 0) {
-      return "Snapshots";
-    }
-    else if (position == 1) {
-      return "Ingredients";
-    }
-    else if (position == 2) {
-      return "Instructions";
-    }
-    else if (position == 3) {
-      return "Details";
-    }
-    else if (position == 4) {
-      return "Profiles";
-    }
-
-    return "Unknown Tab";
+    BiermachtFragment f = (BiermachtFragment) this.fragmentList.get(position);
+    return f.name();
   }
 
   @Override
@@ -87,4 +67,3 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
     return;
   }
 }
-

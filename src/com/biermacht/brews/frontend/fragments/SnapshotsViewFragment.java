@@ -24,11 +24,12 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.comparators.RecipeSnapshotComparator;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SnapshotsViewFragment extends Fragment {
+public class SnapshotsViewFragment extends Fragment implements BiermachtFragment {
 
   private int resource = R.layout.fragment_snapshots_view;
   private Recipe r;
@@ -124,6 +125,16 @@ public class SnapshotsViewFragment extends Fragment {
   }
 
   @Override
+  public void handleClick(View v) {
+    // Not used.
+  }
+
+  @Override
+  public void update() {
+    // Not used.
+  }
+
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.menu_new_snapshot:
@@ -132,6 +143,11 @@ public class SnapshotsViewFragment extends Fragment {
     }
 
     return false;
+  }
+
+  @Override
+  public String name() {
+    return "Snapshots";
   }
 
   /**

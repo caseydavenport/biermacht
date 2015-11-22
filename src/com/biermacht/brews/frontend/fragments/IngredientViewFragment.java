@@ -20,10 +20,11 @@ import com.biermacht.brews.frontend.adapters.IngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 
-public class IngredientViewFragment extends Fragment {
+public class IngredientViewFragment extends Fragment implements BiermachtFragment {
 
   private int resource = R.layout.fragment_ingredient_view;
   private Recipe r;
@@ -140,5 +141,20 @@ public class IngredientViewFragment extends Fragment {
     }
 
     return pageView;
+  }
+
+  @Override
+  public void handleClick(View v) {
+    // Not used.
+  }
+
+  @Override
+  public void update() {
+    // Not used.
+  }
+
+  @Override
+  public String name() {
+    return "Ingredients";
   }
 }

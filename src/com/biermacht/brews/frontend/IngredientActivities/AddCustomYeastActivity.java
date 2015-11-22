@@ -28,7 +28,6 @@ public class AddCustomYeastActivity extends AddYeastActivity {
   @Override
   public void acquireValues() throws Exception {
     super.acquireValues();
-
     yeast.setShortDescription("Custom yeast");
   }
 

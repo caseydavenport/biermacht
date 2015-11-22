@@ -119,7 +119,6 @@ public class IngredientHandler {
                                                                     Ingredient.YEAST));
     yeastsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                                     Ingredient.YEAST));
-
     Collections.sort(yeastsList, new ToStringComparator());
     return this.yeastsList;
   }
@@ -140,7 +139,6 @@ public class IngredientHandler {
                                                                   Ingredient.HOP));
     hopsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                                   Ingredient.HOP));
-
     Collections.sort(hopsList, new ToStringComparator());
     return this.hopsList;
   }
@@ -161,7 +159,6 @@ public class IngredientHandler {
                                                                    Ingredient.MISC));
     miscsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
                                                                    Ingredient.MISC));
-
     Collections.sort(miscsList, new ToStringComparator());
     return this.miscsList;
   }

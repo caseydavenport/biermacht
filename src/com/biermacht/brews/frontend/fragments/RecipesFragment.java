@@ -46,12 +46,12 @@ import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Utils;
-import com.biermacht.brews.utils.interfaces.ClickableFragment;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
 import java.util.ArrayList;
 
-public class RecipesFragment extends Fragment implements ClickableFragment {
+public class RecipesFragment extends Fragment implements BiermachtFragment {
 
   // Layout resource
   private static int resource = R.layout.fragment_recipes;
@@ -236,6 +236,13 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
     // in the main recipe list.
     mClickListener = new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parentView, View childView, int pos, long id) {
+
+        // If the contextual action bar is shown, and we've clicked another recipe,
+        // while we're in tablet mode, we need to cancel the CAB so that it isn't
+        // confusing.  The other option would be to update contextActionRecipe.
+        if (mActionMode != null && isTablet) {
+          mActionMode.finish();
+        }
 
         // If we're running on a tablet, update the details view.
         // Otherwise, open the DisplayRecipeActivity to display the recipe.
@@ -480,6 +487,11 @@ public class RecipesFragment extends Fragment implements ClickableFragment {
 
     // Return false if the item was unhandled.
     return false;
+  }
+
+  @Override
+  public String name() {
+    return "Recipes";
   }
 
   @Override
