@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.DisplaySnapshotActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditFermentableActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditHopActivity;
@@ -29,6 +30,7 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class AboutSnapshotFragment extends Fragment {
+public class AboutSnapshotFragment extends Fragment implements BiermachtFragment {
 
   private int resource = R.layout.fragment_about_snapshot;
   private RecipeSnapshot snapshot;
@@ -124,19 +126,39 @@ public class AboutSnapshotFragment extends Fragment {
     this.snapshot.setDescription(description);
 
     // Save snapshot.
+    Log.d("AboutSnapshotFragment", "Saving snapshot: " + this.snapshot.getDescription());
     this.snapshot.save();
   }
 
   @Override
   public void onStop() {
+    Log.d("AboutSnapshotFragment", "onStop()");
     this.setValues();
     super.onStop();
   }
 
   @Override
   public void onPause() {
+    Log.d("AboutSnapshotFragment", "onPause()");
     this.setValues();
     super.onPause();
+  }
+
+  @Override
+  public void handleClick(View v) {
+    // Not used.
+  }
+
+  @Override
+  public void update() {
+    // Retrieve new snapshot from arguements in case they have changed.
+    Log.d("AboutSnapshotFragment", "update() - Updating snapshot object");
+    snapshot = getArguments().getParcelable(Constants.KEY_SNAPSHOT);
+  }
+
+  @Override
+  public String name() {
+    return "About";
   }
 
   /**

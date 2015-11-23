@@ -225,7 +225,6 @@ public class MashProfile implements Parcelable {
   }
 
   public void setSpargeType(String s) {
-    Log.d("MashProfile", "Sparge type set: " + s);
     this.spargeType = s;
   }
 

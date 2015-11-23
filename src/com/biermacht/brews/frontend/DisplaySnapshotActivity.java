@@ -228,6 +228,14 @@ public class DisplaySnapshotActivity extends AppCompatActivity {
       e.printStackTrace();
     }
 
+    // Update the About fragment - the snapshot may have changed, and the About fragment
+    // saves its snapshot onStop / onPause.  If we don't update this here, the fragment
+    // might save an out-of-date version of the snapshot, thus overwriting any changes made since.
+    if (cpAdapter != null) {
+      cpAdapter.aboutFragment.getArguments().putParcelable(Constants.KEY_SNAPSHOT, mSnapshot);
+      cpAdapter.aboutFragment.update();
+    }
+
     updateUI();
   }
 
