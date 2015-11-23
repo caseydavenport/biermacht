@@ -18,6 +18,7 @@ import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.frontend.adapters.DisplaySnapshotCollectionPagerAdapter;
+import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.AlertBuilder;
@@ -97,7 +98,7 @@ public class DisplaySnapshotActivity extends AppCompatActivity {
     updatePagerAdater();
 
     // Set title based on snapshot date
-    setTitle(mSnapshot.getBrewDate());
+    setTitle(mSnapshot.getDescription());
 
     // Update which options menu is displayed.
     updateOptionsMenu();

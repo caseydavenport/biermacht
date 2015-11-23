@@ -28,6 +28,7 @@ public class SnapshotArrayAdapter extends ArrayAdapter<RecipeSnapshot> {
   private LayoutInflater inflater;
   private View row;
   private HashMap<Integer, Boolean> checked;
+  private RecipeSnapshot snapshot;
 
   // Constructor
   public SnapshotArrayAdapter(Context context, List<RecipeSnapshot> list) {
@@ -51,19 +52,22 @@ public class SnapshotArrayAdapter extends ArrayAdapter<RecipeSnapshot> {
       vs = new ViewStorage();
       vs.titleView = (TextView) row.findViewById(R.id.title);
       vs.subTitleView = (TextView) row.findViewById(R.id.subtitle);
-      vs.volView = (TextView) row.findViewById(R.id.batch_volume);
-      vs.unitsView = (TextView) row.findViewById(R.id.unit_text);
+      vs.dateView = (TextView) row.findViewById(R.id.date);
+      vs.timeView = (TextView) row.findViewById(R.id.time);
       row.setTag(vs);
     }
 
     // Get the component views for this row.
     vs = (ViewStorage) row.getTag();
 
+    // Get the Snapshot
+    this.snapshot = list.get(position);
+
     // Set the correct values for these views.
-    vs.titleView.setText((list.get(position).getBrewDate()));
-    vs.subTitleView.setText(list.get(position).getSnapshotTime());
-    vs.volView.setText(String.format("%2.2f", list.get(position).getDisplayBatchSize()));
-    vs.unitsView.setText(list.get(position).getVolumeUnits());
+    vs.titleView.setText(snapshot.getDescription());
+    vs.subTitleView.setText(snapshot.getRecipeName());
+    vs.dateView.setText(snapshot.getBrewDate());
+    vs.timeView.setText(snapshot.getSnapshotTime());
 
     // TODO - handle the tablet case.
     if (this.checked.get(position) != null && this.checked.get(position)) {
@@ -99,7 +103,7 @@ public class SnapshotArrayAdapter extends ArrayAdapter<RecipeSnapshot> {
   private class ViewStorage {
     public TextView titleView;
     public TextView subTitleView;
-    public TextView volView;
-    public TextView unitsView;
+    public TextView dateView;
+    public TextView timeView;
   }
 }

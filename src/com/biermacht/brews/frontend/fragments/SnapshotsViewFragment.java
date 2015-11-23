@@ -157,8 +157,7 @@ public class SnapshotsViewFragment extends Fragment implements BiermachtFragment
   private AlertDialog.Builder newSnapshotAlert(final Recipe r) {
     return new AlertDialog.Builder(getActivity())
             .setTitle("New Snapshot")
-            .setMessage("Create a new Snapshot?")
-            //.setIcon(android.R.drawable.ic_menu_save)
+            .setMessage("Create a new Snapshot of this recipe in its current state?")
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
