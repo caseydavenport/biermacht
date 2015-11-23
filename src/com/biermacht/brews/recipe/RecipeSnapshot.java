@@ -37,7 +37,7 @@ public class RecipeSnapshot extends Recipe {
   public RecipeSnapshot(String s) {
     super(s);
     this.recipeId = -1;
-    this.setDescription("");
+    this.setDescription("Brew Day Snapshot");
     this.setSnapshotTime("00:00:00");
   }
 
@@ -129,6 +129,12 @@ public class RecipeSnapshot extends Recipe {
     this.snapshotTime = snapshotTime;
   }
 
+  /**
+   * Gets the full date and time - used for comparing snapshots when ordering
+   * within a list.  Use getBrewDate() for the date on which this snapshot occurred.
+   * @return
+   * @throws ParseException
+   */
   public Date getSnapshotDate() throws ParseException {
     String dateString = this.getBrewDate() + " " + this.getSnapshotTime();
     DateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.ENGLISH);
