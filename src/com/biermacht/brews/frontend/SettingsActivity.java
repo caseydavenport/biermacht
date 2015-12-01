@@ -336,7 +336,7 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected String doInBackground(String... params) {
       Log.d("ResetIngredients", "Deleting all 'permanent' ingredients");
-      for (Ingredient ing : DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT)) {
+      for (Ingredient ing : DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT)) {
         DatabaseAPI.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
       }
 

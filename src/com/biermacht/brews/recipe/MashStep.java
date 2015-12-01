@@ -319,9 +319,10 @@ public class MashStep implements Parcelable {
     }
   }
 
-  // Calculates the infusion temperature for both
-  // initial infusion, and water adds.
-  // http://www.howtobrew.com/section3/chapter16-3.html
+  /** Calculates the infusion temperature for both
+   * initial infusion, and water adds.
+   * http://www.howtobrew.com/section3/chapter16-3.html
+   */
   public double calculateInfuseTemp() {
     // We perform different calculations if this is the initial infusion.
     double temp = 0;

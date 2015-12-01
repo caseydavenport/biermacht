@@ -10,6 +10,7 @@ import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.MashProfile;
+import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.comparators.BeerStyleComparator;
 import com.biermacht.brews.utils.comparators.IngredientComparator;
@@ -50,9 +51,9 @@ public class IngredientHandler {
       this.importIngredients();
 
       // Import mash profile assets.
-      DatabaseAPI.addMashProfileListToVirtualDatabase(Constants.DATABASE_CUSTOM,
-                                                   getProfilesFromXml(),
-                                                   Constants.OWNER_NONE);
+      DatabaseAPI.addMashProfileList(Constants.DATABASE_CUSTOM,
+              getProfilesFromXml(),
+              Constants.OWNER_NONE);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -60,18 +61,18 @@ public class IngredientHandler {
 
   // Imports ingredient assets only (not mash profiles).
   public void importIngredients() throws IOException {
-    DatabaseAPI.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                getFermentablesFromXml(),
-                                                Constants.OWNER_NONE);
-    DatabaseAPI.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                getYeastsFromXml(),
-                                                Constants.OWNER_NONE);
-    DatabaseAPI.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                getHopsFromXml(),
-                                                Constants.OWNER_NONE);
-    DatabaseAPI.addIngredientListToVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                getMiscsFromXml(),
-                                                Constants.OWNER_NONE);
+    DatabaseAPI.addIngredientList(Constants.DATABASE_PERMANENT,
+            getFermentablesFromXml(),
+            Constants.OWNER_NONE);
+    DatabaseAPI.addIngredientList(Constants.DATABASE_PERMANENT,
+            getYeastsFromXml(),
+            Constants.OWNER_NONE);
+    DatabaseAPI.addIngredientList(Constants.DATABASE_PERMANENT,
+            getHopsFromXml(),
+            Constants.OWNER_NONE);
+    DatabaseAPI.addIngredientList(Constants.DATABASE_PERMANENT,
+            getMiscsFromXml(),
+            Constants.OWNER_NONE);
   }
 
   /**
@@ -86,10 +87,10 @@ public class IngredientHandler {
     }
 
     fermentablesList.removeAll(fermentablesList);
-    fermentablesList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
-                                                                       Ingredient.FERMENTABLE));
-    fermentablesList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants
-                                                                               .DATABASE_PERMANENT, Ingredient.FERMENTABLE));
+    fermentablesList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM,
+            Ingredient.FERMENTABLE));
+    fermentablesList.addAll(DatabaseAPI.getIngredients(Constants
+            .DATABASE_PERMANENT, Ingredient.FERMENTABLE));
 
     Collections.sort(fermentablesList, new ToStringComparator());
     Log.d("getFermentablesList", "Returning " + fermentablesList.size() + " fermentables");
@@ -108,10 +109,10 @@ public class IngredientHandler {
     }
 
     yeastsList.removeAll(yeastsList);
-    yeastsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
-                                                                 Ingredient.YEAST));
-    yeastsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                                 Ingredient.YEAST));
+    yeastsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM,
+            Ingredient.YEAST));
+    yeastsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT,
+            Ingredient.YEAST));
 
     Collections.sort(yeastsList, new ToStringComparator());
     return this.yeastsList;
@@ -129,10 +130,10 @@ public class IngredientHandler {
     }
 
     hopsList.removeAll(hopsList);
-    hopsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
-                                                               Ingredient.HOP));
-    hopsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                               Ingredient.HOP));
+    hopsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM,
+            Ingredient.HOP));
+    hopsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT,
+            Ingredient.HOP));
 
     Collections.sort(hopsList, new ToStringComparator());
     return this.hopsList;
@@ -150,10 +151,10 @@ public class IngredientHandler {
     }
 
     miscsList.removeAll(miscsList);
-    miscsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_CUSTOM,
-                                                                Ingredient.MISC));
-    miscsList.addAll(DatabaseAPI.getIngredientsFromVirtualDatabase(Constants.DATABASE_PERMANENT,
-                                                                Ingredient.MISC));
+    miscsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM,
+            Ingredient.MISC));
+    miscsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT,
+            Ingredient.MISC));
 
     Collections.sort(miscsList, new ToStringComparator());
     return this.miscsList;
@@ -187,8 +188,8 @@ public class IngredientHandler {
     }
 
     profileList.removeAll(profileList);
-    profileList.addAll(DatabaseAPI.getMashProfilesFromVirtualDatabase(Constants.DATABASE_CUSTOM));
-    profileList.addAll(DatabaseAPI.getMashProfilesFromVirtualDatabase(Constants.DATABASE_PERMANENT));
+    profileList.addAll(DatabaseAPI.getMashProfiles(Constants.DATABASE_CUSTOM));
+    profileList.addAll(DatabaseAPI.getMashProfiles(Constants.DATABASE_PERMANENT));
 
     Collections.sort(profileList, new ToStringComparator());
     return this.profileList;
@@ -406,11 +407,26 @@ public class IngredientHandler {
 
     for (String s : am.list("Profiles")) {
       try {
+        // Parse files.
         SAXParser sp = spf.newSAXParser();
         InputStream is = am.open("Profiles/" + s);
         sp.parse(is, myXMLHandler);
 
-        list.addAll(myXMLHandler.getMashProfiles());
+        // Default mash profiles should auto-calculate infustion temp / amount,
+        // so set that here.
+        for (MashProfile p : myXMLHandler.getMashProfiles()) {
+          for (MashStep step : p.getMashStepList()) {
+            if (step.getType().equals(MashStep.INFUSION)) {
+              Log.d("IngredientHandler", "Enabling auto-calculation for: " + p.getName());
+              step.setAutoCalcInfuseAmt(true);
+              step.setAutoCalcInfuseTemp(true);
+            }
+          }
+
+          // Add the mash profile to the list to return.
+          list.add(p);
+        }
+
       } catch (Exception e) {
         Log.e("getProfilesFromXml", e.toString());
       }

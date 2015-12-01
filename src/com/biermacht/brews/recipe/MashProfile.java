@@ -402,17 +402,6 @@ public class MashProfile implements Parcelable {
     return this.mashSteps.remove(order);
   }
 
-  public void setMashStep(int order, MashStep step) {
-    // If we try to set one larger than our array, add it
-    // to the end instead.
-    if (order >= this.mashSteps.size()) {
-      order = this.mashSteps.size() - 1;
-    }
-
-    step.setRecipe(this.recipe);
-    this.mashSteps.set(order, step);
-  }
-
   public void addMashStep(MashStep step) {
     step.setRecipe(this.recipe);
     this.mashSteps.add(step);
@@ -427,7 +416,7 @@ public class MashProfile implements Parcelable {
     Log.d("MashProfile", "Saving " + name + " to database " + database);
     if (this.id < 0) {
       // We haven't yet saved this.  Add it to the database.
-      DatabaseAPI.addMashProfileToVirtualDatabase(database, this, this.getOwnerId());
+      DatabaseAPI.assMashProfile(database, this, this.getOwnerId());
     }
     else {
       // Already exists.  Update it.

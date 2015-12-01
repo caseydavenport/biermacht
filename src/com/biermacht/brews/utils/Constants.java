@@ -14,7 +14,9 @@ public class Constants {
   // New Objects
   public static final BeerStyle BEERSTYLE_OTHER = new BeerStyle("Other");
 
-  // Master recipe - used as parent for custom ingredients
+  // Master recipe's ID.  This is the ID of the dummy recipe we create on first use.
+  // This recipe is used as a placeholder when a user-created recipe is not available.
+  // For example, when a custom ingredient is added to the database, but is not in a recipe.
   public static final long MASTER_RECIPE_ID = 1;
 
   // Keys for passing objects

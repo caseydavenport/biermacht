@@ -3,7 +3,6 @@ package com.biermacht.brews.database;
 import android.content.Context;
 import android.util.Log;
 
-import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -111,34 +110,34 @@ public class DatabaseAPI {
   }
 
   // Adds a list of ingredients to the specified virtual ingredient database
-  public static void addIngredientListToVirtualDatabase(long dbid, ArrayList<Ingredient> list, long ownerId) {
+  public static void addIngredientList(long dbid, ArrayList<Ingredient> list, long ownerId) {
     for (Ingredient i : list) {
       MainActivity.databaseInterface.addIngredientToDatabase(i, ownerId, dbid);
     }
   }
 
   // Adds a single ingredient to the specified virtual ingredient database
-  public static void addIngredientToVirtualDatabase(long dbid, Ingredient i, long ownerId) {
+  public static void addIngredient(long dbid, Ingredient i, long ownerId) {
     MainActivity.databaseInterface.addIngredientToDatabase(i, ownerId, dbid);
   }
 
   // Returns all ingredients in the given virtual database with the given ingredient type
-  public static ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid, String type) {
-    return MainActivity.databaseInterface.getIngredientsFromVirtualDatabase(dbid, type);
+  public static ArrayList<Ingredient> getIngredients(long dbid, String type) {
+    return MainActivity.databaseInterface.getIngredients(dbid, type);
   }
 
   // Returns all ingredients in the given database with the given ingredient type
-  public static ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid) {
-    return MainActivity.databaseInterface.getIngredientsFromVirtualDatabase(dbid);
+  public static ArrayList<Ingredient> getIngredients(long dbid) {
+    return MainActivity.databaseInterface.getIngredients(dbid);
   }
 
-  public static void addMashProfileListToVirtualDatabase(long dbid, ArrayList<MashProfile> list, long ownerId) {
+  public static void addMashProfileList(long dbid, ArrayList<MashProfile> list, long ownerId) {
     for (MashProfile p : list) {
       MainActivity.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
     }
   }
 
-  public static long addMashProfileToVirtualDatabase(long dbid, MashProfile p, long ownerId) {
+  public static long assMashProfile(long dbid, MashProfile p, long ownerId) {
     return MainActivity.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
   }
 
@@ -147,8 +146,8 @@ public class DatabaseAPI {
   }
 
   // Returns all mash profiles in the given database
-  public static ArrayList<MashProfile> getMashProfilesFromVirtualDatabase(long dbid) {
-    return MainActivity.databaseInterface.getMashProfilesFromVirtualDatabase(dbid);
+  public static ArrayList<MashProfile> getMashProfiles(long dbid) {
+    return MainActivity.databaseInterface.getMashProfiles(dbid);
   }
 
   // Deletes the given mash profile

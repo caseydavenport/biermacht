@@ -623,7 +623,7 @@ public class DatabaseInterface {
   /**
    * Returns ingredients from the given database with the given ingredient type
    */
-  public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid, String type) {
+  public ArrayList<Ingredient> getIngredients(long dbid, String type) {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
     String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid + " AND " +
             DatabaseHelper.ING_COL_TYPE + "=?";
@@ -650,7 +650,7 @@ public class DatabaseInterface {
   /**
    * Returns ingredients from the given database with the given ingredient type
    */
-  public ArrayList<MashProfile> getMashProfilesFromVirtualDatabase(long dbid) {
+  public ArrayList<MashProfile> getMashProfiles(long dbid) {
     ArrayList<MashProfile> list = new ArrayList<MashProfile>();
     String whereString = DatabaseHelper.PRO_COL_DB_ID + "=" + dbid;
     Cursor cursor = database.query(DatabaseHelper.TABLE_PROFILES, profileAllColumns, whereString,
@@ -675,7 +675,7 @@ public class DatabaseInterface {
   /**
    * Returns ingredients from the given database with the given ingredient type
    */
-  public ArrayList<Ingredient> getIngredientsFromVirtualDatabase(long dbid) {
+  public ArrayList<Ingredient> getIngredients(long dbid) {
     ArrayList<Ingredient> list = new ArrayList<Ingredient>();
     String whereString = DatabaseHelper.ING_COL_DB_ID + "=" + dbid;
     Cursor cursor = database.query(DatabaseHelper.TABLE_INGREDIENTS, ingredientAllColumns,
