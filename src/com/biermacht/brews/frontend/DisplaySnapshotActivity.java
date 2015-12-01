@@ -3,6 +3,7 @@ package com.biermacht.brews.frontend;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,11 +19,19 @@ import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.frontend.adapters.DisplaySnapshotCollectionPagerAdapter;
+import com.biermacht.brews.frontend.fragments.AboutSnapshotFragment;
+import com.biermacht.brews.frontend.fragments.DetailsViewFragment;
+import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
+import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
+import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
+import com.biermacht.brews.frontend.fragments.SnapshotsViewFragment;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.recipe.BrewNote;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 public class DisplaySnapshotActivity extends AppCompatActivity {
 
@@ -113,25 +122,28 @@ public class DisplaySnapshotActivity extends AppCompatActivity {
     menu.removeItem(R.id.menu_timer);
     menu.removeItem(R.id.menu_profile_dropdown);
 
-    switch (mViewPager.getCurrentItem()) {
-      case 0:
-        getMenuInflater().inflate(R.menu.fragment_snapshots_menu, menu);
-        break;
-      case 1:
-        getMenuInflater().inflate(R.menu.fragment_ingredient_menu, menu);
-        break;
-      case 2:
-        getMenuInflater().inflate(R.menu.fragment_instruction_menu, menu);
-        break;
-      case 3:
-        getMenuInflater().inflate(R.menu.fragment_details_menu, menu);
-        break;
-      case 4:
-        getMenuInflater().inflate(R.menu.fragment_profile_menu, menu);
-        if (mSnapshot.getType().equals(Recipe.EXTRACT)) {
-          menu.findItem(R.id.menu_edit_mash_profile).setVisible(false);
-        }
-        break;
+    Fragment f = cpAdapter.getItem(mViewPager.getCurrentItem());
+
+    if (f instanceof AboutSnapshotFragment) {
+      getMenuInflater().inflate(R.menu.fragment_about_snap_menu, menu);
+    }
+    else if (f instanceof IngredientViewFragment) {
+      getMenuInflater().inflate(R.menu.fragment_ingredient_menu, menu);
+    }
+    else if (f instanceof InstructionViewFragment) {
+      getMenuInflater().inflate(R.menu.fragment_instruction_menu, menu);
+    }
+    else if (f instanceof DetailsViewFragment) {
+      getMenuInflater().inflate(R.menu.fragment_details_menu, menu);
+    }
+    else if (f instanceof ProfileViewFragment) {
+      getMenuInflater().inflate(R.menu.fragment_profile_menu, menu);
+      if (mSnapshot.getType().equals(Recipe.EXTRACT)) {
+        menu.findItem(R.id.menu_edit_mash_profile).setVisible(false);
+      }
+    }
+    else {
+      return false;
     }
     return true;
   }
@@ -149,6 +161,12 @@ public class DisplaySnapshotActivity extends AppCompatActivity {
     switch (item.getItemId()) {
       case android.R.id.home:
         finish();
+        return true;
+
+      case R.id.menu_add_measurement:
+        AlertBuilder builder = new AlertBuilder(this, null);
+        BrewNote b = new BrewNote();
+        builder.newNoteAlert(b).show();
         return true;
 
       case R.id.add_fermentable:

@@ -13,9 +13,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
+import com.biermacht.brews.recipe.BrewNote;
+import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.Callbacks.BooleanCallback;
 import com.biermacht.brews.utils.Callbacks.Callback;
 
@@ -69,10 +72,10 @@ public class AlertBuilder {
             .setView(alertView)
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-              public void onClick(DialogInterface dialog, int which) {
-                text.setText(editText.getText().toString());
-                callback.call();
-              }
+                public void onClick(DialogInterface dialog, int which) {
+                    text.setText(editText.getText().toString());
+                    callback.call();
+                }
 
             })
 
@@ -132,15 +135,42 @@ public class AlertBuilder {
             .setView(alertView)
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-              public void onClick(DialogInterface dialog, int which) {
-                text.setText(editText.getText().toString());
-                callback.call();
-              }
+                public void onClick(DialogInterface dialog, int which) {
+                    text.setText(editText.getText().toString());
+                    callback.call();
+                }
 
             })
 
             .setNegativeButton(R.string.cancel, null);
   }
+
+  public <T> AlertDialog.Builder newNoteAlert(final RecipeSnapshot s, final BrewNote note) {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final RelativeLayout alertView = (RelativeLayout) factory.inflate(R.layout.alert_view_new_note, null);
+        final EditText gravityView = (EditText) alertView.findViewById(R.id.gravity_edit_text);
+        final EditText temperatureView = (EditText) alertView.findViewById(R.id.temperature_edit_text);
+        final EditText descriptionView = (EditText) alertView.findViewById(R.id.notes_edit_text);
+
+      return new AlertDialog.Builder(context)
+                .setTitle("New Measurement")
+                .setView(alertView)
+                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Get fields.
+                        String description = descriptionView.getText().toString();
+                        double gravity = Double.parseDouble(gravityView.getText().toString());
+                        double temperature = Double.parseDouble(temperatureView.getText().toString());
+
+                        // Set them.
+                        note.setDescription(description);
+                        note.setGravity(gravity);
+                        note.setTemperature(temperature);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null);
+    }
 
   public AlertDialog.Builder editTextFloatCheckBoxAlert(final TextView text, final TextView title, boolean checked, final BooleanCallback cb) {
     LayoutInflater factory = LayoutInflater.from(context);
@@ -152,23 +182,22 @@ public class AlertBuilder {
     editText.setText(text.getText().toString());
 
     checkBox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        cb.call(checkBox.isChecked());
-        if (checkBox.isChecked()) {
-          editText.setEnabled(false);
-          editText.setClickable(false);
-          editText.setFocusable(false);
-          editText.setFocusableInTouchMode(false);
-          editText.setText(text.getText().toString());
+        @Override
+        public void onClick(View view) {
+            cb.call(checkBox.isChecked());
+            if (checkBox.isChecked()) {
+                editText.setEnabled(false);
+                editText.setClickable(false);
+                editText.setFocusable(false);
+                editText.setFocusableInTouchMode(false);
+                editText.setText(text.getText().toString());
+            } else {
+                editText.setEnabled(true);
+                editText.setClickable(true);
+                editText.setFocusable(true);
+                editText.setFocusableInTouchMode(true);
+            }
         }
-        else {
-          editText.setEnabled(true);
-          editText.setClickable(true);
-          editText.setFocusable(true);
-          editText.setFocusableInTouchMode(true);
-        }
-      }
     });
 
     // Set the box to be checked or not.
@@ -187,11 +216,11 @@ public class AlertBuilder {
             .setView(alertView)
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-              public void onClick(DialogInterface dialog, int which) {
-                text.setText(editText.getText().toString());
-                callback.call();
-                cb.call(checkBox.isChecked());
-              }
+                public void onClick(DialogInterface dialog, int which) {
+                    text.setText(editText.getText().toString());
+                    callback.call();
+                    cb.call(checkBox.isChecked());
+                }
 
             })
 

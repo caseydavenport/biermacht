@@ -30,6 +30,7 @@
     <string name="menu_brew_timer">Brew Timer</string>
     <string name="menu_edit_details">Edit Details</string>
     <string name="menu_edit_recipe">Edit Recipe</string>
+    <string name="menu_add_measurement">Add Measurement</string>
     <string name="menu_edit_profile">Edit Profile</string>
 
     <!-- Standard messages -->

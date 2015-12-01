@@ -11,6 +11,7 @@ import com.biermacht.brews.utils.InstructionGenerator;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -19,6 +20,7 @@ public class RecipeSnapshot extends Recipe {
   private long recipeId;                             // ID of the Recipe of which this is a snapshot.
   private String description;                        // Short description, e.g. "For Event X"
   private String snapshotTime;                       // Time of day that this snapshot was taken.
+  private ArrayList<BrewNote> notes;                 // List of notes.
 
   public static final Parcelable.Creator<Recipe> CREATOR =
           new Parcelable.Creator<Recipe>() {
