@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:minHeight="1000dip"
+              android:minWidth="1000dip"
+              android:padding="10dip">
+
+    <LinearLayout android:id="@+id/measurement_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+    <EditText
+        android:id="@+id/gravity_edit_text"
+        android:hint="Gravity"
+        android:layout_margin="10dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="40dip"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"/>
+
+    <EditText
+        android:id="@+id/temperature_edit_text"
+        android:hint="Temperature"
+        android:layout_margin="10dp"
+        android:maxLines="1"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="40dip"
+        android:selectAllOnFocus="true"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/notes_edit_text"
+        android:hint="Notes"
+        android:layout_below="@id/measurement_layout"
+        android:layout_margin="10dp"
+        android:singleLine="false"
+        android:minLines="1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="false"/>
+
+</RelativeLayout>
