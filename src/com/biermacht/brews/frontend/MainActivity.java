@@ -40,11 +40,14 @@ import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
+import com.biermacht.brews.recipe.MashProfile;
+import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
+import com.biermacht.brews.utils.comparators.FromDatabaseMashStepComparator;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
@@ -284,14 +287,14 @@ public class MainActivity extends AppCompatActivity {
 
     if (requestCode == Constants.REQUEST_IMPORT_FILE) {
       if (resultCode == RESULT_OK) {
-        Log.d("MainActivity::onActivityResult", "User selected a file.");
+        Log.d("MainActivity", "User selected a file.");
         Uri uri = data.getData();
         String path = uri.getPath().toString();
-        Log.d("MainActivity::onActivityResult", "URI: " + uri.toString());
-        Log.d("MainActivity::onActivityResult", "Path: " + path);
+        Log.d("MainActivity", "URI: " + uri.toString());
+        Log.d("MainActivity", "Path: " + path);
 
         ContentResolver cR = getContentResolver();
-        Log.d("MainActivity::onActivityResult", "MIME type: " + cR.getType(uri));
+        Log.d("MainActivity", "MIME type: " + cR.getType(uri));
 
         if (path != null) {
           new LoadRecipes(this, uri, ingredientHandler).execute("");
@@ -299,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
       }
       if (resultCode == RESULT_CANCELED) {
         // Action to get recipes was cancelled - do nothing.
-        Log.d("MainActivity::onActivityResult", "Load recipes from file cancelled by user");
+        Log.d("MainActivity", "Load recipes from file cancelled by user");
       }
     }
   }
