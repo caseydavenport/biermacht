@@ -169,15 +169,18 @@ public class AddHopsActivity extends AddEditIngredientActivity {
 
   @Override
   public void getList() {
+    Log.d("AddHopsActivity", "Getting hops list");
     ingredientList = new ArrayList<Ingredient>();
     ingredientList.addAll(ingredientHandler.getHopsList());
+    Log.d("AddHopsActivity", "Found " + ingredientList.size() + " hop(s)");
 
     // Add a placeholder ingredient.  When selected, allows user to create
     // a new custom ingredient.
-    Log.d("AddMiscActivity", "Adding placeholder ingredient");
+    Log.d("AddHopsActivity", "Adding placeholder ingredient");
     PlaceholderIngredient i = new PlaceholderIngredient("Create new");
     i.setShortDescription("Create a custom hop");
     ingredientList.add(0, i);
+    Log.d("AddHopsActivity", "Total with placeholder: " + ingredientList.size() + " hop(s)");
   }
 
   @Override
