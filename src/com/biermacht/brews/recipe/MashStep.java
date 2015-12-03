@@ -36,6 +36,7 @@ public class MashStep implements Parcelable {
   private double infuseTemp;        // Temperature of infuse water
   private boolean calcInfuseTemp;   // Auto calculate the infusion temperature if true.
   private boolean calcInfuseAmt;    // Auto calculate the infusion amount if true.
+  private boolean calcDecoctAmt;    // Auto calculate the amount to decoct if true.
   private Recipe recipe;            // Reference to the recipe that owns this mash.
 
   // ================================================================
@@ -64,6 +65,7 @@ public class MashStep implements Parcelable {
     this.decoctAmount = 0;
     this.calcInfuseAmt = true;
     this.calcInfuseTemp = true;
+    this.calcDecoctAmt = true;
     this.recipe = r;
   }
 
@@ -99,6 +101,7 @@ public class MashStep implements Parcelable {
     infuseTemp = p.readDouble();
     calcInfuseTemp = p.readInt() == 0 ? false : true;
     calcInfuseAmt = p.readInt() == 0 ? false : true;
+    calcDecoctAmt = p.readInt() == 0 ? false : true;
   }
 
   @Override
@@ -128,6 +131,7 @@ public class MashStep implements Parcelable {
     p.writeDouble(infuseTemp);
     p.writeInt(calcInfuseTemp ? 1 : 0);
     p.writeInt(calcInfuseAmt ? 1 : 0);
+    p.writeInt(calcDecoctAmt ? 1 : 0);
   }
 
   public static final Parcelable.Creator<MashStep> CREATOR =
@@ -210,6 +214,12 @@ public class MashStep implements Parcelable {
   }
 
   public double getDisplayDecoctAmount() {
+    // If we are autocalculating.
+    if (this.calcDecoctAmt) {
+      return this.calculateDecoctAmount();
+    }
+
+    // We're not auto-calculating.
     if (Units.getVolumeUnits().equals(Units.GALLONS)) {
       return Units.litersToGallons(this.decoctAmount);
     }
@@ -282,10 +292,10 @@ public class MashStep implements Parcelable {
     }
   }
 
-  // Calculates the infusion amount based on
-  // water to grain ratio, water temp, water to add,
-  // and the step temperature.
-  // Also sets this.infuseAmount to the correct value.
+  /* Calculates the infusion amount based on
+  /* water to grain ratio, water temp, water to add,
+  /* and the step temperature.
+  /* Also sets this.infuseAmount to the correct value. */
   public double calculateInfuseAmount() {
     // We perform different calculations if this is the initial infusion.
     double amt = - 1;
@@ -316,6 +326,49 @@ public class MashStep implements Parcelable {
     }
     else {
       return Units.litersToGallons(amt);
+    }
+  }
+
+  /* Calculates the decoction amount */
+  public double calculateDecoctAmount() {
+    Log.d("MashStep", "Auto-calculating decoct amount");
+    /**
+     * F = (TS – TI) / (TB – TI – X)
+     *
+     * Where f is the fraction, TS is the target step temperature, TI is the initial (current) temperature,
+     * TB is the temperature of the boiling mash and X is an equipment dependent parameter (typically 18F or 10C).
+     */
+    double target = this.getBeerXmlStandardStepTemp();
+    double initial = 0;
+    try {
+      initial = this.getPreviousStep().getBeerXmlStandardStepTemp();
+    } catch (Exception e) {
+      // Attempted to calculate decoct amount for first step in MashProfile.  This isn't
+      // allowed (the first step must be an infusion step).  Handle this
+      // somewhat gracefully, as this can occur temporarily during recipe formulation.
+      e.printStackTrace();
+      return 0;
+    }
+    double boiling = 99; // Boiling temperature of mash (C).
+    double X = 10; // TODO: Equipment factor - accounts for heat absorbtion of mash tun.
+    double grainDensity = .43; // .43kg / 1L
+    double waterVolume = getBXSTotalWaterInMash(); // L
+    double grainMass = (waterVolume / waterToGrainRatio); // kg
+    double grainVolume = grainMass / grainDensity; // L
+    double totalVolume = waterVolume + grainVolume; // L
+
+    // This calculates the ratio of "mash to boil" / "mash to leave in tun".
+    double fraction = (target - initial) / (boiling - initial - X);
+
+    // Convert this ratio to "Mash to boil" / "Total Mash"
+    fraction = (fraction) / (1 + fraction);
+
+    // Return the fraction of mash, adjusted for the selected units.
+    if (Units.getUnitSystem().equals(Units.METRIC)){
+      return fraction * totalVolume; // Return Liters of mash.
+    }
+    else {
+      return fraction * Units.litersToGallons(totalVolume); // Return Gallons of mash.
     }
   }
 
@@ -355,8 +408,7 @@ public class MashStep implements Parcelable {
     // Use appropriate units.
     if (Units.getTemperatureUnits().equals(Units.CELSIUS)) {
       return temp;
-    }
-    else {
+    } else {
       return Units.celsiusToFahrenheit(temp);
     }
   }
@@ -364,8 +416,7 @@ public class MashStep implements Parcelable {
   private double calculateBXSInfuseTemp() {
     if (Units.getTemperatureUnits().equals(Units.CELSIUS)) {
       return this.calculateInfuseTemp();
-    }
-    else {
+    } else {
       return Units.fahrenheitToCelsius(this.calculateInfuseTemp());
     }
   }
@@ -421,6 +472,14 @@ public class MashStep implements Parcelable {
 
   public void setAutoCalcInfuseAmt(boolean b) {
     this.calcInfuseAmt = b;
+  }
+
+  public void setAutoCalcDecoctAmt(boolean b) {
+    this.calcDecoctAmt = b;
+  }
+
+  public boolean getAutoCalcDecoctAmt() {
+    return this.calcDecoctAmt;
   }
 
   public boolean getAutoCalcInfuseTemp() {

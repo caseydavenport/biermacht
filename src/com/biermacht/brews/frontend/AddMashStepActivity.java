@@ -52,6 +52,7 @@ public class AddMashStepActivity extends AddEditActivity {
   // Callbacks for auto-calculation fields.
   public BooleanCallback infuseTempCallback;
   public BooleanCallback infuseAmountCallback;
+  public BooleanCallback decoctAmountCallback;
 
   // Stores potential MashStep types - Temperature, Infusion, Decoction.
   ArrayList<String> stepTypeArray;
@@ -156,7 +157,10 @@ public class AddMashStepActivity extends AddEditActivity {
     }
     else if (v.equals(stepAmountView)) {
       if (step.getType().equals(MashStep.DECOCTION)) {
-        alert = alertBuilder.editTextFloatAlert(stepAmountViewText, stepAmountViewTitle).create();
+        alert = alertBuilder.editTextFloatCheckBoxAlert(stepAmountViewText,
+                                                        stepAmountViewTitle,
+                                                        step.getAutoCalcDecoctAmt(),
+                                                        decoctAmountCallback).create();
       }
       else {
         alert = alertBuilder.editTextFloatCheckBoxAlert(stepAmountViewText,
@@ -216,6 +220,17 @@ public class AddMashStepActivity extends AddEditActivity {
         step.setAutoCalcInfuseAmt(b);
         stepAmountViewText.setText(String.format("%2.2f", step.getDisplayAmount()));
         infuseTemperatureViewText.setText(String.format("%2.2f", step.getDisplayInfuseTemp()));
+        waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
+      }
+    };
+
+    // Called when the "auto-calculate" checkbox is pressed for decoction amount.
+    decoctAmountCallback = new BooleanCallback() {
+      @Override
+      public void call(boolean b) {
+        Log.d("AddMashStepActivity", "Decoct amount autocalc checkbox pressed, set to: " + b);
+        step.setAutoCalcDecoctAmt(b);
+        stepAmountViewText.setText(String.format("%2.2f", step.getDisplayAmount()));
         waterToGrainRatioViewText.setText(String.format("%2.2f", step.getDisplayWaterToGrainRatio()));
       }
     };

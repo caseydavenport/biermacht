@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
@@ -24,6 +25,7 @@ public class AlcoholAttenuationCalculatorFragment extends Fragment implements Bi
   EditText finalGravEditText;
   TextView abvTextView;
   TextView attnTextView;
+  ScrollView scrollView;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -39,6 +41,8 @@ public class AlcoholAttenuationCalculatorFragment extends Fragment implements Bi
     finalGravEditText = (EditText) pageView.findViewById(R.id.final_gravity_edit_text);
     abvTextView = (TextView) pageView.findViewById(R.id.calculated_abv_text_view);
     attnTextView = (TextView) pageView.findViewById(R.id.attenuation_text_view);
+
+    scrollView = (ScrollView) pageView.findViewById(R.id.scrollview);
 
     return pageView;
   }
@@ -88,6 +92,15 @@ public class AlcoholAttenuationCalculatorFragment extends Fragment implements Bi
   public void handleClick(View v) {
     if (v.getId() == R.id.calculate_button) {
       this.calculate();
+
+      // The page is a bit long - scroll to the bottom so the user can see the
+      // calculation output.
+      scrollView.post(new Runnable() {
+        @Override
+        public void run() {
+          scrollView.fullScroll(View.FOCUS_DOWN);
+        }
+      });
     }
   }
 }

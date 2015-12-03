@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
@@ -28,6 +29,7 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
   TextView calcGravityTitle;
   TextView calibTempTitle;
   EditText calibTempEditText;
+  ScrollView scrollView;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -46,6 +48,8 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
     calibTempTitle = (TextView) pageView.findViewById(R.id.calibrate_temperature_title);
     calibTempEditText = (EditText) pageView.findViewById(R.id.calibrate_temperature_edit_text);
     calcGravityTitle = (TextView) pageView.findViewById(R.id.calculated_gravity_title);
+
+    scrollView = (ScrollView) pageView.findViewById(R.id.scrollview);
 
     // Set the correct temperature titles / hints based on unit settings.
     measTempTitle.setText("Temperature of Wort (" + Units.getTemperatureUnits() + ")");
@@ -116,6 +120,15 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
   public void handleClick(View v) {
     if (v.getId() == R.id.calculate_button) {
       this.calculate();
+
+      // The page is a bit long - scroll to the bottom so the user can see the
+      // calculation output.
+      scrollView.post(new Runnable() {
+        @Override
+        public void run() {
+          scrollView.fullScroll(View.FOCUS_DOWN);
+        }
+      });
     }
   }
 }
