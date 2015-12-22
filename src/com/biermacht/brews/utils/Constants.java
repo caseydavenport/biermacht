@@ -81,6 +81,8 @@ public class Constants {
   public static final int REQUEST_EDIT_MASH_STEP = 2;
   public static final int REQUEST_EDIT_RECIPE = 3;
   public static final int REQUEST_IMPORT_FILE = 4;
+  public static final int REQUEST_CONNECT_TO_DRIVE = 5;
+  public static final int REQUEST_DRIVE_FILE = 6;
 
   // Possible timer states
   public static int PAUSED = 0;

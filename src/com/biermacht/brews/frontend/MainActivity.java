@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -47,15 +48,26 @@ import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveApi;
+import com.google.android.gms.drive.DriveContents;
+import com.google.android.gms.drive.DriveFile;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.DriveResource;
+import com.google.android.gms.drive.OpenFileActivityBuilder;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.ListIterator;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   // Globals, referenced outside of this Activity.
   public static DatabaseInterface databaseInterface;
@@ -83,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
   private ActionBarDrawerToggle mDrawerToggle;
   private ListView drawerListView;
 
+  // Google Play API client
+  private GoogleApiClient mGoogleApiClient;
+  private ProgressDialog progressDialog;
+
   // Currently selected drawer item - for use as an index in drawerItems and fragmentList.
   private int selectedItem;
 
@@ -92,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
   // Stores recipes to be imported from the selected file.
   private ArrayList<Recipe> recipesToImport;
 
+  // Stores the file name and extension when importing a recipe.
+  private String fileName;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
 
@@ -100,6 +119,17 @@ public class MainActivity extends AppCompatActivity {
 
     // Instantiate ingredient handler
     ingredientHandler = new IngredientHandler(getApplicationContext());
+
+    // Create the Google API client used for accessing Google Services such as Drive.
+    mGoogleApiClient = new GoogleApiClient.Builder(this)
+            .addApi(Drive.API)
+            .addScope(Drive.SCOPE_FILE)
+            .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .build();
+
+    // Create the progress dialog view - displayed when connecting to Google APIs.
+    progressDialog = new ProgressDialog(MainActivity.this);
 
     // Get shared preferences
     preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
@@ -186,6 +216,14 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
+  protected void onStop() {
+    // Disconnect from Google APIs.
+    mGoogleApiClient.disconnect();
+
+    super.onStop();
+  }
+
+  @Override
   public void onResume() {
     super.onResume();
     Log.d("MainActivity", "onResume() called");
@@ -260,9 +298,9 @@ public class MainActivity extends AppCompatActivity {
 
   private AlertDialog.Builder importRecipeAlert() {
     return new AlertDialog.Builder(this)
-            .setTitle("Import Recipe(s) from XML")
-            .setMessage("Select a BeerXML (.xml) or BeerSmith2 (.bsmx) file on your device to import recipes.")
-            .setPositiveButton("Select", new DialogInterface.OnClickListener() {
+            .setTitle(R.string.import_recipes_title)
+            .setMessage(R.string.import_recipes_msg)
+            .setPositiveButton(R.string.browse, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
                 try {
@@ -278,9 +316,25 @@ public class MainActivity extends AppCompatActivity {
                           .setPositiveButton("OK", null).show();
                 }
               }
-
             })
-            .setNegativeButton(R.string.cancel, null);
+            .setNegativeButton(R.string.import_recipes_drive_button, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                if (! mGoogleApiClient.isConnected()) {
+                  Log.d("MainActivity", "Connecting to Google API");
+                  progressDialog.setMessage("Connecting to Google APIs...");
+                  progressDialog.setIndeterminate(false);
+                  progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                  progressDialog.setCancelable(false);
+                  progressDialog.show();
+                  mGoogleApiClient.connect();
+                }
+                else {
+                  // Already connected - just show the picker.
+                  startGoogleDrivePicker();
+                }
+              }
+            })
+            .setNeutralButton(R.string.cancel, null);
   }
 
   private AlertDialog.Builder existingRecipesAlert(final Recipe r) {
@@ -345,12 +399,76 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "MIME type: " + cR.getType(uri));
 
         if (path != null) {
-          new LoadRecipes(this, uri, ingredientHandler).execute("");
+          try {
+            // Create an InputStream from the path.
+            ContentResolver cr = getApplicationContext().getContentResolver();
+            InputStream inputStream = cr.openInputStream(uri);
+            fileName = uri.getPath().toString();
+
+            // Load the recipes.
+            new LoadRecipes(inputStream, fileName, ingredientHandler).execute("");
+          } catch (FileNotFoundException e) {
+            e.printStackTrace();
+          }
         }
       }
       if (resultCode == RESULT_CANCELED) {
         // Action to get recipes was cancelled - do nothing.
         Log.d("MainActivity", "Load recipes from file cancelled by user");
+      }
+    }
+    else if (requestCode == Constants.REQUEST_CONNECT_TO_DRIVE) {
+      Log.d("MainActivity", "Result from Google API: " + resultCode);
+      if (resultCode == RESULT_OK) {
+        // Make sure the app is not already connected or attempting to connect
+        if (! mGoogleApiClient.isConnecting() &&
+                ! mGoogleApiClient.isConnected()) {
+          mGoogleApiClient.connect();
+        }
+      }
+    }
+    else if (requestCode == Constants.REQUEST_DRIVE_FILE) {
+      Log.d("MainActivity", "Result from Google Drive file access: " + resultCode);
+      if (resultCode == RESULT_OK) {
+        DriveId driveId = data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+        final DriveFile file = Drive.DriveApi.getFile(mGoogleApiClient, driveId);
+
+        // Callback for when the file has been opened.  Checks for success and extracts the contents
+        // of the file.
+        final ResultCallback resultCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
+          @Override
+          public void onResult(DriveApi.DriveContentsResult result) {
+            if (! result.getStatus().isSuccess()) {
+              // TODO: Display an error saying file can't be opened
+              return;
+            }
+            // DriveContents object contains pointers to the actual byte stream.
+            DriveContents contents = result.getDriveContents();
+
+            // Load the recipes in the file.
+            new LoadRecipes(contents.getInputStream(), fileName, ingredientHandler).execute("");
+          }
+        };
+
+        // Callback for when file Metadata has been returned - extracts the file name
+        // and opens the file.
+        ResultCallback metadataCallback = new ResultCallback<DriveResource.MetadataResult>() {
+          @Override
+          public void onResult(DriveResource.MetadataResult result) {
+            if (! result.getStatus().isSuccess()) {
+              // TODO: Display an error saying file can't be opened
+              return;
+            }
+            // Set fileName for use in LoadRecipes.
+            fileName = result.getMetadata().getTitle() + result.getMetadata().getFileExtension();
+
+            // Open the file.
+            file.open(mGoogleApiClient, DriveFile.MODE_READ_ONLY, null).setResultCallback(resultCallback);
+          }
+        };
+
+        // Get Metadata for the file.
+        file.getMetadata(mGoogleApiClient).setResultCallback(metadataCallback);
       }
     }
   }
@@ -368,8 +486,52 @@ public class MainActivity extends AppCompatActivity {
     mDrawerToggle.onConfigurationChanged(newConfig);
   }
 
+  @Override
+  public void onConnected(Bundle bundle) {
+    Log.d("MainActivity", "Connected to Google APIs");
+    if (progressDialog.isShowing()) {
+      Log.d("MainActivity", "Dismissing progress dialog");
+      progressDialog.dismiss();
+    }
+    startGoogleDrivePicker();
+  }
+
+  public void startGoogleDrivePicker() {
+    Log.d("MainActivity", "Starting Google Drive file picker intent");
+    IntentSender intentSender = Drive.DriveApi
+            .newOpenFileActivityBuilder()
+            .setMimeType(new String[]{"text/bsmx", "text/xml"})
+            .build(mGoogleApiClient);
+    try {
+      startIntentSenderForResult(
+              intentSender, Constants.REQUEST_DRIVE_FILE, null, 0, 0, 0);
+    } catch (IntentSender.SendIntentException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void onConnectionSuspended(int i) {
+
+  }
+
+  @Override
+  public void onConnectionFailed(ConnectionResult result) {
+    Log.d("MainActivity", "Google API Connection failed");
+    if (result.hasResolution()) {
+      try {
+        result.startResolutionForResult(this, Constants.REQUEST_CONNECT_TO_DRIVE);
+      } catch (IntentSender.SendIntentException e) {
+        mGoogleApiClient.connect();
+      }
+    }
+    else {
+      GoogleApiAvailability.getInstance().getErrorDialog(this, result.getErrorCode(), Constants.REQUEST_CONNECT_TO_DRIVE).show();
+    }
+  }
+
   /**
-   * Private class which handles selections in the app drawer and selects the appropriate Fragment
+   * Private class which handle¬¬s selections in the app drawer and selects the appropriate Fragment
    * to display.
    */
   private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -416,29 +578,29 @@ public class MainActivity extends AppCompatActivity {
   }
 
   /**
-   * This AsyncTask loads recipes from the given BeerXML file path and then displays the recipe
-   * selector alert which allows the user to select which recipes they would like to import.
+   * This AsyncTask loads recipes from the given InputStream and then displays the recipe selector
+   * alert which allows the user to select which recipes they would like to import.
    */
   private class LoadRecipes extends AsyncTask<String, Void, String> {
 
-    private Uri uri;
+    private InputStream inputStream;
+    private String fileName;
     private IngredientHandler ingredientHandler;
-    private Context context;
     private ProgressDialog progress;
     private ArrayList<Recipe> importedRecipes;
 
-    public LoadRecipes(Context c, Uri uri, IngredientHandler i) {
-      Log.d("MainActivity", "Loading URI: " + uri.toString());
-      this.uri = uri;
+    public LoadRecipes(InputStream is, String fileName, IngredientHandler i) {
+      Log.d("MainActivity", "Loading Recipes");
+      this.inputStream = is;
+      this.fileName = fileName;
       this.ingredientHandler = i;
-      this.context = c;
       this.importedRecipes = new ArrayList<Recipe>();
     }
 
     @Override
     protected String doInBackground(String... params) {
       try {
-        importedRecipes = ingredientHandler.getRecipesFromXml(uri);
+        importedRecipes = ingredientHandler.getRecipesFromXml(this.inputStream, this.fileName);
       } catch (IOException e) {
         Log.e("LoadRecipes", e.toString());
       }
@@ -458,7 +620,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
-      progress = new ProgressDialog(context);
+      progress = new ProgressDialog(MainActivity.this);
       progress.setMessage("Loading...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -536,7 +698,7 @@ public class MainActivity extends AppCompatActivity {
                   Recipe newRecipe = iterator.next();
                   for (Recipe existingRecipe : allRecipes) {
                     if (newRecipe.getRecipeName().equals(existingRecipe.getRecipeName())) {
-                      if (!clashes.contains(newRecipe)) {
+                      if (! clashes.contains(newRecipe)) {
                         // Add to the clashes list.
                         clashes.add(newRecipe);
 

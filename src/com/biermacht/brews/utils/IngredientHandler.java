@@ -1,9 +1,7 @@
 package com.biermacht.brews.utils;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.net.Uri;
 import android.util.Log;
 
 import com.biermacht.brews.database.DatabaseAPI;
@@ -52,8 +50,8 @@ public class IngredientHandler {
 
       // Import mash profile assets.
       DatabaseAPI.addMashProfileList(Constants.DATABASE_CUSTOM,
-              getProfilesFromXml(),
-              Constants.OWNER_NONE);
+                                     getProfilesFromXml(),
+                                     Constants.OWNER_NONE);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -62,17 +60,17 @@ public class IngredientHandler {
   // Imports ingredient assets only (not mash profiles).
   public void importIngredients() throws IOException {
     DatabaseAPI.addIngredientList(Constants.DATABASE_PERMANENT,
-            getFermentablesFromXml(),
-            Constants.OWNER_NONE);
+                                  getFermentablesFromXml(),
+                                  Constants.OWNER_NONE);
     DatabaseAPI.addIngredientList(Constants.DATABASE_PERMANENT,
-            getYeastsFromXml(),
-            Constants.OWNER_NONE);
+                                  getYeastsFromXml(),
+                                  Constants.OWNER_NONE);
     DatabaseAPI.addIngredientList(Constants.DATABASE_PERMANENT,
-            getHopsFromXml(),
-            Constants.OWNER_NONE);
+                                  getHopsFromXml(),
+                                  Constants.OWNER_NONE);
     DatabaseAPI.addIngredientList(Constants.DATABASE_PERMANENT,
-            getMiscsFromXml(),
-            Constants.OWNER_NONE);
+                                  getMiscsFromXml(),
+                                  Constants.OWNER_NONE);
   }
 
   /**
@@ -88,9 +86,9 @@ public class IngredientHandler {
 
     fermentablesList.removeAll(fermentablesList);
     fermentablesList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM,
-            Ingredient.FERMENTABLE));
+                                                       Ingredient.FERMENTABLE));
     fermentablesList.addAll(DatabaseAPI.getIngredients(Constants
-            .DATABASE_PERMANENT, Ingredient.FERMENTABLE));
+                                                               .DATABASE_PERMANENT, Ingredient.FERMENTABLE));
 
     Collections.sort(fermentablesList, new ToStringComparator());
     Log.d("getFermentablesList", "Returning " + fermentablesList.size() + " fermentables");
@@ -110,9 +108,9 @@ public class IngredientHandler {
 
     yeastsList.removeAll(yeastsList);
     yeastsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM,
-            Ingredient.YEAST));
+                                                 Ingredient.YEAST));
     yeastsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT,
-            Ingredient.YEAST));
+                                                 Ingredient.YEAST));
 
     Collections.sort(yeastsList, new ToStringComparator());
     return this.yeastsList;
@@ -131,9 +129,9 @@ public class IngredientHandler {
 
     hopsList.removeAll(hopsList);
     hopsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM,
-            Ingredient.HOP));
+                                               Ingredient.HOP));
     hopsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT,
-            Ingredient.HOP));
+                                               Ingredient.HOP));
 
     Collections.sort(hopsList, new ToStringComparator());
     return this.hopsList;
@@ -152,9 +150,9 @@ public class IngredientHandler {
 
     miscsList.removeAll(miscsList);
     miscsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM,
-            Ingredient.MISC));
+                                                Ingredient.MISC));
     miscsList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT,
-            Ingredient.MISC));
+                                                Ingredient.MISC));
 
     Collections.sort(miscsList, new ToStringComparator());
     return this.miscsList;
@@ -346,18 +344,15 @@ public class IngredientHandler {
    * @return ArrayList of Ingredient Objects
    * @throws IOException
    */
-  public ArrayList<Recipe> getRecipesFromXml(Uri uri) throws IOException {
+  public ArrayList<Recipe> getRecipesFromXml(InputStream is, String path) throws IOException {
     ArrayList<Recipe> retlist = new ArrayList<Recipe>();
     ArrayList<Recipe> list;
     BeerXmlReader beerXmlReader = new BeerXmlReader();
     BsmxXmlReader bsmxXmlReader = new BsmxXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
-    String path = uri.getPath().toString();
 
     try {
-      ContentResolver cr = mContext.getContentResolver();
       SAXParser sp = spf.newSAXParser();
-      InputStream is = cr.openInputStream(uri);
 
       // If this is a .bsmx, use the .bsmx parser.  Otherwise, assume it is BeerXML.
       if (path.endsWith(".bsmx")) {

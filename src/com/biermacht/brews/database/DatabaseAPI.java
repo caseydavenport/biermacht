@@ -17,7 +17,7 @@ import java.util.Collections;
 public class DatabaseAPI {
 
   public static DatabaseInterface newDatabaseInterface(Context c) {
-        return new DatabaseInterface(c);
+    return new DatabaseInterface(c);
   }
 
   // Get all recipes in database, sorted

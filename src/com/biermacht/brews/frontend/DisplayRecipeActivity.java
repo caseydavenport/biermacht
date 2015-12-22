@@ -76,8 +76,8 @@ public class DisplayRecipeActivity extends AppCompatActivity {
   }
 
   /**
-   * TODO: This creates an entire new pager adapter adapter in order to update the UI.  It would be nice
-   * if we could just update things in place, without having to create / destroy so many
+   * TODO: This creates an entire new pager adapter adapter in order to update the UI.  It would be
+   * nice if we could just update things in place, without having to create / destroy so many
    * objects.
    */
   public void updatePagerAdater() {
