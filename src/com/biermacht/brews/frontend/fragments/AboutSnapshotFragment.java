@@ -16,18 +16,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.database.DatabaseAPI;
-import com.biermacht.brews.frontend.DisplaySnapshotActivity;
-import com.biermacht.brews.frontend.IngredientActivities.EditFermentableActivity;
-import com.biermacht.brews.frontend.IngredientActivities.EditHopActivity;
-import com.biermacht.brews.frontend.IngredientActivities.EditMiscActivity;
-import com.biermacht.brews.frontend.IngredientActivities.EditYeastActivity;
-import com.biermacht.brews.frontend.adapters.IngredientArrayAdapter;
-import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.frontend.adapters.BrewNoteArrayAdapter;
 import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
@@ -37,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class AboutSnapshotFragment extends Fragment implements BiermachtFragment {
 
@@ -46,6 +38,10 @@ public class AboutSnapshotFragment extends Fragment implements BiermachtFragment
   private View pageView;
   private Button datePicker;
   private EditText descriptionEditText;
+  private ListView notesListView;
+
+  // Adapter for the list of notes.
+  private BrewNoteArrayAdapter adapter;
 
 
   /**
@@ -81,6 +77,11 @@ public class AboutSnapshotFragment extends Fragment implements BiermachtFragment
     pageView = inflater.inflate(resource, container, false);
     this.datePicker = (Button) pageView.findViewById(R.id.date_picker);
     this.descriptionEditText = (EditText) pageView.findViewById(R.id.description_edit_text);
+    this.notesListView = (ListView) pageView.findViewById(R.id.listview);
+
+    // Set up list adapter.
+    this.adapter = new BrewNoteArrayAdapter(getActivity().getApplicationContext(), snapshot.getBrewNotes());
+    this.notesListView.setAdapter(this.adapter);
 
     // Set values
     this.datePicker.setText(snapshot.getBrewDate());

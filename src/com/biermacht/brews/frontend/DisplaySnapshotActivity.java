@@ -121,6 +121,7 @@ public class DisplaySnapshotActivity extends AppCompatActivity {
     menu.removeItem(R.id.menu_edit_recipe);
     menu.removeItem(R.id.menu_timer);
     menu.removeItem(R.id.menu_profile_dropdown);
+    menu.removeItem(R.id.menu_add_measurement);
 
     Fragment f = cpAdapter.getItem(mViewPager.getCurrentItem());
 
@@ -166,7 +167,7 @@ public class DisplaySnapshotActivity extends AppCompatActivity {
       case R.id.menu_add_measurement:
         AlertBuilder builder = new AlertBuilder(this, null);
         BrewNote b = new BrewNote();
-        builder.newNoteAlert(b).show();
+        builder.newNoteAlert(mSnapshot, b).show();
         return true;
 
       case R.id.add_fermentable:

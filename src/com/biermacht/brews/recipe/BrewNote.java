@@ -41,7 +41,11 @@ public class BrewNote implements Parcelable {
     super();
     this.snapshotId = -1;
     this.setDescription("New Measurement");
-    this.setTime("00:00:00");
+
+    String date = new SimpleDateFormat("dd MMM yyyy").format(new Date());
+    String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+    this.setTime(time);
+    this.setDate(date);
   }
 
   public BrewNote(Parcel p) {
@@ -49,6 +53,8 @@ public class BrewNote implements Parcelable {
     this.description = p.readString();
     this.date = p.readString();
     this.time = p.readString();
+    this.gravity = p.readDouble();
+    this.temperature = p.readDouble();
   }
 
   @Override
@@ -62,6 +68,8 @@ public class BrewNote implements Parcelable {
     p.writeString(this.description);
     p.writeString(this.date);
     p.writeString(this.time);
+    p.writeDouble(this.gravity);
+    p.writeDouble(this.temperature);
   }
 
   public String getDate() { return this.date; }
@@ -77,8 +85,8 @@ public class BrewNote implements Parcelable {
   }
 
   /**
-   * Gets the full date and time - used for comparing snapshots when ordering
-   * within a list.  Use getBrewDate() for the date on which this snapshot occurred.
+   * Gets the full date and time - used for comparing notes when ordering
+   * within a list.  Use getBrewDate() for the date on which this note occurred.
    * @return
    * @throws ParseException
    */
@@ -88,6 +96,22 @@ public class BrewNote implements Parcelable {
 
     Date result =  df.parse(dateString);
     return result;
+  }
+
+  public void setGravity(double g) {
+    this.gravity = g;
+  }
+
+  public double getGravity() {
+    return this.gravity;
+  }
+
+  public void setTemperature(double t) {
+    this.temperature = t;
+  }
+
+  public double getTemperature() {
+    return this.temperature;
   }
 
   public void setSnapshotId(long id) {

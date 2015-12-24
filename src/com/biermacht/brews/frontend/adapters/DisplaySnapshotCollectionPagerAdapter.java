@@ -66,7 +66,7 @@ public class DisplaySnapshotCollectionPagerAdapter extends FragmentStatePagerAda
       return "Details";
     }
     else if (position == 3) {
-      return "Notes";
+      return "Profiles";
     }
 
     return "Unknown Tab";

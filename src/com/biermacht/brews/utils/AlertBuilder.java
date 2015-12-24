@@ -158,15 +158,22 @@ public class AlertBuilder {
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        // Get fields.
-                        String description = descriptionView.getText().toString();
-                        double gravity = Double.parseDouble(gravityView.getText().toString());
-                        double temperature = Double.parseDouble(temperatureView.getText().toString());
+                      // Get fields.
+                      String description = descriptionView.getText().toString();
+                      double gravity = Double.parseDouble(gravityView.getText().toString());
+                      double temperature = Double.parseDouble(temperatureView.getText().toString());
 
-                        // Set them.
-                        note.setDescription(description);
-                        note.setGravity(gravity);
-                        note.setTemperature(temperature);
+                      // Set them.
+                      note.setDescription(description);
+                      note.setGravity(gravity);
+                      note.setTemperature(temperature);
+
+                      // Add note to RecipeSnapshot.
+                      s.addNote(note);
+
+                      // Save.
+                      s.save();
+
                     }
                 })
                 .setNegativeButton(R.string.cancel, null);

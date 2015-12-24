@@ -7,11 +7,14 @@ import android.util.Log;
 import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.InstructionGenerator;
+import com.biermacht.brews.utils.comparators.BrewNoteComparator;
+import com.biermacht.brews.utils.comparators.RecipeSnapshotComparator;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
@@ -41,6 +44,7 @@ public class RecipeSnapshot extends Recipe {
     this.recipeId = -1;
     this.setDescription("Brew Day Snapshot");
     this.setSnapshotTime("00:00:00");
+    this.notes = new ArrayList<BrewNote>();
   }
 
   public static RecipeSnapshot fromRecipe(Recipe r) {
@@ -121,6 +125,7 @@ public class RecipeSnapshot extends Recipe {
     p.writeLong(recipeId);
     p.writeString(this.description);
     p.writeString(this.snapshotTime);
+    p.writeParcelableArray(this.notes, flags);
   }
 
   public String getSnapshotTime() {
@@ -159,6 +164,28 @@ public class RecipeSnapshot extends Recipe {
 
   public String getDescription() {
     return this.description;
+  }
+
+  public ArrayList<BrewNote> getBrewNotes() {
+    //return this.notes;
+    ArrayList<BrewNote> l = new ArrayList<>();
+    for (int i=0; i < 5; i++){
+      BrewNote n = new BrewNote();
+      n.setGravity(1.09 + .02*i);
+      n.setTemperature(68 + i);
+      l.add(n);
+    }
+    return l;
+  }
+  /**
+   * Adds a BrewNote and sorts the list.
+   */
+  public void addNote(BrewNote n) {
+    // Add note.
+    this.notes.add(0, n);
+
+    // Sort list.
+    Collections.sort(this.notes, new BrewNoteComparator<BrewNote>());
   }
 
   /**

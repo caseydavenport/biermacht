@@ -17,13 +17,26 @@
         android:background="@color/theme_blue">
     </TextView>
 
+    <EditText
+        android:id="@+id/description_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="0dp"
+        android:maxLines="1"
+        style="@style/text_input"
+        android:layout_below="@id/divider"
+        android:hint="Description"
+        android:text="Description"/>
+
     <LinearLayout
         android:id="@+id/buttons"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_marginTop="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/divider">
+        android:layout_below="@id/description_edit_text">
 
         <Button
             android:id="@+id/date_picker"
@@ -46,14 +59,10 @@
             android:onClick="onButtonClick" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/description_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        style="@style/text_input"
+    <ListView
+        android:id="@+id/listview"
         android:layout_below="@id/buttons"
-        android:hint="Description"
-        android:text="Description"/>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

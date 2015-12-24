@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="72dp"
+                android:background="@color/transparent"
+                android:focusable="false">
+
+    <ImageView
+        android:id="@+id/row_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center|center_vertical"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_navigate_next_black_48dp"
+        android:contentDescription="icon"
+        android:layout_alignParentLeft="true"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0dp"
+        android:paddingRight="16dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:paddingTop="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/title_color"
+        android:text="23 Dec 2015"
+        android:layout_toRightOf="@id/row_icon"
+        android:layout_toLeftOf="@+id/gravity"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:paddingLeft="0dp"
+        android:text="Measurement"
+        android:layout_toRightOf="@id/row_icon"
+        android:layout_toLeftOf="@+id/gravity"
+        android:layout_below="@id/date"
+        android:textColor="@color/subtitle"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@id/gravity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/subtitle"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="12dp"
+        android:text="1.024"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@+id/temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/subtitle"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="14dp"
+        android:text="72F"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/gravity"
+        android:background="@color/transparent"/>
+</RelativeLayout>
