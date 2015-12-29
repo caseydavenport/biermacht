@@ -40,20 +40,20 @@ import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
-import com.biermacht.brews.recipe.MashProfile;
-import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
-import com.biermacht.brews.utils.comparators.FromDatabaseMashStepComparator;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,8 +86,11 @@ public class MainActivity extends AppCompatActivity {
   // Currently selected drawer item - for use as an index in drawerItems and fragmentList.
   private int selectedItem;
 
-  // Stores recipes found the the selected file
+  // Stores all recipes found the the selected file.
   private ArrayList<Recipe> foundImportedRecipes;
+
+  // Stores recipes to be imported from the selected file.
+  private ArrayList<Recipe> recipesToImport;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -125,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Initialize storage for imported recipes
     foundImportedRecipes = new ArrayList<Recipe>();
+    recipesToImport = new ArrayList<Recipe>();
 
     // Initialize views
     drawerListView = (ListView) findViewById(R.id.drawer_list);
@@ -277,6 +281,50 @@ public class MainActivity extends AppCompatActivity {
 
             })
             .setNegativeButton(R.string.cancel, null);
+  }
+
+  private AlertDialog.Builder existingRecipesAlert(final Recipe r) {
+    return new AlertDialog.Builder(this)
+            .setTitle("Recipe Exists")
+            .setMessage("The recipe '" + r.getRecipeName() + "' already exists.")
+            .setPositiveButton("Overwrite", new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                Log.d("MainActivity", "Overwrite pressed for recipe: " + r.getRecipeName());
+                // Delete any existing recipe with the same name.
+                for (Recipe tmpR : DatabaseAPI.getRecipeList()) {
+                  if (tmpR.getRecipeName().equals(r.getRecipeName())) {
+                    DatabaseAPI.deleteRecipe(tmpR);
+                  }
+                }
+
+                // Add this recipe.
+                ArrayList<Recipe> imports = new ArrayList<Recipe>();
+                imports.add(r);
+                new StoreRecipes(imports, findViewById(R.id.drawer_layout)).execute("");
+              }
+
+            })
+            .setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                Log.d("MainActivity", "Skip pressed for recipe: " + r.getRecipeName());
+              }
+            })
+            .setNeutralButton("Duplicate", new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                Log.d("MainActivity", "Duplicate pressed for recipe: " + r.getRecipeName());
+                // Add copy of this recipe.
+                r.setRecipeName(r.getRecipeName() + " - Import");
+                Recipe copy = DatabaseAPI.createRecipeFromExisting(r);
+
+                // Show SnackBar and update the fragments to display the new recipes.
+                String snack = "1 Recipe(s) Imported";
+                Snackbar.make(findViewById(R.id.drawer_layout), snack, Snackbar.LENGTH_LONG).show();
+                updateFragments();
+              }
+
+            });
   }
 
   /**
@@ -448,7 +496,7 @@ public class MainActivity extends AppCompatActivity {
     // Create checkbox array adapter to hold recipes, and set it as the adapter for the listView.
     final RecipeCheckboxArrayAdapter adapter = new RecipeCheckboxArrayAdapter(getApplicationContext(), foundImportedRecipes);
     v.setAdapter(adapter);
-    final ArrayList<Recipe> recipesToImport = new ArrayList<Recipe>();
+    recipesToImport = new ArrayList<Recipe>();
 
     // Set a listener for the checkbox so that we can select / unselect items in the list.
     checkBox.setOnClickListener(new View.OnClickListener() {
@@ -480,7 +528,34 @@ public class MainActivity extends AppCompatActivity {
                   }
                 }
 
-                // Store the recipes
+                // Get all recipes, check for name clashes.
+                Iterator<Recipe> iterator = recipesToImport.iterator();
+                ArrayList<Recipe> allRecipes = DatabaseAPI.getRecipeList();
+                ArrayList<Recipe> clashes = new ArrayList<Recipe>();
+                while (iterator.hasNext()) {
+                  Recipe newRecipe = iterator.next();
+                  for (Recipe existingRecipe : allRecipes) {
+                    if (newRecipe.getRecipeName().equals(existingRecipe.getRecipeName())) {
+                      if (!clashes.contains(newRecipe)) {
+                        // Add to the clashes list.
+                        clashes.add(newRecipe);
+
+                        // Remove from the "ok to import" list.
+                        iterator.remove();
+                      }
+                    }
+                  }
+                }
+
+                // If there are any clashes, we need to show an alert asking what to do.
+                // The alert will choose which recipes should be imported, duplicated, skipped.
+                if (clashes.size() != 0) {
+                  for (Recipe r : clashes) {
+                    existingRecipesAlert(r).show();
+                  }
+                }
+
+                // Store all recipes which do not have conflicts.
                 new StoreRecipes(recipesToImport, findViewById(R.id.drawer_layout)).execute("");
               }
 
