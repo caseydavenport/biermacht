@@ -141,10 +141,11 @@ public class Instruction implements Parcelable {
                 Units.getTemperatureUnits());
       }
 
-      if (mashStep.getDisplayDecoctAmount() != 0) {
+      if (mashStep.getDisplayDecoctAmount() != 0 && mashStep.getType().equals(MashStep.DECOCTION)) {
         // This is a decoction step.
-        String fmt = "Remove %2.2f %s of mash and boil it.  Then, add it back to the mash.";
-        s += String.format(fmt, mashStep.getDisplayDecoctAmount(), Units.getVolumeUnits());
+        double quarts = Units.litersToQuarts(mashStep.getBeerXmlDecoctAmount());
+        String fmt = "Remove %2.2f %s (%2.2fqt) of mash and boil it.  Then, add it back to the mash tun.\n\n";
+        s += String.format(fmt, mashStep.getDisplayDecoctAmount(), Units.getVolumeUnits(), quarts);
       }
 
       if (mashStep.getType().equals(MashStep.TEMPERATURE)) {

@@ -18,9 +18,6 @@
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawSelectorOnTop="true"
-            android:listSelector="@drawable/selector"
-            android:background="#fff"
             android:visibility="gone">
         </ListView>
 

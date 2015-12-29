@@ -80,6 +80,7 @@ public class BsmxXmlReader extends DefaultHandler {
     this.mashStep = new MashStep(r);
     this.mashStep.setAutoCalcInfuseAmt(false);
     this.mashStep.setAutoCalcInfuseTemp(false);
+    this.mashStep.setAutoCalcDecoctAmt(false);
 
     // How we know what thing we're looking at
     this.thingTypeStack = new Stack();
@@ -204,6 +205,7 @@ public class BsmxXmlReader extends DefaultHandler {
       this.mashStep = new MashStep(r);
       this.mashStep.setAutoCalcInfuseAmt(false);
       this.mashStep.setAutoCalcInfuseTemp(false);
+      this.mashStep.setAutoCalcDecoctAmt(false);
     }
 
     // Encounter new mash step list

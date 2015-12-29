@@ -16,9 +16,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final int DATABASE_ALPHA = 1; // Database used in development stages
   public static final int DATABASE_BETA = 2;  // Database in first release.
   public static final int DATABASE_GAMMA = 3; // Add measured batch size to the Recipe class.
+  public static final int DATABASE_DELTA = 4; // Add auto-calc decoct amount to mash steps.
 
   // Current database version
-  public static final int DATABASE_VERSION = DATABASE_GAMMA;
+  public static final int DATABASE_VERSION = DATABASE_DELTA;
 
   // Tables
   public static final String TABLE_RECIPES = "RecipeTable";
@@ -175,6 +176,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final String STE_COL_DECOCT_AMT = "decoctionAmount";
   public static final String STE_COL_CALC_INFUSE_TEMP = "stepCalcInfuseTemp";
   public static final String STE_COL_CALC_INFUSE_AMT = "stepCalcInfuseAmt";
+  public static final String STE_COL_CALC_DECOCT_AMT = "stepCalcDecoctAmt";
 
   // Create table strings
   private static final String CREATE_RECIPE_TABLE = "create table " +
@@ -338,7 +340,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + STE_COL_INFUSE_TEMP + " float, "
           + STE_COL_DECOCT_AMT + " float, "
           + STE_COL_CALC_INFUSE_TEMP + " int, "
-          + STE_COL_CALC_INFUSE_AMT + " int"
+          + STE_COL_CALC_INFUSE_AMT + " int, "
+          + STE_COL_CALC_DECOCT_AMT + " int"
           + ");";
 
   // Public Constructor
@@ -378,11 +381,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           db.execSQL(sql);
           break;
         case DATABASE_GAMMA:
-          // Upgrade from BETA to ALPHA.  Adds column to recipe table in order to store
+          // Upgrade from BETA to GAMMA.  Adds column to recipe table in order to store
           // measured batch size in beer XML format (Liters).
           Log.d("DatabaseHelper", "Upgrading database from BETA to GAMMA");
           sql = "ALTER TABLE " + TABLE_RECIPES + " ADD COLUMN " +
                   DatabaseHelper.REC_COL_MEAS_BATCH_SIZE + " float";
+          db.execSQL(sql);
+          break;
+        case DATABASE_DELTA:
+          // Upgrade from GAMMA to DELTA.  Adds column to mash step table to store whether or
+          // not to auto-calculate decoction amount.
+          Log.d("DatabaseHelper", "Upgrading database from GAMMA to DELTA");
+          sql = "ALTER TABLE " + TABLE_STEPS + " ADD COLUMN " +
+                  DatabaseHelper.STE_COL_CALC_DECOCT_AMT + " int";
           db.execSQL(sql);
           break;
       }
