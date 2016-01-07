@@ -766,7 +766,9 @@ public class Recipe implements Parcelable {
 
   /**
    * Generates a list of hops in this recipe with the given use.
-   * @param use One of Ingredient.USE_*
+   *
+   * @param use
+   *         One of Ingredient.USE_*
    * @return An ArrayList of Ingredients.
    */
   public ArrayList<Ingredient> getHops(String use) {

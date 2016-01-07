@@ -11,7 +11,8 @@
 
         <!-- Settings for ContextActionBar -->
         <item name="android:windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/context_action_bar_bg</item> (or)
+        <item name="actionModeBackground">@color/context_action_bar_bg</item>
+        (or)
         <item name="android:actionModeBackground">@color/context_action_bar_bg</item>
 
         <!-- Use custom AlertDialog theme -->

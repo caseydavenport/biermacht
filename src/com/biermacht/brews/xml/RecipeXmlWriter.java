@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
-import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;

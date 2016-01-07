@@ -2,7 +2,6 @@ package com.biermacht.brews.frontend.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +87,6 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
       }
     }
 
-
     // Set beer color
     color = ColorHandler.getSrmColor(list.get(position).getColor());
     vs.imageView.setColorFilter(Color.parseColor(color));
@@ -99,8 +97,11 @@ public class RecipeArrayAdapter extends ArrayAdapter<Recipe> {
   /**
    * Marks the given position in the list as checked.  This will cause the list item to be
    * highlighted.
-   * @param pos Position to mark
-   * @param checked Whether to mark as checked or un-checked.
+   *
+   * @param pos
+   *         Position to mark
+   * @param checked
+   *         Whether to mark as checked or un-checked.
    */
   public void setChecked(int pos, boolean checked) {
     this.checked.put(pos, checked);

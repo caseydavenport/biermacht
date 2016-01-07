@@ -39,6 +39,7 @@
     <string name="calculate">Calculate</string>
     <string name="export">Export</string>
     <string name="cancel">Cancel</string>
+    <string name="browse">Browse</string>
     <string name="done">Done</string>
     <string name="ok">OK</string>
     <string name="reset">Reset</string>
@@ -112,5 +113,10 @@
     <string name="recipe_scaled">1 Recipe Scaled</string>
     <string name="recipe_copied">1 Recipe Copied</string>
     <string name="recipe_exported">1 Recipe Exported</string>
+
+    <!-- Alert Dialog Messages -->
+    <string name="import_recipes_title">Import Recipe(s) from XML</string>
+    <string name="import_recipes_msg">Select a BeerXML (.xml) or BeerSmith2 (.bsmx) file to import recipes.</string>
+    <string name="import_recipes_drive_button">GDrive</string>
 
 </resources>

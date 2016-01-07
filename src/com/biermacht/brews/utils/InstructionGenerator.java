@@ -377,7 +377,7 @@ public class InstructionGenerator {
             ArrayList<Ingredient> ingList = hopMap.get(h.getTime());
             ingList.add(h);
             hopMap.put(h.getTime(), ingList);
-            }
+          }
         }
 
         // We need an instruction to indicate that the boil is over and that the temperature

@@ -364,7 +364,7 @@ public class MashStep implements Parcelable {
     fraction = (fraction) / (1 + fraction);
 
     // Return the fraction of mash, adjusted for the selected units.
-    if (Units.getUnitSystem().equals(Units.METRIC)){
+    if (Units.getUnitSystem().equals(Units.METRIC)) {
       return fraction * totalVolume; // Return Liters of mash.
     }
     else {
@@ -372,8 +372,8 @@ public class MashStep implements Parcelable {
     }
   }
 
-  /** Calculates the infusion temperature for both
-   * initial infusion, and water adds.
+  /**
+   * Calculates the infusion temperature for both initial infusion, and water adds.
    * http://www.howtobrew.com/section3/chapter16-3.html
    */
   public double calculateInfuseTemp() {
@@ -408,7 +408,8 @@ public class MashStep implements Parcelable {
     // Use appropriate units.
     if (Units.getTemperatureUnits().equals(Units.CELSIUS)) {
       return temp;
-    } else {
+    }
+    else {
       return Units.celsiusToFahrenheit(temp);
     }
   }
@@ -416,7 +417,8 @@ public class MashStep implements Parcelable {
   private double calculateBXSInfuseTemp() {
     if (Units.getTemperatureUnits().equals(Units.CELSIUS)) {
       return this.calculateInfuseTemp();
-    } else {
+    }
+    else {
       return Units.fahrenheitToCelsius(this.calculateInfuseTemp());
     }
   }
