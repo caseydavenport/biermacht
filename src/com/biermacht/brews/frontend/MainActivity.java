@@ -500,7 +500,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     Log.d("MainActivity", "Starting Google Drive file picker intent");
     IntentSender intentSender = Drive.DriveApi
             .newOpenFileActivityBuilder()
-            .setMimeType(new String[]{"text/bsmx", "text/xml"})
             .build(mGoogleApiClient);
     try {
       startIntentSenderForResult(
