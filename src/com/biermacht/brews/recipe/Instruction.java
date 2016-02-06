@@ -14,6 +14,7 @@ public class Instruction implements Parcelable {
 
   private String instructionText;
   private String instructionType;
+  private String subtitle;
   private int order;
   private double duration;
   private String durationUnits;
@@ -43,6 +44,7 @@ public class Instruction implements Parcelable {
   public Instruction(Recipe r) {
     this.r = r;
     this.setInstructionText("Blank Instruction");
+    this.setSubtitle("");
     this.duration = 0;
     this.durationUnits = Units.MINUTES;
     this.order = - 1;
@@ -109,6 +111,14 @@ public class Instruction implements Parcelable {
 
   public String getInstructionText() {
     return instructionText;
+  }
+
+  public void setSubtitle(String s) {
+    this.subtitle = s;
+  }
+
+  public String getSubtitle() {
+    return this.subtitle;
   }
 
   public void setMashStep(MashStep s) {
@@ -279,13 +289,28 @@ public class Instruction implements Parcelable {
     String s = "";
     for (Ingredient i : this.getRelevantIngredients()) {
       if (s.isEmpty()) {
-        s += i.getName();
+        s += i.getName() + " (" + String.format("%2.1f ", i.getDisplayAmount()) + i.getDisplayUnits() + ")";
       }
       else {
-        s += "\n" + i.getName();
+        s += "\n" + i.getName() + " (" + String.format("%2.1f ", i.getDisplayAmount()) + i.getDisplayUnits() + ")";
       }
     }
     this.instructionText = s;
+  }
+
+  public void setSubtitleFromIngredients() {
+    String s = "";
+    for (Ingredient i : this.getRelevantIngredients()) {
+      if (s.isEmpty()) {
+        s += i.getName()
+                + " - " + String.format("%2.1f", i.getDisplayAmount()) + i.getDisplayUnits();
+      }
+      else {
+        s += "\n" + i.getName()
+                + " - " + String.format("%2.1f", i.getDisplayAmount()) + i.getDisplayUnits();
+      }
+    }
+    this.subtitle = s;
   }
 
   public String getInstructionType() {

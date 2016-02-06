@@ -211,11 +211,13 @@ public abstract class Ingredient implements Parcelable {
    */
   public int compareTo(Ingredient other) {
     // If they are not the same type, sort based on type.
-    if (! this.getType().equals(other.getType())) {
-      return this.getType().compareTo(other.getType());
+    int typeResult = this.getType().compareTo(other.getType());
+    if (typeResult != 0) {
+      return typeResult;
     }
-
-    // Otherwise, sort based on name.
-    return this.name.compareTo(other.getName());
+    else {
+      // Otherwise, sort based on name.
+      return this.getName().compareTo(other.getName());
+    }
   }
 }

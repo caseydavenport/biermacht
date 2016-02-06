@@ -150,6 +150,7 @@ public class InstructionGenerator {
       i.setDurationUnits(Units.HOURS);
       i.setLastInType(false);
       i.setInstructionText("Add First Wort Hops");
+      i.setSubtitleFromIngredients();
       i.setDuration(0);  // Set duration to 0 so we don't show timer.
       list.add(i);
     }
@@ -161,6 +162,7 @@ public class InstructionGenerator {
     i.setDurationUnits(Units.HOURS);
     i.setLastInType(true);
     i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
+    i.setSubtitle("Until " + String.format("%2.1f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
     i.setDuration(0);  // Set duration to 0 so we don't show timer.
     list.add(i);
 
@@ -204,6 +206,7 @@ public class InstructionGenerator {
           inst.setDurationUnits(Units.MINUTES);
           inst.setOrder(- 1 * time);                // Inversely proportional to time
           inst.setInstructionTextFromIngredients();
+          inst.setSubtitle("@" + String.format("%2.0f", r.getDisplaySteepTemp()) + Units.getTemperatureUnits());
           steepsList.add(inst);
         }
       }
@@ -478,7 +481,36 @@ public class InstructionGenerator {
       if (mashSteps.size() > 0) {
         for (MashStep s : mashSteps) {
           inst = new Instruction(r);
-          inst.setInstructionText(s.getName());
+
+          // Determine the correct text for this instruction.
+          String text = s.getName();
+
+          // Determine subtitle.
+          String subtitle = "";
+
+          // If an infuse step, add the infusion amount.
+          if (s.getType().equals(MashStep.INFUSION)) {
+            subtitle += "Infuse "
+              + String.format("%2.1f", s.getDisplayInfuseAmount()) + Units.getVolumeUnits()
+              + " @ "
+              + String.format("%2.0f", s.getDisplayInfuseTemp()) + Units.getTemperatureUnits();
+          }
+          else if (s.getType().equals(MashStep.DECOCTION)) {
+            subtitle += "Decoct " + String.format("%2.1f", s.getDisplayDecoctAmount()) + Units.getVolumeUnits();
+          }
+          else if (s.getType().equals(MashStep.TEMPERATURE)) {
+            subtitle += "Ramp over " + String.format("%2.0f", s.getRampTime()) + "m";
+          }
+
+          // Add the hold time and temperature.
+          subtitle += "\nHold "
+                  + String.format("%2.0f", s.getStepTime())
+                  + "m @ "
+                  + String.format("%2.0f", s.getDisplayStepTemp())
+                  + Units.getTemperatureUnits();
+
+          inst.setInstructionText(text);
+          inst.setSubtitle(subtitle);
           inst.setInstructionType(Instruction.TYPE_MASH);
           inst.setDuration(s.getStepTime());
           inst.setOrder(s.getOrder());
