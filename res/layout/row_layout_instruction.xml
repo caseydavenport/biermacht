@@ -10,28 +10,55 @@
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:gravity="center"
-        android:layout_gravity="center"
         android:textColor="@color/subtitle"
         android:textSize="14sp"
         android:layout_alignParentLeft="true"
         android:background="@color/transparent"/>
 
-    <TextView
-        android:id="@+id/label"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:minHeight="72dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="16dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:textSize="16sp"
-        android:textColor="@color/title_color"
-        android:text="Ingredient Name"
         android:layout_toRightOf="@id/tag"
         android:layout_toLeftOf="@+id/duration_view"
-        android:background="@color/transparent"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:paddingLeft="8sp"
+            android:paddingRight="16sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="0dp"
+            android:textSize="16sp"
+            android:textColor="@color/title_color"
+            android:text="Acid Rest"
+            android:background="@color/transparent"/>
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:layout_gravity="top"
+            android:paddingLeft="8sp"
+            android:paddingRight="16sp"
+            android:visibility="visible"
+            android:paddingTop="0dp"
+            android:paddingBottom="5dp"
+            android:textSize="14sp"
+            android:textColor="@color/subtitle"
+            android:text="Some text"
+            android:layout_toRightOf="@id/tag"
+            android:layout_toLeftOf="@+id/duration_view"
+            android:background="@color/transparent"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@id/duration_view"
