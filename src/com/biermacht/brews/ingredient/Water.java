@@ -97,6 +97,18 @@ public class Water extends Ingredient {
   }
 
   @Override
+  public int compareTo(Ingredient other) {
+    // If not the same type of Ingredient, sort based on Ingredient type.
+    int typeCompare = this.getType().compareTo(other.getType());
+    if (typeCompare != 0) {
+      return typeCompare;
+    }
+
+    // Equal.
+    return 0;
+  }
+
+  @Override
   public int getTime() {
     // TODO Auto-generated method stub
     return 0;

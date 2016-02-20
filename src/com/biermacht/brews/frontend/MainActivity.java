@@ -70,6 +70,7 @@ import java.util.Iterator;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   // Globals, referenced outside of this Activity.
+  // TODO: These should not be use globally - can cause null reference when application is killed and re-started.
   public static DatabaseInterface databaseInterface;
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;

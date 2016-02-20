@@ -84,7 +84,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
       vs.labelView.setText(String.format("%s, %1.1f", h.getName(), h.getAlphaAcidContent()) + "%");
 
       if (h.getUse().equals(Hop.USE_BOIL)) {
-        detailText += String.format("%d mins, ", h.getDisplayTime());
+        detailText += String.format("Boil, %d mins, ", h.getDisplayTime());
         detailText += String.format("%2.2f IBU", BrewCalculator.Bitterness(r, h));
       }
       else if (h.getUse().equals(Hop.USE_FIRST_WORT)) {
@@ -127,7 +127,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
     }
     else {
       // We don't handle these!
-      Log.d("CustomIngredientArrayAdapter", "Unknown ingredient type received");
+      Log.d("IngredientArrayAdapter", "Unknown ingredient type received");
     }
     vs.detailView.setText(detailText);
 

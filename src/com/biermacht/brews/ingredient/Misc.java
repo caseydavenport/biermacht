@@ -110,9 +110,9 @@ public class Misc extends Ingredient {
   }
 
   public String getArrayAdapterDescription() {
-    String s = "";
+    String s = this.getUse() + ", ";
     if (getTime() > 0) {
-      s += getTime() + " " + getTimeUnits() + ", ";
+      s += this.getTime() + " " + this.getTimeUnits() + ", ";
     }
     s += getUseFor();
     return s;
@@ -369,17 +369,59 @@ public class Misc extends Ingredient {
     hc = hc ^ this.use.hashCode();
     hc = hc ^ this.miscType.hashCode();
     hc = hc + this.displayUnits.hashCode();
+    hc = hc + this.getTime();
     return hc;
   }
 
   @Override
   public boolean equals(Object o) {
     if (o instanceof Misc) {
-      if (this.hashCode() == o.hashCode()) {
-        return true;
-      }
+      return this.compareTo((Misc) o) == 0;
     }
     return false;
+  }
+
+  @Override
+  public int compareTo(Ingredient other) {
+    // If not the same type of Ingredient, sort based on Ingredient type.
+    int typeCompare = this.getType().compareTo(other.getType());
+    if (typeCompare != 0) {
+      return typeCompare;
+    }
+    Misc m = (Misc) other;
+
+    // If they are both Misc, sort based on use.
+    int useCompare = this.getUse().compareTo(m.getUse());
+    if (useCompare != 0) {
+      return useCompare;
+    }
+
+    // Sort based on time.
+    int timeCompare = Double.compare(m.getTime(), this.getTime());
+    if (timeCompare != 0) {
+      return timeCompare;
+    }
+
+    // Sort based on name.
+    int nameCompare = this.getName().compareTo(m.getName());
+    if (nameCompare != 0) {
+      return nameCompare;
+    }
+
+    // Sort based on type.
+    int miscTypeCompare = this.getMiscType().compareTo(m.getMiscType());
+    if (miscTypeCompare != 0) {
+      return miscTypeCompare;
+    }
+
+    // Sort based on units.
+    int unitCompare = this.getDisplayUnits().compareTo(m.getDisplayUnits());
+    if (unitCompare != 0) {
+      return unitCompare;
+    }
+
+    // Equal.
+    return 0;
   }
 
   @Override

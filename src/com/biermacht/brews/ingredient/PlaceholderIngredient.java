@@ -117,6 +117,17 @@ public class PlaceholderIngredient extends Ingredient implements Parcelable {
   }
 
   @Override
+  public int compareTo(Ingredient other) {
+    // If not the same type of Ingredient, sort based on Ingredient type.
+    if (! this.getType().equals(other.getType())) {
+      return this.getType().compareTo(other.getType());
+    }
+
+    // Otherwise they are equal.
+    return 0;
+  }
+
+  @Override
   public void setTime(int time) {
     // TODO Auto-generated method stub
 

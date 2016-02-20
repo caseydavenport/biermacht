@@ -24,7 +24,8 @@ import com.biermacht.brews.frontend.IngredientActivities.EditCustomYeastActivity
 import com.biermacht.brews.frontend.adapters.CustomIngredientArrayAdapter;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.comparators.IngredientComparator;
+import com.biermacht.brews.utils.comparators.IngredientsComparator;
+import com.biermacht.brews.utils.comparators.RecipeIngredientsComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
     // Get ingredient list
     list = DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM);
     list.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT));
-    Collections.sort(list, new IngredientComparator());
+    Collections.sort(list, new IngredientsComparator());
 
     // Set up the list adapter
     ingredientArrayAdapter = new CustomIngredientArrayAdapter(c, list);
@@ -143,7 +144,7 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
     list.addAll(loadedList);
 
     // Sort the list.
-    Collections.sort(list, new IngredientComparator());
+    Collections.sort(list, new RecipeIngredientsComparator());
 
     // Notify the adapter that the list has changed.
     ingredientArrayAdapter.notifyDataSetChanged();

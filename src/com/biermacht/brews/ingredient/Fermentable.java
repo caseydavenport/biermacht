@@ -156,6 +156,16 @@ public class Fermentable extends Ingredient implements Parcelable {
   }
 
   @Override
+  public int hashCode() {
+    int hc = this.getName().hashCode();
+    hc += this.getLovibondColor();
+    hc |= (int) this.getGravity() * 1234;
+    hc += (int) this.getBeerXmlStandardAmount();
+    hc |= this.getType().hashCode();
+    return hc;
+  }
+
+  @Override
   public String getDisplayUnits() {
     return Units.getFermentableUnits();
   }
@@ -169,14 +179,6 @@ public class Fermentable extends Ingredient implements Parcelable {
     return Units.KILOGRAMS;
   }
 
-  @Override
-  public int hashCode() {
-    int hc = this.getName().hashCode();
-    hc = hc ^ (int) this.getLovibondColor();
-    hc = hc ^ (int) (this.getGravity() * 1234);
-    return hc;
-  }
-
   /**
    * Evaluates equality of this Fermentable and the given Object.
    *
@@ -186,10 +188,11 @@ public class Fermentable extends Ingredient implements Parcelable {
   @Override
   public boolean equals(Object o) {
     if (o instanceof Fermentable) {
-      if (this.hashCode() == o.hashCode()) {
-        return true;
-      }
+      // Compare to other.
+      return this.compareTo((Fermentable) o) == 0;
     }
+
+    // Not a fermentable, and so is not equal.
     return false;
   }
 
@@ -311,12 +314,38 @@ public class Fermentable extends Ingredient implements Parcelable {
   @Override
   public int compareTo(Ingredient other) {
     // If not the same type of Ingredient, sort based on Ingredient type.
-    if (! this.getType().equals(other.getType())) {
-      return this.getType().compareTo(other.getType());
+    int typeCompare = this.getType().compareTo(other.getType());
+    if (typeCompare != 0) {
+      return typeCompare;
+    }
+    Fermentable f = (Fermentable) other;
+
+    // If they are both Fermentables, sort based on amount.
+    int amountCompare = Double.compare(f.getBeerXmlStandardAmount(), this.getBeerXmlStandardAmount());
+    if (amountCompare != 0) {
+      return amountCompare;
     }
 
-    // If they are both Fermentables, sort based on amount
-    return this.getBeerXmlStandardAmount() > other.getBeerXmlStandardAmount() ? - 1 : 1;
+    // Sort based on name.
+    int nameCompare = this.getName().compareTo(f.getName());
+    if (nameCompare != 0) {
+      return nameCompare;
+    }
+
+    // Sort based on color.
+    int colorCompare = Double.compare(this.getLovibondColor(), f.getLovibondColor());
+    if (colorCompare != 0) {
+      return colorCompare;
+    }
+
+    // Sort based on gravity.
+    int gravCompare = Double.compare(this.getGravity(), f.getGravity());
+    if (gravCompare != 0) {
+      return gravCompare;
+    }
+
+    // If all the above are equal, they are the same.
+    return 0;
   }
 }
 

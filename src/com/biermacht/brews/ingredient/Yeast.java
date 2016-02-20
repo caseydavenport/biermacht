@@ -168,11 +168,34 @@ public class Yeast extends Ingredient {
   @Override
   public boolean equals(Object o) {
     if (o instanceof Yeast) {
-      if (this.hashCode() == o.hashCode()) {
-        return true;
-      }
+      return this.compareTo((Yeast) o) == 0;
     }
     return false;
+  }
+
+  @Override
+  public int compareTo(Ingredient other) {
+    // If not the same type of Ingredient, sort based on Ingredient type.
+    int typeCompare = this.getType().compareTo(other.getType());
+    if (typeCompare != 0) {
+      return typeCompare;
+    }
+    Yeast y = (Yeast) other;
+
+    // If they are both Yeast, sort based on attenuation.
+    int attnCompare = Double.compare(this.getAttenuation(), y.getAttenuation());
+    if (attnCompare != 0) {
+      return attnCompare;
+    }
+
+    // Sort based on name.
+    int nameCompare = this.getName().compareTo(y.getName());
+    if (nameCompare != 0) {
+      return nameCompare;
+    }
+
+    // Equal.
+    return 0;
   }
 
   @Override
