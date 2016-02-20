@@ -11,7 +11,7 @@ import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.comparators.BeerStyleComparator;
-import com.biermacht.brews.utils.comparators.IngredientComparator;
+import com.biermacht.brews.utils.comparators.RecipeIngredientsComparator;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.xml.BeerXmlReader;
 import com.biermacht.brews.xml.BsmxXmlReader;
@@ -213,7 +213,7 @@ public class IngredientHandler {
         sp.parse(is, myXMLHandler);
 
         list.addAll(myXMLHandler.getFermentables());
-        Collections.sort(list, new IngredientComparator());
+        Collections.sort(list, new RecipeIngredientsComparator());
       } catch (Exception e) {
         Log.e("getFermentablesFromXml", e.toString());
       }
@@ -241,7 +241,7 @@ public class IngredientHandler {
         sp.parse(is, myXMLHandler);
 
         list.addAll(myXMLHandler.getYeasts());
-        Collections.sort(list, new IngredientComparator());
+        Collections.sort(list, new RecipeIngredientsComparator());
       } catch (Exception e) {
         Log.e("getYeastsFromXml", e.toString());
       }
@@ -269,7 +269,7 @@ public class IngredientHandler {
         sp.parse(is, myXMLHandler);
 
         list.addAll(myXMLHandler.getHops());
-        Collections.sort(list, new IngredientComparator());
+        Collections.sort(list, new RecipeIngredientsComparator());
       } catch (Exception e) {
         Log.e("getHopsFromXml", e.toString());
       }
@@ -326,7 +326,7 @@ public class IngredientHandler {
         sp.parse(is, myXMLHandler);
 
         list.addAll(myXMLHandler.getMiscs());
-        Collections.sort(list, new IngredientComparator());
+        Collections.sort(list, new RecipeIngredientsComparator());
       } catch (Exception e) {
         Log.e("getMiscsFromXml", e.toString());
       }

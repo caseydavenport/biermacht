@@ -15,7 +15,7 @@ import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.InstructionGenerator;
 import com.biermacht.brews.utils.Units;
-import com.biermacht.brews.utils.comparators.IngredientComparator;
+import com.biermacht.brews.utils.comparators.RecipeIngredientsComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -460,7 +460,7 @@ public class Recipe implements Parcelable {
     list.addAll(miscs);
     list.addAll(waters);
 
-    Collections.sort(list, new IngredientComparator());
+    Collections.sort(list, new RecipeIngredientsComparator());
     return list;
   }
 

@@ -197,15 +197,16 @@ public class Hop extends Ingredient {
   public int hashCode() {
     int hc = this.getName().hashCode();
     hc = hc ^ (int) (getAlphaAcidContent() * 1234);
+    hc += this.getTime();
+    hc += this.getUse().hashCode();
+    hc += this.getType().hashCode();
     return hc;
   }
 
   @Override
   public boolean equals(Object o) {
     if (o instanceof Hop) {
-      if (this.hashCode() == o.hashCode()) {
-        return true;
-      }
+      return this.compareTo((Hop) o) == 0;
     }
     return false;
   }
@@ -302,23 +303,37 @@ public class Hop extends Ingredient {
 
   @Override
   public int compareTo(Ingredient other) {
-    /**
-     * Returns:
-     * 		0 if argument is equal to this
-     * 		< 0 if argument is greater than this
-     * 		> 0 if argument is less than this
-     */
     // If not the same type, sort based on type.
-    if (! this.getType().equals(other.getType())) {
-      return this.getType().compareTo(other.getType());
+    int typeCompare = this.getType().compareTo(other.getType());
+    if (typeCompare != 0) {
+      return typeCompare;
     }
+    Hop h = (Hop) other;
 
     // If they are not the same use, sort based on use.
     if (! this.getUse().equals(other.getUse())) {
       return this.getUse().compareTo(other.getUse());
     }
 
-    // If they are the same, sort based on time.
-    return this.getTime() > other.getTime() ? - 1 : 1;
+    // Sort based on time.
+    int timeCompare = Double.compare(h.getTime(), this.getTime());
+    if (timeCompare != 0) {
+      return timeCompare;
+    }
+
+    // Sort based on name.
+    int nameCompare = this.getName().compareTo(h.getName());
+    if (nameCompare != 0) {
+      return nameCompare;
+    }
+
+    // Sort based on alpha acid.
+    int alphaCompare = Double.compare(this.getAlphaAcidContent(), h.getAlphaAcidContent());
+    if (alphaCompare != 0) {
+      return alphaCompare;
+    }
+
+    // If all else is the same, they are equal.
+    return 0;
   }
 }

@@ -144,6 +144,8 @@ public abstract class Ingredient implements Parcelable {
 
   public abstract boolean equals(Object o);
 
+  public abstract int compareTo(Ingredient other);
+
   public abstract void setTime(int time);
 
   public abstract int getTime();
@@ -203,21 +205,5 @@ public abstract class Ingredient implements Parcelable {
 
   public void setVersion(int version) {
     this.version = version;
-  }
-
-  /**
-   * Returns: 0 if argument is equal to this < 0 if argument is greater than this > 0 if argument is
-   * less than this
-   */
-  public int compareTo(Ingredient other) {
-    // If they are not the same type, sort based on type.
-    int typeResult = this.getType().compareTo(other.getType());
-    if (typeResult != 0) {
-      return typeResult;
-    }
-    else {
-      // Otherwise, sort based on name.
-      return this.getName().compareTo(other.getName());
-    }
   }
 }
