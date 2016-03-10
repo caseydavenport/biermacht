@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -17,7 +16,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -45,12 +43,10 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.DriveActivity;
 import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
@@ -67,7 +63,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends DriveActivity {
 
   // Globals, referenced outside of this Activity.
   // TODO: These should not be use globally - can cause null reference when application is killed and re-started.
@@ -96,10 +92,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
   private ActionBarDrawerToggle mDrawerToggle;
   private ListView drawerListView;
 
-  // Google Play API client
-  private GoogleApiClient mGoogleApiClient;
-  private ProgressDialog progressDialog;
-
   // Currently selected drawer item - for use as an index in drawerItems and fragmentList.
   private int selectedItem;
 
@@ -120,17 +112,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     // Instantiate ingredient handler
     ingredientHandler = new IngredientHandler(getApplicationContext());
-
-    // Create the Google API client used for accessing Google Services such as Drive.
-    mGoogleApiClient = new GoogleApiClient.Builder(this)
-            .addApi(Drive.API)
-            .addScope(Drive.SCOPE_FILE)
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this)
-            .build();
-
-    // Create the progress dialog view - displayed when connecting to Google APIs.
-    progressDialog = new ProgressDialog(MainActivity.this);
 
     // Get shared preferences
     preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
@@ -214,14 +195,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     // Select the recipe fragment
     selectItem(0);
-  }
-
-  @Override
-  protected void onStop() {
-    // Disconnect from Google APIs.
-    mGoogleApiClient.disconnect();
-
-    super.onStop();
   }
 
   @Override
@@ -318,21 +291,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
               }
             })
-            .setNegativeButton(R.string.import_recipes_drive_button, new DialogInterface.OnClickListener() {
+            .setNegativeButton(R.string.drive_button, new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
-                if (! mGoogleApiClient.isConnected()) {
-                  Log.d("MainActivity", "Connecting to Google API");
-                  progressDialog.setMessage("Connecting to Google APIs...");
-                  progressDialog.setIndeterminate(false);
-                  progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                  progressDialog.setCancelable(false);
-                  progressDialog.show();
-                  mGoogleApiClient.connect();
-                }
-                else {
-                  // Already connected - just show the picker.
-                  startGoogleDrivePicker();
-                }
+                pickFile();
               }
             })
             .setNeutralButton(R.string.cancel, null);
@@ -378,7 +339,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 Snackbar.make(findViewById(R.id.drawer_layout), snack, Snackbar.LENGTH_LONG).show();
                 updateFragments();
               }
-
             });
   }
 
@@ -418,60 +378,66 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Log.d("MainActivity", "Load recipes from file cancelled by user");
       }
     }
-    else if (requestCode == Constants.REQUEST_CONNECT_TO_DRIVE) {
-      Log.d("MainActivity", "Result from Google API: " + resultCode);
-      if (resultCode == RESULT_OK) {
-        // Make sure the app is not already connected or attempting to connect
-        if (! mGoogleApiClient.isConnecting() &&
-                ! mGoogleApiClient.isConnected()) {
-          mGoogleApiClient.connect();
+    else {
+      // If none of the above handle the response, see if the super class handles it.
+      // The DriveActivity superclass handles responses to Google Drive intents.
+      super.onActivityResult(requestCode, resultCode, data);
+    }
+  }
+
+  /**
+   * Called by the DriveActivity when a drive file has been selected by a user.
+   *
+   * @param data
+   */
+  public void onDriveFilePicked(Intent data) {
+    DriveId driveId = data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+    final DriveFile file = Drive.DriveApi.getFile(driveClient, driveId);
+
+    // Callback for when the file has been opened.  Checks for success and extracts the contents
+    // of the file.
+    final ResultCallback resultCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
+      @Override
+      public void onResult(DriveApi.DriveContentsResult result) {
+        if (! result.getStatus().isSuccess()) {
+          // TODO: Display an error saying file can't be opened
+          return;
         }
+        // DriveContents object contains pointers to the actual byte stream.
+        DriveContents contents = result.getDriveContents();
+
+        // Load the recipes in the file.
+        new LoadRecipes(contents.getInputStream(), fileName, ingredientHandler).execute("");
       }
-    }
-    else if (requestCode == Constants.REQUEST_DRIVE_FILE) {
-      Log.d("MainActivity", "Result from Google Drive file access: " + resultCode);
-      if (resultCode == RESULT_OK) {
-        DriveId driveId = data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-        final DriveFile file = Drive.DriveApi.getFile(mGoogleApiClient, driveId);
+    };
 
-        // Callback for when the file has been opened.  Checks for success and extracts the contents
-        // of the file.
-        final ResultCallback resultCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
-          @Override
-          public void onResult(DriveApi.DriveContentsResult result) {
-            if (! result.getStatus().isSuccess()) {
-              // TODO: Display an error saying file can't be opened
-              return;
-            }
-            // DriveContents object contains pointers to the actual byte stream.
-            DriveContents contents = result.getDriveContents();
+    // Callback for when file Metadata has been returned - extracts the file name
+    // and opens the file.
+    ResultCallback metadataCallback = new ResultCallback<DriveResource.MetadataResult>() {
+      @Override
+      public void onResult(DriveResource.MetadataResult result) {
+        if (! result.getStatus().isSuccess()) {
+          // TODO: Display an error saying file can't be opened
+          return;
+        }
+        // Set fileName for use in LoadRecipes.
+        fileName = result.getMetadata().getTitle() + result.getMetadata().getFileExtension();
 
-            // Load the recipes in the file.
-            new LoadRecipes(contents.getInputStream(), fileName, ingredientHandler).execute("");
-          }
-        };
-
-        // Callback for when file Metadata has been returned - extracts the file name
-        // and opens the file.
-        ResultCallback metadataCallback = new ResultCallback<DriveResource.MetadataResult>() {
-          @Override
-          public void onResult(DriveResource.MetadataResult result) {
-            if (! result.getStatus().isSuccess()) {
-              // TODO: Display an error saying file can't be opened
-              return;
-            }
-            // Set fileName for use in LoadRecipes.
-            fileName = result.getMetadata().getTitle() + result.getMetadata().getFileExtension();
-
-            // Open the file.
-            file.open(mGoogleApiClient, DriveFile.MODE_READ_ONLY, null).setResultCallback(resultCallback);
-          }
-        };
-
-        // Get Metadata for the file.
-        file.getMetadata(mGoogleApiClient).setResultCallback(metadataCallback);
+        // Open the file.
+        file.open(driveClient, DriveFile.MODE_READ_ONLY, null).setResultCallback(resultCallback);
       }
-    }
+    };
+
+    // Get Metadata for the file.
+    file.getMetadata(driveClient).setResultCallback(metadataCallback);
+  }
+
+  @Override
+  public void onDriveFileWritten(Intent data) {
+    Log.d("MainActivity", "File written to drive");
+
+    // Show a snack bar showing that it was exported.
+    ((RecipesFragment) fragmentList.get(0)).recipesExportedSnackbar();
   }
 
   @Override
@@ -487,51 +453,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     mDrawerToggle.onConfigurationChanged(newConfig);
   }
 
-  @Override
-  public void onConnected(Bundle bundle) {
-    Log.d("MainActivity", "Connected to Google APIs");
-    if (progressDialog.isShowing()) {
-      Log.d("MainActivity", "Dismissing progress dialog");
-      progressDialog.dismiss();
-    }
-    startGoogleDrivePicker();
-  }
-
-  public void startGoogleDrivePicker() {
-    Log.d("MainActivity", "Starting Google Drive file picker intent");
-    IntentSender intentSender = Drive.DriveApi
-            .newOpenFileActivityBuilder()
-            .build(mGoogleApiClient);
-    try {
-      startIntentSenderForResult(
-              intentSender, Constants.REQUEST_DRIVE_FILE, null, 0, 0, 0);
-    } catch (IntentSender.SendIntentException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @Override
-  public void onConnectionSuspended(int i) {
-
-  }
-
-  @Override
-  public void onConnectionFailed(ConnectionResult result) {
-    Log.d("MainActivity", "Google API Connection failed");
-    if (result.hasResolution()) {
-      try {
-        result.startResolutionForResult(this, Constants.REQUEST_CONNECT_TO_DRIVE);
-      } catch (IntentSender.SendIntentException e) {
-        mGoogleApiClient.connect();
-      }
-    }
-    else {
-      GoogleApiAvailability.getInstance().getErrorDialog(this, result.getErrorCode(), Constants.REQUEST_CONNECT_TO_DRIVE).show();
-    }
-  }
-
   /**
-   * Private class which handle¬¬s selections in the app drawer and selects the appropriate Fragment
+   * Private class which handles selections in the app drawer and selects the appropriate Fragment
    * to display.
    */
   private class DrawerItemClickListener implements ListView.OnItemClickListener {

@@ -19,6 +19,7 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,95 +52,148 @@ public class RecipeXmlWriter {
     this.writeRecipes(list, filePrefix);
   }
 
-  public void writeRecipes(List<Recipe> list, String filePrefix) {
+  public Document generateDocument(List<Recipe> list) throws ParserConfigurationException {
     // Open the document.
     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder docBuilder;
-    try {
-      // This throws the exceptions!
-      docBuilder = docFactory.newDocumentBuilder();
 
-      // Create root element.
-      Document doc = docBuilder.newDocument();
-      Element rootElement = doc.createElement("RECIPES");
-      doc.appendChild(rootElement);
+    // This throws the exceptions!
+    docBuilder = docFactory.newDocumentBuilder();
 
-      for (Recipe r : list) {
-        // Element for this recipe.
-        Element recipeElement = doc.createElement("RECIPE");
+    // Create root element.
+    Document doc = docBuilder.newDocument();
+    Element rootElement = doc.createElement("RECIPES");
+    doc.appendChild(rootElement);
 
-        // Create a mapping of name -> value
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("NAME", r.getRecipeName());
-        map.put("VERSION", r.getVersion() + "");
-        map.put("TYPE", r.getType());
-        map.put("EQUIPMENT", "");
-        map.put("BREWER", "");
-        map.put("BATCH_SIZE", r.getBeerXmlStandardBatchSize() + "");
-        map.put("BOIL_SIZE", r.getBeerXmlStandardBoilSize() + "");
-        map.put("BOIL_TIME", r.getBoilTime() + "");
-        map.put("EFFICIENCY", r.getEfficiency() + "");
-        map.put("NOTES", r.getNotes());
-        map.put("OG", r.getOG() + "");
-        map.put("FG", r.getFG() + "");
-        map.put("DISPLAY_OG", r.getMeasuredOG() + "");
-        map.put("DISPLAY_FG", r.getMeasuredFG() + "");
-        map.put("FERMENTATION_STAGES", r.getFermentationStages() + "");
-        map.put("PRIMARY_AGE", r.getFermentationAge(Recipe.STAGE_PRIMARY) + "");
-        map.put("SECONDARY_AGE", r.getFermentationAge(Recipe.STAGE_SECONDARY) + "");
-        map.put("TERTIARY_AGE", r.getFermentationAge(Recipe.STAGE_TERTIARY) + "");
-        map.put("PRIMARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY) + "");
-        map.put("SECONDARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY) + "");
-        map.put("TERTIARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY) + "");
-        map.put("AGE", r.getBottleAge() + "");
+    for (Recipe r : list) {
+      // Element for this recipe.
+      Element recipeElement = doc.createElement("RECIPE");
 
-        for (Map.Entry<String, String> e : map.entrySet()) {
-          String fieldName = e.getKey();
-          String fieldValue = e.getValue();
-          Element element = doc.createElement(fieldName);
-          element.setTextContent(fieldValue);
-          recipeElement.appendChild(element);
-        }
+      // Create a mapping of name -> value
+      Map<String, String> map = new HashMap<String, String>();
+      map.put("NAME", r.getRecipeName());
+      map.put("VERSION", r.getVersion() + "");
+      map.put("TYPE", r.getType());
+      map.put("EQUIPMENT", "");
+      map.put("BREWER", "");
+      map.put("BATCH_SIZE", r.getBeerXmlStandardBatchSize() + "");
+      map.put("BOIL_SIZE", r.getBeerXmlStandardBoilSize() + "");
+      map.put("BOIL_TIME", r.getBoilTime() + "");
+      map.put("EFFICIENCY", r.getEfficiency() + "");
+      map.put("NOTES", r.getNotes());
+      map.put("OG", r.getOG() + "");
+      map.put("FG", r.getFG() + "");
+      map.put("DISPLAY_OG", r.getMeasuredOG() + "");
+      map.put("DISPLAY_FG", r.getMeasuredFG() + "");
+      map.put("FERMENTATION_STAGES", r.getFermentationStages() + "");
+      map.put("PRIMARY_AGE", r.getFermentationAge(Recipe.STAGE_PRIMARY) + "");
+      map.put("SECONDARY_AGE", r.getFermentationAge(Recipe.STAGE_SECONDARY) + "");
+      map.put("TERTIARY_AGE", r.getFermentationAge(Recipe.STAGE_TERTIARY) + "");
+      map.put("PRIMARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY) + "");
+      map.put("SECONDARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY) + "");
+      map.put("TERTIARY_TEMP", r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY) + "");
+      map.put("AGE", r.getBottleAge() + "");
 
-        // Add elements to recipe.
-        recipeElement.appendChild(this.getHopsChild(doc, r.getHopsList()));
-        recipeElement.appendChild(this.getFermentablesChild(doc, r.getFermentablesList()));
-        recipeElement.appendChild(this.getMiscsChild(doc, r.getMiscList()));
-        recipeElement.appendChild(this.getYeastsChild(doc, r.getYeastsList()));
-        recipeElement.appendChild(this.getWatersChild(doc, r.getWatersList()));
-        recipeElement.appendChild(this.getMashChild(doc, r.getMashProfile()));
-        recipeElement.appendChild(this.getStyleChild(doc, r.getStyle()));
-
-        // Add recipe to root <RECIPES> element.
-        rootElement.appendChild(recipeElement);
+      for (Map.Entry<String, String> e : map.entrySet()) {
+        String fieldName = e.getKey();
+        String fieldValue = e.getValue();
+        Element element = doc.createElement(fieldName);
+        element.setTextContent(fieldValue);
+        recipeElement.appendChild(element);
       }
 
-      // Write to XML file.
-      TransformerFactory transformerFactory = TransformerFactory.newInstance();
-      Transformer transformer = transformerFactory.newTransformer();
-      DOMSource source = new DOMSource(doc);
+      // Add elements to recipe.
+      recipeElement.appendChild(this.getHopsChild(doc, r.getHopsList()));
+      recipeElement.appendChild(this.getFermentablesChild(doc, r.getFermentablesList()));
+      recipeElement.appendChild(this.getMiscsChild(doc, r.getMiscList()));
+      recipeElement.appendChild(this.getYeastsChild(doc, r.getYeastsList()));
+      recipeElement.appendChild(this.getWatersChild(doc, r.getWatersList()));
+      recipeElement.appendChild(this.getMashChild(doc, r.getMashProfile()));
+      recipeElement.appendChild(this.getStyleChild(doc, r.getStyle()));
 
-      // Generate date string
-      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-      String dateString = dateFormat.format(new Date());
+      // Add recipe to root <RECIPES> element.
+      rootElement.appendChild(recipeElement);
+    }
+    return doc;
+  }
 
-      // Create file object
-      File file = getStoragePath(filePrefix + dateString + ".xml");
-      StreamResult result = new StreamResult(file);
-      Log.d("WriteXmlFile", "Writing XML to:" + file);
-
-      transformer.transform(source, result);
-      this.lastFileLocation = file.getAbsolutePath();
-
+  public String getXmlText(List<Recipe> list) {
+    // Get the generated XML doc.
+    Document doc;
+    try {
+      doc = generateDocument(list);
     } catch (ParserConfigurationException e) {
       e.printStackTrace();
+      return null;
+    }
+
+    DOMSource domSource = new DOMSource(doc);
+    StringWriter writer = new StringWriter();
+    StreamResult result = new StreamResult(writer);
+    TransformerFactory tf = TransformerFactory.newInstance();
+    Transformer transformer = null;
+
+    try {
+      transformer = tf.newTransformer();
     } catch (TransformerConfigurationException e) {
       e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
+    }
+
+    try {
+      transformer.transform(domSource, result);
     } catch (TransformerException e) {
       e.printStackTrace();
     }
+
+    writer.flush();
+    return writer.toString();
+  }
+
+  public static String generateFileName(String prefix) {
+    // Generate date string
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+    String dateString = dateFormat.format(new Date());
+
+    return prefix + dateString + ".xml";
+  }
+
+  public void writeRecipes(List<Recipe> list, String filePrefix) {
+    // Get the generated XML doc.
+    Document doc;
+    try {
+      doc = generateDocument(list);
+    } catch (ParserConfigurationException e) {
+      e.printStackTrace();
+      return;
+    }
+
+    // Write to XML file.
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = null;
+    try {
+      transformer = transformerFactory.newTransformer();
+    } catch (TransformerConfigurationException e) {
+      e.printStackTrace();
+      return;
+    }
+    DOMSource source = new DOMSource(doc);
+
+    // Create file object
+    File file = null;
+    try {
+      file = getStoragePath(generateFileName(filePrefix));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    StreamResult result = new StreamResult(file);
+    Log.d("WriteXmlFile", "Writing XML to:" + file);
+
+    try {
+      transformer.transform(source, result);
+    } catch (TransformerException e) {
+      e.printStackTrace();
+    }
+    this.lastFileLocation = file.getAbsolutePath();
   }
 
   /**

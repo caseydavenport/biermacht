@@ -113,10 +113,12 @@
     <string name="recipe_scaled">1 Recipe Scaled</string>
     <string name="recipe_copied">1 Recipe Copied</string>
     <string name="recipe_exported">1 Recipe Exported</string>
+    <string name="recipes_exported">All Recipes Exported</string>
 
     <!-- Alert Dialog Messages -->
     <string name="import_recipes_title">Import Recipe(s) from XML</string>
     <string name="import_recipes_msg">Select a BeerXML (.xml) or BeerSmith2 (.bsmx) file to import recipes.</string>
-    <string name="import_recipes_drive_button">GDrive</string>
+    <string name="drive_button">GDrive</string>
+    <string name="local_storage">SD Card</string>
 
 </resources>

@@ -82,7 +82,8 @@ public class Constants {
   public static final int REQUEST_EDIT_RECIPE = 3;
   public static final int REQUEST_IMPORT_FILE = 4;
   public static final int REQUEST_CONNECT_TO_DRIVE = 5;
-  public static final int REQUEST_DRIVE_FILE = 6;
+  public static final int REQUEST_DRIVE_FILE_OPEN = 6;
+  public static final int REQUEST_DRIVE_FILE_CREATE = 7;
 
   // Possible timer states
   public static int PAUSED = 0;
