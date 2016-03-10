@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +30,7 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.DriveActivity;
 import com.biermacht.brews.utils.IngredientHandler;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ import java.util.List;
  * examples would be Recipes, MashProfiles, or Settings.  This class defines a framework for adding
  * views, acquiring values from those views, saving or deleting objects, and more.
  */
-public abstract class AddEditActivity extends AppCompatActivity implements OnClickListener {
+public abstract class AddEditActivity extends DriveActivity implements OnClickListener {
 
   // Main view - holds all the rows
   public ViewGroup mainView;
@@ -411,6 +413,16 @@ public abstract class AddEditActivity extends AppCompatActivity implements OnCli
       Log.d("AddEditActivity", "Cancel Pressed");
       onCancelPressed();
     }
+  }
+
+  @Override
+  public void onDriveFilePicked(Intent data) {
+    // Not used.
+  }
+
+  @Override
+  public void onDriveFileWritten(Intent data) {
+    // Not used.
   }
 
   public void registerViews(List<View> views) {

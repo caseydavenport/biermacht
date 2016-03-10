@@ -3,8 +3,10 @@ package com.biermacht.brews.frontend;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -124,6 +126,16 @@ public class SettingsActivity extends AddEditActivity {
   }
 
   @Override
+  public void onDriveFilePicked(Intent data) {
+    // Not used.
+  }
+
+  @Override
+  public void onDriveFileWritten(Intent data) {
+    Snackbar.make(mainView, R.string.recipes_exported, Snackbar.LENGTH_LONG).show();
+  }
+
+  @Override
   public void onRecipeNotFound() {
     // We don't need a recipe for this, so do nothing.
     Log.d("SettingsActivity", "Recipe not needed, continuing");
@@ -218,15 +230,21 @@ public class SettingsActivity extends AddEditActivity {
     return new AlertDialog.Builder(this)
             .setTitle("Export all recipes")
             .setMessage("Export all recipes to BeerXML.")
-            .setPositiveButton(R.string.export, new DialogInterface.OnClickListener() {
+            .setPositiveButton(R.string.local_storage, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
                 new ExportRecipes().execute("");
               }
 
             })
+            .setNegativeButton(R.string.drive_button, new DialogInterface.OnClickListener() {
 
-            .setNegativeButton(R.string.cancel, null);
+              public void onClick(DialogInterface dialog, int which) {
+                writeFile(DatabaseAPI.getRecipeList());
+              }
+
+            })
+            .setNeutralButton(R.string.cancel, null);
   }
 
   private AlertDialog.Builder finishedExporting(String pathToFile) {

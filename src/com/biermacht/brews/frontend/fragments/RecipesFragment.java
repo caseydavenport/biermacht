@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseAPI;
-import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.AddRecipeActivity;
 import com.biermacht.brews.frontend.BrewTimerActivity;
 import com.biermacht.brews.frontend.DisplayRecipeActivity;
@@ -40,11 +39,11 @@ import com.biermacht.brews.frontend.IngredientActivities.AddHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddMiscActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
-import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter;
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.DriveActivity;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 import com.biermacht.brews.xml.RecipeXmlWriter;
@@ -64,9 +63,6 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
   private AdapterView.OnItemClickListener mClickListener;
   private AdapterView.OnItemLongClickListener mLongClickListener;
   private ArrayList<Recipe> recipeList;
-
-  // Database Interface
-  private DatabaseInterface databaseInterface;
 
   // Context menu items
   private ArrayList<String> menuItems;
@@ -123,9 +119,6 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
       mViewPager = (ViewPager) detailsView.findViewById(R.id.pager);
       isTablet = true;
     }
-
-    // Get database Interface
-    databaseInterface = MainActivity.databaseInterface;
 
     // Callback which handles the creation and operation of the contextual action bar when
     // a Recipe is long-pressed.
@@ -296,6 +289,10 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
 
     Log.d("RecipesFragment", "Exiting onCreateView()");
     return pageView;
+  }
+
+  public void recipesExportedSnackbar() {
+    Snackbar.make(listView, R.string.recipe_exported, Snackbar.LENGTH_LONG).show();
   }
 
   @Override
@@ -528,7 +525,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
     return new AlertDialog.Builder(getActivity())
             .setTitle("Export recipe")
             .setMessage("Export '" + r.getRecipeName() + "' to BeerXML file?")
-            .setPositiveButton(R.string.export, new DialogInterface.OnClickListener() {
+            .setPositiveButton(R.string.local_storage, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
                 new ExportRecipe(r).execute("");
@@ -537,7 +534,17 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
               }
 
             })
-            .setNegativeButton(R.string.cancel, null);
+            .setNeutralButton(R.string.cancel, null)
+            .setNegativeButton(R.string.drive_button, new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                ArrayList<Recipe> l = new ArrayList<Recipe>();
+                l.add(r);
+                ((DriveActivity) getActivity()).writeFile(l);
+                mActionMode.finish();
+              }
+
+            });
   }
 
   private AlertDialog.Builder finishedExporting(String pathToFile) {
