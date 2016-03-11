@@ -2,16 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:orientation="vertical"
-              android:background="@color/activity_background">
+              android:background="@color/activity_background"
+              android:orientation="vertical">
 
     <!-- Divider below pager title -->
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_gravity="top"
-        android:textColor="@color/transparent"
-        android:background="@color/theme_blue">
+        android:background="@color/theme_blue"
+        android:textColor="@color/transparent">
     </TextView>
 
     <ScrollView
@@ -21,25 +21,25 @@
 
         <LinearLayout
             android:id="@+id/profile_view"
-            android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:padding="10dip"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dip">
 
             <LinearLayout
                 android:id="@+id/mash_profile_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dip"
-                android:orientation="vertical"
-                android:background="@drawable/rounded_bg_white">
+                android:background="@drawable/rounded_bg_white"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/mash_profile_title"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:gravity="center"
                     android:background="@drawable/profile_title_bg"
+                    android:gravity="center"
                     android:text="@string/mash_profile"
                     android:textColor="@color/title_color"/>
 
@@ -50,15 +50,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dip"
-                android:orientation="vertical"
-                android:background="@drawable/rounded_bg_white">
+                android:background="@drawable/rounded_bg_white"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/fermentation_profile_title"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:gravity="center"
                     android:background="@drawable/profile_title_bg"
+                    android:gravity="center"
                     android:text="@string/fermentation_profile"
                     android:textColor="@color/title_color"/>
 
@@ -69,15 +69,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dip"
-                android:orientation="vertical"
-                android:background="@drawable/rounded_bg_white">
+                android:background="@drawable/rounded_bg_white"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/profile_title"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:gravity="center"
                     android:background="@drawable/profile_title_bg"
+                    android:gravity="center"
                     android:text="@string/style_profile"
                     android:textColor="@color/title_color"/>
 
@@ -85,10 +85,17 @@
                     android:id="@+id/style_profile_name"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:gravity="center"
                     android:background="@color/transparent"
+                    android:gravity="center"
                     android:text="Other"
                     android:textColor="@color/text"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    style="@style/button"
+                    android:onClick="displayStyle"
+                    android:text="Details"/>
 
             </LinearLayout>
         </LinearLayout>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
@@ -168,13 +169,7 @@ public class ProfileViewFragment extends Fragment implements BiermachtFragment {
   }
 
   private void configureBjcpView(LayoutInflater inflater, ViewGroup container) {
-    TextView tv = new TextView(getActivity());
-    tv.setPadding(20, 20, 20, 20);
-    tv.setTextColor(Color.DKGRAY);
-    tv.setText(r.getStyle().getNotes());
     styleNameView.setText(r.getStyle().getName());
-
-    //styleProfileView.addView(tv);
   }
 
   @Override

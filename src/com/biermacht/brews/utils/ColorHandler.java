@@ -9,16 +9,15 @@ public class ColorHandler {
   public static String RED = "#FF0000";
   public static String YELLOW = "#FFAA00";
 
-  public static String getSrmColor(double d) {
+  public static String getSrmColor(double srmColor) {
 
-    // Format input
-    d = (double) Math.round(d * 100) / 100;
+    // Found to the nearest tenth.
+    Double d = (double) Math.round(srmColor * 10) / 10;
+    // Log.d("ColorHandler", "Rounded color " + srmColor + " to " + d);
 
     if (d > 40) {
-      d = 40;
+      d = 40.0;
     }
-
-    //Log.e("ColorHandler", "Received SRM value: " + d);
 
     // Lookup
     if (d == 0.0) {
@@ -1626,7 +1625,7 @@ public class ColorHandler {
     }
 
     else {
-      Log.e("COLOR", "Could not locate color.");
+      Log.e("COLOR", "Could not locate color: " + d);
       return RgbToHex(0, 0, 0);
     }
   }

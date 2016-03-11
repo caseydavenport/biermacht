@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/activity_background"
+              android:orientation="vertical">
+
+    <!-- Divider below pager title -->
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:background="@color/theme_blue"
+        android:textColor="@color/transparent">
+    </TextView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_background">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:id="@+id/category_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Category 10A"
+                android:textColor="@color/title_color"
+                android:textSize="24dp"/>
+
+            <TextView
+                android:id="@+id/category_subtitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="BJCP 2008"/>
+
+            <TextView
+                android:id="@+id/style_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="Notes go here and they can be quite long so I'm simulating that with this."
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:text="Common Ingredients"
+                android:textColor="@color/title_color"
+                android:textSize="24dp"/>
+
+            <TextView
+                android:id="@+id/ingredients_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="A bunch\nOf beer\n Examples"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/examples_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:text="Examples"
+                android:textColor="@color/title_color"
+                android:textSize="24dp"/>
+
+            <TextView
+                android:id="@+id/examples_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="A bunch\nOf beer\n Examples"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

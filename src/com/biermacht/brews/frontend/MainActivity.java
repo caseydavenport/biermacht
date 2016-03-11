@@ -39,6 +39,7 @@ import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
 import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
+import com.biermacht.brews.frontend.fragments.ViewStylesFragment;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
@@ -71,14 +72,12 @@ public class MainActivity extends DriveActivity {
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;
 
-  // Shared preferences.
-  private static SharedPreferences preferences;
-
   // Static drawer list items
   private static String DRAWER_RECIPES = "Recipes";
   private static String DRAWER_GRAVITY_CALC = "Hydrometer Adjustment";
   private static String DRAWER_MASH_EDIT = "Mash Profile Editor";
   private static String DRAWER_INGRED_EDIT = "Ingredient Editor";
+  private static String DRAWER_STYLE_VIEW = "Style Viewer";
   private static String DRAWER_ABV_CALC = "ABV Calculator";
   private static String DRAWER_STRIKE_CALC = "Strike Temperature";
 
@@ -115,9 +114,6 @@ public class MainActivity extends DriveActivity {
     // Instantiate ingredient handler
     ingredientHandler = new IngredientHandler(getApplicationContext());
 
-    // Get shared preferences
-    preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
-
     // Instantiate my database interface
     databaseInterface = DatabaseAPI.newDatabaseInterface(getApplicationContext());
     databaseInterface.open();
@@ -152,6 +148,7 @@ public class MainActivity extends DriveActivity {
     drawerItems.add(DRAWER_RECIPES);
     drawerItems.add(DRAWER_INGRED_EDIT);
     drawerItems.add(DRAWER_MASH_EDIT);
+    drawerItems.add(DRAWER_STYLE_VIEW);
     drawerItems.add(DRAWER_STRIKE_CALC);
     drawerItems.add(DRAWER_GRAVITY_CALC);
     drawerItems.add(DRAWER_ABV_CALC);
@@ -191,6 +188,7 @@ public class MainActivity extends DriveActivity {
     fragmentList.add(new RecipesFragment());
     fragmentList.add(new EditIngredientsFragment());
     fragmentList.add(new EditMashProfilesFragment());
+    fragmentList.add(new ViewStylesFragment());
     fragmentList.add(new StrikeWaterCalculatorFragment());
     fragmentList.add(new HydrometerTempCalculatorFragment());
     fragmentList.add(new AlcoholAttenuationCalculatorFragment());

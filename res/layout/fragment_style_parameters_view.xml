@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/activity_background"
+              android:orientation="vertical">
+
+    <!-- Divider below pager title -->
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:background="@color/theme_blue"
+        android:textColor="@color/transparent">
+    </TextView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_background">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="Original Gravity"
+                android:textColor="@color/title_color"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/style_og_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="1.052 - 1.060"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="Final Gravity"
+                android:textColor="@color/title_color"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/style_fg_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="1.052 - 1.060"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="ABV"
+                android:textColor="@color/title_color"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/style_abv_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="4.3% - 5.2%"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="Bitterness (IBU)"
+                android:textColor="@color/title_color"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/style_ibu_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="25 - 50"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="Color (SRM)"
+                android:textColor="@color/title_color"
+                android:textSize="20dp"/>
+
+
+            <TextView
+                android:id="@+id/style_color_view"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="7.5 - 9.5"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/min_color_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_margin="4dp"
+                    android:background="@color/transparent"
+                    android:contentDescription="icon"
+                    android:src="@drawable/colored_circle"/>
+
+                <ImageView
+                    android:id="@+id/thirtythree_percent_color_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_margin="4dp"
+                    android:background="@color/transparent"
+                    android:contentDescription="icon"
+                    android:src="@drawable/colored_circle"/>
+
+                <ImageView
+                    android:id="@+id/sixtysix_percent_color_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_margin="4dp"
+                    android:background="@color/transparent"
+                    android:contentDescription="icon"
+                    android:src="@drawable/colored_circle"/>
+
+                <ImageView
+                    android:id="@+id/max_color_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_margin="4dp"
+                    android:background="@color/transparent"
+                    android:contentDescription="icon"
+                    android:src="@drawable/colored_circle"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="Carbonation (Vol CO2)"
+                android:textColor="@color/title_color"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/style_carbonation_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="N / A"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

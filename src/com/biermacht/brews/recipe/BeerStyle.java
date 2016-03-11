@@ -272,6 +272,10 @@ public class BeerStyle implements Parcelable {
     this.maxColor = maxColor;
   }
 
+  public double getAverageColor() {
+    return (this.minColor + this.maxColor) / 2;
+  }
+
   public double getMinAbv() {
     return minAbv;
   }
@@ -333,18 +337,35 @@ public class BeerStyle implements Parcelable {
   }
 
   public String getNotes() {
-    return this.notes;
+    // Return the string without any newlines or tabs.
+    return this.notes.trim()
+            .replace("\n", "")
+            .replace("\r", "")
+            .replace("\t", " ")
+            .replaceAll(" +", " ");
   }
 
   public String getProfile() {
-    return this.profile;
+    return this.profile.trim()
+            .replace("\n", "")
+            .replace("\r", "")
+            .replace("\t", " ")
+            .replaceAll(" +", " ");
   }
 
   public String getIngredients() {
-    return this.ingredients;
+    return this.ingredients.trim()
+            .replace("\n", "")
+            .replace("\r", "")
+            .replace("\t", " ")
+            .replaceAll(" +", " ");
   }
 
   public String getExamples() {
-    return this.examples;
+    return this.examples.trim()
+            .replace("\n", "")
+            .replace("\r", "")
+            .replace("\t", " ")
+            .replaceAll(" +", " ");
   }
 }

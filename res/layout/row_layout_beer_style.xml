@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/ingredient_row"
+                android:layout_width="fill_parent"
+                android:layout_height="72dp"
+                android:background="@color/transparent">
+
+    <ImageView
+        android:id="@+id/row_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center|center_vertical"
+        android:layout_margin="16dp"
+        android:src="@drawable/colored_circle"
+        android:contentDescription="icon"
+        android:layout_alignParentLeft="true"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/title_color"
+        android:text="Title"
+        android:layout_toRightOf="@id/row_icon"
+        android:layout_toLeftOf="@+id/amount"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@+id/style_details_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:paddingRight="24dp"
+        android:paddingLeft="8dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="details"
+        android:layout_toRightOf="@id/row_icon"
+        android:layout_toLeftOf="@+id/unit_text"
+        android:layout_below="@id/title"
+        android:textColor="@color/subtitle"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/subtitle"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="12dp"
+        android:text=""
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@+id/unit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/subtitle"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="14dp"
+        android:text=""
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/amount"
+        android:background="@color/transparent"/>
+</RelativeLayout>

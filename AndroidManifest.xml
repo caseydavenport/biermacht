@@ -1,8 +1,8 @@
 <manifest
     package="com.biermacht.brews"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="24"
-    android:versionName="1.2">
+    android:versionCode="25"
+    android:versionName="1.3">
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -38,7 +38,12 @@
             android:label="@string/title_activity_display_recipe">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.biermacht.brews.MainActivity"/>
+                android:value="com.biermacht.brews.frontend.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".frontend.DisplayStyleActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_display_style">
         </activity>
         <activity
             android:name=".frontend.AddRecipeActivity"

@@ -4,6 +4,7 @@
     <string name="app_name">Biermacht</string>
     <string name="title_activity_main">Biermacht</string>
     <string name="title_activity_display_recipe">Recipe Details</string>
+    <string name="title_activity_display_style">Display Style</string>
     <string name="title_activity_add_new_recipe">Add New Recipe</string>
     <string name="title_activity_add_fermentable">Add Fermentable</string>
     <string name="title_activity_edit_fermentable">Edit Fermentable</string>

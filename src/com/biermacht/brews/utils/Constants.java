@@ -37,6 +37,8 @@ public class Constants {
   public static final String KEY_COMMAND = "biermacht.brews.command";
   public static final String KEY_STEP_NUMBER = "biermacht.brews.stepnumber";
   public static final String KEY_TIMER_STATE = "biermacht.brews.timer.state";
+  public static final String KEY_STYLE = "biermacht.brews.style";
+
   public static final int INVALID_ID = - 1;
 
   // Indicates if a recipe should be displayed after it is created.
