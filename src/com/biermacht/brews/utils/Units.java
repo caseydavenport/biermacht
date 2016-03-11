@@ -1,5 +1,7 @@
 package com.biermacht.brews.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.biermacht.brews.frontend.MainActivity;
@@ -59,6 +61,9 @@ public class Units {
   public static final String PACKAGES_FORMAL = "Packages";
   public static final String POUNDS_FORMAL = "Pounds";
   public static final String UNITS_FORMAL = "Units";
+
+  // SharedPreferences to use.
+  private static SharedPreferences preferences = BiermachtApplication.getContext().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
   public static String toAbbreviation(String s) {
     if (s.toLowerCase().equals(TEASPOONS_FORMAL.toLowerCase())) {
@@ -365,7 +370,7 @@ public class Units {
 
   // Methods to return the units for each measurement system
   public static String getUnitSystem() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+    if (preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
             (IMPERIAL)) {
       return IMPERIAL;
     }
@@ -375,7 +380,7 @@ public class Units {
   }
 
   public static String getHopUnits() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+    if (preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
             (IMPERIAL)) {
       return OUNCES;
     }
@@ -385,7 +390,7 @@ public class Units {
   }
 
   public static String getFermentableUnits() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+    if (preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
             (IMPERIAL)) {
       return POUNDS;
     }
@@ -395,7 +400,7 @@ public class Units {
   }
 
   public static String getWaterToGrainUnits() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+    if (preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
             (IMPERIAL)) {
       return QUARTS_PER_POUND;
     }
@@ -405,7 +410,7 @@ public class Units {
   }
 
   public static String getStrikeVolumeUnits() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+    if (preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
             (IMPERIAL)) {
       return QUARTS;
     }
@@ -415,7 +420,7 @@ public class Units {
   }
 
   public static String getTemperatureUnits() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+    if (preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
             (IMPERIAL)) {
       return FAHRENHEIT;
     }
@@ -425,7 +430,7 @@ public class Units {
   }
 
   public static String getVolumeUnits() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL)) {
+    if (preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals(IMPERIAL)) {
       return GALLONS;
     }
     else {
@@ -434,7 +439,7 @@ public class Units {
   }
 
   public static String getWeightUnits() {
-    if (MainActivity.preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
+    if (preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL).equals
             (IMPERIAL)) {
       return POUNDS;
     }

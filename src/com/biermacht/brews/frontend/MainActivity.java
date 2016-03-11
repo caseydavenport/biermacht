@@ -70,7 +70,9 @@ public class MainActivity extends DriveActivity {
   public static DatabaseInterface databaseInterface;
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;
-  public static SharedPreferences preferences;
+
+  // Shared preferences.
+  private static SharedPreferences preferences;
 
   // Static drawer list items
   private static String DRAWER_RECIPES = "Recipes";

@@ -58,7 +58,7 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
                 writer.write(new RecipeXmlWriter(getApplicationContext()).getXmlText(recipes));
                 writer.close();
               } catch (IOException e) {
-                Log.e("MainActivity", e.getMessage());
+                Log.e("DriveActivity", e.getMessage());
               }
 
               // Determine the default title for the file.
@@ -178,7 +178,7 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
         handleConnectToDrive(resultCode, data);
         break;
       case Constants.REQUEST_DRIVE_FILE_OPEN:
-        Log.d("MainActivity", "Result from Google Drive file access: " + resultCode);
+        Log.d("DriveActivity", "Result from Google Drive file access: " + resultCode);
         handleDriveFileOpen(resultCode, data);
         break;
       case Constants.REQUEST_DRIVE_FILE_CREATE:
@@ -247,7 +247,7 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
 
   @Override
   public void onConnectionFailed(ConnectionResult result) {
-    Log.d("MainActivity", "Google API Connection failed");
+    Log.d("DriveActivity", "Google API Connection failed");
     if (result.hasResolution()) {
       try {
         result.startResolutionForResult(this, Constants.REQUEST_CONNECT_TO_DRIVE);
