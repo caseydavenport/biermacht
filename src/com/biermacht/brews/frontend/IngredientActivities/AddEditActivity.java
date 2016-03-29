@@ -161,7 +161,7 @@ public abstract class AddEditActivity extends DriveActivity implements OnClickLi
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // Get the Ingredient Handler
-    ingredientHandler = MainActivity.ingredientHandler;
+    ingredientHandler = new IngredientHandler(AddEditActivity.this);
 
     // Get the inflater
     inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
