@@ -41,7 +41,7 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
     descriptionViewTitle.setText("Description");
 
     // Set views
-    Log.d("AddCustomFermentableActivity::onCreate", "Initializing views");
+    Log.d("AddCustomFerm", "Initializing views");
     this.registerViews(Arrays.asList(descriptionView));
     this.setViews(Arrays.asList(nameView, fermentableTypeSpinner, timeView, amountView, colorView, gravityView, descriptionView));
     if (! haveRecipe()) {

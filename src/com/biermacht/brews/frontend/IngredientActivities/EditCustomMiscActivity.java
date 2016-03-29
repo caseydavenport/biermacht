@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.IngredientActivities;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.biermacht.brews.database.DatabaseAPI;
 
@@ -17,12 +18,16 @@ public class EditCustomMiscActivity extends EditMiscActivity {
     mainView.removeView(timeView);
 
     // Set views we want visible
-    this.setViews(Arrays.asList(nameView, unitsSpinner, useSpinner, typeSpinner));
+    this.setViews(Arrays.asList(nameView,
+                                unitsSpinner,
+                                useSpinner,
+                                typeSpinner));
 
     // Set values for the given misc.
     setValues(misc);
   }
 
+  @Override
   public void setInitialSearchableListSelection() {
     // Don't set the searchable list selector.
     // Initial values are set based on the ingredient passed
@@ -30,15 +35,9 @@ public class EditCustomMiscActivity extends EditMiscActivity {
   }
 
   @Override
-  public void acquireValues() throws Exception {
-    super.acquireValues();
-    misc.setShortDescription("Custom misc");
-    misc.setUseFor("Custom");
-  }
-
-  @Override
   public void onFinished() {
-    DatabaseAPI.updateIngredient(misc, misc.getDatabaseId());
+    boolean update = DatabaseAPI.updateIngredient(misc, misc.getDatabaseId());
+    Log.d("EditCustomMisc", "Misc updated? " + update);
     finish();
   }
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -109,7 +110,12 @@ public abstract class AddEditIngredientActivity extends AddEditActivity {
   }
 
   public void setInitialSearchableListSelection() {
-    // Set to second item (first is the "create new" placeholder)
+    if (filteredList.size() <= 1) {
+      // If there are no items in the list, we can't set an initial selection.
+      // If there is only a single item in the list, no need to set an initial selection.
+      Log.d("AddEditIngredientActivi", "filteredList size <= 1, do not set list selection");
+      return;
+    }
     searchableListListener.onItemClick(null, null, 1, 1);
   }
 

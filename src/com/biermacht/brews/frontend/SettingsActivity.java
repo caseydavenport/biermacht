@@ -18,13 +18,12 @@ import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.IngredientActivities.AddEditActivity;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
-import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.tasks.ResetIngredients;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SettingsActivity extends AddEditActivity {
@@ -51,7 +50,7 @@ public class SettingsActivity extends AddEditActivity {
 
   // Data storage
   public String unitSystem;
-  public Context appContext;
+  public Context context;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,7 @@ public class SettingsActivity extends AddEditActivity {
     resetIngredientsView.setOnClickListener(onClickListener);
 
     // Store context for use in async tasks
-    appContext = this;
+    context = this;
 
     // Remove views we don't want
     mainView.removeView(spinnerView);
@@ -280,7 +279,7 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
-      progress = new ProgressDialog(appContext);
+      progress = new ProgressDialog(context);
       progress.setMessage("Exporting all recipes...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -316,7 +315,7 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
-      progress = new ProgressDialog(appContext);
+      progress = new ProgressDialog(context);
       progress.setMessage("Deleting all recipes...");
       progress.setIndeterminate(false);
       progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -336,59 +335,13 @@ public class SettingsActivity extends AddEditActivity {
             .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
-                new ResetIngredients().execute("");
+                new ResetIngredients(context,
+                                     "Resetting ingredient database...")
+                        .execute("");
               }
 
             })
 
             .setNegativeButton(R.string.cancel, null);
   }
-
-  /**
-   * Async task to reset the default ingredient database.
-   */
-  private class ResetIngredients extends AsyncTask<String, Void, String> {
-
-    private ProgressDialog progress;
-
-    @Override
-    protected String doInBackground(String... params) {
-      Log.d("ResetIngredients", "Deleting all 'permanent' ingredients");
-      for (Ingredient ing : DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT)) {
-        DatabaseAPI.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
-      }
-
-      Log.d("ResetIngredients", "Re-initializing ingredient assets");
-      try {
-        ingredientHandler.importIngredients();
-      } catch (IOException e) {
-        Log.e("ResetIngredients", e.toString());
-      }
-
-      return "Executed";
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-      super.onPostExecute(result);
-      progress.dismiss();
-      Log.d("ResetIngredients", "Finished exporting recipes");
-    }
-
-    @Override
-    protected void onPreExecute() {
-      super.onPreExecute();
-      progress = new ProgressDialog(appContext);
-      progress.setMessage("Resetting ingredient database...");
-      progress.setIndeterminate(false);
-      progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-      progress.setCancelable(false);
-      progress.show();
-    }
-
-    @Override
-    protected void onProgressUpdate(Void... values) {
-    }
-  }
-
 }

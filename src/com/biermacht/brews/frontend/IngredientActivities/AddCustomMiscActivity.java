@@ -30,6 +30,11 @@ public class AddCustomMiscActivity extends AddMiscActivity {
     // Set initial values
     misc = new Misc("Custom misc");
     setValues(misc);
+
+
+    // Units are configurable via the spinner - don't include the units
+    // in the amount title.
+    amountViewTitle.setText("Amount");
   }
 
   @Override

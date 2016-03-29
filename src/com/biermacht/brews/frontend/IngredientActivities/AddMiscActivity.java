@@ -116,7 +116,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
 
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
         units = unitsArray.get(position);
-        Log.d("AddMiscActivity::onItemSelected", "Misc units selected: " + units);
+        Log.d("AddMiscActivity", "Misc units selected: " + units);
       }
 
       public void onNothingSelected(AdapterView<?> parentView) {
@@ -129,7 +129,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
 
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
         type = typeArray.get(position);
-        Log.d("AddMiscActivity::onItemSelected", "Misc type selected: " + type);
+        Log.d("AddMiscActivity", "Misc type selected: " + type);
       }
 
       public void onNothingSelected(AdapterView<?> parentView) {
@@ -141,17 +141,22 @@ public class AddMiscActivity extends AddEditIngredientActivity {
     useSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+        // Can't do anything if the misc is null.
+        if (misc == null) {
+          Log.d("AddMiscActivity", "No misc available");
+          return;
+        }
+
         use = useArray.get(position);
         misc.setUse(use);
-        Log.d("AddMiscActivity::onItemSelected", "Misc use selected: " + use);
+        Log.d("AddMiscActivity", "Misc use selected: " + use);
 
         if (use.equals(Misc.USE_BOTTLING)) {
           timeView.setVisibility(View.GONE);
         }
         else {
           timeView.setVisibility(View.VISIBLE);
-          String units = misc.getTimeUnits();
-          timeViewTitle.setText(use + " Time" + " (" + units + ")");
+          timeViewTitle.setText(use + " Time" + " (" + misc.getTimeUnits() + ")");
         }
       }
 
@@ -180,13 +185,13 @@ public class AddMiscActivity extends AddEditIngredientActivity {
   @Override
   public void getList() {
     // Get the list of ingredients to show
-    Log.d("AddMiscActivity::getList", "Getting miscs list");
+    Log.d("AddMiscActivity", "Getting miscs list");
     ingredientList = new ArrayList<Ingredient>();
     ingredientList.addAll(ingredientHandler.getMiscsList());
 
     // Add a placeholder ingredient.  When selected, allows user to create
     // a new custom ingredient.
-    Log.d("AddMiscActivity::getList", "Adding placeholder ingredient");
+    Log.d("AddMiscActivity", "Adding placeholder ingredient");
     PlaceholderIngredient i = new PlaceholderIngredient("Create new");
     i.setShortDescription("Create a custom misc");
     ingredientList.add(0, i);
@@ -195,7 +200,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
   @Override
   public void createSpinner() {
     // Set up spinner
-    Log.d("AddMiscActivity::createSpinner", "Creating misc spinner");
+    Log.d("AddMiscActivity", "Creating misc spinner");
     adapter = new IngredientSpinnerAdapter(this, ingredientList, "Misc Selector", true);
     adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
     spinnerView.setAdapter(adapter);
@@ -237,6 +242,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
   }
 
   public void setValues(Misc m) {
+    Log.d("AddMiscActivity", "Setting text view values from misc: " + misc.getName());
     nameViewText.setText(m.getName());
     searchableListViewText.setText(m.getName());
     timeViewText.setText(String.format("%d", mRecipe.getBoilTime()));

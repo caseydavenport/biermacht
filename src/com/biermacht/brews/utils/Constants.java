@@ -6,8 +6,11 @@ import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class Constants {
 
@@ -72,6 +75,12 @@ public class Constants {
   public static final String PREF_BREWER_NAME = "com.biermacht.brews.brewerName";
   public static final String PREF_MEAS_SYSTEM = "com.biermacht.brews.measurementSystem";
   public static final String PREF_FIXED_RATIOS = "com.biermacht.brews.waterToGrainRatiosFixed";
+
+  // Value of this preference indicates the last time ingredients were updated.
+  public static final String PREF_NEW_INGRE_VERSION = "com.biermacht.brews.newIngredientsVersion";
+
+  //  Incremented when new ingredients are available.
+  public static int NEW_INGREDIENTS_VERSION = 1;
 
   // Activity for result return codes
   public static final int RESULT_DELETED = 1;

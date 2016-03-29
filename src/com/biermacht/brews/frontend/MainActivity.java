@@ -41,8 +41,10 @@ import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.ViewStylesFragment;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.tasks.ImportNewIngredients;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
+import com.biermacht.brews.tasks.ResetIngredients;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.DriveActivity;
 import com.biermacht.brews.utils.IngredientHandler;
@@ -125,6 +127,7 @@ public class MainActivity extends DriveActivity {
       // This is the first time the app has been used.  Mark that the app has been opened, and
       // perform first-time use setup task.
       preferences.edit().putBoolean(Constants.PREF_USED_BEFORE, true).commit();
+      preferences.edit().putInt(Constants.PREF_NEW_INGRE_VERSION, Constants.NEW_INGREDIENTS_VERSION).commit();
       new ImportXmlIngredientsTask(this).execute("");
 
       // Create the master recipe - used as placeholder for stuff
@@ -134,6 +137,30 @@ public class MainActivity extends DriveActivity {
       // Async Initialize Assets on startup.  This loads styles and mash profiles for faster
       // access later.
       new InitializeTask(ingredientHandler).execute("");
+
+      // Check if we need to update the ingredients database with new entries.
+      // This occurs when new ingredients are added to the app.
+      int lastVersion = preferences.getInt(Constants.PREF_NEW_INGRE_VERSION, 0);
+
+      Log.d("MainActivity", "Ingredients version, was: " + lastVersion + ", now: " + Constants.NEW_INGREDIENTS_VERSION);
+      while (lastVersion < Constants.NEW_INGREDIENTS_VERSION) {
+        // Increment the version.
+        lastVersion++;
+
+        // Perform and actions for this version.
+        switch (lastVersion) {
+          case 1:
+            Log.d("MainActivity", "Importing new dry yeasts");
+            new ImportNewIngredients(this, "Yeasts/dry-yeasts-01.xml").execute("");
+            break;
+          default:
+            Log.w("MainActivity", "No action for version: " + lastVersion);
+            break;
+        }
+      }
+
+      // Update shared preferences.
+      preferences.edit().putInt(Constants.PREF_NEW_INGRE_VERSION, Constants.NEW_INGREDIENTS_VERSION).commit();
     }
 
     // Initialize storage for imported recipes

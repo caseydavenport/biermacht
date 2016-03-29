@@ -118,6 +118,15 @@ public class BeerXmlReader extends DefaultHandler {
     return mashStepList;
   }
 
+  public ArrayList<Ingredient> getAllIngredients() {
+    ArrayList<Ingredient> l = new ArrayList<>();
+    l.addAll(this.fermList);
+    l.addAll(this.hopList);
+    l.addAll(this.yeastList);
+    l.addAll(this.getMiscs());
+    return l;
+  }
+
   /**
    * This gets called whenever we encounter a new start element.  In this function we create the new
    * object to be populated and set the type of what we are looking at so we can properly parse the

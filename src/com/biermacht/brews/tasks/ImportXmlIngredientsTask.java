@@ -11,6 +11,7 @@ public class ImportXmlIngredientsTask extends AsyncTask<String, Void, String> {
 
   private Context context;
   private ProgressDialog progress;
+  private String message;
 
   public ImportXmlIngredientsTask(Context c) {
     super();

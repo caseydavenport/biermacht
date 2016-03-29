@@ -24,21 +24,19 @@ public class EditCustomHopActivity extends EditHopActivity {
   }
 
   @Override
-  public void acquireValues() throws Exception {
-    super.acquireValues();
-  }
-
   public void setInitialSearchableListSelection() {
     // Don't set the searchable list selector.
     // Initial values are set based on the ingredient we are passed
     // through the intent.
   }
 
+  @Override
   public void onFinished() {
     DatabaseAPI.updateIngredient(hop, hop.getDatabaseId());
     finish();
   }
 
+  @Override
   public void onDeletePressed() {
     DatabaseAPI.deleteIngredientWithId(ingredientId, hop.getDatabaseId());
     finish();

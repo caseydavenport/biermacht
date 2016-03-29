@@ -41,15 +41,15 @@ public class EditMiscActivity extends AddMiscActivity {
   @Override
   public void getList() {
     super.getList();
-    Log.d("EditMiscActivity::getList", "Getting miscs list");
+    Log.d("EditMiscActivity", "Getting miscs list");
 
     // Remove the placeholder ingredient
-    Log.d("EditMiscActivity::getList", "Removing placeholder ingredient");
+    Log.d("EditMiscActivity", "Removing placeholder ingredient");
     ingredientList.remove(0);
 
     // If this misc is not in the array, add it
     if (! ingredientList.contains(misc)) {
-      Log.d("EditMiscActivity::getList", "Adding custom misc to list: " + misc.getName());
+      Log.d("EditMiscActivity", "Adding custom misc to list: " + misc.getName());
       ingredientList.add(0, misc);
     }
   }
