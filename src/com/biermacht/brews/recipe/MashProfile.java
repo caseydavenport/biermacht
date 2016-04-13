@@ -1,5 +1,6 @@
 package com.biermacht.brews.recipe;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -414,19 +415,19 @@ public class MashProfile implements Parcelable {
     this.mashSteps.add(order, step);
   }
 
-  public void save(long database) {
+  public void save(Context c, long database) {
     Log.d("MashProfile", "Saving " + name + " to database " + database);
     if (this.id < 0) {
       // We haven't yet saved this.  Add it to the database.
-      DatabaseAPI.assMashProfile(database, this, this.getOwnerId());
+      new DatabaseAPI(c).addMashProfile(database, this, this.getOwnerId());
     }
     else {
       // Already exists.  Update it.
-      DatabaseAPI.updateMashProfile(this, this.getOwnerId(), database);
+      new DatabaseAPI(c).updateMashProfile(this, this.getOwnerId(), database);
     }
   }
 
-  public void delete(long database) {
-    DatabaseAPI.deleteMashProfileFromDatabase(this.getId(), database);
+  public void delete(Context c, long database) {
+    new DatabaseAPI(c).deleteMashProfileFromDatabase(this.getId(), database);
   }
 }

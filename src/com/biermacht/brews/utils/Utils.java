@@ -1,5 +1,7 @@
 package com.biermacht.brews.utils;
 
+import android.content.Context;
+
 import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Misc;
@@ -75,7 +77,7 @@ public class Utils {
     return 1;
   }
 
-  public static Recipe scaleRecipe(Recipe r, double newVolume) {
+  public static Recipe scaleRecipe(Context c, Recipe r, double newVolume) {
     double oldVolume = r.getDisplayBatchSize();
     double ratio = newVolume / oldVolume;
 
@@ -89,10 +91,10 @@ public class Utils {
       else {
         i.setDisplayAmount(i.getDisplayAmount() * ratio);
       }
-      DatabaseAPI.updateIngredient(i, Constants.DATABASE_DEFAULT);
+      new DatabaseAPI(c).updateIngredient(i, Constants.DATABASE_DEFAULT);
     }
 
-    r.save();
+    r.save(c);
     return r;
   }
 }

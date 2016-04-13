@@ -70,13 +70,13 @@ public class EditCustomFermentableActivity extends AddCustomFermentableActivity 
 
   @Override
   public void onDeletePressed() {
-    DatabaseAPI.deleteIngredientWithId(ingredientId, fermentable.getDatabaseId());
+    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, fermentable.getDatabaseId());
     finish();
   }
 
   @Override
   public void onFinished() {
-    DatabaseAPI.updateIngredient(fermentable, fermentable.getDatabaseId());
+    new DatabaseAPI(this).updateIngredient(fermentable, fermentable.getDatabaseId());
     finish();
   }
 }

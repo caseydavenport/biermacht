@@ -37,13 +37,13 @@ public class EditCustomYeastActivity extends EditYeastActivity {
 
   @Override
   public void onDeletePressed() {
-    DatabaseAPI.deleteIngredientWithId(ingredientId, yeast.getDatabaseId());
+    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, yeast.getDatabaseId());
     finish();
   }
 
   @Override
   public void onFinished() {
-    DatabaseAPI.updateIngredient(yeast, yeast.getDatabaseId());
+    new DatabaseAPI(this).updateIngredient(yeast, yeast.getDatabaseId());
     finish();
   }
 }

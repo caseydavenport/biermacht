@@ -72,7 +72,8 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
   private Recipe contextActionRecipe;
 
   // Context
-  private Context c;
+  private Context context;
+  private DatabaseAPI databaseApi;
 
   // Declare views here
   private ListView listView;
@@ -102,11 +103,12 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
     noRecipesView = (TextView) pageView.findViewById(R.id.no_recipes_view);
 
     // Get Context
-    c = getActivity();
+    context = getActivity();
+    databaseApi = new DatabaseAPI(context);
 
     // Create recipe adapter.
     recipeList = new ArrayList<Recipe>();
-    mAdapter = new RecipeArrayAdapter(c, recipeList, this);
+    mAdapter = new RecipeArrayAdapter(context, recipeList, this);
 
     // Set adapter for listView
     listView.setAdapter(mAdapter);
@@ -160,16 +162,16 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
 
           case R.id.menu_copy_recipe:
             // TODO: Ask user for new name, animate new recipe entering list.
-            Recipe copy = DatabaseAPI.createRecipeFromExisting(contextActionRecipe);
+            Recipe copy = databaseApi.createRecipeFromExisting(contextActionRecipe);
             copy.setRecipeName(contextActionRecipe.getRecipeName() + " - Copy");
             recipeList.add(mAdapter.getPosition(contextActionRecipe) + 1, copy);
             mAdapter.notifyDataSetChanged();
             Snackbar.make(listView, R.string.recipe_copied, Snackbar.LENGTH_LONG).show();
-            copy.save();
+            copy.save(context);
             return true;
 
           case R.id.edit_recipe:
-            i = new Intent(c, EditRecipeActivity.class);
+            i = new Intent(context, EditRecipeActivity.class);
             i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
             i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
             startActivity(i);
@@ -180,21 +182,21 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
             return true;
 
           case R.id.edit_fermentation_profile:
-            i = new Intent(c, EditFermentationProfileActivity.class);
+            i = new Intent(context, EditFermentationProfileActivity.class);
             i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
             i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
             startActivity(i);
             return true;
 
           case R.id.brew_timer:
-            i = new Intent(c, BrewTimerActivity.class);
+            i = new Intent(context, BrewTimerActivity.class);
             i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
             i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
             startActivity(i);
             return true;
 
           case R.id.edit_mash_profile:
-            i = new Intent(c, EditMashProfileActivity.class);
+            i = new Intent(context, EditMashProfileActivity.class);
             i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
             i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
             i.putExtra(Constants.KEY_PROFILE_ID, contextActionRecipe.getMashProfile().getId());
@@ -203,7 +205,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
             return true;
 
           case R.id.recipe_notes:
-            i = new Intent(c, EditRecipeNotesActivity.class);
+            i = new Intent(context, EditRecipeNotesActivity.class);
             i.putExtra(Constants.KEY_RECIPE, contextActionRecipe);
             i.putExtra(Constants.KEY_RECIPE_ID, contextActionRecipe.getId());
             startActivity(i);
@@ -247,7 +249,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
         }
         else {
           Log.d("RecipesFragment", "Launching DisplayRecipeActivity");
-          Intent intent = new Intent(c, DisplayRecipeActivity.class);
+          Intent intent = new Intent(context, DisplayRecipeActivity.class);
           intent.putExtra(Constants.KEY_RECIPE, recipeList.get(pos));
           startActivity(intent);
         }
@@ -321,7 +323,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
 
   public void updateTabletDetailsView(Recipe r) {
     // ViewPager and pagerAdapter for Slidy tabs!
-    cpAdapter = new DisplayRecipeCollectionPagerAdapter(getChildFragmentManager(), r, c);
+    cpAdapter = new DisplayRecipeCollectionPagerAdapter(getChildFragmentManager(), r, context);
 
     // Set Adapter
     mViewPager = (ViewPager) detailsView.findViewById(R.id.pager);
@@ -337,7 +339,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
    * the Recipe will not be deleted.
    */
   private AlertDialog.Builder deleteAlert(final Recipe r) {
-    return new AlertDialog.Builder(c)
+    return new AlertDialog.Builder(context)
             .setTitle("Confirm Delete")
             .setMessage("Do you really want to delete '" + r.getRecipeName() + "'?")
             .setIcon(android.R.drawable.ic_delete)
@@ -347,7 +349,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
                 Log.d("RecipesFragment", "Deleting recipe: " + r);
                 recipeList.remove(r);
                 mAdapter.notifyDataSetChanged();
-                DatabaseAPI.deleteRecipe(r);
+                databaseApi.deleteRecipe(r);
                 if (isTablet) {
                   // If we're running on a tablet, we should set the current selected item to 0
                   // and update the details view.  Otherwise, the details view will remain stuck on the 
@@ -381,11 +383,11 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
   }
 
   private AlertDialog.Builder scaleAlert(final Recipe r) {
-    LayoutInflater factory = LayoutInflater.from(c);
+    LayoutInflater factory = LayoutInflater.from(context);
     final LinearLayout alertView = (LinearLayout) factory.inflate(R.layout.alert_view_scale, null);
     final EditText editText = (EditText) alertView.findViewById(R.id.new_volume_edit_text);
 
-    return new AlertDialog.Builder(c)
+    return new AlertDialog.Builder(context)
             .setTitle("Scale Recipe")
             .setView(alertView)
             .setPositiveButton(R.string.scale, new DialogInterface.OnClickListener() {
@@ -393,7 +395,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
               public void onClick(DialogInterface dialog, int which) {
                 double newVolume = Double.parseDouble(editText.getText().toString()
                                                               .replace(",", "."));
-                Utils.scaleRecipe(r, newVolume);
+                Utils.scaleRecipe(getActivity(), r, newVolume);
                 mAdapter.notifyDataSetChanged();
 
                 // Dismiss the CAB
@@ -494,14 +496,14 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
   @Override
   public void update() {
     Log.d("RecipesFragment", "Updating RecipesFragment UI");
-    if (recipeList != null && c != null) {
+    if (recipeList != null && context != null) {
       updateRecipesFromDatabase();
     }
   }
 
   public void updateRecipesFromDatabase() {
     // Load all recipes from database.
-    ArrayList<Recipe> loadedRecipes = DatabaseAPI.getRecipeList();
+    ArrayList<Recipe> loadedRecipes = databaseApi.getRecipeList();
 
     // Update the recipe list with the loaded recipes.
     recipeList.removeAll(recipeList);

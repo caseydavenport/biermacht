@@ -359,7 +359,7 @@ public class AddRecipeActivity extends AddEditActivity {
   @Override
   public void onFinished() {
     // Create the recipe in the database.
-    Recipe r = DatabaseAPI.createRecipeFromExisting(mRecipe);
+    Recipe r = new DatabaseAPI(getApplicationContext()).createRecipeFromExisting(mRecipe);
 
     if (this.displayOnCreate) {
       // Open up the display recipe activity.

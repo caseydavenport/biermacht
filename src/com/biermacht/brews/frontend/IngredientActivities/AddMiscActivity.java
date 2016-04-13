@@ -260,7 +260,7 @@ public class AddMiscActivity extends AddEditIngredientActivity {
   @Override
   public void onFinished() {
     mRecipe.addIngredient(misc);
-    mRecipe.save();
+    mRecipe.save(this);
     finish();
   }
 

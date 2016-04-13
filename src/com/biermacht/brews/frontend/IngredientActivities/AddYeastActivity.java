@@ -163,7 +163,7 @@ public class AddYeastActivity extends AddEditIngredientActivity {
   @Override
   public void onFinished() {
     mRecipe.addIngredient(yeast);
-    mRecipe.save();
+    mRecipe.save(this);
     finish();
   }
 

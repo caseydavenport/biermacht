@@ -239,7 +239,7 @@ public class SettingsActivity extends AddEditActivity {
             .setNegativeButton(R.string.drive_button, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
-                writeFile(DatabaseAPI.getRecipeList());
+                writeFile(new DatabaseAPI(SettingsActivity.this).getRecipeList());
               }
 
             })
@@ -264,7 +264,7 @@ public class SettingsActivity extends AddEditActivity {
     @Override
     protected String doInBackground(String... params) {
       xmlWriter = new RecipeXmlWriter(SettingsActivity.this);
-      xmlWriter.writeRecipes(DatabaseAPI.getRecipeList(), "recipes-");
+      xmlWriter.writeRecipes(new DatabaseAPI(getApplicationContext()).getRecipeList(), "recipes-");
       return "Executed";
     }
 
@@ -301,7 +301,7 @@ public class SettingsActivity extends AddEditActivity {
 
     @Override
     protected String doInBackground(String... params) {
-      DatabaseAPI.deleteAllRecipes();
+      new DatabaseAPI(SettingsActivity.this).deleteAllRecipes();
       return "Executed";
     }
 

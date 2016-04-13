@@ -15,14 +15,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class DatabaseAPI {
+  private Context context;
+  private DatabaseInterface databaseInterface;
 
-  public static DatabaseInterface newDatabaseInterface(Context c) {
-    return new DatabaseInterface(c);
+  public DatabaseAPI(Context c) {
+    this.context = c;
+    this.databaseInterface = new DatabaseInterface(this.context);
+    this.databaseInterface.open();
   }
 
   // Get all recipes in database, sorted
-  public static ArrayList<Recipe> getRecipeList() {
-    ArrayList<Recipe> list = MainActivity.databaseInterface.getRecipeList();
+  public ArrayList<Recipe> getRecipeList() {
+    ArrayList<Recipe> list = this.databaseInterface.getRecipeList();
 
     for (Recipe r : list) {
       r.update();
@@ -34,41 +38,41 @@ public class DatabaseAPI {
   }
 
   // Create recipe with the given name
-  public static Recipe createRecipeWithName(String name) {
+  public Recipe createRecipeWithName(String name) {
     Recipe r = new Recipe(name);
 
-    long id = MainActivity.databaseInterface.addRecipeToDatabase(r);
-    r = MainActivity.databaseInterface.getRecipeWithId(id);
+    long id = this.databaseInterface.addRecipeToDatabase(r);
+    r = this.databaseInterface.getRecipeWithId(id);
 
     return r;
   }
 
   // Creates recipe from an existing one.
-  public static Recipe createRecipeFromExisting(Recipe r) {
-    long id = MainActivity.databaseInterface.addRecipeToDatabase(r);
-    r = MainActivity.databaseInterface.getRecipeWithId(id);
+  public Recipe createRecipeFromExisting(Recipe r) {
+    long id = this.databaseInterface.addRecipeToDatabase(r);
+    r = this.databaseInterface.getRecipeWithId(id);
 
     return r;
   }
 
   // Updates existing recipe
-  public static boolean updateRecipe(Recipe r) {
+  public boolean updateRecipe(Recipe r) {
     r.update();
-    return MainActivity.databaseInterface.updateExistingRecipe(r);
+    return this.databaseInterface.updateExistingRecipe(r);
   }
 
   // Updates existing ingredient
-  public static boolean updateIngredient(Ingredient i, long dbid) {
-    return MainActivity.databaseInterface.updateExistingIngredientInDatabase(i, dbid);
+  public boolean updateIngredient(Ingredient i, long dbid) {
+    return this.databaseInterface.updateExistingIngredientInDatabase(i, dbid);
   }
 
   // Deletes the given recipe if it exists in the database.
-  public static boolean deleteRecipe(Recipe r) {
-    return MainActivity.databaseInterface.deleteRecipeIfExists(r.getId());
+  public boolean deleteRecipe(Recipe r) {
+    return this.databaseInterface.deleteRecipeIfExists(r.getId());
   }
 
   // Deletes all recipes, and their ingredients
-  public static boolean deleteAllRecipes() {
+  public boolean deleteAllRecipes() {
     boolean bool = true;
 
     for (Recipe r : getRecipeList()) {
@@ -81,9 +85,9 @@ public class DatabaseAPI {
   }
 
   // Deletes the given ingredient, in the given database
-  public static boolean deleteIngredientWithId(long id, long dbid) {
+  public boolean deleteIngredientWithId(long id, long dbid) {
     Log.d("Database", "Trying to delete ingredient from database: " + dbid);
-    boolean b = MainActivity.databaseInterface.deleteIngredientIfExists(id, dbid);
+    boolean b = this.databaseInterface.deleteIngredientIfExists(id, dbid);
     if (b) {
       Log.d("Database", "Successfully deleted ingredient");
     }
@@ -94,64 +98,64 @@ public class DatabaseAPI {
   }
 
   // Gets the recipe with the given ID
-  public static Recipe getRecipeWithId(long id) throws ItemNotFoundException {
+  public Recipe getRecipeWithId(long id) throws ItemNotFoundException {
     // If we receive a special ID, handle that here
     if (id == Constants.INVALID_ID) {
       throw new ItemNotFoundException("Passed ID with value Utils.INVALID_ID");
     }
 
     // Actually perform the lookup
-    return MainActivity.databaseInterface.getRecipeWithId(id);
+    return this.databaseInterface.getRecipeWithId(id);
   }
 
   // Gets the ingredient with the given ID
-  public static Ingredient getIngredientWithId(long id) {
-    return MainActivity.databaseInterface.getIngredientWithId(id);
+  public Ingredient getIngredientWithId(long id) {
+    return this.databaseInterface.getIngredientWithId(id);
   }
 
   // Adds a list of ingredients to the specified virtual ingredient database
-  public static void addIngredientList(long dbid, ArrayList<Ingredient> list, long ownerId) {
+  public void addIngredientList(long dbid, ArrayList<Ingredient> list, long ownerId) {
     for (Ingredient i : list) {
-      MainActivity.databaseInterface.addIngredientToDatabase(i, ownerId, dbid);
+      this.databaseInterface.addIngredientToDatabase(i, ownerId, dbid);
     }
   }
 
   // Adds a single ingredient to the specified virtual ingredient database
-  public static void addIngredient(long dbid, Ingredient i, long ownerId) {
-    MainActivity.databaseInterface.addIngredientToDatabase(i, ownerId, dbid);
+  public void addIngredient(long dbid, Ingredient i, long ownerId) {
+    this.databaseInterface.addIngredientToDatabase(i, ownerId, dbid);
   }
 
   // Returns all ingredients in the given virtual database with the given ingredient type
-  public static ArrayList<Ingredient> getIngredients(long dbid, String type) {
-    return MainActivity.databaseInterface.getIngredients(dbid, type);
+  public ArrayList<Ingredient> getIngredients(long dbid, String type) {
+    return this.databaseInterface.getIngredients(dbid, type);
   }
 
   // Returns all ingredients in the given database with the given ingredient type
-  public static ArrayList<Ingredient> getIngredients(long dbid) {
-    return MainActivity.databaseInterface.getIngredients(dbid);
+  public ArrayList<Ingredient> getIngredients(long dbid) {
+    return this.databaseInterface.getIngredients(dbid);
   }
 
-  public static void addMashProfileList(long dbid, ArrayList<MashProfile> list, long ownerId) {
+  public void addMashProfileList(long dbid, ArrayList<MashProfile> list, long ownerId) {
     for (MashProfile p : list) {
-      MainActivity.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
+      this.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
     }
   }
 
-  public static long assMashProfile(long dbid, MashProfile p, long ownerId) {
-    return MainActivity.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
+  public long addMashProfile(long dbid, MashProfile p, long ownerId) {
+    return this.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
   }
 
-  public static void updateMashProfile(MashProfile p, long ownerId, long dbid) {
-    MainActivity.databaseInterface.updateMashProfile(p, ownerId, dbid);
+  public void updateMashProfile(MashProfile p, long ownerId, long dbid) {
+    this.databaseInterface.updateMashProfile(p, ownerId, dbid);
   }
 
   // Returns all mash profiles in the given database
-  public static ArrayList<MashProfile> getMashProfiles(long dbid) {
-    return MainActivity.databaseInterface.getMashProfiles(dbid);
+  public ArrayList<MashProfile> getMashProfiles(long dbid) {
+    return this.databaseInterface.getMashProfiles(dbid);
   }
 
   // Deletes the given mash profile
-  public static boolean deleteMashProfileFromDatabase(long id, long dbid) {
-    return MainActivity.databaseInterface.deleteMashProfile(id, dbid);
+  public boolean deleteMashProfileFromDatabase(long id, long dbid) {
+    return this.databaseInterface.deleteMashProfile(id, dbid);
   }
 }

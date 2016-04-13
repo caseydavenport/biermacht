@@ -75,7 +75,7 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
   public void onFinished() {
     // onFinished is called when the User has chosen to save changes made to the active profile.
     // Save the profile, then exit the activity.
-    mProfile.save(Constants.DATABASE_DEFAULT);
+    mProfile.save(getApplicationContext(), Constants.DATABASE_DEFAULT);
     finish();
   }
 
@@ -106,7 +106,10 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
             .setPositiveButton("Save", new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
                 mProfile.setName(mRecipe.getRecipeName() + "'s profile");
-                DatabaseAPI.assMashProfile(Constants.DATABASE_CUSTOM, mProfile, mProfile.getOwnerId());
+                new DatabaseAPI(getApplicationContext())
+                        .addMashProfile(Constants.DATABASE_CUSTOM,
+                                        mProfile,
+                                        mProfile.getOwnerId());
                 onMashProfileSavedAlert().create().show();
               }
             })

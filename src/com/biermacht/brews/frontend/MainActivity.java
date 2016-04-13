@@ -69,9 +69,11 @@ public class MainActivity extends DriveActivity {
 
   // Globals, referenced outside of this Activity.
   // TODO: These should not be use globally - can cause null reference when application is killed and re-started.
-  public static DatabaseInterface databaseInterface;
   public static IngredientHandler ingredientHandler;
   public static Boolean usedBefore;
+
+  // For accessing the database.
+  private DatabaseAPI databaseApi;
 
   // Static drawer list items
   private static String DRAWER_RECIPES = "Recipes";
@@ -116,8 +118,7 @@ public class MainActivity extends DriveActivity {
     ingredientHandler = new IngredientHandler(getApplicationContext());
 
     // Instantiate my database interface
-    databaseInterface = DatabaseAPI.newDatabaseInterface(getApplicationContext());
-    databaseInterface.open();
+    this.databaseApi = new DatabaseAPI(this);
 
     // Check for important shared preferences flags and perform any required actions.
     SharedPreferences preferences = this.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
@@ -130,7 +131,7 @@ public class MainActivity extends DriveActivity {
       new ImportXmlIngredientsTask(this).execute("");
 
       // Create the master recipe - used as placeholder for stuff
-      DatabaseAPI.createRecipeWithName("Master Recipe");
+      databaseApi.createRecipeWithName("Master Recipe");
     }
     else {
       // Async Initialize Assets on startup.  This loads styles and mash profiles for faster
@@ -339,9 +340,9 @@ public class MainActivity extends DriveActivity {
               public void onClick(DialogInterface dialog, int which) {
                 Log.d("MainActivity", "Overwrite pressed for recipe: " + r.getRecipeName());
                 // Delete any existing recipe with the same name.
-                for (Recipe tmpR : DatabaseAPI.getRecipeList()) {
+                for (Recipe tmpR : databaseApi.getRecipeList()) {
                   if (tmpR.getRecipeName().equals(r.getRecipeName())) {
-                    DatabaseAPI.deleteRecipe(tmpR);
+                    databaseApi.deleteRecipe(tmpR);
                   }
                 }
 
@@ -363,7 +364,7 @@ public class MainActivity extends DriveActivity {
                 Log.d("MainActivity", "Duplicate pressed for recipe: " + r.getRecipeName());
                 // Add copy of this recipe.
                 r.setRecipeName(r.getRecipeName() + " - Import");
-                Recipe copy = DatabaseAPI.createRecipeFromExisting(r);
+                Recipe copy = databaseApi.createRecipeFromExisting(r);
 
                 // Show SnackBar and update the fragments to display the new recipes.
                 String snack = "1 Recipe(s) Imported";
@@ -646,7 +647,7 @@ public class MainActivity extends DriveActivity {
 
                 // Get all recipes, check for name clashes.
                 Iterator<Recipe> iterator = recipesToImport.iterator();
-                ArrayList<Recipe> allRecipes = DatabaseAPI.getRecipeList();
+                ArrayList<Recipe> allRecipes = databaseApi.getRecipeList();
                 ArrayList<Recipe> clashes = new ArrayList<Recipe>();
                 while (iterator.hasNext()) {
                   Recipe newRecipe = iterator.next();
@@ -697,7 +698,7 @@ public class MainActivity extends DriveActivity {
     protected String doInBackground(String... params) {
       for (Recipe r : list) {
         r.update();
-        DatabaseAPI.createRecipeFromExisting(r);
+        databaseApi.createRecipeFromExisting(r);
       }
       return "Executed";
     }

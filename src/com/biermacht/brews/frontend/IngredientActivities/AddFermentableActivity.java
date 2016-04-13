@@ -276,7 +276,7 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
   @Override
   public void onFinished() {
     mRecipe.addIngredient(fermentable);
-    mRecipe.save();
+    mRecipe.save(AddFermentableActivity.this);
     finish();
   }
 }

@@ -43,7 +43,7 @@ public class EditFermentableActivity extends AddFermentableActivity {
 
     // Get the ingredient as well
     long grainId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
-    fermentable = (Fermentable) DatabaseAPI.getIngredientWithId(grainId);
+    fermentable = (Fermentable) new DatabaseAPI(this).getIngredientWithId(grainId);
     Log.d("EditFermentableActivity::getValuesFromIntent", "Retrieved fermentable: " + fermentable.getName());
   }
 
@@ -124,14 +124,14 @@ public class EditFermentableActivity extends AddFermentableActivity {
 
   @Override
   public void onDeletePressed() {
-    DatabaseAPI.deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
+    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
     finish();
   }
 
   @Override
   public void onFinished() {
     // Update the ingredient, and finish the activity
-    DatabaseAPI.updateIngredient(fermentable, Constants.DATABASE_DEFAULT);
+    new DatabaseAPI(this).updateIngredient(fermentable, Constants.DATABASE_DEFAULT);
     finish();
   }
 }

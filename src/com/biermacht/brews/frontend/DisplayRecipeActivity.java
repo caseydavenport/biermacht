@@ -234,7 +234,7 @@ public class DisplayRecipeActivity extends AppCompatActivity {
     // Changes may have been made to this Recipe in another activity - get the Recipe
     // from the database and update the UI.
     try {
-      mRecipe = DatabaseAPI.getRecipeWithId(mRecipe.getId());
+      mRecipe = new DatabaseAPI(getApplicationContext()).getRecipeWithId(mRecipe.getId());
     } catch (Exception e) {
       e.printStackTrace();
     }

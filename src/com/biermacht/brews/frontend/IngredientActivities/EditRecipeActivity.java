@@ -110,7 +110,7 @@ public class EditRecipeActivity extends AddRecipeActivity {
 
   @Override
   public void onFinished() {
-    mRecipe.save();
+    mRecipe.save(this);
     finish();
   }
 

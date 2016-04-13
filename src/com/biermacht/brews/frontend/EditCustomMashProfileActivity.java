@@ -22,13 +22,13 @@ public class EditCustomMashProfileActivity extends EditMashProfileActivity {
 
   @Override
   public void onFinished() {
-    mProfile.save(Constants.DATABASE_CUSTOM);
+    mProfile.save(getApplicationContext(), Constants.DATABASE_CUSTOM);
     finish();
   }
 
   @Override
   public void onDeletePressed() {
-    mProfile.delete(Constants.DATABASE_CUSTOM);
+    mProfile.delete(getApplicationContext(), Constants.DATABASE_CUSTOM);
     finish();
   }
 

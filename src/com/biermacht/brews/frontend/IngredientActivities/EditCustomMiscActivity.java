@@ -36,14 +36,14 @@ public class EditCustomMiscActivity extends EditMiscActivity {
 
   @Override
   public void onFinished() {
-    boolean update = DatabaseAPI.updateIngredient(misc, misc.getDatabaseId());
+    boolean update = new DatabaseAPI(this).updateIngredient(misc, misc.getDatabaseId());
     Log.d("EditCustomMisc", "Misc updated? " + update);
     finish();
   }
 
   @Override
   public void onDeletePressed() {
-    DatabaseAPI.deleteIngredientWithId(ingredientId, misc.getDatabaseId());
+    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, misc.getDatabaseId());
     finish();
   }
 }

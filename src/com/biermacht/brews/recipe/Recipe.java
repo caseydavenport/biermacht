@@ -1,5 +1,6 @@
 package com.biermacht.brews.recipe;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -1151,8 +1152,8 @@ public class Recipe implements Parcelable {
     }
   }
 
-  public void save() {
+  public void save(Context c) {
     Log.d(getRecipeName() + "::save", "Saving with id: " + this.getId());
-    DatabaseAPI.updateRecipe(this);
+    new DatabaseAPI(c).updateRecipe(this);
   }
 }

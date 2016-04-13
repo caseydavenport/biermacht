@@ -431,7 +431,7 @@ public class AddMashProfileActivity extends AddEditActivity {
   @Override
   public void onFinished() {
     Log.d("AddMashProfileActivity", "Saving MashProfile");
-    mProfile.save(Constants.DATABASE_CUSTOM);
+    mProfile.save(getApplicationContext(), Constants.DATABASE_CUSTOM);
     finish();
   }
 

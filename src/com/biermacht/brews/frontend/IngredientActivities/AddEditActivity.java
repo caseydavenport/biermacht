@@ -309,7 +309,7 @@ public abstract class AddEditActivity extends DriveActivity implements OnClickLi
       if (recipeId != Constants.INVALID_ID) {
         Log.d("AddEditActivity", "Found recipe ID, Trying database");
         try {
-          mRecipe = DatabaseAPI.getRecipeWithId(recipeId);
+          mRecipe = new DatabaseAPI(getApplicationContext()).getRecipeWithId(recipeId);
           Log.d("AddEditActivity", "Found recipe in database");
         } catch (ItemNotFoundException e) {
           e.printStackTrace();
@@ -382,7 +382,7 @@ public abstract class AddEditActivity extends DriveActivity implements OnClickLi
         // Some activities don't want to save the recipe on submit.  Such an activity can set this
         // flag to false, thus not saving the recipe when the submit button is pressed.
         if (this.saveRecipeOnSubmit) {
-          mRecipe.save();
+          mRecipe.save(getApplicationContext());
         }
         onFinished();
       }

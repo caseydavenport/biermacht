@@ -214,7 +214,7 @@ public class EditFermentationProfileActivity extends ActionBarActivity implement
       }
 
       if (readyToGo) {
-        DatabaseAPI.updateRecipe(mRecipe);
+        new DatabaseAPI(getApplicationContext()).updateRecipe(mRecipe);
         finish();
       }
     }

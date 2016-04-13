@@ -119,7 +119,7 @@ public class EditRecipeNotesActivity extends AddEditActivity {
 
   @Override
   public void onFinished() {
-    DatabaseAPI.updateRecipe(mRecipe);
+    new DatabaseAPI(getApplicationContext()).updateRecipe(mRecipe);
     finish();
   }
 

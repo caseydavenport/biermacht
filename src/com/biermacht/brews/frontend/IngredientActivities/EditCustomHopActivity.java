@@ -32,13 +32,13 @@ public class EditCustomHopActivity extends EditHopActivity {
 
   @Override
   public void onFinished() {
-    DatabaseAPI.updateIngredient(hop, hop.getDatabaseId());
+    new DatabaseAPI(this).updateIngredient(hop, hop.getDatabaseId());
     finish();
   }
 
   @Override
   public void onDeletePressed() {
-    DatabaseAPI.deleteIngredientWithId(ingredientId, hop.getDatabaseId());
+    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, hop.getDatabaseId());
     finish();
   }
 }

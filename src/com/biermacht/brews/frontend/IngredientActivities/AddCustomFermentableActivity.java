@@ -109,13 +109,13 @@ public class AddCustomFermentableActivity extends AddFermentableActivity {
   @Override
   public void onFinished() {
     Log.d("AddCustomFerm", "Adding fermentable to db_custom: " + fermentable.getName());
-    DatabaseAPI.addIngredient(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
+    new DatabaseAPI(AddCustomFermentableActivity.this).addIngredient(Constants.DATABASE_CUSTOM, fermentable, Constants.MASTER_RECIPE_ID);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
       Log.d("AddCustomFerm", "Adding fermentable '" +
               fermentable.getName() + "' to recipe '" + mRecipe.getRecipeName() + "'");
       mRecipe.addIngredient(fermentable);
-      mRecipe.save();
+      mRecipe.save(AddCustomFermentableActivity.this);
     }
     Log.d("AddCustomFerm", "Closing activity");
     finish();

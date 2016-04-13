@@ -272,7 +272,7 @@ public class AddHopsActivity extends AddEditIngredientActivity {
   @Override
   public void onFinished() {
     mRecipe.addIngredient(hop);
-    mRecipe.save();
+    mRecipe.save(AddHopsActivity.this);
     finish();
   }
 

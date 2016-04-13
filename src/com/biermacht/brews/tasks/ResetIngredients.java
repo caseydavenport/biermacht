@@ -22,6 +22,7 @@ public class ResetIngredients extends AsyncTask<String, Void, String> {
   private Context context;
   private IngredientHandler ingredientHandler;
   private String message;
+  private DatabaseAPI databaseApi;
 
   public ResetIngredients(Context c, String message) {
     super();
@@ -29,13 +30,14 @@ public class ResetIngredients extends AsyncTask<String, Void, String> {
     this.context = c;
     this.ingredientHandler = new IngredientHandler(c);
     this.message = message;
+    this.databaseApi = new DatabaseAPI(context);
   }
 
   @Override
   protected String doInBackground(String... params) {
     Log.d("ResetIngredients", "Deleting all 'permanent' ingredients");
-    for (Ingredient ing : DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT)) {
-      DatabaseAPI.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
+    for (Ingredient ing : databaseApi.getIngredients(Constants.DATABASE_PERMANENT)) {
+      databaseApi.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
     }
 
     Log.d("ResetIngredients", "Re-initializing ingredient assets");

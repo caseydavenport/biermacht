@@ -32,6 +32,7 @@ public class EditMashProfilesFragment extends Fragment implements BiermachtFragm
   private OnItemClickListener mClickListener;
   private ListView listView;
   private ArrayList<MashProfile> list;
+  private DatabaseAPI databaseApi;
   MashProfileArrayAdapter arrayAdapter;
   View pageView;
   Context c;
@@ -44,9 +45,10 @@ public class EditMashProfilesFragment extends Fragment implements BiermachtFragm
 
     // Context
     c = getActivity();
+    databaseApi = new DatabaseAPI(c);
 
     // Get ingredient list
-    list = DatabaseAPI.getMashProfiles(Constants.DATABASE_CUSTOM);
+    list = databaseApi.getMashProfiles(Constants.DATABASE_CUSTOM);
     Collections.sort(list, new ToStringComparator());
 
     // Initialize list
@@ -97,7 +99,7 @@ public class EditMashProfilesFragment extends Fragment implements BiermachtFragm
   @Override
   public void update() {
     // Get the full list of profiles from the custom database.
-    ArrayList<MashProfile> loadedList = DatabaseAPI.getMashProfiles(Constants.DATABASE_CUSTOM);
+    ArrayList<MashProfile> loadedList = databaseApi.getMashProfiles(Constants.DATABASE_CUSTOM);
 
     // Add the loaded profiles to the list for the list view.
     list.removeAll(list);

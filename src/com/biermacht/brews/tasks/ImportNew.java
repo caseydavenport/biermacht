@@ -46,9 +46,9 @@ public class ImportNew extends AsyncTask<String, Void, String> {
       }
       else if (this.type.equals("mashprofile")) {
         // Imports mash profiles from the file path.
-        DatabaseAPI.addMashProfileList(Constants.DATABASE_CUSTOM,
-                                       ingredientHandler.getProfilesFromXml(filePath),
-                                       Constants.OWNER_NONE);
+        new DatabaseAPI(this.context).addMashProfileList(Constants.DATABASE_CUSTOM,
+                                                         ingredientHandler.getProfilesFromXml(filePath),
+                                                         Constants.OWNER_NONE);
       }
       else {
         Log.w("ImportNew", "Invalid type: " + this.type);

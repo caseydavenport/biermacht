@@ -38,8 +38,9 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
   private ListView listView;
   private ArrayList<Ingredient> list;
   private CustomIngredientArrayAdapter ingredientArrayAdapter;
+  private DatabaseAPI databaseApi;
   View pageView;
-  Context c;
+  Context context;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,15 +49,16 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
     setHasOptionsMenu(true);
 
     // Context
-    c = getActivity();
+    context = getActivity();
+    databaseApi = new DatabaseAPI(context);
 
     // Get ingredient list
-    list = DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM);
-    list.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT));
+    list = databaseApi.getIngredients(Constants.DATABASE_CUSTOM);
+    list.addAll(databaseApi.getIngredients(Constants.DATABASE_PERMANENT));
     Collections.sort(list, new IngredientsComparator());
 
     // Set up the list adapter
-    ingredientArrayAdapter = new CustomIngredientArrayAdapter(c, list);
+    ingredientArrayAdapter = new CustomIngredientArrayAdapter(context, list);
 
     // Initialize important junk
     listView = (ListView) pageView.findViewById(R.id.listview);
@@ -68,7 +70,7 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
 
         // Grain pressed
         if (ing.getType().equals(Ingredient.FERMENTABLE)) {
-          Intent i = new Intent(c, EditCustomFermentableActivity.class);
+          Intent i = new Intent(context, EditCustomFermentableActivity.class);
           i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
           i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
           i.putExtra(Constants.KEY_INGREDIENT, ing);
@@ -77,7 +79,7 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
 
         // Hop Pressed
         if (ing.getType().equals(Ingredient.HOP)) {
-          Intent i = new Intent(c, EditCustomHopActivity.class);
+          Intent i = new Intent(context, EditCustomHopActivity.class);
           i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
           i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
           i.putExtra(Constants.KEY_INGREDIENT, ing);
@@ -86,7 +88,7 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
 
         // Yeast Pressed
         if (ing.getType().equals(Ingredient.YEAST)) {
-          Intent i = new Intent(c, EditCustomYeastActivity.class);
+          Intent i = new Intent(context, EditCustomYeastActivity.class);
           i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
           i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
           i.putExtra(Constants.KEY_INGREDIENT, ing);
@@ -95,7 +97,7 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
 
         // Misc Pressed
         if (ing.getType().equals(Ingredient.MISC)) {
-          Intent i = new Intent(c, EditCustomMiscActivity.class);
+          Intent i = new Intent(context, EditCustomMiscActivity.class);
           i.putExtra(Constants.KEY_RECIPE_ID, Constants.MASTER_RECIPE_ID);
           i.putExtra(Constants.KEY_INGREDIENT_ID, ing.getId());
           i.putExtra(Constants.KEY_INGREDIENT, ing);
@@ -136,8 +138,8 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
   @Override
   public void update() {
     // Get the full list of ingredients from the custom database and permanent database.
-    ArrayList<Ingredient> loadedList = DatabaseAPI.getIngredients(Constants.DATABASE_CUSTOM);
-    loadedList.addAll(DatabaseAPI.getIngredients(Constants.DATABASE_PERMANENT));
+    ArrayList<Ingredient> loadedList = databaseApi.getIngredients(Constants.DATABASE_CUSTOM);
+    loadedList.addAll(databaseApi.getIngredients(Constants.DATABASE_PERMANENT));
 
     // Add the loaded ingredients to the list for the list view.
     list.removeAll(list);
