@@ -41,10 +41,9 @@ import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.ViewStylesFragment;
 import com.biermacht.brews.recipe.Recipe;
-import com.biermacht.brews.tasks.ImportNewIngredients;
+import com.biermacht.brews.tasks.ImportNew;
 import com.biermacht.brews.tasks.ImportXmlIngredientsTask;
 import com.biermacht.brews.tasks.InitializeTask;
-import com.biermacht.brews.tasks.ResetIngredients;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.DriveActivity;
 import com.biermacht.brews.utils.IngredientHandler;
@@ -151,8 +150,13 @@ public class MainActivity extends DriveActivity {
         switch (lastVersion) {
           case 1:
             Log.d("MainActivity", "Importing new dry yeasts");
-            new ImportNewIngredients(this, "Yeasts/dry-yeasts-01.xml").execute("");
+            new ImportNew("ingredient", "Importing new ingredients",
+                          this, "Yeasts/dry-yeasts-01.xml").execute("");
             break;
+          case 2:
+            Log.d("MainActivity", "Importing BIAB mash profiles");
+            new ImportNew("mashprofile", "Importing new mash profiles",
+                          this, "Profiles/biab-01.xml").execute("");
           default:
             Log.w("MainActivity", "No action for version: " + lastVersion);
             break;

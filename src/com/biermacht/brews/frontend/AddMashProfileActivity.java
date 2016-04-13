@@ -167,12 +167,20 @@ public class AddMashProfileActivity extends AddEditActivity {
       }
     });
 
+    // Set visibility based on mash profile type.
+    if (mProfile.getMashType().equals(MashProfile.MASH_TYPE_BIAB)) {
+      spargeTypeSpinner.setVisibility(View.GONE);
+      tunTempView.setVisibility(View.GONE);
+      spargeTempView.setVisibility(View.GONE);
+    }
+
     // Remove views we don't want
     mainView.removeView(amountView);
     mainView.removeView(timeView);
     mainView.removeView(spinnerView);
 
     // Add views that we want
+    mainView.addView(mashTypeSpinner);
     mainView.addView(spargeTypeSpinner);
     mainView.addView(spargeTempView);
     mainView.addView(tunTempView);
@@ -320,6 +328,22 @@ public class AddMashProfileActivity extends AddEditActivity {
 
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
         mProfile.setMashType(mashTypeArray.get(position));
+
+        if (mashTypeArray.get(position).equals(MashProfile.MASH_TYPE_BIAB)) {
+          // Set the spargeTypeSpinner to BIAB.
+          spargeTypeSpinner.setSelection(spargeTypeArray.indexOf(MashProfile.SPARGE_TYPE_BIAB));
+
+          // Make some undesired views disappear.
+          spargeTypeSpinner.setVisibility(View.GONE);
+          spargeTempView.setVisibility(View.GONE);
+          tunTempView.setVisibility(View.GONE);
+        }
+        else {
+          spargeTypeSpinner.setVisibility(View.VISIBLE);
+          spargeTempView.setVisibility(View.VISIBLE);
+          tunTempView.setVisibility(View.VISIBLE);
+        }
+
         callback.call();
       }
 

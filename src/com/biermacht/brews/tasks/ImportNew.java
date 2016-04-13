@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Async task to reset the default ingredient database.
  */
-public class ImportNewIngredients extends AsyncTask<String, Void, String> {
+public class ImportNew extends AsyncTask<String, Void, String> {
 
   private ProgressDialog progress;
   private Context context;
@@ -23,23 +23,38 @@ public class ImportNewIngredients extends AsyncTask<String, Void, String> {
   private String message;
   private String filePath;
 
-  public ImportNewIngredients(Context c, String filePath) {
+  // One of "ingredient", "mashprofile".
+  private String type;
+
+  public ImportNew(String type, String message, Context c, String filePath) {
     super();
 
     this.context = c;
     this.ingredientHandler = new IngredientHandler(c);
-    this.message = "Importing new ingredients";
+    this.message = message;
     this.filePath = filePath;
+    this.type = type;
   }
 
   @Override
   protected String doInBackground(String... params) {
-    Log.d("ResetIngredients", "Installing ingredients from: " + filePath);
+    Log.d("ImportNew", "Installing from: " + filePath);
     try {
-      // Imports ingredients from the file path.
-      ingredientHandler.importIngredients(filePath);
+      if (this.type.equals("ingredient")) {
+        // Imports ingredients from the file path.
+        ingredientHandler.importIngredients(filePath);
+      }
+      else if (this.type.equals("mashprofile")) {
+        // Imports mash profiles from the file path.
+        DatabaseAPI.addMashProfileList(Constants.DATABASE_CUSTOM,
+                                       ingredientHandler.getProfilesFromXml(filePath),
+                                       Constants.OWNER_NONE);
+      }
+      else {
+        Log.w("ImportNew", "Invalid type: " + this.type);
+      }
     } catch (IOException e) {
-      Log.e("ResetIngredients", e.toString());
+      Log.e("ImportNew", e.toString());
     }
 
     return "Executed";
@@ -49,7 +64,7 @@ public class ImportNewIngredients extends AsyncTask<String, Void, String> {
   protected void onPostExecute(String result) {
     super.onPostExecute(result);
     progress.dismiss();
-    Log.d("ResetIngredients", "Finished resetting ingredients");
+    Log.d("ImportNew", "Finished importing new " + this.type);
   }
 
   @Override

@@ -1077,6 +1077,12 @@ public class BeerXmlReader extends DefaultHandler {
     else if (thingTypeStack.read().equalsIgnoreCase("MASH")) {
       if (qName.equalsIgnoreCase("NAME")) {
         profile.setName(currentValue);
+
+        if (currentValue.contains("BIAB")) {
+          // This is a brew-in-a-bag type mash profile.  Set the types.
+          profile.setMashType(MashProfile.MASH_TYPE_BIAB);
+          profile.setSpargeType(MashProfile.MASH_TYPE_BIAB);
+        }
       }
 
       else if (qName.equalsIgnoreCase("VERSION")) {

@@ -14,36 +14,38 @@ import java.util.Collections;
 public class MashProfile implements Parcelable {
   // Beer XML 1.0 Required Fields ===================================
   // ================================================================
-  private String name;                // profile name
-  private Integer version;          // XML Version -- 1
-  private double grainTemp;               // Grain temp in C
-  private ArrayList<MashStep> mashSteps;  // List of steps
+  private String name;                     // profile name
+  private Integer version;                 // XML Version -- 1
+  private double grainTemp;                // Grain temp in C
+  private ArrayList<MashStep> mashSteps;   // List of steps
 
   // Beer XML 1.0 Optional Fields ===================================
   // ================================================================
-  private double tunTemp;        // TUN Temperature in C
+  private double tunTemp;         // TUN Temperature in C
   private double spargeTemp;      // Sparge Temp in C
   private double pH;              // pH of water
   private double tunWeight;       // Weight of TUN in kG
   private double tunSpecificHeat; // Specific heat of TUN
-  private String notes;      // Notes
+  private String notes;           // Notes
   private Boolean equipAdj;       // Adjust for heating of equip?
 
   // Custom Fields ==================================================
   // ================================================================
   private long id;                  // id for use in database
-  private long ownerId;        // id for parent recipe
+  private long ownerId;             // id for parent recipe
   private String mashType;          // one of infusion, decoction, temperature
   private String spargeType;        // one of batch, fly
-  private Recipe recipe;        // Recipe which owns this mash.
+  private Recipe recipe;            // Recipe which owns this mash.
 
   // Static values =================================================
   // ===============================================================
   public static String MASH_TYPE_INFUSION = "Infusion";
   public static String MASH_TYPE_DECOCTION = "Decoction";
   public static String MASH_TYPE_TEMPERATURE = "Temperature";
+  public static String MASH_TYPE_BIAB = "BIAB";
   public static String SPARGE_TYPE_BATCH = "Batch";
   public static String SPARGE_TYPE_FLY = "Fly";
+  public static String SPARGE_TYPE_BIAB = "BIAB";
 
   // Basic Constructor
   public MashProfile(Recipe r) {

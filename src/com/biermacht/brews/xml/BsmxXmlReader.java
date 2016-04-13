@@ -1015,6 +1015,12 @@ public class BsmxXmlReader extends DefaultHandler {
     else if (thingTypeStack.read().equalsIgnoreCase("F_R_MASH")) {
       if (qName.equalsIgnoreCase("F_MH_NAME")) {
         profile.setName(currentValue);
+
+        if (currentValue.contains("BIAB")) {
+          // This is a brew-in-a-bag type mash profile.  Set the types.
+          profile.setMashType(MashProfile.MASH_TYPE_BIAB);
+          profile.setSpargeType(MashProfile.MASH_TYPE_BIAB);
+        }
       }
 
       else if (qName.equalsIgnoreCase("F_MH_GRAIN_TEMP")) {
@@ -1072,7 +1078,7 @@ public class BsmxXmlReader extends DefaultHandler {
         else if (Integer.parseInt(currentValue) == 1) {
           mashStep.setType(MashStep.DECOCTION);
         }
-        else if (Integer.parseInt(currentValue) == 1) {
+        else if (Integer.parseInt(currentValue) == 2) {
           mashStep.setType(MashStep.TEMPERATURE);
         }
       }

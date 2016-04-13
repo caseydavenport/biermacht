@@ -6,6 +6,7 @@ import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.ingredient.Misc;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.recipe.Instruction;
+import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.comparators.InstructionComparator;
@@ -161,8 +162,15 @@ public class InstructionGenerator {
     i.setOrder(1);
     i.setDurationUnits(Units.HOURS);
     i.setLastInType(true);
-    i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
-    i.setSubtitle("Until " + String.format("%2.1f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
+
+    if (r.getMashProfile().getSpargeType().equals(MashProfile.SPARGE_TYPE_BIAB)) {
+      i.setInstructionText("Sparge - remove grains");
+      i.setSubtitle("Top off to " + String.format("%2.1f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
+    }
+    else{
+      i.setSubtitle("Until " + String.format("%2.1f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
+    }
+
     i.setDuration(0);  // Set duration to 0 so we don't show timer.
     list.add(i);
 

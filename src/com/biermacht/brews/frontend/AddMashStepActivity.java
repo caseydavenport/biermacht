@@ -145,11 +145,14 @@ public class AddMashStepActivity extends AddEditActivity {
       alert = alertBuilder.editTextFloatAlert(stepTempViewText, stepTempViewTitle).create();
     }
     else if (v.equals(waterToGrainRatioView)) {
-      if (step.firstInList()) {
+      if (step.firstInList() &&
+              !mRecipe.getMashProfile().getMashType().equals(MashProfile.MASH_TYPE_BIAB)) {
+        // For non-BIAB, the first mash step water-to-grain ratio is not auto-calculated.
         alert = alertBuilder.editTextFloatAlert(waterToGrainRatioViewText,
                                                 waterToGrainRatioViewTitle).create();
       }
       else {
+        // For all other steps, the water-to-grain ratio is auto-calculated.
         alert = alertBuilder.editTextDisabled(waterToGrainRatioViewText,
                                               waterToGrainRatioViewTitle,
                                               Constants.MESSAGE_AUTO_CALC_W2GR).create();

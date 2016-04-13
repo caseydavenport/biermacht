@@ -299,9 +299,20 @@ public class MashStep implements Parcelable {
   public double calculateInfuseAmount() {
     // We perform different calculations if this is the initial infusion.
     double amt = - 1;
-    if (this.firstInList()) {
-      // Initial infusion. Water is constant * amount of grain.
+    if (this.firstInList() &&
+            !this.recipe.getMashProfile().getMashType().equals(MashProfile.MASH_TYPE_BIAB)) {
+      // Initial infusion for a non-biab mash. Water is constant * amount of grain.
       amt = this.getBeerXmlStandardWaterToGrainRatio() * this.getBeerXmlStandardMashWeight();
+    }
+    else if (this.firstInList() &&
+            this.recipe.getMashProfile().getMashType().equals(MashProfile.MASH_TYPE_BIAB)) {
+      // Initial infusion for a BIAB mash.
+      // Water is boil volume + grain absorption.
+      amt = this.recipe.getBeerXmlStandardBoilSize();
+
+      // Estimate ~1 liter per kg absobtion.
+      // TODO: Get this from equipment profile.
+      amt += this.getBeerXmlStandardMashWeight();
     }
     else {
       // The actual temperature of the water being infused.
@@ -382,7 +393,8 @@ public class MashStep implements Parcelable {
     if (this.firstInList()) {
       // Initial infusion.
       // TODO: For now, we don't have equipment so we combine tun / grain temp for calculation.
-      double tunTemp = .7 * this.recipe.getMashProfile().getBeerXmlStandardGrainTemp() + .3 * this.recipe.getMashProfile().getBeerXmlStandardTunTemp();
+      double tunTemp = .7 * this.recipe.getMashProfile().getBeerXmlStandardGrainTemp() +
+                       .3 * this.recipe.getMashProfile().getBeerXmlStandardTunTemp();
       temp = (.41) / (this.getBeerXmlStandardWaterToGrainRatio());
       temp = temp * (this.getBeerXmlStandardStepTemp() - tunTemp) + this.getBeerXmlStandardStepTemp();
     }
@@ -521,7 +533,7 @@ public class MashStep implements Parcelable {
   public double getBeerXmlStandardWaterToGrainRatio() {
     // If this is the first in the list, use the configured value.
     // Otherwise, we need to calculate it based on the water added.
-    if (this.firstInList()) {
+    if (this.firstInList() && !this.recipe.getMashProfile().getMashType().equals(MashProfile.MASH_TYPE_BIAB)) {
       return this.waterToGrainRatio;
     }
     return (this.getBeerXmlStandardInfuseAmount() + this.getBXSTotalWaterInMash()) / this.getBeerXmlStandardMashWeight();

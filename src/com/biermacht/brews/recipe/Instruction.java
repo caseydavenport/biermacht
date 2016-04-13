@@ -140,13 +140,27 @@ public class Instruction implements Parcelable {
       // This is a mash step.
       if (mashStep.getDisplayInfuseAmount() != 0 && mashStep.getType().equals(MashStep.INFUSION)) {
         // This is an infusion step.
-        String fmt = "Add %2.2f %s (%2.2fqt) of %s%s water.\n\n";
-        s += String.format(fmt,
-                           mashStep.getDisplayInfuseAmount(),
-                           Units.getVolumeUnits(),
-                           Units.litersToQuarts(mashStep.getBeerXmlStandardInfuseAmount()),
-                           mashStep.getDisplayInfuseTemp(),
-                           Units.getTemperatureUnits());
+
+        if (r.getMashProfile().getMashType().equals(MashProfile.MASH_TYPE_BIAB)) {
+          // BIAB bash profiles should be worded differently.
+          String fmt = "Add grain bag and grains to boil kettle, in %2.2f %s (%2.2fqt) of %s%s water.\n\n";
+          s += String.format(fmt,
+                             mashStep.getDisplayInfuseAmount(),
+                             Units.getVolumeUnits(),
+                             Units.litersToQuarts(mashStep.getBeerXmlStandardInfuseAmount()),
+                             mashStep.getDisplayInfuseTemp(),
+                             Units.getTemperatureUnits());
+        }
+        else {
+          // Not BIAB - just straight infusion.
+          String fmt = "Add %2.2f %s (%2.2fqt) of %s%s water.\n\n";
+          s += String.format(fmt,
+                             mashStep.getDisplayInfuseAmount(),
+                             Units.getVolumeUnits(),
+                             Units.litersToQuarts(mashStep.getBeerXmlStandardInfuseAmount()),
+                             mashStep.getDisplayInfuseTemp(),
+                             Units.getTemperatureUnits());
+        }
       }
 
       if (mashStep.getDisplayDecoctAmount() != 0 && mashStep.getType().equals(MashStep.DECOCTION)) {
@@ -225,9 +239,22 @@ public class Instruction implements Parcelable {
         s = "Add First Wort hops to the sparge vessel.";
       }
       else {
-        s = getInstructionText() + " until you have " + String.format("%2.2f", r.getDisplayBoilSize()) +
-                " " + Units.getVolumeUnits() + " of wort.  Then, add wort to the" +
-                " boil kettle and bring to a steady boil.";
+        // This is a sparge instruction - text depends on which sparge type is being used.
+        if (r.getMashProfile().getSpargeType().equals(MashProfile.SPARGE_TYPE_BIAB)) {
+          // Brew-in-a-bag sparge type.
+          s = "Slowly lift the grain bag out of the boil kettle and let it drain.\n\n" + "" +
+                  "Top off with water until you have " +
+                  String.format("%2.2f %s", r.getDisplayBoilSize(), Units.getVolumeUnits()) + " " +
+                  "of wort, and bring to a steady boil.";
+
+        }
+        else {
+          // Batch or fly sparge.
+          s = r.getMashProfile().getMashType() + " sparge until you have " +
+                  String.format("%2.2f", r.getDisplayBoilSize()) +
+                  " " + Units.getVolumeUnits() + " of wort.  Then, add wort to the" +
+                  " boil kettle and bring to a steady boil.";
+        }
       }
     }
     else if (this.instructionType.equals(Instruction.TYPE_CALENDAR)) {

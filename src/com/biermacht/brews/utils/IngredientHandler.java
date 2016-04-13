@@ -382,22 +382,32 @@ public class IngredientHandler {
    * @return ArrayList of MashProfile Objects
    * @throws IOException
    */
-  private ArrayList<MashProfile> getProfilesFromXml() throws IOException {
+  public ArrayList<MashProfile> getProfilesFromXml() throws IOException {
+    ArrayList<MashProfile> list = new ArrayList<MashProfile>();
+    AssetManager am = mContext.getAssets();
+
+    for (String s : am.list("Profiles")) {
+      list.addAll(getProfilesFromXml("Profiles/" + s));
+    }
+    return list;
+  }
+
+  public ArrayList<MashProfile> getProfilesFromXml(String path) throws IOException {
     ArrayList<MashProfile> list = new ArrayList<MashProfile>();
     BeerXmlReader myXMLHandler = new BeerXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();
     AssetManager am = mContext.getAssets();
 
-    for (String s : am.list("Profiles")) {
       try {
         // Parse files.
         SAXParser sp = spf.newSAXParser();
-        InputStream is = am.open("Profiles/" + s);
+        InputStream is = am.open(path);
         sp.parse(is, myXMLHandler);
 
         // Default mash profiles should auto-calculate infustion temp / amount,
         // so set that here.
-        for (MashProfile p : myXMLHandler.getMashProfiles()) {
+        list = myXMLHandler.getMashProfiles();
+        for (MashProfile p : list) {
           for (MashStep step : p.getMashStepList()) {
             if (step.getType().equals(MashStep.INFUSION)) {
               Log.d("IngredientHandler", "Enabling auto-calculation for: " + p.getName());
@@ -405,15 +415,12 @@ public class IngredientHandler {
               step.setAutoCalcInfuseTemp(true);
             }
           }
-
-          // Add the mash profile to the list to return.
-          list.add(p);
         }
 
       } catch (Exception e) {
         Log.e("getProfilesFromXml", e.toString());
       }
-    }
     return list;
   }
+
 }

@@ -80,7 +80,7 @@ public class Constants {
   public static final String PREF_NEW_INGRE_VERSION = "com.biermacht.brews.newIngredientsVersion";
 
   //  Incremented when new ingredients are available.
-  public static int NEW_INGREDIENTS_VERSION = 1;
+  public static int NEW_INGREDIENTS_VERSION = 2;
 
   // Activity for result return codes
   public static final int RESULT_DELETED = 1;
@@ -110,8 +110,8 @@ public class Constants {
   private static final String[] ferm_types = {Fermentable.TYPE_GRAIN, Fermentable.TYPE_EXTRACT, Fermentable.TYPE_SUGAR, Fermentable.TYPE_ADJUNCT};
   private static final String[] step_types = {MashStep.INFUSION, MashStep.DECOCTION, MashStep.TEMPERATURE};
   private static final String[] unit_systems = {Units.IMPERIAL, Units.METRIC};
-  private static final String[] mash_types = {MashProfile.MASH_TYPE_DECOCTION, MashProfile.MASH_TYPE_INFUSION, MashProfile.MASH_TYPE_TEMPERATURE};
-  private static final String[] sparge_types = {MashProfile.SPARGE_TYPE_BATCH, MashProfile.SPARGE_TYPE_FLY};
+  private static final String[] mash_types = {MashProfile.MASH_TYPE_DECOCTION, MashProfile.MASH_TYPE_INFUSION, MashProfile.MASH_TYPE_TEMPERATURE, MashProfile.MASH_TYPE_BIAB};
+  private static final String[] sparge_types = {MashProfile.SPARGE_TYPE_BATCH, MashProfile.SPARGE_TYPE_FLY, MashProfile.SPARGE_TYPE_BIAB};
 
   public static final ArrayList<String> HOP_USES = new ArrayList<String>(Arrays.asList(hop_uses));
   public static final ArrayList<String> HOP_FORMS = new ArrayList<String>(Arrays.asList(hop_forms));
