@@ -8,12 +8,16 @@ import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Wrapper around the DatabaseInterface class that exposes higher-level database APIs.
+ */
 public class DatabaseAPI {
   private Context context;
   private DatabaseInterface databaseInterface;
@@ -27,14 +31,33 @@ public class DatabaseAPI {
   // Get all recipes in database, sorted
   public ArrayList<Recipe> getRecipeList() {
     ArrayList<Recipe> list = this.databaseInterface.getRecipeList();
-
     for (Recipe r : list) {
       r.update();
     }
-
     Collections.sort(list, new RecipeComparator<Recipe>());
 
     return list;
+  }
+
+  public ArrayList<RecipeSnapshot> getSnapshots(Recipe r) {
+    ArrayList<RecipeSnapshot> list = new ArrayList<RecipeSnapshot>();
+
+    // Get all the snapshots for the given recipe from the database.
+    list.addAll(this.databaseInterface.getRecipeSnapshots(r.getId()));
+
+    return list;
+  }
+
+  public RecipeSnapshot getSnapshot(long snapshotId) {
+    return this.databaseInterface.getSnapshot(snapshotId);
+  }
+
+  /**
+   * Saves the given RecipeSnapshot to the database.
+   * @param snap
+   */
+  public long saveSnapshot(RecipeSnapshot snap) {
+    return this.databaseInterface.addSnapshotToDatabase(snap, snap.getRecipeId());
   }
 
   // Create recipe with the given name
@@ -61,6 +84,12 @@ public class DatabaseAPI {
     return this.databaseInterface.updateExistingRecipe(r);
   }
 
+  // Updates an existing RecipeSnapshot
+  public boolean updateSnapshot(RecipeSnapshot snap) {
+    snap.update();
+    return this.databaseInterface.updateExistingSnapshot(snap);
+  }
+
   // Updates existing ingredient
   public boolean updateIngredient(Ingredient i, long dbid) {
     return this.databaseInterface.updateExistingIngredientInDatabase(i, dbid);
@@ -68,20 +97,52 @@ public class DatabaseAPI {
 
   // Deletes the given recipe if it exists in the database.
   public boolean deleteRecipe(Recipe r) {
-    return this.databaseInterface.deleteRecipeIfExists(r.getId());
+    // Delete all of this Recipe's ingredients.
+    for (Ingredient i : r.getIngredientList()) {
+      deleteIngredientWithId(i.getId(), Constants.DATABASE_DEFAULT);
+    }
+
+    // Delete this Recipe's MashProfile
+    r.getMashProfile().delete(this.context, Constants.DATABASE_DEFAULT);
+
+    // Delete this Recipe's Snapshots
+    for (RecipeSnapshot snap : this.getSnapshots(r)) {
+      deleteSnapshot(snap);
+    }
+
+    // Delete this Recipe's style
+    this.databaseInterface.deleteStyleRecipe(r.getId());
+
+    // And delete the recipe.
+    return this.databaseInterface.deleteRecipe(r);
   }
 
-  // Deletes all recipes, and their ingredients
-  public boolean deleteAllRecipes() {
-    boolean bool = true;
-
-    for (Recipe r : getRecipeList()) {
-      for (Ingredient i : r.getIngredientList()) {
-        deleteIngredientWithId(i.getId(), Constants.DATABASE_DEFAULT);
-      }
-      bool = deleteRecipe(r);
+  // Deletes the given snapshot if it exists in the database.
+  public boolean deleteSnapshot(RecipeSnapshot snapshot) {
+    // Delete ingredients.
+    for (Ingredient i : snapshot.getIngredientList()) {
+      deleteIngredientWithId(i.getId(), Constants.DATABASE_DEFAULT);
     }
-    return bool;
+
+    // Delete MashProfile
+    snapshot.getMashProfile().delete(this.context, Constants.DATABASE_DEFAULT);
+
+    // Delete style
+    this.databaseInterface.deleteStyleSnapshot(snapshot.getId());
+
+    // And delete the Snapshot
+    return this.databaseInterface.deleteSnapshot(snapshot);
+  }
+
+  /**
+   * Deletes all recipes in the Database, as well as any Ingredients associated
+   * with them.
+   * @return
+   */
+  public void deleteAllRecipes() {
+    for (Recipe r : getRecipeList()) {
+      deleteRecipe(r);
+    }
   }
 
   // Deletes the given ingredient, in the given database
@@ -89,10 +150,10 @@ public class DatabaseAPI {
     Log.d("Database", "Trying to delete ingredient from database: " + dbid);
     boolean b = this.databaseInterface.deleteIngredientIfExists(id, dbid);
     if (b) {
-      Log.d("Database", "Successfully deleted ingredient");
+      Log.d("Database", "  Successfully deleted ingredient");
     }
     else {
-      Log.d("Database", "Failed to delete ingredient");
+      Log.d("Database", "  Failed to delete ingredient");
     }
     return b;
   }
@@ -101,7 +162,7 @@ public class DatabaseAPI {
   public Recipe getRecipeWithId(long id) throws ItemNotFoundException {
     // If we receive a special ID, handle that here
     if (id == Constants.INVALID_ID) {
-      throw new ItemNotFoundException("Passed ID with value Utils.INVALID_ID");
+      throw new ItemNotFoundException();
     }
 
     // Actually perform the lookup
@@ -114,15 +175,15 @@ public class DatabaseAPI {
   }
 
   // Adds a list of ingredients to the specified virtual ingredient database
-  public void addIngredientList(long dbid, ArrayList<Ingredient> list, long ownerId) {
+  public void addIngredientList(long dbid, ArrayList<Ingredient> list, long recipeId, long snapshotId) {
     for (Ingredient i : list) {
-      this.databaseInterface.addIngredientToDatabase(i, ownerId, dbid);
+      this.databaseInterface.addIngredientToDatabase(i, recipeId, dbid, snapshotId);
     }
   }
 
   // Adds a single ingredient to the specified virtual ingredient database
-  public void addIngredient(long dbid, Ingredient i, long ownerId) {
-    this.databaseInterface.addIngredientToDatabase(i, ownerId, dbid);
+  public void addIngredient(long dbid, Ingredient i, long recipeId, long snapshotId) {
+    this.databaseInterface.addIngredientToDatabase(i, recipeId, dbid, snapshotId);
   }
 
   // Returns all ingredients in the given virtual database with the given ingredient type
@@ -135,18 +196,18 @@ public class DatabaseAPI {
     return this.databaseInterface.getIngredients(dbid);
   }
 
-  public void addMashProfileList(long dbid, ArrayList<MashProfile> list, long ownerId) {
+  public void addMashProfileList(long dbid, ArrayList<MashProfile> list, long recipeId, long snapshotId) {
     for (MashProfile p : list) {
-      this.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
+      this.databaseInterface.addMashProfileToDatabase(p, recipeId, snapshotId, dbid);
     }
   }
 
-  public long addMashProfile(long dbid, MashProfile p, long ownerId) {
-    return this.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
+  public long addMashProfile(long dbid, MashProfile p, long recipeId, long snapshotId) {
+    return this.databaseInterface.addMashProfileToDatabase(p, recipeId, snapshotId, dbid);
   }
 
-  public void updateMashProfile(MashProfile p, long ownerId, long dbid) {
-    this.databaseInterface.updateMashProfile(p, ownerId, dbid);
+  public void updateMashProfile(MashProfile p, long recipeId, long snapshotId, long dbid) {
+    this.databaseInterface.updateMashProfile(p, recipeId, dbid, snapshotId);
   }
 
   // Returns all mash profiles in the given database
@@ -155,7 +216,7 @@ public class DatabaseAPI {
   }
 
   // Deletes the given mash profile
-  public boolean deleteMashProfileFromDatabase(long id, long dbid) {
-    return this.databaseInterface.deleteMashProfile(id, dbid);
+  public boolean deleteMashProfile(MashProfile p, long dbid) {
+    return this.databaseInterface.deleteMashProfile(p.getId(), dbid);
   }
 }

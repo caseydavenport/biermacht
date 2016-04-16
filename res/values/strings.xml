@@ -5,6 +5,7 @@
     <string name="title_activity_main">Biermacht</string>
     <string name="title_activity_display_recipe">Recipe Details</string>
     <string name="title_activity_display_style">Display Style</string>
+    <string name="title_activity_display_snapshot">Snapshot Details</string>
     <string name="title_activity_add_new_recipe">Add New Recipe</string>
     <string name="title_activity_add_fermentable">Add Fermentable</string>
     <string name="title_activity_edit_fermentable">Edit Fermentable</string>
@@ -26,9 +27,11 @@
     <!-- Menu stuff -->
     <string name="menu_settings">Settings</string>
     <string name="menu_add_ingredient">Add Ingredient</string>
+    <string name="menu_new_snapshot">New Snapshot</string>
     <string name="menu_brew_timer">Brew Timer</string>
     <string name="menu_edit_details">Edit Details</string>
     <string name="menu_edit_recipe">Edit Recipe</string>
+    <string name="menu_add_measurement">Add Measurement</string>
     <string name="menu_edit_profile">Edit Profile</string>
 
     <!-- Standard messages -->
@@ -121,5 +124,5 @@
     <string name="import_recipes_msg">Select a BeerXML (.xml) or BeerSmith2 (.bsmx) file to import recipes.</string>
     <string name="drive_button">GDrive</string>
     <string name="local_storage">SD Card</string>
-
+    <string name="snapshot_created">Snapshot Created</string>
 </resources>

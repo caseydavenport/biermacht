@@ -6,42 +6,41 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.biermacht.brews.frontend.fragments.AboutSnapshotFragment;
 import com.biermacht.brews.frontend.fragments.DetailsViewFragment;
 import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
 import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
-import com.biermacht.brews.frontend.fragments.SnapshotsViewFragment;
-import com.biermacht.brews.recipe.Recipe;
+import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
 
-public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapter {
-  Recipe r;
-  Context c;
+public class DisplaySnapshotCollectionPagerAdapter extends FragmentStatePagerAdapter {
+  private RecipeSnapshot snapshot;
+  private Context c;
   ArrayList<Fragment> fragmentList;
-  IngredientViewFragment ingredientFragment;
-  InstructionViewFragment instructionFragment;
-  DetailsViewFragment detailsFragment;
-  ProfileViewFragment profileFragment;
-  SnapshotsViewFragment snapshotFragment;
+  public AboutSnapshotFragment aboutFragment;
+  public IngredientViewFragment ingredientFragment;
+  public DetailsViewFragment detailsFragment;
+  public ProfileViewFragment profileFragment;
+  public InstructionViewFragment instructionFragment;
 
-  public DisplayRecipeCollectionPagerAdapter(FragmentManager fm, Recipe r, Context c) {
+  public DisplaySnapshotCollectionPagerAdapter(FragmentManager fm, RecipeSnapshot snap, Context c) {
     super(fm);
-    this.r = r;
+    this.snapshot = snap;
     this.c = c;
-    this.ingredientFragment = IngredientViewFragment.instance(r);
-    this.instructionFragment = InstructionViewFragment.instance(r);
-    this.detailsFragment = DetailsViewFragment.instance(r);
-    this.profileFragment = ProfileViewFragment.instance(r);
-    this.snapshotFragment = SnapshotsViewFragment.instance(r);
+    this.aboutFragment = AboutSnapshotFragment.instance(snap);
+    this.ingredientFragment = IngredientViewFragment.instance(snap);
+    this.instructionFragment = InstructionViewFragment.instance(snap);
+    this.detailsFragment = DetailsViewFragment.instance(snap);
+    this.profileFragment = ProfileViewFragment.instance(snap);
 
-    // Keep in list.
-    this.fragmentList = new ArrayList<>();
-    this.fragmentList.add(snapshotFragment);
+    this.fragmentList = new ArrayList<Fragment>();
+    this.fragmentList.add(aboutFragment);
     this.fragmentList.add(ingredientFragment);
-    this.fragmentList.add(detailsFragment);
     this.fragmentList.add(instructionFragment);
+    this.fragmentList.add(detailsFragment);
     this.fragmentList.add(profileFragment);
   }
 
@@ -67,3 +66,4 @@ public class DisplayRecipeCollectionPagerAdapter extends FragmentStatePagerAdapt
     return;
   }
 }
+

@@ -125,7 +125,7 @@ public class IngredientViewFragment extends Fragment implements BiermachtFragmen
 
     // Set whether or not we show the list view
     if (ingredientList.size() > 0) {
-      // There are ingredients.  Set up the ingredientArrayAdapter
+      // There are ingredients.  Set up the snapshotArrayAdapter
       // and set the list view to be visible.
       ingredientArrayAdapter = new IngredientArrayAdapter(getActivity(), ingredientList, r);
       ingredientListView.setVisibility(View.VISIBLE);

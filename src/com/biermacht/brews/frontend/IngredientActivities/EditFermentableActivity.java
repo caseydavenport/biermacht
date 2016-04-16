@@ -44,20 +44,20 @@ public class EditFermentableActivity extends AddFermentableActivity {
     // Get the ingredient as well
     long grainId = getIntent().getLongExtra(Constants.KEY_INGREDIENT_ID, Constants.INVALID_ID);
     fermentable = (Fermentable) new DatabaseAPI(this).getIngredientWithId(grainId);
-    Log.d("EditFermentableActivity::getValuesFromIntent", "Retrieved fermentable: " + fermentable.getName());
+    Log.d("EditFermentableActivity", "Retrieved fermentable: " + fermentable.getName());
   }
 
   @Override
   public void getList() {
     super.getList();
-    Log.d("EditFermentableActivity::getList", "Getting fermentables list");
+    Log.d("EditFermentableActivity", "Getting fermentables list");
 
     // Remove the placeholder ingredient
-    Log.d("EditFermentableActivity::getList", "Removing placeholder ingredient");
+    Log.d("EditFermentableActivity", "Removing placeholder ingredient");
     ingredientList.remove(0);
 
     if (! ingredientList.contains(fermentable)) {
-      Log.d("EditFermentableActivity::getList", "Adding custom fermentable to list: " + fermentable.getName());
+      Log.d("EditFermentableActivity", "Adding custom fermentable to list: " + fermentable.getName());
       ingredientList.add(0, fermentable);
     }
   }

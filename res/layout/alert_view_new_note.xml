@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:minHeight="1000dip"
+              android:minWidth="1000dip"
+              android:padding="10dip">
+
+    <EditText
+        android:id="@+id/description_edit_text"
+        android:hint="Description"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:text="Measurement"
+        android:singleLine="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="false"/>
+
+    <LinearLayout android:id="@+id/measurement_layout"
+        android:layout_below="@id/description_edit_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/gravity_edit_text"
+        android:hint="Gravity"
+        android:layout_margin="10dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="40dip"
+        android:maxLines="1"
+        android:inputType="numberDecimal"
+        android:selectAllOnFocus="true"/>
+
+    <EditText
+        android:id="@+id/temperature_edit_text"
+        android:hint="Temperature"
+        android:layout_margin="10dp"
+        android:maxLines="1"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="40dip"
+        android:inputType="numberDecimal"
+        android:selectAllOnFocus="true"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/notes_edit_text"
+        android:hint="Notes"
+        android:layout_below="@id/measurement_layout"
+        android:layout_margin="10dp"
+        android:singleLine="false"
+        android:minLines="3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="false"/>
+
+</RelativeLayout>

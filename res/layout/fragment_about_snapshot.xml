@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/activity_background"
+                android:orientation="vertical">
+
+    <!-- Divider below pager title -->
+    <TextView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:textColor="@color/transparent"
+        android:background="@color/theme_blue">
+    </TextView>
+
+    <EditText
+        android:id="@+id/description_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="0dp"
+        android:maxLines="1"
+        style="@style/text_input"
+        android:layout_below="@id/divider"
+        android:hint="Description"
+        android:text="Description"/>
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description_edit_text">
+
+        <Button
+            android:id="@+id/date_picker"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="3"
+            android:text="Pick Date"
+            android:background="@drawable/button_bg"
+            android:padding="5dp"
+            android:onClick="onButtonClick" />
+
+        <Button
+            android:id="@+id/time_picker"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="2"
+            android:text="14:32:17"
+            android:padding="5dp"
+            android:background="@drawable/button_bg"
+            android:onClick="onButtonClick" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_below="@id/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

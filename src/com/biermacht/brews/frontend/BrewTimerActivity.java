@@ -343,9 +343,9 @@ public class BrewTimerActivity extends AppCompatActivity {
       Log.d("BrewTimerService", "Back button pressed, display alert.");
       new AlertDialog.Builder(BrewTimerActivity.this)
               .setTitle("Cancel Brew Timer?")
-              .setMessage("Leaving this screen will cancel the current brew timer. Continue?")
-              .setNegativeButton("Cancel", null)
-              .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+              .setMessage("Leaving this screen will cancel the current brew timer.")
+              .setNegativeButton("Stay Here", null)
+              .setPositiveButton("Exit Timer", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                   finish();
                 }

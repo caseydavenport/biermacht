@@ -17,9 +17,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final int DATABASE_BETA = 2;  // Database in first release.
   public static final int DATABASE_GAMMA = 3; // Add measured batch size to the Recipe class.
   public static final int DATABASE_DELTA = 4; // Add auto-calc decoct amount to mash steps.
+  public static final int DATABASE_EPSILON = 5; // Add recipe snapshot table.
 
   // Current database version
-  public static final int DATABASE_VERSION = DATABASE_DELTA;
+  public static final int DATABASE_VERSION = DATABASE_EPSILON;
 
   // Tables
   public static final String TABLE_RECIPES = "RecipeTable";
@@ -27,6 +28,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final String TABLE_STYLES = "StyleTable";
   public static final String TABLE_PROFILES = "MashProfileTable";
   public static final String TABLE_STEPS = "MashStepTable";
+  public static final String TABLE_SNAPSHOTS = "RecipeSnapshotTable";
+
+  // Common column names
+  public static final String COL_SNAPSHOT_ID = "ownerSnapshotId";       // Identifies the snapshot which owns this item.
 
   // Column name defines for RECIPES
   public static final String REC_COL_ID = "_id";
@@ -71,6 +76,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final String REC_COL_CALC_STRIKE_TEMP = "calculateStrikeTemp";
   public static final String REC_COL_CALC_STRIKE_VOL = "calculateStrikeVolume";
   public static final String REC_COL_MEAS_BATCH_SIZE = "measuredBatchSize";
+
+  // Column name defines for SNAPSHOTS (augments the recipe columns)
+  public static final String SNAP_COL_OWNER_ID = "snapshotOwnerId";
+  public static final String SNAP_COL_DESCRIPTION = "snapshotDescription";
+  public static final String SNAP_COL_SNAPSHOT_TIME = "snapshotTime";
 
   // Column name defines for INGREDIENTS
   public static final String ING_COL_ID = "_id";
@@ -226,6 +236,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + REC_COL_MEAS_BATCH_SIZE + " float"
           + ");";
 
+  private static final String CREATE_SNAPSHOT_TABLE = "create table " +
+          TABLE_SNAPSHOTS
+          + "("
+          + REC_COL_ID + " integer primary key autoincrement, "
+          + SNAP_COL_OWNER_ID + " long not null, "
+          + REC_COL_DB_ID + " long not null, "
+          + REC_COL_NAME + " text not null, "
+          + REC_COL_VER + " int not null, "
+          + REC_COL_TYPE + " text not null, "
+          + REC_COL_BREWER + " text not null, "
+          + REC_COL_BATCH_SIZE + " float not null, "
+          + REC_COL_BOIL_SIZE + " float not null, "
+          + REC_COL_BOIL_TIME + " int not null, "
+          + REC_COL_BOIL_EFF + " float not null, "
+          + REC_COL_OG + " float not null, "
+          + REC_COL_FG + " float not null, "
+          + REC_COL_STAGES + " int not null, "
+          + REC_COL_DESC + " text not null, "
+          + REC_COL_BATCH_TIME + " int not null, "
+          + REC_COL_ABV + " float not null, "
+          + REC_COL_BITTER + " float not null, "
+          + REC_COL_COLOR + " float not null, "
+          + REC_COL_MEAS_OG + " float, "
+          + REC_COL_MEAS_FG + " float, "
+          + REC_COL_PRIMARY_TEMP + " float, "
+          + REC_COL_PRIMARY_AGE + " integer, "
+          + REC_COL_SECONDARY_TEMP + " float, "
+          + REC_COL_SECONDARY_AGE + " integer, "
+          + REC_COL_TERTIARY_TEMP + " float, "
+          + REC_COL_TERTIARY_AGE + " integer, "
+          + REC_COL_TASTE_NOTES + " string, "
+          + REC_COL_TASTE_RATING + " integer, "
+          + REC_COL_BOTTLE_AGE + " integer, "
+          + REC_COL_BOTTLE_TEMP + " float, "
+          + REC_COL_BREW_DATE + " string, "
+          + REC_COL_CARBONATION + " float, "
+          + REC_COL_FORCED_CARB + " integer, "
+          + REC_COL_PRIMING_SUGAR_NAME + " string, "
+          + REC_COL_CARB_TEMP + " float, "
+          + REC_COL_PRIMING_SUGAR_EQUIV + " float, "
+          + REC_COL_KEG_PRIMING_FACTOR + " float, "
+          + REC_COL_CALORIES + " integer, "
+          + REC_COL_CALC_BOIL_VOL + " integer, "
+          + REC_COL_CALC_STRIKE_TEMP + " integer, "
+          + REC_COL_CALC_STRIKE_VOL + " integer, "
+          + REC_COL_MEAS_BATCH_SIZE + " float, "
+          + SNAP_COL_DESCRIPTION + " string, "
+          + SNAP_COL_SNAPSHOT_TIME + " string"
+          + ");";
+
   private static final String CREATE_INGREDIENT_TABLE = "create table " +
           TABLE_INGREDIENTS
           + "("
@@ -267,7 +327,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + ING_MC_COL_VERSION + " int, "
           + ING_MC_COL_AMT_IS_WEIGHT + " int, "
           + ING_MC_COL_USE_FOR + " text, "
-          + ING_MC_COL_USE + " text"
+          + ING_MC_COL_USE + " text, "
+          + COL_SNAPSHOT_ID + " int default -1"
           + ");";
 
   public static final String CREATE_STYLE_TABLE = "create table " +
@@ -297,7 +358,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + STY_COL_NOTES + " text, "
           + STY_COL_PROFILE + " text, "
           + STY_COL_INGREDIENTS + " text, "
-          + STY_COL_EXAMPLES + " text"
+          + STY_COL_EXAMPLES + " text, "
+          + COL_SNAPSHOT_ID + " int default -1"
           + ");";
 
   public static final String CREATE_PROFILE_TABLE = "create table " +
@@ -317,7 +379,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + PRO_COL_TUN_SPEC_HEAT + " float, "
           + PRO_COL_TUN_EQUIP_ADJ + " integer, "
           + PRO_COL_MASH_TYPE + " text, "
-          + PRO_COL_SPARGE_TYPE + " text"
+          + PRO_COL_SPARGE_TYPE + " text, "
+          + COL_SNAPSHOT_ID + " int default -1"
           + ");";
 
   public static final String CREATE_STEP_TABLE = "create table " +
@@ -354,6 +417,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Create the tables
     Log.d("DatabaseHelper", "Creating database tables");
     database.execSQL(CREATE_RECIPE_TABLE);
+    database.execSQL(CREATE_SNAPSHOT_TABLE);
     database.execSQL(CREATE_INGREDIENT_TABLE);
     database.execSQL(CREATE_STYLE_TABLE);
     database.execSQL(CREATE_PROFILE_TABLE);
@@ -396,6 +460,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                   DatabaseHelper.STE_COL_CALC_DECOCT_AMT + " int";
           db.execSQL(sql);
           break;
+        case DATABASE_EPSILON:
+          // Upgrade from DELTA to EPSILON.  Adds the recipe snapshot table.
+          Log.d("DatabaseHelper", "Upgrading database from DELTA to EPSILON");
+          db.execSQL(CREATE_SNAPSHOT_TABLE);
+
+          // Add columns which indicate if owner is a Recipe or a RecipeSnapshot.
+          sql = "ALTER TABLE " + TABLE_INGREDIENTS + " ADD COLUMN " +
+                DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
+          db.execSQL(sql);
+
+          sql = "ALTER TABLE " + TABLE_PROFILES + " ADD COLUMN " +
+                  DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
+          db.execSQL(sql);
+          
+          sql = "ALTER TABLE " + TABLE_STYLES + " ADD COLUMN " +
+                  DatabaseHelper.COL_SNAPSHOT_ID + " int DEFAULT -1";
+          db.execSQL(sql);
+	  break;
       }
     }
   }

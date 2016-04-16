@@ -25,6 +25,7 @@ public class Constants {
   // Keys for passing objects
   public static final String KEY_RECIPE_ID = "biermacht.brews.recipe.id";
   public static final String KEY_RECIPE = "biermacht.brews.recipe";
+  public static final String KEY_SNAPSHOT = "biermacht.brews.snapshot";
   public static final String KEY_PROFILE_ID = "biermacht.brews.mash.profile.id";
   public static final String KEY_PROFILE = "biermacht.brews.mash.profile";
   public static final String KEY_INGREDIENT_ID = "biermacht.brews.ingredient.id";
@@ -60,7 +61,8 @@ public class Constants {
   public static final long DATABASE_DEFAULT = 0;    // Used by default.
 
   // No owner ID for use in database
-  public static final long OWNER_NONE = - 1;
+  public static final long RECIPE_NONE = - 1;
+  public static final long SNAPSHOT_NONE = -1;
 
   // Broadcast types
   public static final String BROADCAST_TIMER = "com.biermacht.brews.broadcast.timer";

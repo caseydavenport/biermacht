@@ -38,7 +38,10 @@ public class AddCustomYeastActivity extends AddYeastActivity {
 
   @Override
   public void onFinished() {
-    new DatabaseAPI(this).addIngredient(Constants.DATABASE_CUSTOM, yeast, Constants.MASTER_RECIPE_ID);
+    new DatabaseAPI(this).addIngredient(Constants.DATABASE_CUSTOM, 
+		                        yeast, 
+		                        Constants.MASTER_RECIPE_ID, 
+					Constants.SNAPSHOT_NONE);
     finish();
   }
 }

@@ -53,7 +53,8 @@ public class IngredientHandler {
       // Import mash profile assets.
       this.databaseApi.addMashProfileList(Constants.DATABASE_CUSTOM,
                                           getProfilesFromXml(),
-                                          Constants.OWNER_NONE);
+                                          Constants.RECIPE_NONE,
+					  Constants.SNAPSHOT_NONE);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -63,22 +64,27 @@ public class IngredientHandler {
   public void importIngredients() throws IOException {
     databaseApi.addIngredientList(Constants.DATABASE_PERMANENT,
                                   getFermentablesFromXml(),
-                                  Constants.OWNER_NONE);
+                                  Constants.RECIPE_NONE,
+                                  Constants.SNAPSHOT_NONE);
     databaseApi.addIngredientList(Constants.DATABASE_PERMANENT,
                                   getYeastsFromXml(),
-                                  Constants.OWNER_NONE);
+                                  Constants.RECIPE_NONE,
+                                  Constants.SNAPSHOT_NONE);
     databaseApi.addIngredientList(Constants.DATABASE_PERMANENT,
                                   getHopsFromXml(),
-                                  Constants.OWNER_NONE);
+                                  Constants.RECIPE_NONE,
+                                  Constants.SNAPSHOT_NONE);
     databaseApi.addIngredientList(Constants.DATABASE_PERMANENT,
                                   getMiscsFromXml(),
-                                  Constants.OWNER_NONE);
+                                  Constants.RECIPE_NONE,
+                                  Constants.SNAPSHOT_NONE);
   }
 
   public void importIngredients(String filePath) throws IOException {
     databaseApi.addIngredientList(Constants.DATABASE_PERMANENT,
                                   getIngredientsFromXml(filePath),
-                                  Constants.OWNER_NONE);
+                                  Constants.RECIPE_NONE,
+                                  Constants.SNAPSHOT_NONE);
   }
 
   /**
@@ -118,7 +124,6 @@ public class IngredientHandler {
                                                  Ingredient.YEAST));
     yeastsList.addAll(databaseApi.getIngredients(Constants.DATABASE_PERMANENT,
                                                  Ingredient.YEAST));
-
     Collections.sort(yeastsList, new ToStringComparator());
     return this.yeastsList;
   }
@@ -139,7 +144,6 @@ public class IngredientHandler {
                                                Ingredient.HOP));
     hopsList.addAll(databaseApi.getIngredients(Constants.DATABASE_PERMANENT,
                                                Ingredient.HOP));
-
     Collections.sort(hopsList, new ToStringComparator());
     return this.hopsList;
   }
@@ -160,7 +164,6 @@ public class IngredientHandler {
                                                 Ingredient.MISC));
     miscsList.addAll(databaseApi.getIngredients(Constants.DATABASE_PERMANENT,
                                                 Ingredient.MISC));
-
     Collections.sort(miscsList, new ToStringComparator());
     return this.miscsList;
   }

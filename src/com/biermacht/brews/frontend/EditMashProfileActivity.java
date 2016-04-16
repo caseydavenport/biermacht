@@ -109,7 +109,8 @@ public class EditMashProfileActivity extends AddMashProfileActivity {
                 new DatabaseAPI(getApplicationContext())
                         .addMashProfile(Constants.DATABASE_CUSTOM,
                                         mProfile,
-                                        mProfile.getOwnerId());
+                                        mProfile.getRecipeId(),
+					Constants.SNAPSHOT_NONE);
                 onMashProfileSavedAlert().create().show();
               }
             })

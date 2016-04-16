@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.biermacht.brews.database.DatabaseAPI;
-import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.IngredientHandler;
 
@@ -48,7 +47,8 @@ public class ImportNew extends AsyncTask<String, Void, String> {
         // Imports mash profiles from the file path.
         new DatabaseAPI(this.context).addMashProfileList(Constants.DATABASE_CUSTOM,
                                                          ingredientHandler.getProfilesFromXml(filePath),
-                                                         Constants.OWNER_NONE);
+                                                         Constants.RECIPE_NONE,
+                                                         Constants.SNAPSHOT_NONE);
       }
       else {
         Log.w("ImportNew", "Invalid type: " + this.type);
