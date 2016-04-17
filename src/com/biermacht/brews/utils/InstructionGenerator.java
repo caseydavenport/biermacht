@@ -165,10 +165,10 @@ public class InstructionGenerator {
 
     if (r.getMashProfile().getSpargeType().equals(MashProfile.SPARGE_TYPE_BIAB)) {
       i.setInstructionText("Sparge - remove grains");
-      i.setSubtitle("Top off to " + String.format("%2.1f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
+      i.setSubtitle("Top off to " + String.format("%2.2f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
     }
     else{
-      i.setSubtitle("Until " + String.format("%2.1f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
+      i.setSubtitle("Until " + String.format("%2.2f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
     }
 
     i.setDuration(0);  // Set duration to 0 so we don't show timer.
@@ -499,12 +499,12 @@ public class InstructionGenerator {
           // If an infuse step, add the infusion amount.
           if (s.getType().equals(MashStep.INFUSION)) {
             subtitle += "Infuse "
-              + String.format("%2.1f", s.getDisplayInfuseAmount()) + Units.getVolumeUnits()
+              + String.format("%2.2f", s.getDisplayInfuseAmount()) + Units.getVolumeUnits()
               + " @ "
               + String.format("%2.0f", s.getDisplayInfuseTemp()) + Units.getTemperatureUnits();
           }
           else if (s.getType().equals(MashStep.DECOCTION)) {
-            subtitle += "Decoct " + String.format("%2.1f", s.getDisplayDecoctAmount()) + Units.getVolumeUnits();
+            subtitle += "Decoct " + String.format("%2.2f", s.getDisplayDecoctAmount()) + Units.getVolumeUnits();
           }
           else if (s.getType().equals(MashStep.TEMPERATURE)) {
             subtitle += "Ramp over " + String.format("%2.0f", s.getRampTime()) + "m";
