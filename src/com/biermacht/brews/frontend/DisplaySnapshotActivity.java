@@ -28,6 +28,7 @@ import com.biermacht.brews.recipe.BrewNote;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.recipe.RecipeSnapshot;
 import com.biermacht.brews.utils.AlertBuilder;
+import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
@@ -163,9 +164,15 @@ public class DisplaySnapshotActivity extends AppCompatActivity {
         return true;
 
       case R.id.menu_add_measurement:
-        AlertBuilder builder = new AlertBuilder(this, null);
-        BrewNote b = new BrewNote();
-        builder.newNoteAlert(mSnapshot, b).show();
+        AlertBuilder builder = new AlertBuilder(this, new Callback() {
+          @Override
+          public void call() {
+            // Trigger an update of the about fragment once the newNoteAlert is closed.
+            cpAdapter.aboutFragment.update();
+          }
+        });
+        BrewNote note = new BrewNote(mSnapshot, BrewNote.TYPE_NOTE);
+        builder.newNoteAlert(mSnapshot, note).show();
         return true;
 
       case R.id.add_fermentable:

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,10 +136,10 @@ public class AlertBuilder {
             .setView(alertView)
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog, int which) {
-                    text.setText(editText.getText().toString());
-                    callback.call();
-                }
+              public void onClick(DialogInterface dialog, int which) {
+                text.setText(editText.getText().toString());
+                callback.call();
+              }
 
             })
 
@@ -150,33 +151,68 @@ public class AlertBuilder {
         final RelativeLayout alertView = (RelativeLayout) factory.inflate(R.layout.alert_view_new_note, null);
         final EditText gravityView = (EditText) alertView.findViewById(R.id.gravity_edit_text);
         final EditText temperatureView = (EditText) alertView.findViewById(R.id.temperature_edit_text);
-        final EditText descriptionView = (EditText) alertView.findViewById(R.id.notes_edit_text);
+        final EditText notesView = (EditText) alertView.findViewById(R.id.notes_edit_text);
+
+        if (note.getType().equals(BrewNote.TYPE_NOTE)) {
+          gravityView.setVisibility(View.GONE);
+          temperatureView.setVisibility(View.GONE);
+        }
+
+        // Set measurement to room temperature by default.
+        if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
+          temperatureView.setText("68.0");
+        } else {
+          temperatureView.setText("20.0");
+        }
 
       return new AlertDialog.Builder(context)
-                .setTitle("New Measurement")
+                .setTitle("New Note")
                 .setView(alertView)
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialog, int which) {
+                    // Get fields.
+                    String notes = "";
+                    double gravity = 1.0;
+                    double temperature = 68.0;
 
-                    public void onClick(DialogInterface dialog, int which) {
-                      // Get fields.
-                      String description = descriptionView.getText().toString();
-                      double gravity = Double.parseDouble(gravityView.getText().toString());
-                      double temperature = Double.parseDouble(temperatureView.getText().toString());
+                    try {
+                      notes = notesView.getText().toString();
+                    } catch (Exception e) {
+                      Log.e("AlertBuilder", "Invalid description, unable to parse");
+                    }
 
-                      // Set them.
-                      note.setDescription(description);
-                      note.setGravity(gravity);
-                      note.setTemperature(temperature);
+                    try {
+                      temperature = Double.parseDouble(temperatureView.getText().toString());
+                    } catch (Exception e) {
+                      Log.e("AlertBuilder", "Invalid temperature, unable to parse");
+                    }
 
-                      // Add note to RecipeSnapshot.
-                      s.addNote(note);
+                    try {
+                      gravity = Double.parseDouble(gravityView.getText().toString());
+                    } catch (Exception e) {
+                      Log.e("AlertBuilder", "Invalid gravity, unable to parse");
+                    }
 
-                      // Save.
-                      s.save(context);
+                    for (BrewNote b : s.getBrewNotes()) {
+                      Log.e("BrewNote!", b.getSnapshotId() + " " + b.getGravity());
+                    }
 
-                      // Alert that the snapshot has been saved.
+                    // Set them.
+                    note.setTextNotes(notes);
+                    note.setGravity(gravity);
+                    note.setTemperature(temperature);
+
+                    // Add note to RecipeSnapshot.
+                    s.addNote(note);
+
+                    // Save.
+                    s.save(context);
+
+                    // Alert that the snapshot has been saved.
+                    if (callback != null) {
                       callback.call();
                     }
+                  }
                 })
                 .setNegativeButton(R.string.cancel, null);
     }

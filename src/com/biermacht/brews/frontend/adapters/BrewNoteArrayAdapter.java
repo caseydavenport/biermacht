@@ -40,12 +40,12 @@ public class BrewNoteArrayAdapter extends ArrayAdapter<BrewNote> {
     // View to return
     row = convertView;
 
+    // Get the note.
+    note = list.get(position);
+
     if (row == null) {
       // If the row does not yet exist, inflate a new row_layout_note.
       row = inflater.inflate(R.layout.row_layout_note, parent, false);
-
-      // Get the note.
-      note = list.get(position);
 
       // Create storage for the component views.
       vs = new ViewStorage();
@@ -53,6 +53,7 @@ public class BrewNoteArrayAdapter extends ArrayAdapter<BrewNote> {
       vs.imageView = (ImageView) row.findViewById(R.id.row_icon);
       vs.gravityView = (TextView) row.findViewById(R.id.gravity);
       vs.temperatureView = (TextView) row.findViewById(R.id.temperature);
+      vs.subtitleView = (TextView) row.findViewById(R.id.subtitle);
       row.setTag(vs);
     }
 
@@ -60,10 +61,22 @@ public class BrewNoteArrayAdapter extends ArrayAdapter<BrewNote> {
     vs = (ViewStorage) row.getTag();
 
     // Set the correct values for these views.
+    if (note.getType().equals(BrewNote.TYPE_NOTE)) {
+      vs.subtitleView.setText(note.getTextNotes());
+    }
+    else {
+      vs.subtitleView.setText(note.getType());
+    }
     vs.dateView.setText(note.getDate());
-    vs.gravityView.setText(String.format("%2.2f", note.getGravity()));
+    vs.gravityView.setText(String.format("%2.3f", note.getGravity()));
     vs.temperatureView.setText(String.format("%2.2f %s", note.getTemperature(),
             Units.getTemperatureUnits()));
+
+    // Don't show measurement values for TYPE_NOTE.
+    if (note.getType().equals(BrewNote.TYPE_NOTE)) {
+      vs.gravityView.setVisibility(View.INVISIBLE);
+      vs.temperatureView.setVisibility(View.INVISIBLE);
+    }
 
     return row;
   }
@@ -74,5 +87,6 @@ public class BrewNoteArrayAdapter extends ArrayAdapter<BrewNote> {
     public ImageView imageView;
     public TextView gravityView;
     public TextView temperatureView;
+    public TextView subtitleView;
   }
 }

@@ -4,10 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.biermacht.brews.database.DatabaseAPI;
-import com.biermacht.brews.ingredient.Ingredient;
-import com.biermacht.brews.utils.InstructionGenerator;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,11 +13,15 @@ import java.util.Locale;
 public class BrewNote implements Parcelable {
 
   private long snapshotId;                           // ID of snapshot.
-  private String description;                        // Short description, e.g. "For Event X"
+  private String type;                               // Type of brew note.
+  private String textNotes;                        // Short textNotes, e.g. "For Event X"
   private String date;                               // Date
   private String time;                               // Time of day that this snapshot was taken.
   private double gravity;
   private double temperature;
+
+  public static String TYPE_GRAVITY_MEASUREMENT = "Gravity Mesurement";
+  public static String TYPE_NOTE = "Text Note";
 
   public static final Parcelable.Creator<BrewNote> CREATOR =
           new Parcelable.Creator<BrewNote>() {
@@ -37,10 +37,11 @@ public class BrewNote implements Parcelable {
           };
 
   // Public constructors
-  public BrewNote() {
+  public BrewNote(RecipeSnapshot s, String type) {
     super();
-    this.snapshotId = -1;
-    this.setDescription("New Measurement/Note");
+    this.snapshotId = s.getId();
+    this.type = type;
+    this.setTextNotes("New Measurement/Note");
 
     String date = new SimpleDateFormat("dd MMM yyyy").format(new Date());
     String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
@@ -50,7 +51,7 @@ public class BrewNote implements Parcelable {
 
   public BrewNote(Parcel p) {
     this.snapshotId = p.readLong();
-    this.description = p.readString();
+    this.textNotes = p.readString();
     this.date = p.readString();
     this.time = p.readString();
     this.gravity = p.readDouble();
@@ -65,11 +66,19 @@ public class BrewNote implements Parcelable {
   @Override
   public void writeToParcel(Parcel p, int flags) {
     p.writeLong(snapshotId);
-    p.writeString(this.description);
+    p.writeString(this.textNotes);
     p.writeString(this.date);
     p.writeString(this.time);
     p.writeDouble(this.gravity);
     p.writeDouble(this.temperature);
+  }
+
+  public String getType() {
+    return this.type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 
   public String getDate() { return this.date; }
@@ -122,12 +131,12 @@ public class BrewNote implements Parcelable {
     return this.snapshotId;
   }
 
-  public void setDescription(String s) {
-    this.description = s;
+  public void setTextNotes(String s) {
+    this.textNotes = s;
   }
 
-  public String getDescription() {
-    return this.description;
+  public String getTextNotes() {
+    return this.textNotes;
   }
 
   /**

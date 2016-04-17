@@ -155,6 +155,12 @@ public class AboutSnapshotFragment extends Fragment implements BiermachtFragment
     // Retrieve new snapshot from arguments in case they have changed.
     Log.d("AboutSnapshotFragment", "update() - Updating snapshot object");
     snapshot = getArguments().getParcelable(Constants.KEY_SNAPSHOT);
+
+    // Notify the adapter that the dataset may have changed, provided it has
+    // already been created.
+    if (adapter != null) {
+      adapter.notifyDataSetChanged();
+    }
   }
 
   @Override
