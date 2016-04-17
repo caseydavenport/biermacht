@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/ingredient_row"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:background="@color/transparent">
+
+    <TextView
+        android:id="@+id/notes"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/text"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Notes"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/transparent"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="1dip"
+        android:layout_below="@id/notes"
+        android:background="@color/divider"/>
+
+    <TextView
+        android:id="@+id/taste_notes"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/text"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Taste notes"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/divider"
+        android:background="@color/transparent"/>
+</RelativeLayout>

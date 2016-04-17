@@ -256,6 +256,11 @@ public class DisplayRecipeActivity extends AppCompatActivity {
     startActivity(i);
   }
 
+  public void handleClick(View v) {
+    // Pass to the currently selected fragment to handle.
+    ((BiermachtFragment) this.cpAdapter.getItem(mViewPager.getCurrentItem())).handleClick(v);
+  }
+
   @Override
   public void onPause() {
     super.onPause();

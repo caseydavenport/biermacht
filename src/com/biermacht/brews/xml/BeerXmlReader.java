@@ -445,6 +445,10 @@ public class BeerXmlReader extends DefaultHandler {
         r.setNotes(currentValue);
       }
 
+      else if (qName.equalsIgnoreCase("DATE")) {
+        r.setBrewDate(currentValue);
+      }
+
       else if (qName.equalsIgnoreCase("BREWER")) {
         r.setBrewer(currentValue);
       }

@@ -1,6 +1,10 @@
 package com.biermacht.brews.utils;
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -96,5 +100,37 @@ public class Utils {
 
     r.save(c);
     return r;
+  }
+
+  /**
+   * This method adjusts the height of the given listView to match the combined height of all if its
+   * children and the dividers between list items.  This is used to set the height of the mash step
+   * list such that it does not scroll, since it is encompassed by a ScrollView.
+   *
+   * @param listView
+   *         ListView to adjust.
+   */
+  public static void setListViewHeightBasedOnChildren(ListView listView) {
+    ListAdapter listAdapter = listView.getAdapter();
+    if (listAdapter == null) {
+      return;
+    }
+
+    int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+    int totalHeight = 0;
+    View view = null;
+    for (int i = 0; i < listAdapter.getCount(); i++) {
+      view = listAdapter.getView(i, view, listView);
+      if (i == 0) {
+        view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+      }
+
+      view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+      totalHeight += view.getMeasuredHeight();
+    }
+    ViewGroup.LayoutParams params = listView.getLayoutParams();
+    params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+    listView.setLayoutParams(params);
+    listView.requestLayout();
   }
 }

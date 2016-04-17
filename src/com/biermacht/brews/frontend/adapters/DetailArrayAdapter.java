@@ -69,16 +69,30 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       this.vs.titleView.setVisibility(View.GONE);
       this.vs.valueView.setVisibility(View.GONE);
     }
-    else if (detail.getType().equals(Detail.TYPE_TEXT)) {
-      // This is a text type detail.
+    else {
+      this.vs.rangeView.setVisibility(View.VISIBLE);
+      this.vs.titleView.setVisibility(View.VISIBLE);
+      this.vs.valueView.setVisibility(View.VISIBLE);
+    }
+
+    if (detail.getType().equals(Detail.TYPE_TEXT)) {
+      // Set visibilities.
+      this.vs.rangeView.setVisibility(View.GONE);
+      this.vs.titleView.setVisibility(View.VISIBLE);
+
+      // Set values.
       this.vs.titleView.setText(detail.getTitle());
       this.vs.valueView.setText(detail.getContent());
-      this.vs.rangeView.setVisibility(View.GONE);
+
+      // Set color.
+      this.vs.valueView.setTextColor(Color.DKGRAY);
     }
     else if (detail.getType().equals(Detail.TYPE_RANGE)) {
       // This is a range type detail.  These details contain a title, range, and value.
       // The value will be colored based on whether or not it falls within the range.
       this.vs.rangeView.setVisibility(View.VISIBLE);
+      this.vs.titleView.setVisibility(View.VISIBLE);
+
       this.range = String.format(this.detail.getFormat(), detail.getMin()) +
               " - " +
               String.format(this.detail.getFormat(), detail.getMax());

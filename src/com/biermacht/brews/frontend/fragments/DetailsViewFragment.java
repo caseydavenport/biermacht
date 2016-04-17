@@ -1,17 +1,23 @@
 package com.biermacht.brews.frontend.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.Detail;
+import com.biermacht.brews.frontend.EditRecipeNotesActivity;
 import com.biermacht.brews.frontend.adapters.DetailArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
@@ -21,14 +27,16 @@ public class DetailsViewFragment extends Fragment implements BiermachtFragment {
   private int resource = R.layout.fragment_details_view;
   private Recipe r;
   private View pageView;
+  private View notesFooter;
 
   // ListView, List, and Adapter.
   private DetailArrayAdapter mAdapter;
   private ArrayList<Detail> detailList;
   private ListView listView;
 
-  // Detail views to show.  These are statically defined.
+  // Detail views to show.
   Detail beerType;
+  Detail brewDate;
   Detail originalGravity;
   Detail finalGravity;
   Detail eff;
@@ -77,6 +85,15 @@ public class DetailsViewFragment extends Fragment implements BiermachtFragment {
     this.beerType.setFormat("%s");
     this.beerType.setContent(this.r.getStyle().getName());
     this.detailList.add(this.beerType);
+
+    if (!this.r.getBrewDate().isEmpty()) {
+      this.brewDate = new Detail();
+      this.brewDate.setTitle("Brew Date: ");
+      this.brewDate.setType(Detail.TYPE_TEXT);
+      this.brewDate.setFormat("%s");
+      this.brewDate.setContent(this.r.getBrewDate());
+      this.detailList.add(this.brewDate);
+    }
 
     // Create and add the Original Gravity detail.  This Detail is a range
     // type which displays the estimated original gravity.
@@ -195,8 +212,43 @@ public class DetailsViewFragment extends Fragment implements BiermachtFragment {
     this.mAdapter = new DetailArrayAdapter(getActivity(), this.detailList);
     this.listView.setAdapter(this.mAdapter);
 
+    // Set up the notes footer.
+    notesFooter = inflater.inflate(R.layout.notes_list_footer, container, false);
+    TextView notesText = (TextView) notesFooter.findViewById(R.id.notes);
+    TextView tasteNotesText = (TextView) notesFooter.findViewById(R.id.taste_notes);
+
+    // Set text if present.
+    if (this.r.getNotes().isEmpty()) {
+      notesText.setText("No notes");
+      notesText.setGravity(Gravity.CENTER_HORIZONTAL);
+    }
+    else {
+      notesText.setText(this.r.getNotes());
+      notesText.setGravity(Gravity.LEFT);
+    }
+
+    if (this.r.getTasteNotes().isEmpty()) {
+      tasteNotesText.setText("No taste notes");
+      tasteNotesText.setGravity(Gravity.CENTER_HORIZONTAL);
+    }
+    else {
+      tasteNotesText.setText(this.r.getTasteNotes());
+      tasteNotesText.setGravity(Gravity.LEFT);
+    }
+
+    this.listView.addFooterView(notesFooter, null, true);
+    notesFooter.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        // Start the edit notes activity.
+        Intent i = new Intent(getActivity(), EditRecipeNotesActivity.class);
+        i.putExtra(Constants.KEY_RECIPE, r);
+        i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
+        startActivity(i);      }
+    });
+
     return this.pageView;
-  }
+    }
 
   @Override
   public void handleClick(View v) {

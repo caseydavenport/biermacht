@@ -168,6 +168,7 @@ public class InstructionGenerator {
       i.setSubtitle("Top off to " + String.format("%2.2f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
     }
     else{
+      i.setInstructionText(r.getMashProfile().getSpargeType() + " sparge");
       i.setSubtitle("Until " + String.format("%2.2f", r.getDisplayBoilSize()) + Units.getVolumeUnits());
     }
 

@@ -44,6 +44,8 @@ public class Constants {
 
   public static final int INVALID_ID = - 1;
 
+  public static final String BREW_DATE_FMT = "dd MMM yyyy";
+
   // Indicates if a recipe should be displayed after it is created.
   public static final String DISPLAY_ON_CREATE = "biermacht.brews.recipe.display.on.create";
 

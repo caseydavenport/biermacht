@@ -360,6 +360,10 @@ public class BsmxXmlReader extends DefaultHandler {
         r.setNotes(currentValue);
       }
 
+      else if (qName.equalsIgnoreCase("F_R_DATE")) {
+        r.setBrewDate(currentValue);
+      }
+
       else if (qName.equalsIgnoreCase("F_R_BREWER")) {
         r.setBrewer(currentValue);
       }

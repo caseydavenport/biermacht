@@ -12,6 +12,7 @@ public class Detail {
 
   public static String TYPE_RANGE = "range";
   public static String TYPE_TEXT = "text";
+  public static String TYPE_BIGTEXT = "bigtext";
   public static String TYPE_BLANK = "blank";
 
   /**

@@ -147,7 +147,8 @@ public class Recipe implements Parcelable {
     // Custom Fields ==================================================
     // ================================================================
     this.id = - 1;
-    this.notes = "No notes provided";
+    this.notes = "";
+    this.tasteNotes = "";
     this.batchTime = 60;
     this.ABV = 0;
     this.bitterness = 0;
@@ -437,12 +438,7 @@ public class Recipe implements Parcelable {
   }
 
   public void setNotes(String notes) {
-    if (notes.isEmpty()) {
-      this.notes = "No notes provided.";
-    }
-    else {
-      this.notes = notes;
-    }
+    this.notes = notes;
   }
 
   public BeerStyle getStyle() {
@@ -949,6 +945,9 @@ public class Recipe implements Parcelable {
   }
 
   public String getTasteNotes() {
+    if (this.tasteNotes == null) {
+      this.tasteNotes = "";
+    }
     return this.tasteNotes;
   }
 

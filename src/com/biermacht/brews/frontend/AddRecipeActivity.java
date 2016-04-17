@@ -26,7 +26,9 @@ import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AddRecipeActivity extends AddEditActivity {
 
@@ -326,8 +328,10 @@ public class AddRecipeActivity extends AddEditActivity {
     double batchSize = Double.parseDouble(batchSizeViewText.getText().toString().replace(",", "."));
     double boilSize = Double.parseDouble(boilSizeViewText.getText().toString().replace(",", "."));
     String description = "No Description Provided";
+    String brewDate = new SimpleDateFormat(Constants.BREW_DATE_FMT).format(new Date());
 
     mRecipe.setRecipeName(name);
+    mRecipe.setBrewDate(brewDate);
     mRecipe.setVersion(Utils.getXmlVersion());
     mRecipe.setType(type);
     mRecipe.setStyle(style);
