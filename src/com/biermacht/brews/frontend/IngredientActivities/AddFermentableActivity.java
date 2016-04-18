@@ -163,7 +163,6 @@ public class AddFermentableActivity extends AddEditIngredientActivity {
           }
         }
         else {
-          // TODO: Do we ever want to enter a time for mashes?
           timeView.setVisibility(View.GONE);
         }
       }

@@ -115,6 +115,9 @@ public class AddMashStepActivity extends AddEditActivity {
     infuseTemperatureViewTitle.setText("Water Temperature (" + Units.getTemperatureUnits() + ")");
     rampTimeViewTitle.setText("Ramp Time");
 
+    // Set visibilities.
+    setVisibilities(step.getType());
+
     // Remove views we don't want
     mainView.removeView(amountView);
 
@@ -328,28 +331,7 @@ public class AddMashStepActivity extends AddEditActivity {
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
         type = stepTypeArray.get(position);
         step.setType(type);
-
-        // We need to set the correct titles and visible views based on the selected MashStep type.
-        if (type.equals(MashStep.DECOCTION)) {
-          stepAmountViewTitle.setText("Amount to decoct (" + Units.getVolumeUnits() + ")");
-          infuseTemperatureView.setVisibility(View.GONE);
-          waterToGrainRatioView.setVisibility(View.GONE);
-          stepAmountView.setVisibility(View.VISIBLE);
-          rampTimeView.setVisibility(View.GONE);
-        }
-        else if (type.equals(MashStep.TEMPERATURE)) {
-          infuseTemperatureView.setVisibility(View.GONE);
-          stepAmountView.setVisibility(View.GONE);
-          waterToGrainRatioView.setVisibility(View.GONE);
-          rampTimeView.setVisibility(View.VISIBLE);
-        }
-        else {
-          stepAmountViewTitle.setText("Water to add (" + Units.getVolumeUnits() + ")");
-          infuseTemperatureView.setVisibility(View.VISIBLE);
-          waterToGrainRatioView.setVisibility(View.VISIBLE);
-          stepAmountView.setVisibility(View.VISIBLE);
-          rampTimeView.setVisibility(View.GONE);
-        }
+        setVisibilities(type);
 
         // Update selected values.
         setValues();
@@ -358,6 +340,30 @@ public class AddMashStepActivity extends AddEditActivity {
       public void onNothingSelected(AdapterView<?> parentView) {
       }
     };
+  }
+
+  private void setVisibilities(String stepType) {
+    // We need to set the correct titles and visible views based on the selected MashStep type.
+    if (stepType.equals(MashStep.DECOCTION)) {
+      stepAmountViewTitle.setText("Amount to decoct (" + Units.getVolumeUnits() + ")");
+      infuseTemperatureView.setVisibility(View.GONE);
+      waterToGrainRatioView.setVisibility(View.GONE);
+      stepAmountView.setVisibility(View.VISIBLE);
+      rampTimeView.setVisibility(View.GONE);
+    }
+    else if (stepType.equals(MashStep.TEMPERATURE)) {
+      infuseTemperatureView.setVisibility(View.GONE);
+      stepAmountView.setVisibility(View.GONE);
+      waterToGrainRatioView.setVisibility(View.GONE);
+      rampTimeView.setVisibility(View.VISIBLE);
+    }
+    else {
+      stepAmountViewTitle.setText("Water to add (" + Units.getVolumeUnits() + ")");
+      infuseTemperatureView.setVisibility(View.VISIBLE);
+      waterToGrainRatioView.setVisibility(View.VISIBLE);
+      stepAmountView.setVisibility(View.VISIBLE);
+      rampTimeView.setVisibility(View.GONE);
+    }
   }
 
   /**
