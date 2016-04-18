@@ -91,6 +91,7 @@
                     android:textColor="@color/text"/>
 
                 <Button
+                    android:id="@+id/display_style_button"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     style="@style/button"

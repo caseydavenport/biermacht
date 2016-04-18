@@ -1,11 +1,19 @@
 package com.biermacht.brews.frontend.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Build;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
@@ -55,30 +63,19 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       this.vs.titleView = (TextView) row.findViewById(R.id.tag);
       this.vs.rangeView = (TextView) row.findViewById(R.id.range);
       this.vs.valueView = (TextView) row.findViewById(R.id.value);
+      this.vs.progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
       this.row.setTag(this.vs);
     }
 
     // Get the component views for this row.
     vs = (ViewStorage) this.row.getTag();
 
-    // Check what type of detail this is.  The type of detail determines 
-    // which views to dislay and how to populate them.
-    if (detail.getType().equals(Detail.TYPE_BLANK)) {
-      // If this is a blank detail, set all views to GONE.
-      this.vs.rangeView.setVisibility(View.GONE);
-      this.vs.titleView.setVisibility(View.GONE);
-      this.vs.valueView.setVisibility(View.GONE);
-    }
-    else {
-      this.vs.rangeView.setVisibility(View.VISIBLE);
-      this.vs.titleView.setVisibility(View.VISIBLE);
-      this.vs.valueView.setVisibility(View.VISIBLE);
-    }
 
     if (detail.getType().equals(Detail.TYPE_TEXT)) {
       // Set visibilities.
       this.vs.rangeView.setVisibility(View.GONE);
       this.vs.titleView.setVisibility(View.VISIBLE);
+      this.vs.progressBar.setVisibility(View.GONE);
 
       // Set values.
       this.vs.titleView.setText(detail.getTitle());
@@ -92,6 +89,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       // The value will be colored based on whether or not it falls within the range.
       this.vs.rangeView.setVisibility(View.VISIBLE);
       this.vs.titleView.setVisibility(View.VISIBLE);
+      this.vs.progressBar.setVisibility(View.VISIBLE);
 
       this.range = String.format(this.detail.getFormat(), detail.getMin()) +
               " - " +
@@ -103,6 +101,19 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       this.vs.rangeView.setText(this.range);
       this.vs.valueView.setText(this.value);
 
+      // Set progress bar progress.
+      double progress = (this.detail.getValue() - this.detail.getMin()) / (this.detail.getMax() - this.detail.getMin());
+      progress = progress * 40 + 30;
+      if (progress > 100) {
+        // Can't set progress above 100!
+        progress = 100;
+      }
+      if (progress <= 2) {
+        // Always show a little bit of red if it goes below.
+        progress = 2;
+      }
+      this.vs.progressBar.setProgress((int) progress);
+
       // Determine if the value is squarely within the specified range.
       this.isGood = Utils.isWithinRange(this.detail.getValue(), this.detail.getMin(), this.detail.getMax());
 
@@ -110,17 +121,26 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       this.isOk = Utils.isWithinRange(detail.getValue(), detail.getMinOk(), detail.getMaxOk());
 
       // Set all the colors appropriately.
+      int color;
       if (this.isGood) {
         // The value is within the specified range.  Color the text green.
-        this.vs.valueView.setTextColor(Color.parseColor(ColorHandler.GREEN));
+        color = Color.parseColor(ColorHandler.GREEN);
       }
       else if (this.isOk) {
         // The value is within the range + tolerance.  Color the text yellow.
-        this.vs.valueView.setTextColor(Color.parseColor(ColorHandler.YELLOW));
+        color = Color.parseColor(ColorHandler.YELLOW);
       }
       else {
         // The value is not good enough.  Color the text red.
-        this.vs.valueView.setTextColor(Color.parseColor(ColorHandler.RED));
+        color = Color.parseColor(ColorHandler.RED);
+      }
+      this.vs.valueView.setTextColor(color);
+      if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        this.vs.progressBar.setProgressTintList(ColorStateList.valueOf(color));
+      }
+      else {
+        this.vs.progressBar.getProgressDrawable().setColorFilter(
+                Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
       }
     }
 
@@ -132,5 +152,6 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
     TextView titleView;
     TextView rangeView;
     TextView valueView;
+    ProgressBar progressBar;
   }
 }

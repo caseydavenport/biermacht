@@ -327,7 +327,7 @@ public class AddRecipeActivity extends AddEditActivity {
     efficiency = Double.parseDouble(efficiencyViewText.getText().toString().replace(",", "."));
     double batchSize = Double.parseDouble(batchSizeViewText.getText().toString().replace(",", "."));
     double boilSize = Double.parseDouble(boilSizeViewText.getText().toString().replace(",", "."));
-    String description = "No Description Provided";
+    String notes = "";
     String brewDate = new SimpleDateFormat(Constants.BREW_DATE_FMT).format(new Date());
 
     mRecipe.setRecipeName(name);
@@ -342,7 +342,8 @@ public class AddRecipeActivity extends AddEditActivity {
     mRecipe.setBoilTime(time);
     mRecipe.setEfficiency(efficiency);
     mRecipe.setBatchTime(1);
-    mRecipe.setNotes(description);
+    mRecipe.setNotes(notes);
+    mRecipe.setTasteNotes(notes);
   }
 
   @Override

@@ -31,6 +31,7 @@ import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.AddRecipeActivity;
 import com.biermacht.brews.frontend.BrewTimerActivity;
 import com.biermacht.brews.frontend.DisplayRecipeActivity;
+import com.biermacht.brews.frontend.DisplayStyleActivity;
 import com.biermacht.brews.frontend.EditFermentationProfileActivity;
 import com.biermacht.brews.frontend.EditMashProfileActivity;
 import com.biermacht.brews.frontend.EditRecipeNotesActivity;
@@ -415,7 +416,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
     // Currently, the handleClick method is only valid when running on
     // a tablet.  If we hit this method when not running on a tablet,
     // we should just return.
-    if (! isTablet) {
+    if (!isTablet) {
       Log.d("RecipesFragment", "Not on tablet, do nothing");
       return;
     }
@@ -466,6 +467,13 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
 
       // Dismiss the currentAlert, which should be the ingredientSelectorAlert()
       currentAlert.dismiss();
+    }
+    else if (v.getId() == R.id.display_style_button) {
+      // Called when the display style button is pressed on the profile fragment.
+      // Launches the DisplayStyleActivity.
+      Intent i = new Intent(getActivity(), DisplayStyleActivity.class);
+      i.putExtra(Constants.KEY_STYLE, r.getStyle());
+      startActivity(i);
     }
   }
 

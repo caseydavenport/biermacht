@@ -588,6 +588,13 @@ public class MainActivity extends DriveActivity {
     }
   }
 
+  public void displayStyle(View v) {
+    // Pass directly to the selected fragment.
+    // This method gets called in tablet mode when a user opens
+    // the style for the currently selected recipe.
+    this.fragmentList.get(selectedItem).handleClick(v);
+  }
+
   /**
    * Creates the Builder for the Recipe selector, which is shown after Recipes have been loaded from
    * a user-chosen XML resource.

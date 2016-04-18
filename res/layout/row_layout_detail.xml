@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="fill_parent"
                 android:layout_height="72dp"
                 android:background="@color/transparent"
@@ -8,11 +10,12 @@
 
     <TextView
         android:id="@+id/tag"
-        android:gravity="center_vertical|right"
+        android:layout_centerVertical="true"
+        android:gravity="right"
         android:layout_width="130dip"
         android:padding="5dip"
         android:background="@color/transparent"
-        android:layout_height="72dp"
+        android:layout_height="wrap_content"
         android:textColor="@color/subtitle"
         android:textSize="14sp"
         android:text="Bitterness, IBU: "
@@ -22,8 +25,8 @@
     <TextView
         android:id="@+id/value"
         android:layout_width="fill_parent"
-        android:layout_height="72dp"
-        android:gravity="left|center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:textSize="16sp"
         android:textColor="@color/text"
         android:text="Beer Name"
@@ -36,12 +39,21 @@
 
     <TextView
         android:id="@id/range"
-        android:gravity="left|center_vertical"
+        android:layout_centerVertical="true"
         android:layout_width="100dp"
         android:background="@color/transparent"
-        android:layout_height="72dp"
+        android:layout_height="wrap_content"
         android:textColor="@color/subtitle"
         android:paddingRight="16dp"
         android:layout_alignParentRight="true"/>
 
-</RelativeLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/progress_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        app:layout_widthPercent="70%"
+        android:layout_height="10dp"
+        android:layout_below="@id/value"/>
+
+</android.support.percent.PercentRelativeLayout>
