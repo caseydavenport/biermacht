@@ -143,6 +143,7 @@ public class Recipe implements Parcelable {
     this.secondaryTemp = 21;
     this.tertiaryTemp = 21;
     this.bottleAge = 14;
+    this.brewDate = "";
 
     // Custom Fields ==================================================
     // ================================================================
@@ -1014,6 +1015,9 @@ public class Recipe implements Parcelable {
   }
 
   public String getBrewDate() {
+    if (this.brewDate == null) {
+      this.brewDate = "";
+    }
     return this.brewDate;
   }
 
