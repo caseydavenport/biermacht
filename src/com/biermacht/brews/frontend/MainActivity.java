@@ -158,6 +158,11 @@ public class MainActivity extends DriveActivity {
             Log.d("MainActivity", "Importing BIAB mash profiles");
             new ImportNew("mashprofile", "Importing new mash profiles",
                           this, "Profiles/biab-01.xml").execute("");
+            break;
+          case 3:
+            Log.d("MainActivity", "Importing mangrove yeasts");
+            new ImportNew("ingredient", "Importing new ingredients",
+                          this, "Yeasts/mangrove-01.xml").execute("");
           default:
             Log.w("MainActivity", "No action for version: " + lastVersion);
             break;

@@ -229,9 +229,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>76.5000000</ATTENUATION>
-        <NOTES>Biscuity, ale-like aroma with lager-like flavor. Accentuates hop flavors and
-            bitterness.
-        </NOTES>
+        <NOTES>Biscuity, ale-like aroma with lager-like flavor. Accentuates hop flavors and bitterness.</NOTES>
         <BEST_FOR>Belgian pale and amber ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -279,9 +277,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>77.0000000</ATTENUATION>
-        <NOTES>High gravity Trappist ale yeast. Dry, slightly acidic finish. Cleaner and less spicy
-            than WLP500 or WLP530.
-        </NOTES>
+        <NOTES>High gravity Trappist ale yeast. Dry, slightly acidic finish. Cleaner and less spicy than WLP500 or WLP530.</NOTES>
         <BEST_FOR>High gravity beers, Belgian ales, Dubbels, Trippels.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -666,9 +662,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>70.0000000</ATTENUATION>
-        <NOTES>Blend of Brettanomyces, Saccharomyces, Lactobacillus and Pediococcus. Use in
-            secondary.
-        </NOTES>
+        <NOTES>Blend of Brettanomyces, Saccharomyces, Lactobacillus and Pediococcus. Use in secondary.</NOTES>
         <BEST_FOR>Belgian sour beers</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -764,8 +758,7 @@
         <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>75.0000000</ATTENUATION>
-        <NOTES>Complex, fruity aromas and flavors. Phenolic, spicy, earthy, and clove like flavor
-        </NOTES>
+        <NOTES>Complex, fruity aromas and flavors. Phenolic, spicy, earthy, and clove like flavor.</NOTES>
         <BEST_FOR>Belgian and French Saison</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -981,8 +974,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>70.0000000</ATTENUATION>
-        <NOTES>Low intensity Brett character. Pineapple like aroma. Mild flavor contribution.
-        </NOTES>
+        <NOTES>Low intensity Brett character. Pineapple like aroma. Mild flavor contribution.</NOTES>
         <BEST_FOR>Sour ales (in secondary)</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1030,8 +1022,7 @@
         <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
         <FLOCCULATION>Very High</FLOCCULATION>
         <ATTENUATION>80.0000000</ATTENUATION>
-        <NOTES>Cherry-pie like flavor and sourness. Works best in conjunction with other yeast.
-        </NOTES>
+        <NOTES>Cherry-pie like flavor and sourness. Works best in conjunction with other yeast.</NOTES>
         <BEST_FOR>Lambic</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1201,9 +1192,7 @@
         <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>Excellent for full-bodied red wines, ester production complements flavor. Alcohol
-            Tolerance: 16%
-        </NOTES>
+        <NOTES>Excellent for full-bodied red wines, ester production complements flavor. Alcohol Tolerance: 16%</NOTES>
         <BEST_FOR>Merlot, Chardonnay, Chianti, Chenin Blanc, and Sauvignon Blanc</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1323,8 +1312,7 @@
         <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>Dry. Mild esters, low sulfur dioxide production. Fermentation speed is moderate.
-        </NOTES>
+        <NOTES>Dry. Mild esters, low sulfur dioxide production. Fermentation speed is moderate.</NOTES>
         <BEST_FOR>Chardonnay Wine</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1420,9 +1408,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>75.0000000</ATTENUATION>
-        <NOTES>Clean, Highly flocculant, and highly attentive yeast. Similar to White labs English
-            Ale yeast, but more attentive. Suitable for high gravity ales.
-        </NOTES>
+        <NOTES>Clean, Highly flocculant, and highly attentive yeast. Similar to White labs English Ale yeast, but more attentive. Suitable for high gravity ales.</NOTES>
         <BEST_FOR>Pale Ales, Amber, ESB, Brown Ales, Strong Ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1446,9 +1432,7 @@
         <MAX_TEMPERATURE>20.5555556</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>68.5000000</ATTENUATION>
-        <NOTES>Traditional Alt yeast from Dusseldorf, Germany. Produces clean, slightly sweet alt
-            beers. Does not accentuate hop flavor like WLP029 does.
-        </NOTES>
+        <NOTES>Traditional Alt yeast from Dusseldorf, Germany. Produces clean, slightly sweet alt beers. Does not accentuate hop flavor like WLP029 does.</NOTES>
         <BEST_FOR>Alt biers, Dusseldorf Alts, German Ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1472,9 +1456,7 @@
         <MAX_TEMPERATURE>22.7777778</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>72.5000000</ATTENUATION>
-        <NOTES>White labs &#34;Brewer Patriot&#34; strain can be used to reproduce many of the
-            American versions of classic beer styles. Very clean with low esters.
-        </NOTES>
+        <NOTES>White labs &#34;Brewer Patriot&#34; strain can be used to reproduce many of the American versions of classic beer styles. Very clean with low esters.</NOTES>
         <BEST_FOR>American Ales, Golden ales, Blonde Ale, Pale Ale and German Alt styles</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1498,9 +1480,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>72.5000000</ATTENUATION>
-        <NOTES>Malty strong ale yeast. Reproduces complex, malty, flavorful schottish ales. Hop
-            character comes through well.
-        </NOTES>
+        <NOTES>Malty strong ale yeast. Reproduces complex, malty, flavorful schottish ales. Hop character comes through well.</NOTES>
         <BEST_FOR>Strong Scottish style ales, ESB, Irish Reds</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1524,12 +1504,8 @@
         <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
         <FLOCCULATION>Very High</FLOCCULATION>
         <ATTENUATION>66.5000000</ATTENUATION>
-        <NOTES>Classic ESB strain best for English style milds, bitters, porters and English style
-            stouts. Leaves a clear beer with some residual sweetness.
-        </NOTES>
-        <BEST_FOR>English Pale Ale, ESB, India Pale Ale, Brown Ale, Porter, Sweet Stouts and Strong
-            Ales
-        </BEST_FOR>
+        <NOTES>Classic ESB strain best for English style milds, bitters, porters and English style stouts. Leaves a clear beer with some residual sweetness.</NOTES>
+        <BEST_FOR>English Pale Ale, ESB, India Pale Ale, Brown Ale, Porter, Sweet Stouts and Strong Ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
         <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -1552,9 +1528,7 @@
         <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>Classic Cider yeast. Ferments dry, but retains apple flavor. Some sulfer produced
-            during fermentation will fade with age.
-        </NOTES>
+        <NOTES>Classic Cider yeast. Ferments dry, but retains apple flavor. Some sulfer produced during fermentation will fade with age.</NOTES>
         <BEST_FOR>Cider, Wine and High Gravity Beer</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1578,10 +1552,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>73.5000000</ATTENUATION>
-        <NOTES>Flavorful British yeast with a drier finish than many ale yeasts. Bready and fruity
-            in character. Well suited for top cropping (collecting). Does not flocculate as much as
-            WLP005 or WLP002.
-        </NOTES>
+        <NOTES>Flavorful British yeast with a drier finish than many ale yeasts. Bready and fruity in character. Well suited for top cropping (collecting). Does not flocculate as much as WLP005 or WLP002.</NOTES>
         <BEST_FOR>British milds, pale ales, bitters, stouts.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1605,9 +1576,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>67.5000000</ATTENUATION>
-        <NOTES>Malty, Northern European ale yeast. Low ester production, low sulfer, gives a clean
-            profile. Low attenuation contributes to malty taste.
-        </NOTES>
+        <NOTES>Malty, Northern European ale yeast. Low ester production, low sulfer, gives a clean profile. Low attenuation contributes to malty taste.</NOTES>
         <BEST_FOR>Alt, Kolsch, malty English Ales, Fruit beers</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1655,9 +1624,7 @@
         <MAX_TEMPERATURE>13.3333333</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>75.0000000</ATTENUATION>
-        <NOTES>Clean, dry flavor profile for aggressively hopped pilsners. Dry finish, mild aroma,
-            slight sulfur production.
-        </NOTES>
+        <NOTES>Clean, dry flavor profile for aggressively hopped pilsners. Dry finish, mild aroma, slight sulfur production.</NOTES>
         <BEST_FOR>Bohemian Pilsner, American Pilsner, Helles, Dunkel</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1681,10 +1648,7 @@
         <MAX_TEMPERATURE>24.4444444</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>This yeast develops a film (flor) on the surface of the wine. Creates green almond,
-            granny smith and nougat characteristics found in sherry. Can also be used for Port,
-            Madeira and other sweet styles. For use in secondary fermentation. Slow fermentor. Al
-        </NOTES>
+        <NOTES>This yeast develops a film (flor) on the surface of the wine. Creates green almond, granny smith and nougat characteristics found in sherry. Can also be used for Port, Madeira and other sweet styles. For use in secondary fermentation. Slow fermentor.</NOTES>
         <BEST_FOR>Sherry wine yeast</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1732,10 +1696,7 @@
         <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>Classic Bordeaux yeast for red wine fermentations. Moderate fermentation
-            characteristics. Tolerates lower fermentation temperatures. Rich, smooth flavor profile.
-            Alcohol Tolerance: 17%
-        </NOTES>
+        <NOTES>Classic Bordeaux yeast for red wine fermentations. Moderate fermentation characteristics. Tolerates lower fermentation temperatures. Rich, smooth flavor profile. Alcohol Tolerance: 17%</NOTES>
         <BEST_FOR>Bordeaux</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1759,10 +1720,7 @@
         <MAX_TEMPERATURE>25.0000000</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>80.0000000</ATTENUATION>
-        <NOTES>A very versatile strain that produces Saison or farmhouse style biers as well as
-            other Belgian style beers that are highly aromatic (estery), peppery, spicy and citrusy.
-            This strain enhances the use of spices and aroma hops, and is extremely attenuative b
-        </NOTES>
+        <NOTES>A very versatile strain that produces Saison or farmhouse style biers as well as other Belgian style beers that are highly aromatic (estery), peppery, spicy and citrusy. This strain enhances the use of spices and aroma hops, and is extremely attenuative.</NOTES>
         <BEST_FOR>French and Belgian Saison or Farmhouse ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1786,9 +1744,7 @@
         <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>Classic yeast for white wine fermentation. Slow to moderate fermenter and foam
-            producer. Gives an enhanced creamy texture. Alcohol Tolerance: 16%
-        </NOTES>
+        <NOTES>Classic yeast for white wine fermentation. Slow to moderate fermenter and foam producer. Gives an enhanced creamy texture. Alcohol Tolerance: 16%</NOTES>
         <BEST_FOR>French white wines</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1812,10 +1768,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>74.0000000</ATTENUATION>
-        <NOTES>Popular all purpose American ale style now in a Gluten Free strain. Produces beers
-            that are nutty, clean with a slight tart finish. Ferment warmer to accentuate hops and
-            add fruitiness or ferment cold for clean light citrus character.
-        </NOTES>
+        <NOTES>Popular all purpose American ale style now in a Gluten Free strain. Produces beers that are nutty, clean with a slight tart finish. Ferment warmer to accentuate hops and add fruitiness or ferment cold for clean light citrus character.</NOTES>
         <BEST_FOR>American Amber, Brown, IPA, Pale ales and stouts. Blondes and fruit beers.
         </BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
@@ -1864,9 +1817,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>76.5000000</ATTENUATION>
-        <NOTES>Strong sulfer component will reduce with aging. Clean flavor, but with more ester
-            production than regular German Ale Yeast.
-        </NOTES>
+        <NOTES>Strong sulfer component will reduce with aging. Clean flavor, but with more ester production than regular German Ale Yeast.</NOTES>
         <BEST_FOR>Kolsch, Alt and German Pale Ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1890,9 +1841,7 @@
         <MAX_TEMPERATURE>20.5555556</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>75.0000000</ATTENUATION>
-        <NOTES>Great for light beers. Accentuates hop flavors. Slight sulfer flavor will fade with
-            age and leave a clean, lager like ale.
-        </NOTES>
+        <NOTES>Great for light beers. Accentuates hop flavors. Slight sulfer flavor will fade with age and leave a clean, lager like ale.</NOTES>
         <BEST_FOR>Kolsch, Altbiers, Pale Ales, Blonde and Honey Ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2012,9 +1961,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>76.5000000</ATTENUATION>
-        <NOTES>Large clove and phenolic aroma, but with minimal banana flavor. Citrus and apricot
-            notes. Crisp and drinkable, with some sulfur production.
-        </NOTES>
+        <NOTES>Large clove and phenolic aroma, but with minimal banana flavor. Citrus and apricot notes. Crisp and drinkable, with some sulfur production.</NOTES>
         <BEST_FOR>German style Hefeweizen</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2038,9 +1985,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>73.0000000</ATTENUATION>
-        <NOTES>Dry diacetyl, fruity flavor characteristic of stouts. Full bodied, dry, clean
-            flavor.
-        </NOTES>
+        <NOTES>Dry diacetyl, fruity flavor characteristic of stouts. Full bodied, dry, clean flavor.</NOTES>
         <BEST_FOR>Irish Dry Stouts, Porter, Scottish Ale, Brown Ale, Imperial Stout, Barley Wine
         </BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
@@ -2065,8 +2010,7 @@
         <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>71.5000000</ATTENUATION>
-        <NOTES>Excellent for Irish Stouts. Produces slight hint of diacetyl balanced by a light
-            fruitiness and a slightly dry crispness.
+        <NOTES>Excellent for Irish Stouts. Produces slight hint of diacetyl balanced by a light fruitiness and a slightly dry crispness.
         </NOTES>
         <BEST_FOR>Irish Ales, Stouts, Porters, Browns, Reds and Pale Ale</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
@@ -2091,9 +2035,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>70.0000000</ATTENUATION>
-        <NOTES>Traditional English Ale style yeast. Produces ester character, and allows hop flavor
-            through. Leaves a slightly sweet malt character in ales.
-        </NOTES>
+        <NOTES>Traditional English Ale style yeast. Produces ester character, and allows hop flavor through. Leaves a slightly sweet malt character in ales.</NOTES>
         <BEST_FOR>Bitters, milds, porters stouts and scottish ale styles.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2141,11 +2083,7 @@
         <MAX_TEMPERATURE>35.0000000</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>80.0000000</ATTENUATION>
-        <NOTES>Lactic acid bacteria isolated from a Belgian brewery. This culture produces moderate
-            levels of acidity and is commonly found in many types of beers including gueuze,
-            lambics, sour brown ales and Berliner Weisse. It is always used in conjunction with
-            S.cer
-        </NOTES>
+        <NOTES>Lactic acid bacteria isolated from a Belgian brewery. This culture produces moderate levels of acidity and is commonly found in many types of beers including gueuze, lambics, sour brown ales and Berliner Weisse.</NOTES>
         <BEST_FOR>Belgian sout beers (secondary)</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2169,9 +2107,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>70.0000000</ATTENUATION>
-        <NOTES>Bacteria for use in secondary. This lactic acid bacteria produces moderate levels of
-            acidity and sour flavors found in lambics, Berliner Weiss, sour brown ale and gueze.
-        </NOTES>
+        <NOTES>Bacteria for use in secondary. This lactic acid bacteria produces moderate levels of acidity and sour flavors found in lambics, Berliner Weiss, sour brown ale and gueze.</NOTES>
         <BEST_FOR>Lambic, Berliner Weiss, Sour Brown and Gueze (secondary)</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2195,10 +2131,7 @@
         <MAX_TEMPERATURE>35.0000000</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>67.0000000</ATTENUATION>
-        <NOTES>Lactic acid bacteria isolated from Belgium. Produces mild acidity and sourness found
-            in many types of Belgian beers. Always used in conjunction with S. Cerevisiae and wild
-            yeasts.
-        </NOTES>
+        <NOTES>Lactic acid bacteria isolated from Belgium. Produces mild acidity and sourness found in many types of Belgian beers. Always used in conjunction with S. Cerevisiae and wild yeasts.</NOTES>
         <BEST_FOR>Belgian gueze, lambic, sour brown ales, and Berliner Weisse.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2222,9 +2155,7 @@
         <MAX_TEMPERATURE>21.6666667</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>71.0000000</ATTENUATION>
-        <NOTES>Dry, malty ale yeast. Produces a complex, oak flavored ester character. Hop
-            bitterness comes through well.
-        </NOTES>
+        <NOTES>Dry, malty ale yeast. Produces a complex, oak flavored ester character. Hop bitterness comes through well.</NOTES>
         <BEST_FOR>Classic British Pale Ales, Bitters and Stouts</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2296,9 +2227,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>69.0000000</ATTENUATION>
-        <NOTES>Malty, balanced flavor. Fruity, rich finish. Excellent for cask conditioned ales and
-            bitters.
-        </NOTES>
+        <NOTES>Malty, balanced flavor. Fruity, rich finish. Excellent for cask conditioned ales and bitters.</NOTES>
         <BEST_FOR>English Bitters, IPA, Brown Ales, Mild Ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2322,10 +2251,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>70.0000000</ATTENUATION>
-        <NOTES>Bacteria for use in secondary. Malolactic fermentation is the conversion of malic
-            acid to lactic acid by bacteria from the lactic acid bacteria family. Lactic acid is
-            less acidic than malic acid, which in turn decreases acidity and helps to soften and/o
-        </NOTES>
+        <NOTES>Bacteria for use in secondary. Malolactic fermentation is the conversion of malic acid to lactic acid by bacteria from the lactic acid bacteria family. Lactic acid is less acidic than malic acid.</NOTES>
         <BEST_FOR>Primarily wine</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2349,9 +2275,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>72.0000000</ATTENUATION>
-        <NOTES>Top fermenting strain that is good for top-cropping. Moderately flocculent with a
-            clean, dry finish. Low ester profile for producing a balanced English ale.
-        </NOTES>
+        <NOTES>Top fermenting strain that is good for top-cropping. Moderately flocculent with a clean, dry finish. Low ester profile for producing a balanced English ale.</NOTES>
         <BEST_FOR>English style ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2375,10 +2299,7 @@
         <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>Neutral, low fusel alcohol production. Will ferment to dryness, alcohol tolerance to
-            18%. Vigorous fermenter. WLP740 is well suited for Merlot, Shiraz, Pinot Noir,
-            Chardonnay, Cabernet, Sauvignon Blanc, and Semillon. Alcohol Tolerance: 18%
-        </NOTES>
+        <NOTES>Neutral, low fusel alcohol production. Will ferment to dryness, alcohol tolerance to 18%. Vigorous fermenter. WLP740 is well suited for Merlot, Shiraz, Pinot Noir, Chardonnay, Cabernet, Sauvignon Blanc, and Semillon. Alcohol Tolerance: 18%</NOTES>
         <BEST_FOR>Merlot, Shiraz, Pinot Noir, Chardonnay, Cabernet, Sauvignon Blanc, and Semillon
         </BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
@@ -2403,9 +2324,7 @@
         <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>74.0000000</ATTENUATION>
-        <NOTES>From Mexico City - produces a clean lager beer with a crisp finish. Good for mexican
-            style beers.
-        </NOTES>
+        <NOTES>From Mexico City - produces a clean lager beer with a crisp finish. Good for mexican style beers.</NOTES>
         <BEST_FOR>Mexican style light and dark lagers.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2429,9 +2348,7 @@
         <MAX_TEMPERATURE>13.3333333</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>75.0000000</ATTENUATION>
-        <NOTES>Unique Pilsner strain. Very smooth, well-rounded and full bodied. Benefits from a
-            diacetyl rest.
-        </NOTES>
+        <NOTES>Unique Pilsner strain. Very smooth, well-rounded and full bodied. Benefits from a diacetyl rest.</NOTES>
         <BEST_FOR>Pilsners, Light Lagers, Dortmond/Export, Marzen/Oktoberfest, Dunkel</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2455,9 +2372,7 @@
         <MAX_TEMPERATURE>13.3333333</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>73.0000000</ATTENUATION>
-        <NOTES>American and Canadian lager yeast. Malty finish makes it suitable for
-            Marzens/Oktoberfest as well.
-        </NOTES>
+        <NOTES>American and Canadian lager yeast. Malty finish makes it suitable for Marzens/Oktoberfest as well.</NOTES>
         <BEST_FOR>American Pilsner, California Common, Canadian Lager, Oktoberfest, Marzen
         </BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
@@ -2482,9 +2397,7 @@
         <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>69.0000000</ATTENUATION>
-        <NOTES>Classic Northwest US ale yeast. Slight fruit flavor, malty ale with good body and
-            balance.
-        </NOTES>
+        <NOTES>Classic Northwest US ale yeast. Slight fruit flavor, malty ale with good body and balance.</NOTES>
         <BEST_FOR>Oregon Ales, All American Ale styles</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2508,9 +2421,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>77.5000000</ATTENUATION>
-        <NOTES>British style of ale yeast with a very dry finish and high attenuation. Medium to low
-            fruit and fusel alcohol production. Good top fermenting yeast for cropping.
-        </NOTES>
+        <NOTES>British style of ale yeast with a very dry finish and high attenuation. Medium to low fruit and fusel alcohol production. Good top fermenting yeast for cropping.</NOTES>
         <BEST_FOR>British ales, pale ales, ambers, porters and stouts.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2534,10 +2445,7 @@
         <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>75.0000000</ATTENUATION>
-        <NOTES>This blend of lager strains is designed to produce a rich, malty, complex and full
-            bodied Octoberfest style beer. It attenuates well while leaving plenty of malt character
-            and mouthfeel. This strain is low in sulfur production.
-        </NOTES>
+        <NOTES>This blend of lager strains is designed to produce a rich, malty, complex and full bodied Octoberfest style beer. It attenuates well while leaving plenty of malt character and mouthfeel. This strain is low in sulfur production.</NOTES>
         <BEST_FOR>Octoberfest, Marzen, Bavarian lagers</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2561,9 +2469,7 @@
         <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>69.0000000</ATTENUATION>
-        <NOTES>Produces a malty, bock style beer. Does not finish as dry or as fast as White&#39;s
-            German Lager yeast. Longer lagering or starter recommended.
-        </NOTES>
+        <NOTES>Produces a malty, bock style beer. Does not finish as dry or as fast as White&#39;s German Lager yeast. Longer lagering or starter recommended.</NOTES>
         <BEST_FOR>Marzen, Oktoberfest, European Lagers, Bocks, Munich Helles</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2587,8 +2493,7 @@
         <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>69.5000000</ATTENUATION>
-        <NOTES>Southern Germany/Bavarian lager yeast. Finishes malty with a slight ester profile.
-        </NOTES>
+        <NOTES>Southern Germany/Bavarian lager yeast. Finishes malty with a slight ester profile.</NOTES>
         <BEST_FOR>Oktoberfest, Marzen, Bock and Dark Lagers.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2612,12 +2517,8 @@
         <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>67.5000000</ATTENUATION>
-        <NOTES>Popular yeast from the Pacific Northwest. Leaves a clear and malty profile. More
-            fruity than WLP002. Suitable for many English and American styles.
-        </NOTES>
-        <BEST_FOR>English &#38; American ales including milds, bitters, IPA, porters and English
-            stouts.
-        </BEST_FOR>
+        <NOTES>Popular yeast from the Pacific Northwest. Leaves a clear and malty profile. More fruity than WLP002. Suitable for many English and American styles.</NOTES>
+        <BEST_FOR>English &#38; American ales including milds, bitters, IPA, porters and English stouts.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
         <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -2640,11 +2541,7 @@
         <MAX_TEMPERATURE>35.0000000</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>80.0000000</ATTENUATION>
-        <NOTES>Lactic acid bacteria used in the production of Belgian style beers where additional
-            acidity is desirable. Often found in gueuze and other Belgian style beer. Acid
-            production will increase with storage time. It may also cause ropiness and produce low
-            level
-        </NOTES>
+        <NOTES>Lactic acid bacteria used in the production of Belgian style beers where additional acidity is desirable. Often found in gueuze and other Belgian style beer. Acid production will increase with storage time.</NOTES>
         <BEST_FOR>Belgian sour ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2668,10 +2565,7 @@
         <MAX_TEMPERATURE>35.0000000</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>67.0000000</ATTENUATION>
-        <NOTES>Lactic acid bacteria isolated from Belgium. Creates a high level of lactic acidity
-            over a long time. Often used with other yeasts, and it may take several months for
-            flavor to fully develop.
-        </NOTES>
+        <NOTES>Lactic acid bacteria isolated from Belgium. Creates a high level of lactic acidity over a long time. Often used with other yeasts, and it may take several months for flavor to fully develop.</NOTES>
         <BEST_FOR>Gueze and other Belgian styles.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2695,9 +2589,7 @@
         <MAX_TEMPERATURE>13.3333333</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>73.0000000</ATTENUATION>
-        <NOTES>Classic American pilsner strain. Smooth with a malty flavor. Dry and crisp
-            fermentation.
-        </NOTES>
+        <NOTES>Classic American pilsner strain. Smooth with a malty flavor. Dry and crisp fermentation.</NOTES>
         <BEST_FOR>American Pilsner, Bohemian Pilsner, Light Lagers</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2745,9 +2637,7 @@
         <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>72.5000000</ATTENUATION>
-        <NOTES>From Staffordshire England. Mild, but complex estery flavor. High attenuation -
-            ferments strong and dry. Suitable for high gravity beers.
-        </NOTES>
+        <NOTES>From Staffordshire England. Mild, but complex estery flavor. High attenuation - ferments strong and dry. Suitable for high gravity beers.</NOTES>
         <BEST_FOR>All English ales including bitters, milds, ESB, Porter, Stout and Barley Wine
         </BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
@@ -2772,9 +2662,7 @@
         <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>70.0000000</ATTENUATION>
-        <NOTES>European ale yeast. Highly flocculant with complex, clear, but malty profile.
-            Slightly fruity ester.
-        </NOTES>
+        <NOTES>European ale yeast. Highly flocculant with complex, clear, but malty profile. Slightly fruity ester.</NOTES>
         <BEST_FOR>Ringwood Ale, Brown Ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2798,10 +2686,7 @@
         <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>80.0000000</ATTENUATION>
-        <NOTES>Culture of Saccharomyces, Brettonomyces and Lactic Acid Bacteria. Complex aromas and
-            flavors. May be used for primary fermentation. Primarily for sour brown and red Belgian
-            styles.
-        </NOTES>
+        <NOTES>Culture of Saccharomyces, Brettonomyces and Lactic Acid Bacteria. Complex aromas and flavors. May be used for primary fermentation. Primarily for sour brown and red Belgian styles.</NOTES>
         <BEST_FOR>Belgian sour brown and red beers.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2825,10 +2710,7 @@
         <MAX_TEMPERATURE>24.4444444</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>For use in rice based fermentations. For sake, use this yeast in conjunction with
-            Koji (to produce fermentable sugar). WLP705 produces full body sake character, and
-            subtle fragrance. Alcohol tolerance to 16%.
-        </NOTES>
+        <NOTES>For use in rice based fermentations. For sake, use this yeast in conjunction with Koji (to produce fermentable sugar). WLP705 produces full body sake character, and subtle fragrance. Alcohol tolerance to 16%.</NOTES>
         <BEST_FOR>Sake wine yeast</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2901,8 +2783,7 @@
         <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>72.0000000</ATTENUATION>
-        <NOTES>Malty finish and balanced aroma. Strong fermenter, slight sulfur and low diacetyl.
-        </NOTES>
+        <NOTES>Malty finish and balanced aroma. Strong fermenter, slight sulfur and low diacetyl.</NOTES>
         <BEST_FOR>German Pilsner, Helles, Oktoberfest, Marzen, Bocks</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2926,9 +2807,7 @@
         <MAX_TEMPERATURE>20.5555556</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>71.5000000</ATTENUATION>
-        <NOTES>From Suffolk county. Products complex fruity and citrus flavors. Slight sulfer
-            production, but this will fade with ageing.
-        </NOTES>
+        <NOTES>From Suffolk county. Products complex fruity and citrus flavors. Slight sulfer production, but this will fade with ageing.</NOTES>
         <BEST_FOR>British bitters and pale ales.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2952,9 +2831,7 @@
         <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>German origin wine yeast. High fruit/ester production. Moderate fermentation
-            characteristics and cold tolerant.
-        </NOTES>
+        <NOTES>German origin wine yeast. High fruit/ester production. Moderate fermentation characteristics and cold tolerant.</NOTES>
         <BEST_FOR>Riesling wines.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2978,9 +2855,7 @@
         <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>82.0000000</ATTENUATION>
-        <NOTES>Ferments up to 25% alcohol content. Flavor may vary greatly depending on beer
-            alcohol. English like esters at low gravity, but will become more wine-like as alcohol
-            exceeds 16% ABV. Refer to White Labs web page for tips on fermenting high gravity ales.
+        <NOTES>Ferments up to 25% alcohol content. Flavor may vary greatly depending on beer alcohol. English like esters at low gravity, but will become more wine-like as alcohol exceeds 16% ABV. Refer to White Labs web page for tips on fermenting high gravity ales.
         </NOTES>
         <BEST_FOR>Very high gravity beers and barley wine up to 25% alcohol.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
@@ -3005,10 +2880,7 @@
         <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>83.0000000</ATTENUATION>
-        <NOTES>Emphasizes fruit aromas in barrel fermentations. High nutrient requirement to avoid
-            volatile acidity production.
-            Alcohol Tolerance: 16%
-        </NOTES>
+        <NOTES>Emphasizes fruit aromas in barrel fermentations. High nutrient requirement to avoid volatile acidity production. Alcohol Tolerance: 16%</NOTES>
         <BEST_FOR>Burgundy</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3032,9 +2904,7 @@
         <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>72.5000000</ATTENUATION>
-        <NOTES>Lower attenuation than White Labs Champagne Yeast. Leaves some residual sweetness as
-            well as fruity flavor. Alcohol concentration up to 15%.
-        </NOTES>
+        <NOTES>Lower attenuation than White Labs Champagne Yeast. Leaves some residual sweetness as well as fruity flavor. Alcohol concentration up to 15%.</NOTES>
         <BEST_FOR>Sweet Mead, Wine and Cider</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3058,9 +2928,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>77.0000000</ATTENUATION>
-        <NOTES>Clean, complex flavor. Low in fruit, low in esters, rich in flavor. Hops come through
-            well.
-        </NOTES>
+        <NOTES>Clean, complex flavor. Low in fruit, low in esters, rich in flavor. Hops come through well.</NOTES>
         <BEST_FOR>British Bitters, ESB, India Pale Ale, English Strong Ale</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3084,8 +2952,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>77.5000000</ATTENUATION>
-        <NOTES>Distinctive fruitiness and plum characteristics. Excellent for high gravity beers.
-        </NOTES>
+        <NOTES>Distinctive fruitiness and plum characteristics. Excellent for high gravity beers.</NOTES>
         <BEST_FOR>Trappist Ale, Dubbel, Trippel, Belgian Ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3109,9 +2976,7 @@
         <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>76.0000000</ATTENUATION>
-        <NOTES>Robust top cropping yeast. Phenolic character and alcohol tolerance up to 12%. Rich
-            ester profile and malty flavor.
-        </NOTES>
+        <NOTES>Robust top cropping yeast. Phenolic character and alcohol tolerance up to 12%. Rich ester profile and malty flavor.</NOTES>
         <BEST_FOR>Belgian Wit, Trappist Ale, High gravity ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3135,9 +3000,7 @@
         <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>74.0000000</ATTENUATION>
-        <NOTES>Pilsner Urquell yeast with mild fruit/floral aroma. Very dry and clean on palate with
-            full mouth feel. Subtle malt character. Clean and neutral finish.
-        </NOTES>
+        <NOTES>Pilsner Urquell yeast with mild fruit/floral aroma. Very dry and clean on palate with full mouth feel. Subtle malt character. Clean and neutral finish.</NOTES>
         <BEST_FOR>Bohemian Pilsner</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3161,9 +3024,7 @@
         <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
         <FLOCCULATION>Low</FLOCCULATION>
         <ATTENUATION>75.0000000</ATTENUATION>
-        <NOTES>Unique Bavarian wheat yeast that produces the spicy weizen clove and banana flavor.
-            Best when fermented at around 68 deg F.
-        </NOTES>
+        <NOTES>Unique Bavarian wheat yeast that produces the spicy weizen clove and banana flavor. Best when fermented at around 68 deg F.</NOTES>
         <BEST_FOR>Bavarian Weizen</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3187,9 +3048,7 @@
         <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>70.0000000</ATTENUATION>
-        <NOTES>Slightly more fruity and malty than Wyeast&#39;s British Ale. Clear and highly
-            flocculant.
-        </NOTES>
+        <NOTES>Slightly more fruity and malty than Wyeast&#39;s British Ale. Clear and highly flocculant.</NOTES>
         <BEST_FOR>Whitbread Ale, British Ales, Pales, Bitters</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3213,9 +3072,7 @@
         <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>73.0000000</ATTENUATION>
-        <NOTES>Blend of ale strains designed to provide quick starts, good flavor, balance and
-            flocculation. Balanced finish suitable for most American and British ale styles.
-        </NOTES>
+        <NOTES>Blend of ale strains designed to provide quick starts, good flavor, balance and flocculation. Balanced finish suitable for most American and British ale styles.</NOTES>
         <BEST_FOR>American and British Ale Styles.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3239,9 +3096,7 @@
         <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>73.0000000</ATTENUATION>
-        <NOTES>Blend of lager strains to produce a complex but clean lager flavor profile. Suitable
-            for many common lager styles.
-        </NOTES>
+        <NOTES>Blend of lager strains to produce a complex but clean lager flavor profile. Suitable for many common lager styles.</NOTES>
         <BEST_FOR>Classic Pilsners, Lagers, Bocks.</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3265,9 +3120,7 @@
         <MAX_TEMPERATURE>20.5555556</MAX_TEMPERATURE>
         <FLOCCULATION>High</FLOCCULATION>
         <ATTENUATION>70.0000000</ATTENUATION>
-        <NOTES>This yeast produces a malty but well balanced profile. Expect toasty flavors with
-            malt driven esters. Highly flocculent and a good choice for many English ales.
-        </NOTES>
+        <NOTES>This yeast produces a malty but well balanced profile. Expect toasty flavors with malt driven esters. Highly flocculent and a good choice for many English ales.</NOTES>
         <BEST_FOR>English pale ales, English brown ales and Mild ales</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3291,9 +3144,7 @@
         <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
         <FLOCCULATION>Medium</FLOCCULATION>
         <ATTENUATION>75.0000000</ATTENUATION>
-        <NOTES>Swiss style lager yeast. Sulfer and diacytl production is minimal. May be used for
-            high gravity lagers with proper care.
-        </NOTES>
+        <NOTES>Swiss style lager yeast. Sulfer and diacytl production is minimal. May be used forhigh gravity lagers with proper care.</NOTES>
         <BEST_FOR>Swiss style lager, and high gravity lagers (over 11% ABV)</BEST_FOR>
         <MAX_REUSE>5</MAX_REUSE>
         <TIMES_CULTURED>0</TIMES_CULTURED>
