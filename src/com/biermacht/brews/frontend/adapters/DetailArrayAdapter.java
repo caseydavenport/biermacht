@@ -140,7 +140,7 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
       }
       else {
         this.vs.progressBar.getProgressDrawable().setColorFilter(
-                Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+                color, android.graphics.PorterDuff.Mode.SRC_IN);
       }
     }
 

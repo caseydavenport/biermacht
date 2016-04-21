@@ -7,6 +7,7 @@ import com.biermacht.brews.exceptions.ItemNotFoundException;
 import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.MashProfile;
+import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.comparators.RecipeComparator;
@@ -68,6 +69,14 @@ public class DatabaseAPI {
 
   // Deletes the given recipe if it exists in the database.
   public boolean deleteRecipe(Recipe r) {
+    // Delete all ingredients for this recipe.
+    for (Ingredient i : r.getIngredientList()) {
+      this.deleteIngredientWithId(i.getId(), i.getDatabaseId());
+    }
+
+    // Delete the MashProfile.
+    this.deleteMashProfileFromDatabase(r.getMashProfile(), Constants.DATABASE_DEFAULT);
+
     return this.databaseInterface.deleteRecipeIfExists(r.getId());
   }
 
@@ -155,7 +164,10 @@ public class DatabaseAPI {
   }
 
   // Deletes the given mash profile
-  public boolean deleteMashProfileFromDatabase(long id, long dbid) {
-    return this.databaseInterface.deleteMashProfile(id, dbid);
+  public boolean deleteMashProfileFromDatabase(MashProfile p, long dbid) {
+    for (MashStep s : p.getMashStepList()) {
+      this.databaseInterface.deleteMashStep(s.getId());
+    }
+    return this.databaseInterface.deleteMashProfile(p.getId(), dbid);
   }
 }

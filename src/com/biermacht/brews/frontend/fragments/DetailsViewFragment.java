@@ -208,12 +208,8 @@ public class DetailsViewFragment extends Fragment implements BiermachtFragment {
       this.detailList.add(this.eff);
     }
 
-    // Create a new DetailArrayAdapter and set it on the listView.
-    this.mAdapter = new DetailArrayAdapter(getActivity(), this.detailList);
-    this.listView.setAdapter(this.mAdapter);
-
     // Set up the notes footer.
-    notesFooter = inflater.inflate(R.layout.notes_list_footer, container, false);
+    notesFooter = inflater.inflate(R.layout.notes_list_footer, null);
     TextView notesText = (TextView) notesFooter.findViewById(R.id.notes);
     TextView tasteNotesText = (TextView) notesFooter.findViewById(R.id.taste_notes);
 
@@ -246,6 +242,10 @@ public class DetailsViewFragment extends Fragment implements BiermachtFragment {
         i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
         startActivity(i);      }
     });
+
+    // Create a new DetailArrayAdapter and set it on the listView.
+    this.mAdapter = new DetailArrayAdapter(getActivity(), this.detailList);
+    this.listView.setAdapter(this.mAdapter);
 
     return this.pageView;
     }

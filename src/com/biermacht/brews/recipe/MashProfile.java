@@ -428,6 +428,6 @@ public class MashProfile implements Parcelable {
   }
 
   public void delete(Context c, long database) {
-    new DatabaseAPI(c).deleteMashProfileFromDatabase(this.getId(), database);
+    new DatabaseAPI(c).deleteMashProfileFromDatabase(this, database);
   }
 }
