@@ -111,7 +111,7 @@ public class Fermentable extends Ingredient implements Parcelable {
   }
 
   public float getPpg() {
-    return (float) (yield * 46) / 100;
+    return (float) (this.yield * 46) / 100;
   }
 
   public String getFermentableType() {
@@ -291,16 +291,21 @@ public class Fermentable extends Ingredient implements Parcelable {
   }
 
   /**
+   *
+   * @return The gravity points contributed by this fermentable.
+   */
+  public double gravityPoints() {
+    return this.getPpg() * Units.kilosToPounds(this.amount);
+  }
+
+  /**
    * turns given yield into a gravity
    *
    * @param yield
    * @return
    */
   public double yieldToGravity(double yield) {
-    double gravity = 0;
-    gravity = 1 + (((yield * 46) / 100) / 1000);
-
-    return gravity;
+    return 1 + (((yield * 46) / 100) / 1000);
   }
 
   /**

@@ -35,6 +35,7 @@ import com.biermacht.brews.frontend.adapters.RecipeCheckboxArrayAdapter;
 import com.biermacht.brews.frontend.fragments.AlcoholAttenuationCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.EditIngredientsFragment;
 import com.biermacht.brews.frontend.fragments.EditMashProfilesFragment;
+import com.biermacht.brews.frontend.fragments.EfficiencyCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.HydrometerTempCalculatorFragment;
 import com.biermacht.brews.frontend.fragments.RecipesFragment;
 import com.biermacht.brews.frontend.fragments.StrikeWaterCalculatorFragment;
@@ -81,6 +82,7 @@ public class MainActivity extends DriveActivity {
   private static String DRAWER_STYLE_VIEW = "Style Viewer";
   private static String DRAWER_ABV_CALC = "ABV Calculator";
   private static String DRAWER_STRIKE_CALC = "Strike Temperature";
+  private static String DRAWER_EFF_CALC = "Efficiency Calculator";
 
   // List to store drawer option names.
   private ArrayList<String> drawerItems;
@@ -197,6 +199,7 @@ public class MainActivity extends DriveActivity {
     drawerItems.add(DRAWER_STRIKE_CALC);
     drawerItems.add(DRAWER_GRAVITY_CALC);
     drawerItems.add(DRAWER_ABV_CALC);
+    drawerItems.add(DRAWER_EFF_CALC);
 
     // Set the adapter and click listener for the list view
     drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.row_layout_drawer_item,
@@ -237,6 +240,7 @@ public class MainActivity extends DriveActivity {
     fragmentList.add(new StrikeWaterCalculatorFragment());
     fragmentList.add(new HydrometerTempCalculatorFragment());
     fragmentList.add(new AlcoholAttenuationCalculatorFragment());
+    fragmentList.add(new EfficiencyCalculatorFragment());
 
     // Select the recipe fragment
     selectItem(0);
