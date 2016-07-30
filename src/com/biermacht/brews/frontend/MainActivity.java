@@ -321,7 +321,7 @@ public class MainActivity extends DriveActivity {
                   intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                   startActivityForResult(intent, Constants.REQUEST_IMPORT_FILE);
                 } catch (android.content.ActivityNotFoundException e) {
-                  new AlertDialog.Builder(getApplicationContext())
+                  new AlertDialog.Builder(MainActivity.this)
                           .setTitle("No File Browser Found")
                           .setMessage("Please install a file browser from the Play Store")
                           .setPositiveButton("OK", null).show();
