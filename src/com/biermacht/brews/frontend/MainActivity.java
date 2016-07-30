@@ -548,6 +548,7 @@ public class MainActivity extends DriveActivity {
     private IngredientHandler ingredientHandler;
     private ProgressDialog progress;
     private ArrayList<Recipe> importedRecipes;
+    private Exception storedException;
 
     public LoadRecipes(InputStream is, String fileName, IngredientHandler i) {
       Log.d("MainActivity", "Loading Recipes");
@@ -561,8 +562,9 @@ public class MainActivity extends DriveActivity {
     protected String doInBackground(String... params) {
       try {
         importedRecipes = ingredientHandler.getRecipesFromXml(this.inputStream, this.fileName);
-      } catch (IOException e) {
+      } catch (Exception e) {
         Log.e("LoadRecipes", e.toString());
+        this.storedException = e;
       }
       return "Executed";
     }
@@ -571,9 +573,25 @@ public class MainActivity extends DriveActivity {
     protected void onPostExecute(String result) {
       super.onPostExecute(result);
       progress.dismiss();
-      setImportedRecipes(importedRecipes);
-      recipeSelectorAlert().show();
-      updateFragments();
+      if (this.storedException == null) {
+        // All is good - show the recipe selector.
+        setImportedRecipes(importedRecipes);
+        recipeSelectorAlert().show();
+        updateFragments();
+      }
+      else {
+        // Failed to load recipes.  Display the exception.
+        String stackTrace = Log.getStackTraceString(this.storedException);
+        String msg = "Parsing failed.  This may be due to an invalid file, or something else.  " +
+                "Please report the follwing message to " +
+                "the developer: \n\n" + this.storedException.toString() + "\n\n" + stackTrace;
+
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Error parsing file")
+                .setMessage(msg)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+      }
       Log.d("LoadRecipes", "Finished loading recipes");
     }
 
