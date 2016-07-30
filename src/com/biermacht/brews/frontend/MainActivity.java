@@ -480,7 +480,7 @@ public class MainActivity extends DriveActivity {
           return;
         }
         // Set fileName for use in LoadRecipes.
-        fileName = result.getMetadata().getTitle() + result.getMetadata().getFileExtension();
+        fileName = result.getMetadata().getTitle() + "." + result.getMetadata().getFileExtension();
 
         // Open the file.
         file.open(driveClient, DriveFile.MODE_READ_ONLY, null).setResultCallback(resultCallback);
