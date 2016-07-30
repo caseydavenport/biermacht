@@ -429,6 +429,22 @@ public class MainActivity extends DriveActivity {
    */
   public void onDriveFilePicked(Intent data) {
     DriveId driveId = data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+
+    // Only grab the file if we're still connected to Drive APIs.
+    // If we've somehow been disconnected, warn the user and return.
+    if (!driveClient.isConnected()) {
+      Log.e("MainActivity", "Drive client became unexpected disconnected");
+      String msg = "Unexpected disconnect from Google Drive";
+      new AlertDialog.Builder(MainActivity.this)
+              .setTitle("Disconnected from Google Drive")
+              .setMessage(msg)
+              .setPositiveButton(R.string.ok, null)
+              .setIcon(android.R.drawable.ic_dialog_alert)
+              .show();
+      return;
+    }
+
+    // Get the file.
     final DriveFile file = Drive.DriveApi.getFile(driveClient, driveId);
 
     // Callback for when the file has been opened.  Checks for success and extracts the contents
@@ -436,7 +452,7 @@ public class MainActivity extends DriveActivity {
     final ResultCallback resultCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
       @Override
       public void onResult(DriveApi.DriveContentsResult result) {
-        if (! result.getStatus().isSuccess()) {
+        if (!result.getStatus().isSuccess()) {
           // TODO: Display an error saying file can't be opened
           return;
         }
