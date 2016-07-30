@@ -82,7 +82,7 @@ public class Constants {
   public static final String PREF_NEW_INGRE_VERSION = "com.biermacht.brews.newIngredientsVersion";
 
   //  Incremented when new ingredients are available.
-  public static int NEW_INGREDIENTS_VERSION = 3;
+  public static int NEW_INGREDIENTS_VERSION = 4;
 
   // Activity for result return codes
   public static final int RESULT_DELETED = 1;

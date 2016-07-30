@@ -1,0 +1,40 @@
+<HOPS>
+    <HOP>
+        <NAME>Mosaic</NAME>
+        <VERSION>1</VERSION>
+        <ORIGIN>U.S.</ORIGIN>
+        <ALPHA>12.0000000</ALPHA>
+        <AMOUNT>0.0000000</AMOUNT>
+        <USE>Boil</USE>
+        <TIME>0.0000000</TIME>
+        <NOTES>Rich in Mango, lemon, citrus, earthy pine, tropical fruit, herbal and stone fruit notes.</NOTES>
+        <SUBSTITUTES>Citra</SUBSTITUTES>
+        <TYPE>Both</TYPE>
+        <FORM>Pellet</FORM>
+        <BETA>3.5000000</BETA>
+        <HSI>00.0000000</HSI>
+        <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+    </HOP>
+
+    <HOP>
+        <NAME>El Dorado</NAME>
+        <VERSION>1</VERSION>
+        <ORIGIN>U.S.</ORIGIN>
+        <ALPHA>15.0000000</ALPHA>
+        <AMOUNT>0.0000000</AMOUNT>
+        <USE>Boil</USE>
+        <TIME>0.0000000</TIME>
+        <NOTES>Bright tropical fruit flavors and aromas of pear, watermelon, and stone fruit.</NOTES>
+        <SUBSTITUTES></SUBSTITUTES>
+        <TYPE>Both</TYPE>
+        <FORM>Pellet</FORM>
+        <BETA>6.5000000</BETA>
+        <HSI>00.0000000</HSI>
+        <DISPLAY_AMOUNT>0.00 oz</DISPLAY_AMOUNT>
+        <INVENTORY>0.00 oz</INVENTORY>
+        <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+    </HOP>
+
+</HOPS>

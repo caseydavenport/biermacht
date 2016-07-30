@@ -18,6 +18,7 @@ import com.biermacht.brews.xml.BsmxXmlReader;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +26,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 

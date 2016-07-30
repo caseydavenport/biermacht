@@ -163,6 +163,11 @@ public class MainActivity extends DriveActivity {
             Log.d("MainActivity", "Importing mangrove yeasts");
             new ImportNew("ingredient", "Importing new ingredients",
                           this, "Yeasts/mangrove-01.xml").execute("");
+            break;
+          case 4:
+            Log.d("MainActivity", "Importing mosaic / el dorado");
+            new ImportNew("ingredient", "Importing new hops",
+                          this, "Hops/new-hops-1.xml").execute("");
           default:
             Log.w("MainActivity", "No action for version: " + lastVersion);
             break;
