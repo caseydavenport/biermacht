@@ -19,6 +19,7 @@ import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.BeerStyleArrayAdapter;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
@@ -45,7 +46,7 @@ public class ViewStylesFragment extends Fragment implements BiermachtFragment {
     c = getActivity();
 
     // Get ingredient list
-    list = MainActivity.ingredientHandler.getStylesList();
+    list = new IngredientHandler(c).getStylesList();
     Collections.sort(list, new ToStringComparator());
 
     // Set up the list adapter

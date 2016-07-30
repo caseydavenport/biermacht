@@ -27,7 +27,6 @@ import android.widget.ListView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseAPI;
-import com.biermacht.brews.database.DatabaseInterface;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomFermentableActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomHopsActivity;
 import com.biermacht.brews.frontend.IngredientActivities.AddCustomMiscActivity;
@@ -59,7 +58,6 @@ import com.google.android.gms.drive.DriveResource;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -127,7 +125,7 @@ public class MainActivity extends DriveActivity {
       // This is the first time the app has been used.  Mark that the app has been opened, and
       // perform first-time use setup task.
       preferences.edit().putBoolean(Constants.PREF_USED_BEFORE, true).commit();
-      preferences.edit().putInt(Constants.PREF_NEW_INGRE_VERSION, Constants.NEW_INGREDIENTS_VERSION).commit();
+      preferences.edit().putInt(Constants.PREF_NEW_CONTENTS_VERSION, Constants.NEW_DB_CONTENTS_VERSION).commit();
       new ImportXmlIngredientsTask(this).execute("");
 
       // Create the master recipe - used as placeholder for stuff
@@ -140,10 +138,10 @@ public class MainActivity extends DriveActivity {
 
       // Check if we need to update the ingredients database with new entries.
       // This occurs when new ingredients are added to the app.
-      int lastVersion = preferences.getInt(Constants.PREF_NEW_INGRE_VERSION, 0);
+      int lastVersion = preferences.getInt(Constants.PREF_NEW_CONTENTS_VERSION, 0);
 
-      Log.d("MainActivity", "Ingredients version, was: " + lastVersion + ", now: " + Constants.NEW_INGREDIENTS_VERSION);
-      while (lastVersion < Constants.NEW_INGREDIENTS_VERSION) {
+      Log.d("MainActivity", "DB Contents version, was: " + lastVersion + ", now: " + Constants.NEW_DB_CONTENTS_VERSION);
+      while (lastVersion < Constants.NEW_DB_CONTENTS_VERSION) {
         // Increment the version.
         lastVersion++;
 
@@ -169,6 +167,10 @@ public class MainActivity extends DriveActivity {
             new ImportNew("ingredient", "Importing new hops",
                           this, "Hops/new-hops-1.xml").execute("");
             break;
+          case 5:
+            Log.d("MainActivity", "Updating style database");
+            new ImportNew("style", "Updating styles",
+                          this, "Styles/styles.xml").execute("");
           default:
             Log.w("MainActivity", "No action for version: " + lastVersion);
             break;
@@ -176,7 +178,7 @@ public class MainActivity extends DriveActivity {
       }
 
       // Update shared preferences.
-      preferences.edit().putInt(Constants.PREF_NEW_INGRE_VERSION, Constants.NEW_INGREDIENTS_VERSION).commit();
+      preferences.edit().putInt(Constants.PREF_NEW_CONTENTS_VERSION, Constants.NEW_DB_CONTENTS_VERSION).commit();
     }
 
     // Initialize storage for imported recipes

@@ -56,6 +56,12 @@ public class IngredientHandler {
       this.databaseApi.addMashProfileList(Constants.DATABASE_CUSTOM,
                                           getProfilesFromXml(),
                                           Constants.OWNER_NONE);
+
+      // Import style assets.
+      this.databaseApi.addStyleList(Constants.DATABASE_PERMANENT,
+                                    getStylesFromXml(),
+                                    Constants.OWNER_NONE);
+
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -174,12 +180,8 @@ public class IngredientHandler {
    */
   public ArrayList<BeerStyle> getStylesList() {
     if (this.styleList == null) {
-      try {
-        this.styleList = getStylesFromXml();
-        this.styleList.add(0, Constants.BEERSTYLE_OTHER);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      this.styleList = this.databaseApi.getStyles(Constants.DATABASE_PERMANENT);
+      this.styleList.addAll(this.databaseApi.getStyles(Constants.DATABASE_CUSTOM));
     }
 
     return styleList;
@@ -258,7 +260,7 @@ public class IngredientHandler {
    * @return ArrayList of BeerStyle Objects
    * @throws IOException
    */
-  private ArrayList<BeerStyle> getStylesFromXml() throws IOException {
+  public ArrayList<BeerStyle> getStylesFromXml() throws IOException {
     ArrayList<BeerStyle> list = new ArrayList<BeerStyle>();
 
     for (String s : mContext.getAssets().list("Styles")) {
@@ -269,7 +271,7 @@ public class IngredientHandler {
     return list;
   }
 
-  private ArrayList<BeerStyle> getStylesFromXml(String filePath) throws IOException {
+  public ArrayList<BeerStyle> getStylesFromXml(String filePath) throws IOException {
     ArrayList<BeerStyle> list = new ArrayList<BeerStyle>();
     BeerXmlReader myXMLHandler = new BeerXmlReader();
     SAXParserFactory spf = SAXParserFactory.newInstance();

@@ -78,11 +78,11 @@ public class Constants {
   public static final String PREF_MEAS_SYSTEM = "com.biermacht.brews.measurementSystem";
   public static final String PREF_FIXED_RATIOS = "com.biermacht.brews.waterToGrainRatiosFixed";
 
-  // Value of this preference indicates the last time ingredients were updated.
-  public static final String PREF_NEW_INGRE_VERSION = "com.biermacht.brews.newIngredientsVersion";
+  // Value of this preference indicates the last time db contents were updated.
+  public static final String PREF_NEW_CONTENTS_VERSION = "com.biermacht.brews.newIngredientsVersion";
 
-  //  Incremented when new ingredients are available.
-  public static int NEW_INGREDIENTS_VERSION = 4;
+  //  Incremented when new database contents are added.
+  public static int NEW_DB_CONTENTS_VERSION = 5;
 
   // Activity for result return codes
   public static final int RESULT_DELETED = 1;

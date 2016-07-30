@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.biermacht.brews.frontend.MainActivity;
+import com.biermacht.brews.utils.IngredientHandler;
 
 public class ImportXmlIngredientsTask extends AsyncTask<String, Void, String> {
 
@@ -21,7 +22,7 @@ public class ImportXmlIngredientsTask extends AsyncTask<String, Void, String> {
   @Override
   protected String doInBackground(String... params) {
     // Grab ingredients from xml, put them into SQLite
-    MainActivity.ingredientHandler.ImportAssets();
+    new IngredientHandler(this.context).ImportAssets();
     return "Executed";
   }
 

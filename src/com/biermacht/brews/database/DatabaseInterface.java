@@ -244,7 +244,7 @@ public class DatabaseInterface {
 
     long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
     addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_DEFAULT);
-    addStyleToDatabase(r.getStyle(), id);
+    addStyleToDatabase(r.getStyle(), Constants.DATABASE_DEFAULT, id);
     addMashProfileToDatabase(r.getMashProfile(), id, Constants.DATABASE_DEFAULT);
 
     return id;
@@ -319,8 +319,8 @@ public class DatabaseInterface {
     }
 
     // TODO: Implement style update methods.
-    deleteStyle(r.getId());
-    addStyleToDatabase(r.getStyle(), r.getId());
+    deleteStyle(r.getId(), Constants.DATABASE_DEFAULT);
+    addStyleToDatabase(r.getStyle(), Constants.DATABASE_DEFAULT, r.getId());
 
     return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
   }
@@ -408,11 +408,11 @@ public class DatabaseInterface {
     return values;
   }
 
-  public long addStyleToDatabase(BeerStyle s, long ownerId) {
+  public long addStyleToDatabase(BeerStyle s, long databaseId, long ownerId) {
     // Load up values to store
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.STY_COL_OWNER_ID, ownerId);
-    values.put(DatabaseHelper.STY_COL_DB_ID, Constants.DATABASE_DEFAULT);
+    values.put(DatabaseHelper.STY_COL_DB_ID, databaseId);
     values.put(DatabaseHelper.STY_COL_NAME, s.getName());
     values.put(DatabaseHelper.STY_COL_CATEGORY, s.getCategory());
     values.put(DatabaseHelper.STY_COL_CAT_NUM, s.getCatNum());
@@ -552,10 +552,21 @@ public class DatabaseInterface {
   }
 
   /**
-   * Deletes all styles with given owner id
+   * Deletes all styles with given owner id in the given database.
    */
-  private boolean deleteStyle(long id) {
-    String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
+  public boolean deleteStyle(long ownerID, long databaseId) {
+    String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + ownerID + " AND " +
+            DatabaseHelper.STY_COL_DB_ID + "=" + databaseId;
+    return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
+  }
+
+  /**
+   * Deletes all styles with given identifiers.
+   */
+  public boolean deleteStyle(BeerStyle s) {
+    String whereClause = DatabaseHelper.STY_COL_STY_GUIDE + "=" + s.getStyleGuide() + " AND " +
+            DatabaseHelper.STY_COL_STY_LETTER + "=" + s.getStyleLetter() + " AND " +
+            DatabaseHelper.STY_COL_CAT_NUM + "=" + s.getCatNum();
     return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
   }
 
@@ -650,7 +661,7 @@ public class DatabaseInterface {
   }
 
   /**
-   * Returns ingredients from the given database with the given ingredient type
+   * Returns all mash profiles from the given database.
    */
   public ArrayList<MashProfile> getMashProfiles(long dbid) {
     ArrayList<MashProfile> list = new ArrayList<MashProfile>();
@@ -674,6 +685,31 @@ public class DatabaseInterface {
     return list;
   }
 
+
+  /**
+   * Returns beer styles from the given database.
+   */
+  public ArrayList<BeerStyle> getBeerStyles(long dbid) {
+    ArrayList<BeerStyle> list = new ArrayList<>();
+    String whereString = DatabaseHelper.STY_COL_DB_ID + "=" + dbid;
+    Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString,
+                                   null, null, null, null);
+
+    cursor.moveToFirst();
+    while (! cursor.isAfterLast()) {
+      try {
+        list.add(cursorToStyle(cursor));
+      } catch (Exception e) {
+        Log.e("DatabaseInterface", "Exception reading cursor!");
+        e.printStackTrace();
+        return list;
+      }
+      cursor.moveToNext();
+    }
+    cursor.close();
+
+    return list;
+  }
   /**
    * Returns ingredients from the given database with the given ingredient type
    */

@@ -23,6 +23,7 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Callbacks.BooleanCallback;
 import com.biermacht.brews.utils.Callbacks.Callback;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.IngredientHandler;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Utils;
 
@@ -74,6 +75,9 @@ public class AddRecipeActivity extends AddEditActivity {
 
     // Disable delete button for this view
     findViewById(R.id.delete_button).setVisibility(View.GONE);
+
+    // Create the ingredient handler.
+    this.ingredientHandler = new IngredientHandler(AddRecipeActivity.this);
 
     // Initialize each of the rows to be displayed
     mainView = (ViewGroup) findViewById(R.id.main_layout);
@@ -292,8 +296,8 @@ public class AddRecipeActivity extends AddEditActivity {
   @Override
   public void getList() {
     // Get array of styles and mash profiles
-    styleArray = MainActivity.ingredientHandler.getStylesList();
-    profileArray = MainActivity.ingredientHandler.getMashProfileList();
+    styleArray = this.ingredientHandler.getStylesList();
+    profileArray = this.ingredientHandler.getMashProfileList();
     typeArray = new ArrayList<String>();
     typeArray.add(Recipe.ALL_GRAIN);
     typeArray.add(Recipe.PARTIAL_MASH);
@@ -302,7 +306,7 @@ public class AddRecipeActivity extends AddEditActivity {
     // If it doesn't contain the current recipes style / profile,
     // then it is custom and we add it to the list.
     if (! styleArray.contains(mRecipe.getStyle())) {
-      styleArray.add(mRecipe.getStyle());
+      styleArray.add(0, mRecipe.getStyle());
     }
     if (! profileArray.contains(mRecipe.getMashProfile())) {
       profileArray.add(mRecipe.getMashProfile());

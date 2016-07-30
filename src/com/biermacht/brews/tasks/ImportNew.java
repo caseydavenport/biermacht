@@ -50,6 +50,11 @@ public class ImportNew extends AsyncTask<String, Void, String> {
                                                          ingredientHandler.getProfilesFromXml(filePath),
                                                          Constants.OWNER_NONE);
       }
+      else if (this.type.equals("style")) {
+        new DatabaseAPI(this.context).addStyleList(Constants.DATABASE_PERMANENT,
+                                                   ingredientHandler.getStylesFromXml(filePath),
+                                                   Constants.OWNER_NONE);
+      }
       else {
         Log.w("ImportNew", "Invalid type: " + this.type);
       }
