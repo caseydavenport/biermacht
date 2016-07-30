@@ -168,6 +168,7 @@ public class MainActivity extends DriveActivity {
             Log.d("MainActivity", "Importing mosaic / el dorado");
             new ImportNew("ingredient", "Importing new hops",
                           this, "Hops/new-hops-1.xml").execute("");
+            break;
           default:
             Log.w("MainActivity", "No action for version: " + lastVersion);
             break;

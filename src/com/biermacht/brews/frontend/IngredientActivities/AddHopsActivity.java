@@ -240,8 +240,15 @@ public class AddHopsActivity extends AddEditIngredientActivity {
     searchableListViewText.setText(h.getName());
     timeViewText.setText(mRecipe.getBoilTime() + "");
     alphaAcidViewText.setText(String.format("%2.2f", h.getAlphaAcidContent()));
-    amountViewText.setText(1.0 + "");
     descriptionViewText.setText(h.getDescription());
+
+    // If an amount has been specified then show it.  Otherewise,
+    // default to 1.0oz.
+    if (hop.getDisplayAmount() != 0) {
+      amountViewText.setText(String.format("%2.2f", hop.getDisplayAmount()));
+    } else {
+      amountViewText.setText("1.0");
+    }
   }
 
   @Override

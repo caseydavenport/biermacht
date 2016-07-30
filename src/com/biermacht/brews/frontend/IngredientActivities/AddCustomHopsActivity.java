@@ -18,15 +18,14 @@ public class AddCustomHopsActivity extends AddHopsActivity {
 
     // Set views
     this.setViews(Arrays.asList(nameView,
-                                amountView,
                                 timeView,
                                 formSpinner,
                                 useSpinner,
+                                amountView,
                                 alphaAcidView,
                                 descriptionView));
     if (! haveRecipe()) {
       timeView.setVisibility(View.GONE);
-      amountView.setVisibility(View.GONE);
     }
     // Set initial values
     hop = new Hop("Custom hop");
