@@ -322,9 +322,7 @@ public class MainActivity extends DriveActivity {
               public void onClick(DialogInterface dialog, int which) {
                 try {
                   Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                  String[] mimeTypes = {"file/*", "text/xml", "text/bsmx"};
-                  intent.setType("text/xml");
-                  intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                  intent.setType("*/*");
                   startActivityForResult(intent, Constants.REQUEST_IMPORT_FILE);
                 } catch (android.content.ActivityNotFoundException e) {
                   new AlertDialog.Builder(getApplicationContext())
