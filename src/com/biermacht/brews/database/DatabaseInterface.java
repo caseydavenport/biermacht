@@ -18,6 +18,7 @@ import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 
+import java.security.KeyException;
 import java.util.ArrayList;
 
 public class DatabaseInterface {
@@ -854,8 +855,15 @@ public class DatabaseInterface {
     cid++;
 
     ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
-    BeerStyle style = readStyle(id);
     MashProfile profile = readMashProfile(id);
+
+    // Get the style.
+    BeerStyle style = new BeerStyle("No Style");
+    try {
+      style = readStyle(id);
+    } catch (NoSuchStyleException e) {
+      e.printStackTrace();
+    }
 
     Log.d("DatabaseInterface", "Creating recipe '" + recipeName + "' from cursor");
 
@@ -933,18 +941,24 @@ public class DatabaseInterface {
     return list;
   }
 
-  // gets the style for recipe with given ID=id
-  private BeerStyle readStyle(long id) {
+  // Gets the style for recipe with given OwnerID=id
+  // If no style exists for that owner, throws a NoSuchStyleException.
+  private BeerStyle readStyle(long id) throws NoSuchStyleException {
 
     String whereString = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
     Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString,
                                    null, null, null, null);
 
-    cursor.moveToFirst();
-    BeerStyle style = cursorToStyle(cursor);
-    cursor.close();
-
-    return style;
+    if (cursor.moveToFirst()) {
+      // Cursor is not empty - convert to a Style.
+      BeerStyle style = cursorToStyle(cursor);
+      cursor.close();
+      return style;
+    }
+    else {
+      // The cursor is empty - throw NoSuchStyleException.
+      throw new NoSuchStyleException();
+    }
   }
 
   private BeerStyle cursorToStyle(Cursor cursor) {
@@ -1358,4 +1372,8 @@ public class DatabaseInterface {
 
     throw new Exception("No ingredient found");
   }
+}
+
+class NoSuchStyleException extends KeyException {
+
 }
