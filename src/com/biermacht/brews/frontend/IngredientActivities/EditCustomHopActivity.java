@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.biermacht.brews.database.DatabaseAPI;
-import com.biermacht.brews.ingredient.Hop;
 
 import java.util.Arrays;
 
@@ -30,7 +29,9 @@ public class EditCustomHopActivity extends EditHopActivity {
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
         use = useArray.get(position);
       }
-      public void onNothingSelected(AdapterView<?> parentView) {}
+
+      public void onNothingSelected(AdapterView<?> parentView) {
+      }
     });
 
     // Set values for the given hop

@@ -401,28 +401,28 @@ public class IngredientHandler {
     SAXParserFactory spf = SAXParserFactory.newInstance();
     AssetManager am = mContext.getAssets();
 
-      try {
-        // Parse files.
-        SAXParser sp = spf.newSAXParser();
-        InputStream is = am.open(path);
-        sp.parse(is, myXMLHandler);
+    try {
+      // Parse files.
+      SAXParser sp = spf.newSAXParser();
+      InputStream is = am.open(path);
+      sp.parse(is, myXMLHandler);
 
-        // Default mash profiles should auto-calculate infustion temp / amount,
-        // so set that here.
-        list = myXMLHandler.getMashProfiles();
-        for (MashProfile p : list) {
-          for (MashStep step : p.getMashStepList()) {
-            if (step.getType().equals(MashStep.INFUSION)) {
-              Log.d("IngredientHandler", "Enabling auto-calculation for: " + p.getName());
-              step.setAutoCalcInfuseAmt(true);
-              step.setAutoCalcInfuseTemp(true);
-            }
+      // Default mash profiles should auto-calculate infustion temp / amount,
+      // so set that here.
+      list = myXMLHandler.getMashProfiles();
+      for (MashProfile p : list) {
+        for (MashStep step : p.getMashStepList()) {
+          if (step.getType().equals(MashStep.INFUSION)) {
+            Log.d("IngredientHandler", "Enabling auto-calculation for: " + p.getName());
+            step.setAutoCalcInfuseAmt(true);
+            step.setAutoCalcInfuseTemp(true);
           }
         }
-
-      } catch (Exception e) {
-        Log.e("getProfilesFromXml", e.toString());
       }
+
+    } catch (Exception e) {
+      Log.e("getProfilesFromXml", e.toString());
+    }
     return list;
   }
 

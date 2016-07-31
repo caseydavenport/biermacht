@@ -27,7 +27,6 @@ public class DisplayStyleActivity extends AppCompatActivity {
     // Set icon as back button
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
     // Get recipe from intent
     style = getIntent().getParcelableExtra(Constants.KEY_STYLE);
 

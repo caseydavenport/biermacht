@@ -149,7 +149,7 @@ public class AddMashStepActivity extends AddEditActivity {
     }
     else if (v.equals(waterToGrainRatioView)) {
       if (step.firstInList() &&
-              !mRecipe.getMashProfile().getMashType().equals(MashProfile.MASH_TYPE_BIAB)) {
+              ! mRecipe.getMashProfile().getMashType().equals(MashProfile.MASH_TYPE_BIAB)) {
         // For non-BIAB, the first mash step water-to-grain ratio is not auto-calculated.
         alert = alertBuilder.editTextFloatAlert(waterToGrainRatioViewText,
                                                 waterToGrainRatioViewTitle).create();

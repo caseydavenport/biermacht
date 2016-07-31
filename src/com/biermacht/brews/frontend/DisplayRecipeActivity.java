@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.database.DatabaseAPI;
@@ -23,7 +22,6 @@ import com.biermacht.brews.frontend.fragments.DetailsViewFragment;
 import com.biermacht.brews.frontend.fragments.IngredientViewFragment;
 import com.biermacht.brews.frontend.fragments.InstructionViewFragment;
 import com.biermacht.brews.frontend.fragments.ProfileViewFragment;
-import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.AlertBuilder;
 import com.biermacht.brews.utils.Constants;

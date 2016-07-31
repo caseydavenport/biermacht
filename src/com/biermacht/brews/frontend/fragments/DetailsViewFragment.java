@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -17,7 +16,6 @@ import com.biermacht.brews.frontend.EditRecipeNotesActivity;
 import com.biermacht.brews.frontend.adapters.DetailArrayAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
 import java.util.ArrayList;
@@ -86,7 +84,7 @@ public class DetailsViewFragment extends Fragment implements BiermachtFragment {
     this.beerType.setContent(this.r.getStyle().getName());
     this.detailList.add(this.beerType);
 
-    if (!this.r.getBrewDate().isEmpty()) {
+    if (! this.r.getBrewDate().isEmpty()) {
       this.brewDate = new Detail();
       this.brewDate.setTitle("Brew Date: ");
       this.brewDate.setType(Detail.TYPE_TEXT);
@@ -240,7 +238,8 @@ public class DetailsViewFragment extends Fragment implements BiermachtFragment {
         Intent i = new Intent(getActivity(), EditRecipeNotesActivity.class);
         i.putExtra(Constants.KEY_RECIPE, r);
         i.putExtra(Constants.KEY_RECIPE_ID, r.getId());
-        startActivity(i);      }
+        startActivity(i);
+      }
     });
 
     // Create a new DetailArrayAdapter and set it on the listView.
@@ -248,7 +247,7 @@ public class DetailsViewFragment extends Fragment implements BiermachtFragment {
     this.listView.setAdapter(this.mAdapter);
 
     return this.pageView;
-    }
+  }
 
   @Override
   public void handleClick(View v) {

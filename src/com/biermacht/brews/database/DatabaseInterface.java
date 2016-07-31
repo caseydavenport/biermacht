@@ -686,7 +686,6 @@ public class DatabaseInterface {
     return list;
   }
 
-
   /**
    * Returns beer styles from the given database.
    */
@@ -711,6 +710,7 @@ public class DatabaseInterface {
 
     return list;
   }
+
   /**
    * Returns ingredients from the given database with the given ingredient type
    */

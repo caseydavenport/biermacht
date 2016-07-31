@@ -316,12 +316,14 @@ public class MainActivity extends DriveActivity {
   }
 
   private AlertDialog.Builder importRecipeAlert() {
+    Log.d("MainActivity", "importRecipeAlert() triggered");
     return new AlertDialog.Builder(this)
             .setTitle(R.string.import_recipes_title)
             .setMessage(R.string.import_recipes_msg)
             .setPositiveButton(R.string.browse, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
+                Log.d("MainActivity", "Browse pressed, launching GET_CONTENT intent");
                 try {
                   Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                   intent.setType("*/*");
@@ -336,10 +338,16 @@ public class MainActivity extends DriveActivity {
             })
             .setNegativeButton(R.string.drive_button, new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
+                Log.d("MainActivity", "Drive button pressed, lauching Drive file picker");
                 pickFile();
               }
             })
-            .setNeutralButton(R.string.cancel, null);
+            .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("MainActivity", "Cancel pressed, not importing any files");
+              }
+            });
   }
 
   private AlertDialog.Builder existingRecipesAlert(final Recipe r) {
@@ -391,6 +399,7 @@ public class MainActivity extends DriveActivity {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+    Log.d("MainActivity", "onActivityResult " + String.format("requestCode: %d, resultCode: %d", requestCode, resultCode));
     if (requestCode == Constants.REQUEST_IMPORT_FILE) {
       if (resultCode == RESULT_OK) {
         Log.d("MainActivity", "User selected a file and result was OK");
@@ -439,7 +448,7 @@ public class MainActivity extends DriveActivity {
 
     // Only grab the file if we're still connected to Drive APIs.
     // If we've somehow been disconnected, warn the user and return.
-    if (!driveClient.isConnected()) {
+    if (! driveClient.isConnected()) {
       Log.e("MainActivity", "Drive client became unexpected disconnected");
       String msg = "Unexpected disconnect from Google Drive";
       new AlertDialog.Builder(MainActivity.this)
@@ -460,7 +469,7 @@ public class MainActivity extends DriveActivity {
       @Override
       public void onResult(DriveApi.DriveContentsResult result) {
         Log.d("MainActivity", "Entering callback for Drive file open");
-        if (!result.getStatus().isSuccess()) {
+        if (! result.getStatus().isSuccess()) {
           Log.e("MainActivity", "Failed to open drive file");
           // TODO: Display an error saying file can't be opened
           return;
@@ -620,7 +629,7 @@ public class MainActivity extends DriveActivity {
         String msg = "Parsing failed.  This may be due to an invalid file, or something else.  " +
                 "Please report the follwing message to " +
                 "the developer: \n\n" + this.storedException.toString() + "\n\n" + stackTrace;
-
+        Log.e("MainActivity", "Alerting user  of failure: \n\n" + stackTrace);
         new AlertDialog.Builder(MainActivity.this)
                 .setTitle("Error parsing file")
                 .setMessage(msg)

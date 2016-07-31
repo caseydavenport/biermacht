@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.frontend.DisplayStyleActivity;
-import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.frontend.adapters.BeerStyleArrayAdapter;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.utils.Constants;

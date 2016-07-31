@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.utils.IngredientHandler;
 
 public class ImportXmlIngredientsTask extends AsyncTask<String, Void, String> {
