@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.biermacht.brews.database.DatabaseAPI;
-import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
 import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.utils.Constants;
@@ -37,12 +36,12 @@ public class ResetIngredients extends AsyncTask<String, Void, String> {
   @Override
   protected String doInBackground(String... params) {
     Log.d("ResetIngredients", "Deleting all 'permanent' ingredients");
-    for (Ingredient ing : databaseApi.getIngredients(Constants.DATABASE_PERMANENT)) {
+    for (Ingredient ing : databaseApi.getIngredients(Constants.DATABASE_SYSTEM_RESOURCES)) {
       databaseApi.deleteIngredientWithId(ing.getId(), ing.getDatabaseId());
     }
 
     Log.d("ResetIngredients", "Deleting all 'permanent' styles");
-    for (BeerStyle s : databaseApi.getStyles(Constants.DATABASE_PERMANENT)) {
+    for (BeerStyle s : databaseApi.getStyles(Constants.DATABASE_SYSTEM_RESOURCES)) {
       databaseApi.deleteStyle(s);
     }
 
@@ -55,7 +54,7 @@ public class ResetIngredients extends AsyncTask<String, Void, String> {
 
     Log.d("ResetIngredients", "Re-initializing style assets");
     try {
-      databaseApi.addStyleList(Constants.DATABASE_PERMANENT,
+      databaseApi.addStyleList(Constants.DATABASE_SYSTEM_RESOURCES,
                                ingredientHandler.getStylesFromXml(),
                                Constants.OWNER_NONE);
     } catch (IOException e) {

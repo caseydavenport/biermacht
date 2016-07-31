@@ -47,7 +47,7 @@ public abstract class Ingredient implements Parcelable {
     this.name = name;
     this.id = Constants.INVALID_ID;
     this.ownerId = Constants.INVALID_ID;
-    this.databaseId = Constants.DATABASE_DEFAULT;
+    this.databaseId = Constants.DATABASE_USER_RECIPES;
     this.amount = 0;
     this.time = 0;
     this.inventory = 0;

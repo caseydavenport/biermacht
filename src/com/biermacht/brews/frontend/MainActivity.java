@@ -169,7 +169,7 @@ public class MainActivity extends DriveActivity {
             break;
           case 5:
             Log.d("MainActivity", "Updating style database");
-            new ImportNew("style", "Updating styles",
+            new ImportNew("style", "Updating style database",
                           this, "Styles/styles.xml").execute("");
           default:
             Log.w("MainActivity", "No action for version: " + lastVersion);

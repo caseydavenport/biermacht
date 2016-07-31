@@ -99,13 +99,13 @@ public class EditMiscActivity extends AddMiscActivity {
 
   @Override
   public void onFinished() {
-    new DatabaseAPI(this).updateIngredient(misc, Constants.DATABASE_DEFAULT);
+    new DatabaseAPI(this).updateIngredient(misc, Constants.DATABASE_USER_RECIPES);
     finish();
   }
 
   @Override
   public void onDeletePressed() {
-    new DatabaseAPI(this).deleteIngredientWithId(misc.getId(), Constants.DATABASE_DEFAULT);
+    new DatabaseAPI(this).deleteIngredientWithId(misc.getId(), Constants.DATABASE_USER_RECIPES);
     finish();
   }
 }

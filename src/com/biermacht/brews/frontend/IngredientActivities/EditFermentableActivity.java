@@ -124,14 +124,14 @@ public class EditFermentableActivity extends AddFermentableActivity {
 
   @Override
   public void onDeletePressed() {
-    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
+    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, Constants.DATABASE_USER_RECIPES);
     finish();
   }
 
   @Override
   public void onFinished() {
     // Update the ingredient, and finish the activity
-    new DatabaseAPI(this).updateIngredient(fermentable, Constants.DATABASE_DEFAULT);
+    new DatabaseAPI(this).updateIngredient(fermentable, Constants.DATABASE_USER_RECIPES);
     finish();
   }
 }

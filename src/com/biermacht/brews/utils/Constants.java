@@ -56,10 +56,21 @@ public class Constants {
   public static final String COMMAND_QUERY = "biermacht.brews.commands.query";
   public static final String COMMAND_STOP_ALARM = "biermacht.brews.commands.stop.alarm";
 
-  // Different virtual databases
-  public static final long DATABASE_PERMANENT = 2;  // Imported from assets.  Save these.
-  public static final long DATABASE_CUSTOM = 1;     // Custom made. Save these
-  public static final long DATABASE_DEFAULT = 0;    // Used by default.
+  // Database identifiers used to slice SQLite database into
+  // multiple zones, each with a different purpose.
+
+  // System DB - imported from assets.  Contains the selection of "default" ingredients /
+  // profiles / styles / etc that come with the application.
+  public static final long DATABASE_SYSTEM_RESOURCES = 2;
+
+  // User DB - custom resources added by the user. Constains the selection of ingredients / profiles
+  // styles / etc that a user has specifically added to the application.
+  public static final long DATABASE_USER_RESOURCES = 1;
+
+  // User DB - stores recipes and specific instances of the "rubber-stamp"
+  // ingredients / profiles / styles / etc from one of SYSTEM_ADDED or USER_ADDED
+  // that are related to those recipes.
+  public static final long DATABASE_USER_RECIPES = 0;
 
   // No owner ID for use in database
   public static final long OWNER_NONE = - 1;

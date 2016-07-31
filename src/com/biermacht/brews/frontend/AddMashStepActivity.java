@@ -291,7 +291,7 @@ public class AddMashStepActivity extends AddEditActivity {
 
     // Get the database to save to.  This varies based on whether we are editing a floating
     // custom MashProfile, or if this MashProfile is attached to a user's recipe.
-    database = getIntent().getLongExtra(Constants.KEY_DATABASE_ID, Constants.DATABASE_DEFAULT);
+    database = getIntent().getLongExtra(Constants.KEY_DATABASE_ID, Constants.DATABASE_USER_RECIPES);
 
     // Since we're adding a new step, we should increment the step temperature, unless this is
     // the first step in the list.  If this is not the first step in the list, increment the

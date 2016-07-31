@@ -119,12 +119,12 @@ public class EditHopActivity extends AddHopsActivity {
   }
 
   public void onFinished() {
-    new DatabaseAPI(this).updateIngredient(hop, Constants.DATABASE_DEFAULT);
+    new DatabaseAPI(this).updateIngredient(hop, Constants.DATABASE_USER_RECIPES);
     finish();
   }
 
   public void onDeletePressed() {
-    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, Constants.DATABASE_DEFAULT);
+    new DatabaseAPI(this).deleteIngredientWithId(ingredientId, Constants.DATABASE_USER_RECIPES);
     finish();
   }
 }
