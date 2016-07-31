@@ -53,8 +53,8 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
     databaseApi = new DatabaseAPI(context);
 
     // Get ingredient list
-    list = databaseApi.getIngredients(Constants.DATABASE_CUSTOM);
-    list.addAll(databaseApi.getIngredients(Constants.DATABASE_PERMANENT));
+    list = databaseApi.getIngredients(Constants.DATABASE_USER_RESOURCES);
+    list.addAll(databaseApi.getIngredients(Constants.DATABASE_SYSTEM_RESOURCES));
     Collections.sort(list, new IngredientsComparator());
 
     // Set up the list adapter
@@ -138,8 +138,8 @@ public class EditIngredientsFragment extends Fragment implements BiermachtFragme
   @Override
   public void update() {
     // Get the full list of ingredients from the custom database and permanent database.
-    ArrayList<Ingredient> loadedList = databaseApi.getIngredients(Constants.DATABASE_CUSTOM);
-    loadedList.addAll(databaseApi.getIngredients(Constants.DATABASE_PERMANENT));
+    ArrayList<Ingredient> loadedList = databaseApi.getIngredients(Constants.DATABASE_USER_RESOURCES);
+    loadedList.addAll(databaseApi.getIngredients(Constants.DATABASE_SYSTEM_RESOURCES));
 
     // Add the loaded ingredients to the list for the list view.
     list.removeAll(list);

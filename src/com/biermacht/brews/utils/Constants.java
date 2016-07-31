@@ -56,10 +56,21 @@ public class Constants {
   public static final String COMMAND_QUERY = "biermacht.brews.commands.query";
   public static final String COMMAND_STOP_ALARM = "biermacht.brews.commands.stop.alarm";
 
-  // Different virtual databases
-  public static final long DATABASE_PERMANENT = 2;  // Imported from assets.  Save these.
-  public static final long DATABASE_CUSTOM = 1;     // Custom made. Save these
-  public static final long DATABASE_DEFAULT = 0;    // Used by default.
+  // Database identifiers used to slice SQLite database into
+  // multiple zones, each with a different purpose.
+
+  // System DB - imported from assets.  Contains the selection of "default" ingredients /
+  // profiles / styles / etc that come with the application.
+  public static final long DATABASE_SYSTEM_RESOURCES = 2;
+
+  // User DB - custom resources added by the user. Constains the selection of ingredients / profiles
+  // styles / etc that a user has specifically added to the application.
+  public static final long DATABASE_USER_RESOURCES = 1;
+
+  // User DB - stores recipes and specific instances of the "rubber-stamp"
+  // ingredients / profiles / styles / etc from one of SYSTEM_ADDED or USER_ADDED
+  // that are related to those recipes.
+  public static final long DATABASE_USER_RECIPES = 0;
 
   // No owner ID for use in database
   public static final long OWNER_NONE = - 1;
@@ -78,11 +89,11 @@ public class Constants {
   public static final String PREF_MEAS_SYSTEM = "com.biermacht.brews.measurementSystem";
   public static final String PREF_FIXED_RATIOS = "com.biermacht.brews.waterToGrainRatiosFixed";
 
-  // Value of this preference indicates the last time ingredients were updated.
-  public static final String PREF_NEW_INGRE_VERSION = "com.biermacht.brews.newIngredientsVersion";
+  // Value of this preference indicates the last time db contents were updated.
+  public static final String PREF_NEW_CONTENTS_VERSION = "com.biermacht.brews.newIngredientsVersion";
 
-  //  Incremented when new ingredients are available.
-  public static int NEW_INGREDIENTS_VERSION = 4;
+  //  Incremented when new database contents are added.
+  public static int NEW_DB_CONTENTS_VERSION = 5;
 
   // Activity for result return codes
   public static final int RESULT_DELETED = 1;

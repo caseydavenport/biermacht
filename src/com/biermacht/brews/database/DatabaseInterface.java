@@ -197,7 +197,7 @@ public class DatabaseInterface {
   public long addRecipeToDatabase(Recipe r) {
     // Load up values to store
     ContentValues values = new ContentValues();
-    values.put(DatabaseHelper.REC_COL_DB_ID, Constants.DATABASE_DEFAULT);
+    values.put(DatabaseHelper.REC_COL_DB_ID, Constants.DATABASE_USER_RECIPES);
     values.put(DatabaseHelper.REC_COL_NAME, r.getRecipeName());
     values.put(DatabaseHelper.REC_COL_VER, r.getVersion());
     values.put(DatabaseHelper.REC_COL_TYPE, r.getType());
@@ -243,9 +243,9 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, r.getBeerXmlMeasuredBatchSize());
 
     long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
-    addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_DEFAULT);
-    addStyleToDatabase(r.getStyle(), id);
-    addMashProfileToDatabase(r.getMashProfile(), id, Constants.DATABASE_DEFAULT);
+    addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_USER_RECIPES);
+    addStyleToDatabase(r.getStyle(), Constants.DATABASE_USER_RECIPES, id);
+    addMashProfileToDatabase(r.getMashProfile(), id, Constants.DATABASE_USER_RECIPES);
 
     return id;
   }
@@ -300,27 +300,27 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, r.getBeerXmlMeasuredBatchSize());
 
     for (Ingredient i : r.getIngredientList()) {
-      Boolean exists = updateExistingIngredientInDatabase(i, Constants.DATABASE_DEFAULT);
+      Boolean exists = updateExistingIngredientInDatabase(i, Constants.DATABASE_USER_RECIPES);
       if (! exists) {
-        addIngredientToDatabase(i, r.getId(), Constants.DATABASE_DEFAULT);
+        addIngredientToDatabase(i, r.getId(), Constants.DATABASE_USER_RECIPES);
       }
     }
 
     // Update mash profile
-    Boolean exists = updateMashProfile(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
+    Boolean exists = updateMashProfile(r.getMashProfile(), r.getId(), Constants.DATABASE_USER_RECIPES);
     if (! exists) {
       // Delete any mash profiles owned by this recipe so we don't build up
       // a bunch over time.
       MashProfile oldProfile = readMashProfile(r.getId());
-      deleteMashProfile(oldProfile.getId(), Constants.DATABASE_DEFAULT);
+      deleteMashProfile(oldProfile.getId(), Constants.DATABASE_USER_RECIPES);
 
       // Add the new one to the database.
-      addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_DEFAULT);
+      addMashProfileToDatabase(r.getMashProfile(), r.getId(), Constants.DATABASE_USER_RECIPES);
     }
 
     // TODO: Implement style update methods.
-    deleteStyle(r.getId());
-    addStyleToDatabase(r.getStyle(), r.getId());
+    deleteStylesForRecipe(r.getId(), Constants.DATABASE_USER_RECIPES);
+    addStyleToDatabase(r.getStyle(), Constants.DATABASE_USER_RECIPES, r.getId());
 
     return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
   }
@@ -408,11 +408,11 @@ public class DatabaseInterface {
     return values;
   }
 
-  public long addStyleToDatabase(BeerStyle s, long ownerId) {
+  public long addStyleToDatabase(BeerStyle s, long databaseId, long ownerId) {
     // Load up values to store
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.STY_COL_OWNER_ID, ownerId);
-    values.put(DatabaseHelper.STY_COL_DB_ID, Constants.DATABASE_DEFAULT);
+    values.put(DatabaseHelper.STY_COL_DB_ID, databaseId);
     values.put(DatabaseHelper.STY_COL_NAME, s.getName());
     values.put(DatabaseHelper.STY_COL_CATEGORY, s.getCategory());
     values.put(DatabaseHelper.STY_COL_CAT_NUM, s.getCatNum());
@@ -523,7 +523,7 @@ public class DatabaseInterface {
     // Load up values to store
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.STE_COL_OWNER_ID, ownerId);
-    values.put(DatabaseHelper.STE_COL_DB_ID, Constants.DATABASE_DEFAULT);
+    values.put(DatabaseHelper.STE_COL_DB_ID, Constants.DATABASE_USER_RECIPES);
     values.put(DatabaseHelper.STE_COL_NAME, s.getName());
     values.put(DatabaseHelper.STE_COL_VERSION, s.getVersion());
     values.put(DatabaseHelper.STE_COL_TYPE, s.getType());
@@ -552,10 +552,21 @@ public class DatabaseInterface {
   }
 
   /**
-   * Deletes all styles with given owner id
+   * Deletes all styles with given owner id in the given database.
    */
-  private boolean deleteStyle(long id) {
-    String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + id;
+  public boolean deleteStylesForRecipe(long ownerID, long databaseId) {
+    String whereClause = DatabaseHelper.STY_COL_OWNER_ID + "=" + ownerID + " AND " +
+            DatabaseHelper.STY_COL_DB_ID + "=" + databaseId;
+    return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
+  }
+
+  /**
+   * Deletes all styles with given identifiers.
+   */
+  public boolean deleteStyle(BeerStyle s) {
+    String whereClause = DatabaseHelper.STY_COL_STY_GUIDE + "=" + s.getStyleGuide() + " AND " +
+            DatabaseHelper.STY_COL_STY_LETTER + "=" + s.getStyleLetter() + " AND " +
+            DatabaseHelper.STY_COL_CAT_NUM + "=" + s.getCatNum();
     return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
   }
 
@@ -650,7 +661,7 @@ public class DatabaseInterface {
   }
 
   /**
-   * Returns ingredients from the given database with the given ingredient type
+   * Returns all mash profiles from the given database.
    */
   public ArrayList<MashProfile> getMashProfiles(long dbid) {
     ArrayList<MashProfile> list = new ArrayList<MashProfile>();
@@ -674,6 +685,31 @@ public class DatabaseInterface {
     return list;
   }
 
+
+  /**
+   * Returns beer styles from the given database.
+   */
+  public ArrayList<BeerStyle> getBeerStyles(long dbid) {
+    ArrayList<BeerStyle> list = new ArrayList<>();
+    String whereString = DatabaseHelper.STY_COL_DB_ID + "=" + dbid;
+    Cursor cursor = database.query(DatabaseHelper.TABLE_STYLES, stylesAllColumns, whereString,
+                                   null, null, null, null);
+
+    cursor.moveToFirst();
+    while (! cursor.isAfterLast()) {
+      try {
+        list.add(cursorToStyle(cursor));
+      } catch (Exception e) {
+        Log.e("DatabaseInterface", "Exception reading cursor!");
+        e.printStackTrace();
+        return list;
+      }
+      cursor.moveToNext();
+    }
+    cursor.close();
+
+    return list;
+  }
   /**
    * Returns ingredients from the given database with the given ingredient type
    */

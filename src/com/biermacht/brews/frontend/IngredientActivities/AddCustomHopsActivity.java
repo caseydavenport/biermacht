@@ -40,7 +40,7 @@ public class AddCustomHopsActivity extends AddHopsActivity {
   @Override
   public void onFinished() {
     Log.d("AddCustomHop", "Adding hop to db_custom: " + hop.getName());
-    new DatabaseAPI(this).addIngredient(Constants.DATABASE_CUSTOM, hop, Constants.MASTER_RECIPE_ID);
+    new DatabaseAPI(this).addIngredient(Constants.DATABASE_USER_RESOURCES, hop, Constants.MASTER_RECIPE_ID);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
       Log.d("AddCustomHop", "Adding hop '" +

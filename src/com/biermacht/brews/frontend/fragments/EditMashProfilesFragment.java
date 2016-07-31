@@ -48,7 +48,7 @@ public class EditMashProfilesFragment extends Fragment implements BiermachtFragm
     databaseApi = new DatabaseAPI(c);
 
     // Get ingredient list
-    list = databaseApi.getMashProfiles(Constants.DATABASE_CUSTOM);
+    list = databaseApi.getMashProfiles(Constants.DATABASE_USER_RESOURCES);
     Collections.sort(list, new ToStringComparator());
 
     // Initialize list
@@ -99,7 +99,7 @@ public class EditMashProfilesFragment extends Fragment implements BiermachtFragm
   @Override
   public void update() {
     // Get the full list of profiles from the custom database.
-    ArrayList<MashProfile> loadedList = databaseApi.getMashProfiles(Constants.DATABASE_CUSTOM);
+    ArrayList<MashProfile> loadedList = databaseApi.getMashProfiles(Constants.DATABASE_USER_RESOURCES);
 
     // Add the loaded profiles to the list for the list view.
     list.removeAll(list);

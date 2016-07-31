@@ -95,7 +95,7 @@ public class Utils {
       else {
         i.setDisplayAmount(i.getDisplayAmount() * ratio);
       }
-      new DatabaseAPI(c).updateIngredient(i, Constants.DATABASE_DEFAULT);
+      new DatabaseAPI(c).updateIngredient(i, Constants.DATABASE_USER_RECIPES);
     }
 
     r.save(c);

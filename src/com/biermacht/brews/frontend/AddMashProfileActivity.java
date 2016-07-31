@@ -7,12 +7,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -400,7 +397,7 @@ public class AddMashProfileActivity extends AddEditActivity {
   @Override
   public void onFinished() {
     Log.d("AddMashProfileActivity", "Saving MashProfile");
-    mProfile.save(getApplicationContext(), Constants.DATABASE_CUSTOM);
+    mProfile.save(getApplicationContext(), Constants.DATABASE_USER_RESOURCES);
     finish();
   }
 

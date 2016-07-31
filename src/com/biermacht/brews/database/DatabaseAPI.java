@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.biermacht.brews.exceptions.ItemNotFoundException;
-import com.biermacht.brews.frontend.MainActivity;
 import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
@@ -75,7 +75,7 @@ public class DatabaseAPI {
     }
 
     // Delete the MashProfile.
-    this.deleteMashProfileFromDatabase(r.getMashProfile(), Constants.DATABASE_DEFAULT);
+    this.deleteMashProfileFromDatabase(r.getMashProfile(), Constants.DATABASE_USER_RECIPES);
 
     return this.databaseInterface.deleteRecipeIfExists(r.getId());
   }
@@ -86,7 +86,7 @@ public class DatabaseAPI {
 
     for (Recipe r : getRecipeList()) {
       for (Ingredient i : r.getIngredientList()) {
-        deleteIngredientWithId(i.getId(), Constants.DATABASE_DEFAULT);
+        deleteIngredientWithId(i.getId(), Constants.DATABASE_USER_RECIPES);
       }
       bool = deleteRecipe(r);
     }
@@ -144,6 +144,16 @@ public class DatabaseAPI {
     return this.databaseInterface.getIngredients(dbid);
   }
 
+  public ArrayList<BeerStyle> getStyles(long dbid) {
+    return this.databaseInterface.getBeerStyles(dbid);
+  }
+
+  public void addStyleList(long databaseId, ArrayList<BeerStyle> list, long ownerID) {
+    for (BeerStyle s : list) {
+      this.databaseInterface.addStyleToDatabase(s, databaseId, ownerID);
+    }
+  }
+
   public void addMashProfileList(long dbid, ArrayList<MashProfile> list, long ownerId) {
     for (MashProfile p : list) {
       this.databaseInterface.addMashProfileToDatabase(p, ownerId, dbid);
@@ -169,5 +179,10 @@ public class DatabaseAPI {
       this.databaseInterface.deleteMashStep(s.getId());
     }
     return this.databaseInterface.deleteMashProfile(p.getId(), dbid);
+  }
+
+  // Deletes the given style.
+  public boolean deleteStyle(BeerStyle s) {
+    return this.databaseInterface.deleteStyle(s);
   }
 }

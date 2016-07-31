@@ -52,7 +52,7 @@ public class AddCustomMiscActivity extends AddMiscActivity {
   @Override
   public void onFinished() {
     Log.d("AddCustomMisc", "Adding misc to db_custom: " + misc.getName());
-    new DatabaseAPI(this).addIngredient(Constants.DATABASE_CUSTOM, misc, Constants.MASTER_RECIPE_ID);
+    new DatabaseAPI(this).addIngredient(Constants.DATABASE_USER_RESOURCES, misc, Constants.MASTER_RECIPE_ID);
     if (haveRecipe()) {
       // If not master ID, update the recipe.
       Log.d("AddCustomMisc", "Adding misc '" +
