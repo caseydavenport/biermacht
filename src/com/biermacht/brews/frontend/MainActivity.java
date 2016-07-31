@@ -393,7 +393,7 @@ public class MainActivity extends DriveActivity {
 
     if (requestCode == Constants.REQUEST_IMPORT_FILE) {
       if (resultCode == RESULT_OK) {
-        Log.d("MainActivity", "User selected a file.");
+        Log.d("MainActivity", "User selected a file and result was OK");
         Uri uri = data.getData();
         String path = uri.getPath().toString();
         Log.d("MainActivity", "URI: " + uri.toString());
@@ -434,6 +434,7 @@ public class MainActivity extends DriveActivity {
    * @param data
    */
   public void onDriveFilePicked(Intent data) {
+    Log.d("MainActivity", "A Google Drive file has been selected");
     DriveId driveId = data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
 
     // Only grab the file if we're still connected to Drive APIs.
@@ -458,7 +459,9 @@ public class MainActivity extends DriveActivity {
     final ResultCallback resultCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
       @Override
       public void onResult(DriveApi.DriveContentsResult result) {
+        Log.d("MainActivity", "Entering callback for Drive file open");
         if (!result.getStatus().isSuccess()) {
+          Log.e("MainActivity", "Failed to open drive file");
           // TODO: Display an error saying file can't be opened
           return;
         }
@@ -475,19 +478,26 @@ public class MainActivity extends DriveActivity {
     ResultCallback metadataCallback = new ResultCallback<DriveResource.MetadataResult>() {
       @Override
       public void onResult(DriveResource.MetadataResult result) {
+        Log.d("MainActivity", "Entering callback for Drive metadata returned");
         if (! result.getStatus().isSuccess()) {
+          Log.e("MainActivity", "Failed to get Drive metadata");
           // TODO: Display an error saying file can't be opened
           return;
         }
         // Set fileName for use in LoadRecipes.
-        fileName = result.getMetadata().getTitle() + "." + result.getMetadata().getFileExtension();
+        String title = result.getMetadata().getTitle();
+        String extension = result.getMetadata().getFileExtension();
+        Log.d("MainActivity", "Metadata.title: " + title + " Metadata.ext: " + extension);
+        fileName = title + "." + extension;
 
         // Open the file.
+        Log.d("MainActivity", "About to open drive file");
         file.open(driveClient, DriveFile.MODE_READ_ONLY, null).setResultCallback(resultCallback);
       }
     };
 
     // Get Metadata for the file.
+    Log.d("MainActivity", "Initiating request for Drive metadata");
     file.getMetadata(driveClient).setResultCallback(metadataCallback);
   }
 
@@ -573,7 +583,7 @@ public class MainActivity extends DriveActivity {
     private Exception storedException;
 
     public LoadRecipes(InputStream is, String fileName, IngredientHandler i) {
-      Log.d("MainActivity", "Loading Recipes");
+      Log.d("MainActivity", "Loading Recipes from file: " + fileName);
       this.inputStream = is;
       this.fileName = fileName;
       this.ingredientHandler = i;
@@ -583,9 +593,10 @@ public class MainActivity extends DriveActivity {
     @Override
     protected String doInBackground(String... params) {
       try {
+        Log.d("MainActivity", "Importing recipes from file: " + this.fileName + " Input stream: " + this.inputStream);
         importedRecipes = ingredientHandler.getRecipesFromXml(this.inputStream, this.fileName);
       } catch (Exception e) {
-        Log.e("LoadRecipes", e.toString());
+        Log.e("LoadRecipes", "Error parsing recipes, storing exception: " + e.toString());
         this.storedException = e;
       }
       return "Executed";
@@ -597,12 +608,14 @@ public class MainActivity extends DriveActivity {
       progress.dismiss();
       if (this.storedException == null) {
         // All is good - show the recipe selector.
+        Log.d("MainActivity", "Successfully parsed file: " + this.fileName);
         setImportedRecipes(importedRecipes);
         recipeSelectorAlert().show();
         updateFragments();
       }
       else {
         // Failed to load recipes.  Display the exception.
+        Log.e("MainActivity", "Failed to parse file: " + this.fileName);
         String stackTrace = Log.getStackTraceString(this.storedException);
         String msg = "Parsing failed.  This may be due to an invalid file, or something else.  " +
                 "Please report the follwing message to " +
@@ -620,6 +633,7 @@ public class MainActivity extends DriveActivity {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
+      Log.d("MainActivity", "About to load recipes from file - starting progress spinner");
       progress = new ProgressDialog(MainActivity.this);
       progress.setMessage("Loading...");
       progress.setIndeterminate(false);
@@ -647,6 +661,8 @@ public class MainActivity extends DriveActivity {
    * @return
    */
   private AlertDialog.Builder recipeSelectorAlert() {
+    Log.d("MainActivity", "Building recipe selector alert after loading file");
+
     // Inflater to inflate custom alert view.
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -690,7 +706,7 @@ public class MainActivity extends DriveActivity {
 
               public void onClick(DialogInterface dialog, int which) {
                 // Iterate recipes, import those which are selected.
-                // TODO: Check if recipe already exists, ask to overwrite.
+                Log.d("MainActivity", "Import button presses, importing recipes");
                 for (int i = 0; i < adapter.getCount(); i++) {
                   if (adapter.isChecked(adapter.getItem(i).getRecipeName())) {
                     recipesToImport.add(adapter.getItem(i));
@@ -719,12 +735,14 @@ public class MainActivity extends DriveActivity {
                 // If there are any clashes, we need to show an alert asking what to do.
                 // The alert will choose which recipes should be imported, duplicated, skipped.
                 if (clashes.size() != 0) {
+                  Log.d("MainActivity", "Recipe clashes found: " + clashes.toString());
                   for (Recipe r : clashes) {
                     existingRecipesAlert(r).show();
                   }
                 }
 
                 // Store all recipes which do not have conflicts.
+                Log.d("MainActivity", "Launching StoreRecipes: " + recipesToImport.toString());
                 new StoreRecipes(recipesToImport, findViewById(R.id.drawer_layout)).execute("");
               }
 
@@ -748,7 +766,9 @@ public class MainActivity extends DriveActivity {
 
     @Override
     protected String doInBackground(String... params) {
+      Log.d("MainActivity", "Storing recipes in database");
       for (Recipe r : list) {
+        Log.d("MainActivity", "\tWriting recipe to database: " + r.toString());
         r.update();
         databaseApi.createRecipeFromExisting(r);
       }
@@ -758,6 +778,7 @@ public class MainActivity extends DriveActivity {
     @Override
     protected void onPostExecute(String result) {
       super.onPostExecute(result);
+      Log.d("MainActivity", "Storing recipes complete - dismiss progress dialog");
       progress.dismiss();
 
       // Show SnackBar and update the fragments to display the new recipes.
@@ -770,6 +791,7 @@ public class MainActivity extends DriveActivity {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
+      Log.d("MainActivity", "About to store recipes, showing progress dialog");
       progress = new ProgressDialog(MainActivity.this);
       progress.setMessage("Importing...");
       progress.setIndeterminate(false);

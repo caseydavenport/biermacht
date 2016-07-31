@@ -370,7 +370,7 @@ public class IngredientHandler {
       list = beerXmlReader.getRecipes();
     }
     else {
-      Log.d("IngredientHandler", "Invalid file type");
+      Log.d("IngredientHandler", "Invalid file type: " + path);
       throw new UnsupportedOperationException("Invaid file type: " + path);
     }
 
