@@ -16,7 +16,6 @@ import com.biermacht.brews.utils.comparators.ToStringComparator;
 import com.biermacht.brews.xml.BeerXmlReader;
 import com.biermacht.brews.xml.BsmxXmlReader;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.xml.sax.InputSource;
 
 import java.io.IOException;
@@ -27,6 +26,8 @@ import java.util.Collections;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import biermacht.org.apache.commons.lang3.StringEscapeUtils;
 
 public class IngredientHandler {
 

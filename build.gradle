@@ -14,12 +14,12 @@ dependencies {
     compile "com.android.support:design:22.2.0"
     compile 'com.android.support:percent:22.2.0'
     compile "com.google.android.gms:play-services-drive:8.3.0"
-    compile files("libs/commons-lang3-3.4/commons-lang3-3.4.jar")
+    compile files("libs/biermacht-commons-lang3-3.4/biermacht-commons-lang3-3.4.jar")
 }
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     sourceSets {
         main {
