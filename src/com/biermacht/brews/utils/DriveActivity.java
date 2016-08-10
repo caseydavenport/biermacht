@@ -45,7 +45,7 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
             public void onResult(DriveApi.DriveContentsResult result) {
 
               if (! result.getStatus().isSuccess()) {
-                // TODO HANDLE ERROR
+                Log.e("DriveActivity", "driveContentsCallback error: " + result.toString());
                 return;
               }
               final DriveContents driveContents = result.getDriveContents();
@@ -82,7 +82,8 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
                                            Constants.REQUEST_DRIVE_FILE_CREATE,
                                            null, 0, 0, 0);
               } catch (IntentSender.SendIntentException e) {
-                // TODO Handle the exception
+                Log.e("DriveActivity", "Exception starting Drive file create intent");
+                e.printStackTrace();
               }
             }
           };
@@ -113,17 +114,20 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
   public abstract void onDriveFileWritten(Intent data);
 
   public void connectToDrive() {
+    Log.d("DriveActivity", "connectToDrive()");
     driveClient.connect();
     progressDialog.show();
   }
 
   @Override
   protected void onStop() {
+    Log.d("DriveActivity", "onStop()");
     driveClient.disconnect();
     super.onStop();
   }
 
   public void pickFile() {
+    Log.d("DriveActivity", "pickFile()");
     if (! driveClient.isConnected()) {
       this.action = FILE_OPEN;
       connectToDrive();
@@ -148,6 +152,7 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
 
   public void writeFile(ArrayList<Recipe> recipes) {
     // Store the given recipes so we can write them later.
+    Log.d("DriveActivity", "writeFile() " + recipes.toString());
     this.recipes = recipes;
 
     if (! driveClient.isConnected()) {
@@ -186,12 +191,14 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
         handleDriveFileWritten(resultCode, data);
         break;
       default:
+        Log.d("DriveActivity", String.format("Unhandled: requestCode: %d, resultCode: %d", requestCode, resultCode));
         super.onActivityResult(requestCode, resultCode, data);
         break;
     }
   }
 
   private void handleConnectToDrive(int resultCode, Intent data) {
+    Log.d("DriveActivity", "handleConnectToDrive() event, rc=" + resultCode);
     if (resultCode == RESULT_OK) {
       // Make sure the app is not already connected or attempting to connect
       if (! this.driveClient.isConnecting() &&
@@ -202,6 +209,7 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
   }
 
   private void handleDriveFileOpen(int resultCode, Intent data) {
+    Log.d("DriveActivity", "handleDriveFileOpen() event, rc=" + resultCode);
     if (resultCode == RESULT_OK) {
       // Pass to the onFilePicked method for the subclass to handle.
       this.onDriveFilePicked(data);
@@ -209,6 +217,7 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
   }
 
   private void handleDriveFileWritten(int resultCode, Intent data) {
+    Log.d("DriveActivity", "handleDriveFileWritten() event, rc=" + resultCode);
     if (resultCode == RESULT_OK) {
       // Pass to the onDriveFileWritten method for the subclass to handle.
       this.onDriveFileWritten(data);
@@ -242,13 +251,14 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
 
   @Override
   public void onConnectionSuspended(int i) {
-
+    Log.d("DriveActivity", "onConnectionSuspended(): " + i);
   }
 
   @Override
   public void onConnectionFailed(ConnectionResult result) {
     Log.d("DriveActivity", "Google API Connection failed");
     if (result.hasResolution()) {
+      Log.d("DriveActivity", "Failure has a resolution, starting");
       try {
         result.startResolutionForResult(this, Constants.REQUEST_CONNECT_TO_DRIVE);
       } catch (IntentSender.SendIntentException e) {
@@ -256,6 +266,7 @@ public abstract class DriveActivity extends AppCompatActivity implements GoogleA
       }
     }
     else {
+      Log.e("DriveActivity", "No resolution, showing error dialog");
       GoogleApiAvailability.getInstance().getErrorDialog(this, result.getErrorCode(),
                                                          Constants.REQUEST_CONNECT_TO_DRIVE).show();
     }

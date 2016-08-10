@@ -75,8 +75,8 @@ public class StyleProfileFragment extends Fragment implements BiermachtFragment 
       appearance = m.group(2);
       flavor = m.group(3);
       mouthfeel = m.group(4);
-    } else
-    {
+    }
+    else {
       Log.d("StyleProfileFragment", "Failed to parse profile: " + s.getProfile());
     }
 

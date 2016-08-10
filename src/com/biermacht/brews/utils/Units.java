@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.biermacht.brews.frontend.MainActivity;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 

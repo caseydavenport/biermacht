@@ -10,7 +10,7 @@ public class IngredientsComparator implements Comparator<Ingredient> {
   public int compare(Ingredient i1, Ingredient i2) {
     // Sort based on type first.
     int typeCompare = i1.getType().compareTo(i2.getType());
-    if (typeCompare != 0 ) {
+    if (typeCompare != 0) {
       return typeCompare;
     }
 

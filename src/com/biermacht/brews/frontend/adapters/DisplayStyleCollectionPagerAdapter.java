@@ -22,7 +22,6 @@ public class DisplayStyleCollectionPagerAdapter extends FragmentStatePagerAdapte
   StyleProfileFragment profileFragment;
   StyleParametersFragment parametersFragment;
 
-
   public DisplayStyleCollectionPagerAdapter(FragmentManager fm, BeerStyle s, Context c) {
     super(fm);
     this.s = s;

@@ -246,7 +246,8 @@ public class AddHopsActivity extends AddEditIngredientActivity {
     // default to 1.0oz.
     if (hop.getDisplayAmount() != 0) {
       amountViewText.setText(String.format("%2.2f", hop.getDisplayAmount()));
-    } else {
+    }
+    else {
       amountViewText.setText("1.0");
     }
   }

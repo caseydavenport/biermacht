@@ -3,7 +3,6 @@ package com.biermacht.brews.frontend.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,6 @@ import com.biermacht.brews.recipe.BeerStyle;
 import com.biermacht.brews.utils.ColorHandler;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class StyleParametersFragment extends Fragment implements BiermachtFragment {
 
@@ -36,7 +32,6 @@ public class StyleParametersFragment extends Fragment implements BiermachtFragme
   ImageView thirtyThreePercentColor;
   ImageView sixtySixPercentColor;
   ImageView maxColor;
-
 
   public StyleParametersFragment() {
   }

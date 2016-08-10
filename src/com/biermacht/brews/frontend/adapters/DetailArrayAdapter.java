@@ -3,12 +3,7 @@ package com.biermacht.brews.frontend.adapters;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +64,6 @@ public class DetailArrayAdapter extends ArrayAdapter<Detail> {
 
     // Get the component views for this row.
     vs = (ViewStorage) this.row.getTag();
-
 
     if (detail.getType().equals(Detail.TYPE_TEXT)) {
       // Set visibilities.

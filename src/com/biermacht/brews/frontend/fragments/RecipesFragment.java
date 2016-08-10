@@ -416,7 +416,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
     // Currently, the handleClick method is only valid when running on
     // a tablet.  If we hit this method when not running on a tablet,
     // we should just return.
-    if (!isTablet) {
+    if (! isTablet) {
       Log.d("RecipesFragment", "Not on tablet, do nothing");
       return;
     }
