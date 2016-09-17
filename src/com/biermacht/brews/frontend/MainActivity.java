@@ -235,7 +235,9 @@ public class MainActivity extends DriveActivity {
     fragmentList.add(new EditMashProfilesFragment());
     fragmentList.add(new ViewStylesFragment());
     fragmentList.add(new StrikeWaterCalculatorFragment());
-    fragmentList.add(new HydrometerTempCalculatorFragment());
+    HydrometerTempCalculatorFragment hydrometerTempCalculatorFragment = new HydrometerTempCalculatorFragment();
+    hydrometerTempCalculatorFragment.setPreferences(preferences);
+    fragmentList.add(hydrometerTempCalculatorFragment);
     fragmentList.add(new AlcoholAttenuationCalculatorFragment());
 
     // Select the recipe fragment

@@ -1,6 +1,7 @@
 package com.biermacht.brews.frontend.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.biermacht.brews.R;
 import com.biermacht.brews.utils.BrewCalculator;
+import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 
@@ -30,6 +32,12 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
   TextView calibTempTitle;
   EditText calibTempEditText;
   ScrollView scrollView;
+
+  SharedPreferences preferences;
+
+  public void setPreferences(SharedPreferences preferences) {
+    this.preferences=preferences;
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -55,14 +63,16 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
     measTempTitle.setText("Temperature of Wort (" + Units.getTemperatureUnits() + ")");
     calibTempTitle.setText("Calibration Temperature (" + Units.getTemperatureUnits() + ")");
     if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
-      calibTempEditText.setText("68");
+      String calibTemp=preferences.getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,"68");
+      calibTempEditText.setText(calibTemp);
       measTempEditText.setHint("80");
-      calcGravityTitle.setText("Gravity at 68" + Units.getTemperatureUnits());
+      calcGravityTitle.setText("Gravity at "+calibTemp + Units.getTemperatureUnits());
     }
     else {
-      calibTempEditText.setText("20");
+      String calibTemp=preferences.getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,"68");
+      calibTempEditText.setText(calibTemp);
       measTempEditText.setHint("27");
-      calcGravityTitle.setText("Gravity at 20" + Units.getTemperatureUnits());
+      calcGravityTitle.setText("Gravity at "+calibTemp + Units.getTemperatureUnits());
     }
 
     return pageView;
@@ -81,6 +91,8 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
     } catch (Exception e) {
       return;
     }
+    // save calibration temp if the field contains a valid value
+    preferences.edit().putString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,calibTempEditText.getText().toString()).commit();
 
     if ((measGrav != 0)) {
       // Update the calculated gravity title
@@ -119,6 +131,8 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
   @Override
   public void handleClick(View v) {
     if (v.getId() == R.id.calculate_button) {
+
+
       this.calculate();
 
       // The page is a bit long - scroll to the bottom so the user can see the
