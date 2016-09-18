@@ -33,12 +33,6 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
   EditText calibTempEditText;
   ScrollView scrollView;
 
-  SharedPreferences preferences;
-
-  public void setPreferences(SharedPreferences preferences) {
-    this.preferences=preferences;
-  }
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
           savedInstanceState) {
@@ -63,13 +57,13 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
     measTempTitle.setText("Temperature of Wort (" + Units.getTemperatureUnits() + ")");
     calibTempTitle.setText("Calibration Temperature (" + Units.getTemperatureUnits() + ")");
     if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
-      String calibTemp=preferences.getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,"68");
+      String calibTemp=this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,"68");
       calibTempEditText.setText(calibTemp);
       measTempEditText.setHint("80");
       calcGravityTitle.setText("Gravity at "+calibTemp + Units.getTemperatureUnits());
     }
     else {
-      String calibTemp=preferences.getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,"68");
+      String calibTemp=this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,"20");
       calibTempEditText.setText(calibTemp);
       measTempEditText.setHint("27");
       calcGravityTitle.setText("Gravity at "+calibTemp + Units.getTemperatureUnits());
@@ -92,7 +86,7 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
       return;
     }
     // save calibration temp if the field contains a valid value
-    preferences.edit().putString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,calibTempEditText.getText().toString()).commit();
+    this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).edit().putString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,calibTempEditText.getText().toString()).commit();
 
     if ((measGrav != 0)) {
       // Update the calculated gravity title
