@@ -39,7 +39,6 @@ public class Constants {
   public static final String KEY_TIMER_STATE = "biermacht.brews.timer.state";
   public static final String KEY_STYLE = "biermacht.brews.style";
 
-
   public static final int INVALID_ID = - 1;
 
   public static final String BREW_DATE_FMT = "dd MMM yyyy";

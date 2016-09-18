@@ -355,8 +355,7 @@ public class IngredientHandler {
       inSrc.setEncoding("ISO-8859-2");
       sp.parse(inSrc, beerXmlReader);
       list = beerXmlReader.getRecipes();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       try {
         Log.d("IngredientHandler", "Failed to parse as .xml, attempting to parse as a .bsmx file");
         // Failed to parse as a .xml file.  Attempt to parse as .bsmx format instead.

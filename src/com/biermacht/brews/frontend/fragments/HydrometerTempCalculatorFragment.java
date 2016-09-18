@@ -1,7 +1,6 @@
 package com.biermacht.brews.frontend.fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -57,16 +56,16 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
     measTempTitle.setText("Temperature of Wort (" + Units.getTemperatureUnits() + ")");
     calibTempTitle.setText("Calibration Temperature (" + Units.getTemperatureUnits() + ")");
     if (Units.getTemperatureUnits().equals(Units.FAHRENHEIT)) {
-      String calibTemp=this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,"68");
+      String calibTemp = this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP, "68");
       calibTempEditText.setText(calibTemp);
       measTempEditText.setHint("80");
-      calcGravityTitle.setText("Gravity at "+calibTemp + Units.getTemperatureUnits());
+      calcGravityTitle.setText("Gravity at " + calibTemp + Units.getTemperatureUnits());
     }
     else {
-      String calibTemp=this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,"20");
+      String calibTemp = this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).getString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP, "20");
       calibTempEditText.setText(calibTemp);
       measTempEditText.setHint("27");
-      calcGravityTitle.setText("Gravity at "+calibTemp + Units.getTemperatureUnits());
+      calcGravityTitle.setText("Gravity at " + calibTemp + Units.getTemperatureUnits());
     }
 
     return pageView;
@@ -86,7 +85,7 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
       return;
     }
     // save calibration temp if the field contains a valid value
-    this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).edit().putString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP,calibTempEditText.getText().toString()).commit();
+    this.getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).edit().putString(Constants.PREF_HYDROMETER_CALIBRATION_TEMP, calibTempEditText.getText().toString()).commit();
 
     if ((measGrav != 0)) {
       // Update the calculated gravity title
@@ -125,7 +124,6 @@ public class HydrometerTempCalculatorFragment extends Fragment implements Bierma
   @Override
   public void handleClick(View v) {
     if (v.getId() == R.id.calculate_button) {
-
 
       this.calculate();
 
