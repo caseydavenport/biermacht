@@ -626,9 +626,8 @@ public class MainActivity extends DriveActivity {
         // Failed to load recipes.  Display the exception.
         Log.e("MainActivity", "Failed to parse file: " + this.fileName);
         String stackTrace = Log.getStackTraceString(this.storedException);
-        String msg = "Parsing failed.  This may be due to an invalid file, or something else.  " +
-                "Please report the follwing message to " +
-                "the developer: \n\n" + this.storedException.toString() + "\n\n" + stackTrace;
+        String msg = "File parsing failed.  This may be due to an invalid file, or something else.  " +
+                "Diagnostics: \n\n" + this.storedException.toString();
         Log.e("MainActivity", "Alerting user  of failure: \n\n" + stackTrace);
         new AlertDialog.Builder(MainActivity.this)
                 .setTitle("Error parsing file")
