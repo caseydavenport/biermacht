@@ -39,6 +39,7 @@ public class Constants {
   public static final String KEY_TIMER_STATE = "biermacht.brews.timer.state";
   public static final String KEY_STYLE = "biermacht.brews.style";
 
+
   public static final int INVALID_ID = - 1;
 
   public static final String BREW_DATE_FMT = "dd MMM yyyy";
@@ -85,7 +86,7 @@ public class Constants {
   public static final String PREF_BREWER_NAME = "com.biermacht.brews.brewerName";
   public static final String PREF_MEAS_SYSTEM = "com.biermacht.brews.measurementSystem";
   public static final String PREF_FIXED_RATIOS = "com.biermacht.brews.waterToGrainRatiosFixed";
-
+  public static final String PREF_HYDROMETER_CALIBRATION_TEMP = "com.biermacht.brews.hydrometerCalibrationTemp";
   // Value of this preference indicates the last time db contents were updated.
   public static final String PREF_NEW_CONTENTS_VERSION = "com.biermacht.brews.newIngredientsVersion";
 
