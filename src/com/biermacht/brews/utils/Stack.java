@@ -24,7 +24,15 @@ public class Stack {
   }
 
   public String read() {
-    return list.get(list.size() - 1);
+    try {
+      return list.get(list.size() - 1);
+    } catch (IndexOutOfBoundsException e) {
+      // Index out of bounds - there are no items in the stack.
+      // Return null to indicate the stack is empty, but don't raise
+      // the Exception.
+      return null;
+    }
+
   }
 
   public boolean contains(String s) {
