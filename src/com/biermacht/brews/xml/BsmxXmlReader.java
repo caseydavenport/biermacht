@@ -134,7 +134,7 @@ public class BsmxXmlReader extends DefaultHandler {
     // Create a new StringBuilder to house the characters read for this element
     stringBuilder = new StringBuilder();
 
-    // Opening tag for a .bsmx file. If this does not exist in the file, the parsing will fail.
+    // Opening tag for a .bsmx file.
     if (qName.equalsIgnoreCase("Selections")) {
       thingTypeStack.push(qName);
       Log.d("BsmxXmlReader", "Started reading .bsmx file");
@@ -328,6 +328,16 @@ public class BsmxXmlReader extends DefaultHandler {
      * Handle individual types of ingredients / things below.  We check
      * the "thingType" and base our actions accordingly.
      ************************************************************/
+
+    // First, make sure that the stack actually has something in it.
+    // If the stack is empty, it likely means the file contains some tags
+    // we don't support.  In this case, just return and wait until we find
+    // some XML tags we do support.
+    if (thingTypeStack.read() == null) {
+      Log.w("BsmxXmlReader", "Got element '" + qName + "', but no corresponding opening element.  Skip");
+      return;
+    }
+
     if (thingTypeStack.read().equalsIgnoreCase("Recipe") ||
             thingTypeStack.read().equalsIgnoreCase("F_R_EQUIPMENT") ||
             thingTypeStack.read().equalsIgnoreCase("F_R_AGE")) {

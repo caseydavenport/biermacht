@@ -413,6 +413,16 @@ public class BeerXmlReader extends DefaultHandler {
      * Handle individual types of ingredients / things below.  We check
      * the "thingType" and base our actions accordingly
      ************************************************************/
+
+    // First, make sure that the stack actually has something in it.
+    // If the stack is empty, it likely means the file contains some tags
+    // we don't support.  In this case, just return and wait until we find
+    // some XML tags we do support.
+    if (thingTypeStack.read() == null) {
+      Log.w("BsmxXmlReader", "Got element '" + qName + "', but no corresponding opening element.  Skip");
+      return;
+    }
+
     if (thingTypeStack.read().equalsIgnoreCase("RECIPE")) {
       if (qName.equalsIgnoreCase("NAME")) {
         r.setRecipeName(currentValue);
