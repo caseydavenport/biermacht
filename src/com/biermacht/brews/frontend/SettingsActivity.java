@@ -30,6 +30,7 @@ public class SettingsActivity extends AddEditActivity {
 
   // Views to display
   public Spinner preferredUnitsSpinner;
+  public Spinner recipeSortMethodSpinner;
   public View deleteAllRecipesView;
   public View exportRecipesView;
   public View resetIngredientsView;
@@ -40,16 +41,17 @@ public class SettingsActivity extends AddEditActivity {
   public TextView resetIngredientsViewTitle;
 
   // View contents
-  public TextView preferredUnitsViewText;
   public TextView deleteAllRecipesViewText;
   public TextView exportRecipesViewText;
   public TextView resetIngredientsViewText;
 
   // Lists for spinners
   public ArrayList<String> unitSystemsArray;
+  public ArrayList<String> recipeSortStrategies;
 
   // Data storage
   public String unitSystem;
+  public String sortStrategy;
   public Context context;
 
   @Override
@@ -57,8 +59,8 @@ public class SettingsActivity extends AddEditActivity {
     super.onCreate(savedInstanceState);
 
     // Create our views
-    preferredUnitsSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView,
-                                                       false);
+    preferredUnitsSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
+    recipeSortMethodSpinner = (Spinner) inflater.inflate(R.layout.row_layout_spinner, mainView, false);
     deleteAllRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     exportRecipesView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
     resetIngredientsView = inflater.inflate(R.layout.row_layout_edit_text, mainView, false);
@@ -78,6 +80,7 @@ public class SettingsActivity extends AddEditActivity {
 
     // Add views we do want
     mainView.addView(preferredUnitsSpinner);
+    mainView.addView(recipeSortMethodSpinner);
     mainView.addView(deleteAllRecipesView);
     mainView.addView(exportRecipesView);
     mainView.addView(resetIngredientsView);
@@ -110,12 +113,31 @@ public class SettingsActivity extends AddEditActivity {
     preferredUnitsSpinner.setAdapter(unitsAdapter);
     preferredUnitsSpinner.setSelection(unitSystemsArray.indexOf(preferences.getString(Constants.PREF_MEAS_SYSTEM, Units.IMPERIAL)));
 
-    // Handle type selector here
+    // Handle preferred units selector here
     preferredUnitsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position,
                                  long id) {
         unitSystem = unitSystemsArray.get(position);
+      }
+
+      public void onNothingSelected(AdapterView<?> parentView) {
+      }
+
+    });
+
+    // Configure spinner for recipe sort strategy
+    SpinnerAdapter recipeSortStrategyAdapter = new SpinnerAdapter(this, recipeSortStrategies, "Recipe Sort Strategy");
+    recipeSortStrategyAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+    recipeSortMethodSpinner.setAdapter(recipeSortStrategyAdapter);
+    recipeSortMethodSpinner.setSelection(recipeSortStrategies.indexOf(preferences.getString(Constants.PREF_SORT_STRATEGY, Constants.SORT_STRATEGY_ALPHABETICAL)));
+
+    // Handle type selector here
+    recipeSortMethodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position,
+                                 long id) {
+        sortStrategy = recipeSortStrategies.get(position);
       }
 
       public void onNothingSelected(AdapterView<?> parentView) {
@@ -163,6 +185,7 @@ public class SettingsActivity extends AddEditActivity {
   @Override
   public void getList() {
     unitSystemsArray = Constants.UNIT_SYSTEMS;
+    recipeSortStrategies = Constants.RECIPE_SORT_STRATEGIES;
   }
 
   @Override
@@ -191,6 +214,7 @@ public class SettingsActivity extends AddEditActivity {
 
     preferences.edit().putString(Constants.PREF_MEAS_SYSTEM, unitSystem).commit();
     preferences.edit().putString(Constants.PREF_BREWER_NAME, name).commit();
+    preferences.edit().putString(Constants.PREF_SORT_STRATEGY, sortStrategy).commit();
   }
 
   @Override

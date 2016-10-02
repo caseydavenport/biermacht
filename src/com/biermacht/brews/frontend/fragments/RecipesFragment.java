@@ -46,10 +46,13 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.DriveActivity;
 import com.biermacht.brews.utils.Utils;
+import com.biermacht.brews.utils.comparators.RecipeDateComparator;
+import com.biermacht.brews.utils.comparators.RecipeNameComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RecipesFragment extends Fragment implements BiermachtFragment {
 
@@ -510,12 +513,17 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
   }
 
   public void updateRecipesFromDatabase() {
+    Log.d("RecipesFragment", "updateRecipesFromDatabase()");
+
     // Load all recipes from database.
     ArrayList<Recipe> loadedRecipes = databaseApi.getRecipeList();
 
     // Update the recipe list with the loaded recipes.
     recipeList.removeAll(recipeList);
     recipeList.addAll(loadedRecipes);
+
+    // Sort the recipe list according to the configured strategy.
+    sortRecipes();
 
     // Update the adapter and UI.
     mAdapter.notifyDataSetChanged();
@@ -528,6 +536,29 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
         Log.d("RecipesFragment", "Found recipes, set pageView");
         updateTabletDetailsView(recipeList.get(currentSelectedIndex));
       }
+    }
+  }
+
+  private void sortRecipes() {
+    String sortStrategy = this.getActivity().
+            getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).
+            getString(Constants.PREF_SORT_STRATEGY, Constants.SORT_STRATEGY_ALPHABETICAL);
+    Log.d("RecipesFragment", "Sorting recipes using strategy: " + sortStrategy);
+
+    if (sortStrategy.equals(Constants.SORT_STRATEGY_ALPHABETICAL)) {
+      Collections.sort(recipeList, new RecipeNameComparator<Recipe>());
+    }
+    else if (sortStrategy.equals(Constants.SORT_STRATEGY_REV_ALPHABETICAL)) {
+      Collections.sort(recipeList, Collections.<Recipe>reverseOrder(new RecipeNameComparator<Recipe>()));
+    }
+    else if (sortStrategy.equals(Constants.SORT_STRATEGY_BREW_DATE)) {
+      Collections.sort(recipeList, new RecipeDateComparator<Recipe>());
+    }
+    else if (sortStrategy.equals(Constants.SORT_STRATEGY_REV_BREW_DATE)) {
+      Collections.sort(recipeList, Collections.reverseOrder(new RecipeDateComparator<Recipe>()));
+    }
+    else {
+      Log.w("RecipesList", "Unrecognized sort strategy: " + sortStrategy);
     }
   }
 
