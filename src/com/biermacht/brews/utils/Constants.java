@@ -86,11 +86,19 @@ public class Constants {
   public static final String PREF_MEAS_SYSTEM = "com.biermacht.brews.measurementSystem";
   public static final String PREF_FIXED_RATIOS = "com.biermacht.brews.waterToGrainRatiosFixed";
   public static final String PREF_HYDROMETER_CALIBRATION_TEMP = "com.biermacht.brews.hydrometerCalibrationTemp";
+  public static final String PREF_SORT_STRATEGY = "com.biermacht.brews.recipe_sort_strategy";
+
   // Value of this preference indicates the last time db contents were updated.
   public static final String PREF_NEW_CONTENTS_VERSION = "com.biermacht.brews.newIngredientsVersion";
 
   //  Incremented when new database contents are added.
   public static int NEW_DB_CONTENTS_VERSION = 5;
+
+  // Valid recipe sort strategies.
+  public static final String SORT_STRATEGY_ALPHABETICAL = "Name (A to Z)";
+  public static final String SORT_STRATEGY_REV_ALPHABETICAL = "Name (Z to A)";
+  public static final String SORT_STRATEGY_BREW_DATE = "Created (Newest first)";
+  public static final String SORT_STRATEGY_REV_BREW_DATE = "Created (Oldest first)";
 
   // Activity for result return codes
   public static final int RESULT_DELETED = 1;
@@ -122,6 +130,7 @@ public class Constants {
   private static final String[] unit_systems = {Units.IMPERIAL, Units.METRIC};
   private static final String[] mash_types = {MashProfile.MASH_TYPE_DECOCTION, MashProfile.MASH_TYPE_INFUSION, MashProfile.MASH_TYPE_TEMPERATURE, MashProfile.MASH_TYPE_BIAB};
   private static final String[] sparge_types = {MashProfile.SPARGE_TYPE_BATCH, MashProfile.SPARGE_TYPE_FLY, MashProfile.SPARGE_TYPE_BIAB};
+  private static final String[] sort_strats = {SORT_STRATEGY_ALPHABETICAL, SORT_STRATEGY_REV_ALPHABETICAL, SORT_STRATEGY_BREW_DATE, SORT_STRATEGY_REV_BREW_DATE};
 
   public static final ArrayList<String> HOP_USES = new ArrayList<String>(Arrays.asList(hop_uses));
   public static final ArrayList<String> HOP_FORMS = new ArrayList<String>(Arrays.asList(hop_forms));
@@ -130,4 +139,6 @@ public class Constants {
   public static final ArrayList<String> UNIT_SYSTEMS = new ArrayList<String>(Arrays.asList(unit_systems));
   public static final ArrayList<String> MASH_TYPES = new ArrayList<String>(Arrays.asList(mash_types));
   public static final ArrayList<String> SPARGE_TYPES = new ArrayList<String>(Arrays.asList(sparge_types));
+  public static final ArrayList<String> RECIPE_SORT_STRATEGIES = new ArrayList(Arrays.asList(sort_strats));
+
 }

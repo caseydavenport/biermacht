@@ -10,10 +10,8 @@ import com.biermacht.brews.recipe.MashProfile;
 import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
-import com.biermacht.brews.utils.comparators.RecipeComparator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class DatabaseAPI {
   private Context context;
@@ -25,15 +23,13 @@ public class DatabaseAPI {
     this.databaseInterface.open();
   }
 
-  // Get all recipes in database, sorted
+  // Get all recipes in database.
   public ArrayList<Recipe> getRecipeList() {
     ArrayList<Recipe> list = this.databaseInterface.getRecipeList();
 
     for (Recipe r : list) {
       r.update();
     }
-
-    Collections.sort(list, new RecipeComparator<Recipe>());
 
     return list;
   }

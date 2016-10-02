@@ -14,12 +14,16 @@ import com.biermacht.brews.ingredient.Water;
 import com.biermacht.brews.ingredient.Yeast;
 import com.biermacht.brews.utils.BrewCalculator;
 import com.biermacht.brews.utils.Constants;
+import com.biermacht.brews.utils.DateUtil;
 import com.biermacht.brews.utils.InstructionGenerator;
 import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.comparators.RecipeIngredientsComparator;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class Recipe implements Parcelable {
   // ===============================================================
@@ -1023,6 +1027,45 @@ public class Recipe implements Parcelable {
 
   public void setBrewDate(String s) {
     this.brewDate = s;
+  }
+
+  /* There is no standardized date format in beerXML.  Thus, we need
+   * to try and parse as many formats as possible.  This method takes the given raw
+   * date string and returns the best effort Date object.  If not we're unable to parse
+   * the date, then this method returns today's date.
+   */
+  public Date getBrewDateDate() {
+    // First, try the common date formats to speed things up.  We'll resort to a full search
+    // of known formats if these fail.
+
+    // This format is common for BeerSmith recipes.
+    try {
+      return new SimpleDateFormat("MM/dd/yyyy").parse(this.brewDate);
+    } catch (ParseException e) {
+      // Do nothing.
+    }
+
+    // This format is used by Biermacht.
+    try {
+      return new SimpleDateFormat("dd MMM yyyy").parse(this.brewDate);
+    } catch (ParseException e) {
+      // Do nothing.
+    }
+
+    // This takes a long time, so only do it as a last resort.
+    // Look through a bunch of known formats to figure out what it is.
+    String fmt = DateUtil.determineDateFormat(this.brewDate);
+    if (fmt == null) {
+      Log.w("Recipe", "Failed to parse date: " + this.brewDate);
+      return new Date();
+    }
+    try {
+      return new SimpleDateFormat(fmt).parse(this.brewDate);
+    } catch (ParseException e) {
+      Log.e("Recipe", "Failed to parse date: " + this.brewDate);
+      e.printStackTrace();
+      return new Date();
+    }
   }
 
   public String getPrimingSugarName() {
