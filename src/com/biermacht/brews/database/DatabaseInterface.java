@@ -583,10 +583,11 @@ public class DatabaseInterface {
   /**
    * Deletes all styles with given identifiers.
    */
-  public boolean deleteStyle(BeerStyle s) {
-    String whereClause = DatabaseHelper.STY_COL_STY_GUIDE + "=" + s.getStyleGuide() + " AND " +
-            DatabaseHelper.STY_COL_STY_LETTER + "=" + s.getStyleLetter() + " AND " +
-            DatabaseHelper.STY_COL_CAT_NUM + "=" + s.getCatNum();
+  public boolean deleteStyle(BeerStyle s, long databaseId) {
+    String whereClause = DatabaseHelper.STY_COL_STY_GUIDE + "='" + s.getStyleGuide() + "' AND " +
+            DatabaseHelper.STY_COL_STY_LETTER + "='" + s.getStyleLetter() + "' AND " +
+            DatabaseHelper.STY_COL_DB_ID + "=" + databaseId + " AND " +
+            DatabaseHelper.STY_COL_CAT_NUM + "='" + s.getCatNum() + "'";
     return database.delete(DatabaseHelper.TABLE_STYLES, whereClause, null) > 0;
   }
 

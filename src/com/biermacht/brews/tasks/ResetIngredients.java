@@ -42,7 +42,7 @@ public class ResetIngredients extends AsyncTask<String, Void, String> {
 
     Log.d("ResetIngredients", "Deleting all 'permanent' styles");
     for (BeerStyle s : databaseApi.getStyles(Constants.DATABASE_SYSTEM_RESOURCES)) {
-      databaseApi.deleteStyle(s);
+      databaseApi.deleteStyle(s, Constants.DATABASE_SYSTEM_RESOURCES);
     }
 
     Log.d("ResetIngredients", "Re-initializing ingredient assets");

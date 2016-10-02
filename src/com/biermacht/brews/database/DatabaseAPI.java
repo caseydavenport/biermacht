@@ -184,7 +184,7 @@ public class DatabaseAPI {
   }
 
   // Deletes the given style.
-  public boolean deleteStyle(BeerStyle s) {
-    return this.databaseInterface.deleteStyle(s);
+  public boolean deleteStyle(BeerStyle s, long database) {
+    return this.databaseInterface.deleteStyle(s, database);
   }
 }
