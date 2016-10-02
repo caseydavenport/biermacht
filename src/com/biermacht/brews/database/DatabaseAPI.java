@@ -91,6 +91,12 @@ public class DatabaseAPI {
 
   // Deletes the given ingredient, in the given database
   public boolean deleteIngredientWithId(long id, long dbid) {
+    // Find the ingredient's owner, and touch it to indicate the recipe has changed.
+    Ingredient i = this.getIngredientWithId(id);
+    if (i != null) {
+      this.databaseInterface.touchRecipe(i.getOwnerId());
+    }
+
     Log.d("Database", "Trying to delete ingredient from database: " + dbid);
     boolean b = this.databaseInterface.deleteIngredientIfExists(id, dbid);
     if (b) {

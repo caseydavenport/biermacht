@@ -19,7 +19,9 @@ import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 
 import java.security.KeyException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DatabaseInterface {
 
@@ -70,6 +72,7 @@ public class DatabaseInterface {
           DatabaseHelper.REC_COL_CALC_STRIKE_TEMP,
           DatabaseHelper.REC_COL_CALC_STRIKE_VOL,
           DatabaseHelper.REC_COL_MEAS_BATCH_SIZE,
+          DatabaseHelper.REC_COL_MODIFIED_DATE,
   };
 
   private String[] ingredientAllColumns = {
@@ -196,6 +199,9 @@ public class DatabaseInterface {
   }
 
   public long addRecipeToDatabase(Recipe r) {
+    // Current time to use for last modified date.
+    String now = new SimpleDateFormat(Constants.LAST_MODIFIED_DATE_FMT).format(new Date());
+
     // Load up values to store
     ContentValues values = new ContentValues();
     values.put(DatabaseHelper.REC_COL_DB_ID, Constants.DATABASE_USER_RECIPES);
@@ -217,14 +223,11 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
     values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
     values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
-    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                 .STAGE_PRIMARY));
+    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
-    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                   .STAGE_SECONDARY));
+    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
-    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                  .STAGE_TERTIARY));
+    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
     values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
@@ -242,6 +245,7 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.getCalculateStrikeTemp() ? 1 : 0);
     values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.getCalculateStrikeVolume() ? 1 : 0);
     values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, r.getBeerXmlMeasuredBatchSize());
+    values.put(DatabaseHelper.REC_COL_MODIFIED_DATE, now);
 
     long id = database.insert(DatabaseHelper.TABLE_RECIPES, null, values);
     addIngredientListToDatabase(r.getIngredientList(), id, Constants.DATABASE_USER_RECIPES);
@@ -253,6 +257,9 @@ public class DatabaseInterface {
 
   public boolean updateExistingRecipe(Recipe r) {
     String whereClause = DatabaseHelper.REC_COL_ID + "=" + r.getId();
+
+    // Current time to use for last modified date.
+    String now = new SimpleDateFormat(Constants.LAST_MODIFIED_DATE_FMT).format(new Date());
 
     // Load up values to store
     ContentValues values = new ContentValues();
@@ -274,14 +281,11 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_COLOR, r.getColor());
     values.put(DatabaseHelper.REC_COL_MEAS_OG, r.getMeasuredOG());
     values.put(DatabaseHelper.REC_COL_MEAS_FG, r.getMeasuredFG());
-    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                 .STAGE_PRIMARY));
+    values.put(DatabaseHelper.REC_COL_PRIMARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_PRIMARY));
     values.put(DatabaseHelper.REC_COL_PRIMARY_AGE, r.getFermentationAge(Recipe.STAGE_PRIMARY));
-    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                   .STAGE_SECONDARY));
+    values.put(DatabaseHelper.REC_COL_SECONDARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_SECONDARY));
     values.put(DatabaseHelper.REC_COL_SECONDARY_AGE, r.getFermentationAge(Recipe.STAGE_SECONDARY));
-    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe
-                                                                                                  .STAGE_TERTIARY));
+    values.put(DatabaseHelper.REC_COL_TERTIARY_TEMP, r.getBeerXmlStandardFermentationTemp(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TERTIARY_AGE, r.getFermentationAge(Recipe.STAGE_TERTIARY));
     values.put(DatabaseHelper.REC_COL_TASTE_NOTES, r.getTasteNotes());
     values.put(DatabaseHelper.REC_COL_TASTE_RATING, r.getTasteRating());
@@ -299,6 +303,7 @@ public class DatabaseInterface {
     values.put(DatabaseHelper.REC_COL_CALC_STRIKE_TEMP, r.getCalculateStrikeTemp() ? 1 : 0);
     values.put(DatabaseHelper.REC_COL_CALC_STRIKE_VOL, r.getCalculateStrikeVolume() ? 1 : 0);
     values.put(DatabaseHelper.REC_COL_MEAS_BATCH_SIZE, r.getBeerXmlMeasuredBatchSize());
+    values.put(DatabaseHelper.REC_COL_MODIFIED_DATE, now);
 
     for (Ingredient i : r.getIngredientList()) {
       Boolean exists = updateExistingIngredientInDatabase(i, Constants.DATABASE_USER_RECIPES);
@@ -324,6 +329,20 @@ public class DatabaseInterface {
     addStyleToDatabase(r.getStyle(), Constants.DATABASE_USER_RECIPES, r.getId());
 
     return database.update(DatabaseHelper.TABLE_RECIPES, values, whereClause, null) > 0;
+  }
+
+  /* Updates the modified timestamp for the recipe with the given ID */
+  public void touchRecipe(long id) {
+    String sql = "UPDATE " + DatabaseHelper.TABLE_RECIPES
+            + " SET "
+            + DatabaseHelper.REC_COL_MODIFIED_DATE
+            + "='"
+            + new SimpleDateFormat(Constants.LAST_MODIFIED_DATE_FMT).format(new Date())
+            + "' WHERE "
+            + DatabaseHelper.REC_COL_ID
+            + "="
+            + id;
+    database.execSQL(sql);
   }
 
   public void addIngredientListToDatabase(ArrayList<Ingredient> ingredientList, long id, long
@@ -853,6 +872,8 @@ public class DatabaseInterface {
     cid++;
     double measBatchsize = cursor.getFloat(cid);
     cid++;
+    String lastModified = cursor.getString(cid);
+    cid++;
 
     ArrayList<Ingredient> ingredientsList = readIngredientsList(id);
     MashProfile profile = readMashProfile(id);
@@ -908,6 +929,7 @@ public class DatabaseInterface {
     r.setCalculateStrikeTemp(calcStrikeTemp > 0);
     r.setCalculateStrikeVolume(calcStrikeVol > 0);
     r.setBeerXmlMeasuredBatchSize(measBatchsize);
+    r.setLastModified(lastModified);
 
     r.setStyle(style);
     r.setMashProfile(profile);

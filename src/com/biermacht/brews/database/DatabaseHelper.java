@@ -17,9 +17,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final int DATABASE_BETA = 2;  // Database in first release.
   public static final int DATABASE_GAMMA = 3; // Add measured batch size to the Recipe class.
   public static final int DATABASE_DELTA = 4; // Add auto-calc decoct amount to mash steps.
+  public static final int DATABASE_EPSILON = 5; // Add recipe last modified date.
 
   // Current database version
-  public static final int DATABASE_VERSION = DATABASE_DELTA;
+  public static final int DATABASE_VERSION = DATABASE_EPSILON;
 
   // Tables
   public static final String TABLE_RECIPES = "RecipeTable";
@@ -71,6 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public static final String REC_COL_CALC_STRIKE_TEMP = "calculateStrikeTemp";
   public static final String REC_COL_CALC_STRIKE_VOL = "calculateStrikeVolume";
   public static final String REC_COL_MEAS_BATCH_SIZE = "measuredBatchSize";
+  public static final String REC_COL_MODIFIED_DATE = "lastModifiedDate";
 
   // Column name defines for INGREDIENTS
   public static final String ING_COL_ID = "_id";
@@ -223,7 +225,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + REC_COL_CALC_BOIL_VOL + " integer, "
           + REC_COL_CALC_STRIKE_TEMP + " integer, "
           + REC_COL_CALC_STRIKE_VOL + " integer, "
-          + REC_COL_MEAS_BATCH_SIZE + " float"
+          + REC_COL_MEAS_BATCH_SIZE + " float, "
+          + REC_COL_MODIFIED_DATE + "string"
           + ");";
 
   private static final String CREATE_INGREDIENT_TABLE = "create table " +
@@ -396,6 +399,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                   DatabaseHelper.STE_COL_CALC_DECOCT_AMT + " int";
           db.execSQL(sql);
           break;
+        case DATABASE_EPSILON:
+          // Upgrade from DELTA to EPSILON.  Adds colume for last modified date.
+          Log.d("DatabaseHelper", "Upgrading database from DELTA to EPSILON");
+          sql = "ALTER TABLE " + TABLE_RECIPES + " ADD COLUMN " +
+                  DatabaseHelper.REC_COL_MODIFIED_DATE + " string";
+          db.execSQL(sql);
       }
     }
   }

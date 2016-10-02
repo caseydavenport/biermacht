@@ -47,6 +47,7 @@ import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.DriveActivity;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.comparators.RecipeDateComparator;
+import com.biermacht.brews.utils.comparators.RecipeModifiedComparator;
 import com.biermacht.brews.utils.comparators.RecipeNameComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 import com.biermacht.brews.xml.RecipeXmlWriter;
@@ -556,6 +557,9 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
     }
     else if (sortStrategy.equals(Constants.SORT_STRATEGY_REV_BREW_DATE)) {
       Collections.sort(recipeList, Collections.reverseOrder(new RecipeDateComparator<Recipe>()));
+    }
+    else if (sortStrategy.equals(Constants.SORT_STRATEGY_MODIFIED)) {
+      Collections.sort(recipeList, new RecipeModifiedComparator<Recipe>());
     }
     else {
       Log.w("RecipesList", "Unrecognized sort strategy: " + sortStrategy);
