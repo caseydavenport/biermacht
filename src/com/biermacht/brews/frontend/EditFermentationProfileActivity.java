@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.biermacht.brews.R;
-import com.biermacht.brews.database.DatabaseAPI;
 import com.biermacht.brews.frontend.adapters.SpinnerAdapter;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
@@ -214,7 +213,7 @@ public class EditFermentationProfileActivity extends ActionBarActivity implement
       }
 
       if (readyToGo) {
-        new DatabaseAPI(getApplicationContext()).updateRecipe(mRecipe);
+        mRecipe.save(getApplicationContext());
         finish();
       }
     }

@@ -91,6 +91,7 @@ public class Recipe implements Parcelable {
   private double kegPrimingFactor;  // factor - use less sugar when kegging vs bottles
   private double carbonationTemp;   // Carbonation temperature in C
   private int calories;             // Calories (KiloCals)
+  private String lastModified;      // Date last modified in database.
 
   // ================================================================
   // Custom Fields ==================================================
@@ -163,6 +164,7 @@ public class Recipe implements Parcelable {
     this.measuredFG = 0;
     this.measuredVol = 0;
     this.steepTemp = Units.fahrenheitToCelsius(155);
+    this.lastModified = new SimpleDateFormat(Constants.LAST_MODIFIED_DATE_FMT).format(new Date());
 
     // Fields for auto-calculation ====================================
     // ================================================================
@@ -225,6 +227,7 @@ public class Recipe implements Parcelable {
     kegPrimingFactor = p.readDouble();  // factor - use less sugar when kegging vs bottles
     carbonationTemp = p.readDouble();   // Carbonation temperature in C
     calories = p.readInt();
+    lastModified = p.readString();
 
     // Custom Fields ==================================================
     // ================================================================
@@ -292,6 +295,7 @@ public class Recipe implements Parcelable {
     p.writeDouble(kegPrimingFactor);  // factor - use less sugar when kegging vs bottles
     p.writeDouble(carbonationTemp);   // Carbonation temperature in C
     p.writeInt(calories);             // Calories (KiloCals)
+    p.writeString(lastModified);
 
     // Custom Fields ==================================================
     // ================================================================
@@ -1016,6 +1020,26 @@ public class Recipe implements Parcelable {
 
   public void setCarbonation(double d) {
     this.carbonation = d;
+  }
+
+  public void setLastModified(String s) {
+    this.lastModified = s;
+  }
+
+  public Date getLastModified() {
+    try {
+      Date d = new SimpleDateFormat(Constants.LAST_MODIFIED_DATE_FMT).parse(this.lastModified);
+      Log.d("Recipe", this.toString() + " was last modified " + d.toString());
+      return d;
+    } catch (ParseException e) {
+      Log.w("Recipe", "Failed to parse lastModified: " + this.lastModified);
+      return new Date();
+    } catch (NullPointerException e) {
+      // No modified date was ever set - likely a recipe from before this
+      // feature existed.
+      Log.w("Recipe", "No last modified for recipe: " + this.toString());
+      return new Date();
+    }
   }
 
   public String getBrewDate() {

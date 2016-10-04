@@ -42,6 +42,7 @@ public class Constants {
   public static final int INVALID_ID = - 1;
 
   public static final String BREW_DATE_FMT = "dd MMM yyyy";
+  public static final String LAST_MODIFIED_DATE_FMT = "dd MMM yyyy HH:mm:ss";
 
   // Indicates if a recipe should be displayed after it is created.
   public static final String DISPLAY_ON_CREATE = "biermacht.brews.recipe.display.on.create";
@@ -99,6 +100,7 @@ public class Constants {
   public static final String SORT_STRATEGY_REV_ALPHABETICAL = "Name (Z to A)";
   public static final String SORT_STRATEGY_BREW_DATE = "Created (Newest first)";
   public static final String SORT_STRATEGY_REV_BREW_DATE = "Created (Oldest first)";
+  public static final String SORT_STRATEGY_MODIFIED = "Modified (Latest first)";
 
   // Activity for result return codes
   public static final int RESULT_DELETED = 1;
@@ -130,7 +132,7 @@ public class Constants {
   private static final String[] unit_systems = {Units.IMPERIAL, Units.METRIC};
   private static final String[] mash_types = {MashProfile.MASH_TYPE_DECOCTION, MashProfile.MASH_TYPE_INFUSION, MashProfile.MASH_TYPE_TEMPERATURE, MashProfile.MASH_TYPE_BIAB};
   private static final String[] sparge_types = {MashProfile.SPARGE_TYPE_BATCH, MashProfile.SPARGE_TYPE_FLY, MashProfile.SPARGE_TYPE_BIAB};
-  private static final String[] sort_strats = {SORT_STRATEGY_ALPHABETICAL, SORT_STRATEGY_REV_ALPHABETICAL, SORT_STRATEGY_BREW_DATE, SORT_STRATEGY_REV_BREW_DATE};
+  private static final String[] sort_strats = {SORT_STRATEGY_ALPHABETICAL, SORT_STRATEGY_REV_ALPHABETICAL, SORT_STRATEGY_BREW_DATE, SORT_STRATEGY_REV_BREW_DATE, SORT_STRATEGY_MODIFIED};
 
   public static final ArrayList<String> HOP_USES = new ArrayList<String>(Arrays.asList(hop_uses));
   public static final ArrayList<String> HOP_FORMS = new ArrayList<String>(Arrays.asList(hop_forms));
