@@ -226,7 +226,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           + REC_COL_CALC_STRIKE_TEMP + " integer, "
           + REC_COL_CALC_STRIKE_VOL + " integer, "
           + REC_COL_MEAS_BATCH_SIZE + " float, "
-          + REC_COL_MODIFIED_DATE + "string"
+          + REC_COL_MODIFIED_DATE + " string"
           + ");";
 
   private static final String CREATE_INGREDIENT_TABLE = "create table " +
