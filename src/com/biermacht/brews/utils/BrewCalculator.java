@@ -176,7 +176,8 @@ public class BrewCalculator {
 
   // Returns the number of non fermentable gravity points for the given ingredient
   public static double NonFermentableGravityPoints(Recipe r, Ingredient i) {
-    if (i.getName().equalsIgnoreCase("Malto-Dextrine") || i.getName().equalsIgnoreCase("Dextrine Malt")) {
+    if (i.getName().equalsIgnoreCase("Malto-Dextrine") || i.getName().equalsIgnoreCase("Dextrine Malt")
+            || i.getName().equalsIgnoreCase("Milk Sugar (Lactose)")) {
       return Units.kilosToPounds(i.getBeerXmlStandardAmount()) * 40 / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
     }
 
