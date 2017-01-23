@@ -214,9 +214,9 @@ public class BrewCalculator {
   // Returns the number of non fermentable gravity points for the given ingredient
   public static double NonFermentableGravityPoints(Recipe r, Ingredient i) {
     if (isUnfermentable(i.getName())) {
-      return UNFERMENTABLE_UNFERMENTABLE_PPG * Units.kilosToPounds(i.getBeerXmlStandardAmount()) / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+      return UNFERMENTABLE_UNFERMENTABLE_PPG * Units.kilosToPounds(i.getBeerXmlStandardAmount()) /
+		  Units.litersToGallons(r.getBeerXmlStandardBatchSize());
     }
-
     else {
       return 0;
     }
