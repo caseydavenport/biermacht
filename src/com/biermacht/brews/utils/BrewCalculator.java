@@ -1,5 +1,7 @@
 package com.biermacht.brews.utils;
 
+import android.util.Log;
+
 import com.biermacht.brews.ingredient.Fermentable;
 import com.biermacht.brews.ingredient.Hop;
 import com.biermacht.brews.ingredient.Ingredient;
@@ -9,6 +11,14 @@ import com.biermacht.brews.recipe.Recipe;
 import java.util.ArrayList;
 
 public class BrewCalculator {
+
+  // Fermentable and unfermentable PPGs for unfermentable - lactose,
+  // dextrin malt (carapils) and malto-dextrin sugar
+  // This is only an estimate, assuming unfermentable contributes 30ppg,
+  // 5 ppg will be fermented and 25ppg will remain in the beer post fermentation
+
+  private static final double UNFERMENTABLE_FERMENTABLE_PPG = 5;
+  private static final double UNFERMENTABLE_UNFERMENTABLE_PPG = 25;
 
   /**
    * Beer details calculations http://www.howtobrew.com/section1/chapter5-5.html
@@ -83,7 +93,10 @@ public class BrewCalculator {
     ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 
     for (Ingredient i : ingredientsList) {
-      gravity_points += FermentableGravityPoints(r, i);
+      double gp = FermentableGravityPoints(r, i);
+      //gravity_points += FermentableGravityPoints(r, i);
+      gravity_points += gp;
+      Log.v("BEER", "Calling fermentable GP for " + i.getName() + " returned: " + gp);
     }
     return gravity_points;
   }
@@ -94,7 +107,10 @@ public class BrewCalculator {
     ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 
     for (Ingredient i : ingredientsList) {
-      gravity_points += NonFermentableGravityPoints(r, i);
+      //gravity_points += NonFermentableGravityPoints(r, i);
+      double gp = NonFermentableGravityPoints(r, i);
+      gravity_points += gp;
+      Log.v("BEER", "Calling non-fermentable GP for " + i.getName() + " returned: " + gp);
     }
     return gravity_points;
   }
@@ -149,7 +165,12 @@ public class BrewCalculator {
         pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
       }
       else if (f.getFermentableType().equals(Fermentable.TYPE_SUGAR)) {
-        pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+        if (isUnfermentable(i.getName())) {
+          pts = UNFERMENTABLE_FERMENTABLE_PPG * Units.kilosToPounds(f.getBeerXmlStandardAmount()) /
+                  Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+        } else {
+          pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+        }
       }
       else if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN)) {
         if (r.getType().equals(Recipe.EXTRACT)) {
@@ -163,8 +184,14 @@ public class BrewCalculator {
           }
         }
         else {
-          // Either a partial mash or all grain recipe
-          pts = r.getEfficiency() * Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize()) / 100;
+
+          if (isUnfermentable(i.getName())) {
+            pts = UNFERMENTABLE_FERMENTABLE_PPG * Units.kilosToPounds(f.getBeerXmlStandardAmount())
+                    / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+          } else {
+            // Either a partial mash or all grain recipe
+            pts = r.getEfficiency() * Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize()) / 100;
+          }
         }
       }
       else {
@@ -174,12 +201,22 @@ public class BrewCalculator {
     return pts;
   }
 
+  private static boolean isUnfermentable(String name) {
+    if (name.equalsIgnoreCase("Malto-Dextrine") ||
+            name.equalsIgnoreCase("Dextrine Malt") ||
+            name.equalsIgnoreCase("Cara-pils") ||
+            name.equalsIgnoreCase("Milk Sugar (Lactose)")) {
+      return true;
+    }
+    return false;
+  }
+
   // Returns the number of non fermentable gravity points for the given ingredient
   public static double NonFermentableGravityPoints(Recipe r, Ingredient i) {
-    if (i.getName().equalsIgnoreCase("Malto-Dextrine") || i.getName().equalsIgnoreCase("Dextrine Malt")) {
-      return Units.kilosToPounds(i.getBeerXmlStandardAmount()) * 40 / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+    if (isUnfermentable(i.getName())) {
+      return UNFERMENTABLE_UNFERMENTABLE_PPG * Units.kilosToPounds(i.getBeerXmlStandardAmount()) /
+		  Units.litersToGallons(r.getBeerXmlStandardBatchSize());
     }
-
     else {
       return 0;
     }
