@@ -600,7 +600,7 @@ public class BsmxXmlReader extends DefaultHandler {
       }
 
       else if (qName.equalsIgnoreCase("F_H_USE")) {
-        String use = "";
+        String use = Hop.USE_BOIL;
 
         if (Integer.parseInt(currentValue) == 0) {
           use = Hop.USE_BOIL;
@@ -617,6 +617,8 @@ public class BsmxXmlReader extends DefaultHandler {
         else if (Integer.parseInt(currentValue) == 4) {
           use = Hop.USE_AROMA;
         }
+
+        h.setUse(use);
       }
 
       else if (qName.equalsIgnoreCase("F_H_BOIL_TIME")) {

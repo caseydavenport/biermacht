@@ -1,6 +1,7 @@
 package com.biermacht.brews.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -132,5 +133,32 @@ public class Utils {
     params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
     listView.setLayoutParams(params);
     listView.requestLayout();
+  }
+
+  public static double parseDouble(String s, Double defaultValue) {
+    try {
+      return Double.parseDouble(s);
+    } catch (Exception e) {
+      Log.e("Utils", "Exception parsing double: " + s);
+      return defaultValue;
+    }
+  }
+
+  public static float parseFloat(String s, float defaultValue) {
+    try {
+      return Float.parseFloat(s);
+    } catch (NumberFormatException e) {
+      Log.e("Utils", "Exception parsing float: " + s);
+      return defaultValue;
+    }
+  }
+
+  public static int parseInt(String s, int defaultValue) {
+    try {
+      return Integer.parseInt(s);
+    } catch (NumberFormatException e) {
+      Log.e("Utils", "Exception parsing int: " + s);
+      return defaultValue;
+    }
   }
 }

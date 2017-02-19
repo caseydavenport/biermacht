@@ -78,7 +78,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
     ingType = list.get(position).getType();
     detailText = "";
 
-    if (ingType == Ingredient.HOP) {
+    if (ingType.equals(Ingredient.HOP)) {
       h = (Hop) list.get(position);
       vs.imageView.setImageResource(R.drawable.icon_hops);
       vs.labelView.setText(String.format("%s, %1.1f", h.getName(), h.getAlphaAcidContent()) + "%");
@@ -97,9 +97,11 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
         detailText = String.format("Steep, %d mins, %2.2f IBU",
                                    h.getDisplayTime(),
                                    BrewCalculator.Bitterness(r, h));
+      } else {
+        detailText = String.format("Unknown use: '%s'", h.getUse());
       }
     }
-    else if (ingType == Ingredient.FERMENTABLE) {
+    else if (ingType.equals(Ingredient.FERMENTABLE)) {
       f = (Fermentable) list.get(position);
       if (f.getFermentableType().equals(Fermentable.TYPE_GRAIN)) {
         vs.imageView.setImageResource(R.drawable.icon_wheat);
@@ -114,14 +116,14 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredient> {
       detailText += "%, ";
       detailText += s2 + " GPts.";
     }
-    else if (ingType == Ingredient.YEAST) {
+    else if (ingType.equals(Ingredient.YEAST)) {
       // TODO: Display type is always a packet.
       vs.amountView.setText("1.00");
       vs.unitView.setText("pkg");
       vs.imageView.setImageResource(R.drawable.icon_yeast);
       detailText = ((Yeast) list.get(position)).getArrayAdapterDescription();
     }
-    else if (ingType == Ingredient.MISC) {
+    else if (ingType.equals(Ingredient.MISC)) {
       vs.imageView.setImageResource(R.drawable.icon_idk);
       detailText = ((Misc) list.get(position)).getArrayAdapterDescription();
     }
