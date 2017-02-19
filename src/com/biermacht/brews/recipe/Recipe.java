@@ -1061,32 +1061,33 @@ public class Recipe implements Parcelable {
   public Date getBrewDateDate() {
     // First, try the common date formats to speed things up.  We'll resort to a full search
     // of known formats if these fail.
+    String d = this.getBrewDate();
 
     // This format is common for BeerSmith recipes.
     try {
-      return new SimpleDateFormat("MM/dd/yyyy").parse(this.brewDate);
+      return new SimpleDateFormat("MM/dd/yyyy").parse(d);
     } catch (ParseException e) {
       // Do nothing.
     }
 
     // This format is used by Biermacht.
     try {
-      return new SimpleDateFormat("dd MMM yyyy").parse(this.brewDate);
+      return new SimpleDateFormat("dd MMM yyyy").parse(d);
     } catch (ParseException e) {
       // Do nothing.
     }
 
     // This takes a long time, so only do it as a last resort.
     // Look through a bunch of known formats to figure out what it is.
-    String fmt = DateUtil.determineDateFormat(this.brewDate);
+    String fmt = DateUtil.determineDateFormat(d);
     if (fmt == null) {
-      Log.w("Recipe", "Failed to parse date: " + this.brewDate);
+      Log.w("Recipe", "Failed to parse date: " + d);
       return new Date();
     }
     try {
-      return new SimpleDateFormat(fmt).parse(this.brewDate);
+      return new SimpleDateFormat(fmt).parse(d);
     } catch (ParseException e) {
-      Log.e("Recipe", "Failed to parse date: " + this.brewDate);
+      Log.e("Recipe", "Failed to parse date: " + d);
       e.printStackTrace();
       return new Date();
     }
