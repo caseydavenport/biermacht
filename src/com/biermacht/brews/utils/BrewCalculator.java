@@ -94,9 +94,8 @@ public class BrewCalculator {
 
     for (Ingredient i : ingredientsList) {
       double gp = FermentableGravityPoints(r, i);
-      //gravity_points += FermentableGravityPoints(r, i);
       gravity_points += gp;
-      Log.v("BEER", "Calling fermentable GP for " + i.getName() + " returned: " + gp);
+      Log.v("BrewCalculator", "Calling fermentable GP for " + i.getName() + " returned: " + gp);
     }
     return gravity_points;
   }
@@ -107,10 +106,9 @@ public class BrewCalculator {
     ArrayList<Ingredient> ingredientsList = r.getIngredientList();
 
     for (Ingredient i : ingredientsList) {
-      //gravity_points += NonFermentableGravityPoints(r, i);
       double gp = NonFermentableGravityPoints(r, i);
       gravity_points += gp;
-      Log.v("BEER", "Calling non-fermentable GP for " + i.getName() + " returned: " + gp);
+      Log.v("BrewCalculator", "Calling non-fermentable GP for " + i.getName() + " returned: " + gp);
     }
     return gravity_points;
   }
