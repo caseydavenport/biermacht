@@ -118,15 +118,18 @@ public class Utils {
     }
 
     int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-    int totalHeight = 0;
+    int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
     View view = null;
     for (int i = 0; i < listAdapter.getCount(); i++) {
       view = listAdapter.getView(i, view, listView);
-      if (i == 0) {
-        view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-      }
 
       view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+
+      if (i == 0) {
+        view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+        //totalHeight += view.getMeasuredHeight();
+      }
+
       totalHeight += view.getMeasuredHeight();
     }
     ViewGroup.LayoutParams params = listView.getLayoutParams();

@@ -1,0 +1,215 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentTop="true"
+        android:background="@color/activity_background">
+
+        <LinearLayout
+            android:id="@+id/main_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                     android:id="@+id/recipe_spinner"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="20dp"
+                     android:layout_marginTop="20dp"
+                     android:layout_weight="1"
+                     android:background="@color/transparent"
+                     android:focusable="false"
+                     android:minHeight="60dp"
+                     android:spinnerMode="dialog">
+            </Spinner>
+
+            <Switch
+                android:id="@+id/show_list_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/final_gravity_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="3"
+                    android:background="@color/transparent"
+                    android:text="Measured Gravity"
+                    android:textColor="#333"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/meas_temp_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:text="Temperature"
+                    android:textColor="#333"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/measured_gravity_edit_text"
+                style="@style/text_input"
+                android:layout_width="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="3"
+                android:hint="1.054"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            <EditText
+                android:id="@+id/meas_temp_edit_text"
+                style="@style/text_input"
+                android:layout_width="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="2"
+                android:hint="68"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/final_volume_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:text="Measured Volume"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/final_volume_edit_text"
+                style="@style/text_input"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="5.25"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"/>
+
+            <!-- For some reason regular listViews don't resize properly -->
+            <com.biermacht.brews.DragDropList.DragSortListView
+                android:id="@+id/ingredient_list"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:dslv="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:dividerHeight="1dp"
+                dslv:collapsed_height="2dp"
+                dslv:drag_enabled="false"
+                dslv:drag_handle_id="@+id/row_icon"
+                dslv:drag_scroll_start="0.33"
+                dslv:drag_start_mode="onDown"
+                dslv:float_alpha="0.6"
+                dslv:max_drag_scroll_speed="0.5"
+                dslv:remove_enabled="true"
+                dslv:remove_mode="flingRemove"
+                dslv:slide_shuffle_speed="0.3"
+                dslv:sort_enabled="true"
+                dslv:track_drag_sort="false"
+                dslv:use_default_controller="true">
+            </com.biermacht.brews.DragDropList.DragSortListView>
+
+            <TextView
+                android:id="@+id/calculated_efficiency_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:text="Efficiency (%)"
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+            <TextView
+                android:id="@+id/calculated_efficiency_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="00.00%"
+                android:textSize="70sp"/>
+
+            <TextView
+                android:id="@+id/max_gravity_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#333"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Bottom Bar -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/activity_background"
+        android:padding="10dp">
+
+        <!-- Delete Button -->
+        <Button
+            android:id="@+id/calculate_button"
+            style="@style/button"
+            android:onClick="onClick"
+            android:text="@string/calculate"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

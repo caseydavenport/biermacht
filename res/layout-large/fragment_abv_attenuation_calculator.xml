@@ -66,28 +66,6 @@
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"/>
 
-            TextView
-            android:id="@+id/calibrate_temperature_title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/transparent"
-            android:gravity="center_vertical"
-            android:text="Calibration Temperature (F)"
-            android:textColor="#333"
-            android:textSize="18dp"/>
-
-            EditText
-            android:id="@+id/calibrate_temperature_edit_text"
-            style="@style/text_input"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="68"
-            android:inputType="numberDecimal"
-            android:selectAllOnFocus="true"/>
-
             <TextView
                 android:id="@+id/calculated_abv_title"
                 android:layout_width="fill_parent"

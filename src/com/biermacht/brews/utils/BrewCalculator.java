@@ -87,6 +87,24 @@ public class BrewCalculator {
     return 1 + pts / 1000;
   }
 
+  // Returns the theoretical max OG for the given recipe assuming 100% efficiency.
+  public static double TheoreticalMaxGravity(Recipe r) {
+    // We can cheat here.  Use the calculated original gravity, and then undo the
+    // efficiency part of the calculation to back-track to the theoretical max.
+    double og = OriginalGravity(r);
+    return 1 + (og - 1) / (r.getEfficiency() / 100);
+  }
+
+  // Returns the total number of gravity points contributed by the list of
+  // fermentables.
+  public static double GravityPoints(ArrayList<Fermentable> fs) {
+    double pts = 0;
+    for (Fermentable f : fs) {
+      pts += f.gravityPoints();
+    }
+    return pts;
+  }
+
   // Calculates contribution of fermentable sugars to gravity
   public static double OriginalFermentableGravityPoints(Recipe r) {
     float gravity_points = 0;
@@ -166,7 +184,8 @@ public class BrewCalculator {
         if (isUnfermentable(i.getName())) {
           pts = UNFERMENTABLE_FERMENTABLE_PPG * Units.kilosToPounds(f.getBeerXmlStandardAmount()) /
                   Units.litersToGallons(r.getBeerXmlStandardBatchSize());
-        } else {
+        }
+        else {
           pts = Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
         }
       }
@@ -186,7 +205,8 @@ public class BrewCalculator {
           if (isUnfermentable(i.getName())) {
             pts = UNFERMENTABLE_FERMENTABLE_PPG * Units.kilosToPounds(f.getBeerXmlStandardAmount())
                     / Units.litersToGallons(r.getBeerXmlStandardBatchSize());
-          } else {
+          }
+          else {
             // Either a partial mash or all grain recipe
             pts = r.getEfficiency() * Units.kilosToPounds(f.getBeerXmlStandardAmount()) * f.getPpg() / Units.litersToGallons(r.getBeerXmlStandardBatchSize()) / 100;
           }
@@ -213,7 +233,7 @@ public class BrewCalculator {
   public static double NonFermentableGravityPoints(Recipe r, Ingredient i) {
     if (isUnfermentable(i.getName())) {
       return UNFERMENTABLE_UNFERMENTABLE_PPG * Units.kilosToPounds(i.getBeerXmlStandardAmount()) /
-		  Units.litersToGallons(r.getBeerXmlStandardBatchSize());
+              Units.litersToGallons(r.getBeerXmlStandardBatchSize());
     }
     else {
       return 0;
@@ -370,5 +390,4 @@ public class BrewCalculator {
 
     return cg;
   }
-
 }
