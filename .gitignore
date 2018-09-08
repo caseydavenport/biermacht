@@ -54,3 +54,4 @@ gradle
 .gradle
 .settings
 local.properties
+projectFilesBackup
