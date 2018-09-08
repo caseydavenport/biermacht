@@ -1,9 +1,10 @@
 buildscript {
     repositories {
+        google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:3.1.4'
     }
 }
 apply plugin: 'com.android.application'
@@ -19,7 +20,6 @@ dependencies {
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
 
     sourceSets {
         main {
@@ -31,9 +31,6 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
-
-        // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
 
         // Move the build types to build-types/<type>
         // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
