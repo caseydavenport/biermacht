@@ -1,25 +1,47 @@
 buildscript {
     repositories {
         google()
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
     }
 }
+
+/**
+ * The allprojects block is where you configure the repositories and
+ * dependencies used by all modules in your project, such as third-party plugins
+ * or libraries. However, you should configure module-specific dependencies in
+ * each module-level build.gradle file. For new projects, Android Studio
+ * includes JCenter and Google's Maven repository by default, but it does not
+ * configure any dependencies (unless you select a template that requires some).
+ */
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile "com.android.support:support-v4:22.2.0"
-    compile "com.android.support:appcompat-v7:21.0.+"
-    compile "com.android.support:design:22.2.0"
-    compile 'com.android.support:percent:22.2.0'
-    compile "com.google.android.gms:play-services-drive:8.3.0"
-    compile files("libs/biermacht-commons-lang3-3.4/biermacht-commons-lang3-3.4.jar")
+    implementation "com.android.support:support-v4:22.2.0"
+    implementation "com.android.support:appcompat-v7:21.0.+"
+    implementation "com.android.support:design:22.2.0"
+    implementation 'com.android.support:percent:22.2.0'
+    implementation "com.google.android.gms:play-services-drive:8.3.0"
+    // implementation "com.android.tools.lint:lint-gradle:26.1.0"
+    implementation files("libs/biermacht-commons-lang3-3.4/biermacht-commons-lang3-3.4.jar")
 }
 
 android {
     compileSdkVersion 21
+
+    // add: Prevent errors in "Generate Signed APK"
+    lintOptions {
+        abortOnError false
+    }
 
     sourceSets {
         main {
@@ -41,4 +63,5 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+
 }
