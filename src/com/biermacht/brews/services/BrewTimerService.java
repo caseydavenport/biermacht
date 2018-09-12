@@ -215,7 +215,7 @@ public class BrewTimerService extends Service {
     // Notification builders
     NotificationCompat.Builder nBuilder =
             new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.ic_launcher_64)
+                    .setSmallIcon(R.drawable.ic_stat_name)
                     .setContentTitle(title)
                     .setContentText(remainingTime);
 

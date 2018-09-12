@@ -7,6 +7,22 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.1.4'
     }
 }
+
+/**
+ * The allprojects block is where you configure the repositories and
+ * dependencies used by all modules in your project, such as third-party plugins
+ * or libraries. However, you should configure module-specific dependencies in
+ * each module-level build.gradle file. For new projects, Android Studio
+ * includes JCenter and Google's Maven repository by default, but it does not
+ * configure any dependencies (unless you select a template that requires some).
+ */
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
 apply plugin: 'com.android.application'
 
 dependencies {
@@ -20,6 +36,7 @@ dependencies {
 
 android {
     compileSdkVersion 21
+
     buildToolsVersion '27.0.3'
 
     sourceSets {
@@ -45,4 +62,5 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+
 }
