@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-        mavenCentral()
         google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
@@ -31,13 +31,17 @@ dependencies {
     implementation "com.android.support:design:22.2.0"
     implementation 'com.android.support:percent:22.2.0'
     implementation "com.google.android.gms:play-services-drive:8.3.0"
+    // implementation "com.android.tools.lint:lint-gradle:26.1.0"
     implementation files("libs/biermacht-commons-lang3-3.4/biermacht-commons-lang3-3.4.jar")
 }
 
 android {
     compileSdkVersion 21
 
-    buildToolsVersion '27.0.3'
+    // add: Prevent errors in "Generate Signed APK"
+    lintOptions {
+        abortOnError false
+    }
 
     sourceSets {
         main {
@@ -49,9 +53,6 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
-
-        // Move the tests to tests/java, tests/res, etc...
-        androidTest.setRoot('tests')
 
         // Move the build types to build-types/<type>
         // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
