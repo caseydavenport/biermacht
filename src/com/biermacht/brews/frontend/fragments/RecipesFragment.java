@@ -42,9 +42,12 @@ import com.biermacht.brews.frontend.IngredientActivities.AddYeastActivity;
 import com.biermacht.brews.frontend.IngredientActivities.EditRecipeActivity;
 import com.biermacht.brews.frontend.adapters.DisplayRecipeCollectionPagerAdapter;
 import com.biermacht.brews.frontend.adapters.RecipeArrayAdapter;
+import com.biermacht.brews.ingredient.Ingredient;
+import com.biermacht.brews.recipe.MashStep;
 import com.biermacht.brews.recipe.Recipe;
 import com.biermacht.brews.utils.Constants;
 import com.biermacht.brews.utils.DriveActivity;
+import com.biermacht.brews.utils.Units;
 import com.biermacht.brews.utils.Utils;
 import com.biermacht.brews.utils.comparators.RecipeDateComparator;
 import com.biermacht.brews.utils.comparators.RecipeModifiedComparator;
@@ -52,6 +55,10 @@ import com.biermacht.brews.utils.comparators.RecipeNameComparator;
 import com.biermacht.brews.utils.interfaces.BiermachtFragment;
 import com.biermacht.brews.xml.RecipeXmlWriter;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -183,7 +190,11 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
             return true;
 
           case R.id.export_recipe:
-            exportAlert(contextActionRecipe).show();
+            exportXMLAlert(contextActionRecipe).show();
+            return true;
+
+          case R.id.export_recipe_txt:
+            exportTextAlert(contextActionRecipe).show();
             return true;
 
           case R.id.edit_fermentation_profile:
@@ -566,14 +577,14 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
     }
   }
 
-  private AlertDialog.Builder exportAlert(final Recipe r) {
+  private AlertDialog.Builder exportXMLAlert(final Recipe r) {
     return new AlertDialog.Builder(getActivity())
             .setTitle("Export recipe")
             .setMessage("Export '" + r.getRecipeName() + "' to BeerXML file?")
             .setPositiveButton(R.string.local_storage, new DialogInterface.OnClickListener() {
 
               public void onClick(DialogInterface dialog, int which) {
-                new ExportRecipe(r).execute("");
+                new ExportRecipeXML(r).execute("");
                 mActionMode.finish();
                 Snackbar.make(listView, R.string.recipe_exported, Snackbar.LENGTH_LONG).show();
               }
@@ -590,6 +601,34 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
               }
 
             });
+  }
+
+  private AlertDialog.Builder exportTextAlert(final Recipe r) {
+    return new AlertDialog.Builder(getActivity())
+            .setTitle("Export recipe")
+            .setMessage("Export '" + r.getRecipeName() + "' to text file?")
+            .setPositiveButton(R.string.local_storage, new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                new ExportRecipeText(r).execute("");
+                mActionMode.finish();
+                Snackbar.make(listView, R.string.recipe_exported, Snackbar.LENGTH_LONG).show();
+              }
+
+            })
+            .setNeutralButton(R.string.cancel, null);
+            // TODO: Support exporting text to Google drive.
+            /*.setNegativeButton(R.string.drive_button, new DialogInterface.OnClickListener() {
+
+              public void onClick(DialogInterface dialog, int which) {
+                ArrayList<Recipe> l = new ArrayList<Recipe>();
+                l.add(r);
+                ((DriveActivity) getActivity()).writeFile(l);
+                mActionMode.finish();
+              }
+
+            });
+            */
   }
 
   private AlertDialog.Builder finishedExporting(String pathToFile) {
@@ -617,8 +656,8 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
             .setNegativeButton(R.string.cancel, null);
   }
 
-  // Async task to export a single recipe.
-  private class ExportRecipe extends AsyncTask<String, Void, String> {
+  // Async task to export a single recipe to XML.
+  private class ExportRecipeXML extends AsyncTask<String, Void, String> {
 
     private ProgressDialog progress;
     private RecipeXmlWriter xmlWriter;
@@ -626,7 +665,7 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
     private Recipe r;
     private String filePrefix;
 
-    private ExportRecipe(Recipe r) {
+    private ExportRecipeXML(Recipe r) {
       this.context = getActivity();
       this.r = r;
       this.filePrefix = r.getRecipeName().replaceAll("\\s", "") + "-";
@@ -660,6 +699,116 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
 
     @Override
     protected void onProgressUpdate(Void... values) {
+    }
+  }
+
+  // Async task to export a single recipe to a text file.
+  private class ExportRecipeText extends AsyncTask<String, Void, String> {
+
+    private ProgressDialog progress;
+    private Context context;
+    private Recipe r;
+    private String filePrefix;
+    private String path;
+
+    private ExportRecipeText(Recipe r) {
+      this.context = getActivity();
+      this.r = r;
+      this.filePrefix = r.getRecipeName().replaceAll("\\s", "") + "-";
+      this.path = "";
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+      this.path = this.writeFile();
+      return "Executed";
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+      super.onPostExecute(result);
+      progress.dismiss();
+      finishedExporting(this.path).show();
+      Log.d("ExportRecipeText", "Finished exporting recipe");
+    }
+
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      progress = new ProgressDialog(context);
+      progress.setMessage("Exporting " + r.getRecipeName() + "...");
+      progress.setIndeterminate(false);
+      progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+      progress.setCancelable(false);
+      progress.show();
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+    }
+
+    // writeFile writes a text file with the contents of the recipe,
+    // and returns the path to the written file.
+    private String writeFile() {
+      File path = context.getExternalFilesDir(null);
+      File file = new File(path, "test-recipe.txt");
+
+      try {
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file));
+
+        // First, write the recipe name to the file as the heading.
+        outputStreamWriter.write(String.format("# %s\n\n", this.r.getRecipeName()));
+
+        // Write some details about the recipe.
+        outputStreamWriter.write(String.format("%s: %s\n", "Name", r.getRecipeName()));
+        outputStreamWriter.write(String.format("%s: %s\n", "Type", r.getType()));
+        outputStreamWriter.write(String.format("%s: %2.2f %s\n", "Size", r.getDisplayBatchSize(), Units.getVolumeUnits()));
+
+        // Now, write ingredients.
+        outputStreamWriter.write(String.format("\n## Ingredients\n\n"));
+        outputStreamWriter.write("");
+        for (Ingredient i : this.r.getIngredientList()) {
+          outputStreamWriter.write(String.format(
+                  "- %2.2f %-5s %s ",
+                  i.getDisplayAmount(), i.getDisplayUnits(),
+                  i.getName(),
+                  i.getUse(), i.getTime()));
+          if (i.getUse().equals(Ingredient.USE_BOIL)) {
+            outputStreamWriter.write(String.format("(Boil %d min)", i.getTime()));
+          } else {
+            outputStreamWriter.write(String.format("(%s)", i.getUse()));
+          }
+          outputStreamWriter.write("\n");
+        }
+
+        // Now, write mash profile.
+        if (r.getType().equals(Recipe.ALL_GRAIN)) {
+          outputStreamWriter.write(String.format("\n## Mash Profile\n\n"));
+          outputStreamWriter.write(r.getMashProfile().getName() + "\n\n");
+          for (MashStep s : r.getMashProfile().getMashStepList()) {
+            outputStreamWriter.write(String.format(
+                    "- %s @ %2.2f%s, %2.2f %s, %s min\n",
+                    s.getName(),
+                    s.getDisplayStepTemp(), Units.getTemperatureUnits(),
+                    s.getDisplayWaterToGrainRatio(), Units.getWaterToGrainUnits(),
+                    s.getStepTime()));
+          }
+        }
+
+        // Finally, write some stats.
+        outputStreamWriter.write("\n## Calculated stats\n\n");
+        outputStreamWriter.write(String.format("OG:  %2.3f\n", r.getOG()));
+        outputStreamWriter.write(String.format("FG:  %2.3f\n", r.getFG()));
+        outputStreamWriter.write(String.format("IBU: %2.1f\n", r.getBitterness()));
+        outputStreamWriter.write(String.format("SRM: %2.1f", r.getColor()));
+
+        // Close the file
+        outputStreamWriter.close();
+      }
+      catch (IOException e) {
+        Log.e("Exception", "File write failed: " + e.toString());
+      }
+      return file.getAbsolutePath();
     }
   }
 }

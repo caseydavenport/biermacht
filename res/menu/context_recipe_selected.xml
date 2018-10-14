@@ -32,35 +32,38 @@
         <menu>
             <item
                 android:id="@+id/export_recipe"
-                android:title="Export Recipe"
+                android:title="Export XML"
                 android:orderInCategory="1"/>
+
+            <item
+                android:id="@+id/export_recipe_txt"
+                android:title="Export text"
+                android:orderInCategory="2"/>
 
             <item
                 android:id="@+id/menu_scale_recipe"
                 android:title="Scale Recipe"
-                android:orderInCategory="2"/>
+                android:orderInCategory="3"/>
 
             <item
                 android:id="@+id/brew_timer"
                 android:title="Brew Timer"
-                android:orderInCategory="3"/>
+                android:orderInCategory="4"/>
 
             <item
                 android:id="@+id/edit_fermentation_profile"
                 android:title="Edit Fermentation"
-                android:orderInCategory="4"/>
+                android:orderInCategory="5"/>
 
             <item
                 android:id="@+id/edit_mash_profile"
                 android:title="Edit Mash"
-                android:orderInCategory="5"/>
+                android:orderInCategory="6"/>
 
             <item
                 android:id="@+id/recipe_notes"
                 android:title="Recipe Notes"
-                android:orderInCategory="6"/>
+                android:orderInCategory="7"/>
         </menu>
-
     </item>
-
 </menu>
