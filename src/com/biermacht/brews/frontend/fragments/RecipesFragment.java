@@ -751,7 +751,8 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
     // and returns the path to the written file.
     private String writeFile() {
       File path = context.getExternalFilesDir(null);
-      File file = new File(path, "test-recipe.txt");
+      String fname = this.r.getRecipeName().toLowerCase().replace(" ", "-") + ".txt";
+      File file = new File(path, fname);
 
       try {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file));
@@ -763,6 +764,9 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
         outputStreamWriter.write(String.format("%s: %s\n", "Name", r.getRecipeName()));
         outputStreamWriter.write(String.format("%s: %s\n", "Type", r.getType()));
         outputStreamWriter.write(String.format("%s: %2.2f %s\n", "Size", r.getDisplayBatchSize(), Units.getVolumeUnits()));
+        outputStreamWriter.write(String.format("%s: %s\n", "Style", r.getStyle().getName()));
+        outputStreamWriter.write(String.format("%s: %2.2f %s\n", "Boil volume", r.getDisplayBoilSize(), Units.getVolumeUnits()));
+        outputStreamWriter.write(String.format("%s: %s min\n", "Boil time", r.getBoilTime()));
 
         // Now, write ingredients.
         outputStreamWriter.write(String.format("\n## Ingredients\n\n"));
@@ -800,7 +804,8 @@ public class RecipesFragment extends Fragment implements BiermachtFragment {
         outputStreamWriter.write(String.format("OG:  %2.3f\n", r.getOG()));
         outputStreamWriter.write(String.format("FG:  %2.3f\n", r.getFG()));
         outputStreamWriter.write(String.format("IBU: %2.1f\n", r.getBitterness()));
-        outputStreamWriter.write(String.format("SRM: %2.1f", r.getColor()));
+        outputStreamWriter.write(String.format("SRM: %2.1f\n", r.getColor()));
+        outputStreamWriter.write(String.format("ABV: %2.1f", r.getABV()));
 
         // Close the file
         outputStreamWriter.close();
