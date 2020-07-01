@@ -1,6 +1,7 @@
 package com.biermacht.brews.services;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -11,8 +12,10 @@ import android.content.IntentFilter;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -34,6 +37,11 @@ public class BrewTimerService extends Service {
 
   // Identifier for our notification
   private int notificationId;
+
+  //
+  final String NOTIFICATION_CHANNEL_ID = "com.biermacht.brews";
+
+  final String NOTIFICATION_CHANNEL_NAME = "Brew Timer";
 
   // Recipe currently being timed
   private Recipe r;
@@ -185,6 +193,29 @@ public class BrewTimerService extends Service {
   }
 
   /**
+   * Workaroud for the modern versions of Android (Oreo+) which require to create a Notification channel
+   *
+   * @param id
+   * @param name
+   * @param importance
+   */
+
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  void makeNotificationChannel(String id, String name, int importance) {
+
+      NotificationChannel channel = new NotificationChannel(id, name, importance);
+      channel.setShowBadge(true); // set false to disable badges, Oreo exclusive
+
+      NotificationManager notificationManager =
+              (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+      assert notificationManager != null;
+      notificationManager.createNotificationChannel(channel);
+    }
+
+
+
+  /**
    * Updates the notification in the notification bar which shows the current step and the remaining
    * time left.  This is updated every time the timer ticks down, as well as in special cases (like
    * when the timer changes state).
@@ -212,9 +243,14 @@ public class BrewTimerService extends Service {
       remainingTime = "Paused";
     }
 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      makeNotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
+    }
+
+
     // Notification builders
     NotificationCompat.Builder nBuilder =
-            new NotificationCompat.Builder(this)
+            new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_stat_name)
                     .setContentTitle(title)
                     .setContentText(remainingTime);

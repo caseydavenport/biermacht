@@ -280,7 +280,7 @@ public class BrewTimerActivity extends AppCompatActivity {
 
       }
     };
-    mViewPager.setOnPageChangeListener(onPageChangeListener);
+    mViewPager.addOnPageChangeListener(onPageChangeListener);
 
     // Set the view pager to the current active step, if there is one.  We need to trigger the
     // OnPageChangeListener to be called, so first setCurrentItem to a different page, and
