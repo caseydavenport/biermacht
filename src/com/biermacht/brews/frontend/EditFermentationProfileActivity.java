@@ -3,7 +3,7 @@ package com.biermacht.brews.frontend;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +23,7 @@ import com.biermacht.brews.utils.Units;
 
 import java.util.ArrayList;
 
-public class EditFermentationProfileActivity extends ActionBarActivity implements OnClickListener {
+public class EditFermentationProfileActivity extends AppCompatActivity implements OnClickListener {
 
   // Main Layout
   private LinearLayout mainLayout;

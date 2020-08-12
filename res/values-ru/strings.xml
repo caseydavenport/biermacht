@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Activity names -->
+    <string name="app_name">Biermacht</string>
+    <string name="title_activity_main">Biermacht</string>
+    <string name="title_activity_display_recipe">Детали рецепта</string>
+    <string name="title_activity_display_style">Стиль отображения</string>
+    <string name="title_activity_add_new_recipe">Добавить рецепт</string>
+    <string name="title_activity_add_fermentable">Добавить сырье</string>
+    <string name="title_activity_edit_fermentable">Редактировать сырье</string>
+    <string name="title_activity_edit_hop">Редактировать хмель</string>
+    <string name="title_activity_edit_recipe">Редактировать Recipe</string>
+    <string name="title_activity_edit_profile">Редактировать Mash Profile</string>
+    <string name="title_activity_add_profile">Добавить профиль затирания</string>
+    <string name="title_activity_add_hops">Добавить хмель</string>
+    <string name="title_activity_add_misc">Новая добавка</string>
+    <string name="title_activity_edit_misc">Редактировать добавку</string>
+    <string name="title_activity_edit_fermentation_profile">Редактировать профиль брожения</string>
+    <string name="title_activity_add_mash_step">Добавить новую паузу</string>
+    <string name="title_activity_edit_mash_step">Редактировать паузу</string>
+    <string name="title_activity_notes">Заметки</string>
+
+    <!-- Menu stuff -->
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_add_ingredient">Добавить ингридиент</string>
+    <string name="menu_brew_timer">Таймер варки</string>
+    <string name="menu_edit_details">Редактировать детали</string>
+    <string name="menu_edit_recipe">Редактировать рецепт</string>
+    <string name="menu_edit_profile">Редактировать профиль</string>
+    <string name="menu_more">Ещё...</string>
+
+    <!-- Standard messages -->
+    <string name="error">Ошибка</string>
+    <string name="add">Добавить</string>
+    <string name="edit">Сохранить</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    <string name="calculate">Расчитать</string>
+    <string name="export">Экспорт</string>
+    <string name="cancel">Отмена</string>
+    <string name="browse">Обзор</string>
+    <string name="done">Готово</string>
+    <string name="ok">OK</string>
+    <string name="reset">Сброс</string>
+    <string name="gravity">Плотность</string>
+    <string name="color">Цвет</string>
+    <string name="name">Имя</string>
+    <string name="scale">Перерасчет</string>
+    <string name="units">Units:</string>
+    <string name="brewer_name">Пивовар</string>
+    <string name="amount">Кол-во (L)</string>
+    <string name="no_recipes">У вас нет рецептов. Добавьте новый нажав на плюс!</string>
+    <string name="dismiss">Отклонить</string>
+
+    <!-- Titles for editTexts / fields -->
+    <string name="enter_name">Введите название</string>
+    <string name="boil_start_time">Начало кипячения</string>
+    <string name="boil_end_time">Окончание кипячения</string>
+    <string name="boil_time">Время кипячения (мин)</string>
+    <string name="steep_time">Время замачивания (мин)</string>
+    <string name="batch_volume">Объем партии после кипячения (гал)</string>
+    <string name="boil_volume">Объем партии до кипячения (gal)</string>
+    <string name="efficiency">Эффективность варки (%)</string>
+    <string name="use">Use</string>
+    <string name="mash_profile">Профиль затирания</string>
+    <string name="fermentation_profile">Профиль брожения</string>
+    <string name="style_profile">Стиль для рецепта</string>
+    <string name="mash_steps">Шаги затирания</string>
+    <string name="form">Форма</string>
+    <string name="measured_og">Измеренная OG</string>
+    <string name="measured_fg">Измеренная FG</string>
+
+    <!-- Hints for editTexts -->
+    <string name="volume_gal_hint">Гал.</string>
+    <string name="efficiency_hint">1 - 100</string>
+    <string name="minutes_hint">мин.</string>
+
+    <!-- Ingredient types -->
+    <string name="fermentable">Сбраживаемое сырье</string>
+    <string name="hop">Хмель</string>
+    <string name="yeast">Дрожжи</string>
+    <string name="misc">Разное</string>
+
+    <!-- from activity_add_fermentable.xml -->
+    <string name="weight_lbs">Вес (фунт)</string>
+    <string name="fermentable_type">Тип сбраживаемого сырья</string>
+    <string name="start_time">Время начала</string>
+    <string name="end_time">Время окончания</string>
+
+    <!-- from activity_add_hops.xml -->
+    <string name="select_hop">Выберите хмель</string>
+    <string name="alpha_acids_title">Альфа-кислоты (%)</string>
+    <string name="weight_oz">Вес (унц)</string>
+
+    <!-- from activity_add_misc.xm -->
+    <string name="select_misc">Выберите добавку</string>
+
+    <!-- from activity_main.xml -->
+    <string name="recipe_search_hint">Фильтр рецептов</string>
+    <string name="search_icon_description">Search Icon</string>
+    <string name="new_volume">Новый объем</string>
+    <string name="title_activity_add_yeast">Добавить дрожжи</string>
+    <string name="title_activity_edit_yeast">Редактировать дрожжи</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="title_activity_brew_timer">Таймер варки</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_open_title">Инструменты</string>
+    <string name="drawer_close">Drawer Open</string>
+
+    <!-- SnackBar strings -->
+    <string name="recipe_deleted">1 Рецепт удален</string>
+    <string name="recipe_scaled">1 Рецепт пересчитан</string>
+    <string name="recipe_copied">1 Рецепт скопирован</string>
+    <string name="recipe_exported">1 Рецепт экспортирован</string>
+    <string name="recipes_exported">Все рецепты экспортированы</string>
+
+    <!-- Alert Dialog Messages -->
+    <string name="import_recipes_title">Загрузить рецепт(ы) из XML</string>
+    <string name="import_recipes_msg">Выберите BeerXML (.xml) или BeerSmith2 (.bsmx) файл для загрузки рецепта.</string>
+    <string name="drive_button">GDrive</string>
+    <string name="local_storage">SD карта</string>
+</resources>
